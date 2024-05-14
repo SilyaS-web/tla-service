@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"
+    />
+
+    <title>Панель управления</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="burger-menu">
+            <div class="admin-menu__body">
+                <div class="admin-menu__title">
+                    Выберите раздел
+                </div>
+                <nav class="nav admin-menu__nav">
+                    <div class="nav__items">
+                        <a href="" class="nav__link">
+                            Модерация блогеров
+                        </a>
+                    </div>
+                </nav>
+                <a href="#" class="admin-menu__leave">Выйти</a>
+            </div>
+        </div>
+        
+        <header class="header">
+            <div class="header__container _container">
+                <div class="header__body">
+                    <div class="header__col">
+                        <div class="header__title">
+                            Панель управления
+                        </div>
+                    </div>
+                    <div class="header__col">
+                        <div class="header__leave">
+                            <a href="#" class="header__leave">Выйти</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <section class="admin-view">
+            <div class="admin-view__container _container">
+                <div class="admin-view__body">
+                    <aside class = "admin-menu">
+                        <div class="admin-menu__container">
+                            <div class="admin-menu__body">
+                                <nav class="nav admin-menu__nav">
+                                    <div class="nav__items">
+                                        <a href="" class="nav__link tab active" data-content="moderation" title="Модерация блогеров">
+                                            <img src="img/list-icon.svg" alt="" class="nav__link-img">
+                                        </a>
+                                        <a href="" class="nav__link tab" data-content="blogers-list" title="Список блогеров">
+                                            <img src="img/blog-icon.svg" alt="" class="nav__link-img">
+                                        </a>
+                                        <a href="" class="nav__link tab" data-content="sellers-list" title="Список селлеров">
+                                            <img src="img/money-icon.svg" alt="" class="nav__link-img">
+                                        </a>
+                                    </div>
+                                </nav>
+                                
+                            </div>
+                        </div>
+                    </aside>
+                    <div class="admin-view__blogers admin-blogers tab-content active" id = "moderation">
+                        <div class="admin-blogers__body">
+                            <div class="admin-blogers__header">
+                                <div class="admin-blogers__title title">
+                                    Модерация блогеров
+                                </div>
+                                <div class="admin-blogers__search form-group">
+                                    <input type="name" id = "blogers-search" class="input" placeholder="Введите название">
+                                    <button class = "btn btn-primary">Найти</button>
+                                </div>
+                            </div>
+                            <div class="admin-blogers__blogers">
+                                <div class="admin-blogers__blogers-item admin-bloger">
+                                    <div class="admin-bloger__row">
+                                        <div class="admin-bloger__col">
+                                            <div class="admin-bloger__img">
+                                                <img src="img/profile-icon.svg" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="admin-bloger__col">
+                                            <div class="admin-bloger__title">
+                                                Название канала
+                                            </div>
+                                            <div class="admin-bloger__info">
+                                                <div class="admin-bloger__info-item">
+                                                    Почта: example@mail.ru
+                                                </div>
+                                                <div class="admin-bloger__info-item">
+                                                    Номер: +7(900) 900-90-90
+                                                </div>
+                                                <div class="admin-bloger__info-item">
+                                                    Дата регистрации: 10.05.2024
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="admin-bloger__btns">
+                                        <a href="#" class="btn btn-primary btn-accept">Принять</a>
+                                        <a href="#" class="btn btn-secondary">Отклонить</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="admin-view__blogers blogers-list tab-content" id = "blogers-list">
+                        <div class="admin-blogers__body">
+                            <div class="admin-blogers__header">
+                                <div class="admin-blogers__title title">
+                                    Список блогеров
+                                </div>
+                                <div class="admin-blogers__search form-group">
+                                    <input type="name" id = "blogers-search" class="input" placeholder="Введите название">
+                                    <button class = "btn btn-primary">Найти</button>
+                                </div>
+                            </div>
+                            <div class="blogers-list__list list-blogers">
+                                <div class="list-blogers__item bloger-item card" data-id="1">
+                                    <div class="card__row card__content">
+                                        <div class="card__col">
+                                            <div class="card__row card__header">
+                                                <div class="card__img">
+                                                    <img src="img/profile-icon.svg" alt="">
+                                                    <div class="card__achive">
+                                                        <img src="img/achive-icon.svg" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="card__name">
+                                                    <p class = "card__name-name">
+                                                        Чертовски мило
+                                                    </p>
+                                                    <p class = "card__name-tag">
+                                                        @chertovski_milo
+                                                    </p>
+                                                </div>
+                                                <div class="card__platform">
+                                                    <img src="img/inst-icon.svg" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="card__row card__tags">
+                                                <div class="card__tags-item">
+                                                    <span>Животные и Природа</span>
+                                                </div>
+                                                <div class="card__tags-item">
+                                                    <span>Развлечения и Юмор</span>
+                                                </div>
+                                                <div class="card__tags-item">
+                                                    <span>Другое</span>
+                                                </div>
+                                            </div>
+                                            <div class="card__row card__desc">
+                                                <p>
+                                                    Коллекция позитивных, светлых  и чертовски милых  видео!
+                                                    Платёжеспособная женская аудитория от 25 лет
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="card__col card__stats">
+                                            <div class="card__col card__stats-stats">
+                                                <div class="card__row card__stats-row">
+                                                
+                                                    <div class="card__col card__stats-item">
+                                                        <div class="card__stats-title">
+                                                            <span>Подписчики</span>
+                                                        </div>
+                                                        <div class="card__stats-val">
+                                                            <span>108 729</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card__col card__stats-item">
+                                                        <div class="card__stats-title">
+                                                            <span>Просмотры</span>
+                                                        </div>
+                                                        <div class="card__stats-val">
+                                                            <span>800</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card__row card__stats-row">
+        
+                                                    <div class="card__col card__stats-item">
+                                                        <div class="card__stats-title">
+                                                            <span>Индекс кач-ва</span>
+                                                        </div>
+                                                        <div class="card__stats-val">
+                                                            <span>51%</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card__col card__stats-item">
+                                                        <div class="card__stats-title">
+                                                            <span>CPV</span>
+                                                        </div>
+                                                        <div class="card__stats-val">
+                                                            <span>~0.38 ₽</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card__col card__column--gender" >
+                                                <div class="card__stats-title">
+                                                    <span>Пол аудитории</span>
+                                                </div>
+                                                <div class="card__row" style="align-items: center; gap:5px">
+                                                    <div class="card__diagram-icon" ><img src="img/blogers-list/male-icon.svg" alt="" ></div>
+                                                    <div class="card__diagram-line" ><span style="width:50%;" ></span></div>
+                                                    <div class="card__diagram-icon" ><img src="img/blogers-list/female-icon.svg" alt="" ></div>
+                                                </div>
+                                            </div>
+                                            <div class="card__row card__row">
+                                                <button class = "btn btn-primary btn-add-to-project" data-project-id="">
+                                                    Заблокировать
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="notification" style="display: none;">
+            <div class="notification__body">
+                <div class="notification__title">Внимание!</div>
+                <div class="notification__text">
+                    Проект успешно создан
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="popup" id = "accept-form">
+        <div class="popup__container _container">
+            <div class="popup__body">
+                <div class="popup__title title">
+                    Заполните данные
+                </div>
+                <div class="popup__form">
+                    <div class="form-group">
+                        <label for="subs">Количество подписчиков</label>
+                        <input id = "subs" name="subs" type="text" class="input">
+                    </div>
+                    <div class="form-group">
+                        <label for="views">Количество просмотров</label>
+                        <input id = "views" name = "views" type="text" class="input">
+                    </div>
+                    <div class="form-group">
+                        <label for="quality">Индекс качества</label>
+                        <input id = "quality" name = "quality" type="text" class="input">
+                    </div>
+                    <div class="form-group">
+                        <label for="cpv">CPV</label>
+                        <input id = "cpv" name = "cpv" type="text" class="input">
+                    </div>
+                    <div class="form-row" style="display: flex; gap:10px;">
+                        <div class="form-group">
+                            <label for="male">Мужчины, %</label>
+                            <input id = "male" name = "male" type="text" class="input">
+                        </div>
+                        <div class="form-group">
+                            <label for="female">Женщины, %</label>
+                            <input id = "female" name = "female" type="text" class="input">
+                        </div>
+                    </div>
+                    <button class = "btn btn-primary send-data">
+                        Отправить
+                    </button>
+                </div>
+                <div class="close-popup">
+                    <img src="img/close-icon.svg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src = "js/script.js"></script>
+</html>

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet"> -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    <title>Реклама товара</title>
+</head>
+<body>
+    <div class="wrapper" style="background-color: #fff;">
+        <div class="burger-menu">
+            <div class="burger-menu__body">
+                <div class="burger-menu__profile">
+                    <a href="#" class="header__profile-w header__profile-burger">
+                        <img src="img/profile-icon.svg" alt="" class="header__profile">
+                        <span class="header__profile-name">
+                            Алексей Андреев
+                        </span>
+                    </a>
+                </div>
+                <div class="burger-menu__nav nav-burger">
+                    <a href="#" class="nav-burger__link nav__link">Создать проект</a>
+                    <a href="#" class="nav-burger__link nav__link">Список блогеров</a>
+                    <a href="#" class="nav-burger__link nav__link">Мои проекты</a>
+                </div>
+                <a href="#" class="burger-menu__close">
+                    <img src="img/close-icon.svg" alt="">
+                </a>
+
+                <div class="burger-contacts">
+                    <div class="footer__contacts-contacts">
+                        <div class="footer__contacts-phone">
+                            hello@tla-agency.ru
+                        </div>
+                        <div class="footer__contacts-phone">
+                            +7(999)194-44-47
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <header class = "header">
+            <div class="header__container _container">
+                <div class="header__body">
+                    <div class="logo header__logo-w">
+                        <img src="img/logo.svg" alt="" class = "logo__logo header__logo">
+                    </div>
+                    <nav class="nav header__nav">
+                        <div class="nav__items">
+                            <a href="" class="nav__link">
+                                Создать проект
+                            </a>
+                            <a href="" class="nav__link">
+                                Список блогеров
+                            </a>
+                            <a href="" class="nav__link">
+                                Мои проекты
+                            </a>
+                        </div>
+                    </nav>
+                    <a href="#" class="header__profile-w header__profile-header">
+                        <img src="img/profile-icon.svg" alt="" class="header__profile">
+                        <span class="header__profile-name">
+                            Алексей Андреев
+                        </span>
+                    </a>
+                    <a href="#" class="header__menu burger">
+                        <img src="img/menu-icon.svg" alt="">
+                    </a>
+                </div>
+            </div>
+        </header>
+        
+        <section class="project-view">
+            <div class="project-view__container _container">
+                <div class="project-view__body">
+                    <div class="project-view__title title">
+                        Реклама товара
+                    </div>
+                    <div class="project-view__project view-project">
+                        <div class="view-project__img _ibg">
+                            <img src="img/project-view/6.webp" alt="">
+                        </div>
+                        <div class="view-project__content">
+                            <div class="view-project__header">
+                                <div class="view-project__title">
+                                    Постельное белье 2 спальное 70х70 наволочки
+                                </div>
+                                <div class="view-project__status active">
+                                    Активно
+                                </div>
+
+                            </div>
+                            <div class="view-project__body">
+                                <div class="view-project__format">
+                                    <div class="view-project__format-item">
+                                        Рекламный пост
+                                    </div>
+                                </div>
+                                <div class="view-project__link">
+                                    <p>Ссылка на товар:</p>
+                                    <a href="#" class="">https://www.wildberries.ru/catalog/176792502/detail.aspx</a>
+                                </div>
+                                <div class="view-project__props view-project__props--desktop">
+                                    <div class="view-project__props-wrap">
+                                        <div class="view-project__props-total">
+                                            <div class="view-project__props-orders">
+                                                Заказы за 30 дн<br>
+                                                <span class="count">2 637 шт</span>
+                                            </div>
+                                            <div class="view-project__props-money">
+                                                Выручка за 30 дн<br>
+                                                <span class="money">4 750 732 ₽</span>
+                                            </div>
+                                        </div>
+                                        <div class="view-project__props-graph">
+                                            <canvas id="orders-graph-desktop" class="" ></canvas>
+                                            <canvas id="prices-graph-desktop" class="" ></canvas>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="view-project__props view-project__props--mobile">
+                                    <div class="view-project__props-wrap">
+                                        <div class="view-project__props-orders">
+                                            Заказы за 30 дн<br>
+                                            <span class="count">2 637 шт</span>
+                                        </div>
+                                        <canvas id="orders-graph-mobile" class="" ></canvas>
+                                    </div>
+                                    <div class="view-project__props-wrap">
+                                        <div class="view-project__props-money">
+                                            Выручка за 30 дн<br>
+                                            <span class="money">4 750 732 ₽</span>
+                                        </div>
+                                        <canvas id="prices-graph-mobile" class="" ></canvas>
+                                    </div>
+                                </div>
+                                <div class="view-project__btns">
+                                    <button class="btn btn-secondary">
+                                        Удалить
+                                    </button>
+                                    <!-- <button class="btn btn-primary">
+                                        Редактировать
+                                    </button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer__container _container">
+                <div class="footer__body">
+                    <div class="footer__top">
+                        <div class="logo footer__logo-w">
+                            <img src="img/logo.svg" alt="" class = "logo__logo footer__logo">
+                        </div>
+                        <nav class="nav footer__nav">
+                            <div class="nav__items">
+                                <a href="" class="nav__link">
+                                    Создать проект
+                                </a>
+                                <a href="" class="nav__link">
+                                    Список блогеров
+                                </a>
+                                <a href="" class="nav__link">
+                                    Мои проекты
+                                </a>
+                            </div>
+                        </nav>
+                        <a href="#" class="btn btn-primary footer__contact-us">
+                            Свяжитесь с нами
+                        </a>
+                    </div>
+                    <div class="footer__bottom">
+                        <div class="footer__addits">
+                            <a href="#" class="footer__policy">
+                                Политика конфиденциальности
+                            </a>
+                            <p class="footer__copyright">
+                                ©️ Все права защищены
+                            </p>
+                        </div>
+                        <div class="footer__contacts">
+                            <div class="footer__contacts-contacts">
+                                <div class="footer__contacts-phone">
+                                    +7(999)194-44-47
+                                </div>
+                                <div class="footer__contacts-phone">
+                                    hello@tla-agency.ru
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <div class="notification" style="display: none;">
+            <div class="notification__body">
+                <div class="notification__title">Внимание!</div>
+                <div class="notification__text">
+                    Проект успешно создан
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    const mediaQuery = window.matchMedia('(max-width: 911px)');
+
+    var prices_ctx, orders_ctx;
+
+    if (mediaQuery.matches) {
+        prices_ctx = document.getElementById('prices-graph-mobile');
+        orders_ctx = document.getElementById('orders-graph-mobile');
+    }
+    else{
+        prices_ctx = document.getElementById('prices-graph-desktop');
+        orders_ctx = document.getElementById('orders-graph-desktop');
+    }
+
+
+    // $.ajax({
+    //     url: 'https://anabar.ai/api/chrome/v1/product/wb/25633521',
+    //     data:{},
+    //     method: 'GET',
+    //     success: (data)=>{
+    //         console.log(data);
+    //     }
+    // })
+    var data = {
+        "orders": 2637,
+        "earnings": 4750732.0,
+        "sale_percent": 0.0,
+        "fromDate": "2021-04-03",
+        "prices_history": [
+            {
+                "dt": "2024-04-10",
+                "price": 1603.0
+            },
+            {
+                "dt": "2024-04-11",
+                "price": 1603.0
+            },
+            {
+                "dt": "2024-04-12",
+                "price": 1603.0
+            },
+            {
+                "dt": "2024-04-13",
+                "price": 1603.0
+            },
+            {
+                "dt": "2024-04-14",
+                "price": 1603.0
+            },
+            {
+                "dt": "2024-04-15",
+                "price": 1603.0
+            },
+            {
+                "dt": "2024-04-16",
+                "price": 1684.0
+            },
+            {
+                "dt": "2024-04-17",
+                "price": 1684.0
+            },
+            {
+                "dt": "2024-04-18",
+                "price": 1684.0
+            },
+            {
+                "dt": "2024-04-19",
+                "price": 1725.0
+            },
+            {
+                "dt": "2024-04-20",
+                "price": 1725.0
+            },
+            {
+                "dt": "2024-04-21",
+                "price": 1725.0
+            },
+            {
+                "dt": "2024-04-22",
+                "price": 1704.0
+            },
+            {
+                "dt": "2024-04-23",
+                "price": 1776.0
+            },
+            {
+                "dt": "2024-04-24",
+                "price": 1848.0
+            },
+            {
+                "dt": "2024-04-25",
+                "price": 1725.0
+            },
+            {
+                "dt": "2024-04-26",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-04-27",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-04-28",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-04-29",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-04-30",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-05-01",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-05-02",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-05-03",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-05-04",
+                "price": 1925.0
+            },
+            {
+                "dt": "2024-05-05",
+                "price": 1925.0
+            },
+            {
+                "dt": "2024-05-06",
+                "price": 1925.0
+            },
+            {
+                "dt": "2024-05-07",
+                "price": 1925.0
+            },
+            {
+                "dt": "2024-05-08",
+                "price": 1925.0
+            },
+            {
+                "dt": "2024-05-09",
+                "price": 1925.0
+            }
+        ],
+        "orders_history": [
+        {
+            "dt": "2024-04-10",
+            "orders": 64.0
+        },
+        {
+            "dt": "2024-04-11",
+            "orders": 70.0
+        },
+        {
+            "dt": "2024-04-12",
+            "orders": 61.0
+        },
+        {
+            "dt": "2024-04-13",
+            "orders": 62.0
+        },
+        {
+            "dt": "2024-04-14",
+            "orders": 69.0
+        },
+        {
+            "dt": "2024-04-15",
+            "orders": 66.0
+        },
+        {
+            "dt": "2024-04-16",
+            "orders": 105.0
+        },
+        {
+            "dt": "2024-04-17",
+            "orders": 105.0
+        },
+        {
+            "dt": "2024-04-18",
+            "orders": 106.0
+        },
+        {
+            "dt": "2024-04-19",
+            "orders": 105.0
+        },
+        {
+            "dt": "2024-04-20",
+            "orders": 101.0
+        },
+        {
+            "dt": "2024-04-21",
+            "orders": 133.0
+        },
+        {
+            "dt": "2024-04-22",
+            "orders": 118.0
+        },
+        {
+            "dt": "2024-04-23",
+            "orders": 129.0
+        },
+        {
+            "dt": "2024-04-24",
+            "orders": 118.0
+        },
+        {
+            "dt": "2024-04-25",
+            "orders": 83.0
+        },
+        {
+            "dt": "2024-04-26",
+            "orders": 74.0
+        },
+        {
+            "dt": "2024-04-27",
+            "orders": 78.0
+        },
+        {
+            "dt": "2024-04-28",
+            "orders": 68.0
+        },
+        {
+            "dt": "2024-04-29",
+            "orders": 111.0
+        },
+        {
+            "dt": "2024-04-30",
+            "orders": 102.0
+        },
+        {
+            "dt": "2024-05-01",
+            "orders": 100.0
+        },
+        {
+            "dt": "2024-05-02",
+            "orders": 58.0
+        },
+        {
+            "dt": "2024-05-03",
+            "orders": 62.0
+        },
+        {
+            "dt": "2024-05-04",
+            "orders": 74.0
+        },
+        {
+            "dt": "2024-05-05",
+            "orders": 89.0
+        },
+        {
+            "dt": "2024-05-06",
+            "orders": 99.0
+        },
+        {
+            "dt": "2024-05-07",
+            "orders": 109.0
+        },
+        {
+            "dt": "2024-05-08",
+            "orders": 64.0
+        },
+        {
+            "dt": "2024-05-09",
+            "orders": 54.0
+        }
+    ]
+    } 
+    
+    var orders = data.orders_history.map(item=>item.orders);
+    var prices = data.prices_history.map(item=>item.price);
+    var date = data.prices_history.map(item=>item.dt.split('-')[2]);
+
+    console.log(orders, prices, date);
+
+    new Chart(orders_ctx, {
+        type: 'bar',
+        data: {
+            labels: data.prices_history.map(item=>item.dt.split('-')[2]),
+            datasets: [
+                {
+                    label: 'Заказы',
+                    data: data.orders_history.map(item=>item.orders),
+                }
+            ]
+        },
+        options: {
+            scales: {
+            y: {
+                beginAtZero: true
+            }
+            }
+        }
+    });
+    new Chart(prices_ctx, {
+        type: 'bar',
+        data: {
+            labels: data.prices_history.map(item=>item.dt.split('-')[2]),
+            datasets: [
+                {
+                    label: 'Выручка',
+                    data: data.prices_history.map(item=>item.price),
+                }
+            ]
+        },
+        options: {
+            scales: {
+            y: {
+                beginAtZero: true
+            }
+            }
+        }
+    });
+</script>
+<script src = "js/script.js"></script>
+</html>

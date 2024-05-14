@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet"> -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    <title>Список моих проектов</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="burger-menu">
+            <div class="burger-menu__body">
+                <div class="burger-menu__profile">
+                    <a href="#" class="header__profile-w header__profile-burger">
+                        <img src="img/profile-icon.svg" alt="" class="header__profile">
+                        <span class="header__profile-name">
+                            Алексей Андреев
+                        </span>
+                    </a>
+                </div>
+                <div class="burger-menu__nav nav-burger">
+                    <a href="#" class="nav-burger__link nav__link">Создать проект</a>
+                    <a href="#" class="nav-burger__link nav__link">Список блогеров</a>
+                    <a href="#" class="nav-burger__link nav__link">Мои проекты</a>
+                </div>
+                <a href="#" class="burger-menu__close">
+                    <img src="img/close-icon.svg" alt="">
+                </a>
+
+                <div class="burger-contacts">
+                    <div class="footer__contacts-contacts">
+                        <div class="footer__contacts-phone">
+                            hello@tla-agency.ru
+                        </div>
+                        <div class="footer__contacts-phone">
+                            +7(999)194-44-47
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <header class = "header">
+            <div class="header__container _container">
+                <div class="header__body">
+                    <div class="logo header__logo-w">
+                        <img src="img/logo.svg" alt="" class = "logo__logo header__logo">
+                    </div>
+                    <nav class="nav header__nav">
+                        <div class="nav__items">
+                            <a href="" class="nav__link">
+                                Создать проект
+                            </a>
+                            <a href="" class="nav__link">
+                                Список блогеров
+                            </a>
+                            <a href="" class="nav__link">
+                                Мои проекты
+                            </a>
+                        </div>
+                    </nav>
+                    <a href="#" class="header__profile-w header__profile-header">
+                        <img src="img/profile-icon.svg" alt="" class="header__profile">
+                        <span class="header__profile-name">
+                            Алексей Андреев
+                        </span>
+                    </a>
+                    <a href="#" class="header__menu burger">
+                        <img src="img/menu-icon.svg" alt="">
+                    </a>
+                </div>
+            </div>
+        </header>
+        
+        <section class="projects-list">
+            <div class="projects-list__container _container">
+                <div class="projects-list__body">
+                    <div class="projects-list__filter filter">
+                        <div class="filter__body">
+                            <div class="filter__top">
+                                <p class = "filter__title">
+                                    Фильтр
+                                </p>
+                                <a href="#" class="filter__reset">
+                                    Сбросить
+                                </a>
+                            </div>
+                            <div class="filter__items">
+                                <div class="form-group filter__item">
+                                    <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию">
+                                </div>
+                                <div class="form-group filter__item">
+                                    <label for="">Формат рекламы</label>
+                                    <select name="filter-format" id="filter-format" class = "input">
+                                        <option value="1" class="">Отзыв на товар</option>
+                                        <option value="2" class="">Рекламная интеграция(Instagram)</option>
+                                        <option value="3" class="">Рекламная интеграция(Youtube)</option>
+                                        <option value="4" class="">Другие площадки для интеграций</option>
+                                        <option value="5" class="">Платные интеграции</option>
+                                    </select>
+                                </div>
+                                <div class="form-group filter__item">
+                                    <label for="">Статус проекта</label>
+                                    <select name="filter-status" id="filter-status" class = "input">
+                                        <option value="1" class="">Активно</option>
+                                        <option value="2" class="">Отклонено</option>
+                                        <option value="3" class="">Выполнено</option>
+                                    </select>
+                                </div>
+                                <div class="form-group filter__item">
+                                    <label for="">Страна</label>
+                                    <select name="filter-country" id="filter-country" class = "input">
+                                        <option value="1" class="">Россия</option>
+                                        <option value="2" class="">Казахстан</option>
+                                        <option value="3" class="">Грузия</option>
+                                    </select>
+                                </div>
+
+                                <div class="filter__btns">
+                                    <button class="btn btn-primary btn-filter-send">Применить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="projects-list__list list-projects">
+                        <div class="projects-list__header">
+                            <div class="list-projects__title title">
+                                Список моих проектов
+                            </div>
+                            <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
+                        </div>
+                        <div class="list-projects__items">
+                            <div class="list-projects__item project-item">
+                                <div class="project-item__img">
+                                    <img src="img/projects-list/1.webp" alt="">
+                                    <div class="project-item__status active">
+                                        Активно
+                                    </div>
+                                    <div class="project-item__country">
+                                        Россия
+                                    </div>
+                                </div>
+                                <div class="project-item__content">
+                                    <div class="project-item__title">
+                                        1120 ₽
+                                    </div>
+                                    <a class="project-item__participants" title="Гель для душа парфюмированный, 1000 мл.">
+                                        Dk-studio / Гель для душа парфюмированный, 1000 мл.
+                                    </a>
+                                    <div class="project-item__format-tags card__row card__tags">
+                                        <div class="card__tags-item">
+                                            <span>Рекламный пост</span>
+                                        </div>
+                                        <div class="card__tags-item">
+                                            <span>Обзор на канале</span>
+                                        </div>
+                                        <div class="card__tags-item">
+                                            <span>Другое</span>
+                                        </div>
+                                    </div>
+                                    <div class="project-item__btns">
+                                        <a href="#" class="btn btn-primary">Посмотреть подробности</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer__container _container">
+                <div class="footer__body">
+                    <div class="footer__top">
+                        <div class="logo footer__logo-w">
+                            <img src="img/logo.svg" alt="" class = "logo__logo footer__logo">
+                        </div>
+                        <nav class="nav footer__nav">
+                            <div class="nav__items">
+                                <a href="" class="nav__link">
+                                    Создать проект
+                                </a>
+                                <a href="" class="nav__link">
+                                    Список блогеров
+                                </a>
+                                <a href="" class="nav__link">
+                                    Мои проекты
+                                </a>
+                            </div>
+                        </nav>
+                        <a href="#" class="btn btn-primary footer__contact-us">
+                            Свяжитесь с нами
+                        </a>
+                    </div>
+                    <div class="footer__bottom">
+                        <div class="footer__addits">
+                            <a href="#" class="footer__policy">
+                                Политика конфиденциальности
+                            </a>
+                            <p class="footer__copyright">
+                                ©️ Все права защищены
+                            </p>
+                        </div>
+                        <div class="footer__contacts">
+                            <div class="footer__contacts-contacts">
+                                <div class="footer__contacts-phone">
+                                    +7(999)194-44-47
+                                </div>
+                                <div class="footer__contacts-phone">
+                                    hello@tla-agency.ru
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <div class="notification" style="display: none;">
+            <div class="notification__body">
+                <div class="notification__title">Внимание!</div>
+                <div class="notification__text">
+                    Проект успешно создан
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src = "js/script.js"></script>
+</html>

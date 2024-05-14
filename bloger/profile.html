@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet"> -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    <title>Профиль</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="burger-menu">
+            <div class="burger-menu__body">
+                <div class="burger-menu__profile">
+                    <a href="#" class="header__profile-w header__profile-burger">
+                        <img src="../img/profile-icon.svg" alt="" class="header__profile">
+                        <span class="header__profile-name">
+                            Алексей Андреев
+                        </span>
+                    </a>
+                </div>
+                <div class="burger-menu__nav nav-burger">
+                    <a href="#" class="nav-burger__link nav__link">Создать проект</a>
+                    <a href="#" class="nav-burger__link nav__link">Мои проекты</a>
+                </div>
+                <a href="#" class="burger-menu__close">
+                    <img src="../img/close-icon.svg" alt="">
+                </a>
+
+                <div class="burger-contacts">
+                    <div class="footer__contacts-contacts">
+                        <div class="footer__contacts-phone">
+                            hello@tla-agency.ru
+                        </div>
+                        <div class="footer__contacts-phone">
+                            +7(999)194-44-47
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <header class = "header">
+            <div class="header__container _container">
+                <div class="header__body">
+                    <div class="logo header__logo-w">
+                        <img src="../img/logo.svg" alt="" class = "logo__logo header__logo">
+                    </div>
+                    <nav class="nav header__nav">
+                        <div class="nav__items">
+                            <a href="" class="nav__link">
+                                Создать проект
+                            </a>
+                            <a href="" class="nav__link">
+                                Список блогеров
+                            </a>
+                        </div>
+                    </nav>
+                    <a href="#" class="header__profile-w header__profile-header">
+                        <img src="../img/profile-icon.svg" alt="" class="header__profile">
+                        <span class="header__profile-name">
+                            Алексей Андреев
+                        </span>
+                    </a>
+                    <a href="#" class="header__menu burger">
+                        <img src="../img/menu-icon.svg" alt="">
+                    </a>
+                </div>
+            </div>
+        </header>
+        
+        <section class="profile">
+            <div class="profile__container _container">
+                <div class="profile__body">
+                    <div class="profile__title title">
+                        Профиль
+                    </div>
+                    <div class="profile__content profile-tabs">
+                        <div class="profile-tabs__tabs">
+                            <div class="profile-tabs__tabs-item tab active" data-content = "info">
+                                Личные данные
+                            </div>
+                            <div class="profile-tabs__tabs-item tab" data-content = "notif">
+                                Оповещения
+                            </div>
+                            <div class="profile-tabs__tabs-item tab" data-content = "chat">
+                                Чат с блогерами
+                            </div>
+                        </div>
+                        <div class="profile-tabs__content">
+                            <div class="profile-tabs__content-item tab-content active" id="info">
+                                <div class="tab-content__profile-img">
+                                    <img src="../img/profile-icon.svg" alt="">
+                                    <div class="tab-content__profile-img-text">
+                                        <p>Фото профиля</p>
+                                        <div class="form-group form-group--file">
+                                            <label class="tab-content__profile-img-upload input-file" for = "profile-img">
+                                                Загрузите изображение товара
+                                                <input type="file" name="name" class="" id="profile-img">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-content__form">
+                                    <div class="tab-content__form-right">
+                                        <div class="form-group">
+                                            <label for="">Имя</label>
+                                            <input type="text" class="input" id = "name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="">E-mail</label>
+                                            <input type="email" class="input" id = "email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="phone">Номер телефона</label>
+                                            <input type="phone" id = "phone" placeholder="" class = "input input--phone">
+                                        </div>    
+                                        <script>
+                                            $(function(){
+                                                $("#phone").mask("8(999) 999-9999");
+                                            });
+                                        </script>  
+                                        <div class="form-group">
+                                            <label for="">Ник в telegram-е</label>
+                                            <input type="text" class="input" id = "nick">
+                                        </div>
+                                        <button class="btn btn-primary desktop">Сохранить</button>
+                                    </div>
+                                    <div class="tab-content__form-left">
+                                        <label for="">Площадки, на которых находится канал</label>
+                                        <div class="input-checkbox-w">
+                                            <input type="checkbox" class="checkbox platform" id = "youtube">
+                                            <label for="">Youtube</label>
+                                        </div>
+                                        <div class="input-checkbox-w">
+                                            <input type="checkbox" class="checkbox platform" id = "telergam">
+                                            <label for="">Telegram</label>
+                                        </div>
+                                        <div class="input-checkbox-w">
+                                            <input type="checkbox" class="checkbox platform" id = "instagram">
+                                            <label for="">Instagram</label>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-primary mobile">Сохранить</button>
+                                </div>
+                            </div>
+                            <div class="profile-tabs__content-item tab-content" id="notif">
+                                <div class="tab-content__notifs">
+                                    <div class="tab-content__notifs-item item-notifs">
+                                        <div class="item-notifs__title">
+                                            Блогер подтвердил заявку
+                                        </div>
+                                        <div class="item-notifs__text">
+                                            Канал “Just Do It” подтвердил заявку на рекламу товара “Чехол для IPhone XR черный”
+                                        </div>
+                                    </div>
+                                    <div class="tab-content__notifs-item item-notifs">
+                                        <div class="item-notifs__title">
+                                            Блогер подтвердил заявку
+                                        </div>
+                                        <div class="item-notifs__text">
+                                            Канал “Just Do It” подтвердил заявку на рекламу товара “Чехол для IPhone XR черный”
+                                        </div>
+                                    </div>
+                                    <div class="tab-content__notifs-item item-notifs">
+                                        <div class="item-notifs__title">
+                                            Блогер подтвердил заявку
+                                        </div>
+                                        <div class="item-notifs__text">
+                                            Канал “Just Do It” подтвердил заявку на рекламу товара “Чехол для IPhone XR черный”
+                                        </div>
+                                    </div>
+                                    <div class="tab-content__notifs-item item-notifs">
+                                        <div class="item-notifs__title">
+                                            Блогер подтвердил заявку
+                                        </div>
+                                        <div class="item-notifs__text">
+                                            Канал “Just Do It” подтвердил заявку на рекламу товара “Чехол для IPhone XR черный”
+                                        </div>
+                                    </div>
+                                    <div class="tab-content__notifs-item item-notifs">
+                                        <div class="item-notifs__title">
+                                            Блогер подтвердил заявку
+                                        </div>
+                                        <div class="item-notifs__text">
+                                            Канал “Just Do It” подтвердил заявку на рекламу товара “Чехол для IPhone XR черный”
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profile-tabs__content-item tab-content" id="chat">
+                                <div class="tab-content__chat chat">
+                                    <div class="chat__body">
+                                        <div class="chat__left">
+                                            <div class="chat__chat-items">
+                                                <div class="chat__chat-item item-chat current">
+                                                    <div class="item-chat__img">
+                                                        <img src="../img/profile-icon.svg" alt="">
+                                                    </div>
+                                                    <div class="item-chat__text">
+                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
+                                                        <div class="item-chat__last-msg">
+                                                            <p>Последнее сообщение:</p>
+                                                            <span> 12.04.24 - 12:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="chat__chat-item item-chat">
+                                                    <div class="item-chat__img">
+                                                        <img src="../img/profile-icon.svg" alt="">
+                                                    </div>
+                                                    <div class="item-chat__text">
+                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
+                                                        <div class="item-chat__last-msg">
+                                                            <p>Последнее сообщение:</p>
+                                                            <span>12.04.24 - 12:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="chat__chat-item item-chat">
+                                                    <div class="item-chat__img">
+                                                        <img src="../img/profile-icon.svg" alt="">
+                                                    </div>
+                                                    <div class="item-chat__text">
+                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
+                                                        <div class="item-chat__last-msg">
+                                                            <p>Последнее сообщение:</p>
+                                                            <span>12.04.24 - 12:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="chat__chat-item item-chat">
+                                                    <div class="item-chat__img">
+                                                        <img src="../img/profile-icon.svg" alt="">
+                                                    </div>
+                                                    <div class="item-chat__text">
+                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
+                                                        <div class="item-chat__last-msg">
+                                                            <p>Последнее сообщение:</p>
+                                                            <span>12.04.24 - 12:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="chat__chat-item item-chat current">
+                                                    <div class="item-chat__img">
+                                                        <img src="../img/profile-icon.svg" alt="">
+                                                    </div>
+                                                    <div class="item-chat__text">
+                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
+                                                        <div class="item-chat__last-msg">
+                                                            <p>Последнее сообщение:</p>
+                                                            <span> 12.04.24 - 12:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="chat__chat-item item-chat">
+                                                    <div class="item-chat__img">
+                                                        <img src="../img/profile-icon.svg" alt="">
+                                                    </div>
+                                                    <div class="item-chat__text">
+                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
+                                                        <div class="item-chat__last-msg">
+                                                            <p>Последнее сообщение:</p>
+                                                            <span>12.04.24 - 12:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="chat__chat-item item-chat">
+                                                    <div class="item-chat__img">
+                                                        <img src="../img/profile-icon.svg" alt="">
+                                                    </div>
+                                                    <div class="item-chat__text">
+                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
+                                                        <div class="item-chat__last-msg">
+                                                            <p>Последнее сообщение:</p>
+                                                            <span>12.04.24 - 12:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="chat__chat-item item-chat">
+                                                    <div class="item-chat__img">
+                                                        <img src="../img/profile-icon.svg" alt="">
+                                                    </div>
+                                                    <div class="item-chat__text">
+                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
+                                                        <div class="item-chat__last-msg">
+                                                            <p>Последнее сообщение:</p>
+                                                            <span>12.04.24 - 12:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="chat__chat-item item-chat current">
+                                                    <div class="item-chat__img">
+                                                        <img src="../img/profile-icon.svg" alt="">
+                                                    </div>
+                                                    <div class="item-chat__text">
+                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
+                                                        <div class="item-chat__last-msg">
+                                                            <p>Последнее сообщение:</p>
+                                                            <span> 12.04.24 - 12:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="chat__chat-item item-chat">
+                                                    <div class="item-chat__img">
+                                                        <img src="../img/profile-icon.svg" alt="">
+                                                    </div>
+                                                    <div class="item-chat__text">
+                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
+                                                        <div class="item-chat__last-msg">
+                                                            <p>Последнее сообщение:</p>
+                                                            <span>12.04.24 - 12:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="chat__chat-item item-chat">
+                                                    <div class="item-chat__img">
+                                                        <img src="../img/profile-icon.svg" alt="">
+                                                    </div>
+                                                    <div class="item-chat__text">
+                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
+                                                        <div class="item-chat__last-msg">
+                                                            <p>Последнее сообщение:</p>
+                                                            <span>12.04.24 - 12:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="chat__chat-item item-chat">
+                                                    <div class="item-chat__img">
+                                                        <img src="../img/profile-icon.svg" alt="">
+                                                    </div>
+                                                    <div class="item-chat__text">
+                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
+                                                        <div class="item-chat__last-msg">
+                                                            <p>Последнее сообщение:</p>
+                                                            <span>12.04.24 - 12:20</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="chat__right">
+                                            <div class="chat__messages messages-chat">
+                                                <div class="messages-chat__item messages-chat__item--author">
+                                                    <div class="messages-chat__item-header">
+                                                        <div class="messages-chat__item-title">
+                                                            Иван Иванов
+                                                        </div>
+                                                        <div class="messages-chat__item-date">
+                                                            12.04.24 12:20
+                                                        </div>
+                                                    </div>
+                                                    <div class="messages-chat__item-msg">
+                                                        Здравствуйте! Какие у нас результаты по проекту?
+                                                    </div>
+                                                </div>
+                                                <div class="messages-chat__item">
+                                                    <div class="messages-chat__item-header">
+                                                        <div class="messages-chat__item-title">
+                                                            Vysokoff SEO - продвижение и заработок
+                                                        </div>
+                                                        <div class="messages-chat__item-date">
+                                                            12.04.24 12:20
+                                                        </div>
+                                                    </div>
+                                                    <div class="messages-chat__item-msg">
+                                                        Здравствуйте! Все отлично, сегодня в 6 вечера по мск скину результаты!
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="chat__messages messages-create">
+                                                <textarea name="" id="" placeholder="Введите текст" class = "messages-create__textarea">
+
+                                                </textarea>
+                                                <button class="btn btn-primary">Отправить</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer__container _container">
+                <div class="footer__body">
+                    <div class="footer__top">
+                        <div class="logo footer__logo-w">
+                            <img src="../img/logo.svg" alt="" class = "logo__logo footer__logo">
+                        </div>
+                        <nav class="nav footer__nav">
+                            <div class="nav__items">
+                                <a href="" class="nav__link">
+                                    Создать проект
+                                </a>
+                                <a href="" class="nav__link">
+                                    Список блогеров
+                                </a>
+                            </div>
+                        </nav>
+                        <a href="#" class="btn btn-primary footer__contact-us">
+                            Свяжитесь с нами
+                        </a>
+                    </div>
+                    <div class="footer__bottom">
+                        <div class="footer__addits">
+                            <a href="#" class="footer__policy">
+                                Политика конфиденциальности
+                            </a>
+                            <p class="footer__copyright">
+                                ©️ Все права защищены
+                            </p>
+                        </div>
+                        <div class="footer__contacts">
+                            <div class="footer__contacts-contacts">
+                                <div class="footer__contacts-phone">
+                                    +7(999)194-44-47
+                                </div>
+                                <div class="footer__contacts-phone">
+                                    hello@tla-agency.ru
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <div class="notification" style="display: none;">
+            <div class="notification__body">
+                <div class="notification__title">Внимание!</div>
+                <div class="notification__text">
+                    Проект успешно создан
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src = "../js/script.js"></script>
+</html>
