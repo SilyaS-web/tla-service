@@ -34,6 +34,24 @@
                         </span>
                     </a>
                 </div>
+                <div class="header__profile-items--mobile header__profile-items header__row">
+                    <a href="#" class="header__col header__tariffs" title="Тарифы">
+                        
+                        <img src="img/tariff-icon.svg" alt="" class="">
+                    </a>
+                    <a href="#" class="header__col header__chat" title="Чат">
+                        <div class="header__profile-notif">
+                            1
+                        </div>
+                        <img src="img/chat-icon.svg" alt="" class="">
+                    </a>
+                    <a href="#" class="header__col header__notif" title="Уведомления">
+                        <div class="header__profile-notif">
+                            1
+                        </div>
+                        <img src="img/notif-icon.svg" alt="" class="">
+                    </a>
+                </div>
                 <div class="burger-menu__nav nav-burger">
                     <a href="#" class="nav-burger__link nav__link">Создать проект</a>
                     <a href="#" class="nav-burger__link nav__link">Список блогеров</a>
@@ -74,12 +92,30 @@
                             </a>
                         </div>
                     </nav>
-                    <a href="#" class="header__profile-w header__profile-header">
-                        <img src="img/profile-icon.svg" alt="" class="header__profile">
-                        <span class="header__profile-name">
-                            Алексей Андреев
-                        </span>
-                    </a>
+                    <div class=" header__profile-items header__profile-items--desktop header__row">
+                        <a href="#" class="header__col header__tariffs" title="Тарифы">
+                            
+                            <img src="img/tariff-icon.svg" alt="" class="">
+                        </a>
+                        <a href="#" class="header__col header__chat" title="Чат">
+                            <div class="header__profile-notif">
+                                1
+                            </div>
+                            <img src="img/chat-icon.svg" alt="" class="">
+                        </a>
+                        <a href="#" class="header__col header__notif" title="Уведомления">
+                            <div class="header__profile-notif">
+                                1
+                            </div>
+                            <img src="img/notif-icon.svg" alt="" class="">
+                        </a>
+                        <a href="#" class="header__profile-w header__profile-header">
+                            <img src="img/profile-icon.svg" alt="" class="header__profile">
+                            <span class="header__profile-name">
+                                Алексей Андреев
+                            </span>
+                        </a>
+                    </div>
                     <a href="#" class="header__menu burger">
                         <img src="img/menu-icon.svg" alt="">
                     </a>
@@ -90,12 +126,48 @@
         <section class="profile">
             <div class="profile__container _container">
                 <div class="profile__body">
-                    <div class="profile__title title">
+                    <!-- <div class="profile__title title">
                         Профиль
+                    </div> -->
+                    <div class="profile__info info-profile">
+                        <div class="info-profile__body">
+                            <div class="info-profile__row">
+                                <div class="info-profile__col info-profile__img">
+                                    <img src="img/profile-icon.svg" alt="">
+                                </div>
+                                <div class="info-profile__col">
+                                    <div class="info-profile__name">
+                                        Петров Сергей Евгеньевич
+                                    </div>
+                                    <div class="info-profile__id">
+                                        Ваш идентификатор — <b>1</b>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="info-profile__row info-profile__tags">
+                                <div class="info-profile__tags-title">
+                                    Дополнительная информация
+                                </div>
+                                <div class="info-profile__tags-items">
+                                    <div class="info-profile__tags-item">
+                                        example@mail.ru
+                                    </div>
+                                    <div class="info-profile__tags-item">
+                                        +7(900) 900-90-90
+                                    </div>
+                                    <div class="info-profile__tags-item">
+                                        Селлер
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="profile__content profile-tabs">
                         <div class="profile-tabs__tabs">
-                            <div class="profile-tabs__tabs-item tab active" data-content = "info">
+                            <div class="profile-tabs__tabs-item tab active" data-content = "projects">
+                                Завершенные проекты
+                            </div>
+                            <div class="profile-tabs__tabs-item tab" data-content = "info">
                                 Личные данные
                             </div>
                             <div class="profile-tabs__tabs-item tab" data-content = "notif">
@@ -109,7 +181,151 @@
                             </div>
                         </div>
                         <div class="profile-tabs__content">
-                            <div class="profile-tabs__content-item tab-content active" id="info">
+                            <div class="profile-tabs__content-item tab-content active" id="projects">
+                                <div class="projects-list__list list-projects">
+                                    <!-- <div class="projects-list__header">
+                                        <div class="list-projects__title title">
+                                            Список моих проектов
+                                        </div>
+                                        <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
+                                    </div> -->
+                                    <div class="list-projects__items">
+                                        <div class="list-projects__item project-item">
+                                            <div class="project-item__img">
+                                                <img src="img/projects-list/1.webp" alt="">
+                                                <div class="project-item__status active">
+                                                    Активно
+                                                </div>
+                                                <div class="project-item__country">
+                                                    Россия
+                                                </div>
+                                            </div>
+                                            <div class="project-item__content">
+                                                <div class="project-item__title">
+                                                    1120 ₽
+                                                </div>
+                                                <a class="project-item__participants" title="Гель для душа парфюмированный, 1000 мл.">
+                                                    Dk-studio / Гель для душа парфюмированный, 1000 мл.
+                                                </a>
+                                                <div class="project-item__format-tags card__row card__tags">
+                                                    <div class="card__tags-item">
+                                                        <span>Рекламный пост</span>
+                                                    </div>
+                                                    <div class="card__tags-item">
+                                                        <span>Обзор на канале</span>
+                                                    </div>
+                                                    <div class="card__tags-item">
+                                                        <span>Другое</span>
+                                                    </div>
+                                                </div>
+                                                <div class="project-item__btns">
+                                                    <a href="#" class="btn btn-primary">Подробности</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="list-projects__item project-item">
+                                            <div class="project-item__img">
+                                                <img src="img/projects-list/1.webp" alt="">
+                                                <div class="project-item__status active">
+                                                    Активно
+                                                </div>
+                                                <div class="project-item__country">
+                                                    Россия
+                                                </div>
+                                            </div>
+                                            <div class="project-item__content">
+                                                <div class="project-item__title">
+                                                    1120 ₽
+                                                </div>
+                                                <a class="project-item__participants" title="Гель для душа парфюмированный, 1000 мл.">
+                                                    Dk-studio / Гель для душа парфюмированный, 1000 мл.
+                                                </a>
+                                                <div class="project-item__format-tags card__row card__tags">
+                                                    <div class="card__tags-item">
+                                                        <span>Рекламный пост</span>
+                                                    </div>
+                                                    <div class="card__tags-item">
+                                                        <span>Обзор на канале</span>
+                                                    </div>
+                                                    <div class="card__tags-item">
+                                                        <span>Другое</span>
+                                                    </div>
+                                                </div>
+                                                <div class="project-item__btns">
+                                                    <a href="#" class="btn btn-primary">Подробности</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="list-projects__item project-item">
+                                            <div class="project-item__img">
+                                                <img src="img/projects-list/1.webp" alt="">
+                                                <div class="project-item__status active">
+                                                    Активно
+                                                </div>
+                                                <div class="project-item__country">
+                                                    Россия
+                                                </div>
+                                            </div>
+                                            <div class="project-item__content">
+                                                <div class="project-item__title">
+                                                    1120 ₽
+                                                </div>
+                                                <a class="project-item__participants" title="Гель для душа парфюмированный, 1000 мл.">
+                                                    Dk-studio / Гель для душа парфюмированный, 1000 мл.
+                                                </a>
+                                                <div class="project-item__format-tags card__row card__tags">
+                                                    <div class="card__tags-item">
+                                                        <span>Рекламный пост</span>
+                                                    </div>
+                                                    <div class="card__tags-item">
+                                                        <span>Обзор на канале</span>
+                                                    </div>
+                                                    <div class="card__tags-item">
+                                                        <span>Другое</span>
+                                                    </div>
+                                                </div>
+                                                <div class="project-item__btns">
+                                                    <a href="#" class="btn btn-primary">Подробности</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="list-projects__item project-item">
+                                            <div class="project-item__img">
+                                                <img src="img/projects-list/1.webp" alt="">
+                                                <div class="project-item__status active">
+                                                    Активно
+                                                </div>
+                                                <div class="project-item__country">
+                                                    Россия
+                                                </div>
+                                            </div>
+                                            <div class="project-item__content">
+                                                <div class="project-item__title">
+                                                    1120 ₽
+                                                </div>
+                                                <a class="project-item__participants" title="Гель для душа парфюмированный, 1000 мл.">
+                                                    Dk-studio / Гель для душа парфюмированный, 1000 мл.
+                                                </a>
+                                                <div class="project-item__format-tags card__row card__tags">
+                                                    <div class="card__tags-item">
+                                                        <span>Рекламный пост</span>
+                                                    </div>
+                                                    <div class="card__tags-item">
+                                                        <span>Обзор на канале</span>
+                                                    </div>
+                                                    <div class="card__tags-item">
+                                                        <span>Другое</span>
+                                                    </div>
+                                                </div>
+                                                <div class="project-item__btns">
+                                                    <a href="#" class="btn btn-primary">Подробности</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profile-tabs__content-item tab-content" id="info">
                                 <div class="tab-content__profile-img">
                                     <img src="img/profile-icon.svg" alt="">
                                     <div class="tab-content__profile-img-text">
@@ -140,10 +356,10 @@
                                             $(function(){
                                                 $("#phone").mask("8(999) 999-9999");
                                             });
-                                        </script>  
+                                        </script> 
                                         <div class="form-group">
-                                            <label for="">Ник в telegram-е</label>
-                                            <input type="text" class="input" id = "nick">
+                                            <label for="">Ссылка на маркетплейс</label>
+                                            <input type="text" class="input" id = "marketplace">
                                         </div>
                                         <button class="btn btn-primary desktop">Сохранить</button>
                                     </div>
@@ -155,7 +371,7 @@
                                         </div>
                                         <div class="input-checkbox-w">
                                             <input type="checkbox" class="checkbox whois" id = "advertiser">
-                                            <label for="">Я рекламодатель</label>
+                                            <label for="">Я селлер</label>
                                         </div>
                                         <div class="form-group" style="margin-top: 20px;">
                                             <label for="">Тип организации</label>
@@ -172,43 +388,26 @@
                             <div class="profile-tabs__content-item tab-content" id="notif">
                                 <div class="tab-content__notifs">
                                     <div class="tab-content__notifs-item item-notifs">
-                                        <div class="item-notifs__title">
-                                            Блогер подтвердил заявку
+                                        <div class="item-notifs__row">
+                                            <div class="item-notifs__img">
+                                                <img src="img/profile-icon.svg" alt="">
+                                            </div>
+                                            <div class="item-notifs__col">
+                                                <div class="item-notifs__title">
+                                                    Блогер подтвердил заявку
+                                                </div>
+                                                <div class="item-notifs__date">
+                                                    20.12.23
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div class="item-notifs__text">
-                                            Канал “Just Do It” подтвердил заявку на рекламу товара “Чехол для IPhone XR черный”
+                                        <div class="item-notifs__row">
+                                            <div class="item-notifs__text">
+                                                Повседневная практика показывает, что граница обучения кадров не оставляет шанса для анализа существующих паттернов поведения.
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="tab-content__notifs-item item-notifs">
-                                        <div class="item-notifs__title">
-                                            Блогер подтвердил заявку
-                                        </div>
-                                        <div class="item-notifs__text">
-                                            Канал “Just Do It” подтвердил заявку на рекламу товара “Чехол для IPhone XR черный”
-                                        </div>
-                                    </div>
-                                    <div class="tab-content__notifs-item item-notifs">
-                                        <div class="item-notifs__title">
-                                            Блогер подтвердил заявку
-                                        </div>
-                                        <div class="item-notifs__text">
-                                            Канал “Just Do It” подтвердил заявку на рекламу товара “Чехол для IPhone XR черный”
-                                        </div>
-                                    </div>
-                                    <div class="tab-content__notifs-item item-notifs">
-                                        <div class="item-notifs__title">
-                                            Блогер подтвердил заявку
-                                        </div>
-                                        <div class="item-notifs__text">
-                                            Канал “Just Do It” подтвердил заявку на рекламу товара “Чехол для IPhone XR черный”
-                                        </div>
-                                    </div>
-                                    <div class="tab-content__notifs-item item-notifs">
-                                        <div class="item-notifs__title">
-                                            Блогер подтвердил заявку
-                                        </div>
-                                        <div class="item-notifs__text">
-                                            Канал “Just Do It” подтвердил заявку на рекламу товара “Чехол для IPhone XR черный”
+                                        <div class="item-notifs__row item-notifs__btns">
+                                            <a href="" class="btn btn-primary">Подробнее</a>
                                         </div>
                                     </div>
                                 </div>
@@ -394,10 +593,13 @@
                                                 </div>
                                             </div>
                                             <div class="chat__messages messages-create">
-                                                <textarea name="" id="" placeholder="Введите текст" class = "messages-create__textarea">
+                                                <textarea name="" id="" placeholder="Введите текст" class = "messages-create__textarea textarea">
 
                                                 </textarea>
-                                                <button class="btn btn-primary">Отправить</button>
+                                                <div class="chat__btns" style="display: flex; flex-wrap: wrap; gap:8px;">
+                                                    <button class="btn btn-primary">Отправить</button>
+                                                    <a href="" class="btn btn-secondary">Подтвердить выполнение проекта</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -406,9 +608,9 @@
                             <div class="profile-tabs__content-item tab-content" id="plans">
                                 <div class="tab-content__plans plans">
                                     <div class="plans__body">
-                                        <div class="plans__title title">
+                                        <!-- <div class="plans__title title">
                                             Тарифы
-                                        </div>
+                                        </div> -->
                                         <div class="plans__current">
                                             <div class="plans__current-item">
                                                 <p class="plans__current-title">

@@ -94,7 +94,74 @@
                                 </div>
                             </div>
                             <div class="admin-blogers__blogers">
-                                <div class="admin-blogers__blogers-item admin-bloger">
+                                <div class="blogers-list__list list-blogers">
+                                    <div class="list-blogers__item seller-item card" data-id="1">
+                                        <div class="card__row card__content">
+                                            <div class="card__col">
+                                                <div class="card__row card__header">
+                                                    <div class="card__img">
+                                                        <img src="img/profile-icon.svg" alt="">
+                                                    </div>
+                                                    <div class="card__name">
+                                                        <p class = "card__name-name">
+                                                            Название канала
+                                                        </p>
+                                                        <p class="card__name-tag">
+                                                            20.12.24
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card__col card__stats">
+                                                <div class="card__col card__stats-stats">
+                                                    <div class="card__row card__stats-row">
+                                                    
+                                                        <div class="card__col card__stats-item">
+                                                            <div class="card__stats-title">
+                                                                <span>Телефон</span>
+                                                            </div>
+                                                            <div class="card__stats-val">
+                                                                <span>+7(900) 900-90-90</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card__col card__stats-item">
+                                                            <div class="card__stats-title">
+                                                                <span>Почта</span>
+                                                            </div>
+                                                            <div class="card__stats-val">
+                                                                <span>example@mail.ru</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- <div class="card__row card__stats-row">
+            
+                                                        <div class="card__col card__stats-item">
+                                                            <div class="card__stats-title">
+                                                                <span>Почта</span>
+                                                            </div>
+                                                            <div class="card__stats-val">
+                                                                <span>example@mail.ru</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card__col card__stats-item">
+                                                            <div class="card__stats-title">
+                                                                <span>ИНН</span>
+                                                            </div>
+                                                            <div class="card__stats-val">
+                                                                <span>7707083893</span>
+                                                            </div>
+                                                        </div>
+                                                    </div> -->
+                                                </div>
+                                                <div class="admin-bloger__btns">
+                                                    <a href="#" class="btn btn-primary btn-accept">Принять</a>
+                                                    <a href="#" class="btn btn-secondary">Отклонить</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="admin-blogers__blogers-item admin-bloger">
                                     <div class="admin-bloger__row">
                                         <div class="admin-bloger__col">
                                             <div class="admin-bloger__img">
@@ -122,7 +189,7 @@
                                         <a href="#" class="btn btn-primary btn-accept">Принять</a>
                                         <a href="#" class="btn btn-secondary">Отклонить</a>
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>
@@ -151,9 +218,6 @@
                                                 <div class="card__name">
                                                     <p class = "card__name-name">
                                                         Чертовски мило
-                                                    </p>
-                                                    <p class = "card__name-tag">
-                                                        @chertovski_milo
                                                     </p>
                                                 </div>
                                                 <div class="card__platform">
@@ -200,10 +264,10 @@
                                                     </div>
                                                 </div>
                                                 <div class="card__row card__stats-row">
-        
+    
                                                     <div class="card__col card__stats-item">
                                                         <div class="card__stats-title">
-                                                            <span>Индекс кач-ва</span>
+                                                            <span>ER</span>
                                                         </div>
                                                         <div class="card__stats-val">
                                                             <span>51%</span>
@@ -211,10 +275,10 @@
                                                     </div>
                                                     <div class="card__col card__stats-item">
                                                         <div class="card__stats-title">
-                                                            <span>CPV</span>
+                                                            <span>CPM</span>
                                                         </div>
                                                         <div class="card__stats-val">
-                                                            <span>~0.38 ₽</span>
+                                                            <span>263₽</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -229,10 +293,97 @@
                                                     <div class="card__diagram-icon" ><img src="img/blogers-list/female-icon.svg" alt="" ></div>
                                                 </div>
                                             </div>
-                                            <div class="card__row card__row">
-                                                <button class = "btn btn-primary btn-add-to-project" data-project-id="">
+                                            <div class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                                <button class = "btn btn-primary">
                                                     Заблокировать
                                                 </button>
+                                                <!-- <button class = "btn btn-secondary btn-achivments-form" data-project-id="">
+                                                    Достижения
+                                                </button> -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="admin-view__blogers blogers-list tab-content" id = "sellers-list">
+                        <div class="admin-blogers__body">
+                            <div class="admin-blogers__header">
+                                <div class="admin-blogers__title title">
+                                    Список селлеров
+                                </div>
+                                <div class="admin-blogers__search form-group">
+                                    <input type="name" id = "blogers-search" class="input" placeholder="Введите название">
+                                    <button class = "btn btn-primary">Найти</button>
+                                </div>
+                            </div>
+                            <div class="blogers-list__list list-blogers">
+                                <div class="list-blogers__item seller-item card" data-id="1">
+                                    <div class="card__row card__content">
+                                        <div class="card__col">
+                                            <div class="card__row card__header">
+                                                <div class="card__img">
+                                                    <img src="img/profile-icon.svg" alt="">
+                                                </div>
+                                                <div class="card__name">
+                                                    <p class = "card__name-name">
+                                                        Петров Андрей Владимирович
+                                                    </p>
+                                                    <p class="card__name-tag">
+                                                        Посредник
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card__col card__stats">
+                                            <div class="card__col card__stats-stats">
+                                                <div class="card__row card__stats-row">
+                                                
+                                                    <div class="card__col card__stats-item">
+                                                        <div class="card__stats-title">
+                                                            <span>Телефон</span>
+                                                        </div>
+                                                        <div class="card__stats-val">
+                                                            <span>+7(900) 900-90-90</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card__col card__stats-item">
+                                                        <div class="card__stats-title">
+                                                            <span>Тип организации</span>
+                                                        </div>
+                                                        <div class="card__stats-val">
+                                                            <span>Какой то тип</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card__row card__stats-row">
+        
+                                                    <div class="card__col card__stats-item">
+                                                        <div class="card__stats-title">
+                                                            <span>Почта</span>
+                                                        </div>
+                                                        <div class="card__stats-val">
+                                                            <span>example@mail.ru</span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card__col card__stats-item">
+                                                        <div class="card__stats-title">
+                                                            <span>ИНН</span>
+                                                        </div>
+                                                        <div class="card__stats-val">
+                                                            <span>7707083893</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                                                <button class = "btn btn-primary">
+                                                    Заблокировать
+                                                </button>
+                                                <!-- <button class = "btn btn-secondary btn-achivments-form" data-project-id="">
+                                                    Достижения
+                                                </button> -->
                                             </div>
                                         </div>
                                     </div>
@@ -270,11 +421,11 @@
                         <input id = "views" name = "views" type="text" class="input">
                     </div>
                     <div class="form-group">
-                        <label for="quality">Индекс качества</label>
+                        <label for="quality">Engagement rate</label>
                         <input id = "quality" name = "quality" type="text" class="input">
                     </div>
                     <div class="form-group">
-                        <label for="cpv">CPV</label>
+                        <label for="cpv">CPM</label>
                         <input id = "cpv" name = "cpv" type="text" class="input">
                     </div>
                     <div class="form-row" style="display: flex; gap:10px;">
@@ -290,6 +441,27 @@
                     <button class = "btn btn-primary send-data">
                         Отправить
                     </button>
+                </div>
+                <div class="close-popup">
+                    <img src="img/close-icon.svg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup" id = "achivments-form">
+        <div class="popup__container _container">
+            <div class="popup__body">
+                <div class="popup__title title">
+                    Выберите достижения
+                </div>
+                <div class="popup__form">
+                    <div class="achivments-form">
+                        <div class="achivments-form__items achivments-form__row">
+                            <div class="achivments-form__item">
+                                Проверенный блогер
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="close-popup">
                     <img src="img/close-icon.svg" alt="">

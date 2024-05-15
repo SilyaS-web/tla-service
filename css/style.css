@@ -166,7 +166,8 @@ a.btn:hover{
 .input-file::before{
     content:"";
     display: block;
-    width: 18px;
+    width: 100%;
+    max-width: 18px;
     height: 18px;
     background-image: url("../img/download-icon.svg");
     background-position: center;
@@ -251,7 +252,7 @@ a.btn:hover{
 .nav__link {
 }
 .burger-menu__profile {
-    margin-bottom: 30px;
+    margin-bottom: 8px;
 }
 .header__profile-w {
 }
@@ -295,12 +296,47 @@ a.btn:hover{
     text-decoration: none;
     color:var(--primary);
 }
+.header__row{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+.header__col{
+    display: flex;
+    flex-direction: column;
+}
+.header__profile-items--mobile{
+    display: none;
+    margin-bottom: 30px;
+}
+.header__profile-items>.header__col{
+    width:45px; height:45px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    background-color: var(--pale);
+    position: relative;
+}
+.header__col .header__profile-notif{
+    position: absolute;
+    right:3px;top:3px;
+    font-size: 10px;
+    border-radius: 50%;
+    background-color: var(--primary);
+    width: 12px; height: 12px;
+    color:#fff;
+    text-align: center;
+}
+.header__profile-items>.header__col img{
+    max-width: 17px;
+}
 .header__profile-w {
     background-color: var(--pale);
     border-radius: 10px;
     display: flex;
     align-items: center;
     padding: 10px;
+    max-width: unset;
 }
 .header__profile-w:hover{
     text-decoration: none;
@@ -315,12 +351,23 @@ a.btn:hover{
     font-size: 12px;
     color: rgba(0,0,0, .4);
 }
+.header__profile-items>.header__chat img{
+    max-width:25px;
+}
+
 
 .input--name {
 }
 .input--password {
 }
-
+.auth__container{
+    margin: 0 auto;
+    padding:50px 0;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .auth__title {
     text-align: center;
 }
@@ -332,6 +379,13 @@ a.btn:hover{
     flex-wrap: wrap;
     gap: 15px;
     margin-bottom: 18px;
+}
+.auth__header{
+    text-align: center;
+    margin-bottom: 25px;
+}
+.auth__header .title{
+    margin-bottom: 12px;
 }
 
 
@@ -360,10 +414,11 @@ a.btn:hover{
 }
 .quest__steps {
 }
-.quest__step {
+
+.step {
     display: none;
 }
-.quest__step.current{
+.step.current{
     display: block;
 }
 .quest__step-title {
@@ -385,7 +440,15 @@ a.btn:hover{
     background-position: center;
     margin-left: 12px;
     cursor: pointer;
-}   
+} 
+.quest__step-row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}  
+.quest__step-row>*{
+    flex:1 1 auto;
+}
 .current-step {
 }
 .form-group {
@@ -571,7 +634,7 @@ a.btn:hover{
     border-radius: 15px;
     width: calc(100% / 3 - 5px);
     max-width: 510px;
-    min-width: 420px;
+    min-width: 400px;
 }
 .card__content {
     gap: 12px;
@@ -612,8 +675,9 @@ a.btn:hover{
     padding:12px 0;
 }
 .card__name-name {
-    font-size: 20px;
-    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .card__name-tag {
     font-size: 15px;
@@ -622,7 +686,7 @@ a.btn:hover{
 .card__platform {
     padding-top: 12px;
     width: 24px; height:24px;
-    margin-left: 5vw;
+    margin-left: auto;
 }
 .card__tags {
     display: flex;
@@ -660,11 +724,10 @@ a.btn:hover{
     
 }
 .card__stats-item {
-    width:120px; height:60px;
-    gap: 24px;
+    width:calc(50% - 20px); height:60px;
+    gap: 12px;
 }
 .card__stats-item:not(:last-child){
-    margin-right: 5vw;
 }
 .card__stats-title {
 }
@@ -720,6 +783,7 @@ a.btn:hover{
 .projects-list__list {
     padding-top:25px;
     flex: 1 1 auto;
+    max-width:1550px;
 }
 .projects-list__header{
     margin-bottom: 25px;
@@ -744,14 +808,14 @@ a.btn:hover{
 .list-projects__item {
 }
 .project-item {
-    width:calc(100% / 3 - 10px);
+    width:calc(100% / 4 - 10px);
     background-color: #fff;
     border-radius: 10px;
     padding:15px;
-    min-width: 295px;
+    min-width: 250px;
     display: flex;
     flex-direction: column;
-    max-width: 380px;
+    max-width: 320px;
     transition: box-shadow .2s linear;
 }
 .project-item:hover{
@@ -992,8 +1056,63 @@ a.btn:hover{
 ._container {
 }
 .profile__body {
+
 }
 .profile__title {
+}
+.profile__info {
+    margin-bottom: 32px;
+}
+.info-profile {
+
+}
+.info-profile__body {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+.info-profile__row {
+    display: flex;
+    gap: 8px;
+}
+.info-profile__col {
+}
+.info-profile__img{
+    max-width:100px;
+    width:100%;
+    border-radius: 10px;
+    overflow: hidden;
+}
+.info-profile__name {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    padding-top: 8px;
+}
+.info-profile__id {
+    font-size: 16px;
+    color:rgba(0, 0, 0, .4)
+}
+.info-profile__tags {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.info-profile__tags-items{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.info-profile__tags-item {
+    background-color: #fff;
+    padding: 8px;
+    border-radius: 5px;
+    color: rgba(0, 0, 0, .4);
+    font-size: 14px;
+}
+.info-profile__desc{
+    max-width: 480px;
+
 }
 .title {
 }
@@ -1013,6 +1132,7 @@ a.btn:hover{
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 .profile-tabs__tabs-item:hover{
     color:rgba(0, 0, 0, .4)
@@ -1107,19 +1227,41 @@ a.btn:hover{
     flex-wrap: wrap;
 }
 .tab-content__notifs-item {
-    width:calc(100% / 4 - 20px);
+    width:calc(100% / 3 - 20px);
     max-width:450px;
-    min-width:250px;
+    min-width:300px;
     padding:20px;
 }
 .item-notifs {
     border-radius: 10px;
     background-color: var(--pale);
 }
+.item-notifs>*:not(:last-child){
+    margin-bottom: 16px;
+}
+.item-notifs__row{
+    display: flex;
+    gap: 8px;
+}
+.item-notifs__col{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.item-notifs__img{
+    width: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    max-width: 70px;
+}
 .item-notifs__title {
-    margin-bottom: 8px;
     font-size: 18px;
     font-weight: 500;
+    padding-top: 8px;
+}
+.item-notifs__date{
+    font-size: 12px;
+    color: rgba(0, 0, 0, .4);
 }
 .item-notifs__text {
     font-size: 14px;
@@ -1175,7 +1317,7 @@ a.btn:hover{
     max-width: 100px;
 }
 .item-chat__img img {
-    border-radius: 5px;
+    border-radius: 10px;
 }
 .item-chat__text {
 }
@@ -1205,6 +1347,17 @@ a.btn:hover{
     gap: 20px;
     height:345px;
     overflow: scroll;
+    position: relative;
+}
+.messages-chat__confirmation{
+    position: absolute;
+    left:10px;bottom:5px;
+    background-color: var(--pale);
+    border-radius: 5px;
+    padding:5px;
+}
+.messages-chat__confirmation:hover{
+    text-decoration: none;
 }
 .messages-chat::-webkit-scrollbar {
     width: 12px;               /* ширина scrollbar */
@@ -1247,13 +1400,17 @@ a.btn:hover{
 .messages-create {
     border-radius: 0 0 10px 10px;
 }
-.messages-create__textarea {
+.textarea{
     background-color:var(--pale);
     width:100%;
     height:160px;
-    margin-bottom: 20px;
-    padding:10px;
     resize:none;
+    padding:10px;
+    border: 1px solid rgba(0, 0, 0, .05);
+    border-radius: 10px;
+}
+.messages-create__textarea {
+    margin-bottom: 20px;
     border-radius: 0 0 10px 10px;
 }
 .messages-create__textarea:focus{
@@ -1678,6 +1835,40 @@ a.btn:hover{
 .footer__copyright {
 }
 
+.current-tariff{
+    position: fixed;
+    right:5vw; top:115px;
+    background-color: #fff;
+    padding:15px;
+    border-radius: 10px;
+    width:100%;
+    max-width:345px;
+    box-shadow: 0px 0px 10px 6px rgba(254,94,0,.03);
+}
+.current-tariff__header{
+    margin-bottom: 12px;
+}
+.current-tariff__body{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.current-tariff__item{
+    color:rgba(0, 0, 0, .4);
+    font-weight: 500;
+    font-size: 14px;
+    padding:5px;
+    border-radius: 5px;
+    background-color: var(--pale);
+}
+.current-tariff__item span{
+    font-weight: 600;    
+}
+.btn-tariffs{
+    display: none;
+}
+
+
 @media(max-width:1350px){
     .projects-list__filter{
         max-width: 320px;
@@ -1697,6 +1888,10 @@ a.btn:hover{
     }
     .projects-list__filter-btn{
         visibility: visible;
+    }
+    .current-tariff{
+        right: 180px;
+        top: 100px;
     }
     .projects-list__body{
         padding:0 15px;
@@ -1740,6 +1935,11 @@ a.btn:hover{
         max-height: unset;
     }
 }
+@media(max-width:1150px){
+    .header__logo-w{
+        margin-right: auto;
+    }
+}
 @media(max-width:1045px){
     .project-item{
         width: calc(100% / 2 - 10px);
@@ -1752,9 +1952,6 @@ a.btn:hover{
     }
 }
 @media(max-width:960px){
-    
-    
-
     .profile-tabs__content{
         padding:20px;
     }
@@ -1780,8 +1977,18 @@ a.btn:hover{
         padding:10px;
         max-width: 100%;
     }
+
+    .btn-tariffs{
+        display: block;
+    }
+    .current-tariff{
+        display: none;
+    }
 }
 @media(max-width:945px){
+    .nav__link:not(:last-child){
+        margin-right: 15px;
+    }
     .footer__logo-w{
         margin-right: 4vw;
     }
@@ -1792,9 +1999,23 @@ a.btn:hover{
 @media(max-width:911px){
     
     .header__logo-w{
-        margin-right: 8vw;
+        margin-right: auto;
     }
-
+    .header__nav{
+        display: none;
+    }
+    .header__profile-items--desktop{
+        display: none;
+    }
+    .header__profile-items--mobile{
+        display: flex;
+    }
+    .burger{
+        display: block;
+    }
+    .header__logo-w{
+        margin-right: auto;
+    }
     .view-project__props--desktop{
         display: none;
     }
@@ -1804,18 +2025,6 @@ a.btn:hover{
 
 }
 @media(max-width:835px){
-    .header__nav{
-        display: none;
-    }
-    .header__profile-header{
-        display: none;
-    }
-    .burger{
-        display: block;
-    }
-    .header__logo-w{
-        margin-right: auto;
-    }
     .view-project__img{
         height:420px;
     }
@@ -1946,6 +2155,12 @@ a.btn:hover{
     .project-item{
         width: 100%;
     }
+    .projects-list__container{
+        padding-left: 15px;
+    }
+    .projects-list__body{
+        padding:0;
+    }
     .tab-content__notifs-item{
         width: 100%;
         max-width: unset;
@@ -1965,9 +2180,6 @@ a.btn:hover{
     }
     .card__stats-stats{
         gap:0;
-    }
-    .card__stats-stats>*:not(:last-child){
-        margin-right: 3%;
     }
     .card__btns--mobile{
         margin-top: 0;
@@ -2023,6 +2235,17 @@ a.btn:hover{
     }
     .card__desc{
         font-size: 16px;
+    }
+    .card__stats-stats{
+        gap: 10px;
+    }
+    .card__stats-row{
+        gap: 10px;
+        width: 50%;
+        flex-direction: column;
+    }
+    .card{
+        min-width: unset;
     }
 }
 @media(max-width:447px){

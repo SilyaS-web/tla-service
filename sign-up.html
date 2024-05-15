@@ -26,77 +26,90 @@
     <div class="wrapper">
         <section class="auth">
             <div class="auth__container _container">
-                <div class="auth__body">
-                    <div class="auth__title title">
-                        Зарегистрируйтесь
+                <div class="auth__body auth__steps">
+                    <div id="step_1" class="auth__step step current">
+                        <div class="auth__title title">
+                            Зарегистрируйтесь
+                        </div>
+                        <div class="form auth__form">
+                            <div class="form-group">
+                                <label for="name">Ваше имя</label>
+                                <input type="text" id = "name" placeholder="Введите ваше имя" class = "input input--name">
+                                <span class="error error-name">
+                                    
+                                </span>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Ваш E-mail</label>
+                                <input type="email" id = "email" placeholder="Введите почту" class = "input input--email">
+                                <span class="error error-email">
+                                    
+                                </span>
+                            </div>    
+                            <div class="form-group">
+                                <label for="phone">Номер телефона</label>
+                                <input type="phone" id = "phone" placeholder="Введите ваш номер" class = "input input--phone">
+                                <span class="error error-phone">
+                                    
+                                </span>
+                            </div>    
+                            <script>
+                                $(function(){
+                                    $("#phone").mask("8(999) 999-9999");
+                                });
+                            </script>      
+                            <div class="form-group">
+                                <label for="pass">Пароль</label>
+                                <input type="password" id = "pass" placeholder="Введите ваш пароль" class = "input input--password">
+                                <span class="error error-pass">
+                                </span>
+                            </div> 
+                            <div class="form-group">
+                                <label for="repeat-pass">Повторите пароль</label>
+                                <input type="password" id = "repeat-pass" placeholder="Повторите пароль" class = "input input--password">
+                                <span class="error error-repeat-pass">
+                                </span>
+                            </div> 
+                            <div class="form-group">
+                                <label for="role">Выберите роль</label>
+                                <select name="role" id="role" class = "input input--role select">
+                                    <option value = "1">Селлер</option>
+                                    <option value = "2">Блогер</option>
+                                </select>
+                                <span class="error error-role">
+                                </span>
+                            </div> 
+                            <div class="form-btns auth__form-btns">
+                                <button class="btn btn-primary next">
+                                    Зарегистрироваться
+                                </button>                      
+                            </div>
+                            <p class="form-addit">
+                                Уже есть аккаунт? Тогда вы можете <a href = "auth.html">войти.</a> Регистрируясь, вы даёте на это согласие и принимаете условия <a href = "policy">Политики конфиденциальности.</a>
+                            </p>
+                        </div>
                     </div>
-                    <form class="form auth__form">
-                        <div class="form-group">
-                            <label for="name">Ваше имя</label>
-                            <input type="text" id = "name" placeholder="Введите ваше имя" class = "input input--name">
-                            <span class="error error-name">
-                                
-                            </span>
+                    <div id ="step_2" class="auth__step step">
+                        <div class="form auth__form">
+                            <div class="auth__header">
+                                <div class="auth__title title">
+                                    Подтвердите личность
+                                </div>
+                                <p class = "auth__subtitle">
+                                    Для того чтобы подтвердить личность нужно перейти по ссылке ниже и ответить боту в телеграме
+                                </p>
+                            </div>
+                            <div class="auth__form-btns" style="justify-content: center;">
+                                <a href="#" class="btn btn-primary telegram-link">
+                                    Перейти в телеграмм
+                                </a>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="email">Ваш E-mail</label>
-                            <input type="email" id = "email" placeholder="Введите почту" class = "input input--email">
-                            <span class="error error-email">
-                                
-                            </span>
-                        </div>    
-                        <div class="form-group">
-                            <label for="phone">Номер телефона</label>
-                            <input type="phone" id = "phone" placeholder="Введите ваш номер" class = "input input--phone">
-                            <span class="error error-phone">
-                                
-                            </span>
-                        </div>    
-                        <script>
-                            $(function(){
-                                $("#phone").mask("8(999) 999-9999");
-                            });
-                        </script>                    
-                        <div class="form-group">
-                            <label for="nickname">Ваш ник в telegram-е</label>
-                            <input type="text" id = "nickname" placeholder="Введите ваш никнэйм в телеграме" class = "input input--nick">
-                            <span class="error error-nickname">
-                                
-                            </span>
-                        </div>     
-                        <div class="form-group">
-                            <label for="pass">Пароль</label>
-                            <input type="password" id = "pass" placeholder="Введите ваш пароль" class = "input input--password">
-                            <span class="error error-pass">
-                            </span>
-                        </div> 
-                        <div class="form-group">
-                            <label for="repeat-pass">Повторите пароль</label>
-                            <input type="password" id = "repeat-pass" placeholder="Повторите пароль" class = "input input--password">
-                            <span class="error error-repeat-pass">
-                            </span>
-                        </div> 
-                        <div class="form-group">
-                            <label for="role">Выберите роль</label>
-                            <select name="role" id="role" class = "input input--role select">
-                                <option value = "1">Рекламодатель</option>
-                                <option value = "2">Блогер</option>
-                            </select>
-                            <span class="error error-role">
-                            </span>
-                        </div> 
-                        <div class="form-btns auth__form-btns">
-                            <button class="btn btn-primary">
-                                Зарегистрироваться
-                            </button>                      
-                        </div>
-                        <p class="form-addit">
-                            Уже есть аккаунт? Тогда вы можете <a href = "auth.html">войти.</a> Регистрируясь, вы даёте на это согласие и принимаете условия <a href = "policy">Политики конфиденциальности.</
-                        </p>
-                    </form>
+                    </div>
                 </div>
             </div>
         </section>
     </div>
 </body>
+<script src="js/script.js"></script>
 </html>

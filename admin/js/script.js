@@ -77,6 +77,42 @@ class PopupAcceptBloger extends Popup{
     }
 }
 
+class PopupAchivmentsManagement extends Popup{
+    constructor(node){
+        super(node);
+
+        return this;
+    }
+
+    sendUri = '#';
+    blogerId = '';
+    dataProps = {
+        name: {
+            set: (value)=>{
+                console.log(value)
+            },
+            get: ()=>{
+                return $(this.node).find('#name').val();
+            }
+        },
+        phone: {
+            set: (value)=>{
+                console.log(value)
+            },
+            get: ()=>{
+                return $(this.node).find('#phone').val();
+            }
+        }
+    }
+    blogerAchivments = {}
+    getAchivments = ()=>{
+        console.log(this.blogerId)
+    }
+    saveData = ()=>{
+
+    }
+}
+
 function notify(type, content){
     $('.notification').show()
     $('.notification').addClass(type)
@@ -99,6 +135,14 @@ $(window).on('load', function(){
     })
 
     var adminTabs = new Tabs('.admin-view');
+
+    $(document).on('click', '.btn-achivments-form', function(e){
+        var achivmentsForm = new PopupAchivmentsManagement('#achivments-form');
+        achivmentsForm.blogerId = $(e.target).closest('.bloger-item').data('id');
+        achivmentsForm.getAchivments();
+        achivmentsForm.openPopup();
+    })
+    
 })
 
 function ibg(){ 

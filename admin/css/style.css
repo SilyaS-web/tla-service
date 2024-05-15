@@ -416,7 +416,7 @@ a.btn:hover{
     width:100%;
     padding:10px;
     position: absolute;
-    height:100%;
+    height:100vh;
     max-width:45px;
     background-color: #fff;
 }
@@ -548,6 +548,7 @@ a.btn:hover{
     background-color: #fff;
     border-radius: 15px;
     width: calc(100% / 3 - 5px);
+    min-width: 400px;
 }
 .card__col {
     display: flex;
@@ -555,7 +556,7 @@ a.btn:hover{
     gap: 6px;
 }
 .card__content {
-    gap: 12px;
+    gap: 16px;
     flex-direction: column;
 }
 .card__row {
@@ -584,12 +585,12 @@ a.btn:hover{
 .card__name {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding:12px 0;
+    justify-content: center;
 }
 .card__name-name {
     font-size: 20px;
     font-weight: 500;
+    margin-bottom: 10px;
 }
 .card__name-tag {
     font-size: 15px;
@@ -598,7 +599,7 @@ a.btn:hover{
 .card__platform {
     padding-top: 12px;
     width: 24px; height:24px;
-    margin-left: 5vw;
+    margin-left: auto;
 }
 .card__tags {
     display: flex;
@@ -630,17 +631,16 @@ a.btn:hover{
     gap: 30px;
 }
 .card__stats-stats{
-    gap: 30px;
+    gap: 20px;
 }
 .card__stats-row{
-    
+    gap: 8px;
 }
 .card__stats-item {
-    width:120px; height:60px;
-    gap: 24px;
+    width:calc(50% - 20px); height:60px;
+    gap: 12px;
 }
 .card__stats-item:not(:last-child){
-    margin-right: 5vw;
 }
 .card__stats-title {
 }
@@ -723,6 +723,29 @@ a.btn:hover{
     cursor: pointer;
 
 }
+.achivments-form{
+
+}
+.achivments-form__items{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding:20px 0;
+}
+.achivments-form__item{
+    padding:10px;
+    border-radius: 5px;
+    text-align: center;
+    background-color: var(--secondary);
+    cursor:pointer
+}
+.achivments-form__item:hover{
+    background-color: var(--pale);
+}
+.achivments-form__item.active{
+    background-color: var(--primary);
+    color:#fff;
+}
 
 @media(max-width:1350px){
     
@@ -775,6 +798,9 @@ a.btn:hover{
     .card__stats-stats{
         flex-direction: row;
     }
+    .seller-item .card__stats-stats{
+        flex-direction: column;
+    }
 }
 @media(max-width:760px){
     .card__column:first-child{
@@ -814,22 +840,10 @@ a.btn:hover{
     .card{
         width: 100%;
     }
-    .card__stats-item:not(:last-child){
-        margin-right: 3%;
-    }
-    .card__stats-stats{
-        gap:0;
-    }
-    .card__stats-stats>*:not(:last-child){
-        margin-right: 3%;
-    }
     .card__stats-item{
         width:50%;   
         height:unset;
         justify-content: space-between;
-    }
-    .card__stats-row{
-        width: calc(97% / 2);
     }
 }
 @media(max-width:545px){
@@ -843,12 +857,6 @@ a.btn:hover{
     .title{
         font-size: 24px;
     }
-    .card__stats-item:not(:last-child){
-        margin-right: 8px;
-    }
-    .card__stats-stats>*:not(:last-child){
-        margin-right: 8px;
-    }
     .card__column--gender{
         margin-bottom: 0;
     }
@@ -860,6 +868,22 @@ a.btn:hover{
     }
     .card__desc{
         font-size: 16px;
+    }
+    .card__stats-stats{
+        gap: 10px;
+    }
+    .card__stats-row{
+        gap: 10px;
+        width: 50%;
+        flex-direction: column;
+    }
+    .seller-item .card__stats-row{
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .card{
+        min-width: unset;
     }
 }
 @media(max-width:447px){

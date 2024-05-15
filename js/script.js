@@ -1,13 +1,39 @@
 class Quest {
     constructor(node) {
         this.node = node;
-        this.stepsCount = $(node).find('.quest__step').length;
+        this.stepsCount = $(node).find('.step').length;
         this.currentStep = 1;
-
+        
         $(node).find('.btn.next').on('click', this.nextStep)
-        $(node).find('.quest__step-arrow.next').on('click', this.nextStep)
         $(node).find('.btn.back').on('click', this.stepBack)
-        $(node).find('.btn.send').on('click', this.sendData)
+
+        return this;
+    }
+    currentStep = 1;
+    stepsCount = 1;
+    node = '';
+    nextStep = ()=>{
+        if(this.currentStep + 1 <= this.stepsCount){
+            this.currentStep += 1;
+        
+            $(this.node).find('.step').removeClass('current'); 
+            $(this.node).find(`#step_${this.currentStep}`).addClass('current');
+        }
+    }
+    stepBack = ()=>{
+        if(this.currentStep - 1 > 0){
+            this.currentStep -= 1;
+    
+            $(this.node).find('.step').removeClass('current'); 
+            $(this.node).find(`#step_${this.currentStep}`).addClass('current');
+        }
+    }
+}
+
+class CreateProject extends Quest {
+    constructor(node) {
+        super(node);
+
         $(node).find('.quest__step-arrow.send').on('click', this.sendData)
         $(node).find('.input-file input').on('change', function(){
             $(this).closest('.input-file').find('span').text('Изображение успешно загружено')
@@ -15,9 +41,6 @@ class Quest {
 
         return this;
     }
-    currentStep = 1;
-    stepsCount = 1;
-    node = '';
     saveUri = '#';
     emptyErrorsKeys = {
         projectName: 'Название проекта',
@@ -72,22 +95,6 @@ class Quest {
             get: ()=>{
                 return $(this.node).find('.marketing-format').find('input:checked').attr('id'); 
             }
-        }
-    }
-    nextStep = ()=>{
-        if(this.currentStep + 1 <= this.stepsCount){
-            this.currentStep += 1;
-        
-            $(this.node).find('.quest__step').removeClass('current'); 
-            $(this.node).find(`#quest_${this.currentStep}`).addClass('current');
-        }
-    }
-    stepBack = ()=>{
-        if(this.currentStep - 1 > 0){
-            this.currentStep -= 1;
-    
-            $(this.node).find('.quest__step').removeClass('current'); 
-            $(this.node).find(`#quest_${this.currentStep}`).addClass('current');
         }
     }
     sendData = ()=>{
@@ -563,7 +570,7 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
-    var quest = new Quest('.create-project__quest');
+    var quest = new CreateProject('.create-project__quest');
 
     // burger menu
     $('.burger-menu__close').on('click', function(){

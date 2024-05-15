@@ -94,10 +94,10 @@
                     </div>
                     <div class="create-project__quest quest">
                         <div class="quest__steps">
-                            <div id = "quest_1" class="quest__step current">
+                            <div id = "step_1" class="quest__step step current">
                                 <div class="quest__step-title">
                                     Шаг <span class = "current-step">1</span> 
-                                    <span class="quest__step-arrow next"></span>
+                                    <!-- <span class="quest__step-arrow next"></span> -->
                                 </div>
                                 <div class="form-group">
                                     <label for="project-name">Название проекта</label>
@@ -113,7 +113,14 @@
                                         
                                     </span>
                                 </div>
-                                <div class="quest__step-row" style="display: flex; gap:20px">
+                                <div class="quest__step-row">
+                                    <div class="form-group">
+                                        <label for="project-price">Артикул товара</label>
+                                        <input type="text" id = "product-articul" placeholder="Введите артикул" class = "input input--product_price">
+                                        <span class="error error-project-price">
+                                            
+                                        </span>
+                                    </div>
                                     <div class="form-group">
                                         <label for="project-price">Цена товара</label>
                                         <input type="number" id = "project-price" placeholder="Введите цену" class = "input input--product_price">
@@ -124,6 +131,13 @@
                                     <div class="form-group">
                                         <label for="project-link">Ссылка на товар</label>
                                         <input type="text" id = "project-link" placeholder="Ссылка" class = "input input--product_link">
+                                        <span class="error error-project-link">
+                                            
+                                        </span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="project-link">Ссылка на маркетплейс</label>
+                                        <input type="text" id = "marketplace-link" placeholder="Ссылка" class = "input input--product_link">
                                         <span class="error error-project-link">
                                             
                                         </span>
@@ -144,10 +158,10 @@
                                     </button> 
                                 </div>
                             </div>
-                            <div id = "quest_2" class="quest__step">
+                            <div id = "step_2" class="quest__step step">
                                 <div class="quest__step-title">
                                     Шаг <span class = "current-step">2</span>
-                                    <span class="quest__step-arrow send"></span>
+                                    <!-- <span class="quest__step-arrow send"></span> -->
                                 </div>
                                 <div class="form-group marketing-format">
                                     <label for="format">Выберите формат рекламы</label>

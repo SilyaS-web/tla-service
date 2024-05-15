@@ -34,6 +34,24 @@
                         </span>
                     </a>
                 </div>
+                <div class="header__profile-items--mobile header__profile-items header__row">
+                    <a href="#" class="header__col header__tariffs" title="Тарифы">
+                        
+                        <img src="img/tariff-icon.svg" alt="" class="">
+                    </a>
+                    <a href="#" class="header__col header__chat" title="Чат">
+                        <div class="header__profile-notif">
+                            1
+                        </div>
+                        <img src="img/chat-icon.svg" alt="" class="">
+                    </a>
+                    <a href="#" class="header__col header__notif" title="Уведомления">
+                        <div class="header__profile-notif">
+                            1
+                        </div>
+                        <img src="img/notif-icon.svg" alt="" class="">
+                    </a>
+                </div>
                 <div class="burger-menu__nav nav-burger">
                     <a href="#" class="nav-burger__link nav__link">Создать проект</a>
                     <a href="#" class="nav-burger__link nav__link">Список блогеров</a>
@@ -74,12 +92,30 @@
                             </a>
                         </div>
                     </nav>
-                    <a href="#" class="header__profile-w header__profile-header">
-                        <img src="img/profile-icon.svg" alt="" class="header__profile">
-                        <span class="header__profile-name">
-                            Алексей Андреев
-                        </span>
-                    </a>
+                    <div class=" header__profile-items header__profile-items--desktop header__row">
+                        <a href="#" class="header__col header__tariffs" title="Тарифы">
+                            
+                            <img src="img/tariff-icon.svg" alt="" class="">
+                        </a>
+                        <a href="#" class="header__col header__chat" title="Чат">
+                            <div class="header__profile-notif">
+                                1
+                            </div>
+                            <img src="img/chat-icon.svg" alt="" class="">
+                        </a>
+                        <a href="#" class="header__col header__notif" title="Уведомления">
+                            <div class="header__profile-notif">
+                                1
+                            </div>
+                            <img src="img/notif-icon.svg" alt="" class="">
+                        </a>
+                        <a href="#" class="header__profile-w header__profile-header">
+                            <img src="img/profile-icon.svg" alt="" class="header__profile">
+                            <span class="header__profile-name">
+                                Алексей Андреев
+                            </span>
+                        </a>
+                    </div>
                     <a href="#" class="header__menu burger">
                         <img src="img/menu-icon.svg" alt="">
                     </a>
@@ -142,7 +178,12 @@
                             <div class="list-projects__title title">
                                 Список моих проектов
                             </div>
-                            <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
+                            <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
+                                <a href="#" class="btn btn-secondary btn-tariffs">
+                                    Ваши тарифы
+                                </a>
+                            </div>
                         </div>
                         <div class="list-projects__items">
                             <div class="list-projects__item project-item">
@@ -174,7 +215,7 @@
                                         </div>
                                     </div>
                                     <div class="project-item__btns">
-                                        <a href="#" class="btn btn-primary">Посмотреть подробности</a>
+                                        <a href="#" class="btn btn-primary">Подробности</a>
                                     </div>
                                 </div>
                             </div>
@@ -231,6 +272,19 @@
                 </div>
             </div>
         </footer>
+
+        <div class="current-tariff">
+            <div class="current-tariff__header">
+                <div class="current-tariff__title">
+                    Ваши тарифы
+                </div>
+            </div>
+            <div class="current-tariff__body">
+                <div class="current-tariff__item">
+                    Рекламный пост <span>123</span>
+                </div>
+            </div>
+        </div>
 
         <div class="notification" style="display: none;">
             <div class="notification__body">
