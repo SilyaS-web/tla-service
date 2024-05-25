@@ -12,18 +12,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/style.css">
-
     <script
     src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
     crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
 
+    <link rel="stylesheet" href="libs/owl/owl.carousel.min.css">
+    <link rel="stylesheet" href="libs/owl/owl.theme.default.css">
+
+    <link rel="stylesheet" href="libs/meter/style.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
     <title>Профиль</title>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="wrapper" style="background-color: #fff;">
         <div class="burger-menu">
             <div class="burger-menu__body">
                 <div class="burger-menu__profile">
@@ -53,9 +58,10 @@
                     </a>
                 </div>
                 <div class="burger-menu__nav nav-burger">
-                    <a href="#" class="nav-burger__link nav__link">Создать проект</a>
-                    <a href="#" class="nav-burger__link nav__link">Список блогеров</a>
-                    <a href="#" class="nav-burger__link nav__link">Мои проекты</a>
+                    <a href="#" class="nav-burger__link nav__link">Дашборд</a>
+                    <a href="#" class="nav-burger__link nav__link">База знаний</a>
+                    <a href="#" class="nav-burger__link nav__link">Инструкции</a>
+                    <a href="#" class="nav-burger__link nav__link">Кейсы</a>
                 </div>
                 <a href="#" class="burger-menu__close">
                     <img src="img/close-icon.svg" alt="">
@@ -82,39 +88,78 @@
                     <nav class="nav header__nav">
                         <div class="nav__items">
                             <a href="" class="nav__link">
-                                Создать проект
+                                Дашборд
                             </a>
-                            <a href="" class="nav__link">
-                                Список блогеров
+                            <a href="" class="nav__link disabled">
+                                База знаний
                             </a>
-                            <a href="" class="nav__link">
-                                Мои проекты
+                            <a href="" class="nav__link disabled">
+                                Инструкции
+                            </a>
+                            <a href="" class="nav__link disabled">
+                                Кейсы
                             </a>
                         </div>
                     </nav>
                     <div class=" header__profile-items header__profile-items--desktop header__row">
-                        <a href="#" class="header__col header__tariffs" title="Тарифы">
-                            
-                            <img src="img/tariff-icon.svg" alt="" class="">
-                        </a>
-                        <a href="#" class="header__col header__chat" title="Чат">
-                            <div class="header__profile-notif">
-                                1
+
+                        <div href="#" class="header__col header__tarrif tarrif-header" >
+                            Ваш тариф — Стандарт
+                            <div class="tarrif-header__items">
+                                <div class="tarrif-header__item tarrif-header__adv">
+                                    Рекламные посты <b><span class = "counter">12</span> шт.</b>
+                                    <div class="tarrif-header__date">
+                                        02 Мая — 02 Июня
+                                    </div> 
+                                    <a href="#" class="tarrif-header__buy">Продлить</a>
+                                </div>
                             </div>
-                            <img src="img/chat-icon.svg" alt="" class="">
-                        </a>
+                        </div>
                         <a href="#" class="header__col header__notif" title="Уведомления">
                             <div class="header__profile-notif">
                                 1
                             </div>
                             <img src="img/notif-icon.svg" alt="" class="">
+                            <div class="header__notif-items notif-header">
+                                <div class="notif-header__items">
+                                    <div class="notif-header__row ">
+                                        <div class="notif-header__col notif-header__img">
+                                            <img src="img/profile-icon.svg" alt="">
+                                        </div>
+                                        <div class="notif-header__col">
+                                            <div class="notif-header__title">
+                                                Заявка №1233 подтверждена
+                                            </div>
+                                            <div class="notif-header__text">
+                                                Блогер "Чертовски мило" подтвердил заявку, начните переписку с ним, чтобы обсудить подробности.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </a>
-                        <a href="#" class="header__profile-w header__profile-header">
+                        <div href="#" class="header__profile-w header__profile-header">
                             <img src="img/profile-icon.svg" alt="" class="header__profile">
-                            <span class="header__profile-name">
-                                Алексей Андреев
-                            </span>
-                        </a>
+                            <div class="header__profile-col">
+                                <span class="header__profile-name">
+                                    Алексей Андреев
+                                </span>
+                                <span class="header__profile-org">
+                                    Организация (ИП, ООО и тд)
+                                </span>
+                            </div>
+                            <div class="header__profile-settings">
+                                <a href="#" class="row">
+                                    Личные данные 
+                                </a>
+                                <a href="#" class="row">
+                                    Тарифы 
+                                </a>
+                                <a href="#" class="row">
+                                    Выход
+                                </a>
+                            </div>
+                        </div>
                     </div>
                     <a href="#" class="header__menu burger">
                         <img src="img/menu-icon.svg" alt="">
@@ -126,522 +171,1326 @@
         <section class="profile">
             <div class="profile__container _container">
                 <div class="profile__body">
-                    <!-- <div class="profile__title title">
-                        Профиль
-                    </div> -->
-                    <div class="profile__info info-profile">
-                        <div class="info-profile__body">
-                            <div class="info-profile__row">
-                                <div class="info-profile__col info-profile__img">
-                                    <img src="img/profile-icon.svg" alt="">
-                                </div>
-                                <div class="info-profile__col">
-                                    <div class="info-profile__name">
-                                        Петров Сергей Евгеньевич
-                                    </div>
-                                    <div class="info-profile__id">
-                                        Ваш идентификатор — <b>1</b>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="info-profile__row info-profile__tags">
-                                <div class="info-profile__tags-title">
-                                    Дополнительная информация
-                                </div>
-                                <div class="info-profile__tags-items">
-                                    <div class="info-profile__tags-item">
-                                        example@mail.ru
-                                    </div>
-                                    <div class="info-profile__tags-item">
-                                        +7(900) 900-90-90
-                                    </div>
-                                    <div class="info-profile__tags-item">
-                                        Селлер
-                                    </div>
-                                </div>
+                    <div class="profile__navigation nav-menu">
+                        <div class="nav-menu__body">
+                            <div class="nav-menu__items">
+                                <a href="#" class="nav-menu__item nav-menu__link tab project-link" data-content = "create-project">
+                                    Создать проект
+                                </a>
+                                <a href="#" class="nav-menu__item nav-menu__link tab projects-list-link" data-content = "profile-projects">
+                                    Мои проекты
+                                </a>
+                                <a href="#" class="nav-menu__item nav-menu__link tab active dashboard-link" data-content = "dashboard">
+                                    Статистика
+                                </a>
+                                <a href="#" class="nav-menu__item nav-menu__link tab blogers-list-link" data-content = "profile-blogers-list">
+                                    Каталог блогеров
+                                </a>
+                                <a href="#" class="nav-menu__item nav-menu__link tab chat-link" data-content = "chat">
+                                    Чат с блогерами
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <div class="profile__content profile-tabs">
-                        <div class="profile-tabs__tabs">
-                            <div class="profile-tabs__tabs-item tab active" data-content = "projects">
-                                Завершенные проекты
-                            </div>
-                            <div class="profile-tabs__tabs-item tab" data-content = "info">
-                                Личные данные
-                            </div>
-                            <div class="profile-tabs__tabs-item tab" data-content = "notif">
-                                Оповещения
-                            </div>
-                            <div class="profile-tabs__tabs-item tab" data-content = "chat">
-                                Чат с блогерами
-                            </div>
-                            <div class="profile-tabs__tabs-item tab" data-content = "plans">
-                                Тарифы
-                            </div>
-                        </div>
-                        <div class="profile-tabs__content">
-                            <div class="profile-tabs__content-item tab-content active" id="projects">
-                                <div class="projects-list__list list-projects">
-                                    <!-- <div class="projects-list__header">
-                                        <div class="list-projects__title title">
-                                            Список моих проектов
-                                        </div>
-                                        <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
-                                    </div> -->
-                                    <div class="list-projects__items">
-                                        <div class="list-projects__item project-item">
-                                            <div class="project-item__img">
-                                                <img src="img/projects-list/1.webp" alt="">
-                                                <div class="project-item__status active">
-                                                    Активно
-                                                </div>
-                                                <div class="project-item__country">
-                                                    Россия
-                                                </div>
-                                            </div>
-                                            <div class="project-item__content">
-                                                <div class="project-item__title">
-                                                    1120 ₽
-                                                </div>
-                                                <a class="project-item__participants" title="Гель для душа парфюмированный, 1000 мл.">
-                                                    Dk-studio / Гель для душа парфюмированный, 1000 мл.
-                                                </a>
-                                                <div class="project-item__format-tags card__row card__tags">
-                                                    <div class="card__tags-item">
-                                                        <span>Рекламный пост</span>
-                                                    </div>
-                                                    <div class="card__tags-item">
-                                                        <span>Обзор на канале</span>
-                                                    </div>
-                                                    <div class="card__tags-item">
-                                                        <span>Другое</span>
-                                                    </div>
-                                                </div>
-                                                <div class="project-item__btns">
-                                                    <a href="#" class="btn btn-primary">Подробности</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="list-projects__item project-item">
-                                            <div class="project-item__img">
-                                                <img src="img/projects-list/1.webp" alt="">
-                                                <div class="project-item__status active">
-                                                    Активно
-                                                </div>
-                                                <div class="project-item__country">
-                                                    Россия
-                                                </div>
-                                            </div>
-                                            <div class="project-item__content">
-                                                <div class="project-item__title">
-                                                    1120 ₽
-                                                </div>
-                                                <a class="project-item__participants" title="Гель для душа парфюмированный, 1000 мл.">
-                                                    Dk-studio / Гель для душа парфюмированный, 1000 мл.
-                                                </a>
-                                                <div class="project-item__format-tags card__row card__tags">
-                                                    <div class="card__tags-item">
-                                                        <span>Рекламный пост</span>
-                                                    </div>
-                                                    <div class="card__tags-item">
-                                                        <span>Обзор на канале</span>
-                                                    </div>
-                                                    <div class="card__tags-item">
-                                                        <span>Другое</span>
-                                                    </div>
-                                                </div>
-                                                <div class="project-item__btns">
-                                                    <a href="#" class="btn btn-primary">Подробности</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="list-projects__item project-item">
-                                            <div class="project-item__img">
-                                                <img src="img/projects-list/1.webp" alt="">
-                                                <div class="project-item__status active">
-                                                    Активно
-                                                </div>
-                                                <div class="project-item__country">
-                                                    Россия
-                                                </div>
-                                            </div>
-                                            <div class="project-item__content">
-                                                <div class="project-item__title">
-                                                    1120 ₽
-                                                </div>
-                                                <a class="project-item__participants" title="Гель для душа парфюмированный, 1000 мл.">
-                                                    Dk-studio / Гель для душа парфюмированный, 1000 мл.
-                                                </a>
-                                                <div class="project-item__format-tags card__row card__tags">
-                                                    <div class="card__tags-item">
-                                                        <span>Рекламный пост</span>
-                                                    </div>
-                                                    <div class="card__tags-item">
-                                                        <span>Обзор на канале</span>
-                                                    </div>
-                                                    <div class="card__tags-item">
-                                                        <span>Другое</span>
-                                                    </div>
-                                                </div>
-                                                <div class="project-item__btns">
-                                                    <a href="#" class="btn btn-primary">Подробности</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="list-projects__item project-item">
-                                            <div class="project-item__img">
-                                                <img src="img/projects-list/1.webp" alt="">
-                                                <div class="project-item__status active">
-                                                    Активно
-                                                </div>
-                                                <div class="project-item__country">
-                                                    Россия
-                                                </div>
-                                            </div>
-                                            <div class="project-item__content">
-                                                <div class="project-item__title">
-                                                    1120 ₽
-                                                </div>
-                                                <a class="project-item__participants" title="Гель для душа парфюмированный, 1000 мл.">
-                                                    Dk-studio / Гель для душа парфюмированный, 1000 мл.
-                                                </a>
-                                                <div class="project-item__format-tags card__row card__tags">
-                                                    <div class="card__tags-item">
-                                                        <span>Рекламный пост</span>
-                                                    </div>
-                                                    <div class="card__tags-item">
-                                                        <span>Обзор на канале</span>
-                                                    </div>
-                                                    <div class="card__tags-item">
-                                                        <span>Другое</span>
-                                                    </div>
-                                                </div>
-                                                <div class="project-item__btns">
-                                                    <a href="#" class="btn btn-primary">Подробности</a>
-                                                </div>
-                                            </div>
-                                        </div>
+                    <div class="profile__content">
+                        <div class="profile__content-inner">
+                            <div class="profile-create-project tab-content" id = "create-project">
+                                <div class="create-project__body">
+                                    <div class="create-project__title title">
+                                        Создать проект
                                     </div>
-                                </div>
-                            </div>
-                            <div class="profile-tabs__content-item tab-content" id="info">
-                                <div class="tab-content__profile-img">
-                                    <img src="img/profile-icon.svg" alt="">
-                                    <div class="tab-content__profile-img-text">
-                                        <p>Фото профиля</p>
-                                        <div class="form-group form-group--file">
-                                            <label class="tab-content__profile-img-upload input-file" for = "profile-img">
-                                                Загрузите изображение товара
-                                                <input type="file" name="name" class="" id="profile-img">
-                                            </label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-content__form">
-                                    <div class="tab-content__form-right">
-                                        <div class="form-group">
-                                            <label for="">Имя</label>
-                                            <input type="text" class="input" id = "name">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="">E-mail</label>
-                                            <input type="email" class="input" id = "email">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="phone">Номер телефона</label>
-                                            <input type="phone" id = "phone" placeholder="" class = "input input--phone">
-                                        </div>    
-                                        <script>
-                                            $(function(){
-                                                $("#phone").mask("8(999) 999-9999");
-                                            });
-                                        </script> 
-                                        <div class="form-group">
-                                            <label for="">Ссылка на маркетплейс</label>
-                                            <input type="text" class="input" id = "marketplace">
-                                        </div>
-                                        <button class="btn btn-primary desktop">Сохранить</button>
-                                    </div>
-                                    <div class="tab-content__form-left">
-                                        <label for="">Вы размещаете рекламу для себя или являетесь посредником?</label>
-                                        <div class="input-checkbox-w">
-                                            <input type="checkbox" class="checkbox whois" id = "broker">
-                                            <label for="">Я посредник</label>
-                                        </div>
-                                        <div class="input-checkbox-w">
-                                            <input type="checkbox" class="checkbox whois" id = "advertiser">
-                                            <label for="">Я селлер</label>
-                                        </div>
-                                        <div class="form-group" style="margin-top: 20px;">
-                                            <label for="">Тип организации</label>
-                                            <input type="text" class="input" id = "type">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="">ИНН</label>
-                                            <input type="text" class="input" id = "inn">
-                                        </div>
-                                    </div>
-                                    <button class="btn btn-primary mobile">Сохранить</button>
-                                </div>
-                            </div>
-                            <div class="profile-tabs__content-item tab-content" id="notif">
-                                <div class="tab-content__notifs">
-                                    <div class="tab-content__notifs-item item-notifs">
-                                        <div class="item-notifs__row">
-                                            <div class="item-notifs__img">
-                                                <img src="img/profile-icon.svg" alt="">
-                                            </div>
-                                            <div class="item-notifs__col">
-                                                <div class="item-notifs__title">
-                                                    Блогер подтвердил заявку
+                                    <div class="create-project__quest quest">
+                                        <div class="quest__steps">
+                                            <div id = "step_1" class="quest__step step current">
+                                                <div class="quest__step-title">
+                                                    Шаг <span class = "current-step">1</span> 
+                                                    <!-- <span class="quest__step-arrow next"></span> -->
                                                 </div>
-                                                <div class="item-notifs__date">
-                                                    20.12.23
+                                                <div class="form-group">
+                                                    <label for="project-name">Название проекта</label>
+                                                    <input type="text" id = "project-name" placeholder="Введите наименование проекта" class = "input input--project_name">
+                                                    <span class="error error-project-name">
+                                                        
+                                                    </span>
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="item-notifs__row">
-                                            <div class="item-notifs__text">
-                                                Повседневная практика показывает, что граница обучения кадров не оставляет шанса для анализа существующих паттернов поведения.
-                                            </div>
-                                        </div>
-                                        <div class="item-notifs__row item-notifs__btns">
-                                            <a href="" class="btn btn-primary">Подробнее</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="profile-tabs__content-item tab-content" id="chat">
-                                <div class="tab-content__chat chat">
-                                    <div class="chat__body">
-                                        <div class="chat__left">
-                                            <div class="chat__chat-items">
-                                                <div class="chat__chat-item item-chat current">
-                                                    <div class="item-chat__img">
-                                                        <img src="img/profile-icon.svg" alt="">
+                                                <div class="form-group">
+                                                    <label for="product-name">Название товара</label>
+                                                    <input type="text" id = "product-name" placeholder="Введите наименование товара" class = "input input--product_name">
+                                                    <span class="error error-product-name">
+                                                        
+                                                    </span>
+                                                </div>
+                                                <div class="quest__step-row">
+                                                    <div class="form-group">
+                                                        <label for="project-price">Артикул товара</label>
+                                                        <input type="text" id = "product-articul" placeholder="Введите артикул" class = "input input--product_price">
+                                                        <span class="error error-project-price">
+                                                            
+                                                        </span>
                                                     </div>
-                                                    <div class="item-chat__text">
-                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
-                                                        <div class="item-chat__last-msg">
-                                                            <p>Последнее сообщение:</p>
-                                                            <span> 12.04.24 - 12:20</span>
-                                                        </div>
+                                                    <div class="form-group">
+                                                        <label for="project-price">Цена товара</label>
+                                                        <input type="number" id = "project-price" placeholder="Введите цену" class = "input input--product_price">
+                                                        <span class="error error-project-price">
+                                                            
+                                                        </span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="project-link">Ссылка на товар</label>
+                                                        <input type="text" id = "project-link" placeholder="Ссылка" class = "input input--product_link">
+                                                        <span class="error error-project-link">
+                                                            
+                                                        </span>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label for="project-link">Ссылка на маркетплейс</label>
+                                                        <input type="text" id = "marketplace-link" placeholder="Ссылка" class = "input input--product_link">
+                                                        <span class="error error-project-link">
+                                                            
+                                                        </span>
                                                     </div>
                                                 </div>
-                                                <div class="chat__chat-item item-chat">
-                                                    <div class="item-chat__img">
-                                                        <img src="img/profile-icon.svg" alt="">
+                                                <div class="form-group form-group--file create-project__files upload-files">
+                                                    <div class="upload-files__title">
+                                                        Загрузите изображения товара
                                                     </div>
-                                                    <div class="item-chat__text">
-                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
-                                                        <div class="item-chat__last-msg">
-                                                            <p>Последнее сообщение:</p>
-                                                            <span>12.04.24 - 12:20</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="chat__chat-item item-chat">
-                                                    <div class="item-chat__img">
-                                                        <img src="img/profile-icon.svg" alt="">
-                                                    </div>
-                                                    <div class="item-chat__text">
-                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
-                                                        <div class="item-chat__last-msg">
-                                                            <p>Последнее сообщение:</p>
-                                                            <span>12.04.24 - 12:20</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="chat__chat-item item-chat">
-                                                    <div class="item-chat__img">
-                                                        <img src="img/profile-icon.svg" alt="">
-                                                    </div>
-                                                    <div class="item-chat__text">
-                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
-                                                        <div class="item-chat__last-msg">
-                                                            <p>Последнее сообщение:</p>
-                                                            <span>12.04.24 - 12:20</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="chat__chat-item item-chat current">
-                                                    <div class="item-chat__img">
-                                                        <img src="img/profile-icon.svg" alt="">
-                                                    </div>
-                                                    <div class="item-chat__text">
-                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
-                                                        <div class="item-chat__last-msg">
-                                                            <p>Последнее сообщение:</p>
-                                                            <span> 12.04.24 - 12:20</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="chat__chat-item item-chat">
-                                                    <div class="item-chat__img">
-                                                        <img src="img/profile-icon.svg" alt="">
-                                                    </div>
-                                                    <div class="item-chat__text">
-                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
-                                                        <div class="item-chat__last-msg">
-                                                            <p>Последнее сообщение:</p>
-                                                            <span>12.04.24 - 12:20</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="chat__chat-item item-chat">
-                                                    <div class="item-chat__img">
-                                                        <img src="img/profile-icon.svg" alt="">
-                                                    </div>
-                                                    <div class="item-chat__text">
-                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
-                                                        <div class="item-chat__last-msg">
-                                                            <p>Последнее сообщение:</p>
-                                                            <span>12.04.24 - 12:20</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="chat__chat-item item-chat">
-                                                    <div class="item-chat__img">
-                                                        <img src="img/profile-icon.svg" alt="">
-                                                    </div>
-                                                    <div class="item-chat__text">
-                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
-                                                        <div class="item-chat__last-msg">
-                                                            <p>Последнее сообщение:</p>
-                                                            <span>12.04.24 - 12:20</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="chat__chat-item item-chat current">
-                                                    <div class="item-chat__img">
-                                                        <img src="img/profile-icon.svg" alt="">
-                                                    </div>
-                                                    <div class="item-chat__text">
-                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
-                                                        <div class="item-chat__last-msg">
-                                                            <p>Последнее сообщение:</p>
-                                                            <span> 12.04.24 - 12:20</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="chat__chat-item item-chat">
-                                                    <div class="item-chat__img">
-                                                        <img src="img/profile-icon.svg" alt="">
-                                                    </div>
-                                                    <div class="item-chat__text">
-                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
-                                                        <div class="item-chat__last-msg">
-                                                            <p>Последнее сообщение:</p>
-                                                            <span>12.04.24 - 12:20</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="chat__chat-item item-chat">
-                                                    <div class="item-chat__img">
-                                                        <img src="img/profile-icon.svg" alt="">
-                                                    </div>
-                                                    <div class="item-chat__text">
-                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
-                                                        <div class="item-chat__last-msg">
-                                                            <p>Последнее сообщение:</p>
-                                                            <span>12.04.24 - 12:20</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="chat__chat-item item-chat">
-                                                    <div class="item-chat__img">
-                                                        <img src="img/profile-icon.svg" alt="">
-                                                    </div>
-                                                    <div class="item-chat__text">
-                                                        <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
-                                                        <div class="item-chat__last-msg">
-                                                            <p>Последнее сообщение:</p>
-                                                            <span>12.04.24 - 12:20</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="chat__right">
-                                            <div class="chat__messages messages-chat">
-                                                <div class="messages-chat__item messages-chat__item--author">
-                                                    <div class="messages-chat__item-header">
-                                                        <div class="messages-chat__item-title">
-                                                            Иван Иванов
-                                                        </div>
-                                                        <div class="messages-chat__item-date">
-                                                            12.04.24 12:20
-                                                        </div>
-                                                    </div>
-                                                    <div class="messages-chat__item-msg">
-                                                        Здравствуйте! Какие у нас результаты по проекту?
-                                                    </div>
-                                                </div>
-                                                <div class="messages-chat__item">
-                                                    <div class="messages-chat__item-header">
-                                                        <div class="messages-chat__item-title">
-                                                            Vysokoff SEO - продвижение и заработок
-                                                        </div>
-                                                        <div class="messages-chat__item-date">
-                                                            12.04.24 12:20
-                                                        </div>
-                                                    </div>
-                                                    <div class="messages-chat__item-msg">
-                                                        Здравствуйте! Все отлично, сегодня в 6 вечера по мск скину результаты!
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="chat__messages messages-create">
-                                                <textarea name="" id="" placeholder="Введите текст" class = "messages-create__textarea textarea">
+                                                    <div class="upload-files__body">
+                                                        <div class="upload-files__plus">
 
-                                                </textarea>
-                                                <div class="chat__btns" style="display: flex; flex-wrap: wrap; gap:8px;">
-                                                    <button class="btn btn-primary">Отправить</button>
-                                                    <a href="" class="btn btn-secondary">Подтвердить выполнение проекта</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="quest__btns">
+                                                    <button class="btn btn-primary next">
+                                                        Далее
+                                                    </button> 
+                                                </div>
+                                            </div>
+                                            <div id = "step_2" class="quest__step step">
+                                                <div class="quest__step-title">
+                                                    Шаг <span class = "current-step">2</span>
+                                                    <!-- <span class="quest__step-arrow send"></span> -->
+                                                </div>
+                                                <div class="form-group marketing-format">
+                                                    <label for="format">Выберите формат рекламы</label>
+                                                    <div class="input-checkbox-w">
+                                                        <input type="checkbox" class = "checkbox" id = "product-feedback">
+                                                        <label for="product-feedback">Отзыв на товар - Бартер</label>
+                                                        <div class="format-tooltip" data-hint = "feedback">
+                                                            ?
+                                                            <div class="format-hint format-hint--text" id = "feedback">
+                                                                <div class="format-hint__title">
+                                                                    Рекламный пост
+                                                                </div>
+                                                                <div class="format-hint__body">
+                                                                    Приятно, граждане, наблюдать, как акционеры крупнейших компаний формируют глобальную экономическую сеть и при этом — объявлены нарушающими общечеловеческие нормы этики и морали
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div class="input-checkbox-w disabled">
+                                                        <input type="checkbox" class = "checkbox" id = "product-inst">
+                                                        <label for="product-inst">Рекламная интеграция (Inst) - Бартер</label>
+                                                        <div class="format-tooltip" data-hint = "inst">
+                                                            ?
+                                                            <div class="format-hint format-hint--text" id = "inst">
+                                                                <div class="format-hint__title">
+                                                                    Рекламная интеграция (Inst) - Бартер
+                                                                </div>
+                                                                <div class="format-hint__body">
+                                                                    ...
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div class="input-checkbox-w disabled">
+                                                        <input type="checkbox" class = "checkbox" id = "product-youtube">
+                                                        <label for="product-youtube">Рекламная интеграция (YouTube) - Бартер</label>
+                                                        <div class="format-tooltip" data-hint = "youtube">
+                                                            ?
+                                                            <div class="format-hint format-hint--text" id = "youtube">
+                                                                <div class="format-hint__title">
+                                                                    Рекламная интеграция (YouTube) - Бартер
+                                                                </div>
+                                                                <div class="format-hint__body">
+                                                                    ...
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div class="input-checkbox-w disabled">
+                                                        <input type="checkbox" class = "checkbox" id = "product-other">
+                                                        <label for="product-other">Другие площадки для интеграций - Бартер</label>
+                                                        <div class="format-tooltip" data-hint = "other">
+                                                            ?
+                                                            <div class="format-hint format-hint--text" id = "other">
+                                                                <div class="format-hint__title">
+                                                                    Другие площадки для интеграций - Бартер
+                                                                </div>
+                                                                <div class="format-hint__body">
+                                                                    ...
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    <div class="input-checkbox-w disabled">
+                                                        <input type="checkbox" class = "checkbox" id = "product-payment">
+                                                        <label for="product-payment">Платные интеграции</label>
+                                                        <div class="format-tooltip" data-hint = "payment">
+                                                            ?
+                                                            <div class="format-hint format-hint--text" id = "payment">
+                                                                <div class="format-hint__title">
+                                                                    Платные интеграции
+                                                                </div>
+                                                                <div class="format-hint__body">
+                                                                    ...
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        
+                                                    </div>
+                                                    
+                                                    <span class="error error-format">
+                                                        
+                                                    </span>
+                                                </div>
+                                                <div class="quest__btns">
+                                                    <button class="btn btn-secondary back">
+                                                        Назад
+                                                    </button> 
+                                                    <button class="btn btn-primary send">
+                                                        Сохранить
+                                                    </button> 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard tab-content active"  id = "dashboard">
+                                <div class="dashboard__body">
+                                    <div class="dashboard__title title">
+                                        Статистика
+                                    </div>
+                                    <div class="dashboard__tabs">
+                                        <div class="dashboard__tab active" data-content="wb">
+                                            Wildberries
+                                        </div>
+                                        <div class="dashboard__tab disabled" data-content="ozon">
+                                            OZON
+                                        </div>
+                                    </div>
+                                    <div class="dashboard__items">
+                                        <div class="dashboard__content active" id="wb">
+                                            <div class="dashboard__row dashboard__item--feedback feedback-dashboard">
+                                                <div class="dashboard__col dashboard__item--sm dashboard-sm">
+                                                    <div class="dashboard-sm__title">
+                                                        Общая оценка магазина
+                                                    </div>
+                                                    <div class="dashboard-sm__sm" id = wrapper>
+                                                        <svg id="meter">    
+                                                            <circle id="outline_curves" class="circle outline"  cx="50%" cy="50%">
+                                                            </circle>
+                                                            <circle id="low" class="circle range" cx="50%" cy="50%" stroke="#FD6567">
+                                                            </circle>
+                                                            <circle id="avg" class="circle range" cx="50%" cy="50%" stroke="#F0C457">
+                                                            </circle>
+                                                            <circle id="high" class="circle range" cx="50%" cy="50%" stroke="#5CAD9A">
+                                                            </circle>
+                                                            <circle id="outline_ends" class="circle outline" cx="50%" cy="50%">
+                                                            </circle>
+                                                        </svg>
+                                                        <div class="dashboard-sm__digits">
+                                                            <div class="dashboard-sm__low">
+                                                                0
+                                                            </div>
+                                                            <div class="dashboard-sm__high">
+                                                                5
+                                                            </div>
+                                                        </div>
+                                                        <img id="meter_needle" src="libs/meter/svg-meter-gauge-needle.svg" alt="" data-percents = '95'>
+                                                    </div>
+                                                    <div class="dashboard-sm__desc">
+                                                        У вас отличные показатели, <br>
+                                                        ваш средний балл по отзывам 4,9
+                                                        <div class="dashboard-sm__quest">
+                                                            ?
+                                                            <div class="dashboard-sm__desc-inner">
+                                                                <p>4,2 - 4,7 — У вас отличные показатели, но можно улучшить</p>
+                                                                <p>3,5 - 4,2 — У вас показатели ниже среднего, требуется улучшить отзывы</p>
+                                                                <p>0 - 3,5 — У вас ужасные показатели, срочно требуется работа по отзывам </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="dashboard__col feedback-dashboard__fb">
+                                                    <div class="feedback-dashboard__fb-title">
+                                                        У вас 56 отзывов без ответа, для улучшения оценки, требуется исправить
+                                                    </div>
+                                                    <div class="feedback-dashboard__fb-items">
+                                                        <div class="feedback-dashboard__fb-row feedback-item">
+                                                            <div class="feedback-item__title">
+                                                                Статистика оценок по товарам
+                                                                <div class="feedback-item__quest">
+                                                                    ?
+                                                                    <div class="feedback-item__quest-desc">
+                                                                        <p>Ваша оценка зависит от качества ваших отзывов, от количества плохих и хороших оценок, важно следить, чтобы количество плохих отзывов не становилось больше</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="feedback-item__stats">
+                                                                <div class="feedback-item__stat">
+                                                                    <div class="feedback-item__stat-quest danger">
+                                                                        !
+                                                                    </div>
+                                                                    У вас 10 товаров с очень низкой оценкой
+                                                                </div>
+                                                                <div class="feedback-item__stat">
+                                                                    <div class="feedback-item__stat-quest warning">
+                                                                        !
+                                                                    </div>
+                                                                    У вас 20 товаров с удовлетворительной оценкой, требуется улучшение
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="feedback-dashboard__fb-row">
+                                                            <div class="feedback-dashboard__fb-row feedback-item">
+                                                                <div class="feedback-item__title">
+                                                                    Статистика количества отзывов на товарах
+                                                                    <div class="feedback-item__quest">
+                                                                        ?
+                                                                        <div class="feedback-item__quest-desc">
+                                                                            <p>Для улучшения вашей оценки необходимо работать надо отзывами на маркетплейсах, очень важно следить за количеством отзывов и их обработкой</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="feedback-item__stats">
+                                                                    <div class="feedback-item__stat">
+                                                                        <div class="feedback-item__stat-quest danger">
+                                                                            !
+                                                                        </div>
+                                                                        На 20 товарах очень мало отзывов, требуется исправить
+                                                                    </div>
+                                                                    <div class="feedback-item__stat">
+                                                                        <div class="feedback-item__stat-quest warning">
+                                                                            !
+                                                                        </div>
+                                                                        У вас 15 товаров со среднем количеством отзывов, требуется улучшение
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>                               
+                                            </div>
+                                            <div class="dashboard__row">
+                                                <div class="dashboard__col dashboard__item dashboard__item--cover">
+                                                    <div class="dashboard__item-cover">
+                                                        <div class="dashboard__item-title">
+                                                            Охват
+                                                        </div>
+                                                        <canvas class="graph" id="coverage-graph">
+                                                            
+                                                        </canvas>
+                                                    </div>
+                                                </div>
+                                                <div class="dashboard__col dashboard__item acc-statistics">
+                                                    <div class="dashboard__col">
+                                                        <div class="dashboard__row acc-statistics__item er-statistics">
+                                                            <div class="er-statistics__body">
+                                                                <div class="er-statistics__col">
+                                                                    <div class="acc-statistics__title">
+                                                                        Engagement Rate
+                                                                    </div>
+                                                                    <div class="acc-statistics__val">
+                                                                        5.41
+                                                                    </div>
+                                                                </div>
+                                                                <div class="er-statistics__col er-statistics__graph">
+                                                                    <canvas id = "er"></canvas>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="dashboard__row acc-statistics__item cpm-statistics">
+                                                            <div class="cpm-statistics__body">
+                                                                <div class="cpm-statistics__col">
+                                                                    <div class="acc-statistics__title">
+                                                                        CPM
+                                                                    </div>
+                                                                    <div class="acc-statistics__val">
+                                                                        ~213 ₽
+                                                                    </div>
+                                                                </div>
+                                                                <div class="cpm-statistics__col cpm-statistics__graph">
+                                                                    <canvas id = "cpm"></canvas>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="dashboard__placeholder">
+                                                    <div class="dashboard__placeholder-text">
+                                                        Раздел находится в разработке
+                                                    </div>
+                                                    <div class="dashboard__placeholder-overflow">
+    
+                                                    </div>
+                                                </div>                                   
+                                            </div>
+                                            <div class="dashboard__row">
+                                                <div class="dashboard__col dashboard__item">
+                                                    <img src="img/statistics-ph.png" alt="" class="">
+                                                    <div class="dashboard__placeholder">
+                                                        <div class="dashboard__placeholder-text">
+                                                            Раздел находится в разработке
+                                                        </div>
+                                                         <div class="dashboard__placeholder-overflow">
+        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="dashboard__col dashboard__item">
+                                                    <img src="img/1_GZq1SvhxjrbQbqkag4XH3w.jpg" alt="" class="">
+                                                    <div class="dashboard__placeholder">
+                                                        <div class="dashboard__placeholder-text">
+                                                            Раздел находится в разработке
+                                                        </div>
+                                                         <div class="dashboard__placeholder-overflow">
+        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="dashboard__content" id="ozon">
+                                            <div class="dashboard__row">
+                                                <div class="dashboard__col dashboard__item dashboard__item--cover">
+                                                    <div class="dashboard__item-cover">
+                                                        <div class="dashboard__item-title">
+                                                            Охват
+                                                        </div>
+                                                        <canvas class="graph" id="coverage-graph">
+                                                            
+                                                        </canvas>
+                                                    </div>
+                                                </div>
+                                                <div class="dashboard__col dashboard__item acc-statistics">
+                                                    <div class="dashboard__col">
+                                                        <div class="dashboard__row acc-statistics__item er-statistics">
+                                                            <div class="er-statistics__body">
+                                                                <div class="er-statistics__col">
+                                                                    <div class="acc-statistics__title">
+                                                                        Engagement Rate
+                                                                    </div>
+                                                                    <div class="acc-statistics__val">
+                                                                        5.41
+                                                                    </div>
+                                                                </div>
+                                                                <div class="er-statistics__col er-statistics__graph">
+                                                                    <canvas id = "er"></canvas>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="dashboard__row acc-statistics__item cpm-statistics">
+                                                            <div class="cpm-statistics__body">
+                                                                <div class="cpm-statistics__col">
+                                                                    <div class="acc-statistics__title">
+                                                                        CPM
+                                                                    </div>
+                                                                    <div class="acc-statistics__val">
+                                                                        ~213 ₽
+                                                                    </div>
+                                                                </div>
+                                                                <div class="cpm-statistics__col cpm-statistics__graph">
+                                                                    <canvas id = "cpm"></canvas>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                                                        
+                                            </div>
+                                            <div class="dashboard__row">
+                                                <div class="dashboard__col dashboard__item">
+                                                    <img src="img/statistics-ph.png" alt="" class="">
+                                                    <div class="dashboard__placeholder">
+                                                        <div class="dashboard__placeholder-text">
+                                                            Введите свой API ключ для получения статистики
+                                                        </div>
+                                                        <button class = "btn btn-primary btn-input-wb-api">Ввести ключ</button>
+                                                        <div class="dashboard__placeholder-overflow">
+        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="dashboard__col dashboard__item acc-statistics">
+                                                    <div class="dashboard__col projects-statistics">
+                                                        <div class="projects-statistics__body">
+                                                            <div class="projects-statistics__col">
+                                                                <div class="acc-statistics__title">
+                                                                    Интеграции выполнено
+                                                                </div>
+                                                            </div>
+                                                            <div class="projects-statistics__col">
+                                                                <div class="projects-statistics__graph">
+                                                                    <canvas id ="projects"></canvas>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="dashboard__row">
+                                                <div class="dashboard__col dashboard__item">
+                                                    <img src="img/no-image.png" alt="" class="">
+                                                    <div class="dashboard__placeholder">
+                                                        <div class="dashboard__placeholder-text">
+                                                            Раздел находится в разработке
+                                                        </div>
+                                                         <div class="dashboard__placeholder-overflow">
+        
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="dashboard__col dashboard__item">
+                                                    <img src="img/no-image.png" alt="" class="">
+                                                    <div class="dashboard__placeholder">
+                                                        <div class="dashboard__placeholder-text">
+                                                            Раздел находится в разработке
+                                                        </div>
+                                                         <div class="dashboard__placeholder-overflow">
+        
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="profile-tabs__content-item tab-content" id="plans">
-                                <div class="tab-content__plans plans">
-                                    <div class="plans__body">
-                                        <!-- <div class="plans__title title">
-                                            Тарифы
-                                        </div> -->
-                                        <div class="plans__current">
-                                            <div class="plans__current-item">
-                                                <p class="plans__current-title">
-                                                    Ваш текущий тариф: <span>Начальный</span>
-                                                </p>
+                            <div class="profile-projects tab-content" id = "profile-projects">
+                                <div class="profile-projects__body">
+                                    <div class="profile-projects__title title">
+                                        Список проектов
+                                    </div>
+                                    <div class="profile-projects__items">
+                                        <div class="profile-projects__row profile-projects__item">
+                                            <div class="profile-projects__col profile-projects__img">
+                                                <img src="img/projects-list/1.webp" alt="">
                                             </div>
-                                            <div class="plans__current-item">
-                                                <p class="plans__current-title">
-                                                    Заявок осталось: <span>123</span>
-                                                </p>
+                                            <div class="profile-projects__col profile-projects__content" style="padding:15px 0px;">
+                                                <div class="profile-projects__row">
+                                                    <div class="profile-projects__item-title">
+                                                        Название товара
+                                                    </div>
+                                                    <div class="profile-projects__status active">
+                                                        Активно
+                                                    </div>
+                                                </div>
+                                                <div class="profile-projects__row">
+                                                    <div class="profile-projects__formats">
+                                                        <div class="profile-projects__format">
+                                                            Рекламный пост
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="profile-projects__row" style="margin-top:auto">
+                                                    <div class="profile-projects__btns">
+                                                        <button class="btn btn-primary btn-bloggers">Заявки от блогеров</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="profile-projects__col profile-projects__content profile-projects__info" style="padding:15px 0px;">
+                                                <div class="card__col card__stats">
+                                                    <div class="card__col card__stats-stats">
+                                                        <div class="card__row card__stats-row">
+                                                        
+                                                            <div class="card__col card__stats-item">
+                                                                <div class="card__stats-title">
+                                                                    <span>Блогеров в работе</span>
+                                                                </div>
+                                                                <div class="card__stats-val">
+                                                                    <span>12</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__col card__stats-item">
+                                                                <div class="card__stats-title">
+                                                                    <span>Дата создания</span>
+                                                                </div>
+                                                                <div class="card__stats-val">
+                                                                    <span>12.12.23</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="profile-projects__row" style="margin-top:auto">
+                                                    <div class="profile-projects__btns">
+                                                        <button class="btn btn-primary btn-statistics">Статистика</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="profile-projects__row profile-projects__blogers projects-blogers owl-carousel">
+                                                <div class="list-blogers__item bloger-item card" data-id="1">
+                                                    <div class="card__row card__content">
+                                                        <div class="card__col">
+                                                            <div class="card__row card__header">
+                                                                <div class="card__img">
+                                                                    <img src="img/profile-icon.svg" alt="">
+                                                                    <div class="card__achive">
+                                                                        <img src="img/achive-icon.svg" alt="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card__name">
+                                                                    <p class = "card__name-name">
+                                                                        Чертовски мило
+                                                                    </p>
+                                                                </div>
+                                                                <div class="card__platform">
+                                                                    <img src="img/inst-icon.svg" alt="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__row card__tags">
+                                                                <div class="card__tags-item">
+                                                                    <span>Животные и Природа</span>
+                                                                </div>
+                                                                <div class="card__tags-item">
+                                                                    <span>Развлечения и Юмор</span>
+                                                                </div>
+                                                                <div class="card__tags-item">
+                                                                    <span>Другое</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__row card__desc-title">
+                                                                <p style="font-weight: 500; font-size: 18px;">
+                                                                    Сообщение от блогера
+                                                                </p>
+                                                            </div>
+                                                            <div class="card__row card__desc">
+                                                                <p>
+                                                                    Коллекция позитивных, светлых  и чертовски милых  видео!
+                                                                    Платёжеспособная женская аудитория от 25 лет
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card__col card__stats">
+                                                            <div class="card__col card__stats-stats">
+                                                                <div class="card__row card__stats-row">
+                                                                
+                                                                    <div class="card__col card__stats-item">
+                                                                        <div class="card__stats-title">
+                                                                            <span>Подписчики</span>
+                                                                        </div>
+                                                                        <div class="card__stats-val">
+                                                                            <span>108 729</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card__col card__stats-item">
+                                                                        <div class="card__stats-title">
+                                                                            <span>Просмотры</span>
+                                                                        </div>
+                                                                        <div class="card__stats-val">
+                                                                            <span>800</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card__row card__stats-row">
+                        
+                                                                    <div class="card__col card__stats-item">
+                                                                        <div class="card__stats-title">
+                                                                            <span>ER</span>
+                                                                        </div>
+                                                                        <div class="card__stats-val">
+                                                                            <span>51%</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card__col card__stats-item">
+                                                                        <div class="card__stats-title">
+                                                                            <span>CPM</span>
+                                                                        </div>
+                                                                        <div class="card__stats-val">
+                                                                            <span>263₽</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__col card__column--gender" >
+                                                                <div class="card__stats-title">
+                                                                    <span>Пол аудитории</span>
+                                                                </div>
+                                                                <div class="card__row" style="align-items: center; gap:5px">
+                                                                    <div class="card__diagram-icon" ><img src="img/blogers-list/male-icon.svg" alt="" ></div>
+                                                                    <div class="card__diagram-line" ><span style="width:50%;" ></span></div>
+                                                                    <div class="card__diagram-icon" ><img src="img/blogers-list/female-icon.svg" alt="" ></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__row card__row" style="gap:12px">
+                                                                <button class = "btn btn-primary" data-project-id="">
+                                                                    Принять
+                                                                </button>
+                                                                <button class = "btn btn-secondary" data-project-id="">
+                                                                    Отклонить
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="list-blogers__item bloger-item card" data-id="1">
+                                                    <div class="card__row card__content">
+                                                        <div class="card__col">
+                                                            <div class="card__row card__header">
+                                                                <div class="card__img">
+                                                                    <img src="img/profile-icon.svg" alt="">
+                                                                    <div class="card__achive">
+                                                                        <img src="img/achive-icon.svg" alt="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card__name">
+                                                                    <p class = "card__name-name">
+                                                                        Чертовски мило
+                                                                    </p>
+                                                                </div>
+                                                                <div class="card__platform">
+                                                                    <img src="img/inst-icon.svg" alt="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__row card__tags">
+                                                                <div class="card__tags-item">
+                                                                    <span>Животные и Природа</span>
+                                                                </div>
+                                                                <div class="card__tags-item">
+                                                                    <span>Развлечения и Юмор</span>
+                                                                </div>
+                                                                <div class="card__tags-item">
+                                                                    <span>Другое</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__row card__desc-title">
+                                                                <p style="font-weight: 500; font-size: 18px;">
+                                                                    Сообщение от блогера
+                                                                </p>
+                                                            </div>
+                                                            <div class="card__row card__desc">
+                                                                <p>
+                                                                    Коллекция позитивных, светлых  и чертовски милых  видео!
+                                                                    Платёжеспособная женская аудитория от 25 лет
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card__col card__stats">
+                                                            <div class="card__col card__stats-stats">
+                                                                <div class="card__row card__stats-row">
+                                                                
+                                                                    <div class="card__col card__stats-item">
+                                                                        <div class="card__stats-title">
+                                                                            <span>Подписчики</span>
+                                                                        </div>
+                                                                        <div class="card__stats-val">
+                                                                            <span>108 729</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card__col card__stats-item">
+                                                                        <div class="card__stats-title">
+                                                                            <span>Просмотры</span>
+                                                                        </div>
+                                                                        <div class="card__stats-val">
+                                                                            <span>800</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card__row card__stats-row">
+                        
+                                                                    <div class="card__col card__stats-item">
+                                                                        <div class="card__stats-title">
+                                                                            <span>ER</span>
+                                                                        </div>
+                                                                        <div class="card__stats-val">
+                                                                            <span>51%</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card__col card__stats-item">
+                                                                        <div class="card__stats-title">
+                                                                            <span>CPM</span>
+                                                                        </div>
+                                                                        <div class="card__stats-val">
+                                                                            <span>263₽</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__col card__column--gender" >
+                                                                <div class="card__stats-title">
+                                                                    <span>Пол аудитории</span>
+                                                                </div>
+                                                                <div class="card__row" style="align-items: center; gap:5px">
+                                                                    <div class="card__diagram-icon" ><img src="img/blogers-list/male-icon.svg" alt="" ></div>
+                                                                    <div class="card__diagram-line" ><span style="width:50%;" ></span></div>
+                                                                    <div class="card__diagram-icon" ><img src="img/blogers-list/female-icon.svg" alt="" ></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__row card__row" style="gap:12px">
+                                                                <button class = "btn btn-primary" data-project-id="">
+                                                                    Принять
+                                                                </button>
+                                                                <button class = "btn btn-secondary" data-project-id="">
+                                                                    Отклонить
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="list-blogers__item bloger-item card" data-id="1">
+                                                    <div class="card__row card__content">
+                                                        <div class="card__col">
+                                                            <div class="card__row card__header">
+                                                                <div class="card__img">
+                                                                    <img src="img/profile-icon.svg" alt="">
+                                                                    <div class="card__achive">
+                                                                        <img src="img/achive-icon.svg" alt="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card__name">
+                                                                    <p class = "card__name-name">
+                                                                        Чертовски мило
+                                                                    </p>
+                                                                </div>
+                                                                <div class="card__platform">
+                                                                    <img src="img/inst-icon.svg" alt="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__row card__tags">
+                                                                <div class="card__tags-item">
+                                                                    <span>Животные и Природа</span>
+                                                                </div>
+                                                                <div class="card__tags-item">
+                                                                    <span>Развлечения и Юмор</span>
+                                                                </div>
+                                                                <div class="card__tags-item">
+                                                                    <span>Другое</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__row card__desc-title">
+                                                                <p style="font-weight: 500; font-size: 18px;">
+                                                                    Сообщение от блогера
+                                                                </p>
+                                                            </div>
+                                                            <div class="card__row card__desc">
+                                                                <p>
+                                                                    Коллекция позитивных, светлых  и чертовски милых  видео!
+                                                                    Платёжеспособная женская аудитория от 25 лет
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card__col card__stats">
+                                                            <div class="card__col card__stats-stats">
+                                                                <div class="card__row card__stats-row">
+                                                                
+                                                                    <div class="card__col card__stats-item">
+                                                                        <div class="card__stats-title">
+                                                                            <span>Подписчики</span>
+                                                                        </div>
+                                                                        <div class="card__stats-val">
+                                                                            <span>108 729</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card__col card__stats-item">
+                                                                        <div class="card__stats-title">
+                                                                            <span>Просмотры</span>
+                                                                        </div>
+                                                                        <div class="card__stats-val">
+                                                                            <span>800</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card__row card__stats-row">
+                        
+                                                                    <div class="card__col card__stats-item">
+                                                                        <div class="card__stats-title">
+                                                                            <span>ER</span>
+                                                                        </div>
+                                                                        <div class="card__stats-val">
+                                                                            <span>51%</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card__col card__stats-item">
+                                                                        <div class="card__stats-title">
+                                                                            <span>CPM</span>
+                                                                        </div>
+                                                                        <div class="card__stats-val">
+                                                                            <span>263₽</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__col card__column--gender" >
+                                                                <div class="card__stats-title">
+                                                                    <span>Пол аудитории</span>
+                                                                </div>
+                                                                <div class="card__row" style="align-items: center; gap:5px">
+                                                                    <div class="card__diagram-icon" ><img src="img/blogers-list/male-icon.svg" alt="" ></div>
+                                                                    <div class="card__diagram-line" ><span style="width:50%;" ></span></div>
+                                                                    <div class="card__diagram-icon" ><img src="img/blogers-list/female-icon.svg" alt="" ></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__row card__row" style="gap:12px">
+                                                                <button class = "btn btn-primary" data-project-id="">
+                                                                    Принять
+                                                                </button>
+                                                                <button class = "btn btn-secondary" data-project-id="">
+                                                                    Отклонить
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="list-blogers__item bloger-item card" data-id="1">
+                                                    <div class="card__row card__content">
+                                                        <div class="card__col">
+                                                            <div class="card__row card__header">
+                                                                <div class="card__img">
+                                                                    <img src="img/profile-icon.svg" alt="">
+                                                                    <div class="card__achive">
+                                                                        <img src="img/achive-icon.svg" alt="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card__name">
+                                                                    <p class = "card__name-name">
+                                                                        Чертовски мило
+                                                                    </p>
+                                                                </div>
+                                                                <div class="card__platform">
+                                                                    <img src="img/inst-icon.svg" alt="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__row card__tags">
+                                                                <div class="card__tags-item">
+                                                                    <span>Животные и Природа</span>
+                                                                </div>
+                                                                <div class="card__tags-item">
+                                                                    <span>Развлечения и Юмор</span>
+                                                                </div>
+                                                                <div class="card__tags-item">
+                                                                    <span>Другое</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__row card__desc-title">
+                                                                <p style="font-weight: 500; font-size: 18px;">
+                                                                    Сообщение от блогера
+                                                                </p>
+                                                            </div>
+                                                            <div class="card__row card__desc">
+                                                                <p>
+                                                                    Коллекция позитивных, светлых  и чертовски милых  видео!
+                                                                    Платёжеспособная женская аудитория от 25 лет
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card__col card__stats">
+                                                            <div class="card__col card__stats-stats">
+                                                                <div class="card__row card__stats-row">
+                                                                
+                                                                    <div class="card__col card__stats-item">
+                                                                        <div class="card__stats-title">
+                                                                            <span>Подписчики</span>
+                                                                        </div>
+                                                                        <div class="card__stats-val">
+                                                                            <span>108 729</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card__col card__stats-item">
+                                                                        <div class="card__stats-title">
+                                                                            <span>Просмотры</span>
+                                                                        </div>
+                                                                        <div class="card__stats-val">
+                                                                            <span>800</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="card__row card__stats-row">
+                        
+                                                                    <div class="card__col card__stats-item">
+                                                                        <div class="card__stats-title">
+                                                                            <span>ER</span>
+                                                                        </div>
+                                                                        <div class="card__stats-val">
+                                                                            <span>51%</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="card__col card__stats-item">
+                                                                        <div class="card__stats-title">
+                                                                            <span>CPM</span>
+                                                                        </div>
+                                                                        <div class="card__stats-val">
+                                                                            <span>263₽</span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__col card__column--gender" >
+                                                                <div class="card__stats-title">
+                                                                    <span>Пол аудитории</span>
+                                                                </div>
+                                                                <div class="card__row" style="align-items: center; gap:5px">
+                                                                    <div class="card__diagram-icon" ><img src="img/blogers-list/male-icon.svg" alt="" ></div>
+                                                                    <div class="card__diagram-line" ><span style="width:50%;" ></span></div>
+                                                                    <div class="card__diagram-icon" ><img src="img/blogers-list/female-icon.svg" alt="" ></div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__row card__row" style="gap:12px">
+                                                                <button class = "btn btn-primary" data-project-id="">
+                                                                    Принять
+                                                                </button>
+                                                                <button class = "btn btn-secondary" data-project-id="">
+                                                                    Отклонить
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="profile-projects__row profile-projects__statistics projects-statistics">
+                                                <div class="projects-statistics__title">
+                                                    Статистика по товару
+                                                </div>
+                                                <div class="view-project__props view-project__props--desktop">
+                                                    <div class="view-project__props-wrap">
+                                                        <div class="view-project__props-total">
+                                                            <div class="view-project__props-orders">
+                                                                Заказы за 30 дн<br>
+                                                                <span class="count">2 637 шт</span>
+                                                            </div>
+                                                            <div class="view-project__props-money">
+                                                                Выручка за 30 дн<br>
+                                                                <span class="money">4 750 732 ₽</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="view-project__props-graph">
+                                                            <canvas id="orders-graph-desktop" class="" ></canvas>
+                                                            <canvas id="prices-graph-desktop" class="" ></canvas>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="view-project__props view-project__props--mobile">
+                                                    <div class="view-project__props-wrap">
+                                                        <div class="view-project__props-orders">
+                                                            Заказы за 30 дн<br>
+                                                            <span class="count">2 637 шт</span>
+                                                        </div>
+                                                        <canvas id="orders-graph-mobile" class="" ></canvas>
+                                                    </div>
+                                                    <div class="view-project__props-wrap">
+                                                        <div class="view-project__props-money">
+                                                            Выручка за 30 дн<br>
+                                                            <span class="money">4 750 732 ₽</span>
+                                                        </div>
+                                                        <canvas id="prices-graph-mobile" class="" ></canvas>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="profile-projects__control-btns">
+                                                <div class="profile-projects__edit">
+                                                    <img src="img/pencil-icon.svg" alt="">
+                                                </div>
+                                                <div class="profile-projects__hide">
+                                                    <img src="img/eye-icon.svg" alt="">
+                                                </div>
+                                                <div class="profile-projects__delete">
+                                                    <img src="img/delete-icon.svg" alt="">
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="planItem__container">
-                                            <div class="planItem planItem--free">
-                                                <div class="card">
-                                                    <div class="card__header">
-                                                        <!-- <div class="card__icon symbol"></div> -->
-                                                        <h2>Начальный</h2>
-                                                        <!-- <div class="card__label label">Best Value</div> -->
+                                    </div>
+                                </div>
+                                <div class="profile-projects__filters">
+                                    <div class="projects-list__filter filter">
+                                        <div class="filter__body">
+                                            <div class="filter__top">
+                                                <p class = "filter__title">
+                                                    Фильтр
+                                                </p>
+                                                <a href="#" class="filter__reset">
+                                                    Сбросить
+                                                </a>
+                                            </div>
+                                            <div class="filter__items">
+                                                <div class="form-group filter__item">
+                                                    <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию">
+                                                </div>
+                                                <div class="form-group filter__item">
+                                                    <label for="">Формат рекламы</label>
+                                                    <select name="filter-format" id="filter-format" class = "input">
+                                                        <option value="1" class="">Отзыв на товар</option>
+                                                        <option value="2" class="">Рекламная интеграция(Instagram)</option>
+                                                        <option value="3" class="">Рекламная интеграция(Youtube)</option>
+                                                        <option value="4" class="">Другие площадки для интеграций</option>
+                                                        <option value="5" class="">Платные интеграции</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group filter__item">
+                                                    <label for="">Страна</label>
+                                                    <select name="filter-country" id="filter-country" class = "input">
+                                                        <option value="1" class="">Россия</option>
+                                                        <option value="2" class="">Казахстан</option>
+                                                        <option value="3" class="">Грузия</option>
+                                                    </select>
+                                                </div>
+                
+                                                <div class="filter__btns">
+                                                    <button class="btn btn-primary btn-filter-send">Применить</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profile-blogers tab-content" id = "profile-blogers-list">
+                                <div class="profile-blogers__body">
+                                    <div class="profile-projects__title title">
+                                        Список блогеров
+                                    </div>
+                                    <div class="blogers-list__list list-blogers">
+                                        <div class="list-blogers__item bloger-item card" data-id="1">
+                                            <div class="card__row card__content">
+                                                <div class="card__col">
+                                                    <div class="card__row card__header">
+                                                        <div class="card__img">
+                                                            <img src="img/profile-icon.svg" alt="">
+                                                            <div class="card__achive">
+                                                                <img src="img/achive-icon.svg" alt="">
+                                                            </div>
+                                                        </div>
+                                                        <div class="card__name">
+                                                            <p class = "card__name-name">
+                                                                Чертовски мило
+                                                            </p>
+                                                        </div>
+                                                        <div class="card__platform">
+                                                            <img src="img/inst-icon.svg" alt="">
+                                                        </div>
                                                     </div>
-                                                    <div class="card__desc">Оплатив этот тариф вы получите возможность создавать интеграции</div>
+                                                    <div class="card__row card__tags">
+                                                        <div class="card__tags-item">
+                                                            <span>Животные и Природа</span>
+                                                        </div>
+                                                        <div class="card__tags-item">
+                                                            <span>Развлечения и Юмор</span>
+                                                        </div>
+                                                        <div class="card__tags-item">
+                                                            <span>Другое</span>
+                                                        </div>
                                                     </div>
-                                            
-                                                    <div class="price">2500 ₽<span>/ месяц</span></div>
-                                            
-                                                    <ul class="featureList">
-                                                    <li>Поддержка чата</li>
-                                                    <li>Возможность создавать 500 интеграций в месяц</li>
-                                                    </ul>
-                                            
-                                                    <button class="btn btn-primary" style="max-width:160px">Оплатить</button>
+                                                    <div class="card__row card__desc">
+                                                        <p>
+                                                            Коллекция позитивных, светлых  и чертовски милых  видео!
+                                                            Платёжеспособная женская аудитория от 25 лет
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="card__col card__stats">
+                                                    <div class="card__col card__stats-stats">
+                                                        <div class="card__row card__stats-row">
+                                                        
+                                                            <div class="card__col card__stats-item">
+                                                                <div class="card__stats-title">
+                                                                    <span>Подписчики</span>
+                                                                </div>
+                                                                <div class="card__stats-val">
+                                                                    <span>108 729</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__col card__stats-item">
+                                                                <div class="card__stats-title">
+                                                                    <span>Просмотры</span>
+                                                                </div>
+                                                                <div class="card__stats-val">
+                                                                    <span>800</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card__row card__stats-row">
+                
+                                                            <div class="card__col card__stats-item">
+                                                                <div class="card__stats-title">
+                                                                    <span>ER</span>
+                                                                </div>
+                                                                <div class="card__stats-val">
+                                                                    <span>51%</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card__col card__stats-item">
+                                                                <div class="card__stats-title">
+                                                                    <span>CPM</span>
+                                                                </div>
+                                                                <div class="card__stats-val">
+                                                                    <span>263₽</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card__col card__column--gender" >
+                                                        <div class="card__stats-title">
+                                                            <span>Пол аудитории</span>
+                                                        </div>
+                                                        <div class="card__row" style="align-items: center; gap:5px">
+                                                            <div class="card__diagram-icon" ><img src="img/blogers-list/male-icon.svg" alt="" ></div>
+                                                            <div class="card__diagram-line" ><span style="width:50%;" ></span></div>
+                                                            <div class="card__diagram-icon" ><img src="img/blogers-list/female-icon.svg" alt="" ></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card__row card__row">
+                                                        <button class = "btn btn-primary btn-add-to-project" data-project-id="">
+                                                            Добавить
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="blogers-list__filter filter">
+                                    <div class="filter__body">
+                                        <div class="filter__top">
+                                            <p class = "filter__title">
+                                                Фильтр
+                                            </p>
+                                            <a href="#" class="filter__reset">
+                                                Сбросить
+                                            </a>
+                                        </div>
+                                        <div class="filter__items">
+                                            <div class="form-group filter__item">
+                                                <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию">
+                                            </div>
+                                            <div class="form-group filter__item">
+                                                <label for="">Категория</label>
+                                                <select name="filter-cat" id="filter-cat" class = "input">
+                                                    <option value="1" class="">IT Сфера</option>
+                                                    <option value="2" class="">Образование</option>
+                                                    <option value="3" class="">Отдых</option>
+                                                    <option value="3" class="">Полезное</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group filter__item">
+                                                <label for="">Платформа</label>
+                                                <select name="filter-platform" id="filter-platform" class = "input">
+                                                    <option value="1" class="">Youtube</option>
+                                                    <option value="2" class="">Telegram</option>
+                                                    <option value="3" class="">Instagram</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group filter__item">
+                                                <label for="">Пол блогера</label>
+                                                <div class="filter__item--sex">
+                                                    <div class="input-checkbox-w">
+                                                        <input type="checkbox" class = "checkbox" id = "male">
+                                                        <label for="male">Мужской</label>
+                                                    </div>
+                                                    <div class="input-checkbox-w">
+                                                        <input type="checkbox" class = "checkbox" id = "female">
+                                                        <label for="femail">Женский</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group filter__item">
+                                                <label for="">Количество подписчиков</label>
+                                                <div class="input-range-w">
+                                                    <input id = "subs-range" name="" type="range" class="input input-range" min="5" max="1200000">
+                                                    <div class="input-range-content">
+                                                        <input id="subs-min" type="number" class="input input-number" value = "5">
+                                                        <input id="subs-max" type="number" class="input input-number" value = "1200000">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group filter__item">
+                                                <label for="">Страна блогера</label>
+                                                <select name="filter-country" id="filter-country" class = "input">
+                                                    <option value="1" class="">Россия</option>
+                                                    <option value="2" class="">Казахстан</option>
+                                                    <option value="3" class="">Грузия</option>
+                                                </select>
+                                            </div>
+            
+                                            <div class="filter__btns">
+                                                <button class="btn btn-primary btn-filter-send">Применить</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="profile-chat tab-content" id = "chat">
+                                <div class="profile-chat__body">
+                                    <div class="profile-projects__title title">
+                                        Переписка с блогерами
+                                    </div>
+                                    <div class="profile-tabs__content-item">
+                                        <div class="tab-content__chat chat">
+                                            <div class="chat__body">
+                                                <div class="chat__left">
+                                                    <div class="chat__chat-items">
+                                                        <div class="chat__chat-item item-chat current">
+                                                            <div class="item-chat__img">
+                                                                <img src="img/profile-icon.svg" alt="">
+                                                            </div>
+                                                            <div class="item-chat__text">
+                                                                <div class="item-chat__title">Vysokoff SEO - продвижение и заработок</div>
+                                                                <div class="item-chat__last-msg">
+                                                                    <p>Последнее сообщение:</p>
+                                                                    <span> 12.04.24 - 12:20</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="chat__right">
+                                                    <div class="chat__messages messages-chat">
+                                                        <div class="messages-chat__item messages-chat__item--author">
+                                                            <div class="messages-chat__item-header">
+                                                                <div class="messages-chat__item-title">
+                                                                    Иван Иванов
+                                                                </div>
+                                                                <div class="messages-chat__item-date">
+                                                                    12.04.24 12:20
+                                                                </div>
+                                                            </div>
+                                                            <div class="messages-chat__item-msg">
+                                                                Здравствуйте! Какие у нас результаты по проекту?
+                                                            </div>
+                                                        </div>
+                                                        <div class="messages-chat__item">
+                                                            <div class="messages-chat__item-header">
+                                                                <div class="messages-chat__item-title">
+                                                                    Vysokoff SEO - продвижение и заработок
+                                                                </div>
+                                                                <div class="messages-chat__item-date">
+                                                                    12.04.24 12:20
+                                                                </div>
+                                                            </div>
+                                                            <div class="messages-chat__item-msg">
+                                                                Здравствуйте! Все отлично, сегодня в 6 вечера по мск скину результаты!
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="chat__messages messages-create">
+                                                        <div class="textarea-w">
+                                                            <div class="textarea-upload">
+                                                                <svg fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg" class="base-0-2-1" ie-style=""><path clip-rule="evenodd" d="m14.9502 3.80108c-1.0653-1.06811-2.7917-1.06811-3.857 0l-5.53401 5.54845c-1.74559 1.75017-1.74559 4.58847 0 6.33867 1.7445 1.7491 4.57211 1.7491 6.31661 0l.0025-.0026 2.8799-2.8595c.294-.2918.7688-.2901 1.0607.0038.2918.2939.2901.7688-.0038 1.0606l-2.8773 2.857-.0013.0013c-2.3307 2.3354-6.1092 2.3349-8.43936-.0013-2.32952-2.3356-2.32952-6.1216 0-8.45724l5.53396-5.54845c1.6514-1.65575 4.3297-1.65575 5.9811 0 1.6504 1.65465 1.6504 4.33657 0 5.99123l-5.5339 5.54846c-.97226.9748-2.54938.9748-3.52162 0-.97115-.9737-.97115-2.5516 0-3.5253l.0024-.0024 3.10232-3.08243c.2939-.29195.7688-.29042 1.0607.00341.292.29383.2904.7687-.0034 1.06065l-3.09997 3.08007-.00102.001c-.38619.3883-.38586 1.0178.00102 1.4057.38613.3872 1.01136.3872 1.3975 0l5.53397-5.54844c1.0664-1.06918 1.0664-2.80349 0-3.87268z" fill="currentColor" fill-rule="evenodd"></path></svg>
+                                                                <div class="textarea-upload__text">
+                                                                    Прикрепите файл
+                                                                </div>
+                                                            </div>
+                                                            <textarea name="" id="" placeholder="Введите текст" class = "messages-create__textarea textarea"></textarea>
+                                                        </div>
+                                                        <div class="chat__btns" style="display: flex; flex-wrap: wrap; gap:8px;">
+                                                            <button class="btn btn-primary">Отправить</button>
+                                                            <a href="" class="btn btn-secondary">Подтвердить выполнение проекта</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -711,5 +1560,509 @@
         </div>
     </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var mediaQuery = window.matchMedia('(max-width: 911px)');
+
+    var coverageGraph;
+
+    if (mediaQuery.matches) {
+        coverageGraph = document.getElementById('coverage-graph');
+        erGraph = document.getElementById('er');
+        cpmGraph = document.getElementById('cpm');
+        pGraph = document.getElementById('projects');
+    }
+    else{
+        coverageGraph = document.getElementById('coverage-graph');
+        erGraph = document.getElementById('er');
+        cpmGraph = document.getElementById('cpm');
+        pGraph = document.getElementById('projects');
+    }
+
+    var data = {
+        "orders": 2637,
+        "earnings": 4750732.0,
+        "sale_percent": 0.0,
+        "fromDate": "2021-04-03",
+        "prices_history": [
+            {
+                "dt": "2024-04-18",
+                "price": 1684.0
+            },
+            {
+                "dt": "2024-04-19",
+                "price": 1725.0
+            },
+            {
+                "dt": "2024-04-20",
+                "price": 1725.0
+            },
+            {
+                "dt": "2024-04-21",
+                "price": 1725.0
+            },
+            {
+                "dt": "2024-04-22",
+                "price": 1704.0
+            },
+            {
+                "dt": "2024-04-23",
+                "price": 1776.0
+            },
+            {
+                "dt": "2024-04-24",
+                "price": 1848.0
+            },
+            {
+                "dt": "2024-04-25",
+                "price": 1725.0
+            },
+            {
+                "dt": "2024-04-26",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-04-27",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-04-28",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-04-29",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-04-30",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-05-01",
+                "price": 1949.0
+            },
+        ],
+     } 
+    
+
+    new Chart(coverageGraph, {
+        type: 'bar',
+        data: {
+            labels: data.prices_history.map(item=>item.dt.split('-')[2]),
+            datasets: [
+                {
+                    label: 'Охваты',
+                    data: data.prices_history.map(item=>item.price),
+                }
+            ]
+        },
+        options: {
+            scales: {
+            y: {
+                beginAtZero: true
+            }
+            }
+        }
+    });
+   
+   
+    var labels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    var data = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'ER',
+                data: [10, 32, 45, 9, 55, 89, 123, 15, 102, 11, 15, 245],
+                borderColor: '#FE5E00',
+                backgroundColor: '#FAF5EF',
+            },
+        ]
+    };
+   
+    new Chart(erGraph, {
+        type: 'line',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+            legend: {
+                position: 'top',
+            },
+            }
+        },
+    });
+
+
+    var labels = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+    var data = {
+        labels: labels,
+        datasets: [
+            {
+                label: 'CPM',
+                data: [144, 12, 555, 9, 55, 123, 123, 15, 102, 11, 51, 245],
+                borderColor: '#FE5E00',
+                backgroundColor: '#FAF5EF',
+            },
+        ]
+    };
+   
+    new Chart(cpmGraph, {
+        type: 'line',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+            legend: {
+                position: 'top',
+            },
+            }
+        },
+    });
+
+    var data = {
+        labels: ['Всего', 'Выполнено'],
+        datasets: [
+            {
+            label: 'Интеграции',
+            data: [126, 120],
+            backgroundColor: ['#98CBED','#FE5E00'],
+            }
+        ]
+        };
+   
+    new Chart(pGraph, {
+        type: 'pie',
+        data: data,
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+            }
+        },
+    });
+</script>
+<script src="libs/owl/owl.carousel.min.js"></script>
+<script src="libs/meter/script.js"></script>
+<script>
+    var mediaQuery = window.matchMedia('(max-width: 911px)');
+
+    var prices_ctx, orders_ctx;
+
+    if (mediaQuery.matches) {
+        prices_ctx = document.getElementById('prices-graph-mobile');
+        orders_ctx = document.getElementById('orders-graph-mobile');
+    }
+    else{
+        prices_ctx = document.getElementById('prices-graph-desktop');
+        orders_ctx = document.getElementById('orders-graph-desktop');
+    }
+
+
+    // $.ajax({
+    //     url: 'https://anabar.ai/api/chrome/v1/product/wb/25633521',
+    //     data:{},
+    //     method: 'GET',
+    //     success: (data)=>{
+    //         console.log(data);
+    //     }
+    // })
+    var data = {
+        "orders": 2637,
+        "earnings": 4750732.0,
+        "sale_percent": 0.0,
+        "fromDate": "2021-04-03",
+        "prices_history": [
+            {
+                "dt": "2024-04-10",
+                "price": 1603.0
+            },
+            {
+                "dt": "2024-04-11",
+                "price": 1603.0
+            },
+            {
+                "dt": "2024-04-12",
+                "price": 1603.0
+            },
+            {
+                "dt": "2024-04-13",
+                "price": 1603.0
+            },
+            {
+                "dt": "2024-04-14",
+                "price": 1603.0
+            },
+            {
+                "dt": "2024-04-15",
+                "price": 1603.0
+            },
+            {
+                "dt": "2024-04-16",
+                "price": 1684.0
+            },
+            {
+                "dt": "2024-04-17",
+                "price": 1684.0
+            },
+            {
+                "dt": "2024-04-18",
+                "price": 1684.0
+            },
+            {
+                "dt": "2024-04-19",
+                "price": 1725.0
+            },
+            {
+                "dt": "2024-04-20",
+                "price": 1725.0
+            },
+            {
+                "dt": "2024-04-21",
+                "price": 1725.0
+            },
+            {
+                "dt": "2024-04-22",
+                "price": 1704.0
+            },
+            {
+                "dt": "2024-04-23",
+                "price": 1776.0
+            },
+            {
+                "dt": "2024-04-24",
+                "price": 1848.0
+            },
+            {
+                "dt": "2024-04-25",
+                "price": 1725.0
+            },
+            {
+                "dt": "2024-04-26",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-04-27",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-04-28",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-04-29",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-04-30",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-05-01",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-05-02",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-05-03",
+                "price": 1949.0
+            },
+            {
+                "dt": "2024-05-04",
+                "price": 1925.0
+            },
+            {
+                "dt": "2024-05-05",
+                "price": 1925.0
+            },
+            {
+                "dt": "2024-05-06",
+                "price": 1925.0
+            },
+            {
+                "dt": "2024-05-07",
+                "price": 1925.0
+            },
+            {
+                "dt": "2024-05-08",
+                "price": 1925.0
+            },
+            {
+                "dt": "2024-05-09",
+                "price": 1925.0
+            }
+        ],
+        "orders_history": [
+        {
+            "dt": "2024-04-10",
+            "orders": 64.0
+        },
+        {
+            "dt": "2024-04-11",
+            "orders": 70.0
+        },
+        {
+            "dt": "2024-04-12",
+            "orders": 61.0
+        },
+        {
+            "dt": "2024-04-13",
+            "orders": 62.0
+        },
+        {
+            "dt": "2024-04-14",
+            "orders": 69.0
+        },
+        {
+            "dt": "2024-04-15",
+            "orders": 66.0
+        },
+        {
+            "dt": "2024-04-16",
+            "orders": 105.0
+        },
+        {
+            "dt": "2024-04-17",
+            "orders": 105.0
+        },
+        {
+            "dt": "2024-04-18",
+            "orders": 106.0
+        },
+        {
+            "dt": "2024-04-19",
+            "orders": 105.0
+        },
+        {
+            "dt": "2024-04-20",
+            "orders": 101.0
+        },
+        {
+            "dt": "2024-04-21",
+            "orders": 133.0
+        },
+        {
+            "dt": "2024-04-22",
+            "orders": 118.0
+        },
+        {
+            "dt": "2024-04-23",
+            "orders": 129.0
+        },
+        {
+            "dt": "2024-04-24",
+            "orders": 118.0
+        },
+        {
+            "dt": "2024-04-25",
+            "orders": 83.0
+        },
+        {
+            "dt": "2024-04-26",
+            "orders": 74.0
+        },
+        {
+            "dt": "2024-04-27",
+            "orders": 78.0
+        },
+        {
+            "dt": "2024-04-28",
+            "orders": 68.0
+        },
+        {
+            "dt": "2024-04-29",
+            "orders": 111.0
+        },
+        {
+            "dt": "2024-04-30",
+            "orders": 102.0
+        },
+        {
+            "dt": "2024-05-01",
+            "orders": 100.0
+        },
+        {
+            "dt": "2024-05-02",
+            "orders": 58.0
+        },
+        {
+            "dt": "2024-05-03",
+            "orders": 62.0
+        },
+        {
+            "dt": "2024-05-04",
+            "orders": 74.0
+        },
+        {
+            "dt": "2024-05-05",
+            "orders": 89.0
+        },
+        {
+            "dt": "2024-05-06",
+            "orders": 99.0
+        },
+        {
+            "dt": "2024-05-07",
+            "orders": 109.0
+        },
+        {
+            "dt": "2024-05-08",
+            "orders": 64.0
+        },
+        {
+            "dt": "2024-05-09",
+            "orders": 54.0
+        }
+    ]
+    } 
+    
+    var orders = data.orders_history.map(item=>item.orders);
+    var prices = data.prices_history.map(item=>item.price);
+    var date = data.prices_history.map(item=>item.dt.split('-')[2]);
+
+    console.log(orders, prices, date);
+
+    new Chart(orders_ctx, {
+        type: 'bar',
+        data: {
+            labels: data.prices_history.map(item=>item.dt.split('-')[2]),
+            datasets: [
+                {
+                    label: 'Заказы',
+                    data: data.orders_history.map(item=>item.orders),
+                }
+            ]
+        },
+        options: {
+            scales: {
+            y: {
+                beginAtZero: true
+            }
+            }
+        }
+    });
+    new Chart(prices_ctx, {
+        type: 'bar',
+        data: {
+            labels: data.prices_history.map(item=>item.dt.split('-')[2]),
+            datasets: [
+                {
+                    label: 'Выручка',
+                    data: data.prices_history.map(item=>item.price),
+                }
+            ]
+        },
+        options: {
+            scales: {
+            y: {
+                beginAtZero: true
+            }
+            }
+        }
+    });
+</script>
 <script src = "js/script.js"></script>
 </html>

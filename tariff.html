@@ -12,26 +12,28 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="css/style.css">
-
-    <link rel="stylesheet" href="libs/owl/owl.carousel.min.css">
-    <link rel="stylesheet" href="libs/owl/owl.theme.default.css">
-
     <script
     src="https://code.jquery.com/jquery-3.7.1.min.js"
     integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
     crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
 
-    <title>Профиль</title>
+    <link rel="stylesheet" href="libs/owl/owl.carousel.min.css">
+    <link rel="stylesheet" href="libs/owl/owl.theme.default.css">
+
+    <link rel="stylesheet" href="libs/meter/style.css">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <title>Тарифы</title>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="wrapper" style="background-color: #fff;">
         <div class="burger-menu">
             <div class="burger-menu__body">
                 <div class="burger-menu__profile">
                     <a href="#" class="header__profile-w header__profile-burger">
-                        <img src="../img/profile-icon.svg" alt="" class="header__profile">
+                        <img src="img/profile-icon.svg" alt="" class="header__profile">
                         <span class="header__profile-name">
                             Алексей Андреев
                         </span>
@@ -40,29 +42,29 @@
                 <div class="header__profile-items--mobile header__profile-items header__row">
                     <a href="#" class="header__col header__tariffs" title="Тарифы">
                         
-                        <img src="../img/tariff-icon.svg" alt="" class="">
+                        <img src="img/tariff-icon.svg" alt="" class="">
                     </a>
                     <a href="#" class="header__col header__chat" title="Чат">
                         <div class="header__profile-notif">
                             1
                         </div>
-                        <img src="../img/chat-icon.svg" alt="" class="">
+                        <img src="img/chat-icon.svg" alt="" class="">
                     </a>
                     <a href="#" class="header__col header__notif" title="Уведомления">
                         <div class="header__profile-notif">
                             1
                         </div>
-                        <img src="../img/notif-icon.svg" alt="" class="">
+                        <img src="img/notif-icon.svg" alt="" class="">
                     </a>
                 </div>
                 <div class="burger-menu__nav nav-burger">
-                    <a href="#" class="nav-burger__link nav__link">Главная</a>
+                    <a href="#" class="nav-burger__link nav__link">Дашборд</a>
                     <a href="#" class="nav-burger__link nav__link">База знаний</a>
                     <a href="#" class="nav-burger__link nav__link">Инструкции</a>
                     <a href="#" class="nav-burger__link nav__link">Кейсы</a>
                 </div>
                 <a href="#" class="burger-menu__close">
-                    <img src="../img/close-icon.svg" alt="">
+                    <img src="img/close-icon.svg" alt="">
                 </a>
 
                 <div class="burger-contacts">
@@ -81,35 +83,48 @@
             <div class="header__container _container">
                 <div class="header__body">
                     <div class="logo header__logo-w">
-                        <img src="../img/logo.svg" alt="" class = "logo__logo header__logo">
+                        <img src="img/logo.svg" alt="" class = "logo__logo header__logo">
                     </div>
                     <nav class="nav header__nav">
                         <div class="nav__items">
                             <a href="" class="nav__link">
-                                Главная
+                                Дашборд
                             </a>
-                            <a href="" class="nav__link">
+                            <a href="" class="nav__link disabled">
                                 База знаний
                             </a>
-                            <a href="" class="nav__link">
+                            <a href="" class="nav__link disabled">
                                 Инструкции
                             </a>
-                            <a href="" class="nav__link">
+                            <a href="" class="nav__link disabled">
                                 Кейсы
                             </a>
                         </div>
                     </nav>
                     <div class=" header__profile-items header__profile-items--desktop header__row">
+
+                        <div href="#" class="header__col header__tarrif tarrif-header" >
+                            Ваш тариф — Стандарт
+                            <div class="tarrif-header__items">
+                                <div class="tarrif-header__item tarrif-header__adv">
+                                    Рекламные посты <b><span class = "counter">12</span> шт.</b>
+                                    <div class="tarrif-header__date">
+                                        02 Мая — 02 Июня
+                                    </div> 
+                                    <a href="#" class="tarrif-header__buy">Продлить</a>
+                                </div>
+                            </div>
+                        </div>
                         <a href="#" class="header__col header__notif" title="Уведомления">
                             <div class="header__profile-notif">
                                 1
                             </div>
-                            <img src="../img/notif-icon.svg" alt="" class="">
+                            <img src="img/notif-icon.svg" alt="" class="">
                             <div class="header__notif-items notif-header">
                                 <div class="notif-header__items">
                                     <div class="notif-header__row ">
                                         <div class="notif-header__col notif-header__img">
-                                            <img src="../img/profile-icon.svg" alt="">
+                                            <img src="img/profile-icon.svg" alt="">
                                         </div>
                                         <div class="notif-header__col">
                                             <div class="notif-header__title">
@@ -124,18 +139,21 @@
                             </div>
                         </a>
                         <div href="#" class="header__profile-w header__profile-header">
-                            <img src="../img/profile-icon.svg" alt="" class="header__profile">
+                            <img src="img/profile-icon.svg" alt="" class="header__profile">
                             <div class="header__profile-col">
                                 <span class="header__profile-name">
                                     Алексей Андреев
                                 </span>
                                 <span class="header__profile-org">
-                                    Чертовски мило
+                                    Организация (ИП, ООО и тд)
                                 </span>
                             </div>
                             <div class="header__profile-settings">
                                 <a href="#" class="row">
                                     Личные данные 
+                                </a>
+                                <a href="#" class="row">
+                                    Тарифы 
                                 </a>
                                 <a href="#" class="row">
                                     Выход
@@ -144,112 +162,50 @@
                         </div>
                     </div>
                     <a href="#" class="header__menu burger">
-                        <img src="../img/menu-icon.svg" alt="">
+                        <img src="img/menu-icon.svg" alt="">
                     </a>
                 </div>
             </div>
         </header>
         
-        <section class="user-view">
-            <div class="user-view__container _container">
-                <div class="user-view__body">
-                    <div class="user-view__info info-profile">
-                        <div class="info-profile__body">
-                            <div class="info-profile__row">
-                                <div class="info-profile__col info-profile__img">
-                                    <img src="img/profile-icon.svg" alt="">
-                                </div>
-                                <div class="info-profile__col">
-                                    <div class="info-profile__name">
-                                        Чертовски мило
-                                    </div>
-                                    <div class="info-profile__id">
-                                        На площадке с 20.12.23
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="info-profile__row info-profile__tags">
-                                <div class="info-profile__tags-title">
-                                    Дополнительная информация
-                                </div>
-                                <div class="info-profile__tags-items">
-                                    <div class="info-profile__tags-item">
-                                        Проверенный блогер
-                                    </div>
-                                </div>
-                                <div class="info-profile__tags-items">
-                                    <div class="info-profile__tags-item">
-                                        YouTube
-                                    </div>
-                                    <div class="info-profile__tags-item">
-                                        Instgram
-                                    </div>
-                                    <div class="info-profile__tags-item">
-                                        Telegram
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="info-profile__row info-profile__desc">
-                                <p>Мы любим животных и стараемся поддерживать тех из них, кому не посчастливилось иметь ласковых хозяев и тёплый кров. </p>
-                            </div>
-                        </div>
+        <section class="tariff">
+            <div class="tariff__container  _container">
+                <div class="tariff__body">
+                    <div class="tariff__title title">
+                        Тарифы
                     </div>
-                    <div class="user-view__projects">
-                        <div class="profile-projects tab-content active" id = "my-projects">
-                            <div class="profile-projects__body">
-                                <div class="profile-projects__title title">
-                                    Список выполненных интеграций
+                    <div class="profile-tabs__content-item">
+                        <div class="tab-content__plans plans">
+                            <div class="plans__body">
+                                <div class="plans__current">
+                                    <div class="plans__current-item">
+                                        <p class="plans__current-title">
+                                            Ваш текущий тариф: <span>Начальный</span>
+                                        </p>
+                                    </div>
+                                    <div class="plans__current-item">
+                                        <p class="plans__current-title">
+                                            Заявок осталось: <span>123</span>
+                                        </p>
+                                    </div>
                                 </div>
-                                <div class="list-projects__items">
-                                    <div class="list-projects__item project-item">
-                                        <div class="owl-carousel project-item__carousel">
-                                            <div class="project-item__img">
-                                                <img src="img/projects-list/1.webp" alt="">
-                                                <div class="project-item__status active">
-                                                    Активно
-                                                </div>
-                                                <div class="project-item__country">
-                                                    Россия
-                                                </div>
-                                            </div>
-                                            <div class="project-item__img">
-                                                <img src="img/projects-list/1.webp" alt="">
-                                                <div class="project-item__status active">
-                                                    Активно
-                                                </div>
-                                                <div class="project-item__country">
-                                                    Россия
-                                                </div>
-                                            </div>
-                                            <div class="project-item__img">
-                                                <img src="img/projects-list/1.webp" alt="">
-                                                <div class="project-item__status active">
-                                                    Активно
-                                                </div>
-                                                <div class="project-item__country">
-                                                    Россия
-                                                </div>
-                                            </div>
+                                <div class="planItem__container">
+                                    <div class="planItem planItem--free">
+                                        <div class="card">
+                                        <div class="card__header">
+                                            <h2>Начальный</h2>
                                         </div>
-                                        <div class="project-item__content">
-                                            <div class="project-item__title">
-                                                Цена — 1120 ₽
-                                            </div>
-                                            <a class="project-item__participants" title="Гель для душа парфюмированный, 1000 мл.">
-                                                Dk-studio / Гель для душа парфюмированный, 1000 мл.
-                                            </a>
-                                            <div class="project-item__format-tags card__row card__tags">
-                                                <div class="card__tags-item">
-                                                    <span>Рекламный пост</span>
-                                                </div>
-                                                <div class="card__tags-item">
-                                                    <span>Обзор на канале</span>
-                                                </div>
-                                                <div class="card__tags-item">
-                                                    <span>Другое</span>
-                                                </div>
-                                            </div>
+                                        <div class="card__desc">Оплатив этот тариф вы получите возможность создавать интеграции</div>
                                         </div>
+                                
+                                        <div class="price">2500 ₽<span>/ месяц</span></div>
+                                
+                                        <ul class="featureList">
+                                        <li>Поддержка чата</li>
+                                        <li>Возможность создавать 500 интеграций в месяц</li>
+                                        </ul>
+                                
+                                        <button class="btn btn-primary" style="max-width:160px">Оплатить</button>
                                     </div>
                                 </div>
                             </div>
@@ -314,16 +270,8 @@
                     Проект успешно создан
                 </div>
             </div>
-        </div>  
+        </div>
     </div>
 </body>
-<script src="libs/owl/owl.carousel.min.js"></script>
-<script>
-    $(".project-item__carousel").owlCarousel({
-        items: 1,
-        margin: 5,
-        dots: true
-    });
-</script>
 <script src = "js/script.js"></script>
 </html>

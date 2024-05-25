@@ -39,6 +39,8 @@ class CreateProject extends Quest {
             $(this).closest('.input-file').find('span').text('Изображение успешно загружено')
         })
 
+        $(node).find('.upload-files').find('.upload-files__plus').on('click', this.plusFile)
+
         return this;
     }
     saveUri = '#';
@@ -50,6 +52,12 @@ class CreateProject extends Quest {
         productPrice: 'Цена',
         format: 'Формат рекламы'
     }
+    newFileTemplate = `<div class="upload-files__item">
+                            <div class="upload-files__path">
+                               
+                            </div>
+                            <input type="file" hidden>
+                        </div>`
     dataProps = {
         projectName: {
             set: (value)=>{
@@ -97,6 +105,20 @@ class CreateProject extends Quest {
             }
         }
     }
+    plusFile = ()=>{
+        var plusBtn = $(this.node).find('.upload-files').find('.upload-files__plus');
+
+        $(this.newFileTemplate).insertBefore(plusBtn);
+        
+        var newFile = plusBtn.prev();
+        
+        newFile.find('input[type="file"]').on('change', function(){
+            var newFileName = $(this).prop('files')[0].name;
+
+            newFile.find('.upload-files__path').text(newFileName)
+        })
+        newFile.find('input[type="file"]').click();
+    }   
     sendData = ()=>{
         var questData = {}, isAnyFieldEmpty = false;
 
@@ -555,6 +577,35 @@ class PopupAddBlogerToProject extends Popup{//когда нибудь тут б�
     }
 }
 
+class DashboardTabs extends Tabs{
+    constructor(node){
+        super(node);
+
+        this.node = node;
+        $(this.node).find('.dashboard__tab').on('click', this.tabClick);
+
+        return this;
+    }
+    node = '';
+    dataProps = {
+        
+    }
+    tabClick = (e)=>{
+        var curTab = $(e.target);
+        if(curTab.hasClass('disabled')){
+            notify('info',{title: 'Внимание', message: 'Данный раздел находится в разработке'})
+
+            return;
+        }
+        $(this.node).find('.dashboard__tab').removeClass('active');
+        $(this.node).find('.dashboard__content').removeClass('active');
+
+        curTab.closest('.dashboard__tab').addClass('active');
+        $(`#${curTab.data('content')}`).addClass('active')
+    }
+
+}
+
 
 function notify(type, content){
     $('.notification').show()
@@ -570,6 +621,46 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
+    var dbTabs = new DashboardTabs('.dashboard');
+
+    $(document).on('click', '.tarrif-header', function(e){
+        $('.header__profile-items--desktop').children().not($(e.target).closest('.tarrif-header')).removeClass('active')
+        $(e.target).closest('.tarrif-header').toggleClass('active')
+    })
+    $(document).on('click', '.header__profile-w', function(e){
+        $('.header__profile-items--desktop').children().not($(e.target).closest('.header__profile-w')).removeClass('active')
+        $(e.target).closest('.header__profile-w').toggleClass('active')
+    })
+    $(document).on('click', '.header__notif', function(e){
+        $('.header__profile-items--desktop').children().not((e.target).closest('.header__notif')).removeClass('active')
+        $(e.target).closest('.header__notif').toggleClass('active')
+    })
+    
+    
+    $(document).on('click', '.profile-projects__item .btn-bloggers', function(e){
+        $(e.target).closest('.profile-projects__item').toggleClass('active-bloggers');
+        $(e.target).closest('.profile-projects__item').removeClass('active-statistics');
+        $(e.target).closest('.profile-projects__item').find('.owl-carousel').owlCarousel({
+            items: 2,
+            margin: 5,
+            nav: true,
+            responsive: {
+                1199: {
+                    items: 2
+                }
+            }
+        });
+    })
+
+    $(document).on('click', '.profile-projects__item .btn-statistics', function(e){
+        $(e.target).closest('.profile-projects__item').toggleClass('active-statistics');
+        $(e.target).closest('.profile-projects__item').removeClass('active-bloggers');
+    })
+    
+    $(document).on('click', '.profile-projects__item .profile-projects__blogers', function(e){
+        e.stopPropagation()
+    })
+    
     var quest = new CreateProject('.create-project__quest');
 
     // burger menu
@@ -609,7 +700,7 @@ $(window).on('load', function(){
 
 
     //profile
-    var profileTabs = new Tabs('.profile-tabs') 
+    var profileTabs = new Tabs('.profile__body') 
     var profileForm = new ProfileInfoForm('#info') 
 
     //popups
@@ -645,6 +736,12 @@ $(window).on('load', function(){
         notify('info',{title: 'Внимание', message: 'Данный формат рекламы находится в разработке'})
     })
     
+    $(document).find('.nav__link.disabled').on('click', function(e){
+        e.preventDefault()
+        $(e.target).closest('.input-checkbox-w').find('input').prop('checked', false);
+        notify('info',{title: 'Внимание', message: 'Данная страница находится в разработке'})
+    })
+
 })
 
 function ibg(){ 
