@@ -55,6 +55,7 @@ Route::prefix('apist')->group(function () {
     Route::post('/works/accept', [WorkController::class, 'acceptWorkByBlogger']);
 
     Route::post('/messages/create', [MessageController::class, 'store']);
+    Route::post('/messages/count', [MessageController::class, 'count']);
     Route::post('/messages', [MessageController::class, 'index']);
 
     Route::post('/tg', [AuthController::class, 'setTGPhone']);

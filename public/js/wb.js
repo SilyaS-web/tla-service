@@ -63,4 +63,15 @@ function getUrl(nm) {
     return `https://${o}/vol${n}/part${a}/${r}/info/price-history.json`;
 }
 
-console.log(getUrl(216290588));
+
+async function getStatistics(nm) {
+    let response = await fetch(getUrl(nm));
+
+    if (response.ok) {
+    return json = await response.json();
+    } else {
+      alert("Ошибка HTTP: " + response.status);
+    }
+}
+
+
