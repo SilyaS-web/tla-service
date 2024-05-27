@@ -229,7 +229,7 @@ a.btn:hover{
     height: 100%;
     padding:25px;
     max-width: 300px;
-    z-index: 1;
+    z-index: 9999;
     transition: right .2s linear;
 }
 .burger-menu.opened{
@@ -240,11 +240,41 @@ a.btn:hover{
 }
 .burger-menu__nav {
 }
+.burger-menu .header__col.header__notif{
+    width: 20px;
+    height: 20px;
+}
+.burger-menu .header__col .header__profile-notif{
+    top:-2px;
+    right: -3px;
+}
+.burger-menu .header__profile-org{
+    font-size: 10px;
+}
+.burger-menu .header__profile-name{
+    font-size: 12px;
+}
+.burger-menu .header__tarrif{
+    font-size: 12px;
+    margin-top: 8px;
+}
+.burger-menu .header__notif-items{
+    right:0;
+    width: 300px;
+}
+.burger-menu .notif-header__title{
+    font-size: 12px;
+}
+.burger-menu .notif-header__text{
+    font-size: 10px;
+}
+
 .nav-burger {
     display: flex;
     flex-direction: column;
     gap: 25px;
     margin-bottom: 30px;
+    margin-top: 30px;
 }
 .nav-burger__link {
 
@@ -1211,7 +1241,10 @@ a.btn:hover{
     gap: 30px;
 }
 .card__stats-row{
-    
+    gap: 8px;
+}
+.btn-bloggers.tablet{
+    display: none;
 }
 .card__stats-item {
     width:calc(50% - 20px); height:60px;
@@ -2742,6 +2775,44 @@ a.btn:hover{
     .projects-list__body{
         padding:0 15px;
     }
+
+    .nav-menu__item{
+        color:transparent;
+        font-size: 0;
+        width: 50px;
+        
+    }
+    .nav-menu__item::before{
+        width: 100%;
+        max-width: 20px;
+        margin-right: 0;
+    }
+    .nav-menu{
+        min-width: unset;
+    }
+
+    .header__logo-w{
+        margin-right: auto;
+    }
+    .header__nav{
+        display: none;
+    }
+    .header__profile-items--desktop{
+        display: none;
+    }
+    .header__profile-items--mobile{
+        display: flex;
+    }
+    .burger{
+        display: block;
+    }
+    .header__logo-w{
+        margin-right: auto;
+    }
+
+    .blogers-list__filter{
+        display: none;
+    }
 }
 @media(max-width:1200px){
     .blogers-list__filter{
@@ -2758,6 +2829,11 @@ a.btn:hover{
 
     .view-project__img{
         max-height: 375px;
+    }
+}
+@media(max-width:1180px){
+    .feedback-dashboard__fb-title{
+        font-size: 20px;
     }
 }
 @media(max-width:1150px){
@@ -2785,8 +2861,51 @@ a.btn:hover{
     .header__logo-w{
         margin-right: auto;
     }
+    .dashboard__row--integrations{
+        flex-direction: column;
+    }
+    .dashboard__row--dev{
+        flex-direction: column;
+    }
+    .dashboard__row--dev>*{
+        width: 100%;
+        max-width: unset;
+    }
+    .dashboard__item--cover{
+        max-width: unset;
+    }
+    .acc-statistics{
+        max-width: unset;
+    }
+
+    .profile-projects__info{
+        width: 100%;
+    }
+    .btn-bloggers{
+        display: none;
+    }
+    .btn-bloggers.tablet{
+        display: block;
+    }
+}
+@media(max-width:1130px){
+    .profile-projects__items{
+        max-width: unset;
+        width:calc(100% - 145px)
+    }
+}
+@media(max-width:1100px){
+    .dashboard__item--feedback{
+        flex-direction: column;
+    }
+    .dashboard__item--feedback>*{
+        width: 100%;    
+    }
 }
 @media(max-width:1045px){
+    .user-view__projects .project-item{
+        min-width: unset;
+    }
     .project-item{
         width: calc(100% / 2 - 10px);
     }
@@ -2830,6 +2949,10 @@ a.btn:hover{
     .current-tariff{
         display: none;
     }
+
+    .btn-statistics, .btn-bloggers{
+        margin-top: 25px;
+    }
 }
 @media(max-width:945px){
     .nav__link:not(:last-child){
@@ -2843,25 +2966,6 @@ a.btn:hover{
     }
 }
 @media(max-width:911px){
-    
-    .header__logo-w{
-        margin-right: auto;
-    }
-    .header__nav{
-        display: none;
-    }
-    .header__profile-items--desktop{
-        display: none;
-    }
-    .header__profile-items--mobile{
-        display: flex;
-    }
-    .burger{
-        display: block;
-    }
-    .header__logo-w{
-        margin-right: auto;
-    }
     .view-project__props--desktop{
         display: none;
     }
@@ -2916,6 +3020,9 @@ a.btn:hover{
     }
     .card__stats-stats{
         flex-direction: row;
+    }
+    .profile-projects__item .card__stats-stats{
+        flex-direction: column;
     }
 }
 @media(max-width:760px){
@@ -2998,9 +3105,6 @@ a.btn:hover{
     .footer__nav .nav__link:not(:last-child){
         margin-right: 10px;
     }
-    .project-item{
-        width: 100%;
-    }
     .projects-list__container{
         padding-left: 15px;
     }
@@ -3024,9 +3128,6 @@ a.btn:hover{
     .card__stats-item:not(:last-child){
         margin-right: 3%;
     }
-    .card__stats-stats{
-        gap:0;
-    }
     .card__btns--mobile{
         margin-top: 0;
     }
@@ -3037,6 +3138,71 @@ a.btn:hover{
     }
     .card__stats-row{
         width: calc(97% / 2);
+    }
+    .profile-projects__item .card__stats-row{
+        width: 100%;
+    }
+    .profile__body{
+        gap: 30px;
+    }
+    .profile-projects__item.active-bloggers .profile-projects__blogers{
+       
+    }
+    .profile-projects__items{
+        width:100%;
+    }
+    .profile-projects{
+        gap: 0;
+    }
+    .profile-projects__body{
+        width: 100%;
+    }
+    .nav-menu{
+        padding:45px 0px 0px 0px;
+    }
+    .dashboard__item--feedback{
+        padding:15px 15px 30px 15px;
+    }
+    .dashboard-sm__desc{
+        font-size: 18px;
+    }
+    .feedback-dashboard__fb-title{
+        font-size: 18px;
+    }
+    .dashboard-sm__desc{
+        gap: 15px;
+    }
+    .feedback-item__title{
+        font-size: 16px;
+    }
+    .feedback-item__stat{
+        font-size: 14px;
+    }
+    .er-statistics__body{
+        flex-direction: column;
+    }
+    .er-statistics__graph{
+        width: 100%;
+    }
+    .cpm-statistics__body{
+        flex-direction: column;
+    }
+    .cpm-statistics__graph{
+        width: 100%;
+    }
+
+    .profile-projects__btns{
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 25px!important;
+    }
+    .profile-projects__btns>*{
+        margin-top: 0;
+        width: fit-content;
+    }
+    .profile__content{
+        width:calc(100% - 80px);
     }
 }
 @media(max-width:545px){
@@ -3082,6 +3248,10 @@ a.btn:hover{
     .card{
         min-width: unset;
     }
+
+    .profile__body{
+        gap: 12px;
+    }
 }
 @media(max-width:447px){
     .quest{
@@ -3106,5 +3276,19 @@ a.btn:hover{
     }
     .tg-confirmation__col{
         width: 100%;
+    }
+
+    .dashboard__item--feedback{
+        padding:10px 20px 20px 10px;
+    }
+
+    .project-item__title{
+        font-size: 16px;
+    }
+    .project-item__participants{
+        font-size: 14px;
+    }
+    .card__tags-item{
+        font-size: 14px;
     }
 }

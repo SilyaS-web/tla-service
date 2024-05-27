@@ -552,7 +552,6 @@ class PopupAddBlogerToProject extends Popup{//когда нибудь тут б�
     }
 
     addToProject = () => {
-        console.log(this.blogerId,this.projectId );
         $.ajax({
             url: this.sendUri,
             body: {
@@ -640,17 +639,20 @@ $(window).on('load', function(){
     $(document).on('click', '.profile-projects__item .btn-bloggers', function(e){
         $(e.target).closest('.profile-projects__item').toggleClass('active-bloggers');
         $(e.target).closest('.profile-projects__item').removeClass('active-statistics');
-        $(e.target).closest('.profile-projects__item').find('.owl-carousel').owlCarousel({
-            items: 2,
-            margin: 5,
-            nav: true,
-            responsive: {
-                1199: {
-                    items: 2
-                }
-            }
-        });
     })
+
+    $('.profile-projects__item').find('.owl-carousel').owlCarousel({
+        margin: 5,
+        nav: true,
+        responsive: {
+            0:{
+                items: 1
+            },
+            1180: {
+                items:2 
+            }
+        }
+    });
 
     $(document).on('click', '.profile-projects__item .btn-statistics', function(e){
         $(e.target).closest('.profile-projects__item').toggleClass('active-statistics');

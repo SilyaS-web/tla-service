@@ -31,31 +31,67 @@
     <div class="wrapper" style="background-color: #fff;">
         <div class="burger-menu">
             <div class="burger-menu__body">
-                <div class="burger-menu__profile">
-                    <a href="#" class="header__profile-w header__profile-burger">
-                        <img src="img/profile-icon.svg" alt="" class="header__profile">
-                        <span class="header__profile-name">
-                            Алексей Андреев
-                        </span>
-                    </a>
-                </div>
-                <div class="header__profile-items--mobile header__profile-items header__row">
-                    <a href="#" class="header__col header__tariffs" title="Тарифы">
-                        
-                        <img src="img/tariff-icon.svg" alt="" class="">
-                    </a>
-                    <a href="#" class="header__col header__chat" title="Чат">
-                        <div class="header__profile-notif">
-                            1
+                
+                <div class="header__col">
+                    <div class="header__row">
+                        <div href="#" class="header__profile-w header__profile-header">
+                            <img src="img/profile-icon.svg" alt="" class="header__profile">
+                            <div class="header__profile-col">
+                                <span class="header__profile-name">
+                                    Алексей Андреев
+                                </span>
+                                <span class="header__profile-org">
+                                    Организация (ИП, ООО и тд)
+                                </span>
+                            </div>
+                            <div class="header__profile-settings">
+                                <a href="#" class="row">
+                                    Личные данные 
+                                </a>
+                                <a href="#" class="row">
+                                    Тарифы 
+                                </a>
+                                <a href="#" class="row">
+                                    Выход
+                                </a>
+                            </div>
                         </div>
-                        <img src="img/chat-icon.svg" alt="" class="">
-                    </a>
-                    <a href="#" class="header__col header__notif" title="Уведомления">
-                        <div class="header__profile-notif">
-                            1
+                        <a href="#" class="header__col header__notif" title="Уведомления">
+                            <div class="header__profile-notif">
+                                1
+                            </div>
+                            <img src="img/notif-icon.svg" alt="" class="">
+                            <div class="header__notif-items notif-header">
+                                <div class="notif-header__items">
+                                    <div class="notif-header__row ">
+                                        <div class="notif-header__col notif-header__img">
+                                            <img src="img/profile-icon.svg" alt="">
+                                        </div>
+                                        <div class="notif-header__col">
+                                            <div class="notif-header__title">
+                                                Заявка №1233 подтверждена
+                                            </div>
+                                            <div class="notif-header__text">
+                                                Блогер "Чертовски мило" подтвердил заявку, начните переписку с ним, чтобы обсудить подробности.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                    <div href="#" class="header__col header__tarrif tarrif-header" >
+                        Ваш тариф — Стандарт
+                        <div class="tarrif-header__items">
+                            <div class="tarrif-header__item tarrif-header__adv">
+                                Рекламные посты <b><span class = "counter">12</span> шт.</b>
+                                <div class="tarrif-header__date">
+                                    02 Мая — 02 Июня
+                                </div> 
+                                <a href="#" class="tarrif-header__buy">Продлить</a>
+                            </div>
                         </div>
-                        <img src="img/notif-icon.svg" alt="" class="">
-                    </a>
+                    </div>
                 </div>
                 <div class="burger-menu__nav nav-burger">
                     <a href="#" class="nav-burger__link nav__link">Дашборд</a>
@@ -372,7 +408,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="dashboard tab-content active"  id = "dashboard">
+                            <div class="dashboard tab-content"  id = "dashboard">
                                 <div class="dashboard__body">
                                     <div class="dashboard__title title">
                                         Статистика
@@ -488,7 +524,7 @@
                                                     </div>
                                                 </div>                               
                                             </div>
-                                            <div class="dashboard__row">
+                                            <div class="dashboard__row dashboard__row--integrations">
                                                 <div class="dashboard__col dashboard__item dashboard__item--cover">
                                                     <div class="dashboard__item-cover">
                                                         <div class="dashboard__item-title">
@@ -542,7 +578,7 @@
                                                     </div>
                                                 </div>                                   
                                             </div>
-                                            <div class="dashboard__row">
+                                            <div class="dashboard__row dashboard__row--dev">
                                                 <div class="dashboard__col dashboard__item">
                                                     <img src="img/statistics-ph.png" alt="" class="">
                                                     <div class="dashboard__placeholder">
@@ -673,10 +709,15 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="profile-projects tab-content" id = "profile-projects">
+                            <div class="profile-projects tab-content active" id = "profile-projects">
                                 <div class="profile-projects__body">
-                                    <div class="profile-projects__title title">
-                                        Список проектов
+                                    <div class="projects-list__header">
+                                        <div class="list-projects__title title">
+                                            Список моих проектов
+                                        </div>
+                                        <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                            <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
+                                        </div>
                                     </div>
                                     <div class="profile-projects__items">
                                         <div class="profile-projects__row profile-projects__item">
@@ -729,10 +770,11 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="profile-projects__row" style="margin-top:auto">
-                                                    <div class="profile-projects__btns">
-                                                        <button class="btn btn-primary btn-statistics">Статистика</button>
-                                                    </div>
+                                                <div class="profile-projects__row profile-projects__btns" style="margin-top:auto">
+                                                    
+                                                    <button class="btn btn-primary btn-bloggers tablet">Заявки от блогеров</button>
+                                                    <button class="btn btn-primary btn-statistics">Статистика</button>
+                                                
                                                 </div>
                                             </div>
                                             <div class="profile-projects__row profile-projects__blogers projects-blogers owl-carousel">
@@ -1250,8 +1292,13 @@
                             </div>
                             <div class="profile-blogers tab-content" id = "profile-blogers-list">
                                 <div class="profile-blogers__body">
-                                    <div class="profile-projects__title title">
-                                        Список блогеров
+                                    <div class="projects-list__header">
+                                        <div class="list-projects__title title">
+                                            Список блогеров
+                                        </div>
+                                        <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                            <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
+                                        </div>
                                     </div>
                                     <div class="blogers-list__list list-blogers">
                                         <div class="list-blogers__item bloger-item card" data-id="1">
