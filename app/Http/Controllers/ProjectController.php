@@ -19,7 +19,6 @@ class ProjectController extends Controller
      */
     public function index(Request $request)
     {
-
         $validator = Validator::make($request->all(), [
             'project_type' => [Rule::in(Project::TYPES)],
             'project_name' => '',
@@ -51,7 +50,6 @@ class ProjectController extends Controller
         if (isset($validated['project_name']) && !empty($validated['project_name'])) {
             $filter[] = ['project_name', 'like', '%' . $validated['project_name'] . '%'];
         }
-
         $projects = $user->projects()->where($filter)->withCount(['works' => function (Builder $query) {
             $query->where('status', 1);
         }])->get();

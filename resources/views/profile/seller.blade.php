@@ -533,8 +533,8 @@
                                             </div>
                                             <div class="form-group filter__item">
                                                 <label for="">Формат рекламы</label>
-                                                <select name="filter-format" id="filter-format" class="input">
-                                                    <option value="1" class="">Отзыв на товар</option>
+                                                <select name="project_type" id="filter-format" class="input">
+                                                    <option value="feedback" class="">Отзыв на товар</option>
                                                     <option value="2" class="">Рекламная интеграция(Instagram)</option>
                                                     <option value="3" class="">Рекламная интеграция(Youtube)</option>
                                                     <option value="4" class="">Другие площадки для интеграций</option>
@@ -584,7 +584,7 @@
                                         <div class="form-group filter__item">
                                             <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию">
                                         </div>
-                                        <div class="form-group filter__item">
+                                        {{-- <div class="form-group filter__item">
                                             <label for="">Категория</label>
                                             <select name="filter-cat" id="filter-cat" class="input">
                                                 <option value="1" class="">IT Сфера</option>
@@ -592,16 +592,16 @@
                                                 <option value="3" class="">Отдых</option>
                                                 <option value="3" class="">Полезное</option>
                                             </select>
-                                        </div>
+                                        </div> --}}
                                         <div class="form-group filter__item">
                                             <label for="">Платформа</label>
                                             <select name="filter-platform" id="filter-platform" class="input">
-                                                <option value="1" class="">Youtube</option>
-                                                <option value="2" class="">Telegram</option>
-                                                <option value="3" class="">Instagram</option>
+                                                <option value="Youtube" class="">Youtube</option>
+                                                <option value="Telegram" class="">Telegram</option>
+                                                <option value="Instagram" class="">Instagram</option>
                                             </select>
                                         </div>
-                                        <div class="form-group filter__item">
+                                        {{-- <div class="form-group filter__item">
                                             <label for="">Пол блогера</label>
                                             <div class="filter__item--sex">
                                                 <div class="input-checkbox-w">
@@ -613,7 +613,7 @@
                                                     <label for="femail">Женский</label>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="form-group filter__item">
                                             <label for="">Количество подписчиков</label>
                                             <div class="input-range-w">
@@ -624,14 +624,14 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="form-group filter__item">
+                                        {{-- <div class="form-group filter__item">
                                             <label for="">Страна блогера</label>
                                             <select name="filter-country" id="filter-country" class="input">
                                                 <option value="1" class="">Россия</option>
                                                 <option value="2" class="">Казахстан</option>
                                                 <option value="3" class="">Грузия</option>
                                             </select>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="filter__btns">
                                             <button class="btn btn-primary btn-filter-send">Применить</button>

@@ -17,11 +17,11 @@
                     <img src="img/inst-icon.svg" alt="">
                 </div>
             </div>
-            <div class="card__row card__tags">
+            {{-- <div class="card__row card__tags">
                 <div class="card__tags-item">
                     <span>Животные и Природа</span>
                 </div>
-            </div>
+            </div> --}}
             <div class="card__row card__desc">
                 <p>
                     {{ $blogger->description }}

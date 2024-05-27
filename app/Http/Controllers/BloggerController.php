@@ -17,7 +17,7 @@ class BloggerController extends Controller
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'string',
+            'name' => 'string|nullable',
             'platform' => [Rule::in(Blogger::PLATFORM_TYPES)],
             'user_id' => 'exists:users,id',
             'subscriber_quantity_min' => 'numeric',
@@ -42,15 +42,16 @@ class BloggerController extends Controller
         }
 
         if (isset($validated['subscriber_quantity_min']) && !empty($validated['subscriber_quantity_min'])) {
-            $filter[] = ['subscriber_quantity_min', '>=', $validated['subscriber_quantity_min']];
+            $filter[] = ['subscriber_quantity', '>=', $validated['subscriber_quantity_min']];
         }
 
         if (isset($validated['subscriber_quantity_max']) && !empty($validated['subscriber_quantity_max'])) {
-            $filter[] = ['subscriber_quantity_max', '>=', $validated['subscriber_quantity_max']];
+            $filter[] = ['subscriber_quantity', '<=', $validated['subscriber_quantity_max']];
         }
 
         $bloggers = [];
-        if (!empty($validated['name'])) {
+
+        if (!empty($validated['name']) && $validated['name'] != '') {
             $bloggers = Blogger::whereHas('user', function (Builder $query) use ($validated) {
                 $query->where('name', 'like', '%' . $validated['name'] . '%');
             })->where($filter)->get();

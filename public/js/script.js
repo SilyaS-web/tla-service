@@ -59,7 +59,7 @@ class CreateProject extends Quest {
                             <div class="upload-files__delete">
 
                             </div>
-                            <input type="file" hidden>
+                            <input type="file" hidden name = "images[]">
                             <input type="text" data-id="" hidden>
                         </div>`
     dataProps = {
@@ -174,7 +174,7 @@ class BlogersFilter {
         return this;
     }
     node = '';
-    saveUri = '#';
+    sendUri = '/apist/bloggers';
     dataProps = {
         blogerName: {
             set: (value)=>{
@@ -194,10 +194,10 @@ class BlogersFilter {
         },
         platform: {
             set: (value)=>{
-                $(this.node).find('#filter-name').val(value);
+                $(this.node).find('#filter-platform').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#filter-name').val();
+                return $(this.node).find('#filter-platform').val();
             }
         },
         sex: {
@@ -210,7 +210,6 @@ class BlogersFilter {
         },
         subscribers: {
             set: (value)=>{
-                console.log(value);
             },
             get: ()=>{
                 return {
@@ -228,28 +227,33 @@ class BlogersFilter {
             }
         }
     }
+
     resetFilters = () => {
         for(var key in this.dataProps){
             this.dataProps[key].set('');
         }
     }
+
     listenToSubsRange = ()=>{
         var value = $(this.node).find('#subs-range').val();
 
         $(this.node).find('#subs-max').val(value)
     }
+
     sendData = ()=>{
+        var self = this;
+
         var questData = {
-
+            name: this.dataProps.blogerName.get(),
+            platform: this.dataProps.platform.get().toLowerCase(),
+            subscriber_quantity_min: this.dataProps.subscribers.get()['min'],
+            subscriber_quantity_max: this.dataProps.subscribers.get()['max']
         }
-
-        var data = new FormData();
-
-        for(var key in questData){
-            data.append(key, questData[key]);
-        }
-
-        console.log(data, questData);
+        console.log(questData);
+        $.post(self.sendUri, questData, function(res){
+            $(document).find('.blogers-list__list.list-blogers').remove();
+            $(document).find('.profile-blogers__body').append(res);
+        })
     }
 }
 
@@ -263,7 +267,7 @@ class ProjectsFilter {
         return this;
     }
     node = '';
-    saveUri = '#';
+    sendUri = '/apist/projects';
     dataProps = {
         projectName: {
             set: (value)=>{
@@ -275,18 +279,10 @@ class ProjectsFilter {
         },
         format: {
             set: (value)=>{
-                $(this.node).find('#filter-cat').val(value);
+                $(this.node).find('#filter-format').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#filter-cat').val();
-            }
-        },
-        status: {
-            set: (value)=>{
-                $(this.node).find('#filter-name').val(value);
-            },
-            get: ()=>{
-                return $(this.node).find('#filter-name').val();
+                return $(this.node).find('#filter-format').val();
             }
         },
         country: {
@@ -304,19 +300,19 @@ class ProjectsFilter {
         }
     }
     sendData = ()=>{
+        var self = this;
+
         var questData = {
-
-        }
-
-        var data = new FormData();
-
-        for(var key in questData){
-            data.append(key, questData[key]);
+            project_type: this.dataProps.format.get(),
+            project_name: this.dataProps.projectName.get(),
         }
 
         console.log(data, questData);
 
-        // notify('success', {'title': 'Успешно!', 'message': 'Проект успешно сохранен, можете посмортеть список проектов во вкладке "Мои проекты"'})
+        $.post(self.sendUri, questData, function(res){
+            $(document).find('.profile-projects__items').remove();
+            $(document).find('.profile-projects__body').append(res);
+        })
     }
 }
 
@@ -464,12 +460,11 @@ class Chat {
         this.node = node;
 
         $(this.node).find('#profile-img').on('change', this.profileImgUploadedListener);
-        // this.getUserData();
 
         return this;
     }
     node = '';
-    sendMsgUri = '#';
+    sendMsgUri = '';
     getMsgUri = '#';
 
     chooseChat = ()=>{

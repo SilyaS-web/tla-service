@@ -45,7 +45,7 @@
                                 <span>Дата создания</span>
                             </div>
                             <div class="card__stats-val">
-                                <span>{{ $project->created_at }}</span>
+                                <span>{{ date_format($project->created_at, 'd.m.Y') }}</span>
                             </div>
                         </div>
                     </div>
@@ -54,7 +54,6 @@
             <div class="profile-projects__row profile-projects__btns" style="margin-top:auto">
 
                 <!-- <button class="btn btn-primary btn-bloggers tablet">Заявки от блогеров</button> -->
-                <button class="btn btn-primary btn-statistics">Статистика</button>
 
             </div>
         </div>
