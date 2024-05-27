@@ -3,7 +3,7 @@ class Quest {
         this.node = node;
         this.stepsCount = $(node).find('.step').length;
         this.currentStep = 1;
-
+        
         $(node).find('.btn.next').on('click', this.nextStep)
         $(node).find('.btn.back').on('click', this.stepBack)
 
@@ -15,16 +15,16 @@ class Quest {
     nextStep = ()=>{
         if(this.currentStep + 1 <= this.stepsCount){
             this.currentStep += 1;
-
-            $(this.node).find('.step').removeClass('current');
+        
+            $(this.node).find('.step').removeClass('current'); 
             $(this.node).find(`#step_${this.currentStep}`).addClass('current');
         }
     }
     stepBack = ()=>{
         if(this.currentStep - 1 > 0){
             this.currentStep -= 1;
-
-            $(this.node).find('.step').removeClass('current');
+    
+            $(this.node).find('.step').removeClass('current'); 
             $(this.node).find(`#step_${this.currentStep}`).addClass('current');
         }
     }
@@ -54,13 +54,9 @@ class CreateProject extends Quest {
     }
     newFileTemplate = `<div class="upload-files__item">
                             <div class="upload-files__path">
-
-                            </div>
-                            <div class="upload-files__delete">
-
+                               
                             </div>
                             <input type="file" hidden>
-                            <input type="text" data-id="" hidden>
                         </div>`
     dataProps = {
         projectName: {
@@ -68,7 +64,7 @@ class CreateProject extends Quest {
                 $(this.node).find('#project-name').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#project-name').val();
+                return $(this.node).find('#project-name').val(); 
             }
         },
         productName: {
@@ -76,7 +72,7 @@ class CreateProject extends Quest {
                 $(this.node).find('#product-name').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#product-name').val();
+                return $(this.node).find('#product-name').val(); 
             }
         },
         productLink: {
@@ -84,7 +80,7 @@ class CreateProject extends Quest {
                 $(this.node).find('#project-link').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#project-link').val();
+                return $(this.node).find('#project-link').val(); 
             }
         },
         productImg: {
@@ -105,35 +101,24 @@ class CreateProject extends Quest {
                 $(this.node).find(`#${type}`).val(value);
             },
             get: ()=>{
-                return $(this.node).find('.marketing-format').find('input:checked').attr('id');
+                return $(this.node).find('.marketing-format').find('input:checked').attr('id'); 
             }
         }
     }
-
     plusFile = ()=>{
         var plusBtn = $(this.node).find('.upload-files').find('.upload-files__plus');
 
         $(this.newFileTemplate).insertBefore(plusBtn);
-
+        
         var newFile = plusBtn.prev();
-        var self = this;
-
+        
         newFile.find('input[type="file"]').on('change', function(){
             var newFileName = $(this).prop('files')[0].name;
 
             newFile.find('.upload-files__path').text(newFileName)
-            newFile.addClass('uploaded');
-
-            newFile.find('.upload-files__delete').on('click', (e) => self.deleteFile(e));
         })
-
         newFile.find('input[type="file"]').click();
-    }
-
-    deleteFile = (e) => {
-        $(e.target).closest('.upload-files__item').remove();
-    }
-
+    }   
     sendData = ()=>{
         var questData = {}, isAnyFieldEmpty = false;
 
@@ -151,13 +136,13 @@ class CreateProject extends Quest {
 
         if(!isAnyFieldEmpty){
             var data = new FormData();
-
+            
             for(var key in questData){
                 data.append(key, questData[key]);
             }
-
+    
             console.log(data, questData);
-
+    
             notify('success', {'title': 'Успешно!', 'message': 'Проект успешно сохранен, можете посмортеть список проектов во вкладке "Мои проекты"'})
         }
     }
@@ -181,7 +166,7 @@ class BlogersFilter {
                 $(this.node).find('#filter-name').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#filter-name').val();
+                return $(this.node).find('#filter-name').val(); 
             }
         },
         category: {
@@ -189,7 +174,7 @@ class BlogersFilter {
                 $(this.node).find('#filter-cat').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#filter-cat').val();
+                return $(this.node).find('#filter-cat').val(); 
             }
         },
         platform: {
@@ -197,7 +182,7 @@ class BlogersFilter {
                 $(this.node).find('#filter-name').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#filter-name').val();
+                return $(this.node).find('#filter-name').val(); 
             }
         },
         sex: {
@@ -224,7 +209,7 @@ class BlogersFilter {
                 $(this.node).find('#filter-country').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#filter-country').val();
+                return $(this.node).find('#filter-country').val(); 
             }
         }
     }
@@ -240,11 +225,11 @@ class BlogersFilter {
     }
     sendData = ()=>{
         var questData = {
-
+            
         }
-
+        
         var data = new FormData();
-
+        
         for(var key in questData){
             data.append(key, questData[key]);
         }
@@ -270,7 +255,7 @@ class ProjectsFilter {
                 $(this.node).find('#filter-name').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#filter-name').val();
+                return $(this.node).find('#filter-name').val(); 
             }
         },
         format: {
@@ -278,7 +263,7 @@ class ProjectsFilter {
                 $(this.node).find('#filter-cat').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#filter-cat').val();
+                return $(this.node).find('#filter-cat').val(); 
             }
         },
         status: {
@@ -286,7 +271,7 @@ class ProjectsFilter {
                 $(this.node).find('#filter-name').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#filter-name').val();
+                return $(this.node).find('#filter-name').val(); 
             }
         },
         country: {
@@ -294,7 +279,7 @@ class ProjectsFilter {
                 $(this.node).find('#filter-country').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#filter-country').val();
+                return $(this.node).find('#filter-country').val(); 
             }
         }
     }
@@ -305,11 +290,11 @@ class ProjectsFilter {
     }
     sendData = ()=>{
         var questData = {
-
+            
         }
-
+        
         var data = new FormData();
-
+        
         for(var key in questData){
             data.append(key, questData[key]);
         }
@@ -323,14 +308,14 @@ class ProjectsFilter {
 class Tabs {
     constructor(node) {
         this.node = node;
-
+        
         $(this.node).find('.tab').on('click', this.tabClick);
 
         return this;
     }
     node = '';
     dataProps = {
-
+        
     }
     tabClick = (e)=>{
         var curTab = $(e.target);
@@ -349,7 +334,7 @@ class ProfileInfoForm {
 
         $(this.node).find('#profile-img').on('change', this.profileImgUploadedListener);
         // this.getUserData();
-
+        
         return this;
     }
     node = '';
@@ -362,7 +347,7 @@ class ProfileInfoForm {
                 $(this.node).find('.tab-content__profile-img').attr('src', value);
             },
             get: ()=>{
-                return $(this.node).find('.tab-content__profile-img').attr('src');
+                return $(this.node).find('.tab-content__profile-img').attr('src'); 
             }
         },
         name: {
@@ -370,7 +355,7 @@ class ProfileInfoForm {
                 $(this.node).find('#name').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#name').val();
+                return $(this.node).find('#name').val(); 
 
             }
         },
@@ -379,7 +364,7 @@ class ProfileInfoForm {
                 $(this.node).find('#email').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#email').val();
+                return $(this.node).find('#email').val(); 
 
             }
         },
@@ -388,7 +373,7 @@ class ProfileInfoForm {
                 $(this.node).find('#phone').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#phone').val();
+                return $(this.node).find('#phone').val(); 
 
             }
         },
@@ -397,7 +382,7 @@ class ProfileInfoForm {
                 $(this.node).find('#nick').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#nick').val();
+                return $(this.node).find('#nick').val(); 
 
             }
         },
@@ -406,7 +391,7 @@ class ProfileInfoForm {
                 $(this.node).find('.whois#' + value).prop('checked', true);
             },
             get: ()=>{
-                return $(this.node).find('.whois:checked').val();
+                return $(this.node).find('.whois:checked').val(); 
 
             }
         },
@@ -415,7 +400,7 @@ class ProfileInfoForm {
                 $(this.node).find('#type').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#type').val();
+                return $(this.node).find('#type').val(); 
 
             }
         },
@@ -424,18 +409,18 @@ class ProfileInfoForm {
                 $(this.node).find('#inn').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#inn').val();
+                return $(this.node).find('#inn').val(); 
 
             }
         },
     }
     saveUserData = ()=>{
         var questData = {
-
+            
         }
-
+        
         var data = new FormData();
-
+        
         for(var key in questData){
             data.append(key, questData[key]);
         }
@@ -456,7 +441,7 @@ class ProfileInfoForm {
 
     profileImgUploadedListener = () => {
         $(this.node).find('.tab-content__profile-img-upload').text('Изображение успешно загружено');
-    }
+    } 
 }
 
 class Chat {
@@ -465,15 +450,15 @@ class Chat {
 
         $(this.node).find('#profile-img').on('change', this.profileImgUploadedListener);
         // this.getUserData();
-
+        
         return this;
     }
     node = '';
     sendMsgUri = '#';
     getMsgUri = '#';
-
+    
     chooseChat = ()=>{
-
+        
     }
 }
 
@@ -482,16 +467,16 @@ class Popup{
         this.node = node;
 
         $(this.node).find('.close-popup').on('click', this.closePopup)
-
+        
         return this;
     }
-
+    
     node = '';
-
+    
     openPopup = () => {
         $(this.node).addClass('opened');
     }
-
+    
     closePopup = () => {
         $(this.node).removeClass('opened');
     }
@@ -500,7 +485,7 @@ class Popup{
 class PopupCallUs extends Popup{
     constructor(node){
         super(node);
-
+        
         $(this.node).find('.btn.send-data').on('click', this.sendData)
 
         return this;
@@ -526,9 +511,9 @@ class PopupCallUs extends Popup{
         }
     }
     sendData = () => {//не знаю куда если честно это отправлять, мб потом в админку, но пока что так понимаю на почту, естественно через бэк
-
+    
         var data = new FormData();
-
+        
         for(var key in this.dataProps){
             data.append(key, questData[key].get());
         }
@@ -540,7 +525,7 @@ class PopupCallUs extends Popup{
 class PopupAddBlogerToProject extends Popup{//когда нибудь тут будет пагинация
     constructor(node){
         super(node);
-
+        
         $(this.node).find('.btn.btn-add').on('click', (e)=>{
             this.projectId = $(e.target).closest('popup-projects__item').data('id');
 
@@ -567,6 +552,7 @@ class PopupAddBlogerToProject extends Popup{//когда нибудь тут б�
     }
 
     addToProject = () => {
+        console.log(this.blogerId,this.projectId );
         $.ajax({
             url: this.sendUri,
             body: {
@@ -591,42 +577,13 @@ class PopupAddBlogerToProject extends Popup{//когда нибудь тут б�
     }
 }
 
-class DashboardTabs extends Tabs{
-    constructor(node){
-        super(node);
-
-        this.node = node;
-        $(this.node).find('.dashboard__tab').on('click', this.tabClick);
-
-        return this;
-    }
-    node = '';
-    dataProps = {
-
-    }
-    tabClick = (e)=>{
-        var curTab = $(e.target);
-        if(curTab.hasClass('disabled')){
-            notify('info',{title: 'Внимание', message: 'Данный раздел находится в разработке'})
-
-            return;
-        }
-        $(this.node).find('.dashboard__tab').removeClass('active');
-        $(this.node).find('.dashboard__content').removeClass('active');
-
-        curTab.closest('.dashboard__tab').addClass('active');
-        $(`#${curTab.data('content')}`).addClass('active')
-    }
-
-}
-
 
 function notify(type, content){
     $('.notification').show()
     $('.notification').addClass(type)
     $('.notification .notification__title').text(content.title);
     $('.notification .notification__text').text(content.message);
-
+    
     setTimeout(()=>{
         $('.notification').hide()
         $('.notification').removeClass(type)
@@ -635,49 +592,38 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
-    var dbTabs = new DashboardTabs('.dashboard');
-
     $(document).on('click', '.tarrif-header', function(e){
-        $('.header__profile-item--js').not($(e.target).closest('.tarrif-header')).removeClass('active')
+        $('.header__profile-items--desktop').children().not($(e.target).closest('.tarrif-header')).removeClass('active')
         $(e.target).closest('.tarrif-header').toggleClass('active')
     })
     $(document).on('click', '.header__profile-w', function(e){
-        $('.header__profile-item--js').not($(e.target).closest('.header__profile-w')).removeClass('active')
+        $('.header__profile-items--desktop').children().not($(e.target).closest('.header__profile-w')).removeClass('active')
         $(e.target).closest('.header__profile-w').toggleClass('active')
     })
     $(document).on('click', '.header__notif', function(e){
-        $('.header__profile-item--js').not((e.target).closest('.header__notif')).removeClass('active')
+        $('.header__profile-items--desktop').children().not((e.target).closest('.header__notif')).removeClass('active')
         $(e.target).closest('.header__notif').toggleClass('active')
     })
-
-
-    $(document).on('click', '.profile-projects__item .btn-bloggers', function(e){
-        $(e.target).closest('.profile-projects__item').toggleClass('active-bloggers');
-        $(e.target).closest('.profile-projects__item').removeClass('active-statistics');
-    })
-
-    $('.profile-projects__item').find('.owl-carousel').owlCarousel({
-        margin: 5,
-        nav: true,
-        responsive: {
-            0:{
-                items: 1
-            },
-            1180: {
-                items:2
+    
+    
+    $(document).on('click', '.profile-projects__item', function(e){
+        $(e.target).closest('.profile-projects__item').toggleClass('active');
+        $(e.target).closest('.profile-projects__item').find('.owl-carousel').owlCarousel({
+            items: 2,
+            margin: 5,
+            nav: true,
+            responsive: {
+                1199: {
+                    items: 2
+                }
             }
-        }
-    });
-
-    $(document).on('click', '.profile-projects__item .btn-statistics', function(e){
-        $(e.target).closest('.profile-projects__item').toggleClass('active-statistics');
-        $(e.target).closest('.profile-projects__item').removeClass('active-bloggers');
+        });
     })
-
+    
     $(document).on('click', '.profile-projects__item .profile-projects__blogers', function(e){
         e.stopPropagation()
     })
-
+    
     var quest = new CreateProject('.create-project__quest');
 
     // burger menu
@@ -691,7 +637,7 @@ $(window).on('load', function(){
 
     //blogers filters
     var blogerFilters = new BlogersFilter('.blogers-list__filter');
-
+    
     $('.blogers-list__filter-btn').on('click', function(){
         $('.blogers-list__filter').addClass('opened');
 
@@ -704,7 +650,7 @@ $(window).on('load', function(){
 
     //projects filters
     var projectsFilters = new ProjectsFilter('.projects-list__filter');
-
+    
     $('.projects-list__filter-btn').on('click', function(){
         $('.projects-list__filter').addClass('opened');
 
@@ -717,8 +663,8 @@ $(window).on('load', function(){
 
 
     //profile
-    var profileTabs = new Tabs('.profile__body')
-    var profileForm = new ProfileInfoForm('#info')
+    var profileTabs = new Tabs('.profile__body') 
+    var profileForm = new ProfileInfoForm('#info') 
 
     //popups
     $(document).on('click', '#contact-us', function(){
@@ -726,9 +672,9 @@ $(window).on('load', function(){
         form.openPopup()
     })
     $(document).on('click', '.btn-add-to-project', function(e){//здесь вообще так должно работать, что если мы не со страницы создания проекта пришли, то попапа нет, тк у нас есть айдишник проекта
-        var pId = $(e.target).closest('.card').find('btn-add-to-project').data('project-id');
-        var bId = $(e.target).closest('.card').data('id');
-
+        var pId = $(e.target).closest('.card').find('btn-add-to-project').data('project-id'); 
+        var bId = $(e.target).closest('.card').data('id'); 
+        
         if(pId && pId != ''){
             $.ajax({
                 url: '#',
@@ -752,7 +698,7 @@ $(window).on('load', function(){
         $(e.target).closest('.input-checkbox-w').find('input').prop('checked', false);
         notify('info',{title: 'Внимание', message: 'Данный формат рекламы находится в разработке'})
     })
-
+    
     $(document).find('.nav__link.disabled').on('click', function(e){
         e.preventDefault()
         $(e.target).closest('.input-checkbox-w').find('input').prop('checked', false);
@@ -761,14 +707,14 @@ $(window).on('load', function(){
 
 })
 
-function ibg(){
-    let ibg = $('._ibg');
+function ibg(){ 
+    let ibg = $('._ibg'); 
 
     $(ibg).each((i, item)=>{
         if(img = $(item).find('img')){
             $(item).css("background-image", 'url("' + img.attr('src') + '")');
         }
-    })
-}
+    })   
+} 
 
 window.addEventListener('load', ibg)

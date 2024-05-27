@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200..900&display=swap" rel="stylesheet"> -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script
+    src="https://code.jquery.com/jquery-3.7.1.min.js"
+    integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+    crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"
+    />
+
+    <title>Список блогеров</title>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="burger-menu">
+            <div class="burger-menu__body">
+                <div class="burger-menu__profile">
+                    <a href="#" class="header__profile-w header__profile-burger">
+                        <img src="img/profile-icon.svg" alt="" class="header__profile">
+                        <span class="header__profile-name">
+                            Алексей Андреев
+                        </span>
+                    </a>
+                </div>
+                <div class="header__profile-items--mobile header__profile-items header__row">
+                    <a href="#" class="header__col header__tariffs" title="Тарифы">
+                        
+                        <img src="img/tariff-icon.svg" alt="" class="">
+                    </a>
+                    <a href="#" class="header__col header__chat" title="Чат">
+                        <div class="header__profile-notif">
+                            1
+                        </div>
+                        <img src="img/chat-icon.svg" alt="" class="">
+                    </a>
+                    <a href="#" class="header__col header__notif" title="Уведомления">
+                        <div class="header__profile-notif">
+                            1
+                        </div>
+                        <img src="img/notif-icon.svg" alt="" class="">
+                    </a>
+                </div>
+                <div class="burger-menu__nav nav-burger">
+                    <a href="#" class="nav-burger__link nav__link">Создать проект</a>
+                    <a href="#" class="nav-burger__link nav__link">Список блогеров</a>
+                    <a href="#" class="nav-burger__link nav__link">Мои проекты</a>
+                </div>
+                <a href="#" class="burger-menu__close">
+                    <img src="img/close-icon.svg" alt="">
+                </a>
+
+                <div class="burger-contacts">
+                    <div class="footer__contacts-contacts">
+                        <div class="footer__contacts-phone">
+                            hello@tla-agency.ru
+                        </div>
+                        <div class="footer__contacts-phone">
+                            +7(999)194-44-47
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <header class = "header">
+            <div class="header__container _container">
+                <div class="header__body">
+                    <div class="logo header__logo-w">
+                        <img src="img/logo.svg" alt="" class = "logo__logo header__logo">
+                    </div>
+                    <nav class="nav header__nav">
+                        <div class="nav__items">
+                            <a href="" class="nav__link">
+                                Создать проект
+                            </a>
+                            <a href="" class="nav__link">
+                                Список блогеров
+                            </a>
+                            <a href="" class="nav__link">
+                                Мои проекты
+                            </a>
+                        </div>
+                    </nav>
+                    <div class=" header__profile-items header__profile-items--desktop header__row">
+                        <a href="#" class="header__col header__tariffs" title="Тарифы">
+                            
+                            <img src="img/tariff-icon.svg" alt="" class="">
+                        </a>
+                        <a href="#" class="header__col header__chat" title="Чат">
+                            <div class="header__profile-notif">
+                                1
+                            </div>
+                            <img src="img/chat-icon.svg" alt="" class="">
+                        </a>
+                        <a href="#" class="header__col header__notif" title="Уведомления">
+                            <div class="header__profile-notif">
+                                1
+                            </div>
+                            <img src="img/notif-icon.svg" alt="" class="">
+                        </a>
+                        <a href="#" class="header__profile-w header__profile-header">
+                            <img src="img/profile-icon.svg" alt="" class="header__profile">
+                            <span class="header__profile-name">
+                                Алексей Андреев
+                            </span>
+                        </a>
+                    </div>
+                    <a href="#" class="header__menu burger">
+                        <img src="img/menu-icon.svg" alt="">
+                    </a>
+                </div>
+            </div>
+        </header>
+        
+        <section class="blogers-list">
+            <div class="blogers-list__container _container">
+                <div class="blogers-list__body">
+                    <div class="blogers-list__filter filter">
+                        <div class="filter__body">
+                            <div class="filter__top">
+                                <p class = "filter__title">
+                                    Фильтр
+                                </p>
+                                <a href="#" class="filter__reset">
+                                    Сбросить
+                                </a>
+                            </div>
+                            <div class="filter__items">
+                                <div class="form-group filter__item">
+                                    <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию">
+                                </div>
+                                <div class="form-group filter__item">
+                                    <label for="">Категория</label>
+                                    <select name="filter-cat" id="filter-cat" class = "input">
+                                        <option value="1" class="">IT Сфера</option>
+                                        <option value="2" class="">Образование</option>
+                                        <option value="3" class="">Отдых</option>
+                                        <option value="3" class="">Полезное</option>
+                                    </select>
+                                </div>
+                                <div class="form-group filter__item">
+                                    <label for="">Платформа</label>
+                                    <select name="filter-platform" id="filter-platform" class = "input">
+                                        <option value="1" class="">Youtube</option>
+                                        <option value="2" class="">Telegram</option>
+                                        <option value="3" class="">Instagram</option>
+                                    </select>
+                                </div>
+                                <div class="form-group filter__item">
+                                    <label for="">Пол блогера</label>
+                                    <div class="filter__item--sex">
+                                        <div class="input-checkbox-w">
+                                            <input type="checkbox" class = "checkbox" id = "male">
+                                            <label for="male">Мужской</label>
+                                        </div>
+                                        <div class="input-checkbox-w">
+                                            <input type="checkbox" class = "checkbox" id = "female">
+                                            <label for="femail">Женский</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group filter__item">
+                                    <label for="">Количество подписчиков</label>
+                                    <div class="input-range-w">
+                                        <input id = "subs-range" name="" type="range" class="input input-range" min="5" max="1200000">
+                                        <div class="input-range-content">
+                                            <input id="subs-min" type="number" class="input input-number" value = "5">
+                                            <input id="subs-max" type="number" class="input input-number" value = "1200000">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group filter__item">
+                                    <label for="">Страна блогера</label>
+                                    <select name="filter-country" id="filter-country" class = "input">
+                                        <option value="1" class="">Россия</option>
+                                        <option value="2" class="">Казахстан</option>
+                                        <option value="3" class="">Грузия</option>
+                                    </select>
+                                </div>
+
+                                <div class="filter__btns">
+                                    <button class="btn btn-primary btn-filter-send">Применить</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="blogers-list__main">
+                        <div class="blogers-list__header">
+                            <div class="blogers-list__title title">
+                                Выберите блогеров
+                            </div>
+                            <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
+                                <a href="#" class="btn btn-secondary btn-tariffs">
+                                    Ваши тарифы
+                                </a>
+                            </div>
+                        </div>
+                        <div class="blogers-list__list list-blogers">
+                            <div class="list-blogers__item bloger-item card" data-id="1">
+                                <div class="card__row card__content">
+                                    <div class="card__col">
+                                        <div class="card__row card__header">
+                                            <div class="card__img">
+                                                <img src="img/profile-icon.svg" alt="">
+                                                <div class="card__achive">
+                                                    <img src="img/achive-icon.svg" alt="">
+                                                </div>
+                                            </div>
+                                            <div class="card__name">
+                                                <p class = "card__name-name">
+                                                    Чертовски мило
+                                                </p>
+                                            </div>
+                                            <div class="card__platform">
+                                                <img src="img/inst-icon.svg" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="card__row card__tags">
+                                            <div class="card__tags-item">
+                                                <span>Животные и Природа</span>
+                                            </div>
+                                            <div class="card__tags-item">
+                                                <span>Развлечения и Юмор</span>
+                                            </div>
+                                            <div class="card__tags-item">
+                                                <span>Другое</span>
+                                            </div>
+                                        </div>
+                                        <div class="card__row card__desc">
+                                            <p>
+                                                Коллекция позитивных, светлых  и чертовски милых  видео!
+                                                Платёжеспособная женская аудитория от 25 лет
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="card__col card__stats">
+                                        <div class="card__col card__stats-stats">
+                                            <div class="card__row card__stats-row">
+                                            
+                                                <div class="card__col card__stats-item">
+                                                    <div class="card__stats-title">
+                                                        <span>Подписчики</span>
+                                                    </div>
+                                                    <div class="card__stats-val">
+                                                        <span>108 729</span>
+                                                    </div>
+                                                </div>
+                                                <div class="card__col card__stats-item">
+                                                    <div class="card__stats-title">
+                                                        <span>Просмотры</span>
+                                                    </div>
+                                                    <div class="card__stats-val">
+                                                        <span>800</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="card__row card__stats-row">
+    
+                                                <div class="card__col card__stats-item">
+                                                    <div class="card__stats-title">
+                                                        <span>ER</span>
+                                                    </div>
+                                                    <div class="card__stats-val">
+                                                        <span>51%</span>
+                                                    </div>
+                                                </div>
+                                                <div class="card__col card__stats-item">
+                                                    <div class="card__stats-title">
+                                                        <span>CPM</span>
+                                                    </div>
+                                                    <div class="card__stats-val">
+                                                        <span>263₽</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card__col card__column--gender" >
+                                            <div class="card__stats-title">
+                                                <span>Пол аудитории</span>
+                                            </div>
+                                            <div class="card__row" style="align-items: center; gap:5px">
+                                                <div class="card__diagram-icon" ><img src="img/blogers-list/male-icon.svg" alt="" ></div>
+                                                <div class="card__diagram-line" ><span style="width:50%;" ></span></div>
+                                                <div class="card__diagram-icon" ><img src="img/blogers-list/female-icon.svg" alt="" ></div>
+                                            </div>
+                                        </div>
+                                        <div class="card__row card__row">
+                                            <button class = "btn btn-primary btn-add-to-project" data-project-id="">
+                                                Добавить
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="footer__container _container">
+                <div class="footer__body">
+                    <div class="footer__top">
+                        <div class="logo footer__logo-w">
+                            <img src="img/logo.svg" alt="" class = "logo__logo footer__logo">
+                        </div>
+                        <nav class="nav footer__nav">
+                            <div class="nav__items">
+                                <a href="" class="nav__link">
+                                    Создать проект
+                                </a>
+                                <a href="" class="nav__link">
+                                    Список блогеров
+                                </a>
+                                <a href="" class="nav__link">
+                                    Мои проекты
+                                </a>
+                            </div>
+                        </nav>
+                        <a href="#" class="btn btn-primary footer__contact-us" id="contact-us">
+                            Свяжитесь с нами
+                        </a>
+                    </div>
+                    <div class="footer__bottom">
+                        <div class="footer__addits">
+                            <a href="#" class="footer__policy">
+                                Политика конфиденциальности
+                            </a>
+                            <p class="footer__copyright">
+                                ©️ Все права защищены
+                            </p>
+                        </div>
+                        <div class="footer__contacts">
+                            <div class="footer__contacts-contacts">
+                                <div class="footer__contacts-phone">
+                                    +7(999)194-44-47
+                                </div>
+                                <div class="footer__contacts-phone">
+                                    hello@tla-agency.ru
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+        <div class="current-tariff">
+            <div class="current-tariff__header">
+                <div class="current-tariff__title">
+                    Ваши тарифы
+                </div>
+            </div>
+            <div class="current-tariff__body">
+                <div class="current-tariff__item">
+                    Рекламный пост <span>123</span>
+                </div>
+            </div>
+        </div>
+        <div class="notification" style="display: none;">
+            <div class="notification__body">
+                <div class="notification__title">Внимание!</div>
+                <div class="notification__text">
+                    Проект успешно создан
+                </div>
+            </div>
+        </div>
+
+        <div class="popup" id = "contact-form">
+            <div class="popup__container _container">
+                <div class="popup__body">
+                    <div class="popup__title title">
+                        Оставьте номер
+                    </div>
+                    <div class="popup__form">
+                        <div class="form-group">
+                            <label for="">Ваше имя</label>
+                            <input id = "name" name="name" type="text" class="input">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Ваш номер</label>
+                            <input id = "phone" name = "phone" type="phone" class="input">
+                        </div>
+                        <script>
+                            $(function(){
+                              $("#phone").mask("8(999) 999-9999");
+                            });
+                        </script> 
+                        <p class="form-addit">
+                           Оставляя свои данные, вы даёте на это согласие <br>
+                           и принимаете условия <a href = "policy">Политики конфиденциальности.</a>
+                        </p>
+                        <button class = "btn btn-primary send-data">
+                            Отправить
+                        </button>
+                    </div>
+                    <div class="close-popup">
+                        <img src="img/close-icon.svg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="popup" id = "add-to-project">
+            <div class="popup__container _container">
+                <div class="popup__body">
+                    <div class="popup__header">
+                        <div class="popup__title title">
+                            Выберите проект
+                        </div>
+                        <div class="popup__search form-group" style="">
+                            <input type="text" class="input" placeholder="Найти проект">
+                            <button class="btn btn-primary btn-search">
+                                Найти
+                            </button>
+                        </div>
+                    </div>
+                    <div class="popup__list popup-projects">
+                        <div class="popup-projects__item" data-id = "1">
+                            <div class="popup-projects__item-header">
+                                <div class="popup-projects__item-title">
+                                    Название проекта
+                                </div>
+                                <div class="popup-projects__item-date">
+                                    12.05.2024
+                                </div>
+                            </div>
+                            <div class="popup-projects__item-format">
+                                Тип рекламы
+                            </div>
+                            <button class="btn btn-primary btn-add">
+                                Выбрать
+                            </button>
+                        </div>
+                    </div>
+                    <div class="close-popup">
+                        <img src="img/close-icon.svg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src = "js/script.js"></script>
+</html>
