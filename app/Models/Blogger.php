@@ -25,6 +25,7 @@ class Blogger extends Model
     protected $fillable = [
         'user_id',
         'platform',
+        'name',
         'description',
         'subscriber_quantity',
         'coverage',

@@ -31,6 +31,7 @@ class Seller extends Model
         'organization_type',
         'is_agent',
         'description',
+        'finish_date',
         'remaining_tariff',
         'tariff',
     ];

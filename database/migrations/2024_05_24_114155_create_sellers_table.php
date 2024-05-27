@@ -24,6 +24,7 @@ class CreateSellersTable extends Migration
             $table->string('inn', 50)->nullable();
             $table->string('description', 500)->nullable();
             $table->string('platform')->nullable();
+            $table->timestamp('finish_date')->nullable();
             $table->string('platform_link')->nullable();
             $table->timestamps();
             $table->softDeletes();

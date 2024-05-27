@@ -31,7 +31,7 @@ class MessageController extends Controller
         $user_id = $validated['user_id'];
 
         $works = Work::where([
-            'user_id'=> $user_id,
+            'user_id' => $user_id,
         ]);
 
         return view('shared.chat.index', compact('works', 'user_id'));
@@ -68,7 +68,7 @@ class MessageController extends Controller
         $validated = $validator->validated();
         Message::create($validated);
 
-        return response()->json(['message'=> 'success'], 200);
+        return response()->json(['message' => 'success'], 200);
     }
 
     /**

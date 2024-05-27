@@ -29,12 +29,13 @@ class SellerController extends Controller
             case Seller::START:
                 $seller->remaining_tariff += Seller::TARIFFS[Seller::START]['quantity'];;
                 $seller->tariff = Seller::TARIFFS[Seller::START]['name'];
+                $seller->finish_date = time() + (86400 * 30);
                 $seller->save();
-
                 break;
             case Seller::TRIAL:
                 $seller->remaining_tariff += Seller::TARIFFS[Seller::TRIAL]['quantity'];
                 $seller->tariff = Seller::TARIFFS[Seller::TRIAL]['name'];
+                $seller->finish_date = time() + (86400 * 30);
                 $seller->save();
 
                 break;
