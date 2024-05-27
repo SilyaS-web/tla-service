@@ -24,15 +24,3 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/projects', [ProjectController::class, 'index']);
-
-Route::post('/bloggers', [BloggerController::class, 'index']);
-Route::post('/bloggers/create', [BloggerController::class, 'store']);
-
-Route::post('/works', [WorkController::class, 'store']);
-Route::post('/works/accept', [WorkController::class, 'acceptWorkByBlogger']);
-
-Route::post('/messages/create', [MessageController::class, 'store']);
-Route::post('/messages', [MessageController::class, 'index']);
-
-Route::post('/tg', [AuthController::class, 'setTGPhone']);

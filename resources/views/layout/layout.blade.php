@@ -29,33 +29,72 @@
         @auth
         <div class="burger-menu">
             <div class="burger-menu__body">
-                <div class="burger-menu__profile">
-                    <a href="#" class="header__profile-w header__profile-burger">
-                        <img src="{{ asset('img/profile-icon.svg') }}" alt="" class="header__profile">
-                        <span class="header__profile-name">
-                            {{ auth()->user()->name }}
-                        </span>
-                    </a>
-                </div>
-                <div class="header__profile-items--mobile header__profile-items header__row">
+                <div class="header__col header__profile-items">
+                    <div class="header__row">
+                        <div href="#" class="header__profile-w header__profile-header header__profile-item--js">
+                            <img src="img/profile-icon.svg" alt="" class="header__profile">
+                            <div class="header__profile-col">
+                                <span class="header__profile-name">
+                                    {{ auth()->user()->name }}
+                                </span>
+                                <span class="header__profile-org">
+                                    @if ( auth()->user()->role == 'seller')
+                                        {{ auth()->user()->seller->organization_type }}
+                                    @elseif (auth()->user()->blogger)
+                                        {{ auth()->user()->blogger->name }}
+                                    @endif
+                                </span>
+                            </div>
+                            <div class="header__profile-settings">
+                                <a href="#" class="row">
+                                    Личные данные
+                                </a>
+                                <a href="#" class="row">
+                                    Тарифы
+                                </a>
+                                <a href="#" class="row">
+                                    Выход
+                                </a>
+                            </div>
+                        </div>
+                        <a href="#" class="header__col header__notif header__profile-item--js" title="Уведомления">
+                            <div class="header__profile-notif">
+                                1
+                            </div>
+                            <img src="img/notif-icon.svg" alt="" class="">
+                            <div class="header__notif-items notif-header">
+                                <div class="notif-header__items">
+                                    <div class="notif-header__row ">
+                                        <div class="notif-header__col notif-header__img">
+                                            <img src="img/profile-icon.svg" alt="">
+                                        </div>
+                                        <div class="notif-header__col">
+                                            <div class="notif-header__title">
+                                                Заявка №1233 подтверждена
+                                            </div>
+                                            <div class="notif-header__text">
+                                                Блогер "Чертовски мило" подтвердил заявку, начните переписку с ним, чтобы обсудить подробности.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
                     @if ( auth()->user()->role == 'seller')
-                    <a href="{{ route('tariff') }}" class="header__col header__tariffs" title="Тарифы">
-                        <img src="{{ asset('img/tariff-icon.svg') }}" alt="" class="">
-                    </a>
+                        <div href="#" class="header__col header__tarrif tarrif-header header__profile-item--js" >
+                            Ваш тариф — {{ auth()->user()->seller->tariff }}
+                            <div class="tarrif-header__items">
+                                <div class="tarrif-header__item tarrif-header__adv">
+                                    Рекламные посты <b><span class = "counter">{{ auth()->user()->seller->remaining_tariff }}</span> шт.</b>
+                                    <div class="tarrif-header__date">
+                                        До 2 Июня
+                                    </div>
+                                    <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
+                                </div>
+                            </div>
+                        </div>
                     @endif
-
-                    <a href="#" class="header__col header__chat" title="Чат">
-                        <div class="header__profile-notif">
-                            1
-                        </div>
-                        <img src="{{ asset('img/chat-icon.svg') }}" alt="" class="">
-                    </a>
-                    <a href="#" class="header__col header__notif" title="Уведомления">
-                        <div class="header__profile-notif">
-                            1
-                        </div>
-                        <img src="{{ asset('img/notif-icon.svg') }}" alt="" class="">
-                    </a>
                 </div>
                 <div class="burger-menu__nav nav-burger">
                     <a href="{{ route('profile') }}" class="nav-burger__link nav__link">Дашборд</a>
@@ -64,7 +103,7 @@
                     <a href="#" class="nav-burger__link nav__link">Кейсы</a>
                 </div>
                 <a href="#" class="burger-menu__close">
-                    <img src="{{ asset('img/close-icon.svg') }}" alt="">
+                    <img src="img/close-icon.svg" alt="">
                 </a>
 
                 <div class="burger-contacts">
@@ -107,7 +146,7 @@
 
                     <div class=" header__profile-items header__profile-items--desktop header__row">
                         @if ( auth()->user()->role == 'seller')
-                        <div href="#" class="header__col header__tarrif tarrif-header">
+                        <div href="#" class="header__col header__tarrif tarrif-header header__profile-item--js">
                             Ваш тариф — {{ auth()->user()->seller->tariff }}
                             <div class="tarrif-header__items">
                                 <div class="tarrif-header__item tarrif-header__adv">
@@ -120,7 +159,7 @@
                             </div>
                         </div>
                         @endif
-                        <a href="#" class="header__col header__notif" title="Уведомления">
+                        <a href="#" class="header__col header__notif header__profile-item--js" title="Уведомления">
                             <div class="header__profile-notif">
                                 1
                             </div>
@@ -143,7 +182,7 @@
                                 </div>
                             </div>
                         </a>
-                        <div href="#" class="header__profile-w header__profile-header">
+                        <div href="#" class="header__profile-w header__profile-header header__profile-item--js">
                             <img src="img/profile-icon.svg" alt="" class="header__profile">
                             <div class="header__profile-col">
                                 <span class="header__profile-name">
@@ -151,9 +190,9 @@
                                 </span>
                                 <span class="header__profile-org">
                                     @if ( auth()->user()->role == 'seller')
-                                    {{ auth()->user()->seller->organization_type }}
+                                        {{ auth()->user()->seller->organization_type }}
                                     @elseif (auth()->user()->blogger)
-                                    {{ auth()->user()->blogger->name }}
+                                        {{ auth()->user()->blogger->name }}
                                     @endif
                                 </span>
                             </div>
@@ -162,9 +201,9 @@
                                     Личные данные
                                 </a>
                                 @if ( auth()->user()->role == 'seller')
-                                <a href="{{ route('tariff') }}" class="row">
-                                    Тарифы
-                                </a>
+                                    <a href="#" class="row">
+                                        Тарифы
+                                    </a>
                                 @endif
                                 <form action="{{ route('logout') }}" method="POST" class="row">
                                     @csrf
