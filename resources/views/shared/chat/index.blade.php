@@ -29,7 +29,7 @@
                 <textarea name="" id="" placeholder="Введите текст" class="messages-create__textarea textarea"></textarea>
             </div>
             <div class="chat__btns" style="display: flex; flex-wrap: wrap; gap:8px;">
-                <button class="btn btn-primary">Отправить</button>
+                <button class="btn btn-primary btn-send-msg">Отправить</button>
                 <a href="" class="btn btn-secondary">Подтвердить выполнение проекта</a>
             </div>
         </div>

@@ -1,4 +1,4 @@
-<div class="chat__chat-item item-chat current">
+<div class="chat__chat-item item-chat" data-id="{{$work->id}}"> {{--current--}}
     <div class="item-chat__img">
         <img src="img/profile-icon.svg" alt="">
     </div>

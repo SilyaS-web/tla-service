@@ -21,6 +21,9 @@
                             </a>
                             <a href="#" class="nav-menu__item nav-menu__link tab chat-link" data-content="chat">
                                 Чат с блогерами
+                                <div class="nav-menu__item-notifs notifs notifs-chat" style="display: none">
+                                    1
+                                </div>
                             </a>
                         </div>
                     </div>

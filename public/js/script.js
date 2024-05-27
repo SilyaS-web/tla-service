@@ -459,16 +459,74 @@ class Chat {
     constructor(node) {
         this.node = node;
 
-        $(this.node).find('#profile-img').on('change', this.profileImgUploadedListener);
+        // this.getMsgCountInterval = setInterval(this.getNewMessagesCount, 5000);
+
+        $(this.node).find('.chat__btns .btn-send-msg').on('click', (e) => this.chooseChat(e));
+
+        // $(document).find('.chat-link').on('click', (e)=>{
+        //     var link = $(e.target).closest('.chat-link');
+
+        //     if(link.hasClass('active')){
+        //         clearInterval(this.getMsgCountInterval)
+        //     }
+        // })
 
         return this;
     }
+
     node = '';
-    sendMsgUri = '';
-    getMsgUri = '#';
 
-    chooseChat = ()=>{
+    sendMsgUri = '/apist/messages/create';
+    getMsgUri = '/apist/messages';
+    getMsgCountUri = '/apist/messages/count';
 
+    getMsgCountInterval = null;
+
+    currentChatId = null;
+
+    chooseChat = (e)=>{
+        var chat = $(e.target).closest('.item-chat');
+
+        this.getNewMessages(chat.data('id'));
+        this.currentChatId = chat.data('id');
+
+        $(document).find('.item-chat').removeClass('current');
+        chat.addClass('current');
+    }
+
+    getNewMessagesCount = ()=>{
+        $.post(this.getMsgCountUri, {}, function(res){
+            if(Number(JSON.parse(res)) > 0){
+                $('.nav-menu__link.chat-link').show()
+                $('.nav-menu__link.chat-link').find('.notifs-chat').text(res)
+            }
+            else{
+                $('.nav-menu__link.chat-link').hide()
+            }
+        })
+    }
+
+    getNewMessages = (id = false) => {
+        var data = {};
+
+        if(id) data = {work_id: id}
+
+        $.post(this.getMsgUri, {
+            work_id: id
+        }, function(res){
+            $(document).find('.profile-tabs__content-item').remove();
+            $(document).find('.profile-chat__body').append(res);
+        })
+    }
+
+    sendMessage = () => {
+        var msg = $(document).find('.messages-create__textarea').val();
+
+        $.post(this.sendMsgUri, {
+            msg: msg
+        }, function(res){
+            $(document).find('.item-chat.active').click();
+        })
     }
 }
 
@@ -631,6 +689,8 @@ function notify(type, content){
 
 $(window).on('load', function(){
     var dbTabs = new DashboardTabs('.dashboard');
+
+    var chat =
 
     $(document).on('click', '.tarrif-header', function(e){
         $('.header__profile-item--js').not($(e.target).closest('.tarrif-header')).removeClass('active')
