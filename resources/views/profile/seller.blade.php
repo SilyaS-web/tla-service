@@ -1151,5 +1151,6 @@
             }
         });
 
-    </script>
-    @endsection
+</script>
+<script src="{{ asset('js/wb.js') }}"></script>
+@endsection
