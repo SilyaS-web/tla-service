@@ -6,6 +6,7 @@ use App\Models\Message;
 use App\Models\Project;
 use App\Models\ProjectFile;
 use App\Models\User;
+use App\Models\Work;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -18,7 +19,7 @@ class MessageController extends Controller
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'work_id' => 'required|exists:works,id',
+            'user_id' => 'required|exists:users,id',
             'new_only' => 'boolean',
         ]);
 
@@ -26,9 +27,14 @@ class MessageController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        
+        $validated = $validator->validated();
+        $user_id = $validated['user_id'];
 
-        return response()->json(['message'=> 'success'], 200);
+        $works = Work::where([
+            'user_id'=> $user_id,
+        ]);
+
+        return view('shared.chat.index', compact('works', 'user_id'));
     }
 
     /**
