@@ -26,7 +26,6 @@ class BloggerController extends Controller
 
         if ($validator->fails()) {
             $bloggers = [];
-
             return view('blogger.list', compact('bloggers'));
         }
 

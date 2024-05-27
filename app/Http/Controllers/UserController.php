@@ -31,6 +31,7 @@ class UserController extends Controller
             case 'admin':
                 $data = $this->getAdminProfileData();
                 break;
+
             default:
                 break;
         }

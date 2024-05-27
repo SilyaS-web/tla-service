@@ -15,30 +15,20 @@ use Illuminate\Database\Eloquent\Builder;
 
 class MessageController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'project_type' => [Rule::in(Project::TYPES)],
-            'project_name' => '',
-            'status' => '',
-            'user_id' => 'exists:users,id',
+            'work_id' => 'required|exists:works,id',
+            'new_only' => 'boolean',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return response()->json($validator->errors(), 400);
         }
 
-        $validated = $validator->validated();
+        
 
-        $user = Auth::user();
-        if (!$user) {
-            $user = User::find($request->user_id);
-        }
+        return response()->json(['message'=> 'success'], 200);
     }
 
     /**

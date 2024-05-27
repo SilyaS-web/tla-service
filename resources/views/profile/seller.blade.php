@@ -517,9 +517,7 @@
                             <div class="profile-projects__title title">
                                 Список проектов
                             </div>
-                            <div class="profile-projects__items">
-                                @include('project.index')
-                            </div>
+                            @include('project.index')
                         </div>
                         <div class="profile-projects__filters">
                             <div class="projects-list__filter filter">

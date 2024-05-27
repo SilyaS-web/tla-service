@@ -28,7 +28,8 @@ class ProjectController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            $projects = [];
+            return view("project.index", compact('projects'));
         }
 
         $validated = $validator->validated();
