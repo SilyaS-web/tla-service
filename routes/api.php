@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BloggerController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\WorkController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -28,3 +30,4 @@ Route::post('/bloggers/create', [BloggerController::class, 'store']);
 Route::post('/works', [WorkController::class, 'store']);
 Route::post('/works/accept', [WorkController::class, 'acceptWorkByBlogger']);
 Route::post('/message', [MessageController::class, 'store']);
+Route::post('/tg', [AuthController::class, 'setTGPhone']);

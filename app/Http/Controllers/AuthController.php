@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Seller;
+use App\Models\TgPhone;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -40,6 +42,12 @@ class AuthController extends Controller
         } else {
             $validated['status'] = 0;
         }
+        $phone_for_search = str_replace(['(', ')', ' ', '-'], '', $validated['phone']);
+        $phone_for_search = '+7' . mb_substr($phone_for_search, 1);
+        $tgPhone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
+        if (!$tgPhone) {
+            return redirect()->route('register')->with('success', 'Необходимо подтвердить телеграм')->withInput();
+        }
 
         $user = User::create([
             'name' => $validated['name'],
@@ -61,6 +69,22 @@ class AuthController extends Controller
         request()->session()->regenerate();
 
         return redirect()->route('profile')->with('success', 'Аккаунт успешно создан');
+    }
+
+    public function setTGPhone()
+    {
+        $validator = Validator::make(request()->all(), [
+            'phone' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+
+        TgPhone::create($validated);
+        return response()->json('success', 200);
     }
 
     public function authenticate()
@@ -87,6 +111,6 @@ class AuthController extends Controller
         request()->session()->regenerateToken();
         request()->session()->invalidate();
 
-        return redirect()->route('login')->with('success','');
+        return redirect()->route('login')->with('success', '');
     }
 }

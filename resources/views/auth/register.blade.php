@@ -10,21 +10,21 @@
             <form class="form auth__form" method="POST" action="{{ route('register') }}">
                 <div class="form-group">
                     <label for="name">Ваше имя</label>
-                    <input type="text" id="name" name="name" placeholder="Введите ваше имя" class="input input--name">
+                    <input type="text" id="name" name="name" placeholder="Введите ваше имя" class="input input--name" value="{{ old('name') }}">
                     @error('name')
                     <span class="error">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="email">Ваш E-mail</label>
-                    <input type="email" id="email" name="email" placeholder="Введите почту" class="input input--email">
+                    <input type="email" id="email" name="email" placeholder="Введите почту" class="input input--email" value="{{ old('email') }}">
                     @error('email')
                     <span class="error">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="phone">Номер телефона</label>
-                    <input type="phone" id="phone" name="phone" placeholder="Введите ваш номер" class="input input--phone">
+                    <input type="phone" id="phone" name="phone" placeholder="Введите ваш номер" class="input input--phone" value="{{ old('phone') }}">
                     @error('phone')
                     <span class="error">{{ $message }}</span>
                     @enderror
