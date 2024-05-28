@@ -54,6 +54,7 @@
                     <select name="role" id="role" name="role" class="input input--role select">
                         <option value="seller">Селлер</option>
                         <option value="blogger">Блогер</option>
+                        <option value="agency">Представитель бренда (Агенство)</option>
                     </select>
                     @error('role')
                     <span class="error">{{ $message }}</span>
@@ -83,9 +84,12 @@
                     <button class="btn btn-primary next" type="submit">
                         Зарегистрироваться
                     </button>
+                    <a href="{{ route('login') }}" class="btn btn-secondary" type="submit">
+                        Войти
+                    </a>
                 </div>
                 <p class="form-addit">
-                    Уже есть аккаунт? Тогда вы можете <a href="{{ route('login') }}">войти.</a> Регистрируясь, вы даёте на это согласие и принимаете условия <a href="{{ route('policy') }}">Политики конфиденциальности.</a>
+                    Регистрируясь, вы даёте на это согласие и принимаете условия <a href="{{ route('policy') }}">Политики конфиденциальности.</a>
                 </p>
             </form>
         </div>

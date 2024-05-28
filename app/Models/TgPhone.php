@@ -11,5 +11,6 @@ class TgPhone extends Model
 
     protected $fillable = [
         'phone',
+        'chat_id'
     ];
 }

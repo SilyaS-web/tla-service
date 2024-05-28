@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blogger;
 use App\Models\Project;
 use App\Models\ProjectFile;
 use App\Models\User;
@@ -107,13 +108,29 @@ class ProjectController extends Controller
             ]);
         }
 
-        return redirect()->route('profile')->with('success', 'Проект успешно создан');
+        return redirect()->route('select-bloggers', [
+            'project_id'=> $project->id
+        ])->with('success', 'Проект успешно создан');
+    }
+
+    public function selectBloggers($project_id){
+        // $validator = Validator::make($request->all(), [
+        //     'project_id' => 'required',
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return response()->json($validator->errors(), 400);
+        // }
+        $project = Project::find($project_id);
+        $bloggers = Blogger::get();
+        return view('seller.select-blogger', compact('project', 'bloggers'));
     }
 
     public function bloggerProjects(Request $request)
     {
         $user = Auth::user();
         $user_id = $user->id;
+        $role = $user->role;
 
         $validator = Validator::make(request()->all(), [
             'project_type' => [Rule::in(Project::TYPES)],

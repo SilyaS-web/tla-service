@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/telegram', [AuthController::class, 'telegram'])->name('telegram');
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::get('/profile/edit', [UserController::class, 'edit'])->name('edit-profile');
+    Route::get('/project/{project_id}', [ProjectController::class, 'selectBloggers'])->name('select-bloggers');
     Route::get('/admin-panel', [AdminController::class, 'index']);
     Route::resource('projects', ProjectController::class);
     Route::get('/tariff', function () {
@@ -53,7 +54,7 @@ Route::prefix('apist')->group(function () {
     Route::post('/bloggers', [BloggerController::class, 'index']);
     Route::post('/bloggers/create', [BloggerController::class, 'store']);
 
-    Route::post('/works', [WorkController::class, 'store']);
+    Route::post('/works', [WorkController::class, 'store'])->name('create-work');
     Route::post('/works/accept', [WorkController::class, 'acceptWorkByBlogger']);
 
     Route::post('/messages/create', [MessageController::class, 'store']);
@@ -67,5 +68,6 @@ Route::prefix('apist')->group(function () {
     Route::get('/admin/deny/{user_id}', [AdminController::class, 'deny']);
     Route::get('/admin/achievement/{user_id}', [AdminController::class, 'achievement']);
 
+    Route::post('/password/reset', [AuthController::class, 'resetPassword']);
     Route::post('/tg', [AuthController::class, 'setTGPhone']);
 });

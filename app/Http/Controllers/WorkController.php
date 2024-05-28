@@ -14,7 +14,7 @@ class WorkController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'blogger_id' => 'required|exists:users,id',
-            'seller_id' => 'required|exists:users,id',
+            'seller_id' => 'exists:users,id|nullable',
             'project_id' => 'required|exists:projects,id',
         ]);
 
@@ -23,17 +23,22 @@ class WorkController extends Controller
             return response()->json($validator->errors(), 400);
         }
         $validated = $validator->validated();
-        $seller = User::find($validated['seller_id'])->seller;
+        // $seller = User::find($validated['seller_id'])->seller;
+        $user = Auth::user();
+        if (!$user) {
+            $user = User::find($request->user_id);
+        }
+        $seller = $user->seller;
         if ($seller) {
             if ($seller->remaining_tariff < 1) {
-                return response()->json(['extend the tariff'], 400);
+                return response()->json(['extend tariff', $seller->remaining_tariff], 400);
             }
         } else {
             return response()->json(['seller not found'], 400);
         }
         $seller->remaining_tariff -= 1;
         $seller->save();
-
+        $validated['seller_id'] = $seller->id;
         Work::create($validated);
 
         return redirect()->route('profile')->with('success', 'Заявка успешно отправлена');

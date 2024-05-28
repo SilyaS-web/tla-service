@@ -16,6 +16,7 @@ class CreateTgPhonesTable extends Migration
         Schema::create('tg_phones', function (Blueprint $table) {
             $table->id();
             $table->string('phone')->unique();
+            $table->integer('chat_id');
             $table->timestamps();
             $table->softDeletes();
         });
