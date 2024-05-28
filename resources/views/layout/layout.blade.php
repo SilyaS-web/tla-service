@@ -203,7 +203,7 @@
                                     Личные данные
                                 </a>
                                 @if ( auth()->user()->role == 'seller')
-                                    <a href="#" class="row">
+                                    <a href="{{ route('tariff') }}" class="row">
                                         Тарифы
                                     </a>
                                 @endif
