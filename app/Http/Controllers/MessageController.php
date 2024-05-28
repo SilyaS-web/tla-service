@@ -20,6 +20,7 @@ class MessageController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'user_id' => 'exists:users,id|nullable',
+            'work_id' => 'exists:works,id|nullable',
             'new_only' => 'boolean',
         ]);
 
@@ -33,9 +34,19 @@ class MessageController extends Controller
         $validated = $validator->validated();
         $user_id = $user->id;
         $role = $user->role;
-        $works = Work::where([
-            'user_id' => $user_id,
-        ]);
+        $filter = [
+            $role . '_id' => $user_id,
+        ];
+
+        if (!empty($validated['work_id'])) {
+            $filter['id'] = $validated['work_id'];
+        }
+
+        $works = Work::where($filter)->get();
+        if (!empty($validated['work_id'])) {
+            $work = $works->first();
+            return view('shared.chat.messages', compact('work', 'user_id', 'role'));
+        }
 
         return view('shared.chat.index', compact('works', 'user_id', 'role'));
     }
