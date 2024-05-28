@@ -784,7 +784,7 @@ class PopupConfirmCompletion extends Popup{
     }
 
     node = '';
-    sendUri = "#";
+    sendUri = "/apist/project/confirm";
     mark = 0;
 
     setMark = (e) => {
@@ -806,7 +806,8 @@ class PopupConfirmCompletion extends Popup{
 
         $.post(self.sendUri, {
             message: $(self.node).find('#comment').val(),
-            mark: self.mark
+            mark: self.mark,
+            work_id: $(document).find('.item-chat.current').data('id')
         }, function(res){
             notify('info', {title: 'Успешно!', message: 'Вы успешно подтвердили выполнение проекта'});
             self.closePopup();
