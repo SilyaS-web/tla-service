@@ -29,6 +29,7 @@ class Seller extends Model
         'platform',
         'platform_link',
         'organization_type',
+        'is_achievement',
         'is_agent',
         'description',
         'finish_date',

@@ -123,7 +123,9 @@ class AdminController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return [];
+            $sellers = [];
+            return view('shared.admin.sellers-list', compact('sellers'));
+
         }
         $validated = $validator->validated();
 
@@ -137,5 +139,27 @@ class AdminController extends Controller
         }
 
         return view('shared.admin.sellers-list', compact('sellers'));
+    }
+
+    public function achievement() {
+        $validator = Validator::make(request()->all(), [
+            'user_id' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+        $user = User::find($validated['user_id']);
+        if ($user->role == 'seller') {
+            $user->seller->is_achievement = 1;
+        } else {
+            $user->blogger->is_achievement = 1;
+        }
+
+        $user->save();
+
+        return response()->json('success', 200);
     }
 }

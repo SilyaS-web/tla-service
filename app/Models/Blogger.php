@@ -29,6 +29,7 @@ class Blogger extends Model
         'description',
         'subscriber_quantity',
         'coverage',
+        'is_achievement',
         'engagement_rate',
         'cost_per_mille',
         'gender_ratio',

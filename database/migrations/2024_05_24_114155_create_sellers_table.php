@@ -19,6 +19,7 @@ class CreateSellersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->integer('organization_type')->nullable();
             $table->string('tariff')->default('Пробный');
+            $table->integer('is_achievement')->nullable();
             $table->integer('remaining_tariff')->default(1);
             $table->integer('is_agent')->default(0);
             $table->string('inn', 50)->nullable();

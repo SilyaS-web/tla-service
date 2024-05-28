@@ -65,6 +65,7 @@ Route::prefix('apist')->group(function () {
     Route::post('/admin/moderation', [AdminController::class, 'moderation']);
     Route::post('/admin/bloggers/accept/{user_id}', [AdminController::class, 'accept']);
     Route::get('/admin/deny/{user_id}', [AdminController::class, 'deny']);
+    Route::get('/admin/achievement/{user_id}', [AdminController::class, 'achievement']);
 
     Route::post('/tg', [AuthController::class, 'setTGPhone']);
 });

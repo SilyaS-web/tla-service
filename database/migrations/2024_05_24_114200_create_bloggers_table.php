@@ -19,6 +19,7 @@ class CreateBloggersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->string('platform', 150);
             $table->string('description', 500);
+            $table->integer('is_achievement')->nullable();
             $table->string('name');
             $table->integer('subscriber_quantity');
             $table->integer('coverage');
