@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Project;
 use App\Models\ProjectFile;
 use App\Models\User;
+use App\Models\Work;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +24,7 @@ class ProjectController extends Controller
             'project_type' => [Rule::in(Project::TYPES)],
             'project_name' => '',
             'status' => '',
-            'user_id' => 'exists:users,id',
+            'user_id' => 'exists:users,id|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -55,6 +56,8 @@ class ProjectController extends Controller
         }])->get();
 
         if ($user->role == 'blogger') {
+            $works = Work::where([['blogger_id', $user->id]])->get();
+            $projects = Project::whereIn('id', $works->pluck('project_id'))->where($validated)->get();
             return view("project.blogger-list", compact('projects'));
         }
 
@@ -105,6 +108,28 @@ class ProjectController extends Controller
         }
 
         return redirect()->route('profile')->with('success', 'Проект успешно создан');
+    }
+
+    public function bloggerProjects(Request $request)
+    {
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        $validator = Validator::make(request()->all(), [
+            'project_type' => [Rule::in(Project::TYPES)],
+            'project_name' => '',
+            'status' => '',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+        $works = Work::where([['blogger_id', $user_id]])->get();
+        $projects = Project::whereIn('id', $works->pluck('project_id'))->where($validated)->get();
+
+        return view('project.blogger-list', compact('projects', 'works', 'role', 'user_id'));
     }
 
     /**

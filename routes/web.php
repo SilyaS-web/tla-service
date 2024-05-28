@@ -48,6 +48,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::prefix('apist')->group(function () {
     Route::post('/projects', [ProjectController::class, 'index']);
+    Route::post('/blogger/projects', [ProjectController::class, 'bloggerProjects']);
 
     Route::post('/bloggers', [BloggerController::class, 'index']);
     Route::post('/bloggers/create', [BloggerController::class, 'store']);
