@@ -80,9 +80,16 @@
                 </div>
             </div>
             <div class="card__row card__row">
-                <button class="btn btn-primary btn-add-to-project" data-project-id="">
-                    Добавить
-                </button>
+                @if (isset($project))
+                <form action="{{ route('create-work') }}" method="POST">
+                    @csrf
+                    <input name="project_id" value="{{ $project->id }}" hidden />
+                    <input name="blogger_id" value="{{ $blogger->user_id }}" hidden />
+                    <button class="btn btn-primary btn-add-to-project" type="submit" data-project-id="">
+                        Добавить
+                    </button>
+                </form>
+                @endif
             </div>
         </div>
     </div>
