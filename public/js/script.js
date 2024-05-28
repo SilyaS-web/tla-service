@@ -628,6 +628,8 @@ class Chat {
         var data = {},
             self = this;
 
+        if(!id) id = self.currentChatId;
+
         if(id) data = {work_id: id}
 
         $.post(this.getMsgUri, {
