@@ -461,8 +461,8 @@ class Chat {
 
         // this.getMsgCountInterval = setInterval(this.getNewMessagesCount, 5000);
 
-        $(this.node).on('click', '.chat__btns .btn-send-msg', (e) => this.sendMessage(e));
-        $(this.node).on('click', '.item-chat', (e) => this.chooseChat(e));
+        $(this.node).on('click', '.chat__btns .btn-send-msg', (e) => { this.sendMessage(e) });
+        $(this.node).on('click', '.item-chat', (e) => { this.chooseChat(e) });
 
         // $(document).find('.chat-link').on('click', (e)=>{
         //     var link = $(e.target).closest('.chat-link');
@@ -471,6 +471,8 @@ class Chat {
         //         clearInterval(this.getMsgCountInterval)
         //     }
         // })
+
+        this.getNewMessages(false);
 
         return this;
     }
@@ -486,6 +488,11 @@ class Chat {
     currentChatId = null;
 
     chooseChat = (e)=>{
+        if(!e){
+            this.getNewMessages()
+            return;
+        }
+
         var chat = $(e.target).closest('.item-chat');
 
         this.getNewMessages(chat.data('id'));
@@ -508,25 +515,34 @@ class Chat {
     }
 
     getNewMessages = (id = false) => {
-        var data = {};
+        var data = {},
+            self = this;
 
         if(id) data = {work_id: id}
 
         $.post(this.getMsgUri, {
-            work_id: id
+            work_id: data
         }, function(res){
-            $(document).find('.profile-tabs__content-item').remove();
-            $(document).find('.profile-chat__body').append(res);
+            if(!id){
+                $(document).find('.profile-tabs__content-item').remove();
+                $(document).find('.profile-chat__body').append(res);
+            }
+            else{
+                $(self.node).find('.messages-chat').empty()
+                $(self.node).find('.messages-chat').append(res)
+            }
         })
     }
 
     sendMessage = () => {
         var msg = $(document).find('.messages-create__textarea').val();
-
+        var self = this;
         $.post(this.sendMsgUri, {
-            msg: msg
+            message: msg,
+            work_id: self.currentChatId
         }, function(res){
-            $(document).find('.item-chat.active').click();
+            $(self.node).find('.item-chat.current').click();
+            $(self.node).find('.messages-create__textarea').val('')
         })
     }
 }
@@ -691,7 +707,7 @@ function notify(type, content){
 $(window).on('load', function(){
     var dbTabs = new DashboardTabs('.dashboard');
 
-    var chat = new Chat('.tab-content__chat')
+    var chat = new Chat('.profile-chat__body')
 
     $(document).on('click', '.tarrif-header', function(e){
         $('.header__profile-item--js').not($(e.target).closest('.tarrif-header')).removeClass('active')
