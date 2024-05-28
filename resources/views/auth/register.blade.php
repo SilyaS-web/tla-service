@@ -69,7 +69,7 @@
                                 Перейдите в телеграмм и подтведите свою личность, чтобы получать уведомления о новостях на площадкке.
                             </div>
                             <div class="tg-confirmation__btn">
-                                <a href="https://t.me/tla_service_bot" class="">Перейти</a>
+                                <a target="_blank" href="https://t.me/tla_service_bot" class="">Перейти</a>
                             </div>
                         </div>
                         <div class="tg-confirmation__col">
