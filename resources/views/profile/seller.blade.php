@@ -1,7 +1,7 @@
     @extends('layout.layout')
 
     @section('content')
-    <section class="profile">
+    <section class="profile" id="seller">
         <div class="profile__container _container">
             <div class="profile__body">
                 <div class="profile__navigation nav-menu">

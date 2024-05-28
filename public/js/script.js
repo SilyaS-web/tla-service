@@ -156,8 +156,6 @@ class CreateProject extends Quest {
                 data.append(key, questData[key]);
             }
 
-            console.log(data, questData);
-
             notify('success', {'title': 'Успешно!', 'message': 'Проект успешно сохранен, можете посмортеть список проектов во вкладке "Мои проекты"'})
         }
     }
@@ -307,11 +305,123 @@ class ProjectsFilter {
             project_name: this.dataProps.projectName.get(),
         }
 
-        console.log(data, questData);
-
         $.post(self.sendUri, questData, function(res){
             $(document).find('.profile-projects__items').remove();
             $(document).find('.profile-projects__body').append(res);
+        })
+    }
+}
+
+class BloggerAllProjectsFilter {
+    constructor(node) {
+        this.node = node;
+
+        $(this.node).find('.btn-filter-send').on('click', this.sendData);
+        $(this.node).find('.filter__reset').on('click', this.resetFilters);
+
+        return this;
+    }
+    node = '';
+    sendUri = '/apist/projects';
+    dataProps = {
+        projectName: {
+            set: (value)=>{
+                $(this.node).find('#filter-name').val(value);
+            },
+            get: ()=>{
+                return $(this.node).find('#filter-name').val();
+            }
+        },
+        format: {
+            set: (value)=>{
+                $(this.node).find('#filter-format').val(value);
+            },
+            get: ()=>{
+                return $(this.node).find('#filter-format').val();
+            }
+        },
+        country: {
+            set: (value)=>{
+                $(this.node).find('#filter-country').val(value);
+            },
+            get: ()=>{
+                return $(this.node).find('#filter-country').val();
+            }
+        }
+    }
+    resetFilters = () => {
+        for(var key in this.dataProps){
+            this.dataProps[key].set('');
+        }
+    }
+    sendData = ()=>{
+        var self = this;
+
+        var questData = {
+            project_type: this.dataProps.format.get(),
+            project_name: this.dataProps.projectName.get(),
+        }
+
+        $.post(self.sendUri, questData, function(res){
+            $(document).find('.list-projects__items').empty();
+            $(document).find('.list-projects__items').append(res);
+        })
+    }
+}
+
+class BloggerProjectsFilter {
+    constructor(node) {
+        this.node = node;
+
+        $(this.node).find('.btn-filter-send').on('click', this.sendData);
+        $(this.node).find('.filter__reset').on('click', this.resetFilters);
+
+        return this;
+    }
+    node = '';
+    sendUri = '/apist/blogger/projects';
+    dataProps = {
+        projectName: {
+            set: (value)=>{
+                $(this.node).find('#filter-name').val(value);
+            },
+            get: ()=>{
+                return $(this.node).find('#filter-name').val();
+            }
+        },
+        format: {
+            set: (value)=>{
+                $(this.node).find('#filter-format').val(value);
+            },
+            get: ()=>{
+                return $(this.node).find('#filter-format').val();
+            }
+        },
+        country: {
+            set: (value)=>{
+                $(this.node).find('#filter-country').val(value);
+            },
+            get: ()=>{
+                return $(this.node).find('#filter-country').val();
+            }
+        }
+    }
+    resetFilters = () => {
+        for(var key in this.dataProps){
+            this.dataProps[key].set('');
+        }
+    }
+    sendData = ()=>{
+        var self = this;
+
+        var questData = {
+            project_type: this.dataProps.format.get(),
+            project_name: this.dataProps.projectName.get(),
+        }
+
+        $.post(self.sendUri, questData, function(res){
+            $(document).find('.list-projects__items').empty();
+            $(document).find('.list-projects__items').append(res);
         })
     }
 }
@@ -435,8 +545,6 @@ class ProfileInfoForm {
         for(var key in questData){
             data.append(key, questData[key]);
         }
-
-        console.log(data, questData);
 
         // notify('success', {'title': 'Успешно!', 'message': 'Проект успешно сохранен, можете посмортеть список проектов во вкладке "Мои проекты"'})
     }
@@ -602,8 +710,6 @@ class PopupCallUs extends Popup{
         for(var key in this.dataProps){
             data.append(key, questData[key].get());
         }
-
-        console.log(data, questData);
     }
 }
 
@@ -714,7 +820,7 @@ class PopupChangePassword extends Popup{
     }
 
     node = '';
-    sendUri = "#";
+    sendUri = "/apist/password/reset";
 
     dataProps = {
         phone: {
@@ -849,7 +955,9 @@ $(window).on('load', function(){
     })
 
     //projects filters
-    var projectsFilters = new ProjectsFilter('.projects-list__filter');
+    var projectsFilters = new ProjectsFilter('.profile#seller .projects-list__filter');
+    var blogersProjectsFilters = new BloggerProjectsFilter('.profile#blogger #my-projects .projects-list__filter');
+    var blogersAllProjectsFilters = new BloggerAllProjectsFilter('.profile#blogger #profile-projects .projects-list__filter');
 
     $('.projects-list__filter-btn').on('click', function(){
         $('.projects-list__filter').addClass('opened');

@@ -30,17 +30,17 @@
                     @enderror
                 </div>
                 <p class="form-addit">
-                    <a href="#">Восстановить пароль</a>
+                    <a href="#" id="change-password-btn">Восстановить пароль</a>
                 </p>
                 <div class="form-btns auth__form-btns">
                     <button class="btn btn-primary" type="submit">
-                        Подтвердить
+                        Войти
                     </button>
-                    <span class="btn btn-secondary" id="change-password-btn" style="cursor: pointer">
-                        Восстановить пароль
-                    </span>
+                    <a href="{{ route('register') }}" class="btn btn-secondary"  style="cursor: pointer">
+                        Зарегистрируйтесь
+                    </a>
                 </div>
-                <p class="form-addit">Нет аккаунта? Тогда <a href="{{ route('register') }}">зарегистрируйтесь</a> в нашем сервисе! Авторизуясь, вы даёте на это согласие и принимаете условия <a href="{{ route('policy') }}">Политики конфиденциальности.</a> </p>
+                <p class="form-addit">Авторизуясь, вы даёте на это согласие и принимаете условия <a href="{{ route('policy') }}">Политики конфиденциальности.</a> </p>
             </form>
         </div>
     </div>
