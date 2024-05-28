@@ -136,12 +136,48 @@ class UserController extends Controller
         return compact('unverified_users', 'bloggers', 'sellers');
     }
 
-    public function update()
+    public function edit()
     {
-        if (request()->has('image')) {
-            $imagePath = request()->file('product_image')->store('projects', 'public');
-            $validated['product_image'] = $imagePath;
-            $validated['customer_id'] = Auth::user()->id;
+        $user = Auth::user();
+
+        return view('profile.edit.' . $user->role, compact('user'));
+    }
+
+    public function update(Request $request)
+    {
+        $validated = request()->validate([
+            'name' => 'required|min:3',
+            'email' => 'required|email|unique:users,email',
+            'phone' => 'required|unique:users,phone',
+            'role' => ['required', Rule::in(User::TYPES)],
+            'password' => 'required|confirmed|min:8'
+        ]);
+
+        if ($validated['role'] == 'seller') {
+            $validated['status'] = 1;
+        } else {
+            $validated['status'] = 0;
+        }
+        $phone_for_search = str_replace(['(', ')', ' ', '-'], '', $validated['phone']);
+        $phone_for_search = '+7' . mb_substr($phone_for_search, 1);
+        $tgPhone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
+        if (!$tgPhone) {
+            return redirect()->route('register')->with('success', 'Необходимо подтвердить телеграм')->withInput();
+        }
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'role' => $validated['role'],
+            'status' => $validated['status'],
+            'password' => bcrypt($validated['password']),
+        ]);
+
+        if ($validated['role'] == 'seller') {
+            Seller::create([
+                'user_id' => $user->id
+            ]);
         }
     }
 }
