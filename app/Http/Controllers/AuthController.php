@@ -85,6 +85,7 @@ class AuthController extends Controller
     {
         $validator = Validator::make(request()->all(), [
             'phone' => 'required|numeric|unique:tg_phones,phone',
+            'chat_id' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -122,5 +123,27 @@ class AuthController extends Controller
         request()->session()->invalidate();
 
         return redirect()->route('login')->with('success', '');
+    }
+
+    public function resetPassword() {
+        $validator = Validator::make(request()->all(), [
+            'phone' => 'required|numeric|unique:tg_phones,phone',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+        $phone_for_search = str_replace(['(', ')', ' ', '-'], '', $validated['phone']);
+        $phone_for_search = '+7' . mb_substr($phone_for_search, 1);
+        $tgPhone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
+        if (!$tgPhone) {
+            $tgPhone = TgPhone::where([['phone', '=',  mb_substr($phone_for_search, 1)]])->first();
+            if (!$tgPhone) {
+                return response()->json('error', 401);
+            }
+        }
+        return response()->json('success', 200);
     }
 }
