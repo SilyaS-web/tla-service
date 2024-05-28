@@ -18,6 +18,7 @@ class CreateProjectsTable extends Migration
             $table->string('project_type');
             $table->string('project_name');
             $table->string('product_name');
+            $table->string('product_nm');
             $table->string('product_link');
             $table->double('product_price');
             $table->integer('status')->default(0);

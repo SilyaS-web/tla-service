@@ -16,7 +16,7 @@
             <div class="profile-projects__row">
                 <div class="profile-projects__formats">
                     <div class="profile-projects__format">
-                        Рекламный пост
+                        Рекламные посты
                     </div>
                 </div>
             </div>
@@ -475,7 +475,10 @@
                 </div>
             </div>
         </div> -->
-        <div class="profile-projects__row profile-projects__statistics projects-statistics">
+        <?
+            $stats = json_decode($project->getStatistics());
+        ?>
+        <div class="profile-projects__row profile-projects__statistics projects-statistics" data-stats="{{ $project->getStatistics() }}">
             <div class="projects-statistics__title">
                 Статистика по товару
             </div>
@@ -484,11 +487,11 @@
                     <div class="view-project__props-total">
                         <div class="view-project__props-orders">
                             Заказы за 30 дн<br>
-                            <span class="count">2 637 шт</span>
+                            <span class="count">{{$stats->orders}} шт</span>
                         </div>
                         <div class="view-project__props-money">
                             Выручка за 30 дн<br>
-                            <span class="money">4 750 732 ₽</span>
+                            <span class="money">{{$stats->earnings}} ₽</span>
                         </div>
                     </div>
                     <div class="view-project__props-graph">
@@ -530,3 +533,56 @@
     Нет проетков
     @endforelse
 </div>
+
+<script>
+        var mediaQuery = window.matchMedia('(max-width: 911px)');
+
+        $(document).find('.profile-projects__row.projects-statistics').each((i, stat)=>{
+            var prices_ctx, orders_ctx;
+
+            if (mediaQuery.matches) {
+                prices_ctx = $(stat).find('#prices-graph-mobile');
+                orders_ctx = $(stat).find('#orders-graph-mobile');
+            } else {
+                prices_ctx = $(stat).find('#prices-graph-desktop');
+                orders_ctx = $(stat).find('#orders-graph-desktop');
+            }
+
+            var data = $(stat).data('stats')
+
+            new Chart(orders_ctx, {
+                type: 'bar'
+                , data: {
+                    labels: data.prices_history.map(item => item.dt.split('-')[2])
+                    , datasets: [{
+                        label: 'Заказы'
+                        , data: data.orders_history.map(item => item.orders)
+                    , }]
+                }
+                , options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+            new Chart(prices_ctx, {
+                type: 'bar'
+                , data: {
+                    labels: data.prices_history.map(item => item.dt.split('-')[2])
+                    , datasets: [{
+                        label: 'Выручка'
+                        , data: data.prices_history.map(item => item.price)
+                    , }]
+                }
+                , options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        })
+</script>
