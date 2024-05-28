@@ -85,7 +85,7 @@ class AuthController extends Controller
     {
         $validator = Validator::make(request()->all(), [
             'phone' => 'required|numeric|unique:tg_phones,phone',
-            'chat_id' => 'required|numeric',
+            // 'chat_id' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
