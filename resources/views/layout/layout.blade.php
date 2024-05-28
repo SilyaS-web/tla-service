@@ -199,7 +199,7 @@
                                 </span>
                             </div>
                             <div class="header__profile-settings">
-                                <a href="#" class="row">
+                                <a href="{{ route('edit-profile') }}" class="row">
                                     Личные данные
                                 </a>
                                 @if ( auth()->user()->role == 'seller')

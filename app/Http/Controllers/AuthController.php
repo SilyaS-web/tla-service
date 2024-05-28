@@ -74,7 +74,7 @@ class AuthController extends Controller
     public function setTGPhone()
     {
         $validator = Validator::make(request()->all(), [
-            'phone' => 'required|numeric',
+            'phone' => 'required|numeric|unique:tg_phones,phone',
         ]);
 
         if ($validator->fails()) {
