@@ -86,7 +86,7 @@
                                     Модерация блогеров
                                 </div>
                                 <div class="admin-blogers__search form-group">
-                                    <input type="name" id="blogers-search" class="input" placeholder="Введите название">
+                                    <input type="name" id="blogers-search--moderation" class="input" placeholder="Введите название">
                                     <button class="btn btn-primary">Найти</button>
                                 </div>
                             </div>
@@ -101,7 +101,7 @@
                                 </div>
                                 <div class="admin-blogers__search form-group">
                                     <input type="name" id="blogers-search" class="input" placeholder="Введите название">
-                                    <button class="btn btn-primary">Найти</button>
+                                    <button class="btn btn-primary blogers-search-btn">Найти</button>
                                 </div>
                             </div>
                             @include('shared.admin.bloggers-list')
@@ -114,8 +114,8 @@
                                     Список селлеров
                                 </div>
                                 <div class="admin-blogers__search form-group">
-                                    <input type="name" id="blogers-search" class="input" placeholder="Введите название">
-                                    <button class="btn btn-primary">Найти</button>
+                                    <input type="name" id="sellers-search" class="input" placeholder="Введите название">
+                                    <button class="btn btn-primary sellers-search-btn">Найти</button>
                                 </div>
                             </div>
                             @include('shared.admin.sellers-list')

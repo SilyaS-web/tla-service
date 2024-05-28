@@ -698,7 +698,8 @@ class PopupConfirmCompletion extends Popup{
             message: $(self.node).find('#comment').val(),
             mark: self.mark
         }, function(res){
-            notify('info', {title: 'Успешно!', message: 'Вы успешно подтвердили выполнение проекта'})
+            notify('info', {title: 'Успешно!', message: 'Вы успешно подтвердили выполнение проекта'});
+            self.closePopup();
         })
     }
 }
