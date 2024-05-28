@@ -106,7 +106,7 @@ class AdminController extends Controller
 
 
         $bloggers = [];
-        if (!empty($validated['blogger_name'])) {
+        if (!empty($validated['name'])) {
             $bloggers = Blogger::whereHas('user', function (Builder $query) use ($validated) {
                 $query->where('name', 'like', '%' . $validated['name'] . '%');
             })->get();

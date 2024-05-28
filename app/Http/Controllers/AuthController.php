@@ -29,7 +29,7 @@ class AuthController extends Controller
 
     public function store(Request $request)
     {
-        $validated = request()->validate([
+        $validator = Validator::make(request()->all(), [
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users,email',
             'phone' => 'required|unique:users,phone',
@@ -37,16 +37,25 @@ class AuthController extends Controller
             'password' => 'required|confirmed|min:8'
         ]);
 
+        if ($validator->fails()) {
+            return redirect()->route('register')->withErrors($validator->errors())->withInput();
+        }
+        $validated = $validator->validated();
+
         if ($validated['role'] == 'seller') {
             $validated['status'] = 1;
         } else {
             $validated['status'] = 0;
         }
+
         $phone_for_search = str_replace(['(', ')', ' ', '-'], '', $validated['phone']);
         $phone_for_search = '+7' . mb_substr($phone_for_search, 1);
         $tgPhone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
         if (!$tgPhone) {
-            return redirect()->route('register')->with('success', 'Необходимо подтвердить телеграм')->withInput();
+            $tgPhone = TgPhone::where([['phone', '=',  mb_substr($phone_for_search, 1)]])->first();
+            if (!$tgPhone) {
+                return redirect()->route('register')->with('success', 'Необходимо подтвердить телеграм')->withInput();
+            }
         }
 
         $user = User::create([
@@ -70,6 +79,7 @@ class AuthController extends Controller
 
         return redirect()->route('profile')->with('success', 'Аккаунт успешно создан');
     }
+
 
     public function setTGPhone()
     {
