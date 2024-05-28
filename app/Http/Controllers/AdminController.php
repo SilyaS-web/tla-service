@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blogger;
+use App\Models\Seller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -16,7 +17,7 @@ class AdminController extends Controller
 
     }
 
-    public function acceptBlogger() {
+    public function accept() {
         $validator = Validator::make(request()->all(), [
             'user_id' => 'required|numeric',
             'platform' => ['required', Rule::in(Blogger::PLATFORM_TYPES)],
@@ -29,7 +30,7 @@ class AdminController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('profile')->with('success', 'Ошибка при подтверждении блогера!');
+            return response()->json($validator->errors(), 400);
         }
 
         $validated = $validator->validated();
@@ -48,16 +49,16 @@ class AdminController extends Controller
         $user->status = 1;
         $user->save();
 
-        return redirect()->route('profile')->with('success', 'Блогер успешно подтверждён!');
+        return view('shared.admin.bloggers-list');
     }
 
-    public function denyBlogger() {
+    public function deny() {
         $validator = Validator::make(request()->all(), [
             'user_id' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('profile')->with('success', 'Не удалось отклонить заявку!');
+            return response()->json($validator->errors(), 400);
         }
 
         $validated = $validator->validated();
@@ -65,9 +66,76 @@ class AdminController extends Controller
         $user->status = -1;
         $user->save();
 
-        return redirect()->route('profile')->with('success', 'Заявка отклонена!');
+        return view('shared.admin.bloggers-list');
     }
 
-    public function ban(Request $request) {
+    public function moderation(Request $request) {
+        $validator = Validator::make(request()->all(), [
+            'name' => 'string',
+        ]);
+
+        if ($validator->fails()) {
+            return [];
+        }
+
+        $validated = $validator->validated();
+
+        $filter = [
+            ['role', 'blogger'],
+            ['status', 0],
+        ];
+
+        if (!empty($validated['name'])) {
+            $filter[] = ['name', 'like', '%' . $validated['name'] . '%'];
+        }
+
+        $unverified_users = User::where($filter)->get();
+
+        return view('shared.admin.unverified-users-list', compact('unverified_users'));
+    }
+
+    public function bloggers(Request $request) {
+        $validator = Validator::make(request()->all(), [
+            'name' => 'string',
+        ]);
+
+        if ($validator->fails()) {
+            return [];
+        }
+        $validated = $validator->validated();
+
+
+        $bloggers = [];
+        if (!empty($validated['blogger_name'])) {
+            $bloggers = Blogger::whereHas('user', function (Builder $query) use ($validated) {
+                $query->where('name', 'like', '%' . $validated['name'] . '%');
+            })->get();
+        } else {
+            $bloggers = Blogger::get();
+        }
+
+        return view('shared.admin.bloggers-list', compact('bloggers'));
+    }
+
+    public function sellers(Request $request) {
+        $validator = Validator::make(request()->all(), [
+            'name' => 'string',
+        ]);
+
+        if ($validator->fails()) {
+            return [];
+        }
+        $validated = $validator->validated();
+
+        $sellers = [];
+        if (!empty($validated['name'])) {
+            $sellers = Seller::whereHas('user', function (Builder $query) use ($validated) {
+                $query->where('name', 'like', '%' . $validated['name'] . '%');
+            })->get();
+        } else {
+            $sellers = Seller::get();
+        }
+
+        return view('shared.admin.sellers-list', compact('sellers'));
     }
 }

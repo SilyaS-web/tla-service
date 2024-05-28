@@ -1,7 +1,7 @@
 class Tabs {
     constructor(node) {
         this.node = node;
-        
+
         $(this.node).find('.tab').on('click', (e)=>{
             e.preventDefault();
             this.tabClick(e)
@@ -11,7 +11,7 @@ class Tabs {
     }
     node = '';
     dataProps = {
-        
+
     }
     tabClick = (e)=>{
         var curTab = $(e.target).closest('.tab');
@@ -29,16 +29,16 @@ class Popup{
         this.node = node;
 
         $(this.node).find('.close-popup').on('click', this.closePopup)
-        
+
         return this;
     }
-    
+
     node = '';
-    
+
     openPopup = () => {
         $(this.node).addClass('opened');
     }
-    
+
     closePopup = () => {
         $(this.node).removeClass('opened');
     }
@@ -47,7 +47,7 @@ class Popup{
 class PopupAcceptBloger extends Popup{
     constructor(node){
         super(node);
-        
+
         $(this.node).find('.btn.send-data').on('click', this.sendData)
 
         return this;
@@ -118,7 +118,7 @@ function notify(type, content){
     $('.notification').addClass(type)
     $('.notification .notification__title').text(content.title);
     $('.notification .notification__text').text(content.message);
-    
+
     setTimeout(()=>{
         $('.notification').hide()
         $('.notification').removeClass(type)
@@ -142,17 +142,41 @@ $(window).on('load', function(){
         achivmentsForm.getAchivments();
         achivmentsForm.openPopup();
     })
-    
+
+
+    $(document).on('click', '.blogers-search-btn', function(){
+        let search = $(document).find('#blogers-search').val();
+
+        $.post('/apist/bloggers', {
+            name: search
+        },
+        function(res){
+            $('#blogers-list').find('.list-blogers').remove();
+            $('#blogers-list').find('.admin-blogers__body').append(res);
+        })
+    })
+
+    $(document).on('click', '.sellers-search-btn', function(){
+        let search = $(document).find('#sellers-search').val();
+
+        $.post('/apist/sellers', {
+            name: search
+        },
+        function(res){
+            $('#sellers-list').find('.list-blogers').remove();
+            $('#sellers-list').find('.admin-blogers__body').append(res);
+        })
+    })
 })
 
-function ibg(){ 
-    let ibg = $('._ibg'); 
+function ibg(){
+    let ibg = $('._ibg');
 
     $(ibg).each((i, item)=>{
         if(img = $(item).find('img')){
             $(item).css("background-image", 'url("' + img.attr('src') + '")');
         }
-    })   
-} 
+    })
+}
 
 window.addEventListener('load', ibg)
