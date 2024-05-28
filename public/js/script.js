@@ -569,8 +569,8 @@ class Chat {
 
         // this.getMsgCountInterval = setInterval(this.getNewMessagesCount, 5000);
 
-        $(this.node).on('click', '.chat__btns .btn-send-msg', (e) => { this.sendMessage(e) });
-        $(this.node).on('click', '.item-chat', (e) => { this.chooseChat(e) });
+        $(document).on('click', '.chat__btns .btn-send-msg', (e) => { this.sendMessage(e) });
+        $(document).on('click', '.item-chat', (e) => { this.chooseChat(e) });
 
         // $(document).find('.chat-link').on('click', (e)=>{
         //     var link = $(e.target).closest('.chat-link');
