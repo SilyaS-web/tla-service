@@ -29,7 +29,7 @@ class AuthController extends Controller
 
     public function store(Request $request)
     {
-        $validator = Validator::make(request()->all(), [
+        $validator = Validator::make($request->all(), [
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users,email',
             'phone' => 'required|unique:users,phone',
