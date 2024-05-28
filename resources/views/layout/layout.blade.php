@@ -22,7 +22,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-    {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <title>Профиль</title>
 </head>
