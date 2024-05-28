@@ -54,8 +54,8 @@ class ProjectController extends Controller
             $query->where('status', 1);
         }])->get();
 
-        if ($user->role == 'seller') {
-            return view("project.seller-list", compact('projects'));
+        if ($user->role == 'blogger') {
+            return view("project.blogger-list", compact('projects'));
         }
 
         return view("project.index", compact('projects'));
@@ -76,8 +76,9 @@ class ProjectController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'project_type' => ['required', Rule::in(Project::TYPES)],
-            'project_name' => 'required|min:3',
             'product_name' => 'required|min:3',
+            'project_name' => 'required|min:3',
+            'product_nm' => 'required|min:3|numeric',
             'product_link' => 'required|min:3',
             'product_price' => 'required|numeric',
             'images' => 'required|array',

@@ -22,6 +22,8 @@ class CreateWorksTable extends Migration
             $table->unsignedBigInteger('project_id');
             $table->foreign('project_id')->references('id')->on('projects')->cascadeOnDelete();
             $table->integer('status')->default(0);
+            $table->timestamp('confirmed_by_blogger_at')->nullable();
+            $table->timestamp('confirmed_by_seller_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

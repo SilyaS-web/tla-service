@@ -6,6 +6,7 @@ use App\Models\Work;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 
 class WorkController extends Controller
 {
@@ -55,5 +56,33 @@ class WorkController extends Controller
         $work->save();
 
         return redirect()->route('profile')->with('success', 'Заявка успешно принята');
+    }
+
+    public function confirm(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'work_id' => 'required|exists:works,id',
+        ]);
+
+        if ($validator->fails()) {
+            // return redirect()->route('profile')->withErrors($validator);
+            return response()->json($validator->errors(), 400);
+        }
+
+        $user = Auth::user();
+        if (!$user) {
+            $user = User::find($request->user_id);
+        }
+        $validated = $validator->validated();
+
+        $work = Work::find($validated['work_id']);
+        if ($user->role == 'blogger') {
+            $work->confirmed_by_blogger_at = time();
+        } else {
+            $work->confirmed_by_seller_at = time();
+        }
+        $work->save();
+
+        return redirect()->route('profile')->with('success');
     }
 }

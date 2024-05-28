@@ -14,6 +14,8 @@ class Work extends Model
         'blogger_id',
         'seller_id',
         'project_id',
+        'confirmed_by_blogger_at',
+        'confirmed_by_seller_at',
         'status',
     ];
 
@@ -25,6 +27,11 @@ class Work extends Model
     public function seller()
     {
         return $this->hasOne(Seller::class, 'user_id', 'seller_id');
+    }
+
+    public function project()
+    {
+        return $this->hasOne(Project::class, 'id', 'project_id');
     }
 
     public function messages() {

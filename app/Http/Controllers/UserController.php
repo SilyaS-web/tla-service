@@ -53,11 +53,12 @@ class UserController extends Controller
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
-        $all_projects = Project::where($validator->validated())->get();
-        $projects = $all_projects;
 
         $works = Work::where([['blogger_id', $user_id]])->get();
-        $role = 'blogger';
+        $projects = Project::whereIn('id', $works->pluck('project_id'))->get();
+        $all_projects = Project::where($validator->validated())->get();
+
+        $role = $user->role;
 
         return compact('projects', 'all_projects', 'works', 'role', 'user_id');
     }

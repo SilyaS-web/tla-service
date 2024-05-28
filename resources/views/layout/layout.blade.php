@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
+
     <title>Профиль</title>
 </head>
 <body>
@@ -154,7 +154,7 @@
                                 <div class="tarrif-header__item tarrif-header__adv">
                                     Рекламные посты <b><span class="counter">{{ auth()->user()->seller->remaining_tariff }}</span> шт.</b>
                                     <div class="tarrif-header__date">
-                                        02 Мая — 02 Июня
+                                        {{-- 02 Мая — 02 Июня --}}
                                     </div>
                                     <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
                                 </div>

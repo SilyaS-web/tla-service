@@ -67,4 +67,7 @@ class AdminController extends Controller
 
         return redirect()->route('profile')->with('success', 'Заявка отклонена!');
     }
+
+    public function ban(Request $request) {
+    }
 }

@@ -59,8 +59,8 @@
                                             <div class="quest__step-row">
                                                 <div class="form-group">
                                                     <label for="project-price">Артикул товара</label>
-                                                    <input type="text" id="product-articul" placeholder="Введите артикул" class="input input--product_price">
-                                                    @error('product-articul')
+                                                    <input type="text" id="product-articul" name="product_nm" placeholder="Введите артикул" class="input input--product_price">
+                                                    @error('product_nm')
                                                     <span class="error">{{ $message }}</span>
                                                     @enderror
                                                 </div>
@@ -544,14 +544,14 @@
                                                     <option value="5" class="">Платные интеграции</option>
                                                 </select>
                                             </div>
-                                            <div class="form-group filter__item">
+                                            {{-- <div class="form-group filter__item">
                                                 <label for="">Страна</label>
                                                 <select name="filter-country" id="filter-country" class="input">
                                                     <option value="1" class="">Россия</option>
                                                     <option value="2" class="">Казахстан</option>
                                                     <option value="3" class="">Грузия</option>
                                                 </select>
-                                            </div>
+                                            </div> --}}
 
                                             <div class="filter__btns">
                                                 <button class="btn btn-primary btn-filter-send">Применить</button>
