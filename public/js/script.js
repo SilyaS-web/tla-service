@@ -582,6 +582,8 @@ class Chat {
 
         this.getNewMessages(false);
 
+        this.getMsgInterval = setInterval(this.getNewMessages, 5000)
+
         return this;
     }
 
@@ -592,6 +594,7 @@ class Chat {
     getMsgCountUri = '/apist/messages/count';
 
     getMsgCountInterval = null;
+    getMsgInterval = null;
 
     currentChatId = null;
 
