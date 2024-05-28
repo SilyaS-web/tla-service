@@ -461,7 +461,8 @@ class Chat {
 
         // this.getMsgCountInterval = setInterval(this.getNewMessagesCount, 5000);
 
-        $(this.node).find('.chat__btns .btn-send-msg').on('click', (e) => this.chooseChat(e));
+        $(this.node).on('click', '.chat__btns .btn-send-msg', (e) => this.sendMessage(e));
+        $(this.node).on('click', '.item-chat', (e) => this.chooseChat(e));
 
         // $(document).find('.chat-link').on('click', (e)=>{
         //     var link = $(e.target).closest('.chat-link');
@@ -690,7 +691,7 @@ function notify(type, content){
 $(window).on('load', function(){
     var dbTabs = new DashboardTabs('.dashboard');
 
-    var chat =
+    var chat = new Chat('.tab-content__chat')
 
     $(document).on('click', '.tarrif-header', function(e){
         $('.header__profile-item--js').not($(e.target).closest('.tarrif-header')).removeClass('active')

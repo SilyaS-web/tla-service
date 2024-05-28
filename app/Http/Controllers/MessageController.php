@@ -64,7 +64,7 @@ class MessageController extends Controller
             ['user_id', '<>', $user_id]
         ]);
 
-        
+
 
         return view('shared.chat.index', compact('works', 'user_id'));
     }
