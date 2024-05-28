@@ -45,9 +45,9 @@ class AuthController extends Controller
         $phone_for_search = str_replace(['(', ')', ' ', '-'], '', $validated['phone']);
         $phone_for_search = '+7' . mb_substr($phone_for_search, 1);
         $tgPhone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
-        // if (!$tgPhone) {
-        //     return redirect()->route('register')->with('success', 'Необходимо подтвердить телеграм')->withInput();
-        // }
+        if (!$tgPhone) {
+            return redirect()->route('register')->with('success', 'Необходимо подтвердить телеграм')->withInput();
+        }
 
         $user = User::create([
             'name' => $validated['name'],

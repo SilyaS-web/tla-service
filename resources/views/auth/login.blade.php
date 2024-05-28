@@ -29,6 +29,9 @@
                     <span class="error">{{ $message }}</span>
                     @enderror
                 </div>
+                <p class="form-addit">
+                    <a href="#">Восстановить пароль</a>
+                </p>
                 <div class="form-btns auth__form-btns">
                     <button class="btn btn-primary" type="submit">
                         Подтвердить
