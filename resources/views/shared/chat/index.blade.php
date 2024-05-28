@@ -4,7 +4,7 @@
             @forelse ($works as $work)
             @include('shared.chat.item')
             @empty
-            Нет блогеров
+                <p class = "chat__chat-empty">Переписка пустая, <span style="color:var(--primary); cursor:pointer" onclick="(function(){ $(document).find('.nav-menu__item.project-link').click() })();">создайте проект</span> и начните работу с блогерами</p>
             @endforelse
         </div>
     </div>
@@ -27,7 +27,7 @@
             </div>
             <div class="chat__btns" style="display: flex; flex-wrap: wrap; gap:8px;">
                 <button class="btn btn-primary btn-send-msg">Отправить</button>
-                <a href="" class="btn btn-secondary">Подтвердить выполнение проекта</a>
+                <a href="" class="btn btn-secondary" id = "confirm-completion-btn">Подтвердить выполнение проекта</a>
             </div>
         </div>
     </div>
