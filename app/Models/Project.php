@@ -46,8 +46,8 @@ class Project extends Model
         return $this->hasMany(Work::class, 'project_id', 'id');
     }
 
-    public function countActiveBloggers()
-    {
+    public function countActiveBloggers() {
+
     }
 
     public function getImageURL($only_primary = false)
@@ -101,5 +101,10 @@ class Project extends Model
         curl_close($ch);
 
         return $response;
+    }
+
+    public function seller()
+    {
+        return $this->hasOne(Seller::class, 'user_id', 'seller_id');
     }
 }

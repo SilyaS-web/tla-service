@@ -25,7 +25,7 @@ class UserController extends Controller
                 break;
 
             case 'blogger':
-                $data = $this->getSellerProfileData();
+                $data = $this->getBloggerProfileData();
                 break;
 
             case 'admin':
@@ -38,6 +38,30 @@ class UserController extends Controller
 
         return view("profile." . $user->role, $data);
     }
+
+    public function getBloggerProfileData()
+    {
+        $user = Auth::user();
+        $user_id = $user->id;
+
+        $validator = Validator::make(request()->all(), [
+            'project_type' => [Rule::in(Project::TYPES)],
+            'project_name' => '',
+            'status' => '',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+        $all_projects = Project::where($validator->validated())->get();
+        $projects = $all_projects;
+
+        $works = Work::where([['blogger_id', $user_id]])->get();
+        $role = 'blogger';
+
+        return compact('projects', 'all_projects', 'works', 'role', 'user_id');
+    }
+
 
     public function getSellerProfileData()
     {

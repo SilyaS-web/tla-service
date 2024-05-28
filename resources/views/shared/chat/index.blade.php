@@ -10,10 +10,7 @@
     </div>
     <div class="chat__right">
         <div class="chat__messages messages-chat">
-            @forelse ($works as $work)
-            @include('shared.chat.messages', ['work' => $work])
-            @empty
-            @endforelse
+
         </div>
 
         <div class="chat__messages messages-create">

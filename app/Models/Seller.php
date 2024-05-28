@@ -40,4 +40,16 @@ class Seller extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
+    // public function projects()
+    // {
+    //     return $this->hasManyThrough(
+    //         Deployment::class,
+    //         Environment::class,
+    //         'project_id', // Foreign key on the environments table...
+    //         'environment_id', // Foreign key on the deployments table...
+    //         'id', // Local key on the projects table...
+    //         'id' // Local key on the environments table...
+    //     );
+    // }
 }

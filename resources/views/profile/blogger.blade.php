@@ -32,62 +32,7 @@
                                 </div>
                             </div>
                             <div class="list-projects__items">
-                                <div class="list-projects__item project-item">
-                                    <div class="owl-carousel project-item__carousel">
-                                        <div class="project-item__img">
-                                            <img src="../img/projects-list/1.webp" alt="">
-                                            <div class="project-item__status active">
-                                                Активно
-                                            </div>
-                                            <div class="project-item__country">
-                                                Россия
-                                            </div>
-                                        </div>
-                                        <div class="project-item__img">
-                                            <img src="../img/projects-list/1.webp" alt="">
-                                            <div class="project-item__status active">
-                                                Активно
-                                            </div>
-                                            <div class="project-item__country">
-                                                Россия
-                                            </div>
-                                        </div>
-                                        <div class="project-item__img">
-                                            <img src="../img/projects-list/1.webp" alt="">
-                                            <div class="project-item__status active">
-                                                Активно
-                                            </div>
-                                            <div class="project-item__country">
-                                                Россия
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="project-item__content">
-                                        <div class="project-item__title">
-                                            Цена — 1120 ₽
-                                        </div>
-                                        <div class="project-item__left" style="margin-bottom: 12px;">
-                                            Осталось выполнить отзывов <span style="font-weight: 600; color:#FE5E00">5</span>
-                                        </div>
-                                        <a class="project-item__participants" title="Гель для душа парфюмированный, 1000 мл.">
-                                            Dk-studio / Гель для душа парфюмированный, 1000 мл.
-                                        </a>
-                                        <div class="project-item__format-tags card__row card__tags">
-                                            <div class="card__tags-item">
-                                                <span>Рекламный пост</span>
-                                            </div>
-                                            <div class="card__tags-item">
-                                                <span>Обзор на канале</span>
-                                            </div>
-                                            <div class="card__tags-item">
-                                                <span>Другое</span>
-                                            </div>
-                                        </div>
-                                        <div class="project-item__btns">
-                                            <a href="#" class="btn btn-primary">Отправить</a>
-                                        </div>
-                                    </div>
-                                </div>
+                                @include('project.blogger-list', ['projects' => $projects, 'all' => false])
                             </div>
                         </div>
                         <div class="profile-projects__filters">
@@ -143,59 +88,7 @@
                                 </div>
                             </div>
                             <div class="list-projects__items">
-                                <div class="list-projects__item project-item">
-                                    <div class="owl-carousel project-item__carousel">
-                                        <div class="project-item__img">
-                                            <img src="../img/projects-list/1.webp" alt="">
-                                            <div class="project-item__status active">
-                                                Активно
-                                            </div>
-                                            <div class="project-item__country">
-                                                Россия
-                                            </div>
-                                        </div>
-                                        <div class="project-item__img">
-                                            <img src="../img/projects-list/1.webp" alt="">
-                                            <div class="project-item__status active">
-                                                Активно
-                                            </div>
-                                            <div class="project-item__country">
-                                                Россия
-                                            </div>
-                                        </div>
-                                        <div class="project-item__img">
-                                            <img src="../img/projects-list/1.webp" alt="">
-                                            <div class="project-item__status active">
-                                                Активно
-                                            </div>
-                                            <div class="project-item__country">
-                                                Россия
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="project-item__content">
-                                        <div class="project-item__title">
-                                            Цена — 1120 ₽
-                                        </div>
-                                        <div class="project-item__left" style="margin-bottom: 12px;">
-                                            Осталось выполнить отзывов <span style="font-weight: 600; color:#FE5E00">5</span>
-                                        </div>
-                                        <a class="project-item__participants" title="Гель для душа парфюмированный, 1000 мл.">
-                                            Dk-studio / Гель для душа парфюмированный, 1000 мл.
-                                        </a>
-                                        <div class="project-item__format-tags card__row card__tags">
-                                            <div class="card__tags-item">
-                                                <span>Рекламный пост</span>
-                                            </div>
-                                            <div class="card__tags-item">
-                                                <span>Обзор на канале</span>
-                                            </div>
-                                            <div class="card__tags-item">
-                                                <span>Другое</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                @include('project.blogger-list', ['projects' => $all_projects, 'all' => true])
                             </div>
                         </div>
                         <div class="profile-projects__filters">

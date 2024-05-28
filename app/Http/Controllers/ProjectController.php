@@ -54,6 +54,10 @@ class ProjectController extends Controller
             $query->where('status', 1);
         }])->get();
 
+        if ($user->role == 'seller') {
+            return view("project.seller-list", compact('projects'));
+        }
+
         return view("project.index", compact('projects'));
     }
 
