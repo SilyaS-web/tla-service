@@ -88,7 +88,8 @@ class UserController extends Controller
 
         $works = Work::where([['seller_id', $user_id]])->get();
         $role = $user->role;
-        return compact('projects', 'bloggers', 'works', 'role', 'user_id');
+        $chat_role = "blogger";
+        return compact('projects', 'bloggers', 'works', 'role', 'user_id', 'chat_role');
     }
 
     public function getAdminProfileData()

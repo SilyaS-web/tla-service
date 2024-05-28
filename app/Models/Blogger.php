@@ -38,5 +38,4 @@ class Blogger extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
-
 }

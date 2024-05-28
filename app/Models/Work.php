@@ -37,4 +37,12 @@ class Work extends Model
     public function messages() {
         return $this->hasMany(Message::class,'work_id','id');
     }
+
+    public function getPartnerUser($role) {
+        if ($role == 'seller') {
+            return $this->blogger->user;
+        } else {
+            return $this->seller->user;
+        }
+    }
 }
