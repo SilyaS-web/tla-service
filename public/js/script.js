@@ -636,8 +636,8 @@ class Chat {
             work_id: data
         }, function(res){
             if(!id){
-                $(document).find('.profile-tabs__content-item').remove();
-                $(document).find('.profile-chat__body').append(res);
+                $(document).find('.profile-chat__body').remove();
+                $(document).find('#chat').append(res);
             }
             else{
                 $(self.node).find('.messages-chat').empty()
