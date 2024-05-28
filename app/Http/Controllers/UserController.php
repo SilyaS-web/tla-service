@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Project;
 use App\Models\Seller;
+use App\Models\TgPhone;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\User;
 use App\Models\Work;
@@ -86,7 +87,7 @@ class UserController extends Controller
         $bloggers = Blogger::get();
 
         $works = Work::where([['seller_id', $user_id]])->get();
-        $role = 'blogger';
+
         return compact('projects', 'bloggers', 'works', 'role', 'user_id');
     }
 
