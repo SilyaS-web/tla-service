@@ -6,7 +6,7 @@
         </div>
         <div class="profile-projects__col profile-projects__content" style="padding:15px 0px;">
             <div class="profile-projects__row">
-                <div class="profile-projects__item-title">
+                <div class="profile-projects__item-title" title="{{ $project->project_name }}">
                     {{ $project->project_name }}
                 </div>
                 <div class="profile-projects__status active">
@@ -530,7 +530,7 @@
         </div>
     </div>
     @empty
-    Нет проетков
+        Нет проетков
     @endforelse
 </div>
 

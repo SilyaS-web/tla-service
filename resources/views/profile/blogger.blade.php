@@ -1,7 +1,7 @@
 @extends('layout.layout')
 
 @section('content')
-<section class="profile">
+<section class="profile" id="blogger">
     <div class="profile__container _container">
         <div class="profile__body">
             <div class="profile__navigation nav-menu">
@@ -53,7 +53,7 @@
                                         <div class="form-group filter__item">
                                             <label for="">Формат рекламы</label>
                                             <select name="filter-format" id="filter-format" class = "input">
-                                                <option value="1" class="">Отзыв на товар</option>
+                                                <option value="feedback" class="">Отзыв на товар</option>
                                                 <option value="2" class="">Рекламная интеграция(Instagram)</option>
                                                 <option value="3" class="">Рекламная интеграция(Youtube)</option>
                                                 <option value="4" class="">Другие площадки для интеграций</option>
@@ -87,7 +87,7 @@
                                     <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
                                 </div>
                             </div>
-                            <div class="list-projects__items">
+                            <div class="profile-projects__items list-projects__items">
                                 @include('project.blogger-list', ['projects' => $all_projects, 'all' => true])
                             </div>
                         </div>
@@ -109,7 +109,7 @@
                                         <div class="form-group filter__item">
                                             <label for="">Формат рекламы</label>
                                             <select name="filter-format" id="filter-format" class = "input">
-                                                <option value="1" class="">Отзыв на товар</option>
+                                                <option value="feedback" class="">Отзыв на товар</option>
                                                 <option value="2" class="">Рекламная интеграция(Instagram)</option>
                                                 <option value="3" class="">Рекламная интеграция(Youtube)</option>
                                                 <option value="4" class="">Другие площадки для интеграций</option>

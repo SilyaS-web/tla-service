@@ -18,7 +18,7 @@
             {{-- <div class="project-item__left" style="margin-bottom: 12px;">
                 Осталось выполнить отзывов <span style="font-weight: 600; color:#FE5E00">5</span>
             </div> --}}
-            <a class="project-item__participants" title="Гель для душа парфюмированный, 1000 мл.">
+            <a class="project-item__participants" title="{{ $project->product_name }}">
                 {{ $project->seller->user->name }} / {{ $project->product_name }}
             </a>
             <div class="project-item__format-tags card__row card__tags">

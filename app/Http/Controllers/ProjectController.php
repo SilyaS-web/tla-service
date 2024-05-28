@@ -114,6 +114,7 @@ class ProjectController extends Controller
     {
         $user = Auth::user();
         $user_id = $user->id;
+        $role = $user->role;
 
         $validator = Validator::make(request()->all(), [
             'project_type' => [Rule::in(Project::TYPES)],
