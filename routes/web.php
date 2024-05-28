@@ -23,9 +23,9 @@ use App\Http\Controllers\WorkController;
 
 Route::get('/', function () {
     if (Auth::check()) {
-        route('profile');
+        return redirect()->route('profile');
     } else {
-        route('login');
+        return redirect()->route('login');
     }
 });
 
