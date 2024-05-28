@@ -39,7 +39,8 @@
                     </div>
                     <div class="admin-bloger__btns">
                         <a href="#" class="btn btn-primary btn-accept">Принять</a>
-                        <a href="#" class="btn btn-secondary">Отклонить</a>
+                        {{-- <a href="{{route('admin/deny' . $unverified_user->id)}}" class="btn btn-secondary">Отклонить</a> --}}
+                        <a href="/admin/deny" class="btn btn-secondary">Отклонить</a>
                     </div>
                 </div>
             </div>

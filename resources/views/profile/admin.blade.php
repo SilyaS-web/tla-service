@@ -86,8 +86,8 @@
                                     Модерация блогеров
                                 </div>
                                 <div class="admin-blogers__search form-group">
-                                    <input type="name" id="blogers-search--moderation" class="input" placeholder="Введите название">
-                                    <button class="btn btn-primary">Найти</button>
+                                    <input type="name" id="moderation-search" class="input" placeholder="Введите название">
+                                    <button class="btn btn-primary moderation-search-btn" >Найти</button>
                                 </div>
                             </div>
                             @include('shared.admin.unverified-users-list')
@@ -166,6 +166,19 @@
                         <div class="form-group">
                             <label for="female">Женщины, %</label>
                             <input id="female" name="female" type="text" class="input">
+                        </div>
+                    </div>
+                    <div class="form-group filter__item">
+                        <label for="">Пол блогера</label>
+                        <div class="filter__item--sex">
+                            <div class="input-checkbox-w">
+                                <input type="checkbox" class = "checkbox" id = "male">
+                                <label for="male">Мужской</label>
+                            </div>
+                            <div class="input-checkbox-w">
+                                <input type="checkbox" class = "checkbox" id = "female">
+                                <label for="femail">Женский</label>
+                            </div>
                         </div>
                     </div>
                     <button class="btn btn-primary send-data">

@@ -147,7 +147,7 @@ $(window).on('load', function(){
     $(document).on('click', '.blogers-search-btn', function(){
         let search = $(document).find('#blogers-search').val();
 
-        $.post('/apist/bloggers', {
+        $.post('/apist/admin/bloggers', {
             name: search
         },
         function(res){
@@ -159,12 +159,24 @@ $(window).on('load', function(){
     $(document).on('click', '.sellers-search-btn', function(){
         let search = $(document).find('#sellers-search').val();
 
-        $.post('/apist/sellers', {
+        $.post('/apist/admin/sellers', {
             name: search
         },
         function(res){
             $('#sellers-list').find('.list-blogers').remove();
             $('#sellers-list').find('.admin-blogers__body').append(res);
+        })
+    })
+
+    $(document).on('click', '.moderation-search-btn', function(){
+        let search = $(document).find('#moderation-search').val();
+
+        $.post('/apist/admin/moderation', {
+            name: search
+        },
+        function(res){
+            $('#moderation').find('.list-blogers').remove();
+            $('#moderation').find('.admin-blogers__body').append(res);
         })
     })
 })
