@@ -1,12 +1,18 @@
-@if(session()->has('success'))
+<?
+    $isSuccess = session()->has('success');
+?>
 
-    <div class="notification">
-        <div class="notification__body">
-            <div class="notification__title">Внимание!</div>
-            <div class="notification__text">
-                {{ session('success') }}
-            </div>
+<div class="notification" style="display:none">
+    <div class="notification__body">
+        <div class="notification__title">Внимание!</div>
+        <div class="notification__text">
+            {{ $isSuccess ? session('success') : "" }}
         </div>
     </div>
+</div>
 
-@endif
+<? if($isSuccess): ?>
+    <script>
+        notify({'Внимание!', <?php echo session('success')?>})
+    </script>
+<? endif ?>

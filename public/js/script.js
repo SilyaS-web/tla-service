@@ -661,6 +661,80 @@ class PopupAddBlogerToProject extends Popup{//когда нибудь тут б�
     }
 }
 
+class PopupConfirmCompletion extends Popup{
+    constructor(node){
+        super(node);
+
+        this.node = node;
+
+        $(this.node).find('.mark-items__star').on('click', (e) => this.setMark(e));
+        $(this.node).find('.btn.send-data').on('click', this.sendData);
+
+        return this;
+    }
+
+    node = '';
+    sendUri = "#";
+    mark = 0;
+
+    setMark = (e) => {
+        var cStar = $(e.target).closest('.mark-items__star'),
+            allStars = $(this.node).find('.mark-items__star');
+
+        allStars.removeClass('active');
+        allStars.each((i, star) => {
+            if(allStars.index(star) <= allStars.index(cStar)){
+                $(star).addClass('active');
+            }
+        })
+
+        this.mark = allStars.index(cStar);
+    }
+
+    sendData = () => {
+        var self = this;
+
+        $.post(self.sendUri, {
+            message: $(self.node).find('#comment').val(),
+            mark: self.mark
+        }, function(res){
+            notify('info', {title: 'Успешно!', message: 'Вы успешно подтвердили выполнение проекта'})
+        })
+    }
+}
+
+class PopupChangePassword extends Popup{
+    constructor(node){
+        super(node);
+
+        this.node = node;
+
+        return this;
+    }
+
+    node = '';
+    sendUri = "#";
+
+    dataProps = {
+        phone: {
+            set: (val) => {console.log(val);},
+            get: () =>{
+                return $(this.node).find('#phone').get();
+            }
+        }
+    }
+
+    sendData = () => {
+        var self = this;
+
+        $.post(self.sendUri, {
+            phone: self.dataProps.phone.get(),
+        }, function(res){
+            notify('info', {title: 'Сообщение отправлено!', message: 'Вам отправлен новый пароль, перейдите в телеграм, чтобы получить его'})
+        })
+    }
+}
+
 class DashboardTabs extends Tabs{
     constructor(node){
         super(node);
@@ -692,15 +766,14 @@ class DashboardTabs extends Tabs{
 
 
 function notify(type, content){
-    $('.notification').show()
+    $('.notification').fadeIn()
     $('.notification').addClass(type)
     $('.notification .notification__title').text(content.title);
     $('.notification .notification__text').text(content.message);
 
     setTimeout(()=>{
-        $('.notification').hide()
+        $('.notification').fadeOut()
         $('.notification').removeClass(type)
-        $('.notification .notification__text').text('');
     }, 5000)
 }
 
@@ -819,6 +892,20 @@ $(window).on('load', function(){
 
         form.openPopup();
     })
+
+    $(document).on('click', '#change-password-btn', function(){
+        let popup = new Popup('#change-password');
+        popup.openPopup();
+    })
+
+
+    $(document).on('click', '#confirm-completion-btn', function(e){
+        e.preventDefault();
+
+        let popup = new PopupConfirmCompletion('#confirm-completion');
+        popup.openPopup();
+    })
+
 
     $(document).find('.quest__step .input-checkbox-w.disabled').on('click', function(e){
         $(e.target).closest('.input-checkbox-w').find('input').prop('checked', false);

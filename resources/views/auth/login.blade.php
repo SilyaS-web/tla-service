@@ -36,9 +36,11 @@
                     <button class="btn btn-primary" type="submit">
                         Подтвердить
                     </button>
+                    <span class="btn btn-secondary" id="change-password-btn" style="cursor: pointer">
+                        Восстановить пароль
+                    </span>
                 </div>
-                <p class="form-addit">
-                    Нет аккаунта? Тогда <a href="{{ route('register') }}">зарегистрируйтесь</a> в нашем сервисе! Авторизуясь, вы даёте на это согласие и принимаете условия <a href="policy">Политики конфиденциальности.</a></p>
+                <p class="form-addit">Нет аккаунта? Тогда <a href="{{ route('register') }}">зарегистрируйтесь</a> в нашем сервисе! Авторизуясь, вы даёте на это согласие и принимаете условия <a href="{{ route('policy') }}">Политики конфиденциальности.</a> </p>
             </form>
         </div>
     </div>

@@ -568,7 +568,7 @@
                                         Список блогеров
                                     </div>
                                     <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
-                                        <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
+                                        <button class="btn btn-primary blogers-list__filter-btn">Фильтры</button>
                                     </div>
                                 </div>
                                 @include('blogger.list')

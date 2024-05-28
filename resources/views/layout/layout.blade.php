@@ -22,7 +22,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
 
     <title>Профиль</title>
 </head>
@@ -235,13 +235,13 @@
 
                             </div>
                         </nav>
-                        <a href="#" class="btn btn-primary footer__contact-us">
+                        <a href="#" class="btn btn-primary footer__contact-us" id="contact-us">
                             Свяжитесь с нами
                         </a>
                     </div>
                     <div class="footer__bottom">
                         <div class="footer__addits">
-                            <a href="{{ route('policy') }}" class="footer__policy">
+                            <a href="#" class="footer__policy">
                                 Политика конфиденциальности
                             </a>
                             <p class="footer__copyright">
@@ -262,6 +262,129 @@
                 </div>
             </div>
         </footer>
+
+        <div class="popup" id = "contact-form">
+            <div class="popup__container _container">
+                <div class="popup__body">
+                    <div class="popup__header">
+                        <div class="popup__title title">
+                            Оставьте свой номер
+                        </div>
+                        <div class="popup__subtitle">
+                            Укажите свои контактные данные и наш менеджер свяжется с вами в течении 15 минут
+                        </div>
+                    </div>
+                    <div class="popup__form">
+                        <div class="form-group">
+                            <label for="">Ваше имя</label>
+                            <input id = "name" name="name" type="text" class="input">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Ваш номер</label>
+                            <input id = "phone" name = "phone" type="phone" class="input">
+                        </div>
+                        <script>
+                            $(function(){
+                              $("#phone").mask("8(999) 999-9999");
+                            });
+                        </script>
+                        <p class="form-addit">
+                           Оставляя свои данные, вы даёте на это согласие <br>
+                           и принимаете условия <a href = "policy">Политики конфиденциальности.</a>
+                        </p>
+                        <button class = "btn btn-primary send-data">
+                            Отправить
+                        </button>
+                    </div>
+                    <div class="close-popup">
+                        <img src="img/close-icon.svg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="popup" id = "change-password">
+            <div class="popup__container _container">
+                <div class="popup__body">
+                    <div class="popup__header">
+                        <div class="popup__title title">
+                            Введите номер
+                        </div>
+                        <div class="popup__subtitle">
+                            Отправьте нам свой номер и наш телеграм-бот пришлёт вам новый пароль, который потом можно поменять в настройках профиля
+                        </div>
+                    </div>
+                    <div class="popup__form">
+                        <div class="form-group">
+                            <label for="phone">Ваш номер</label>
+                            <input id = "phone" name = "phone" type="phone" class="input">
+                        </div>
+                        <script>
+                            $(function(){
+                              $("#phone").mask("8(999) 999-9999");
+                            });
+                        </script>
+                        <p class="form-addit">
+                           Оставляя свои данные, вы даёте на это согласие <br>
+                           и принимаете условия <a href = "policy">Политики конфиденциальности.</a>
+                        </p>
+                        <button class = "btn btn-primary send-data">
+                            Отправить
+                        </button>
+                    </div>
+                    <div class="close-popup">
+                        <img src="img/close-icon.svg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="popup" id = "confirm-completion" style="">
+            <div class="popup__container _container">
+                <div class="popup__body">
+                    <div class="popup__header">
+                        <div class="popup__title title">
+                            Заполните данные
+                        </div>
+                        <div class="popup__subtitle">
+                            Выберите оценку, не забудьте добавить комментарий, это очень важно для развития площадки и улучшения сообщества
+                        </div>
+                    </div>
+                    <div class="popup__form">
+                        <div class="form-group">
+                            <label for="mark">Ваша оценка</label>
+                            <div class="mark-items">
+                                <div class="mark-items__star">
+                                    <img src="/img/star-icon.svg" alt="">
+                                </div>
+                                <div class="mark-items__star">
+                                    <img src="/img/star-icon.svg" alt="">
+                                </div>
+                                <div class="mark-items__star">
+                                    <img src="/img/star-icon.svg" alt="">
+                                </div>
+                                <div class="mark-items__star">
+                                    <img src="/img/star-icon.svg" alt="">
+                                </div>
+                                <div class="mark-items__star">
+                                    <img src="/img/star-icon.svg" alt="">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Комментарий</label>
+                            <textarea name="comment" id="comment" cols="30" rows="10" class="textarea" placeholder="Введите сообщение"></textarea>
+                        </div>
+                        <button class = "btn btn-primary send-data">
+                            Отправить
+                        </button>
+                    </div>
+                    <div class="close-popup">
+                        <img src="img/close-icon.svg" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
 
         @include('shared.success-message')
     </div>
