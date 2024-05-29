@@ -1,5 +1,7 @@
 @extends('layout.layout')
 
+@section('title', $title ?? 'Авторизация')
+
 @section('content')
 <section class="auth">
     <div class="auth__container _container">

@@ -24,7 +24,7 @@
 
     <script src="{{ asset('libs/chart/chart.js') }}"></script>
 
-    <title>Профиль</title>
+    <title>@yield('title')</title>
 </head>
 <body>
     <div class="wrapper" style="background-color: #fff;">
