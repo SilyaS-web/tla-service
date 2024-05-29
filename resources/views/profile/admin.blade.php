@@ -87,7 +87,7 @@
                                 </div>
                                 <div class="admin-blogers__search form-group">
                                     <input type="name" id="moderation-search" class="input" placeholder="Введите название">
-                                    <button class="btn btn-primary moderation-search-btn" >Найти</button>
+                                    <button class="btn btn-primary moderation-search-btn">Найти</button>
                                 </div>
                             </div>
                             @include('shared.admin.unverified-users-list')
@@ -142,42 +142,52 @@
                     Заполните данные
                 </div>
                 <div class="popup__form">
-                    <div class="form-group">
-                        <label for="subs">Количество подписчиков</label>
-                        <input id="subs" name="subs" type="text" class="input">
+                    <div class="form-group filter__item">
+                        <label for="platform">Платформа</label>
+                        <select name="platform" id="platform" class="input">
+                            @foreach ($platforms as $platform)
+                            <option value="{{ $platform }}" class="">{{ $platform }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="views">Количество просмотров</label>
-                        <input id="views" name="views" type="text" class="input">
+                        <label for="subscriber_quantity">Количество подписчиков</label>
+                        <input id="subscriber_quantity" name="subscriber_quantity" type="text" class="input">
                     </div>
                     <div class="form-group">
-                        <label for="quality">Engagement rate</label>
-                        <input id="quality" name="quality" type="text" class="input">
+                        <label for="coverage">Охваты</label>
+                        <input id="coverage" name="coverage" type="text" class="input">
                     </div>
                     <div class="form-group">
-                        <label for="cpv">CPM</label>
-                        <input id="cpv" name="cpv" type="text" class="input">
+                        <label for="engagement_rate">Engagement rate</label>
+                        <input id="engagement_rate" name="engagement_rate" type="text" class="input">
                     </div>
-                    <div class="form-row" style="display: flex; gap:10px;">
+                    <div class="form-group">
+                        <label for="cost_per_mille">CPM</label>
+                        <input id="cost_per_mille" name="cost_per_mille" type="text" class="input">
+                    </div>
+                    <div class="form-row filter__item" style="display: flex; gap:10px;">
                         <div class="form-group">
-                            <label for="male">Мужчины, %</label>
-                            <input id="male" name="male" type="text" class="input">
+                            <label for="gender_ratio">Мужчины, %</label>
+                            <input id="gender_ratio" name="gender_ratio" type="text" class="input">
                         </div>
                         <div class="form-group">
                             <label for="female">Женщины, %</label>
                             <input id="female" name="female" type="text" class="input">
                         </div>
                     </div>
-                    <div class="form-group filter__item">
-                        <label for="">Пол блогера</label>
-                        <div class="filter__item--sex">
+                    <div class="form-row filter__item">
+                        <div class="form-group">
+                            <label for="sex">Пол блогера</label>
+                            <select name="sex" id="sex" class="input">
+                                <option value="male" class="">Мужской</option>
+                                <option value="female" class="">Женский</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <div class="input-checkbox-w">
-                                <input type="checkbox" class = "checkbox" id = "male">
-                                <label for="male">Мужской</label>
-                            </div>
-                            <div class="input-checkbox-w">
-                                <input type="checkbox" class = "checkbox" id = "female">
-                                <label for="femail">Женский</label>
+                                <input name="is_achievement" type="checkbox" class="checkbox whois" id="is_achievement">
+                                <label for="">Проверенный блогер</label>
                             </div>
                         </div>
                     </div>

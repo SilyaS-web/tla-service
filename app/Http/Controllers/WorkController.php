@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Notification;
 use App\Models\Work;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -40,7 +41,11 @@ class WorkController extends Controller
         $seller->save();
         $validated['seller_id'] = $seller->id;
         Work::create($validated);
-
+        Notification::create([
+            'user_id'=> $validated['blogger_id'],
+            'type'=> 'Новая заявка',
+            'text'=> 'Вам поступила новая заявка от ' . $seller->user->name,
+        ]);
         return redirect()->route('profile')->with('success', 'Заявка успешно отправлена');
     }
 
@@ -82,9 +87,19 @@ class WorkController extends Controller
 
         $work = Work::find($validated['work_id']);
         if ($user->role == 'blogger') {
-            $work->confirmed_by_blogger_at = time();
+            $work->confirmed_by_blogger_at = date('Y-m-d');
+            Notification::create([
+                'user_id'=> $work->seller->user->id,
+                'type'=> 'Подтверждение',
+                'text'=> 'Блогер отправил запрос на подтверждение выполнения проекта ' . $work->project->project_name,
+            ]);
         } else {
-            $work->confirmed_by_seller_at = time();
+            Notification::create([
+                'user_id'=> $work->blogger->user->id,
+                'type'=> 'Подтверждение',
+                'text'=> 'Селлер отправил запрос на подтверждение выполнения проекта ' . $work->project->project_name,
+            ]);
+            $work->confirmed_by_seller_at = date('Y-m-d');
         }
         $work->save();
 

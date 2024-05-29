@@ -63,7 +63,7 @@
                             <label class="input-file" for="product-img">
                                 <span>Загрузите изображение товара</span>
                                 <input type="file" name="product_images[]" class="" id="product-img">
-                                </label>
+                            </label>
                             <span class="error error-product-img">
 
                             </span>
@@ -72,7 +72,7 @@
                             <label class="input-file" for="product-img2">
                                 <span>Загрузите изображение товара</span>
                                 <input type="file" name="product_images[]" class="" id="product-img2">
-                                </label>
+                            </label>
                             <span class="error error-product-img">
 
                             </span>
@@ -106,17 +106,17 @@
                                 </div>
 
                             </div>
-                            <div class="input-checkbox-w disabled">
-                                <input type="checkbox" class="checkbox" id="product-inst">
-                                <label for="product-inst">Рекламная интеграция (Inst) - Бартер</label>
-                                <div class="format-tooltip" data-hint="inst">
+                            <div class="input-checkbox-w">
+                                <input type="checkbox" name="project_type" class="checkbox" value="feedback" id="product-feedback" checked>
+                                <label for="product-feedback">Отзыв на товар - Бартер</label>
+                                <div class="format-tooltip" data-hint="feedback">
                                     ?
-                                    <div class="format-hint format-hint--text" id="inst">
+                                    <div class="format-hint format-hint--text" id="feedback">
                                         <div class="format-hint__title">
                                             Рекламная интеграция (Inst) - Бартер
                                         </div>
                                         <div class="format-hint__body">
-                                            ...
+                                            Приятно, граждане, наблюдать, как акционеры крупнейших компаний формируют глобальную экономическую сеть и при этом — объявлены нарушающими общечеловеческие нормы этики и морали
                                         </div>
                                     </div>
                                 </div>

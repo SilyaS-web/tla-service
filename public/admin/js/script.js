@@ -53,29 +53,88 @@ class PopupAcceptBloger extends Popup{
         return this;
     }
 
-    sendUri = '/';
+    sendUri = '/apist/admin/bloggers/accept';
+    blogger_id = '';
     dataProps = {
-        name: {
+        platform: {
             set: (value)=>{
                 console.log(value)
             },
             get: ()=>{
-                return $(this.node).find('#name').val();
+                return $(this.node).find('#platform').val();
             }
         },
-        phone: {
+        subscriber_quantity: {
             set: (value)=>{
                 console.log(value)
             },
             get: ()=>{
-                return $(this.node).find('#phone').val();
+                return $(this.node).find('#subscriber_quantity').val();
             }
-        }
+        },
+        coverage: {
+            set: (value)=>{
+                console.log(value)
+            },
+            get: ()=>{
+                return $(this.node).find('#coverage').val();
+            }
+        },
+        engagement_rate: {
+            set: (value)=>{
+                console.log(value)
+            },
+            get: ()=>{
+                return $(this.node).find('#engagement_rate').val();
+            }
+        },
+        cost_per_mille: {
+            set: (value)=>{
+                console.log(value)
+            },
+            get: ()=>{
+                return $(this.node).find('#cost_per_mille').val();
+            }
+        },
+        gender_ratio: {
+            set: (value)=>{
+                console.log(value)
+            },
+            get: ()=>{
+                return $(this.node).find('#gender_ratio').val();
+            }
+        },
+        sex: {
+            set: (value)=>{
+                console.log(value)
+            },
+            get: ()=>{
+                return $(this.node).find('#sex').val();
+            }
+        },
+        is_achievement: {
+            set: (value)=>{
+                console.log(value)
+            },
+            get: ()=>{
+                return $(this.node).find('#is_achievement').val();
+            }
+        },
+
     }
     sendData = () => {
         var self = this;
 
         $.post(self.sendUri, {
+            user_id: self.blogger_id,
+            platform: self.dataProps.platform.get(),
+            subscriber_quantity: self.dataProps.subscriber_quantity.get(),
+            coverage: self.dataProps.coverage.get(),
+            engagement_rate: self.dataProps.engagement_rate.get(),
+            cost_per_mille: self.dataProps.cost_per_mille.get(),
+            gender_ratio: self.dataProps.gender_ratio.get(),
+            sex: self.dataProps.sex.get(),
+            is_achievement: self.dataProps.is_achievement.get(),
         }, function(res){
             notify('info', {title: 'Успешно!', message: ''});
             self.closePopup();
@@ -137,6 +196,8 @@ $(window).on('load', function(){
     $(document).on('click', '.btn-accept', function(e){
         e.preventDefault();
         let form = new PopupAcceptBloger('#accept-form');
+        console.log(e.target)
+        form.blogger_id = e.target.dataset.id
         form.openPopup()
     })
 

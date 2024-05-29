@@ -784,7 +784,7 @@ class PopupConfirmCompletion extends Popup{
     }
 
     node = '';
-    sendUri = "/apist/project/confirm";
+    sendUri = "/apist/projects/confirm";
     mark = 0;
 
     setMark = (e) => {
@@ -1045,3 +1045,17 @@ function ibg(){
 }
 
 window.addEventListener('load', ibg)
+setInterval(() => {
+    $.ajax({
+        url: '/apist/notifications',
+    })
+    .done(function( data ) {
+        document.querySelector('#header-notif-container').innerHTML = data.view;
+        document.querySelector('#header-notif-count').innerHTML = data.count;
+        if (data.count == 0) {
+            document.querySelector('#header-notif-count').style.display = 'none';
+        } else {
+            document.querySelector('#header-notif-count').style.display = 'block';
+        }
+    });
+}, 5000)

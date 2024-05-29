@@ -40,7 +40,7 @@
                                 <span>{{ $project->works_count }}</span>
                             </div>
                         </div>
-                        <div class="card__col card__stats-item">
+                        <div class="card__col card__stats-item" style="align-items: end; flex: 1: width: auto">
                             <div class="card__stats-title">
                                 <span>Дата создания</span>
                             </div>
@@ -480,7 +480,7 @@
         ?>
         <div class="profile-projects__row profile-projects__statistics projects-statistics" data-stats="{{ $project->getStatistics() }}">
             <div class="projects-statistics__title">
-                Статистика по товару
+                Статистика по товару (WB)
             </div>
             <div class="view-project__props view-project__props--desktop">
                 <div class="view-project__props-wrap">
@@ -517,7 +517,7 @@
                 </div>
             </div>
         </div>
-        <div class="profile-projects__control-btns">
+        {{-- <div class="profile-projects__control-btns">
             <div class="profile-projects__edit">
                 <img src="img/pencil-icon.svg" alt="">
             </div>
@@ -527,7 +527,7 @@
             <div class="profile-projects__delete">
                 <img src="img/delete-icon.svg" alt="">
             </div>
-        </div>
+        </div> --}}
     </div>
     @empty
         Нет проетков

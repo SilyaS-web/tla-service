@@ -408,7 +408,7 @@ input[type='range']::-webkit-slider-thumb{
 .title {
 }
 .profile-projects__items {
-    max-width:1000px;
+    /* max-width:1000px; */
     width:100%;
 }
 .profile-projects__row {

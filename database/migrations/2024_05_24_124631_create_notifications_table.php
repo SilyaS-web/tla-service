@@ -17,7 +17,7 @@ class CreateNotificationsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->string('type', 50);
+            $table->string('type', 50)->nullable();
             $table->string('text', 500);
             $table->timestamp('viewed_at')->nullable();
             $table->timestamps();

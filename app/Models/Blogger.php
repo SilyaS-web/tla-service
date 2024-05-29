@@ -27,6 +27,7 @@ class Blogger extends Model
         'platform',
         'name',
         'description',
+        'sex',
         'subscriber_quantity',
         'coverage',
         'is_achievement',

@@ -51,7 +51,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::prefix('apist')->group(function () {
     Route::post('/projects', [ProjectController::class, 'index']);
-    Route::post('/projects/confirm', [ProjectController::class, 'index']);
+    Route::post('/projects/confirm', [WorkController::class, 'confirm']);
     Route::post('/blogger/projects', [ProjectController::class, 'bloggerProjects']);
 
     Route::post('/bloggers', [BloggerController::class, 'index']);
@@ -67,10 +67,12 @@ Route::prefix('apist')->group(function () {
     Route::post('/admin/bloggers', [AdminController::class, 'bloggers']);
     Route::post('/admin/sellers', [AdminController::class, 'sellers']);
     Route::post('/admin/moderation', [AdminController::class, 'moderation']);
-    Route::post('/admin/bloggers/accept/{user_id}', [AdminController::class, 'accept']);
+    Route::post('/admin/bloggers/accept', [AdminController::class, 'accept']);
     Route::get('/admin/deny/{user_id}', [AdminController::class, 'deny']);
     Route::get('/admin/achievement/{user_id}', [AdminController::class, 'achievement']);
 
     Route::post('/password/reset', [AuthController::class, 'resetPassword']);
     Route::post('/tg', [AuthController::class, 'setTGPhone']);
+    Route::get('/notifications', [UserController::class, 'getNewNotifications']);
+    Route::get('/notifications/view', [AuthController::class, 'setTGPhone']);
 });

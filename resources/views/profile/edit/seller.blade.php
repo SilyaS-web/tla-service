@@ -9,7 +9,7 @@
             </div>
             <div class="edit-profile__content">
                 <div class="tab-content__profile-img">
-                    <img src="img/profile-icon.svg" alt="">
+                    <img src="{{ $user->getImageUrl() }}" alt="">
                     <div class="tab-content__profile-img-text">
                         <p>Фото профиля</p>
                         <div class="form-group form-group--file">
@@ -42,20 +42,11 @@
                         </script>
                         <div class="form-group">
                             <label for="">Ссылка на маркетплейс</label>
-                            <input type="text" class="input" id="marketplace" name="marketplace_link">
+                            <input type="text" class="input" id="marketplace" name="marketplace_link" value="{{ $user->seller->marketplace_link }}">
                         </div>
                         <button class="btn btn-primary desktop">Сохранить</button>
                     </div>
                     <div class="tab-content__form-left">
-                        <label for="">Вы размещаете рекламу для себя или являетесь посредником?</label>
-                        <div class="input-checkbox-w">
-                            <input type="checkbox" class="checkbox whois" id="broker">
-                            <label for="">Я посредник</label>
-                        </div>
-                        <div class="input-checkbox-w">
-                            <input type="checkbox" class="checkbox whois" id="advertiser">
-                            <label for="">Я селлер</label>
-                        </div>
                         <div class="form-group" style="margin-top: 20px;">
                             <label for="">Тип организации</label>
                             <input type="text" class="input" id="type" name="marketplace_link">

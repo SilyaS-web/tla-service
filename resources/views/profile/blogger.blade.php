@@ -54,7 +54,7 @@
                                             <label for="">Формат рекламы</label>
                                             <select name="filter-format" id="filter-format" class = "input">
                                                 <option value="feedback" class="">Отзыв на товар</option>
-                                                <option value="2" class="">Рекламная интеграция(Instagram)</option>
+                                                <option value="feedback" class="">Рекламная интеграция(Instagram)</option>
                                                 <option value="3" class="">Рекламная интеграция(Youtube)</option>
                                                 <option value="4" class="">Другие площадки для интеграций</option>
                                                 <option value="5" class="">Платные интеграции</option>

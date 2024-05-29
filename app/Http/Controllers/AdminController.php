@@ -17,16 +17,18 @@ class AdminController extends Controller
 
     }
 
-    public function accept() {
-        $validator = Validator::make(request()->all(), [
+    public function accept(Request $request) {
+        $validator = Validator::make($request->all(), [
             'user_id' => 'required|numeric',
             'platform' => ['required', Rule::in(Blogger::PLATFORM_TYPES)],
-            'description' => 'required|string',
+            'description' => 'string|nullable',
             'subscriber_quantity' => 'required|numeric',
+            'sex' => 'required|string',
             'coverage' => 'required|numeric',
             'engagement_rate' => 'required|numeric',
             'cost_per_mille' => 'required|numeric',
             'gender_ratio' => 'required|numeric',
+            'is_achievement' => 'string'
         ]);
 
         if ($validator->fails()) {
@@ -37,19 +39,21 @@ class AdminController extends Controller
         Blogger::create([
             'user_id' => $validated['user_id'],
             'platform' => $validated['platform'],
-            'description' => $validated['description'],
+            'description' => $validated['description'] ?? null,
             'subscriber_quantity' => $validated['subscriber_quantity'],
             'coverage' => $validated['coverage'],
             'engagement_rate' => $validated['engagement_rate'],
             'cost_per_mille' => $validated['cost_per_mille'],
             'gender_ratio' => $validated['gender_ratio'],
+            'sex' => $validated['sex'],
+            'is_achievement' => $validated['is_achievement'] == 'on' ,
         ]);
 
         $user = User::find($validated['user_id']);
         $user->status = 1;
         $user->save();
 
-        return view('shared.admin.bloggers-list');
+        return response()->json('success', 200);
     }
 
     public function deny() {

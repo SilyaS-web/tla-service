@@ -162,25 +162,13 @@
                         </div>
                         @endif
                         <a href="#" class="header__col header__notif header__profile-item--js" title="Уведомления">
-                            <div class="header__profile-notif">
-                                1
+                            <div class="header__profile-notif" id="header-notif-count" style="display: none">
+
                             </div>
                             <img src="img/notif-icon.svg" alt="" class="">
                             <div class="header__notif-items notif-header">
-                                <div class="notif-header__items">
-                                    <div class="notif-header__row ">
-                                        <div class="notif-header__col notif-header__img">
-                                            <img src="img/profile-icon.svg" alt="">
-                                        </div>
-                                        <div class="notif-header__col">
-                                            <div class="notif-header__title">
-                                                Заявка №1233 подтверждена
-                                            </div>
-                                            <div class="notif-header__text">
-                                                Блогер "Чертовски мило" подтвердил заявку, начните переписку с ним, чтобы обсудить подробности.
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div class="notif-header__items" id="header-notif-container">
+                                    Нет новых уведомлений
                                 </div>
                             </div>
                         </a>

@@ -43,7 +43,7 @@ $(window).on('load', function(){
 	document.querySelector('#avg')
 		.setAttribute('stroke-dasharray', semi_cf / 2 + ',' + cf);
 	document.querySelector('#high')
-		.setAttribute('stroke-dasharray', cf / 3  + ',' + cf);
+		.setAttribute('stroke-dasharray', cf / 16  + ',' + cf);
 
 	document.querySelector('#outline_ends')
 		.setAttribute('stroke-dasharray', 2 + ',' + (semi_cf - 2));

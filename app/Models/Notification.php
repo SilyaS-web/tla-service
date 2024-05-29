@@ -9,4 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 class Notification extends Model
 {
     use HasFactory, SoftDeletes;
+
+    protected $fillable = [
+        'user_id',
+        'type',
+        'text',
+        'viewed_at'
+    ];
 }

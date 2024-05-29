@@ -133,9 +133,9 @@ class UserController extends Controller
         } else {
             $sellers = Seller::get();
         }
+        $platforms = Blogger::PLATFORM_TYPES;
 
-
-        return compact('unverified_users', 'bloggers', 'sellers');
+        return compact('unverified_users', 'bloggers', 'sellers', 'platforms');
     }
 
     public function edit()
@@ -181,5 +181,13 @@ class UserController extends Controller
                 'user_id' => $user->id
             ]);
         }
+    }
+
+    public function getNewNotifications(Request $request) {
+        $user = Auth::user();
+        $user_id = $user->id;
+        $old_notifications = $user->notifications()->where('viewed_at', '<>', null)->latest()->limit(4)->get();
+        $notifications = $user->notifications()->where('viewed_at', null)->get();
+        return response()->json(['view' => view('shared.notifications', compact('notifications', 'old_notifications'))->render(), 'count' => $notifications->count()]);
     }
 }
