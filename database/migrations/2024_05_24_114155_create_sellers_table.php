@@ -27,6 +27,7 @@ class CreateSellersTable extends Migration
             $table->string('platform')->nullable();
             $table->timestamp('finish_date')->nullable();
             $table->string('platform_link')->nullable();
+            $table->string('wb_api_key')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

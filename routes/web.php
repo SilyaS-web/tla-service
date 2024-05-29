@@ -35,6 +35,8 @@ Route::get('/policy', function () {
 })->name('policy');
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/blogger/{blogger}', [BloggerController::class, 'show'])->name('blogger-page');
+    Route::get('/seller/{seller}', [SellerController::class, 'show'])->name('seller-page');
     Route::get('/telegram', [AuthController::class, 'telegram'])->name('telegram');
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::get('/profile/edit', [UserController::class, 'edit'])->name('edit-profile');
@@ -49,6 +51,7 @@ Route::middleware(['auth'])->group(function () {
 
 Route::prefix('apist')->group(function () {
     Route::post('/projects', [ProjectController::class, 'index']);
+    Route::post('/projects/confirm', [ProjectController::class, 'index']);
     Route::post('/blogger/projects', [ProjectController::class, 'bloggerProjects']);
 
     Route::post('/bloggers', [BloggerController::class, 'index']);

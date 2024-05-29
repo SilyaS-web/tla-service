@@ -10,7 +10,12 @@
                 </div>
                 <div class="card__name">
                     <p class="card__name-name">
-                        {{ $blogger->user->name}}
+                        <a class="btn-add-to-project" href="{{ route('blogger-page', $blogger->id) }}">
+                            {{ $blogger->user->name}}
+                        </a><br/>
+                        <p style="font-size: 12px">
+                            {{ $blogger->description }}
+                        </p>
                     </p>
                 </div>
                 <div class="card__platform">
@@ -23,9 +28,7 @@
                 </div>
             </div> --}}
             <div class="card__row card__desc">
-                <p>
-                    {{ $blogger->description }}
-                </p>
+
             </div>
         </div>
         <div class="card__col card__stats">
@@ -79,17 +82,11 @@
                     <div class="card__diagram-icon"><img src="img/blogers-list/female-icon.svg" alt=""></div>
                 </div>
             </div>
-            <div class="card__row card__row">
-                @if (isset($project))
-                <form action="{{ route('create-work') }}" method="POST">
-                    @csrf
-                    <input name="project_id" value="{{ $project->id }}" hidden />
-                    <input name="blogger_id" value="{{ $blogger->user_id }}" hidden />
-                    <button class="btn btn-primary btn-add-to-project" type="submit" data-project-id="">
-                        Добавить
-                    </button>
-                </form>
-                @endif
+            <div class="card__row card__row" style="flex-direction: column; gap: 5px">
+                <button class="btn btn-primary btn-add-to-project" onclick="sendProjectToBlogger({{ $blogger->user_id }})" data-project-id="">
+                    Отправить заявку
+                </button>
+
             </div>
         </div>
     </div>

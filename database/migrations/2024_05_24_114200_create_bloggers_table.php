@@ -21,6 +21,7 @@ class CreateBloggersTable extends Migration
             $table->string('description', 500);
             $table->integer('is_achievement')->nullable();
             $table->string('name');
+            $table->string('sex');
             $table->integer('subscriber_quantity');
             $table->integer('coverage');
             $table->double('engagement_rate');

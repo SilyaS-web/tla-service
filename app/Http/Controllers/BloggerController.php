@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blogger;
 use App\Models\Project;
 use App\Models\User;
+use App\Models\Work;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -114,15 +115,12 @@ class BloggerController extends Controller
         return response()->json('success');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Blogger  $blogger
-     * @return \Illuminate\Http\Response
-     */
     public function show(Blogger $blogger)
     {
-        //
+        $user = $blogger->user;
+        $works = Work::where([['blogger_id', $user->id]])->get();
+        $projects = Project::whereIn('id', $works->pluck('project_id'))->get();
+        return view('profile.public.blogger', compact('user', 'projects'));
     }
 
     /**

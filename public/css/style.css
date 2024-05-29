@@ -3406,3 +3406,7 @@ input[type='range']::-webkit-slider-thumb{
 
 
 }
+
+.owl-carousel {
+    display: inherit !important;
+}

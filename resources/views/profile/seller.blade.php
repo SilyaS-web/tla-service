@@ -264,7 +264,7 @@
                                         </div>
                                         <div class="dashboard__col feedback-dashboard__fb">
                                             <div class="feedback-dashboard__fb-title">
-                                                У вас 56 отзывов без ответа, для улучшения оценки, требуется исправить
+                                                У вас {{ auth()->user()->seller->getCountUnansweredWB() }} отзывов без ответа, для улучшения оценки, требуется исправить
                                             </div>
                                             <div class="feedback-dashboard__fb-items">
                                                 <div class="feedback-dashboard__fb-row feedback-item">
@@ -567,8 +567,15 @@
                                 <div class="list-projects__title title">
                                     Список блогеров
                                 </div>
-                                <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
-                                    <button class="btn btn-primary blogers-list__filter-btn">Фильтры</button>
+                                <div class="" style="display: flex; align-items: center; gap: 15px">
+                                    Выберите проект:
+                                    <div class="form-group filter__item" style="margin-bottom: 0;">
+                                        <select name="send-project" id="send-project-el" class="input" style="padding: 3px 10px; margin-bottom: 0; background-color: #fff;" data-send-project-element="true">
+                                            @foreach ($projects as $project)
+                                            <option value="{{ $project->id }}" class="">{{ $project->project_name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             @include('blogger.list')
@@ -886,4 +893,19 @@
 
 </script>
 <script src="{{ asset('js/wb.js') }}"></script>
+<script>
+    function sendProjectToBlogger(user_id) {
+        let project_id = document.getElementById('send-project-el').value
+        console.log(project_id)
+        console.log(user_id)
+         $.post('/apist/works', {
+            seller_id: {{ auth()->user()->id }},
+            blogger_id: user_id,
+            project_id: project_id
+        }, function(res){
+            notify('info', {title: 'Успешно!', message: 'Заявка успешно отправлена!'});
+        })
+    }
+
+</script>
 @endsection

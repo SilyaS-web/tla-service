@@ -71,7 +71,7 @@ class User extends Authenticatable
     public function getImageURL()
     {
         if (empty($this->image)) {
-            return null;
+            return asset('img/profile-icon.svg');
         }
 
         return url('storage/' . $this->image);
