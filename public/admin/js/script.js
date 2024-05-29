@@ -53,7 +53,7 @@ class PopupAcceptBloger extends Popup{
         return this;
     }
 
-    sendUri = '#';
+    sendUri = '/';
     dataProps = {
         name: {
             set: (value)=>{
@@ -72,8 +72,14 @@ class PopupAcceptBloger extends Popup{
             }
         }
     }
-    sendData = {
+    sendData = () => {
+        var self = this;
 
+        $.post(self.sendUri, {
+        }, function(res){
+            notify('info', {title: 'Успешно!', message: ''});
+            self.closePopup();
+        })
     }
 }
 
