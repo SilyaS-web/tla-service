@@ -69,7 +69,7 @@
                             <div class="tg-confirmation__text">
                                 Перейдите в телеграмм и подтведите свою личность, чтобы получать уведомления о новостях на площадкке.
                             </div>
-                            <div class="tg-confirmation__btn">
+                            <div class="tg-confirmation__btn" id="tg-confirmation__btn">
                                 <a target="_blank" href="https://t.me/tla_service_bot" class="">Перейти</a>
                             </div>
                         </div>

@@ -73,6 +73,7 @@ Route::prefix('apist')->group(function () {
 
     Route::post('/password/reset', [AuthController::class, 'resetPassword']);
     Route::post('/tg', [AuthController::class, 'setTGPhone']);
+    Route::post('/tg/confirmed', [AuthController::class, 'isTgConfirmed']);
     Route::get('/notifications', [UserController::class, 'getNewNotifications']);
     Route::get('/notifications/view', [AuthController::class, 'setTGPhone']);
 });

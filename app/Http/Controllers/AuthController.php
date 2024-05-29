@@ -98,6 +98,27 @@ class AuthController extends Controller
         return response()->json('success', 200);
     }
 
+    public function isTgConfirmed()
+    {
+        $validator = Validator::make(request()->all(), [
+            'phone' => 'required|numeric|exists:tg_phones,phone',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+
+        $phone_for_search = str_replace(['(', ')', ' ', '-'], '', $validated['phone']);
+        $tgPhone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
+        if (!$tgPhone) {
+            return response()->json('unconfirmed', 401);
+        }
+
+        return response()->json('success', 200);
+    }
+
     public function authenticate()
     {
         $validated = request()->validate([
@@ -125,7 +146,8 @@ class AuthController extends Controller
         return redirect()->route('login')->with('success', '');
     }
 
-    public function resetPassword() {
+    public function resetPassword()
+    {
         $validator = Validator::make(request()->all(), [
             'phone' => 'required|numeric|unique:tg_phones,phone',
         ]);
