@@ -111,4 +111,5 @@
     });
 
 </script>
+<script src="{{ asset('js/tg.js') }}"></script>
 @endsection

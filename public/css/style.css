@@ -905,6 +905,10 @@ input[type='range']::-webkit-slider-thumb{
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
+    transition: all 4s ease-in-out;
+}
+.tg-confirmation__btn.success {
+    background-color: #00000;
 }
 .tg-confirmation__qr{
     display: flex;

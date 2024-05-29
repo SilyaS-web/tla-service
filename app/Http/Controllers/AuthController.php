@@ -101,7 +101,7 @@ class AuthController extends Controller
     public function isTgConfirmed()
     {
         $validator = Validator::make(request()->all(), [
-            'phone' => 'required|numeric|exists:tg_phones,phone',
+            'phone' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -111,6 +111,7 @@ class AuthController extends Controller
         $validated = $validator->validated();
 
         $phone_for_search = str_replace(['(', ')', ' ', '-'], '', $validated['phone']);
+        $phone_for_search = '+7' . mb_substr($phone_for_search, 1);
         $tgPhone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
         if (!$tgPhone) {
             return response()->json('unconfirmed', 401);
