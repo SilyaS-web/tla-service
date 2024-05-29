@@ -108,9 +108,7 @@ class ProjectController extends Controller
             ]);
         }
 
-        return redirect()->route('select-bloggers', [
-            'project_id'=> $project->id
-        ])->with('success', 'Проект успешно создан');
+        return redirect()->route('profile')->with('success', 'Проект успешно создан');
     }
 
     public function selectBloggers($project_id){
