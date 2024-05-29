@@ -1045,6 +1045,7 @@ function ibg(){
 }
 
 window.addEventListener('load', ibg)
+
 setInterval(() => {
     $.ajax({
         url: '/apist/notifications',
