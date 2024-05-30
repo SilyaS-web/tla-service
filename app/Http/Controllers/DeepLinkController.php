@@ -16,7 +16,6 @@ class DeepLinkController extends Controller
 {
     public function index($link)
     {
-        $this->createDeepLinkStats(1);
         $deepLink = DeepLink::where("link", $link)->first();
         if (!$deepLink) {
             abort(404);
