@@ -71,7 +71,8 @@ class DeepLinkController extends Controller
             $validated['link'] = Str::random(10);
         }
 
-        DeepLink::create($validated);
+        $deepLink = DeepLink::create($validated);
+        print_r($deepLink->link);
     }
 
     public function stats()
