@@ -111,7 +111,6 @@ class AuthController extends Controller
         $validated = $validator->validated();
 
         $phone_for_search = str_replace(['(', ')', ' ', '-'], '', $validated['phone']);
-        $phone_for_search = '+7' . mb_substr($phone_for_search, 1);
         $tgPhone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
         if (!$tgPhone) {
             return response()->json('unconfirmed', 401);
