@@ -22,7 +22,7 @@ class DeepLinkController extends Controller
         }
 
         $this->createDeepLinkStats($deepLink->id);
-        redirect($deepLink->destination);
+        return redirect($deepLink->destination);
     }
 
     public function createDeepLinkStats($link_id)
