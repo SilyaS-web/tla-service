@@ -77,6 +77,7 @@ class DeepLinkController extends Controller
     public function stats()
     {
         $deepLinkStats = DeepLinkStat::get();
+        echo "<pre>";
         print_r($deepLinkStats->toArray());
     }
 }
