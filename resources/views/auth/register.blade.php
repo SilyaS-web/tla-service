@@ -24,14 +24,15 @@
                 </div>
                 <div class="form-group">
                     <label for="phone">Номер телефона</label>
-                    <input type="phone" id="phone" name="phone" placeholder="Введите ваш номер" class="input input--phone" value="{{ old('phone') }}">
+                    <input type="text" id="phone" name="phone" placeholder="Введите ваш номер" class="input input--phone" value="{{ old('phone') }}">
                     @error('phone')
                     <span class="error">{{ $message }}</span>
                     @enderror
                 </div>
                 <script>
                     $(function() {
-                        $("#phone").mask("8(999) 999-9999");
+                        $.mask.definitions['h'] = "[0|1|3|4|5|6|7|9]"
+                        $("#phone").mask("+7 (h99) 999-99-99");
                     });
 
                 </script>

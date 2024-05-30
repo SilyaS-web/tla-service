@@ -49,7 +49,7 @@ class AuthController extends Controller
         }
 
         $phone_for_search = str_replace(['(', ')', ' ', '-'], '', $validated['phone']);
-        $phone_for_search = '+7' . mb_substr($phone_for_search, 1);
+
         $tgPhone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
         if (!$tgPhone) {
             $tgPhone = TgPhone::where([['phone', '=',  mb_substr($phone_for_search, 1)]])->first();

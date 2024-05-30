@@ -224,7 +224,7 @@
                                     <div class="dashboard__row dashboard__item--feedback feedback-dashboard">
                                         <div class="dashboard__col dashboard__item--sm dashboard-sm">
                                             <div class="dashboard-sm__title">
-                                                Общая оценка магазина
+                                                Рейтинг на основе отзывов
                                             </div>
                                             <div class="dashboard-sm__sm" id=wrapper>
                                                 <svg id="meter">
@@ -834,62 +834,6 @@
             , }
         }
     , });
-
-</script>
-<script>
-    var mediaQuery = window.matchMedia('(max-width: 911px)');
-
-    var prices_ctx, orders_ctx;
-
-    if (mediaQuery.matches) {
-        prices_ctx = document.getElementById('prices-graph-mobile');
-        orders_ctx = document.getElementById('orders-graph-mobile');
-    } else {
-        prices_ctx = document.getElementById('prices-graph-desktop');
-        orders_ctx = document.getElementById('orders-graph-desktop');
-    }
-
-    var data = {}
-    var orders = data.orders_history.map(item => item.orders);
-    var prices = data.prices_history.map(item => item.price);
-    var date = data.prices_history.map(item => item.dt.split('-')[2]);
-
-    console.log(orders, prices, date);
-
-    new Chart(orders_ctx, {
-        type: 'bar'
-        , data: {
-            labels: data.prices_history.map(item => item.dt.split('-')[2])
-            , datasets: [{
-                label: 'Заказы'
-                , data: data.orders_history.map(item => item.orders)
-            , }]
-        }
-        , options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
-    new Chart(prices_ctx, {
-        type: 'bar'
-        , data: {
-            labels: data.prices_history.map(item => item.dt.split('-')[2])
-            , datasets: [{
-                label: 'Выручка'
-                , data: data.prices_history.map(item => item.price)
-            , }]
-        }
-        , options: {
-            scales: {
-                y: {
-                    beginAtZero: true
-                }
-            }
-        }
-    });
 
 </script>
 <script src="{{ asset('js/wb.js') }}"></script>

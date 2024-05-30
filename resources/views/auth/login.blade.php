@@ -20,9 +20,10 @@
                 </div>
                 <script>
                     $(function() {
-                        $("#phone").mask("8(999) 999-9999");
+                        $.mask.definitions['h'] = "[0|1|3|4|5|6|7|9]"
+                        $(".auth #phone").mask('+7 (h99) 999-99-99');
+                        console.log($(".auth #phone"));
                     });
-
                 </script>
                 <div class="form-group">
                     <label for="pass">Пароль</label>
