@@ -34,7 +34,7 @@ class DeepLinkController extends Controller
         $dd = new DeviceDetector($userAgent, $clientHints);
         $dd->parse();
 
-        $token = env('DADATA_API_TOKEN', null);
+        $token = config('dadata.api_token');
         $dadata = new DadataClient($token, null);
         $geoData = $dadata->iplocate($_SERVER['REMOTE_ADDR']);
 
