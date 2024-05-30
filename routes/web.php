@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\BloggerController;
+use App\Http\Controllers\DeepLinkController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\WorkController;
 /*
@@ -33,6 +34,7 @@ Route::get('/', function () {
 Route::get('/policy', function () {
     return view('policy');
 })->name('policy');
+Route::get('/lnk/{link}', [DeepLinkController::class, 'index']);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/blogger/{blogger}', [BloggerController::class, 'show'])->name('blogger-page');

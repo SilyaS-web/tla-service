@@ -12,6 +12,7 @@ class DeepLink extends Model
     protected $fillable = [
         'user_id',
         'work_id',
+        'link',
         'destination',
     ];
 
