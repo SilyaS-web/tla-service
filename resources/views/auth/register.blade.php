@@ -61,7 +61,7 @@
                     @enderror
                 </div>
                 <div class="form-group tg-confirmation">
-                    <div class="tg-confirmation__row">
+                    <div class="tg-confirmation__row" id="tg-confirmation">
                         <div class="tg-confirmation__col">
                             <div class="tg-confirmation__title">
                                 Подтвердите личность
@@ -69,7 +69,7 @@
                             <div class="tg-confirmation__text">
                                 Перейдите в телеграмм и подтведите свою личность, чтобы получать уведомления о новостях на площадкке.
                             </div>
-                            <div class="tg-confirmation__btn" id="tg-confirmation__btn">
+                            <div class="tg-confirmation__btn">
                                 <a target="_blank" href="https://t.me/tla_service_bot" class="">Перейти</a>
                             </div>
                         </div>
@@ -78,6 +78,12 @@
 
                             </div>
                         </div>
+                    </div>
+                    <div class="tg-confirmation__block" id="tg-confirmation__block" >
+                        <div>
+                            <img src="{{ asset('img/approved-aproved-confirm-2-svgrepo-com.svg') }}" />
+                        </div>
+                        <div>Телеграм-аккаунт успешно подтверждён</div>
                     </div>
                 </div>
                 <div class="form-btns auth__form-btns">
