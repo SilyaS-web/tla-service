@@ -906,6 +906,15 @@ input[type='range']::-webkit-slider-thumb{
     background-size: contain;
     background-repeat: no-repeat;
 }
+.tg-confirmation__block {
+    display: none; gap: 10px;
+    align-items: center;
+}
+.tg-confirmation__block img{
+    width: 32px;
+    heiht: 32px;
+    filter: brightness(0) saturate(100%) invert(46%) sepia(44%) saturate(6441%) hue-rotate(2deg) brightness(105%) contrast(102%);
+}
 .tg-confirmation__qr{
     display: flex;
     justify-content: center;align-items: center;
