@@ -57,16 +57,14 @@ class MessageController extends Controller
             'user_id' => 'exists:users,id|nullable',
             'work_id' => 'required|exists:users,id',
         ]);
-
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
         $validated = $validator->validated();
 
         $user = Auth::user();
         if (!$user) {
             $user = User::find($validated['user_id']);
-        }
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
         }
 
         $user_id = $user->id;

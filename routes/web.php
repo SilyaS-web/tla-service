@@ -34,7 +34,12 @@ Route::get('/', function () {
 Route::get('/policy', function () {
     return view('policy');
 })->name('policy');
-Route::get('/lnk/{link}', [DeepLinkController::class, 'index']);
+
+Route::prefix('lnk')->group(function () {
+    Route::get('/create', [DeepLinkController::class, 'store']);
+    Route::get('/stats', [DeepLinkController::class, 'stats']);
+    Route::get('/{link}', [DeepLinkController::class, 'index']);
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/blogger/{blogger}', [BloggerController::class, 'show'])->name('blogger-page');

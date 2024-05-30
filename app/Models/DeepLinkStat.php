@@ -15,8 +15,12 @@ class DeepLinkStat extends Model
         'device',
         'operating_system',
         'country',
+        'federal_district',
+        'region',
         'city',
-        'referrer'
+        'referrer',
+        'is_bot',
+        'is_mobile',
     ];
 
     public function deepLink()

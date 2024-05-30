@@ -21,8 +21,12 @@ class CreateDeepLinkStatsTable extends Migration
             $table->string('device')->nullable();
             $table->string('operating_system')->nullable();
             $table->string('country')->nullable();
+            $table->string('federal_district')->nullable();
+            $table->string('region')->nullable();
             $table->string('city')->nullable();
             $table->string('referrer')->nullable();
+            $table->integer('is_bot')->nullable();
+            $table->integer('is_mobile')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
