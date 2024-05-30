@@ -12,8 +12,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="{{ asset('libs/jquery/jquery-3.7.1.min.js') }}" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="{{ asset('libs/jquery/jquery.maskedinput.min.js') }}"></script>
 
     <link rel="stylesheet" href="{{ asset('libs/owl/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('libs/owl/owl.theme.default.css') }}">
@@ -273,7 +273,8 @@
                         </div>
                         <script>
                             $(function(){
-                              $("#phone").mask("8(999) 999-9999");
+                                $.mask.definitions['h'] = "[0|1|3|4|5|6|7|9]"
+                              $("#contact-form #phone").mask('+7 (h99) 999-99-99');
                             });
                         </script>
                         <p class="form-addit">
@@ -309,7 +310,8 @@
                         </div>
                         <script>
                             $(function(){
-                              $("#phone").mask("8(999) 999-9999");
+                                $.mask.definitions['h'] = "[0|1|3|4|5|6|7|9]"
+                              $("#change-password #phone").mask('+7 (h99) 999-99-99');
                             });
                         </script>
                         <p class="form-addit">

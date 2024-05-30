@@ -909,6 +909,7 @@ $(window).on('load', function(){
 
 
     $(document).on('click', '.profile-projects__item .btn-bloggers', function(e){
+        $(e.target).closest('.btn-bloggers').toggleClass('active');
         $(e.target).closest('.profile-projects__item').toggleClass('active-bloggers');
         $(e.target).closest('.profile-projects__item').removeClass('active-statistics');
     })
@@ -927,6 +928,7 @@ $(window).on('load', function(){
     });
 
     $(document).on('click', '.profile-projects__item .btn-statistics', function(e){
+        $(e.target).closest('.btn-statistics').toggleClass('active');
         $(e.target).closest('.profile-projects__item').toggleClass('active-statistics');
         $(e.target).closest('.profile-projects__item').removeClass('active-bloggers');
     })

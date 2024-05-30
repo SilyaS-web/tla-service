@@ -13,7 +13,7 @@
                 @csrf
                 <div class="form-group">
                     <label for="phone">Номер телефона</label>
-                    <input type="text" name="phone" id="phone" placeholder="Введите ваш номер" class="input input--phone mask-phone form-control">
+                    <input type="text" name="phone" id="phone" placeholder="Введите ваш номер" class="input input--phone">
                     @error('phone')
                     <span class="error">{{ $message }}</span>
                     @enderror
@@ -21,7 +21,8 @@
                 <script>
                     $(function() {
                         $.mask.definitions['h'] = "[0|1|3|4|5|6|7|9]"
-                        $("#phone").mask("+7 (h99) 999-99-99");
+                        $(".auth #phone").mask('+7 (h99) 999-99-99');
+                        console.log($(".auth #phone"));
                     });
                 </script>
                 <div class="form-group">
