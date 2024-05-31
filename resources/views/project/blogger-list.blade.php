@@ -3,24 +3,27 @@
         <div class="owl-carousel project-item__carousel">
             <div class="project-item__img">
                 <img src="{{ $project->getImageURL(true) }}" alt="">
-                <div class="project-item__status active">
-                    {{ $project->active == 0 ? 'Активно' : 'Выполнено' }}
-                </div>
-                <div class="project-item__country">
-                    Россия
-                </div>
+            </div>
+            <div class="project-item__status active">
+                {{ $project->active == 0 ? 'Активно' : 'Выполнено' }}
+            </div>
+            <div class="project-item__country">
+                Россия
             </div>
         </div>
         <div class="project-item__content">
             <div class="project-item__title">
-                Цена — {{ $project->product_price }}₽
+                {{ $project->product_price }}₽
             </div>
-            {{-- <div class="project-item__left" style="margin-bottom: 12px;">
-                Осталось выполнить отзывов <span style="font-weight: 600; color:#FE5E00">5</span>
-            </div> --}}
-            <a class="project-item__participants" href="{{ route('seller-page', $project->seller->id) }}" title="{{ $project->product_name }}">
-                {{ $project->seller->user->name }} / {{ $project->product_name }}
-            </a>
+            <div class="project-item__subtitle" title="{{ $project->product_name }}">
+                {{ $project->product_name }}
+            </div>
+            <div class="project-item__left" style="margin-bottom: 12px;">
+                <div class="line">
+                    <div class="line__val" style="width:65%"></div>
+                </div>
+                Осталось мест на интеграцию <span style="font-weight: 700;">5/10</span>
+            </div>
             <div class="project-item__format-tags card__row card__tags">
                 <div class="card__tags-item">
                     <span>Рекламный пост</span>

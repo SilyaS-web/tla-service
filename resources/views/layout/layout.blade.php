@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 
     <script src="{{ asset('libs/chart/chart.js') }}"></script>
+    <script src="{{ asset('libs/funnel/funnel-chart.js') }}"></script>
 
     <title>@yield('title')</title>
 </head>

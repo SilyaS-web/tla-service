@@ -497,24 +497,48 @@
             $stats = json_decode($project->getStatistics());
         ?>
         <div class="profile-projects__row profile-projects__statistics projects-statistics" data-stats="{{ $project->getStatistics() }}">
-            <div class="projects-statistics__title">
-                Статистика по товару (WB)
-            </div>
             <div class="view-project__props view-project__props--desktop">
                 <div class="view-project__props-wrap">
-                    <div class="view-project__props-total">
-                        <div class="view-project__props-orders">
-                            Заказы за 30 дн<br>
-                            <span class="count">{{$stats->orders}} шт</span>
+                    <div class="view-project__props-col">
+                        <div class="projects-statistics__title">
+                            Статистика по товару (WB)
                         </div>
-                        <div class="view-project__props-money">
-                            Выручка за 30 дн<br>
-                            <span class="money">{{$stats->earnings}} ₽</span>
+                        <div class="view-project__props-total">
+                            <div class="view-project__props-orders">
+                                Заказы за 30 дн<br>
+                                <span class="count">{{$stats->orders}} шт</span>
+                            </div>
+                            <div class="view-project__props-money">
+                                Выручка за 30 дн<br>
+                                <span class="money">{{$stats->earnings}} ₽</span>
+                            </div>
+                        </div>
+                        <div class="view-project__props-graph">
+                            <canvas id="orders-graph-desktop" class=""></canvas>
                         </div>
                     </div>
-                    <div class="view-project__props-graph">
-                        <canvas id="orders-graph-desktop" class=""></canvas>
-                        <canvas id="prices-graph-desktop" class=""></canvas>
+                    <div class="view-project__props-col">
+                        <div class="projects-statistics__title">
+                            Статистика по товару (OZON)
+                        </div>
+                        <div class="view-project__props-total">
+                            <div class="view-project__props-orders">
+                                Заказы за 30 дн<br>
+                                <span class="count">{{$stats->orders}} шт</span>
+                            </div>
+                            <div class="view-project__props-money">
+                                Выручка за 30 дн<br>
+                                <span class="money">{{$stats->earnings}} ₽</span>
+                            </div>
+                        </div>
+                        <div class="view-project__props-graph">
+                            <canvas id="prices-graph-desktop" class=""></canvas>
+                        </div>
+                        <div class="view-project__props-ph">
+                            <div class="view-project__props-ph_title">
+                                Раздел находится в разработке
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -567,22 +591,56 @@
         }
 
         var data = $(stat).data('stats')
-        console.log(data);
+
         new Chart(orders_ctx, {
             data: {
-                labels: data.prices_history.map(item => item.dt.split('-')[2]),
+                labels: data.prices_history.map(item => `${item.dt.split('-')[2]} мая`),
                 datasets: [
                     {
                         label: 'Заказы',
                         data: data.orders_history.map(item => item.orders),
-                        order: 1,
+                        order: 0,
                         type: 'bar',
                     },
                     {
                         label: 'Выручка',
                         data: data.prices_history.map(item => item.price),
                         type: 'line',
-                        order: 0
+                        order: 1,
+                        tension: 0.1
+                    },
+                ],
+            }
+            , options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        type: 'logarithmic'
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                }
+            }
+        });
+        new Chart(prices_ctx, {
+            data: {
+                labels: data.prices_history.map(item => `${item.dt.split('-')[2]} мая`),
+                datasets: [
+                    {
+                        label: 'Заказы',
+                        data: data.orders_history.map(item => item.orders),
+                        order: 0,
+                        type: 'bar',
+                    },
+                    {
+                        label: 'Выручка',
+                        data: data.prices_history.map(item => item.price),
+                        type: 'line',
+                        order: 1,
+                        tension: 0.1
                     },
                 ],
             }
