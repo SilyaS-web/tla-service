@@ -64,19 +64,24 @@
                                                 <span class="error">{{ $message }}</span>
                                                 @enderror
                                             </div>
-                                            <div class="form-group">
-                                                <label for="project-price">Цена товара</label>
-                                                <input type="number" id="project-price" name="product_price" placeholder="Введите цену" class="input input--product_price">
-                                                @error('product_price')
-                                                <span class="error">{{ $message }}</span>
-                                                @enderror
-                                            </div>
+                                        </div>
+                                        <div class="quest__step-row">
                                             <div class="form-group">
                                                 <label for="project-link">Ссылка на товар</label>
                                                 <input type="text" id="project-link" name="product_link" placeholder="Ссылка" class="input input--product_link">
                                                 @error('product_link')
                                                 <span class="error">{{ $message }}</span>
                                                 @enderror
+                                            </div>
+                                        </div>
+                                        <div class="form-group" style="max-width:50%">
+                                            <label for="">Количество мест на интеграцию</label>
+                                            <div class="input-range-w">
+                                                <input id="subs-range" name="" type="range" class="input input-range" min="5" max="1200000">
+                                                <div class="input-range-content">
+                                                    <input id="subs-min" type="number" class="input input-number" value="5">
+                                                    <input id="subs-max" type="number" class="input input-number" value="1200000">
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="form-group form-group--file create-project__files upload-files">
@@ -326,14 +331,24 @@
                                         <div class="dashboard__col dashboard__item dashboard__item--cover">
                                             <div class="dashboard__item-cover">
                                                 <div class="dashboard__item-title">
-                                                    Охват
+                                                    Переходы по интеграциям
                                                 </div>
                                                 <canvas class="graph" id="coverage-graph">
 
                                                 </canvas>
                                             </div>
                                         </div>
-                                        <div class="dashboard__col dashboard__item acc-statistics">
+                                        <div class="dashboard__col dashboard__item funnel-statistics">
+                                            <div class="dashboard__col">
+                                                <div class="dashboard__item-title">
+                                                    Воронка показателей эффективности
+                                                </div>
+                                                <div class="dashboard__row">
+                                                    <canvas id = "funnel-graph"></canvas>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {{-- <div class="dashboard__col dashboard__item acc-statistics">
                                             <div class="dashboard__col">
                                                 <div class="dashboard__row acc-statistics__item er-statistics">
                                                     <div class="er-statistics__body">
@@ -366,15 +381,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="dashboard__placeholder">
-                                            <div class="dashboard__placeholder-text">
-                                                Раздел находится в разработке
-                                            </div>
-                                            <div class="dashboard__placeholder-overflow">
-
-                                            </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                     <div class="dashboard__row">
                                         <div class="dashboard__col dashboard__item">
@@ -748,7 +755,7 @@
     new Chart(coverageGraph, {
         type: 'bar'
         , data: {
-            labels: data.prices_history.map(item => item.dt.split('-')[2])
+            labels: data.prices_history.map(item => `${item.dt.split('-')[2]} Мая`)
             , datasets: [{
                 label: 'Охваты'
                 , data: data.prices_history.map(item => item.price)
@@ -835,13 +842,53 @@
         }
     , });
 
+    var config = {
+        type: 'funnel',
+        data: {
+            datasets: [{
+                data: [30, 60, 90],
+                backgroundColor: [
+                    "#FF6384",
+                    "#36A2EB",
+                    "#FFCE56"
+                ],
+                hoverBackgroundColor: [
+                    "#FF6384",
+                    "#36A2EB",
+                    "#FFCE56"
+                ]
+            }],
+            labels: [
+                "Red",
+                "Blue",
+                "Yellow"
+            ]
+        }
+    }
+    // var funnel = document.getElementById('funnel-graph').getContext('2d');
+    // console.log(funnel);
+    FunnelChart('funnel-graph', {
+            values: [3512, 891, 652],
+            sectionColor: ['#98CBED', '#F0C457', '#FD6567'],
+            displayPercentageChange: false,
+            pSectionHeightPercent: 100,
+            font: '"Inter", sans-serif',
+            labelWidthPercent: 28,
+            labelFontColor: '#000',
+            labels: [
+                'Переходы',
+                'ER, %',
+                'CPM, Руб.',
+            ],
+            maxFontSize: 20,
+        });
+
+
 </script>
 <script src="{{ asset('js/wb.js') }}"></script>
 <script>
     function sendProjectToBlogger(user_id) {
         let project_id = document.getElementById('send-project-el').value
-        console.log(project_id)
-        console.log(user_id)
          $.post('/apist/works', {
             seller_id: {{ auth()->user()->id }},
             blogger_id: user_id,
