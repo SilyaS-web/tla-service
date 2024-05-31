@@ -3,18 +3,17 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class Message extends Model
+class DeepLink extends Model
 {
-    use HasFactory, SoftDeletes;
+    use HasFactory;
 
     protected $fillable = [
+        'user_id',
         'work_id',
-        'message',
-        'viewed_at',
-        'user_id'
+        'link',
+        'destination',
     ];
 
     public function user()
@@ -22,8 +21,7 @@ class Message extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function work()
-    {
-        return $this->hasOne(Work::class, 'id', 'work_id');
+    public function work() {
+        return $this->hasOne(Work::class, 'id','work_id');
     }
 }

@@ -873,7 +873,6 @@ class DashboardTabs extends Tabs{
         curTab.closest('.dashboard__tab').addClass('active');
         $(`#${curTab.data('content')}`).addClass('active')
     }
-
 }
 
 
@@ -1062,3 +1061,11 @@ setInterval(() => {
         }
     });
 }, 5000)
+
+selectTab = (tabName)=>{
+    $('.tab').removeClass('active');
+    $('.tab-content').removeClass('active');
+    curTab = $(`[data-content=${tabName}]`);
+    curTab.addClass('active');
+    $(`#${tabName}`).addClass('active')
+}

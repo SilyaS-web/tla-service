@@ -62,7 +62,7 @@
                     @enderror
                 </div>
                 <div class="form-group tg-confirmation">
-                    <div class="tg-confirmation__row">
+                    <div class="tg-confirmation__row" id="tg-confirmation">
                         <div class="tg-confirmation__col">
                             <div class="tg-confirmation__title">
                                 Подтвердите личность
@@ -79,6 +79,12 @@
 
                             </div>
                         </div>
+                    </div>
+                    <div class="tg-confirmation__block" id="tg-confirmation__block" >
+                        <div>
+                            <img src="{{ asset('img/approved-aproved-confirm-2-svgrepo-com.svg') }}" />
+                        </div>
+                        <div>Телеграм-аккаунт успешно подтверждён</div>
                     </div>
                 </div>
                 <div class="form-btns auth__form-btns">
@@ -112,4 +118,5 @@
     });
 
 </script>
+<script src="{{ asset('js/tg.js') }}"></script>
 @endsection

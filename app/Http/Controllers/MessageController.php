@@ -57,27 +57,23 @@ class MessageController extends Controller
             'user_id' => 'exists:users,id|nullable',
             'work_id' => 'required|exists:users,id',
         ]);
-
-        $user = Auth::user();
-        if (!$user) {
-            $user = User::find($request->user_id);
-        }
-
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-
         $validated = $validator->validated();
-        $user_id = $user->id;
 
-        $works = Message::where([
+        $user = Auth::user();
+        if (!$user) {
+            $user = User::find($validated['user_id']);
+        }
+
+        $user_id = $user->id;
+        $messages = Message::where([
             ['work_id', $validated['work_id']],
             ['user_id', '<>', $user_id]
         ]);
 
-
-
-        return view('shared.chat.index', compact('works', 'user_id'));
+        return response()->json($validator->errors(), 400);
     }
 
     public function store(Request $request)

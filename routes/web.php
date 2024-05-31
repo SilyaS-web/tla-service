@@ -8,6 +8,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\BloggerController;
+use App\Http\Controllers\DeepLinkController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\WorkController;
 /*
@@ -33,6 +34,12 @@ Route::get('/', function () {
 Route::get('/policy', function () {
     return view('policy');
 })->name('policy');
+
+Route::prefix('lnk')->group(function () {
+    Route::get('/create', [DeepLinkController::class, 'store']);
+    Route::get('/stats', [DeepLinkController::class, 'stats']);
+    Route::get('/{link}', [DeepLinkController::class, 'index']);
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/blogger/{blogger}', [BloggerController::class, 'show'])->name('blogger-page');
@@ -73,6 +80,7 @@ Route::prefix('apist')->group(function () {
 
     Route::post('/password/reset', [AuthController::class, 'resetPassword']);
     Route::post('/tg', [AuthController::class, 'setTGPhone']);
+    Route::post('/tg/confirmed', [AuthController::class, 'isTgConfirmed']);
     Route::get('/notifications', [UserController::class, 'getNewNotifications']);
     Route::get('/notifications/view', [AuthController::class, 'setTGPhone']);
 });
