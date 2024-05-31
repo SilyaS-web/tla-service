@@ -341,7 +341,7 @@
                                         <div class="dashboard__col dashboard__item funnel-statistics">
                                             <div class="dashboard__col">
                                                 <div class="dashboard__item-title">
-                                                    Воронка показателей эффективности
+                                                    Воронка показателей эффективности за 14 дней
                                                 </div>
                                                 <div class="dashboard__row">
                                                     <canvas id = "funnel-graph"></canvas>
@@ -892,15 +892,20 @@
 <script src="{{ asset('js/wb.js') }}"></script>
 <script>
     function sendProjectToBlogger(user_id) {
-        let project_id = document.getElementById('send-project-el').value
-         $.post('/apist/works', {
-            seller_id: {{ auth()->user()->id }},
-            blogger_id: user_id,
-            project_id: project_id
-        }, function(res){
-            notify('info', {title: 'Успешно!', message: 'Заявка успешно отправлена!'});
-        })
-    }
+        let project_input = document.getElementById('send-project-el');
 
+        if (!project_input) {
+            notify('info', {title: 'Ошибка', message: 'Выберите проект!'});
+        } else {
+            let project_id = project_input.value;
+            $.post('/apist/works', {
+                seller_id: {{ auth()->user()->id }},
+                blogger_id: user_id,
+                project_id: project_id
+            }, function(res){
+                notify('info', {title: 'Успешно!', message: 'Заявка успешно отправлена!'});
+            })
+        }
+    }
 </script>
 @endsection
