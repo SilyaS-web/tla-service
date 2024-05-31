@@ -570,11 +570,15 @@
                                 <div class="" style="display: flex; align-items: center; gap: 15px">
                                     Выберите проект:
                                     <div class="form-group filter__item" style="margin-bottom: 0;">
+                                        @if ($projects->isNotEmpty())
                                         <select name="send-project" id="send-project-el" class="input" style="padding: 3px 10px; margin-bottom: 0; background-color: #fff;" data-send-project-element="true">
                                             @foreach ($projects as $project)
                                             <option value="{{ $project->id }}" class="">{{ $project->project_name }}</option>
                                             @endforeach
                                         </select>
+                                        @else
+                                        <p style="font-size: 14px; color: rgba(0, 0, 0, 0.4)">У вас нет активных проектов, <button onclick="selectTab('create-project')" class="btn-link">создать проект</button></p>
+                                        @endif
                                     </div>
                                 </div>
                             </div>
@@ -627,10 +631,10 @@
                                     <div class="form-group filter__item">
                                         <label for="">Количество подписчиков</label>
                                         <div class="input-range-w">
-                                            <input id="subs-range" name="" type="range" class="input input-range" min="5" max="1200000">
+                                            <input id="subs-range" name="" type="range" class="input input-range" min="{{ $bloggers->min('subscriber_quantity') ?? 0 }}" max="{{ $bloggers->max('subscriber_quantity') ?? 0 }}">
                                             <div class="input-range-content">
-                                                <input id="subs-min" type="number" class="input input-number" value="5">
-                                                <input id="subs-max" type="number" class="input input-number" value="1200000">
+                                                <input id="subs-min" type="number" class="input input-number" value="{{ $bloggers->min('subscriber_quantity') ?? 0 }}">
+                                                <input id="subs-max" type="number" class="input input-number" value="{{ $bloggers->max('subscriber_quantity') ?? 0 }}">
                                             </div>
                                         </div>
                                     </div>
@@ -842,12 +846,15 @@
         let project_id = document.getElementById('send-project-el').value
         console.log(project_id)
         console.log(user_id)
-         $.post('/apist/works', {
-            seller_id: {{ auth()->user()->id }},
-            blogger_id: user_id,
-            project_id: project_id
-        }, function(res){
-            notify('info', {title: 'Успешно!', message: 'Заявка успешно отправлена!'});
+        $.post('/apist/works', {
+            seller_id: {{ auth()->user()->id }}
+            , blogger_id: user_id
+            , project_id: project_id
+        }, function(res) {
+            notify('info', {
+                title: 'Успешно!'
+                , message: 'Заявка успешно отправлена!'
+            });
         })
     }
 
