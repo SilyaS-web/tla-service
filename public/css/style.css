@@ -65,7 +65,7 @@ body::-webkit-scrollbar {
     border: 3px solid #fff;  /* padding вокруг плашки */
   }
 
-a{
+a, .btn-link{
     color: var(--primary);
     transition: text-decoration .2s linear;
 }
