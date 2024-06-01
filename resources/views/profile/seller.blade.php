@@ -66,21 +66,25 @@
                                             </div>
                                         </div>
                                         <div class="quest__step-row">
-                                            <div class="form-group">
+                                            <div class="form-group" style="flex:1 1 auto">
                                                 <label for="project-link">Ссылка на товар</label>
                                                 <input type="text" id="project-link" name="product_link" placeholder="Ссылка" class="input input--product_link">
                                                 @error('product_link')
                                                 <span class="error">{{ $message }}</span>
                                                 @enderror
                                             </div>
-                                        </div>
-                                        <div class="form-group" style="max-width:50%">
-                                            <label for="">Количество мест на интеграцию</label>
-                                            <div class="input-range-w">
-                                                <input id="subs-range" name="" type="range" class="input input-range" min="5" max="1200000">
-                                                <div class="input-range-content">
-                                                    <input id="subs-min" type="number" class="input input-number" value="5">
-                                                    <input id="subs-max" type="number" class="input input-number" value="1200000">
+                                            <div class="form-group" style="flex:1 1">
+                                                <label for="" style="display:unset">Количество мест на интеграцию</label>
+                                                <div class="quantity-w" data-max="100">
+                                                    <div class="quantity-minus">
+                                                        <img src="{{ asset('img/minus-icon.svg') }}" alt="">
+                                                    </div>
+                                                    <div class="quantity-input">
+                                                        <input type="number" class="input" value = "0" name = "quantity">
+                                                    </div>
+                                                    <div class="quantity-plus">
+                                                        <img src="{{ asset('img/plus-icon.svg') }}" alt="">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
