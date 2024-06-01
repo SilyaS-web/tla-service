@@ -62,6 +62,7 @@ class AuthController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
+            'tg_phone_id' => $tgPhone->id,
             'role' => $validated['role'],
             'status' => $validated['status'],
             'password' => bcrypt($validated['password']),
@@ -149,7 +150,7 @@ class AuthController extends Controller
     public function resetPassword()
     {
         $validator = Validator::make(request()->all(), [
-            'phone' => 'required|numeric|unique:tg_phones,phone',
+            'phone' => 'required|numeric',
         ]);
 
         if ($validator->fails()) {
@@ -158,10 +159,19 @@ class AuthController extends Controller
 
         $validated = $validator->validated();
         $phone_for_search = str_replace(['(', ')', ' ', '-'], '', $validated['phone']);
-        $tgPhone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
-        if (!$tgPhone) {
+        $tg_phone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
+        if (!$tg_phone) {
             return response()->json('error', 401);
         }
+
+        $user = User::where('tg_phone_id', $tg_phone->id)->first();
+        if (!$user) {
+            return response()->json('user not found', 401);
+
+        }
+
+        $user->password = bcrypt($validated['password']);
+        $user->save();
         return response()->json('success', 200);
     }
 }

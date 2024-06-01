@@ -35,7 +35,7 @@
                 <div class="header__col header__profile-items">
                     <div class="header__row">
                         <div href="#" class="header__profile-w header__profile-header header__profile-item--js">
-                            <img src="img/profile-icon.svg" alt="" class="header__profile">
+                            <img src="{{ asset('img/profile-icon.svg') }}" alt="" class="header__profile">
                             <div class="header__profile-col">
                                 <span class="header__profile-name">
                                     {{ auth()->user()->name }}
@@ -62,14 +62,14 @@
                         </div>
                         <a href="#" class="header__col header__notif header__profile-item--js" title="Уведомления">
                             <div class="header__profile-notif">
-                                1
+                                0
                             </div>
-                            <img src="img/notif-icon.svg" alt="" class="">
+                            <img src="{{ asset('img/notif-icon.svg') }}" alt="" class="">
                             <div class="header__notif-items notif-header">
                                 <div class="notif-header__items">
                                     <div class="notif-header__row ">
                                         <div class="notif-header__col notif-header__img">
-                                            <img src="img/profile-icon.svg" alt="">
+                                            <img src="{{ asset('img/profile-icon.svg') }}" alt="">
                                         </div>
                                         <div class="notif-header__col">
                                             <div class="notif-header__title">
@@ -106,7 +106,7 @@
                     <a href="#" class="nav-burger__link nav__link">Кейсы</a>
                 </div>
                 <a href="#" class="burger-menu__close">
-                    <img src="img/close-icon.svg" alt="">
+                    <img src="{{ asset('img/close-icon.svg') }}" alt="">
                 </a>
 
                 <div class="burger-contacts">
@@ -166,15 +166,15 @@
                             <div class="header__profile-notif" id="header-notif-count" style="display: none">
 
                             </div>
-                            <img src="img/notif-icon.svg" alt="" class="">
+                            <img src="{{ asset('img/notif-icon.svg') }}" alt="" class="">
                             <div class="header__notif-items notif-header">
                                 <div class="notif-header__items" id="header-notif-container">
-                                    Нет новых уведомлений
+                                    @include('shared.notifications')
                                 </div>
                             </div>
                         </a>
                         <div href="#" class="header__profile-w header__profile-header header__profile-item--js">
-                            <img src="img/profile-icon.svg" alt="" class="header__profile">
+                            <img src="{{ asset('img/profile-icon.svg') }}" alt="" class="header__profile">
                             <div class="header__profile-col">
                                 <span class="header__profile-name">
                                     {{ auth()->user()->name }}
@@ -204,7 +204,7 @@
                         </div>
                     </div>
                     <a href="#" class="header__menu burger">
-                        <img src="img/menu-icon.svg" alt="">
+                        <img src="{{ asset('img/menu-icon.svg') }}" alt="">
                     </a>
                     @endauth
                 </div>
@@ -217,7 +217,7 @@
                 <div class="footer__body">
                     <div class="footer__top">
                         <div class="logo footer__logo-w">
-                            <img src="img/logo.svg" alt="" class="logo__logo footer__logo">
+                            <img src="{{ asset('img/logo.svg') }}" alt="" class="logo__logo footer__logo">
                         </div>
                         <nav class="nav footer__nav">
                             <div class="nav__items">
@@ -287,7 +287,7 @@
                         </button>
                     </div>
                     <div class="close-popup">
-                        <img src="img/close-icon.svg" alt="">
+                        <img src="{{ asset('img/close-icon.svg') }}" alt="">
                     </div>
                 </div>
             </div>
@@ -324,7 +324,7 @@
                         </button>
                     </div>
                     <div class="close-popup">
-                        <img src="img/close-icon.svg" alt="">
+                        <img src="{{ asset('img/close-icon.svg') }}" alt="">
                     </div>
                 </div>
             </div>
@@ -346,19 +346,19 @@
                             <label for="mark">Ваша оценка</label>
                             <div class="mark-items">
                                 <div class="mark-items__star">
-                                    <img src="/img/star-icon.svg" alt="">
+                                    <img src="{{ asset('/img/star-icon.svg') }}" alt="">
                                 </div>
                                 <div class="mark-items__star">
-                                    <img src="/img/star-icon.svg" alt="">
+                                    <img src="{{ asset('/img/star-icon.svg') }}" alt="">
                                 </div>
                                 <div class="mark-items__star">
-                                    <img src="/img/star-icon.svg" alt="">
+                                    <img src="{{ asset('/img/star-icon.svg') }}" alt="">
                                 </div>
                                 <div class="mark-items__star">
-                                    <img src="/img/star-icon.svg" alt="">
+                                    <img src="{{ asset('/img/star-icon.svg') }}" alt="">
                                 </div>
                                 <div class="mark-items__star">
-                                    <img src="/img/star-icon.svg" alt="">
+                                    <img src="{{ asset('/img/star-icon.svg') }}" alt="">
                                 </div>
                             </div>
                         </div>
@@ -371,7 +371,7 @@
                         </button>
                     </div>
                     <div class="close-popup">
-                        <img src="img/close-icon.svg" alt="">
+                        <img src="{{ asset('img/close-icon.svg') }}" alt="">
                     </div>
                 </div>
             </div>

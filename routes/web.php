@@ -83,4 +83,6 @@ Route::prefix('apist')->group(function () {
     Route::post('/tg/confirmed', [AuthController::class, 'isTgConfirmed']);
     Route::get('/notifications', [UserController::class, 'getNewNotifications']);
     Route::get('/notifications/view', [AuthController::class, 'setTGPhone']);
+
+    Route::get('/coverage-data', [DeepLinkController::class, 'stats']);
 });

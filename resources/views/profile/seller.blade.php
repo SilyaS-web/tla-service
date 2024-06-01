@@ -691,6 +691,8 @@
         pGraph = document.getElementById('projects');
     }
 
+
+
     var data = {
         "orders": 2637
         , "earnings": 4750732.0
@@ -755,14 +757,17 @@
         , ]
     , }
 
-
+    let coverageData = [];
+    let coverageData = $.get('/apist/coverage-data').done(function( data ) {
+        coverageData = data.coverage;
+    });
     new Chart(coverageGraph, {
         type: 'bar'
         , data: {
-            labels: data.prices_history.map(item => `${item.dt.split('-')[2]} Мая`)
+            labels: coverageData.map(item => item.formattedDate)
             , datasets: [{
                 label: 'Охваты'
-                , data: data.prices_history.map(item => item.price)
+                , data: coverageData.map(item => item.data)
             , }]
         }
         , options: {

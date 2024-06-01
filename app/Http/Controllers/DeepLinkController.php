@@ -4,13 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\DeepLink;
 use App\Models\DeepLinkStat;
+use App\Models\Project;
+use App\Models\Work;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Auth;
 use Dadata\DadataClient;
 use DeviceDetector\ClientHints;
 use DeviceDetector\DeviceDetector;
 use DeviceDetector\Parser\Device\AbstractDeviceParser;
+use Illuminate\Support\Facades\DB;
 
 class DeepLinkController extends Controller
 {
@@ -76,8 +80,17 @@ class DeepLinkController extends Controller
 
     public function stats()
     {
-        $deepLinkStats = DeepLinkStat::get();
-        echo "<pre>";
-        print_r($deepLinkStats->toArray());
+        $user = Auth::user();
+
+        $works = Work::where([['blogger_id', $user->id]])->get();
+        $deepLinkStats = DeepLinkStat::whereIn('work_id', $works->pluck('id'))->getAttributewhere('created_at', '>=',  date('Y-m-d', time() - (86400 * 14)))
+        ->groupBy('date')
+        ->orderBy('date', 'DESC')
+        ->get(array(
+            DB::raw('Date(created_at) as date'),
+            DB::raw('COUNT(*) as "total"')
+        ));
+
+        return response()->json($deepLinkStats, 200);
     }
 }
