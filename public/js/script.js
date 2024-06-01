@@ -815,6 +815,52 @@ class PopupConfirmCompletion extends Popup{
     }
 }
 
+class PopupConfirmCompletionBlogger extends Popup{
+    constructor(node){
+        super(node);
+
+        this.node = node;
+
+        $(this.node).find('.mark-items__star').on('click', (e) => this.setMark(e));
+        $(this.node).find('.btn.send-data').on('click', this.sendData);
+        $(this.node).find('.input-file.input-file--stat input[type="file"]').on('change', this.uploadFile)
+
+        return this;
+    }
+
+    node = '';
+    sendUri = "/apist/projects/confirm";
+    workId = false;
+
+    uploadFile  = () => {
+        $(this.node).find('.input-file.input-file--stat label').text('Файл прикреплен')
+    }
+
+    sendData = () => {
+        var self = this;
+
+        if(self.workId){
+            var data = new FormData;
+
+            data.append('img', $(self.node).find('#statistics-file')[0].files[0]);
+            data.append('work_id', self.workId);
+            data.append('message',$(self.node).find('#comment').val());
+
+            $.ajax({
+                type: "POST",
+                url: self.sendUri,
+                data: data,
+                cache : false,
+                processData: false,
+            }).done(res=>{
+                notify('info', {title: 'Успешно!', message: 'Вы успешно подтвердили выполнение проекта'});
+                self.closePopup();
+            })
+        }
+
+    }
+}
+
 class PopupChangePassword extends Popup{
     constructor(node){
         super(node);
@@ -926,9 +972,13 @@ $(window).on('load', function(){
 
 
     $(document).on('click', '.profile-projects__item .btn-bloggers', function(e){
-        $(e.target).closest('.btn-bloggers').toggleClass('active');
         $(e.target).closest('.profile-projects__item').toggleClass('active-bloggers');
         $(e.target).closest('.profile-projects__item').removeClass('active-statistics');
+    })
+
+    $(document).on('click', '.profile-projects__item .btn-statistics', function(e){
+        $(e.target).closest('.profile-projects__item').toggleClass('active-statistics');
+        $(e.target).closest('.profile-projects__item').removeClass('active-bloggers');
     })
 
     $('.profile-projects__item').find('.owl-carousel').owlCarousel({
@@ -943,12 +993,6 @@ $(window).on('load', function(){
             }
         }
     });
-
-    $(document).on('click', '.profile-projects__item .btn-statistics', function(e){
-        $(e.target).closest('.btn-statistics').toggleClass('active');
-        $(e.target).closest('.profile-projects__item').toggleClass('active-statistics');
-        $(e.target).closest('.profile-projects__item').removeClass('active-bloggers');
-    })
 
     $(document).on('click', '.profile-projects__item .profile-projects__blogers', function(e){
         e.stopPropagation()
@@ -1036,6 +1080,14 @@ $(window).on('load', function(){
         e.preventDefault();
 
         let popup = new PopupConfirmCompletion('#confirm-completion');
+        popup.openPopup();
+    })
+
+    $(document).on('click', '#confirm-completion-blogger-btn', function(e){
+        e.preventDefault();
+
+        let popup = new PopupConfirmCompletionBlogger('#confirm-completion-blogger');
+        popup.workId = $(e.target).data('work-id');
         popup.openPopup();
     })
 

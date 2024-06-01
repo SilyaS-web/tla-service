@@ -10,11 +10,10 @@
 
     <link rel="stylesheet" href="{{ asset('admin/css/style.css') }}">
 
-    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.maskedinput/1.4.1/jquery.maskedinput.js"></script>
+    <script src="{{ asset('libs/jquery/jquery-3.7.1.min.js') }}" crossorigin="anonymous"></script>
+    <script src="{{ asset('libs/jquery/jquery.maskedinput.min.js') }}"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+
 
     <title>Панель управления</title>
 </head>
@@ -142,29 +141,91 @@
                     Заполните данные
                 </div>
                 <div class="popup__form">
-                    <div class="form-group filter__item">
-                        <label for="platform">Платформа</label>
-                        <select name="platform" id="platform" class="input">
-                            @foreach ($platforms as $platform)
-                            <option value="{{ $platform }}" class="">{{ $platform }}</option>
-                            @endforeach
-                        </select>
+                    <label for="">Статистика по блогеру</label>
+                    <div class="popup__form-row popup__form-stat form-stat">
+                        <div class="form-stat__title">
+                            Telegram
+                        </div>
+                        <div class="form-stat__content">
+                            <div class="form-stat__row">
+                                <div class="form-group">
+                                    <label for="tg_subs">Подписчики</label>
+                                    <input id = "tg_subs" type="text" class="input" name = "">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tg_cover">Охваты</label>
+                                    <input id = "tg_cover" type="text" class="input" name = "">
+                                </div>
+                            </div>
+                            <div class="form-stat__row">
+                                <div class="form-group">
+                                    <label for="tg_er">ER</label>
+                                    <input id = "tg_er" type="text" class="input" name = "">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tg_cpm">CPM</label>
+                                    <input id = "tg_cpm" type="text" class="input" name = "">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="popup__form-row popup__form-stat form-stat">
+                        <div class="form-stat__title">
+                            Instagram
+                        </div>
+                        <div class="form-stat__content">
+                            <div class="form-stat__row">
+                                <div class="form-group">
+                                    <label for="inst_subs">Подписчики</label>
+                                    <input id = "inst_subs" type="text" class="input" name = "">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inst_cover">Охваты</label>
+                                    <input id = "inst_cover" type="text" class="input" name = "">
+                                </div>
+                            </div>
+                            <div class="form-stat__row">
+                                <div class="form-group">
+                                    <label for="inst_er">ER</label>
+                                    <input id = "inst_er" type="text" class="input" name = "">
+                                </div>
+                                <div class="form-group">
+                                    <label for="inst_cpm">CPM</label>
+                                    <input id = "inst_cpm" type="text" class="input" name = "">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="popup__form-row popup__form-stat form-stat">
+                        <div class="form-stat__title">
+                            Youtube
+                        </div>
+                        <div class="form-stat__content">
+                            <div class="form-stat__row">
+                                <div class="form-group">
+                                    <label for="yt_subs">Подписчики</label>
+                                    <input id = "yt_subs" type="text" class="input" name = "">
+                                </div>
+                                <div class="form-group">
+                                    <label for="yt_cover">Охваты</label>
+                                    <input id = "yt_cover" type="text" class="input" name = "">
+                                </div>
+                            </div>
+                            <div class="form-stat__row">
+                                <div class="form-group">
+                                    <label for="yt_er">ER</label>
+                                    <input id = "yt_er" type="text" class="input" name = "">
+                                </div>
+                                <div class="form-group">
+                                    <label for="yt_cpm">CPM</label>
+                                    <input id = "yt_cpm" type="text" class="input" name = "">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <label for="subscriber_quantity">Количество подписчиков</label>
-                        <input id="subscriber_quantity" name="subscriber_quantity" type="text" class="input">
-                    </div>
-                    <div class="form-group">
-                        <label for="coverage">Охваты</label>
-                        <input id="coverage" name="coverage" type="text" class="input">
-                    </div>
-                    <div class="form-group">
-                        <label for="engagement_rate">Engagement rate</label>
-                        <input id="engagement_rate" name="engagement_rate" type="text" class="input">
-                    </div>
-                    <div class="form-group">
-                        <label for="cost_per_mille">CPM</label>
-                        <input id="cost_per_mille" name="cost_per_mille" type="text" class="input">
+                        <label for="desc">Описание канала</label>
+                        <textarea name="desc" id="desc" cols="30" rows="10" class="textarea" placeholder="Введите текст"></textarea>
                     </div>
                     <div class="form-row filter__item" style="display: flex; gap:10px;">
                         <div class="form-group">
