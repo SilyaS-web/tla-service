@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Message;
+use App\Models\Notification;
 use App\Models\Project;
 use App\Models\ProjectFile;
 use App\Models\User;
@@ -23,6 +24,7 @@ class MessageController extends Controller
             'work_id' => 'exists:works,id|nullable',
             'new_only' => 'boolean',
         ]);
+
 
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
@@ -97,6 +99,13 @@ class MessageController extends Controller
         $validated['user_id'] = $user->id;
 
         Message::create($validated);
+        $work = Work::find($validated['work_id']);
+
+        Notification::create([
+            'user_id'=> $work->getPartnerUser($user->role)->id,
+            'type'=> 'message',
+            'text'=> 'Вам поступила новое сообщение от ' . $user->name,
+        ]);
 
         return response()->json(['message' => 'success'], 200);
     }
