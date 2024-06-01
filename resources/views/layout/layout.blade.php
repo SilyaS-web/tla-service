@@ -376,6 +376,36 @@
                 </div>
             </div>
         </div>
+        <div class="popup" id = "confirm-completion-blogger" style="">
+            <div class="popup__container _container">
+                <div class="popup__body">
+                    <div class="popup__header">
+                        <div class="popup__title title">
+                            Заполните данные
+                        </div>
+                        <div class="popup__subtitle">
+                            Выберите оценку, не забудьте добавить комментарий, это очень важно для развития площадки и улучшения сообщества
+                        </div>
+                    </div>
+                    <div class="popup__form">
+                        <div class="form-group">
+                            <label for="comment">Комментарий</label>
+                            <textarea name="comment" id="comment" cols="30" rows="10" class="textarea" placeholder="Введите сообщение"></textarea>
+                        </div>
+                        <div class="input-file input-file--stat" style="padding-left:0; margin-bottom:20px;">
+                            <label for="statistics-file">Прикрепить отчет по статитстике</label>
+                            <input id = "statistics-file" type="file"  hidden>
+                        </div>
+                        <button class = "btn btn-primary send-data">
+                            Отправить
+                        </button>
+                    </div>
+                    <div class="close-popup">
+                        <img src="{{ asset('img/close-icon.svg') }}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
 
         @include('shared.success-message')
     </div>

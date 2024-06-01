@@ -29,9 +29,15 @@
                     <span>Рекламный пост</span>
                 </div>
             </div>
-            {{-- <div class="project-item__btns">
-                <a href="#" class="btn btn-primary">Отправить</a>
-            </div> --}}
+            <div class="project-item__btns">
+                <a href="" class="btn btn-primary" id = "confirm-completion-blogger-btn" data-work-id = "<?=$project->id?>">Подтвердить выполнение</a>
+                <? switch($type): case 'avail' :?>
+                        <a href="/apist/works?project_id=<?=$project->id?>" class="btn btn-primary">Откликнуться</a>
+                    <? break; case 'start': ?>
+                        <a href="/apist/work/<?=$project->id?>/accept" class="btn btn-primary" id = "accept-btn">Начать работу</a>
+                    <? break; case 'finish': ?>
+                    <? break; endswitch ?>
+            </div>
         </div>
     </div>
 

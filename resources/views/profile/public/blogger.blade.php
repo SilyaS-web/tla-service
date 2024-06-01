@@ -28,9 +28,123 @@
                                 Проверенный блогер
                             </div>
                         </div>
-                        <div class="info-profile__tags-items">
-                            <div class="info-profile__tags-item">
-                                {{ ucfirst($user->blogger->platform) }}
+                        <div class="info-profile__platrfoms blogger-platforms">
+                            <div class="blogger-platforms__item item-platforms">
+                                <div class="item-platforms__title item-platforms__title--yt">
+                                    Youtube
+                                </div>
+                                <div class="item-platforms__stats">
+                                    <div class="item-platforms__stat">
+                                        <div class="item-platforms__stat-title">
+                                            Просмотры
+                                        </div>
+                                        <div class="item-platforms__stat-value">
+                                            1200
+                                        </div>
+                                    </div>
+                                    <div class="item-platforms__stat">
+                                        <div class="item-platforms__stat-title">
+                                            Охваты
+                                        </div>
+                                        <div class="item-platforms__stat-value">
+                                            400
+                                        </div>
+                                    </div>
+                                    <div class="item-platforms__stat">
+                                        <div class="item-platforms__stat-title">
+                                            ER
+                                        </div>
+                                        <div class="item-platforms__stat-value">
+                                            1200
+                                        </div>
+                                    </div>
+                                    <div class="item-platforms__stat">
+                                        <div class="item-platforms__stat-title">
+                                            CPM
+                                        </div>
+                                        <div class="item-platforms__stat-value">
+                                            724₽
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="blogger-platforms__item item-platforms">
+                                <div class="item-platforms__title item-platforms__title--tg">
+                                    Telegram
+                                </div>
+                                <div class="item-platforms__stats">
+                                    <div class="item-platforms__stat">
+                                        <div class="item-platforms__stat-title">
+                                            Просмотры
+                                        </div>
+                                        <div class="item-platforms__stat-value">
+                                            850
+                                        </div>
+                                    </div>
+                                    <div class="item-platforms__stat">
+                                        <div class="item-platforms__stat-title">
+                                            Охваты
+                                        </div>
+                                        <div class="item-platforms__stat-value">
+                                            120
+                                        </div>
+                                    </div>
+                                    <div class="item-platforms__stat">
+                                        <div class="item-platforms__stat-title">
+                                            ER
+                                        </div>
+                                        <div class="item-platforms__stat-value">
+                                            860
+                                        </div>
+                                    </div>
+                                    <div class="item-platforms__stat">
+                                        <div class="item-platforms__stat-title">
+                                            CPM
+                                        </div>
+                                        <div class="item-platforms__stat-value">
+                                            428₽
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="blogger-platforms__item item-platforms">
+                                <div class="item-platforms__title item-platforms__title--inst">
+                                    Instagram
+                                </div>
+                                <div class="item-platforms__stats">
+                                    <div class="item-platforms__stat">
+                                        <div class="item-platforms__stat-title">
+                                            Просмотры
+                                        </div>
+                                        <div class="item-platforms__stat-value">
+                                            1200
+                                        </div>
+                                    </div>
+                                    <div class="item-platforms__stat">
+                                        <div class="item-platforms__stat-title">
+                                            Охваты
+                                        </div>
+                                        <div class="item-platforms__stat-value">
+                                            400
+                                        </div>
+                                    </div>
+                                    <div class="item-platforms__stat">
+                                        <div class="item-platforms__stat-title">
+                                            ER
+                                        </div>
+                                        <div class="item-platforms__stat-value">
+                                            1200
+                                        </div>
+                                    </div>
+                                    <div class="item-platforms__stat">
+                                        <div class="item-platforms__stat-title">
+                                            CPM
+                                        </div>
+                                        <div class="item-platforms__stat-value">
+                                            724₽
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -39,48 +153,50 @@
                     </div>
                 </div>
             </div>
-            <div class="user-view__projects">
-                <div class="profile-projects tab-content active" id="my-projects">
-                    <div class="profile-projects__body">
-                        <div class="profile-projects__title title">
-                            Список выполненных интеграций
-                        </div>
-                        <div class="list-projects__items">
-                            @forelse ($projects as $project)
-                            <div class="list-projects__item project-item">
-                                <div class="owl-carousel project-item__carousel">
-                                    <div class="project-item__img">
-                                        <img src="{{ $project->getImageURL(true) }}" alt="">
-                                        <div class="project-item__status active">
-                                            {{ $project->active == 0 ? 'Активно' : 'Выполнено' }}
-                                        </div>
-                                        {{-- <div class="project-item__country">
-                                            Россия
-                                        </div> --}}
-                                    </div>
-                                </div>
-                                <div class="project-item__content">
-                                    <div class="project-item__title">
-                                        Цена — {{ $project->product_price }} ₽
-                                    </div>
-                                    <a class="project-item__participants" title="Гель для душа парфюмированный, 1000 мл.">
-                                        {{ $project->seller->user->name }} / {{ $project->project_name }}.
-                                    </a>
-                                    <div class="project-item__format-tags card__row card__tags">
-                                        <div class="card__tags-item">
-                                            <span>Рекламный пост</span>
-                                        </div>
-                                    </div>
-                                </div>
+            <? if(count($projects) > 0): ?>
+                <div class="user-view__projects">
+                    <div class="profile-projects tab-content active" id="my-projects">
+                        <div class="profile-projects__body">
+                            <div class="profile-projects__title title">
+                                Список выполненных интеграций
                             </div>
-                            @empty
-                            Пока что здесь пусть
-                            @endforelse
+                            <div class="list-projects__items">
+                                @forelse ($projects as $project)
+                                <div class="list-projects__item project-item">
+                                    <div class="owl-carousel project-item__carousel">
+                                        <div class="project-item__img">
+                                            <img src="{{ $project->getImageURL(true) }}" alt="">
+                                            <div class="project-item__status active">
+                                                {{ $project->active == 0 ? 'Активно' : 'Выполнено' }}
+                                            </div>
+                                            {{-- <div class="project-item__country">
+                                                Россия
+                                            </div> --}}
+                                        </div>
+                                    </div>
+                                    <div class="project-item__content">
+                                        <div class="project-item__title">
+                                            Цена — {{ $project->product_price }} ₽
+                                        </div>
+                                        <a class="project-item__participants" title="Гель для душа парфюмированный, 1000 мл.">
+                                            {{ $project->seller->user->name }} / {{ $project->project_name }}.
+                                        </a>
+                                        <div class="project-item__format-tags card__row card__tags">
+                                            <div class="card__tags-item">
+                                                <span>Рекламный пост</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @empty
+                                Пока что здесь пусть
+                                @endforelse
 
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            <? endif ?>
         </div>
     </div>
 </section>
