@@ -183,9 +183,21 @@ class UserController extends Controller
         }
     }
 
-    public function getNewNotifications(Request $request) {
+    public function getNewNotifications(Request $request)
+    {
+        $validated = request()->validate([
+            'type' => '',
+        ]);
+
         $user = Auth::user();
         $user_id = $user->id;
+
+        if (isset($validated['type']) && $validated['type'] == 'message') {
+            $filter[] = ['type' => $validated['type']];
+            $notifications_count = $user->notifications()->where('viewed_at', null)->where($filter)->count();
+            return response()->json(['count' => $notifications_count]);
+        }
+
         $old_notifications = $user->notifications()->where('viewed_at', '<>', null)->latest()->limit(4)->get();
         $notifications = $user->notifications()->where('viewed_at', null)->get();
         return response()->json(['view' => view('shared.notifications', compact('notifications', 'old_notifications'))->render(), 'count' => $notifications->count()]);

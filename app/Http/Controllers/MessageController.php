@@ -45,7 +45,7 @@ class MessageController extends Controller
         $works = Work::where($filter)->get();
         if (!empty($validated['work_id'])) {
             $work = $works->first();
-            return view('shared.chat.messages', compact('work', 'user_id', 'role'));
+            return response()->json(['view' => view('shared.chat.messages', compact('work', 'user_id', 'role'))->render(), 'btn-class' => 'confirm-completion-btn', 'btn-text' => 'Подтвердить выполнение']);
         }
 
         return view('shared.chat.chat-list', compact('works', 'user_id', 'role'));
