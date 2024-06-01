@@ -10,11 +10,11 @@
                 </div>
                 <div class="card__name">
                     <p class="card__name-name">
-                        <a class="btn-add-to-project" href="{{ route('blogger-page', $blogger->id) }}">
+                        <a class="btn-add-to-project" href="{{ route('blogger-page', $blogger->id) }}" style="color:#000">
                             {{ $blogger->user->name}}
                         </a><br/>
                         <p style="font-size: 12px">
-                            {{ $blogger->description }}
+
                         </p>
                     </p>
                 </div>
@@ -28,7 +28,7 @@
                 </div>
             </div> --}}
             <div class="card__row card__desc">
-
+                {{ $blogger->description }}
             </div>
         </div>
         <div class="card__col card__stats">

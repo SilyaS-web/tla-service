@@ -49,53 +49,20 @@ class PopupAcceptBloger extends Popup{
         super(node);
 
         $(this.node).find('.btn.send-data').on('click', this.sendData)
+        $(this.node).find('.form-stat__title').on('click', (e) => this.statCardClick(e))
 
         return this;
     }
 
     sendUri = '/apist/admin/bloggers/accept';
+
     blogger_id = '';
+
+    statCardClick = (e) => {
+        $(e.target).closest('.form-stat').toggleClass('active');
+    }
+
     dataProps = {
-        platform: {
-            set: (value)=>{
-                console.log(value)
-            },
-            get: ()=>{
-                return $(this.node).find('#platform').val();
-            }
-        },
-        subscriber_quantity: {
-            set: (value)=>{
-                console.log(value)
-            },
-            get: ()=>{
-                return $(this.node).find('#subscriber_quantity').val();
-            }
-        },
-        coverage: {
-            set: (value)=>{
-                console.log(value)
-            },
-            get: ()=>{
-                return $(this.node).find('#coverage').val();
-            }
-        },
-        engagement_rate: {
-            set: (value)=>{
-                console.log(value)
-            },
-            get: ()=>{
-                return $(this.node).find('#engagement_rate').val();
-            }
-        },
-        cost_per_mille: {
-            set: (value)=>{
-                console.log(value)
-            },
-            get: ()=>{
-                return $(this.node).find('#cost_per_mille').val();
-            }
-        },
         gender_ratio: {
             set: (value)=>{
                 console.log(value)
@@ -121,20 +88,93 @@ class PopupAcceptBloger extends Popup{
             }
         },
 
+        tg_subs: {
+            get: ()=>{
+                return $(this.node).find('#tg_subs').val();
+            }
+        },
+        tg_cover: {
+            get: ()=>{
+                return $(this.node).find('#tg_cover').val();
+            }
+        },
+        tg_er: {
+            get: ()=>{
+                return $(this.node).find('#tg_er').val();
+            }
+        },
+        tg_cpm: {
+            get: ()=>{
+                return $(this.node).find('#tg_cpm').val();
+            }
+        },
+
+        inst_subs: {
+            get: ()=>{
+                return $(this.node).find('#inst_subs').val();
+            }
+        },
+        inst_cover: {
+            get: ()=>{
+                return $(this.node).find('#inst_cover').val();
+            }
+        },
+        inst_er: {
+            get: ()=>{
+                return $(this.node).find('#inst_er').val();
+            }
+        },
+        inst_cpm: {
+            get: ()=>{
+                return $(this.node).find('#inst_cpm').val();
+            }
+        },
+
+        yt_subs: {
+            get: ()=>{
+                return $(this.node).find('#yt_subs').val();
+            }
+        },
+        yt_cover: {
+            get: ()=>{
+                return $(this.node).find('#yt_cover').val();
+            }
+        },
+        yt_er: {
+            get: ()=>{
+                return $(this.node).find('#yt_er').val();
+            }
+        },
+        yt_cpm: {
+            get: ()=>{
+                return $(this.node).find('#yt_cpm').val();
+            }
+        },
     }
+
     sendData = () => {
         var self = this;
 
         $.post(self.sendUri, {
             user_id: self.blogger_id,
-            platform: self.dataProps.platform.get(),
-            subscriber_quantity: self.dataProps.subscriber_quantity.get(),
-            coverage: self.dataProps.coverage.get(),
-            engagement_rate: self.dataProps.engagement_rate.get(),
-            cost_per_mille: self.dataProps.cost_per_mille.get(),
             gender_ratio: self.dataProps.gender_ratio.get(),
             sex: self.dataProps.sex.get(),
             is_achievement: self.dataProps.is_achievement.get(),
+
+            tg_subs: self.dataProps.tg_subs.get(),
+            tg_cover: self.dataProps.tg_cover.get(),
+            tg_er: self.dataProps.tg_er.get(),
+            tg_cpm: self.dataProps.tg_cpm.get(),
+
+            inst_subs: self.dataProps.inst_subs.get(),
+            inst_cover: self.dataProps.inst_cover.get(),
+            inst_er: self.dataProps.inst_er.get(),
+            inst_cpm: self.dataProps.inst_cpm.get(),
+
+            yt_subs: self.dataProps.yt_subs.get(),
+            yt_cover: self.dataProps.yt_cover.get(),
+            yt_er: self.dataProps.yt_er.get(),
+            yt_cpm: self.dataProps.yt_cpm.get(),
         }, function(res){
             notify('info', {title: 'Успешно!', message: ''});
             self.closePopup();
