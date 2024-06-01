@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\BloggerController;
 use App\Http\Controllers\DeepLinkController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\WorkController;
 /*
 |--------------------------------------------------------------------------
@@ -82,7 +83,7 @@ Route::prefix('apist')->group(function () {
     Route::post('/tg', [AuthController::class, 'setTGPhone']);
     Route::post('/tg/confirmed', [AuthController::class, 'isTgConfirmed']);
     Route::get('/notifications', [UserController::class, 'getNewNotifications']);
-    Route::get('/notifications/view', [AuthController::class, 'setTGPhone']);
+    Route::get('/notifications/view', [NotificationController::class, 'view']);
 
     Route::get('/coverage-data', [DeepLinkController::class, 'stats']);
 });
