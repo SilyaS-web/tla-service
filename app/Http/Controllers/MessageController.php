@@ -48,7 +48,7 @@ class MessageController extends Controller
             return view('shared.chat.messages', compact('work', 'user_id', 'role'));
         }
 
-        return view('shared.chat.index', compact('works', 'user_id', 'role'));
+        return view('shared.chat.chat-list', compact('works', 'user_id', 'role'));
     }
 
     public function count(Request $request)

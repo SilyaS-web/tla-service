@@ -14,7 +14,7 @@ class WorkController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'blogger_id' => 'required|exists:users,id',
+            'blogger_id' => 'exists:users,id|nullable',
             'seller_id' => 'exists:users,id|nullable',
             'project_id' => 'required|exists:projects,id',
         ]);

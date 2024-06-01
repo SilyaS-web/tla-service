@@ -26,4 +26,9 @@ class Message extends Model
     {
         return $this->hasOne(Work::class, 'id', 'work_id');
     }
+
+    public function images()
+    {
+        return $this->hasMany(MessageFile::class, 'source_id', 'id');
+    }
 }
