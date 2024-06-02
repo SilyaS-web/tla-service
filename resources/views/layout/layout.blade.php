@@ -401,6 +401,16 @@
                 </div>
             </div>
         </div>
+        <div class="popup" id = "chat-img" style="">
+            <div class="popup__container _container">
+                <div class="popup__body">
+                    <img src="" alt="" class="chat-img" style="width:100%">
+                    <div class="close-popup">
+                        <img src="{{ asset('img/close-icon.svg') }}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
 
         @include('shared.success-message')
     </div>
