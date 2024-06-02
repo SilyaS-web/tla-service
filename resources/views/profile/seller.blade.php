@@ -596,12 +596,12 @@
                                     </div>
                                 </div>
                                 <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
-                                    <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
+                                    <button class="btn btn-primary projects-list__filter-btn" data-filter="">Фильтры</button>
                                 </div>
                             </div>
                             @include('blogger.list')
                         </div>
-                        <div class="blogers-list__filter filter">
+                        <div class="projects-list__filter filter">
                             <div class="filter__body">
                                 <div class="filter__top">
                                     <p class="filter__title">

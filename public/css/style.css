@@ -403,7 +403,7 @@ input[type='range']::-webkit-slider-runnable-track{
     gap: 25px;
 }
 .profile-projects__body {
-    width: 100%;
+    width: calc(100% - 380px);
     max-width: 1000px;
 }
 #blogger .profile-projects__body{
@@ -1856,7 +1856,8 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .profile__body {
     display: flex;
-    gap: 65px;
+    gap: 3%;
+    justify-content: space-between;
 }
 .profile__title {
 }
@@ -3100,7 +3101,26 @@ input[type='range']::-webkit-slider-runnable-track{
     display: none;
 }
 
-
+@media(max-width: 1740px){
+    #seller .profile-projects__filters .projects-list__filter{
+        position: absolute;
+        left: -100%;
+        top: 0;
+        height: 100%;
+    }
+    #seller .projects-list__filter-btn{
+        visibility: visible;
+    }
+    .profile-projects__body{
+        width:100%;
+        max-width: 1200px;
+    }
+}
+@media(max-width: 1650px){
+    .profile-projects__body{
+        width:100%;
+    }
+}
 @media(max-width:1350px){
     .projects-list__filter{
         max-width: 320px;
@@ -3116,7 +3136,7 @@ input[type='range']::-webkit-slider-runnable-track{
     .projects-list__filter{
         position: absolute;
         left:-100%;top:0;
-        height: 100vh;
+        height: 100%;
     }
     .current-tariff{
         right: 180px;
@@ -3687,7 +3707,6 @@ input[type='range']::-webkit-slider-runnable-track{
         display: flex;
         align-items: center;
         justify-content: center;
-        display: block;
         transition: all .2s linear;
     }
     .profile__navigation.nav-menu .nav-menu__close img{
