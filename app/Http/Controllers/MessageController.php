@@ -47,7 +47,7 @@ class MessageController extends Controller
         $works = Work::where($filter)->get();
         if (!empty($validated['work_id'])) {
             $work = $works->first();
-            Message::whereIn('work_id', [$validated['work_id']])->where('created_at', '<=', date('Y-m-d H:i'))->update(['viewed_at' => date('Y-m-d H:i')]);
+            Message::whereIn('work_id', [$validated['work_id']])->where('viewed_at', '<=', date('Y-m-d H:i'))->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
             return response()->json(['view' => view('shared.chat.messages', compact('work', 'user_id', 'role'))->render(), 'btn-class' => 'confirm-completion-btn', 'btn-text' => 'Подтвердить выполнение']);
         }
 

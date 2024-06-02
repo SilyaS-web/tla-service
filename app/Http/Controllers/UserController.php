@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blogger;
+use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -186,16 +187,17 @@ class UserController extends Controller
     public function getNewNotifications(Request $request)
     {
         $validated = request()->validate([
-            'type' => '',
+            'type' => 'string',
         ]);
 
         $user = Auth::user();
         $user_id = $user->id;
 
         if (isset($validated['type']) && $validated['type'] == 'message') {
-            $filter[] = ['type' => $validated['type']];
-            $notifications_count = $user->notifications()->where('viewed_at', null)->where($filter)->count();
-            return response()->json(['count' => $notifications_count]);
+            $message_count = Message::whereHas('work', function (Builder $query) use ($user) {
+                $query->where($user->role . '_id', $user->id);
+            })->where('user_id', '<>', $user->id)->where('viewed_at', null)->count();
+            return response()->json(['count' => $message_count]);
         }
 
         $old_notifications = $user->notifications()->where('viewed_at', '<>', null)->latest()->limit(4)->get();
