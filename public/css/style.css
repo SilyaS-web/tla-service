@@ -2566,6 +2566,14 @@ input[type='range']::-webkit-slider-runnable-track{
     background-color: var(--pale);
     margin-left: auto;
 }
+.messages-chat__item--system {
+    margin: 0 auto;
+    text-align: center;
+}
+.messages-chat__item--system .messages-chat__item-msg {
+    font-size: 18px;
+    font-weight: 600;
+}
 .messages-chat__item-header {
     display: flex;
     align-items: center;
@@ -2582,7 +2590,14 @@ input[type='range']::-webkit-slider-runnable-track{
     color: rgba(0, 0, 0, .4);
 }
 .messages-chat__item-msg {
-
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+}
+.messages-chat__item-msg img{
+    width: 100px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 .messages-create {
     border-radius: 0 0 10px 10px;

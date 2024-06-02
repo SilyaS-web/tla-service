@@ -590,7 +590,7 @@ class Chat {
 
     sendMsgUri = '/apist/messages/create';
     getMsgUri = '/apist/messages';
-    getMsgCountUri = '/apist/notifications?type="message"';
+    getMsgCountUri = '/apist/notifications?type=message';
 
     getMsgCountInterval = null;
     getMsgInterval = null;
@@ -639,7 +639,7 @@ class Chat {
             }
             else{
                 $(self.node).find('.messages-chat').empty()
-                $(self.node).find('.messages-chat').append(res)
+                $(self.node).find('.messages-chat').append(res.view)
             }
 
             if(!this.newMessagesInterval){
@@ -977,6 +977,15 @@ $(window).on('load', function(){
         $(e.target).closest('.header__notif').toggleClass('active')
     })
 
+
+    $(document).on('click', '.chat-img-popup', function(e){
+        var src = $(e.target).prop('src');
+
+        var popup = new Popup($(e.target).data('popup'));
+        $(popup.node).find('.chat-img').prop('src', src);
+        popup.openPopup();
+
+    })
 
     $(document).on('click', '.profile-projects__item .btn-bloggers', function(e){
         $(e.target).closest('.profile-projects__item').toggleClass('active-bloggers');
