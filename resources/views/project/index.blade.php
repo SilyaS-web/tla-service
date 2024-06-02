@@ -169,7 +169,7 @@
                                 <div class="card__diagram-icon"><img src="img/blogers-list/female-icon.svg" alt=""></div>
                             </div>
                         </div>
-                        <div class="card__row card__row" style="gap:12px">
+                        <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap">
                             <button class="btn btn-primary" data-project-id="">
                                 Принять
                             </button>
@@ -273,7 +273,7 @@
                                 <div class="card__diagram-icon"><img src="img/blogers-list/female-icon.svg" alt=""></div>
                             </div>
                         </div>
-                        <div class="card__row card__row" style="gap:12px">
+                        <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap">
                             <button class="btn btn-primary" data-project-id="">
                                 Принять
                             </button>
@@ -377,7 +377,7 @@
                                 <div class="card__diagram-icon"><img src="img/blogers-list/female-icon.svg" alt=""></div>
                             </div>
                         </div>
-                        <div class="card__row card__row" style="gap:12px">
+                        <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap">
                             <button class="btn btn-primary" data-project-id="">
                                 Принять
                             </button>
@@ -481,7 +481,7 @@
                                 <div class="card__diagram-icon"><img src="img/blogers-list/female-icon.svg" alt=""></div>
                             </div>
                         </div>
-                        <div class="card__row card__row" style="gap:12px">
+                        <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap">
                             <button class="btn btn-primary" data-project-id="">
                                 Принять
                             </button>
@@ -582,13 +582,8 @@
     $(document).find('.profile-projects__row.projects-statistics').each((i, stat)=>{
         var prices_ctx, orders_ctx;
 
-        if (mediaQuery.matches) {
-            prices_ctx = $(stat).find('#prices-graph-mobile');
-            orders_ctx = $(stat).find('#orders-graph-mobile');
-        } else {
-            prices_ctx = $(stat).find('#prices-graph-desktop');
-            orders_ctx = $(stat).find('#orders-graph-desktop');
-        }
+        prices_ctx = $(stat).find('#prices-graph-desktop');
+        orders_ctx = $(stat).find('#orders-graph-desktop');
 
         var data = $(stat).data('stats')
 

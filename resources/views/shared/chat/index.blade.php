@@ -15,6 +15,10 @@
                     </div>
                 </div>
                 <div class="chat__right">
+                    <div class="chat__back">
+                        <img src="{{asset('img/arrow-alt.svg')}}" alt="">
+                        <span> Вернуться </span>
+                    </div>
                     <div class="chat__messages messages-chat">
 
                     </div>

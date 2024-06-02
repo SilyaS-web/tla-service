@@ -223,6 +223,14 @@ class BlogersFilter {
             get: ()=>{
                 return $(this.node).find('#filter-country').val();
             }
+        },
+        city: {
+            set: (value)=>{
+                $(this.node).find('#filter-city').val(value);
+            },
+            get: ()=>{
+                return $(this.node).find('#filter-city').val();
+            }
         }
     }
 
@@ -245,7 +253,8 @@ class BlogersFilter {
             name: this.dataProps.blogerName.get(),
             platform: this.dataProps.platform.get().toLowerCase(),
             subscriber_quantity_min: this.dataProps.subscribers.get()['min'],
-            subscriber_quantity_max: this.dataProps.subscribers.get()['max']
+            subscriber_quantity_max: this.dataProps.subscribers.get()['max'],
+            city: this.dataProps.city.get()
         }
         console.log(questData);
         $.post(self.sendUri, questData, function(res){
@@ -569,20 +578,36 @@ class Chat {
 
         this.getMsgCountInterval = setInterval(this.getNewMessagesCount, 5000);
 
-        $(document).on('click', '.chat__btns .btn-send-msg', (e) => { this.sendMessage(e) });
-        $(document).on('click', '.item-chat', (e) => { this.chooseChat(e) });
-        $(document).on('change', '#chat-upload', (e) => { this.uploadFile(e) });
+        $(this.node).on('click', '.chat__btns .btn-send-msg', (e) => { this.sendMessage(e) });
+        $(this.node).on('click', '.item-chat', (e) => { this.chooseChat(e) });
+        $(this.node).on('change', '#chat-upload', (e) => { this.uploadFile(e) });
+        $(this.node).on('click', '.chat__back', (e) => {
+            $('.chat__left').show();
+            $('.chat__right').hide();
+            this.currentChatId = false;
+        });
 
-        // $(document).find('.chat-link').on('click', (e)=>{
-        //     var link = $(e.target).closest('.chat-link');
+        var mediaQuery = window.matchMedia('(max-width: 700px)')
 
-        //     if(link.hasClass('active')){
-        //         clearInterval(this.getMsgCountInterval)
-        //     }
-        // })
+        if (mediaQuery.matches) {
+            $(this.node).on('click', '.item-chat', ()=>{
+                $('.chat__left').hide()
+                $('.chat__right').show()
+            });
+        }
+        else{
+            $(window).on('resize', function(){
+                var mediaQuery = window.matchMedia('(max-width: 700px)')
 
-        // this.getNewMessages(false);
-        // this.getMsgInterval = setInterval(this.getNewMessages, 5000)
+                if (mediaQuery.matches) {
+                    $(this.node).on('click', '.item-chat', ()=>{
+                        $('.chat__left').hide()
+                        $('.chat__right').show()
+                    });
+                }
+            })
+        }
+
 
         return this;
     }
@@ -723,7 +748,7 @@ class PopupCallUs extends Popup{
     dataProps = {
         name: {
             set: (value)=>{
-                console.log(value)
+                $(this.node).find('#name').val(value)
             },
             get: ()=>{
                 return $(this.node).find('#name').val();
@@ -731,7 +756,7 @@ class PopupCallUs extends Popup{
         },
         phone: {
             set: (value)=>{
-                console.log(value)
+                $(this.node).find('#phone').val(value)
             },
             get: ()=>{
                 return $(this.node).find('#phone').val();
@@ -747,6 +772,10 @@ class PopupCallUs extends Popup{
         }, function(res){
             notify('info', {title: 'Успешно!', message: 'Данные успешно отправлены'});
             self.closePopup();
+
+            for(let key in self.dataProps){
+                self.dataProps[key].set('')
+            }
         })
     }
 }

@@ -141,6 +141,7 @@ a.btn:hover{
     background-color: var(--pale);
     padding: 15px 30px;
     margin-bottom: 7px;
+    max-width:100%;
 }
 .input:focus{
     box-shadow: 0px 0px 10px 6px rgba(254,94,0,.2);
@@ -1055,7 +1056,8 @@ input[type='range']::-webkit-slider-runnable-track{
     max-width: 920px;
     margin:0 auto;
 }
-.quest__steps {
+.quest__steps .form-group{
+    max-width: 100%;
 }
 
 .step {
@@ -2522,6 +2524,23 @@ input[type='range']::-webkit-slider-runnable-track{
     flex-direction: column;
     position: relative;
 }
+.chat__back{
+    border:1px solid var(--primary);
+    border-radius: 10px;
+    padding:15px;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color:var(--primary);
+    width: fit-content;
+    display: none;
+}
+.chat__back img{
+    filter: brightness(0) saturate(100%) invert(50%) sepia(74%) saturate(4903%) hue-rotate(2deg) brightness(104%) contrast(105%);
+    transform: rotate(90deg);
+    width: 12px; height: 12px;
+}
 .chat__overflow{
     position: absolute;
     width: 100%;
@@ -2532,6 +2551,7 @@ input[type='range']::-webkit-slider-runnable-track{
     align-items: center;
     background-color: var(--pale);
     opacity: .9;
+    padding:10px;
 }
 .chat__overflow-text{
     width: 425px;
@@ -3132,11 +3152,41 @@ input[type='range']::-webkit-slider-runnable-track{
     display: none;
 }
 
-
+@media(max-width: 1740px){
+    #seller .projects-list__filter{
+        position: absolute;
+        left: -100%;
+        top: 0;
+        height: 100%;
+    }
+    #seller .projects-list__filter.opened{
+        left:0;
+    }
+    #seller .projects-list__filter-btn{
+        visibility: visible;
+    }
+    .profile-projects__body{
+        width:100%;
+        max-width: 1200px;
+    }
+}
+@media(max-width: 1650px){
+    .profile-projects__body{
+        width:100%;
+    }
+}
+@media(max-width: 1550px){
+    .profile-projects__body{
+        max-width:1000px
+    }
+}
 @media(max-width:1350px){
     .projects-list__filter{
         max-width: 320px;
         padding: 20px;
+    }
+    .profile-projects__body{
+        max-width:900px
     }
 }
 @media(max-width:1300px){
@@ -3193,6 +3243,10 @@ input[type='range']::-webkit-slider-runnable-track{
     }
 
     .blogers-list__filter{
+    }
+
+    .projects-list__filter-btn{
+        visibility: visible;
     }
 }
 @media(max-width:1200px){
@@ -3262,18 +3316,17 @@ input[type='range']::-webkit-slider-runnable-track{
     .profile-projects__info{
         width: 100%;
     }
-    .btn-bloggers{
-        display: none;
+
+    .dashboard-sm__desc-inner{
+        top: calc(100% + 10px);
+        right: 0;
     }
-    .btn-bloggers.tablet{
-        display: block;
+    .feedback-item__quest-desc{
+        top: calc(100% + 10px);
+        right: 0;
     }
 }
 @media(max-width:1130px){
-    .profile-projects__items{
-        max-width: unset;
-        width:calc(100% - 145px)
-    }
 }
 @media(max-width:1100px){
     .dashboard__item--feedback{
@@ -3281,6 +3334,10 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .dashboard__item--feedback>*{
         width: 100%;
+    }
+
+    .profile-projects__body{
+        max-width:800px
     }
 }
 @media(max-width:1045px){
@@ -3354,6 +3411,10 @@ input[type='range']::-webkit-slider-runnable-track{
     .notification__text{
         font-size: 16px;
     }
+
+    .profile-projects__body{
+        max-width:700px
+    }
 }
 @media(max-width:945px){
     .nav__link:not(:last-child){
@@ -3367,13 +3428,23 @@ input[type='range']::-webkit-slider-runnable-track{
     }
 }
 @media(max-width:911px){
-    .view-project__props--desktop{
-        display: none;
+    .view-project__props-col{
+        width: 100%;
     }
-    .view-project__props--mobile{
-        display: flex;
+    .view-project__props-wrap{
+        flex-direction: column;
     }
-
+}
+@media(max-width:867px){
+    .profile-projects__body{
+        max-width:600px;
+    }
+    .item-chat__title{
+        font-size: 14px;
+    }
+    .item-chat__last-msg{
+        font-size: 12px;
+    }
 }
 @media(max-width:835px){
     .view-project__img{
@@ -3424,6 +3495,21 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .profile-projects__item .card__stats-stats{
         flex-direction: column;
+    }
+
+    .chat__left{
+        width:320px;
+    }
+    .item-chat__last-msg{
+        font-size: 10px;
+    }
+    .item-chat__img{
+        width: 50px; height: 50px;
+    }
+}
+@media(max-width:768px){
+    .profile-projects__body{
+        max-width:500px;
     }
 }
 @media(max-width:760px){
@@ -3497,6 +3583,10 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .chat__chat-items{
         max-width: 100%;
+    }
+    .chat__back{
+        display: flex;
+        margin-bottom: 12px;
     }
 }
 @media(max-width:675px){
@@ -3605,6 +3695,10 @@ input[type='range']::-webkit-slider-runnable-track{
     .profile__content{
         width:calc(100% - 80px);
     }
+
+    .profile-projects__body{
+        max-width:400px;
+    }
 }
 @media(max-width:545px){
     .title{
@@ -3613,6 +3707,14 @@ input[type='range']::-webkit-slider-runnable-track{
 
     .view-project__title{
         font-size: 20px;
+    }
+}
+@media(max-width:495px){
+    .profile-projects__body{
+        max-width:350px;
+    }
+    .profile-projects__item{
+        padding:10px;
     }
 }
 @media(max-width:475px){
@@ -3652,6 +3754,53 @@ input[type='range']::-webkit-slider-runnable-track{
 
     .profile__body{
         gap: 12px;
+    }
+
+    .messages-chat__item--author{
+        margin-left: 0;
+    }
+
+    .dashboard-sm__desc{
+        font-size: 16px;
+    }
+    .feedback-dashboard__fb-title{
+        font-size: 16px;
+    }
+    .dashboard-sm__desc-inner{
+        font-size: 14px;
+    }
+    .feedback-item__title{
+        font-size: 15px;
+    }
+    .feedback-item__stat{
+        font-size: 13px;
+    }
+    .funnel-statistics{
+        padding:15px
+    }
+    .dashboard__item--cover{
+        padding:15px
+    }
+
+    .dashboard__item-title{
+        font-size: 16px;
+    }
+    .dashboard__placeholder-text{
+        font-size: 18px;
+    }
+    .dashboard-sm__title{
+        font-size: 24px;
+    }
+
+    .btn{
+        padding:15px 20px;
+    }
+
+    .messages-chat__item-date{
+        font-size: 12px;
+    }
+    .messages-chat__item-title{
+        font-size: 14px;
     }
 }
 @media(max-width:447px){

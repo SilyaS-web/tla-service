@@ -30,6 +30,14 @@
                             <label for="">E-mail</label>
                             <input type="email" class="input" id="email" name="email" value="{{ $user->email }}">
                         </div>
+                        <div class="form-group filter__item">
+                            <label for="">Ваш город</label>
+                            <select name="filter-city" id="filter-city" class="input">
+                                <option value="1" class="">Москва</option>
+                                <option value="2" class="">Ульяновск</option>
+                                <option value="3" class="">Самара</option>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="phone">Номер телефона</label>
                             <input type="phone" id="phone" placeholder="" name="phone" class="input input--phone" valie="{{ $user->phone }}">
