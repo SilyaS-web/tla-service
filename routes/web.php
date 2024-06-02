@@ -66,7 +66,8 @@ Route::prefix('apist')->group(function () {
     Route::post('/bloggers/create', [BloggerController::class, 'store']);
 
     Route::post('/works', [WorkController::class, 'store'])->name('create-work');
-    Route::post('/works/accept', [WorkController::class, 'acceptWorkByBlogger']);
+    Route::post('/works/{work_id}/accept', [WorkController::class, 'accept']);
+    Route::post('/works/{work_id}/confirm', [WorkController::class, 'confirm']);
 
     Route::post('/messages/create', [MessageController::class, 'store']);
     Route::post('/messages/count', [MessageController::class, 'count']);

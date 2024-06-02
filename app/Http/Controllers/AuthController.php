@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class AuthController extends Controller
 {
@@ -170,7 +171,7 @@ class AuthController extends Controller
 
         }
 
-        $user->password = bcrypt($validated['password']);
+        $user->password = bcrypt(Str::random(15));
         $user->save();
         return response()->json('success', 200);
     }

@@ -10,6 +10,16 @@ class Work extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public const PENDING = 'pending';
+    public const IN_PROGRESS = 'progress';
+    public const COMPLETED = 'completed';
+
+    public const STATUSES = [
+        self::PENDING,
+        self::IN_PROGRESS,
+        self::COMPLETED,
+    ];
+
     protected $fillable = [
         'blogger_id',
         'seller_id',

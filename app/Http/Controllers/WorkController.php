@@ -49,7 +49,7 @@ class WorkController extends Controller
         return redirect()->route('profile')->with('success', 'Заявка успешно отправлена');
     }
 
-    public function acceptWorkByBlogger(Request $request)
+    public function accept(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'work_id' => 'required|exists:works,id',
