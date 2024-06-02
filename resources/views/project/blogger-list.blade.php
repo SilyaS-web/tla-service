@@ -18,12 +18,12 @@
             <div class="project-item__subtitle" title="{{ $project->product_name }}">
                 {{ $project->product_name }}
             </div>
-            <div class="project-item__left" style="margin-bottom: 12px;">
+            {{-- <div class="project-item__left" style="margin-bottom: 12px;">
                 <div class="line">
                     <div class="line__val" style="width:65%"></div>
                 </div>
                 Осталось мест на интеграцию <span style="font-weight: 700;">5/10</span>
-            </div>
+            </div> --}}
             <div class="project-item__format-tags card__row card__tags">
                 <div class="card__tags-item">
                     <span>Рекламный пост</span>

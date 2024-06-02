@@ -219,11 +219,6 @@
                         <div class="logo footer__logo-w">
                             <img src="{{ asset('img/logo.svg') }}" alt="" class="logo__logo footer__logo">
                         </div>
-                        <nav class="nav footer__nav">
-                            <div class="nav__items">
-
-                            </div>
-                        </nav>
                         <a href="#" class="btn btn-primary footer__contact-us" id="contact-us">
                             Свяжитесь с нами
                         </a>

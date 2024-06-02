@@ -27,6 +27,9 @@
                         </a>
                     </div>
                 </div>
+                <div class="nav-menu__close">
+                    <img src="{{asset('img/arrow-alt.svg')}}" alt="">
+                </div>
             </div>
             <div class="profile__content">
                 <div class="profile__content-inner">
@@ -579,10 +582,10 @@
                                     Список блогеров
                                 </div>
                                 <div class="" style="display: flex; align-items: center; gap: 15px">
-                                    Выберите проект:
+                                    <p style="text-wrap:nowrap">Выберите проект:</p>
                                     <div class="form-group filter__item" style="margin-bottom: 0;">
                                         @if ($projects->isNotEmpty())
-                                        <select name="send-project" id="send-project-el" class="input" style="padding: 3px 10px; margin-bottom: 0; background-color: #fff;" data-send-project-element="true">
+                                        <select name="send-project" id="send-project-el" class="input" style="padding: 3px 10px; margin-bottom: 0; background-color: #fff; width:100%" data-send-project-element="true">
                                             @foreach ($projects as $project)
                                             <option value="{{ $project->id }}" class="">{{ $project->project_name }}</option>
                                             @endforeach
@@ -591,6 +594,9 @@
                                         <p style="font-size: 14px; color: rgba(0, 0, 0, 0.4)">У вас нет активных проектов, <button onclick="selectTab('create-project')" class="btn-link">создать проект</button></p>
                                         @endif
                                     </div>
+                                </div>
+                                <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                    <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
                                 </div>
                             </div>
                             @include('blogger.list')

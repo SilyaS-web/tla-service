@@ -166,9 +166,9 @@
                                     <div class="owl-carousel project-item__carousel">
                                         <div class="project-item__img">
                                             <img src="{{ $project->getImageURL(true) }}" alt="">
-                                            <div class="project-item__status active">
+                                            {{-- <div class="project-item__status active">
                                                 {{ $project->active == 0 ? 'Активно' : 'Выполнено' }}
-                                            </div>
+                                            </div> --}}
                                             {{-- <div class="project-item__country">
                                                 Россия
                                             </div> --}}
@@ -176,11 +176,11 @@
                                     </div>
                                     <div class="project-item__content">
                                         <div class="project-item__title">
-                                            Цена — {{ $project->product_price }} ₽
+                                            {{ $project->product_price }}₽
                                         </div>
-                                        <a class="project-item__participants" title="Гель для душа парфюмированный, 1000 мл.">
-                                            {{ $project->seller->user->name }} / {{ $project->project_name }}.
-                                        </a>
+                                        <div class="project-item__subtitle" title="{{ $project->product_name }}">
+                                            {{ $project->product_name }}
+                                        </div>
                                         <div class="project-item__format-tags card__row card__tags">
                                             <div class="card__tags-item">
                                                 <span>Рекламный пост</span>
@@ -189,7 +189,7 @@
                                     </div>
                                 </div>
                                 @empty
-                                Пока что здесь пусть
+                                    Пока что здесь пусть
                                 @endforelse
 
                             </div>
