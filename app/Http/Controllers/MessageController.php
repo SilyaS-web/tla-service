@@ -47,7 +47,7 @@ class MessageController extends Controller
         $works = Work::where($filter)->get();
         if (!empty($validated['work_id'])) {
             $work = $works->first();
-            Message::whereIn('work_id', $validated['work_id'])->where('created_at', '<=', time())->update(['viewed_at' => time()]);
+            Message::whereIn('work_id', [$validated['work_id']])->where('created_at', '<=', time())->update(['viewed_at' => time()]);
             return response()->json(['view' => view('shared.chat.messages', compact('work', 'user_id', 'role'))->render(), 'btn-class' => 'confirm-completion-btn', 'btn-text' => 'Подтвердить выполнение']);
         }
 
@@ -105,7 +105,7 @@ class MessageController extends Controller
         Notification::create([
             'user_id'=> $work->getPartnerUser($user->role)->id,
             'type'=> 'message',
-            'text'=> 'Вам поступила новое сообщение от ' . $user->name,
+            'text'=> 'Вам поступило новое сообщение от ' . $user->name,
         ]);
 
         return response()->json(['message' => 'success'], 200);

@@ -567,7 +567,7 @@ class Chat {
     constructor(node) {
         this.node = node;
 
-        // this.getMsgCountInterval = setInterval(this.getNewMessagesCount, 5000);
+        this.getMsgCountInterval = setInterval(this.getNewMessagesCount, 5000);
 
         $(document).on('click', '.chat__btns .btn-send-msg', (e) => { this.sendMessage(e) });
         $(document).on('click', '.item-chat', (e) => { this.chooseChat(e) });
@@ -580,8 +580,8 @@ class Chat {
         //     }
         // })
 
-        this.getNewMessages(false);
-        this.getMsgInterval = setInterval(this.getNewMessages, 5000)
+        // this.getNewMessages(false);
+        // this.getMsgInterval = setInterval(this.getNewMessages, 5000)
 
         return this;
     }
@@ -590,12 +590,12 @@ class Chat {
 
     sendMsgUri = '/apist/messages/create';
     getMsgUri = '/apist/messages';
-    getMsgCountUri = '/apist/messages/count';
+    getMsgCountUri = '/apist/notifications?type="message"';
 
     getMsgCountInterval = null;
     getMsgInterval = null;
 
-    currentChatId = null;
+    currentChatId = false;
 
     chooseChat = (e)=>{
         if(!e){
@@ -608,40 +608,42 @@ class Chat {
         this.getNewMessages(chat.data('id'));
         this.currentChatId = chat.data('id');
 
-        $(document).find('.item-chat').removeClass('current');
+        $(document).find('.item-chat.current').removeClass('current');
         chat.addClass('current');
     }
 
     getNewMessagesCount = ()=>{
-        $.post(this.getMsgCountUri, {}, function(res){
-            if(Number(JSON.parse(res)) > 0){
-                $('.nav-menu__link.chat-link').show()
-                $('.nav-menu__link.chat-link').find('.notifs-chat').text(res)
+        $.get(this.getMsgCountUri, {}, function(res){
+            if(Number(JSON.parse(res.count)) > 0){
+                $('.nav-menu__link.chat-link .notifs-chat').show()
+                $('.nav-menu__link.chat-link').find('.notifs-chat').text(res.count)
             }
             else{
-                $('.nav-menu__link.chat-link').hide()
+                $('.nav-menu__link.chat-link .notifs-chat').hide()
             }
         })
     }
 
     getNewMessages = (id = false) => {
-        var data = {},
-            self = this;
+        var self = this,
+            data = {};
 
         if(!id) id = self.currentChatId;
 
-        if(id) data = {work_id: id}
+        if(id) data = { work_id: id }
 
-        $.post(this.getMsgUri, {
-            work_id: data
-        }, function(res){
+        $.post(self.getMsgUri, data, function(res){
             if(!id){
-                $(document).find('.profile-chat__body').remove();
-                $(document).find('#chat').append(res);
+                $(document).find('.chat__chat-items').remove();
+                $(document).find('#chat .chat__left').append(res);
             }
             else{
                 $(self.node).find('.messages-chat').empty()
                 $(self.node).find('.messages-chat').append(res)
+            }
+
+            if(!this.newMessagesInterval){
+                this.newMessagesInterval = setInterval(this.getNewMessages, 5000);
             }
         })
     }
@@ -649,7 +651,7 @@ class Chat {
     sendMessage = () => {
         var msg = $(document).find('.messages-create__textarea').val();
         var self = this;
-        $.post(this.sendMsgUri, {
+        $.post(self.sendMsgUri, {
             message: msg,
             work_id: self.currentChatId
         }, function(res){
@@ -953,9 +955,14 @@ $(window).on('load', function(){
         }
     })
 
+    $(document).on('click', '.profile .nav-menu__close', function(e){
+        $(e.target).closest('.profile__navigation.nav-menu').toggleClass('active')
+    })
+
     var dbTabs = new DashboardTabs('.dashboard');
 
-    var chat = new Chat('.profile-chat__body')
+    var chat = new Chat('.profile-chat__body');
+    $(document).find('.nav-menu__link.chat-link').on('click', () => chat.getNewMessages(false))
 
     $(document).on('click', '.tarrif-header', function(e){
         $('.header__profile-item--js').not($(e.target).closest('.tarrif-header')).removeClass('active')
@@ -1028,6 +1035,7 @@ $(window).on('load', function(){
     var blogersAllProjectsFilters = new BloggerAllProjectsFilter('.profile#blogger #profile-projects .projects-list__filter');
 
     $('.projects-list__filter-btn').on('click', function(){
+        console.log(123);
         $('.projects-list__filter').addClass('opened');
 
         $(document).off('click').on('click', function(e){
@@ -1117,20 +1125,20 @@ function ibg(){
 
 window.addEventListener('load', ibg)
 
-setInterval(() => {
-    $.ajax({
-        url: '/apist/notifications',
-    })
-    .done(function( data ) {
-        document.querySelector('#header-notif-container').innerHTML = data.view;
-        document.querySelector('#header-notif-count').innerHTML = data.count;
-        if (data.count == 0) {
-            document.querySelector('#header-notif-count').style.display = 'none';
-        } else {
-            document.querySelector('#header-notif-count').style.display = 'block';
-        }
-    });
-}, 5000)
+// setInterval(() => {
+//     $.ajax({
+//         url: '/apist/notifications',
+//     })
+//     .done(function( data ) {
+//         document.querySelector('#header-notif-container').innerHTML = data.view;
+//         document.querySelector('#header-notif-count').innerHTML = data.count;
+//         if (data.count == 0) {
+//             document.querySelector('#header-notif-count').style.display = 'none';
+//         } else {
+//             document.querySelector('#header-notif-count').style.display = 'block';
+//         }
+//     });
+// }, 5000)
 
 selectTab = (tabName)=>{
     $('.tab').removeClass('active');
