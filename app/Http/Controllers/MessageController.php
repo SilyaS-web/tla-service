@@ -50,8 +50,8 @@ class MessageController extends Controller
             Message::whereIn('work_id', [$validated['work_id']])->where('viewed_at', '<=', date('Y-m-d H:i'))->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
             return response()->json(['view' => view('shared.chat.messages', compact('work', 'user_id', 'role'))->render(), 'btn-class' => 'confirm-completion-btn', 'btn-text' => 'Подтвердить выполнение']);
         }
-
-        return view('shared.chat.chat-list', compact('works', 'user_id', 'role'));
+        $works_count = $works->count();
+        return response()->json(['view' => view('shared.chat.chat-list', compact('works', 'user_id', 'role'))->render(), 'count' => $works_count]);
     }
 
     public function count(Request $request)
