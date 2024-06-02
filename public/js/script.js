@@ -571,6 +571,7 @@ class Chat {
 
         $(document).on('click', '.chat__btns .btn-send-msg', (e) => { this.sendMessage(e) });
         $(document).on('click', '.item-chat', (e) => { this.chooseChat(e) });
+        $(document).on('change', '#chat-upload', (e) => { this.uploadFile(e) });
 
         // $(document).find('.chat-link').on('click', (e)=>{
         //     var link = $(e.target).closest('.chat-link');
@@ -624,6 +625,10 @@ class Chat {
         })
     }
 
+    uploadFile = () => {
+        $(this.node).find('.textarea-upload__text').text('Файл прикреплен');
+    }
+
     getNewMessages = (id = false) => {
         var self = this,
             data = {};
@@ -635,11 +640,14 @@ class Chat {
         $.post(self.getMsgUri, data, function(res){
             if(!id){
                 $(document).find('.chat__chat-items').remove();
-                $(document).find('#chat .chat__left').append(res);
+                $(document).find('#chat .chat__left').append(res.view);
+
+                $(self.node).find('.chat__overflow').show()
             }
             else{
                 $(self.node).find('.messages-chat').empty()
                 $(self.node).find('.messages-chat').append(res.view)
+                $(self.node).find('.chat__overflow').hide()
             }
 
             if(!this.newMessagesInterval){
@@ -651,13 +659,34 @@ class Chat {
     sendMessage = () => {
         var msg = $(document).find('.messages-create__textarea').val();
         var self = this;
-        $.post(self.sendMsgUri, {
-            message: msg,
-            work_id: self.currentChatId
-        }, function(res){
-            $(self.node).find('.item-chat.current').click();
-            $(self.node).find('.messages-create__textarea').val('')
+        var file = $(this.node).find('.textarea-upload #chat-upload').prop('files');
+
+        var formData = new FormData;
+
+        formData.append('message', msg)
+        formData.append('img', file)
+        formData.append('work_id', self.currentChatId)
+
+        $.ajax({
+            url: self.sendMsgUri,
+            data: formData,
+            method: 'POST',
+            processData: false,
+            contentType: false,
+            success: (res)=>{
+                $(self.node).find('.item-chat.current').click();
+
+                $(self.node).find('.messages-create__textarea').val('')
+                $(self.node).find('.textarea-upload__text').text('Прикрепите файл');
+                $(self.node).find('.textarea-upload #chat-upload').val('');
+            }
         })
+
+        // $.post(this.sendMsgUri, formData, function(res){
+
+        //     $(self.node).find('.item-chat.current').click();
+        //     $(self.node).find('.messages-create__textarea').val('')
+        // })
     }
 }
 
@@ -690,7 +719,7 @@ class PopupCallUs extends Popup{
         return this;
     }
 
-    sendUri = '#';
+    sendUri = '/apist/feedback';
     dataProps = {
         name: {
             set: (value)=>{
@@ -709,13 +738,16 @@ class PopupCallUs extends Popup{
             }
         }
     }
-    sendData = () => {//не знаю куда если честно это отправлять, мб потом в админку, но пока что так понимаю на почту, естественно через бэк
+    sendData = () => {
+        var self = this;
 
-        var data = new FormData();
-
-        for(var key in this.dataProps){
-            data.append(key, questData[key].get());
-        }
+        $.post(self.sendUri, {
+            message: self.dataProps.name.get(),
+            mark: self.dataProps.phone.get(),
+        }, function(res){
+            notify('info', {title: 'Успешно!', message: 'Данные успешно отправлены'});
+            self.closePopup();
+        })
     }
 }
 
@@ -869,6 +901,8 @@ class PopupChangePassword extends Popup{
 
         this.node = node;
 
+        $(this.node).find('.send-data').on('click', this.sendData)
+
         return this;
     }
 
@@ -879,14 +913,13 @@ class PopupChangePassword extends Popup{
         phone: {
             set: (val) => {console.log(val);},
             get: () =>{
-                return $(this.node).find('#phone').get();
+                return $(this.node).find('#phone').val();
             }
         }
     }
 
     sendData = () => {
         var self = this;
-
         $.post(self.sendUri, {
             phone: self.dataProps.phone.get(),
         }, function(res){
@@ -1088,7 +1121,7 @@ $(window).on('load', function(){
     })
 
     $(document).on('click', '#change-password-btn', function(){
-        let popup = new Popup('#change-password');
+        let popup = new PopupChangePassword('#change-password');
         popup.openPopup();
     })
 
