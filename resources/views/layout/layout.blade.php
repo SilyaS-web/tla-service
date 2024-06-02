@@ -176,7 +176,7 @@
                         <div href="#" class="header__profile-w header__profile-header header__profile-item--js">
                             <img src="{{ asset('img/profile-icon.svg') }}" alt="" class="header__profile">
                             <div class="header__profile-col">
-                                <span class="header__profile-name">
+                                <span class="header__profile-name" data-user-id="{{ auth()->user()->id }}">
                                     {{ auth()->user()->name }}
                                 </span>
                                 <span class="header__profile-org">

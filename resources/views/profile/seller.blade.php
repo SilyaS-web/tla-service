@@ -67,6 +67,12 @@
                                                 <span class="error">{{ $message }}</span>
                                                 @enderror
                                             </div>
+                                            <div class="form-group" style="flex:1 1">
+                                                <label for="" style="display:unset">Цена товара</label>
+                                                <div class="quantity-input">
+                                                    <input type="number" class="input" value="0" name="product_price">
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="quest__step-row">
                                             <div class="form-group" style="flex:1 1 auto">
@@ -83,7 +89,7 @@
                                                         <img src="{{ asset('img/minus-icon.svg') }}" alt="">
                                                     </div>
                                                     <div class="quantity-input">
-                                                        <input type="number" class="input" value = "0" name = "quantity">
+                                                        <input type="number" class="input" value="0" name="quantity">
                                                     </div>
                                                     <div class="quantity-plus">
                                                         <img src="{{ asset('img/plus-icon.svg') }}" alt="">
@@ -351,7 +357,7 @@
                                                     Воронка показателей эффективности за 14 дней
                                                 </div>
                                                 <div class="dashboard__row">
-                                                    <canvas id = "funnel-graph"></canvas>
+                                                    <canvas id="funnel-graph"></canvas>
                                                 </div>
                                             </div>
                                         </div>
@@ -857,65 +863,46 @@
     , });
 
     var config = {
-        type: 'funnel',
-        data: {
+        type: 'funnel'
+        , data: {
             datasets: [{
-                data: [30, 60, 90],
-                backgroundColor: [
-                    "#FF6384",
-                    "#36A2EB",
-                    "#FFCE56"
-                ],
-                hoverBackgroundColor: [
-                    "#FF6384",
-                    "#36A2EB",
-                    "#FFCE56"
+                data: [30, 60, 90]
+                , backgroundColor: [
+                    "#FF6384"
+                    , "#36A2EB"
+                    , "#FFCE56"
                 ]
-            }],
-            labels: [
-                "Red",
-                "Blue",
-                "Yellow"
+                , hoverBackgroundColor: [
+                    "#FF6384"
+                    , "#36A2EB"
+                    , "#FFCE56"
+                ]
+            }]
+            , labels: [
+                "Red"
+                , "Blue"
+                , "Yellow"
             ]
         }
     }
     // var funnel = document.getElementById('funnel-graph').getContext('2d');
     // console.log(funnel);
     FunnelChart('funnel-graph', {
-            values: [3512, 891, 652],
-            sectionColor: ['#98CBED', '#F0C457', '#FD6567'],
-            displayPercentageChange: false,
-            pSectionHeightPercent: 100,
-            font: '"Inter", sans-serif',
-            labelWidthPercent: 28,
-            labelFontColor: '#000',
-            labels: [
-                'Переходы',
-                'ER, %',
-                'CPM, Руб.',
-            ],
-            maxFontSize: 20,
-        });
-
+        values: [3512, 891, 652]
+        , sectionColor: ['#98CBED', '#F0C457', '#FD6567']
+        , displayPercentageChange: false
+        , pSectionHeightPercent: 100
+        , font: '"Inter", sans-serif'
+        , labelWidthPercent: 28
+        , labelFontColor: '#000'
+        , labels: [
+            'Переходы'
+            , 'ER, %'
+            , 'CPM, Руб.'
+        , ]
+        , maxFontSize: 20
+    , });
 
 </script>
 <script src="{{ asset('js/wb.js') }}"></script>
-<script>
-    function sendProjectToBlogger(user_id) {
-        let project_input = document.getElementById('send-project-el');
-
-        if (!project_input) {
-            notify('info', {title: 'Ошибка', message: 'Выберите проект!'});
-        } else {
-            let project_id = project_input.value;
-            $.post('/apist/works', {
-                seller_id: {{ auth()->user()->id }},
-                blogger_id: user_id,
-                project_id: project_id
-            }, function(res){
-                notify('info', {title: 'Успешно!', message: 'Заявка успешно отправлена!'});
-            })
-        }
-    }
-</script>
 @endsection

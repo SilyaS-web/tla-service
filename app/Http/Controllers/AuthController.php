@@ -50,10 +50,10 @@ class AuthController extends Controller
 
         $phone_for_search = str_replace(['(', ')', ' ', '-'], '', $validated['phone']);
 
-        $tgPhone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
-        if (!$tgPhone) {
-            $tgPhone = TgPhone::where([['phone', '=',  mb_substr($phone_for_search, 1)]])->first();
-            if (!$tgPhone) {
+        $tg_phone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
+        if (!$tg_phone) {
+            $tg_phone = TgPhone::where([['phone', '=',  mb_substr($phone_for_search, 1)]])->first();
+            if (!$tg_phone) {
                 return redirect()->route('register')->with('success', 'Необходимо подтвердить телеграм')->withInput();
             }
         }
@@ -62,7 +62,7 @@ class AuthController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
-            'tg_phone_id' => $tgPhone->id,
+            'tg_phone_id' => $tg_phone->id,
             'role' => $validated['role'],
             'status' => $validated['status'],
             'password' => bcrypt($validated['password']),

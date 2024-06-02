@@ -31,6 +31,7 @@ class User extends Authenticatable
         'phone',
         'image',
         'role',
+        'tg_phone_id',
         'password',
         'telegram_verified_at',
     ];
