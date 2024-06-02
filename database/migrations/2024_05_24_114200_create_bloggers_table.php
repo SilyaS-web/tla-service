@@ -17,16 +17,11 @@ class CreateBloggersTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->string('platform', 150);
             $table->string('description', 500)->nullable();
             $table->integer('is_achievement')->nullable();
             $table->string('name')->nullable();
-            $table->string('sex');
-            $table->integer('subscriber_quantity');
-            $table->integer('coverage');
-            $table->double('engagement_rate');
-            $table->double('cost_per_mille');
             $table->double('gender_ratio');
+            $table->string('sex');
             $table->timestamps();
             $table->softDeletes();
         });

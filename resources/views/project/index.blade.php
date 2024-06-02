@@ -506,11 +506,11 @@
                         <div class="view-project__props-total">
                             <div class="view-project__props-orders">
                                 Заказы за 30 дн<br>
-                                <span class="count">{{$stats->orders}} шт</span>
+                                <span class="count">{{$stats->orders ?? 0}} шт</span>
                             </div>
                             <div class="view-project__props-money">
                                 Выручка за 30 дн<br>
-                                <span class="money">{{$stats->earnings}} ₽</span>
+                                <span class="money">{{$stats->earnings ?? 0}} ₽</span>
                             </div>
                         </div>
                         <div class="view-project__props-graph">
@@ -524,11 +524,11 @@
                         <div class="view-project__props-total">
                             <div class="view-project__props-orders">
                                 Заказы за 30 дн<br>
-                                <span class="count">{{$stats->orders}} шт</span>
+                                <span class="count">{{$stats->orders ?? 0}} шт</span>
                             </div>
                             <div class="view-project__props-money">
                                 Выручка за 30 дн<br>
-                                <span class="money">{{$stats->earnings}} ₽</span>
+                                <span class="money">{{$stats->earnings ?? 0}} ₽</span>
                             </div>
                         </div>
                         <div class="view-project__props-graph">

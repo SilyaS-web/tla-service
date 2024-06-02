@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Message;
 use App\Models\Notification;
 use App\Models\Work;
 use App\Models\User;
@@ -40,68 +41,80 @@ class WorkController extends Controller
         $seller->remaining_tariff -= 1;
         $seller->save();
         $validated['seller_id'] = $seller->id;
+        $validated['status'] = Work::PENDING;
+
         Work::create($validated);
         Notification::create([
-            'user_id'=> $validated['blogger_id'],
-            'type'=> 'Новая заявка',
-            'text'=> 'Вам поступила новая заявка от ' . $seller->user->name,
+            'user_id' => $validated['blogger_id'],
+            'type' => 'Новая заявка',
+            'text' => 'Вам поступила новая заявка от ' . $seller->user->name,
         ]);
         return redirect()->route('profile')->with('success', 'Заявка успешно отправлена');
     }
 
-    public function accept(Request $request)
+    public function accept(Work $work)
     {
-        $validator = Validator::make($request->all(), [
-            'work_id' => 'required|exists:works,id',
+        $user = Auth::user();
+        $work->accept($user);
+        Message::create([
+            'work_id' => $work->id,
+            'user_id' => 0,
+            'text' => $user->role . ' готов приступить к работе',
         ]);
-
-        if ($validator->fails()) {
-            // return redirect()->route('profile')->withErrors($validator);
-            return response()->json($validator->errors(), 400);
+        if ($work->isBothAcceptd() && $work->status = Work::PENDING) {
+            $work->status = Work::IN_PROGRESS;
+            $work->save();
+            Message::create([
+                'work_id' => $work->id,
+                'user_id' => 0,
+                'text' => 'Работа начата',
+            ]);
         }
 
-        $validated = $validator->validated();
-        $work = Work::find($validated['work_id']);
-        $work->status = 1;
-        $work->save();
-
-        return redirect()->route('profile')->with('success', 'Заявка успешно принята');
+        return response()->json('success', 200);
     }
 
-    public function confirm(Request $request)
+    public function confirm(Work $work, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'work_id' => 'required|exists:works,id',
+            'images' => 'array',
+            'images.*' => 'image|max:10240',
+
         ]);
 
         if ($validator->fails()) {
-            // return redirect()->route('profile')->withErrors($validator);
             return response()->json($validator->errors(), 400);
         }
 
         $user = Auth::user();
-        if (!$user) {
-            $user = User::find($request->user_id);
-        }
-        $validated = $validator->validated();
+        $work->confirm($user);
+        $work->save();
 
-        $work = Work::find($validated['work_id']);
         if ($user->role == 'blogger') {
-            $work->confirmed_by_blogger_at = date('Y-m-d');
+            Message::create([
+                'work_id' => $work->id,
+                'user_id' => 0,
+                'text' => 'Блогер запросил подтверждение проекта',
+            ]);
             Notification::create([
-                'user_id'=> $work->seller->user->id,
-                'type'=> 'Подтверждение',
-                'text'=> 'Блогер отправил запрос на подтверждение выполнения проекта ' . $work->project->project_name,
+                'user_id' => $work->seller->user->id,
+                'type' => 'Подтверждение',
+                'text' => 'Блогер отправил запрос на подтверждение выполнения проекта ' . $work->project->project_name,
             ]);
         } else {
-            Notification::create([
-                'user_id'=> $work->blogger->user->id,
-                'type'=> 'Подтверждение',
-                'text'=> 'Селлер отправил запрос на подтверждение выполнения проекта ' . $work->project->project_name,
+            Message::create([
+                'work_id' => $work->id,
+                'user_id' => 0,
+                'text' => 'Проект успешно завершён',
             ]);
-            $work->confirmed_by_seller_at = date('Y-m-d');
+            $work->status = Work::COMPLETED;
+            $work->save();
+            Notification::create([
+                'user_id' => $work->blogger->user->id,
+                'type' => 'Подтверждение',
+                'text' => 'Селлер подтвердил выполнение проекта ' . $work->project->project_name,
+            ]);
         }
-        $work->save();
 
         return redirect()->route('profile')->with('success');
     }

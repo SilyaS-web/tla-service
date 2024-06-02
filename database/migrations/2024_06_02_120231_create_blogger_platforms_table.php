@@ -15,6 +15,13 @@ class CreateBloggerPlatformsTable extends Migration
     {
         Schema::create('blogger_platforms', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('blogger_id');
+            $table->foreign('blogger_id')->references('id')->on('bloggers')->cascadeOnDelete();
+            $table->string('name');
+            $table->integer('subscriber_quantity');
+            $table->integer('coverage');
+            $table->double('engagement_rate');
+            $table->double('cost_per_mille');
             $table->timestamps();
         });
     }

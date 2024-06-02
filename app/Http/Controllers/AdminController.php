@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blogger;
+use App\Models\BloggerPlatform;
 use App\Models\Seller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -13,22 +14,30 @@ use Illuminate\Database\Eloquent\Builder;
 
 class AdminController extends Controller
 {
-    public function index() {
-
+    public function index()
+    {
     }
 
-    public function accept(Request $request) {
+    public function accept(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|numeric',
-            'platform' => ['required', Rule::in(Blogger::PLATFORM_TYPES)],
-            'description' => 'string|nullable',
-            'subscriber_quantity' => 'required|numeric',
+            'desc' => 'string|nullable',
             'sex' => 'required|string',
-            'coverage' => 'required|numeric',
-            'engagement_rate' => 'required|numeric',
-            'cost_per_mille' => 'required|numeric',
+            'is_achievement' => 'string',
             'gender_ratio' => 'required|numeric',
-            'is_achievement' => 'string'
+            'tg_subs' => 'numeric',
+            'tg_cover' => 'numeric',
+            'tg_er' => 'numeric',
+            'tg_cpm' => 'numeric',
+            'inst_subs' => 'numeric',
+            'inst_cover' => 'numeric',
+            'inst_er' => 'numeric',
+            'inst_cpm' => 'numeric',
+            'yt_subs' => 'numeric',
+            'yt_cover' => 'numeric',
+            'yt_er' => 'numeric',
+            'yt_cpm' => 'numeric',
         ]);
 
         if ($validator->fails()) {
@@ -36,18 +45,46 @@ class AdminController extends Controller
         }
 
         $validated = $validator->validated();
-        Blogger::create([
+        $blogger = Blogger::create([
             'user_id' => $validated['user_id'],
-            'platform' => $validated['platform'],
-            'description' => $validated['description'] ?? null,
-            'subscriber_quantity' => $validated['subscriber_quantity'],
-            'coverage' => $validated['coverage'],
-            'engagement_rate' => $validated['engagement_rate'],
-            'cost_per_mille' => $validated['cost_per_mille'],
-            'gender_ratio' => $validated['gender_ratio'],
+            'description' => $validated['desc'] ?? null,
             'sex' => $validated['sex'],
-            'is_achievement' => $validated['is_achievement'] == 'on' ,
+            'gender_ratio' => $validated['gender_ratio'],
+            'is_achievement' => $validated['is_achievement'] == 'on',
         ]);
+
+        if ($validated['tg_subs']) {
+            BloggerPlatform::create([
+                'blogger_id' => $blogger->id,
+                'name' => Blogger::TELEGRAM,
+                'subscriber_quantity' => $validated['tg_subs'],
+                'coverage' => $validated['tg_cover'],
+                'engagement_rate' => $validated['tg_er'],
+                'cost_per_mille' => $validated['tg_cpm'],
+            ]);
+        }
+
+        if ($validated['inst_subs']) {
+            BloggerPlatform::create([
+                'blogger_id' => $blogger->id,
+                'name' => Blogger::INSTAGRAM,
+                'subscriber_quantity' => $validated['inst_subs'],
+                'coverage' => $validated['inst_cover'],
+                'engagement_rate' => $validated['inst_er'],
+                'cost_per_mille' => $validated['inst_cpm'],
+            ]);
+        }
+
+        if ($validated['yt_subs']) {
+            BloggerPlatform::create([
+                'blogger_id' => $blogger->id,
+                'name' => Blogger::YOUTUBE,
+                'subscriber_quantity' => $validated['yt_subs'],
+                'coverage' => $validated['yt_cover'],
+                'engagement_rate' => $validated['yt_er'],
+                'cost_per_mille' => $validated['yt_cpm'],
+            ]);
+        }
 
         $user = User::find($validated['user_id']);
         $user->status = 1;
@@ -56,7 +93,8 @@ class AdminController extends Controller
         return response()->json('success', 200);
     }
 
-    public function deny() {
+    public function deny()
+    {
         $validator = Validator::make(request()->all(), [
             'user_id' => 'required|numeric',
         ]);
@@ -73,7 +111,8 @@ class AdminController extends Controller
         return view('shared.admin.bloggers-list');
     }
 
-    public function moderation(Request $request) {
+    public function moderation(Request $request)
+    {
         $validator = Validator::make(request()->all(), [
             'name' => 'string',
         ]);
@@ -98,7 +137,8 @@ class AdminController extends Controller
         return view('shared.admin.unverified-users-list', compact('unverified_users'));
     }
 
-    public function bloggers(Request $request) {
+    public function bloggers(Request $request)
+    {
         $validator = Validator::make(request()->all(), [
             'name' => 'string',
         ]);
@@ -121,7 +161,8 @@ class AdminController extends Controller
         return view('shared.admin.bloggers-list', compact('bloggers'));
     }
 
-    public function sellers(Request $request) {
+    public function sellers(Request $request)
+    {
         $validator = Validator::make(request()->all(), [
             'name' => 'string',
         ]);
@@ -129,7 +170,6 @@ class AdminController extends Controller
         if ($validator->fails()) {
             $sellers = [];
             return view('shared.admin.sellers-list', compact('sellers'));
-
         }
         $validated = $validator->validated();
 
@@ -145,7 +185,8 @@ class AdminController extends Controller
         return view('shared.admin.sellers-list', compact('sellers'));
     }
 
-    public function achievement() {
+    public function achievement()
+    {
         $validator = Validator::make(request()->all(), [
             'user_id' => 'required|numeric',
         ]);

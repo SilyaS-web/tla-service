@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Seller;
 use App\Models\TgPhone;
+use App\Services\TgService;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Validation\Rule;
@@ -151,7 +152,7 @@ class AuthController extends Controller
     public function resetPassword()
     {
         $validator = Validator::make(request()->all(), [
-            'phone' => 'required|numeric',
+            'phone' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -168,11 +169,13 @@ class AuthController extends Controller
         $user = User::where('tg_phone_id', $tg_phone->id)->first();
         if (!$user) {
             return response()->json('user not found', 401);
-
         }
 
-        $user->password = bcrypt(Str::random(15));
+        $password = Str::random(15);
+        $user->password = bcrypt($password);
         $user->save();
+
+        TgService::sendResetPassword($tg_phone->chat_id, $password);
         return response()->json('success', 200);
     }
 }
