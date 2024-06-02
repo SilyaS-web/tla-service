@@ -2520,6 +2520,23 @@ input[type='range']::-webkit-slider-runnable-track{
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
+    position: relative;
+}
+.chat__overflow{
+    position: absolute;
+    width: 100%;
+    height:100%;
+    top:0;left:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--pale);
+    opacity: .9;
+}
+.chat__overflow-text{
+    width: 425px;
+    text-align: center;
+    font-size: 18px;
 }
 .chat__messages {
 }
