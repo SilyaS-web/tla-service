@@ -59,6 +59,7 @@ class PopupAcceptBloger extends Popup{
     blogger_id = '';
 
     statCardClick = (e) => {
+        console.log($(e.target).closest('.form-stat'));
         $(e.target).closest('.form-stat').toggleClass('active');
     }
 
@@ -233,12 +234,16 @@ function notify(type, content){
 
 $(window).on('load', function(){
     //popups
+    var acceptBlogerForm;
     $(document).on('click', '.btn-accept', function(e){
         e.preventDefault();
-        let form = new PopupAcceptBloger('#accept-form');
-        console.log(e.target)
-        form.blogger_id = e.target.dataset.id
-        form.openPopup()
+
+        if(!acceptBlogerForm){
+            acceptBlogerForm = new PopupAcceptBloger('#accept-form');
+        }
+
+        acceptBlogerForm.blogger_id = e.target.dataset.id
+        acceptBlogerForm.openPopup()
     })
 
     var adminTabs = new Tabs('.admin-view');
