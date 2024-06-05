@@ -686,10 +686,10 @@ class Chat {
         var self = this;
         var file = $(this.node).find('.textarea-upload #chat-upload').prop('files');
 
-        var formData = new FormData;
+        var formData = new FormData();
 
         formData.append('message', msg)
-        formData.append('img', file)
+        formData.append('img', file[0])
         formData.append('work_id', self.currentChatId)
 
         $.ajax({
@@ -706,12 +706,6 @@ class Chat {
                 $(self.node).find('.textarea-upload #chat-upload').val('');
             }
         })
-
-        // $.post(this.sendMsgUri, formData, function(res){
-
-        //     $(self.node).find('.item-chat.current').click();
-        //     $(self.node).find('.messages-create__textarea').val('')
-        // })
     }
 }
 
