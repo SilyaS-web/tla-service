@@ -21,6 +21,9 @@
                         </a>
                     </div>
                 </div>
+                <div class="nav-menu__close">
+                    <img src="{{asset('img/arrow-alt.svg')}}" alt="">
+                </div>
             </div>
             <div class="profile__content">
                 <div class="profile__content-inner">

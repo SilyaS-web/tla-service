@@ -607,7 +607,7 @@
                             </div>
                             @include('blogger.list')
                         </div>
-                        <div class="blogers-list__filter filter">
+                        <div class="projects-list__filter filter">
                             <div class="filter__body">
                                 <div class="filter__top">
                                     <p class="filter__title">
@@ -669,7 +669,14 @@
                                                 <option value="3" class="">Грузия</option>
                                             </select>
                                         </div> --}}
-
+                                    <div class="form-group filter__item">
+                                        <label for="">Город блогера</label>
+                                        <select name="filter-city" id="filter-city" class="input">
+                                            <option value="1" class="">Москва</option>
+                                            <option value="2" class="">Ульяновск</option>
+                                            <option value="3" class="">Самара</option>
+                                        </select>
+                                    </div>
                                     <div class="filter__btns">
                                         <button class="btn btn-primary btn-filter-send">Применить</button>
                                     </div>
