@@ -579,6 +579,20 @@ class Chat {
         this.getMsgCountInterval = setInterval(this.getNewMessagesCount, 5000);
 
         $(this.node).on('click', '.chat__btns .btn-send-msg', (e) => { this.sendMessage(e) });
+        $(this.node).on('click', '#accept-btn', (e) => {
+            e.preventDefault()
+            $.ajax({
+                url: $(e.target).prop('href'),
+                data: {},
+                method: 'POST',
+                processData: false,
+                contentType: false,
+                success: (res)=>{
+                    $(e.target).prop('id', 'confirm-completion-btn')
+                    $(e.target).text('Подтвердить выполнение')
+                }
+            })
+        });
         $(this.node).on('click', '.item-chat', (e) => { this.chooseChat(e) });
         $(this.node).on('change', '#chat-upload', (e) => { this.uploadFile(e) });
         $(this.node).on('click', '.chat__back', (e) => {
