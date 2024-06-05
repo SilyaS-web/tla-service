@@ -47,7 +47,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/seller/{seller}', [SellerController::class, 'show'])->name('seller-page');
     Route::get('/telegram', [AuthController::class, 'telegram'])->name('telegram');
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
-    Route::get('/profile/edit', [UserController::class, 'edit'])->name('edit-profile');
+    Route::get('/profile/edit', [UserController::class, 'update'])->name('edit-profile');
+    Route::post('/profile/update', [UserController::class, 'edit'])->name('edit-profile-post');
     Route::get('/project/{project_id}', [ProjectController::class, 'selectBloggers'])->name('select-bloggers');
     Route::get('/admin-panel', [AdminController::class, 'index']);
     Route::resource('projects', ProjectController::class);

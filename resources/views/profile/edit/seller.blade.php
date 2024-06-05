@@ -7,7 +7,7 @@
             <div class="edit-profile__title title">
                 Редактировать данные
             </div>
-            <div class="edit-profile__content">
+            <form class="edit-profile__content" action="{{ route('edit-profile-post') }}" method="POST">
                 <div class="tab-content__profile-img">
                     <img src="{{ $user->getImageUrl() }}" alt="">
                     <div class="tab-content__profile-img-text">
@@ -49,18 +49,18 @@
                     <div class="tab-content__form-left">
                         <div class="form-group" style="margin-top: 20px;">
                             <label for="">Тип организации</label>
-                            <input type="text" class="input" id="type" name="marketplace_link">
+                            <input type="text" class="input" id="type" name="marketplace_link" name="marketplace_link" value="{{ $user->seller->marketplace_link }}">
                         </div>
                         <div class="form-group">
                             <label for="">ИНН</label>
-                            <input type="text" class="input" id="inn">
+                            <input type="text" class="input" id="inn" name="inn" value="{{ $user->seller->inn }}">
                         </div>
                           <div class="form-group">
                             <label for="">Ключ API WB</label>
-                            <input type="text" class="input" id="inn">
+                            <input type="text" class="input" id="inn" name="wb_api_key" value="{{ $user->seller->wb_api_key }}">
                         </div>
                     </div>
-                    <button class="btn btn-primary mobile">Сохранить</button>
+                    <button class="btn btn-primary mobile" type='submit'>Сохранить</button>
                 </div>
             </div>
         </div>

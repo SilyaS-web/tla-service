@@ -176,7 +176,7 @@ class Seller extends Model
     public function getTotalFeedbacksWB()
     {
         if (empty($this->wb_api_key)) {
-            return ['total' => 0, 'low' => 0, 'med' => 0, 'hig' => 0];
+            return ['total' => 0, 'low' => 0, 'med' => 0, 'hig' => 0, 'avg' => 0, 'pr_low' => 0, 'pr_mid' => 0];
         }
 
         $curl = curl_init();

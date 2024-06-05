@@ -88,7 +88,7 @@ class MessageController extends Controller
             'work_id' => 'required|exists:works,id',
             'user_id' => 'exists:users,id|nullable',
             'message' => 'required|string',
-            'img' => 'image|max:10240',
+            'img' => '',
         ]);
 
         if ($validator->fails()) {

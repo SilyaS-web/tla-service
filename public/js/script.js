@@ -650,6 +650,8 @@ class Chat {
 
         $(document).find('.item-chat.current').removeClass('current');
         chat.addClass('current');
+
+        this.getMsgInterval = setInterval(this.getNewMessages, 5000);
     }
 
     getNewMessagesCount = ()=>{
