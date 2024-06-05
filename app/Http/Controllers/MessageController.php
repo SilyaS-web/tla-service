@@ -50,7 +50,7 @@ class MessageController extends Controller
             $work = $works->first();
             $btn_class = $work->status == Work::PENDING ? 'accept-btn' : 'confirm-completion-btn';
             $btn_text = $work->status == Work::PENDING ? 'Принять в работу' : 'Завершить проект';
-            Message::whereIn('work_id', [$validated['work_id']])->where('viewed_at', '<=', date('Y-m-d H:i'))->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
+            Message::where('work_id', $validated['work_id'])->where('viewed_at', null)->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
             return response()->json(['view' => view('shared.chat.messages', compact('work', 'user_id', 'role'))->render(), 'btn-class' => $btn_class, 'btn-text' => $btn_text]);
         }
         $works_count = $works->count();

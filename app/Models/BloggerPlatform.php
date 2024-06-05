@@ -17,4 +17,9 @@ class BloggerPlatform extends Model
         'engagement_rate',
         'cost_per_mille',
     ];
+
+    public function blogger()
+    {
+        return $this->belongsTo(Blogger::class, 'id', 'blogger_id');
+    }
 }

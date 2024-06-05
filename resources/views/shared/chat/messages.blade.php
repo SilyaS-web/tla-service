@@ -14,6 +14,9 @@
     @endif
     <div class="messages-chat__item-msg">
         {{ $message->message }}
+        @if (count($message->images) > 0)
+            <img src="{{ $message->images[0]->getURL() }}" alt="" class="chat-img-popup" data-popup="#chat-img">
+        @endif
     </div>
 </div>
 @endforeach

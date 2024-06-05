@@ -35,4 +35,9 @@ class Blogger extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
+    public function platforms()
+    {
+        return $this->hasMay(BloggerPlatform::class, 'blogger_id', 'id');
+    }
 }
