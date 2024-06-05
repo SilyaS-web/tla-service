@@ -38,7 +38,7 @@
                         </div>
                         <div class="chat__btns" style="display: flex; flex-wrap: wrap; gap:8px;">
                             <button class="btn btn-primary btn-send-msg">Отправить</button>
-                            <a href="" class="btn btn-secondary" id="confirm-completion-btn">Подтвердить выполнение проекта</a>
+                            <a href="" class="btn btn-secondary btn-action" id="">Подтвердить выполнение проекта</a>
                         </div>
                     </div>
 

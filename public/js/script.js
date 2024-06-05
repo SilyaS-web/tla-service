@@ -673,7 +673,18 @@ class Chat {
                 $(self.node).find('.messages-chat').empty()
                 $(self.node).find('.messages-chat').append(res.view)
                 $(self.node).find('.chat__overflow').hide()
+
+                $(self.node).find('.btn-action').text(res['btn-text']);
+                $(self.node).find('.btn-action').prop('id', res['btn-class']);
+
+                if(res['btn-class'] == 'accept-btn'){
+                    $(self.node).find('.btn-action').prop('href', `/apist/works/${self.currentChatId}/accept`);
+                }
+                else{
+                    $(self.node).find('.btn-action').prop('href', `#`);
+                }
             }
+
 
             if(!this.newMessagesInterval){
                 this.newMessagesInterval = setInterval(this.getNewMessages, 5000);
