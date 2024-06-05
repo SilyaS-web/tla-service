@@ -534,8 +534,9 @@
                         <div class="view-project__props-graph">
                             <canvas id="prices-graph-desktop" class=""></canvas>
                         </div>
-                        <div class="view-project__props-ph">
+                        <div class="view-project__props-ph" style="background-image: url('https://avatars.dzeninfra.ru/get-zen_doc/271828/pub_6418978da9e20d25ef56e075_664c628224cc530fd1824b2d/scale_1200')">
                             <div class="view-project__props-ph_title">
+                                Статистика по товару (OZON)<br>
                                 Раздел находится в разработке
                             </div>
                         </div>

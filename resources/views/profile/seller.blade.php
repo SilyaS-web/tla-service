@@ -124,7 +124,7 @@
                                         <div class="form-group marketing-format">
                                             <label for="format">Выберите формат рекламы</label>
                                             @error('project_type')
-                                            <span class="error">{{ $message }}</span>
+                                                <span class="error">{{ $message }}</span>
                                             @enderror
                                             <div class="input-checkbox-w">
                                                 <input type="checkbox" class="checkbox" name="project_type" value="feedback" id="product-feedback">
@@ -142,10 +142,10 @@
                                                 </div>
 
                                             </div>
-                                            <div class="input-checkbox-w disabled">
-                                                <input type="checkbox" class="checkbox" id="product-inst">
+                                            <div class="input-checkbox-w">
+                                                <input type="checkbox" class="checkbox" name="project_type" value="feedback" id="product-feedback">
                                                 <label for="product-inst">Рекламная интеграция (Inst) - Бартер</label>
-                                                <div class="format-tooltip" data-hint="inst">
+                                                <div class="format-tooltip" data-hint="feedback">
                                                     ?
                                                     <div class="format-hint format-hint--text" id="inst">
                                                         <div class="format-hint__title">

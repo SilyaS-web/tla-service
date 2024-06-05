@@ -601,6 +601,8 @@ class Chat {
             this.currentChatId = false;
         });
 
+
+
         var mediaQuery = window.matchMedia('(max-width: 700px)')
 
         if (mediaQuery.matches) {
@@ -650,6 +652,8 @@ class Chat {
 
         $(document).find('.item-chat.current').removeClass('current');
         chat.addClass('current');
+
+        this.getMsgInterval = setInterval(this.getNewMessages, 5000);
     }
 
     getNewMessagesCount = ()=>{
