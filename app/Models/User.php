@@ -74,6 +74,10 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class, 'user_id', 'id');
     }
 
+    public function tgPhone() {
+        return $this->hasOne(TgPhone::class,'id', 'tg_phone_id');
+    }
+
     public function getImageURL()
     {
         if (empty($this->image)) {

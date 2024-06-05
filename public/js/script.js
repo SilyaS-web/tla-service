@@ -1217,20 +1217,20 @@ function ibg(){
 
 window.addEventListener('load', ibg)
 
-// setInterval(() => {
-//     $.ajax({
-//         url: '/apist/notifications',
-//     })
-//     .done(function( data ) {
-//         document.querySelector('#header-notif-container').innerHTML = data.view;
-//         document.querySelector('#header-notif-count').innerHTML = data.count;
-//         if (data.count == 0) {
-//             document.querySelector('#header-notif-count').style.display = 'none';
-//         } else {
-//             document.querySelector('#header-notif-count').style.display = 'block';
-//         }
-//     });
-// }, 5000)
+setInterval(() => {
+    $.ajax({
+        url: '/apist/notifications',
+    })
+    .done(function( data ) {
+        document.querySelector('#header-notif-container').innerHTML = data.view;
+        document.querySelector('#header-notif-count').innerHTML = data.count;
+        if (data.count == 0) {
+            document.querySelector('#header-notif-count').style.display = 'none';
+        } else {
+            document.querySelector('#header-notif-count').style.display = 'block';
+        }
+    });
+}, 5000)
 
 selectTab = (tabName)=>{
     $('.tab').removeClass('active');

@@ -46,8 +46,8 @@ class Project extends Model
         return $this->hasMany(Work::class, 'project_id', 'id');
     }
 
-    public function countActiveBloggers() {
-
+    public function countActiveBloggers()
+    {
     }
 
     public function getImageURL($only_primary = false)
@@ -85,7 +85,7 @@ class Project extends Model
             'accept-language: ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7',
             'origin: https://www.wildberries.ru',
             'priority: u=1, i',
-            'referer: https://www.wildberries.ru/catalog/'. $this->product_nm .'/detail.aspx',
+            'referer: https://www.wildberries.ru/catalog/' . $this->product_nm . '/detail.aspx',
             'sec-ch-ua: "Google Chrome";v="125", "Chromium";v="125", "Not.A/Brand";v="24"',
             'sec-ch-ua-mobile: ?0',
             'sec-ch-ua-platform: "Windows"',
@@ -100,7 +100,24 @@ class Project extends Model
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        return $httpcode == 200 ? true : false ;
+        return $httpcode == 200 ? $response : false;
+    }
+
+    public function getCountStatistics()
+    {
+        $ch = curl_init();
+
+        $ch = curl_init();
+        $url ='https://card.wb.ru/cards/detail?nm=' . $this->product_nm . '&appType=1&locale=ru&lang=ru&curr=rub&dest=1';
+        curl_setopt($ch, CURLOPT_URL, $url );
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+        $response = curl_exec($ch);
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+        $response = json_decode($response);
+
+        return $httpcode == 200 && !empty($response->data->products)? $response->data->products[0] : false;
     }
 
     public function seller()

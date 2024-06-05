@@ -9,6 +9,7 @@ use App\Models\Project;
 use App\Models\ProjectFile;
 use App\Models\User;
 use App\Models\Work;
+use App\Services\TgService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -120,6 +121,7 @@ class MessageController extends Controller
             'type' => 'message',
             'text' => 'Вам поступило новое сообщение от ' . $user->name,
         ]);
+        TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, 'Вам поступило новое сообщение от ' . $user->name);
 
         return response()->json(['message' => 'success'], 200);
     }

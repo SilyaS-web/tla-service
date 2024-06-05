@@ -50,13 +50,13 @@
                         </div>
                     </div>
                     <div class="card__row card__stats-row">
-
+                        @php( $statCount = $project->getCountStatistics() )
                         <div class="card__col card__stats-item">
                             <div class="card__stats-title">
                                 <span>Рейтинг</span>
                             </div>
                             <div class="card__stats-val card__stats-val--rait">
-                                <span>4.3</span>
+                                <span>{{ $statCount->reviewRating ?? 0}}</span>
                             </div>
                         </div>
                         <div class="card__col card__stats-item" style="flex: 1: width: auto">
@@ -64,7 +64,7 @@
                                 <span>Отзывы</span>
                             </div>
                             <div class="card__stats-val card__stats-val--feedback">
-                                <span>380</span>
+                                <span>{{ $statCount->feedbacks ?? 0}}</span>
                             </div>
                         </div>
                     </div>
@@ -572,14 +572,14 @@
         </div> --}}
     </div>
     @empty
-        Нет проетков
+    Нет проетков
     @endforelse
 </div>
 
 <script>
     var mediaQuery = window.matchMedia('(max-width: 911px)');
 
-    $(document).find('.profile-projects__row.projects-statistics').each((i, stat)=>{
+    $(document).find('.profile-projects__row.projects-statistics').each((i, stat) => {
         var prices_ctx, orders_ctx;
 
         prices_ctx = $(stat).find('#prices-graph-desktop');
@@ -589,70 +589,68 @@
 
         new Chart(orders_ctx, {
             data: {
-                labels: data.prices_history.map(item => `${item.dt.split('-')[2]} мая`),
-                datasets: [
-                    {
-                        label: 'Заказы',
-                        data: data.orders_history.map(item => item.orders),
-                        order: 0,
-                        type: 'bar',
-                    },
-                    {
-                        label: 'Выручка',
-                        data: data.prices_history.map(item => item.price),
-                        type: 'line',
-                        order: 1,
-                        tension: 0.1
-                    },
-                ],
-            }
+                labels: data.prices_history.map(item => `${item.dt.split('-')[2]} мая`)
+                , datasets: [{
+                        label: 'Заказы'
+                        , data: data.orders_history.map(item => item.orders)
+                        , order: 0
+                        , type: 'bar'
+                    , }
+                    , {
+                        label: 'Выручка'
+                        , data: data.prices_history.map(item => item.price)
+                        , type: 'line'
+                        , order: 1
+                        , tension: 0.1
+                    }
+                , ]
+            , }
             , options: {
                 scales: {
                     y: {
-                        beginAtZero: true,
-                        type: 'logarithmic'
+                        beginAtZero: true
+                        , type: 'logarithmic'
                     }
-                },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
                 }
+                , plugins: {
+                    legend: {
+                        position: 'top'
+                    , }
+                , }
             }
         });
         new Chart(prices_ctx, {
             data: {
-                labels: data.prices_history.map(item => `${item.dt.split('-')[2]} мая`),
-                datasets: [
-                    {
-                        label: 'Заказы',
-                        data: data.orders_history.map(item => item.orders),
-                        order: 0,
-                        type: 'bar',
-                    },
-                    {
-                        label: 'Выручка',
-                        data: data.prices_history.map(item => item.price),
-                        type: 'line',
-                        order: 1,
-                        tension: 0.1
-                    },
-                ],
-            }
+                labels: data.prices_history.map(item => `${item.dt.split('-')[2]} мая`)
+                , datasets: [{
+                        label: 'Заказы'
+                        , data: data.orders_history.map(item => item.orders)
+                        , order: 0
+                        , type: 'bar'
+                    , }
+                    , {
+                        label: 'Выручка'
+                        , data: data.prices_history.map(item => item.price)
+                        , type: 'line'
+                        , order: 1
+                        , tension: 0.1
+                    }
+                , ]
+            , }
             , options: {
                 scales: {
                     y: {
-                        beginAtZero: true,
-                        type: 'logarithmic'
+                        beginAtZero: true
+                        , type: 'logarithmic'
                     }
-                },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                    },
                 }
+                , plugins: {
+                    legend: {
+                        position: 'top'
+                    , }
+                , }
             }
         });
     })
-</script>
 
+</script>
