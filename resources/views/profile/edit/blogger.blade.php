@@ -14,7 +14,7 @@
                         <p>Фото профиля</p>
                         <div class="form-group form-group--file">
                             <label class="tab-content__profile-img-upload input-file" for="profile-img">
-                                Загрузите изображение товара
+                                Загрузите изображение
                                 <input type="file" name="name" class="" id="profile-img">
                             </label>
                         </div>

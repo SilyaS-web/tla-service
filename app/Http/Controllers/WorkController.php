@@ -52,14 +52,17 @@ class WorkController extends Controller
         return redirect()->route('profile')->with('success', 'Заявка успешно отправлена');
     }
 
-    public function accept(Work $work)
+    public function accept($work_id)
     {
+        $work = Work::find($work_id);
         $user = Auth::user();
-        $work->accept($user);
+        $param = 'accepted_by_' . $user->role . '_at';
+        $work->$param = date('Y-m-d H:i');
+        $work->save();
         Message::create([
             'work_id' => $work->id,
             'user_id' => 0,
-            'text' => $user->role . ' готов приступить к работе',
+            'message' => $user->role . ' готов приступить к работе',
         ]);
         if ($work->isBothAcceptd() && $work->status = Work::PENDING) {
             $work->status = Work::IN_PROGRESS;
@@ -67,19 +70,19 @@ class WorkController extends Controller
             Message::create([
                 'work_id' => $work->id,
                 'user_id' => 0,
-                'text' => 'Работа начата',
+                'message' => 'Работа начата',
             ]);
         }
 
         return response()->json('success', 200);
     }
 
-    public function confirm(Work $work, Request $request)
+    public function confirm(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'images' => 'array',
-            'images.*' => 'image|max:10240',
-
+            'message' => '',
+            'mark' => 'numeric',
+            'work_id' => 'required|exists:works,id'
         ]);
 
         if ($validator->fails()) {
@@ -87,6 +90,7 @@ class WorkController extends Controller
         }
 
         $user = Auth::user();
+        $work = Work::find($request->work_id);
         $work->confirm($user);
         $work->save();
 
@@ -94,7 +98,7 @@ class WorkController extends Controller
             Message::create([
                 'work_id' => $work->id,
                 'user_id' => 0,
-                'text' => 'Блогер запросил подтверждение проекта',
+                'message' => 'Блогер запросил подтверждение проекта',
             ]);
             Notification::create([
                 'user_id' => $work->seller->user->id,
@@ -105,7 +109,7 @@ class WorkController extends Controller
             Message::create([
                 'work_id' => $work->id,
                 'user_id' => 0,
-                'text' => 'Проект успешно завершён',
+                'message' => 'Проект успешно завершён',
             ]);
             $work->status = Work::COMPLETED;
             $work->save();

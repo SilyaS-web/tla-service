@@ -59,14 +59,12 @@ class Work extends Model
     }
 
     public function accept($user) {
-        $param = 'accepted_by_' . $user->role . '_at';
-        $this->$param = self::IN_PROGRESS;
-        $this->save();
+
     }
 
     public function confirm($user) {
         $param = 'confirmed_by_' . $user->role . '_at';
-        $this->$param = self::IN_PROGRESS;
+        $this->$param = date('Y-m-d H:i');
         $this->save();
     }
 

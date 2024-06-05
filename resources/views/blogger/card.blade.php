@@ -40,7 +40,7 @@
                             <span>Подписчики</span>
                         </div>
                         <div class="card__stats-val">
-                            <span>{{ $blogger->subscriber_quantity }}</span>
+                            <span>{{ $blogger->getSubscribers() }}</span>
                         </div>
                     </div>
                     <div class="card__col card__stats-item">
@@ -48,7 +48,7 @@
                             <span>Охваты</span>
                         </div>
                         <div class="card__stats-val">
-                            <span>{{ $blogger->coverage }}</span>
+                            <span>{{ $blogger->getCoverage() }}</span>
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                             <span>ER</span>
                         </div>
                         <div class="card__stats-val">
-                            <span>{{ $blogger->engagement_rate }}</span>
+                            <span>{{ $blogger->getER() }}</span>
                         </div>
                     </div>
                     <div class="card__col card__stats-item">
@@ -67,7 +67,7 @@
                             <span>CPM</span>
                         </div>
                         <div class="card__stats-val">
-                            <span>{{ $blogger->cost_per_mille }}₽</span>
+                            <span>{{ $blogger->getCPM() }}₽</span>
                         </div>
                     </div>
                 </div>

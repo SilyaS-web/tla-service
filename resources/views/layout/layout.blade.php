@@ -42,9 +42,9 @@
                                 </span>
                                 <span class="header__profile-org">
                                     @if ( auth()->user()->role == 'seller')
-                                        {{ auth()->user()->seller->organization_type }}
+                                    {{ auth()->user()->seller->organization_type }}
                                     @elseif (auth()->user()->blogger)
-                                        {{ auth()->user()->blogger->name }}
+                                    {{ auth()->user()->blogger->name }}
                                     @endif
                                 </span>
                             </div>
@@ -85,22 +85,28 @@
                         </a>
                     </div>
                     @if ( auth()->user()->role == 'seller')
-                        <div href="#" class="header__col header__tarrif tarrif-header header__profile-item--js" >
-                            Ваш тариф — {{ auth()->user()->seller->tariff }}
-                            <div class="tarrif-header__items">
-                                <div class="tarrif-header__item tarrif-header__adv">
-                                    Рекламные посты <b><span class = "counter">{{ auth()->user()->seller->remaining_tariff }}</span> шт.</b>
-                                    <div class="tarrif-header__date">
-                                        До 2 Июня
-                                    </div>
-                                    <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
+                    <div href="#" class="header__col header__tarrif tarrif-header header__profile-item--js">
+                        Ваш тариф — {{ auth()->user()->seller->tariff }}
+                        <div class="tarrif-header__items">
+                            <div class="tarrif-header__item tarrif-header__adv">
+                                Рекламные посты <b><span class="counter">{{ auth()->user()->seller->remaining_tariff }}</span> шт.</b>
+                                <div class="tarrif-header__date">
+                                    До 2 Июня
                                 </div>
+                                <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
                             </div>
                         </div>
+                    </div>
                     @endif
                 </div>
                 <div class="burger-menu__nav nav-burger">
-                    <a href="{{ route('profile') }}" class="nav-burger__link nav__link">Дашборд</a>
+                    <a href="{{ route('profile') }}" class="nav-burger__link nav__link">
+                        @if ( auth()->user()->role == 'seller')
+                        Дашборд
+                        @elseif (auth()->user()->blogger)
+                        Главная
+                        @endif
+                    </a>
                     <a href="#" class="nav-burger__link nav__link">База знаний</a>
                     <a href="#" class="nav-burger__link nav__link">Инструкции</a>
                     <a href="#" class="nav-burger__link nav__link">Кейсы</a>
@@ -132,7 +138,11 @@
                     <nav class="nav header__nav">
                         <div class="nav__items">
                             <a href="{{ route('profile') }}" class="nav__link">
+                                @if ( auth()->user()->role == 'seller')
                                 Дашборд
+                                @elseif (auth()->user()->blogger)
+                                Главная
+                                @endif
                             </a>
                             <a href="" class="nav__link disabled">
                                 База знаний
@@ -181,9 +191,9 @@
                                 </span>
                                 <span class="header__profile-org">
                                     @if ( auth()->user()->role == 'seller')
-                                        {{ auth()->user()->seller->organization_type }}
+                                    {{ auth()->user()->seller->organization_type }}
                                     @elseif (auth()->user()->blogger)
-                                        {{ auth()->user()->blogger->name }}
+                                    {{ auth()->user()->blogger->name }}
                                     @endif
                                 </span>
                             </div>
@@ -192,9 +202,9 @@
                                     Личные данные
                                 </a>
                                 @if ( auth()->user()->role == 'seller')
-                                    <a href="{{ route('tariff') }}" class="row">
-                                        Тарифы
-                                    </a>
+                                <a href="{{ route('tariff') }}" class="row">
+                                    Тарифы
+                                </a>
                                 @endif
                                 <form action="{{ route('logout') }}" method="POST" class="row">
                                     @csrf
@@ -247,7 +257,7 @@
             </div>
         </footer>
 
-        <div class="popup" id = "contact-form">
+        <div class="popup" id="contact-form">
             <div class="popup__container _container">
                 <div class="popup__body">
                     <div class="popup__header">
@@ -261,23 +271,24 @@
                     <div class="popup__form">
                         <div class="form-group">
                             <label for="">Ваше имя</label>
-                            <input id = "name" name="name" type="text" class="input">
+                            <input id="name" name="name" type="text" class="input">
                         </div>
                         <div class="form-group">
                             <label for="phone">Ваш номер</label>
-                            <input id = "phone" name = "phone" type="phone" class="input">
+                            <input id="phone" name="phone" type="phone" class="input">
                         </div>
                         <script>
-                            $(function(){
+                            $(function() {
                                 $.mask.definitions['h'] = "[0|1|3|4|5|6|7|9]"
-                              $("#contact-form #phone").mask('+7 (h99) 999-99-99');
+                                $("#contact-form #phone").mask('+7 (h99) 999-99-99');
                             });
+
                         </script>
                         <p class="form-addit">
-                           Оставляя свои данные, вы даёте на это согласие <br>
-                           и принимаете условия <a href = "policy">Политики конфиденциальности.</a>
+                            Оставляя свои данные, вы даёте на это согласие <br>
+                            и принимаете условия <a href="policy">Политики конфиденциальности.</a>
                         </p>
-                        <button class = "btn btn-primary send-data">
+                        <button class="btn btn-primary send-data">
                             Отправить
                         </button>
                     </div>
@@ -288,7 +299,7 @@
             </div>
         </div>
 
-        <div class="popup" id = "change-password">
+        <div class="popup" id="change-password">
             <div class="popup__container _container">
                 <div class="popup__body">
                     <div class="popup__header">
@@ -302,19 +313,20 @@
                     <div class="popup__form">
                         <div class="form-group">
                             <label for="phone">Ваш номер</label>
-                            <input id = "phone" name = "phone" type="phone" class="input">
+                            <input id="phone" name="phone" type="phone" class="input">
                         </div>
                         <script>
-                            $(function(){
+                            $(function() {
                                 $.mask.definitions['h'] = "[0|1|3|4|5|6|7|9]"
-                              $("#change-password #phone").mask('+7 (h99) 999-99-99');
+                                $("#change-password #phone").mask('+7 (h99) 999-99-99');
                             });
+
                         </script>
                         <p class="form-addit">
-                           Оставляя свои данные, вы даёте на это согласие <br>
-                           и принимаете условия <a href = "policy">Политики конфиденциальности.</a>
+                            Оставляя свои данные, вы даёте на это согласие <br>
+                            и принимаете условия <a href="policy">Политики конфиденциальности.</a>
                         </p>
-                        <button class = "btn btn-primary send-data">
+                        <button class="btn btn-primary send-data">
                             Отправить
                         </button>
                     </div>
@@ -325,7 +337,7 @@
             </div>
         </div>
 
-        <div class="popup" id = "confirm-completion" style="">
+        <div class="popup" id="confirm-completion" style="">
             <div class="popup__container _container">
                 <div class="popup__body">
                     <div class="popup__header">
@@ -361,7 +373,7 @@
                             <label for="comment">Комментарий</label>
                             <textarea name="comment" id="comment" cols="30" rows="10" class="textarea" placeholder="Введите сообщение"></textarea>
                         </div>
-                        <button class = "btn btn-primary send-data">
+                        <button class="btn btn-primary send-data">
                             Отправить
                         </button>
                     </div>
@@ -371,7 +383,7 @@
                 </div>
             </div>
         </div>
-        <div class="popup" id = "confirm-completion-blogger" style="">
+        <div class="popup" id="confirm-completion-blogger" style="">
             <div class="popup__container _container">
                 <div class="popup__body">
                     <div class="popup__header">
@@ -389,9 +401,9 @@
                         </div>
                         <div class="input-file input-file--stat" style="padding-left:0; margin-bottom:20px;">
                             <label for="statistics-file">Прикрепить отчет по статитстике</label>
-                            <input id = "statistics-file" type="file"  hidden>
+                            <input id="statistics-file" type="file" hidden>
                         </div>
-                        <button class = "btn btn-primary send-data">
+                        <button class="btn btn-primary send-data">
                             Отправить
                         </button>
                     </div>
@@ -401,7 +413,7 @@
                 </div>
             </div>
         </div>
-        <div class="popup" id = "chat-img" style="">
+        <div class="popup" id="chat-img" style="">
             <div class="popup__container _container">
                 <div class="popup__body">
                     <img src="" alt="" class="chat-img" style="width:100%">

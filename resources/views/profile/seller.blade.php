@@ -14,7 +14,7 @@
                             Мои проекты
                         </a>
                         <a href="#" class="nav-menu__item nav-menu__link tab active dashboard-link" data-content="dashboard">
-                            Статистика
+                            Дашборд
                         </a>
                         <a href="#" class="nav-menu__item nav-menu__link tab blogers-list-link" data-content="profile-blogers-list">
                             Каталог блогеров
@@ -244,7 +244,14 @@
                                             <div class="dashboard-sm__title">
                                                 Рейтинг на основе отзывов
                                             </div>
+
+                                            @php( $wb_stats = auth()->user()->seller->getTotalFeedbacksWB() )
                                             <div class="dashboard-sm__sm" id=wrapper>
+                                                <input id="wb_total" value="{{ $wb_stats['total'] }}" hidden>
+                                                <input id="wb_low" value="{{ $wb_stats['low'] }}" hidden>
+                                                <input id="wb_med" value="{{ $wb_stats['med'] }}" hidden>
+                                                <input id="wb_hig" value="{{ $wb_stats['hig'] }}" hidden>
+                                                <input id="wb_avg" value="{{ $wb_stats['avg'] }}" hidden>
                                                 <svg id="meter">
                                                     <circle id="outline_curves" class="circle outline" cx="50%" cy="50%">
                                                     </circle>
@@ -265,17 +272,17 @@
                                                         5
                                                     </div>
                                                 </div>
-                                                <img id="meter_needle" src="libs/meter/svg-meter-gauge-needle.svg" alt="" data-percents='95'>
+                                                <img id="meter_needle" src="libs/meter/svg-meter-gauge-needle.svg" alt="" data-percents='{{ round($wb_stats['avg'], 2) * 20 }}'>
                                             </div>
                                             <div class="dashboard-sm__desc">
-                                                У вас отличные показатели, <br>
-                                                ваш средний балл по отзывам 4,9
+                                                {{-- У вас отличные показатели, <br> --}}
+                                                Ваш средний балл по отзывам {{ round($wb_stats['avg'], 2) }}
                                                 <div class="dashboard-sm__quest">
                                                     ?
                                                     <div class="dashboard-sm__desc-inner">
                                                         <p>4,2 - 4,7 — У вас отличные показатели, но можно улучшить</p>
                                                         <p>3,5 - 4,2 — У вас показатели ниже среднего, требуется улучшить отзывы</p>
-                                                        <p>0 - 3,5 — У вас ужасные показатели, срочно требуется работа по отзывам </p>
+                                                        <p>0 - 3,5 — Cрочно требуется работа по отзывам </p>
                                                     </div>
                                                 </div>
                                             </div>
@@ -296,18 +303,22 @@
                                                         </div>
                                                     </div>
                                                     <div class="feedback-item__stats">
+                                                        @if($wb_stats['low'] > 0)
                                                         <div class="feedback-item__stat">
                                                             <div class="feedback-item__stat-quest danger">
                                                                 !
                                                             </div>
-                                                            У вас 10 товаров с очень низкой оценкой
+                                                            У вас {{ $wb_stats['low'] }} товар(ов) с очень низкой оценкой
                                                         </div>
+                                                        @endif
+                                                        @if($wb_stats['med'] > 0)
                                                         <div class="feedback-item__stat">
                                                             <div class="feedback-item__stat-quest warning">
                                                                 !
                                                             </div>
-                                                            У вас 20 товаров с удовлетворительной оценкой, требуется улучшение
+                                                            У вас {{ $wb_stats['med'] }} товаров с удовлетворительной оценкой, требуется улучшение
                                                         </div>
+                                                        @endif
                                                     </div>
                                                 </div>
                                                 <div class="feedback-dashboard__fb-row">
@@ -322,18 +333,22 @@
                                                             </div>
                                                         </div>
                                                         <div class="feedback-item__stats">
+                                                            @if($wb_stats['pr_low'] > 0)
                                                             <div class="feedback-item__stat">
                                                                 <div class="feedback-item__stat-quest danger">
                                                                     !
                                                                 </div>
-                                                                На 20 товарах очень мало отзывов, требуется исправить
+                                                                На {{ $wb_stats['pr_low'] }} товарах очень мало отзывов, требуется исправить
                                                             </div>
+                                                            @endif
+                                                            @if($wb_stats['pr_mid'] > 0)
                                                             <div class="feedback-item__stat">
                                                                 <div class="feedback-item__stat-quest warning">
                                                                     !
                                                                 </div>
-                                                                У вас 15 товаров со среднем количеством отзывов, требуется улучшение
+                                                                У вас {{ $wb_stats['pr_mid'] }} товаров со среднем количеством отзывов, требуется улучшение
                                                             </div>
+                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>

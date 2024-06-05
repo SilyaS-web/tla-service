@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="project-item__btns">
-                <a href="" class="btn btn-primary" id = "confirm-completion-blogger-btn" data-work-id = "<?=$project->id?>">Подтвердить выполнение</a>
+                {{-- <a href="" class="btn btn-primary" id = "confirm-completion-blogger-btn" data-work-id = "<?=$project->id?>">Подтвердить выполнение</a> --}}
                 <? switch($type): case 'avail' :?>
                         <a href="/apist/works?project_id=<?=$project->id?>" class="btn btn-primary">Откликнуться</a>
                     <? break; case 'start': ?>

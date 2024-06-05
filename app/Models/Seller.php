@@ -57,6 +57,7 @@ class Seller extends Model
 
     public function getNMfromWB()
     {
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -86,10 +87,11 @@ class Seller extends Model
         ));
 
         $response = curl_exec($curl);
+
         $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
         if (200 != $http_code) {
-            return [];
+            return 0;
         }
 
         $nm = [];
@@ -97,7 +99,7 @@ class Seller extends Model
         foreach ($result as $product_card) {
             $nm[] = $product_card->nmID;
         }
-
+        dd($result);
         return $nm;
     }
 
@@ -137,10 +139,10 @@ class Seller extends Model
     public function getCountUnansweredWB()
     {
 
-        if(empty($this->wb_api_key)) {
+        if (empty($this->wb_api_key)) {
             return 0;
         }
-        
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
@@ -162,7 +164,7 @@ class Seller extends Model
         $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
         if (200 != $http_code) {
-            return [];
+            return 1;
         }
 
         $result = json_decode($response);
@@ -171,22 +173,27 @@ class Seller extends Model
         return $countUnanswered;
     }
 
-    public function getTotalFeedbacksWB() {
+    public function getTotalFeedbacksWB()
+    {
+        if (empty($this->wb_api_key)) {
+            return ['total' => 0, 'low' => 0, 'med' => 0, 'hig' => 0];
+        }
+
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-          CURLOPT_URL => '//api/v1/feedbacks?isAnswered=false&take=4500&skip=0',
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => '',
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
-          CURLOPT_FOLLOWLOCATION => true,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => 'GET',
-          CURLOPT_HTTPHEADER => array(
-            'Accept: application/json',
-            'Authorization: ' . $this->wb_api_key,
-          ),
+            CURLOPT_URL => 'https://feedbacks-api.wildberries.ru/api/v1/feedbacks?isAnswered=true&take=4500&skip=0',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_HTTPHEADER => array(
+                'Accept: application/json',
+                'Authorization: ' . $this->wb_api_key,
+            ),
         ));
 
         $response = curl_exec($curl);
@@ -195,16 +202,24 @@ class Seller extends Model
         if (200 != $http_code) {
             return [];
         }
-
         $result = json_decode($response);
+
         $total = 0;
         $low = 0;
         $med = 0;
         $hig = 0;
-
+        $total_valuation = 0;
+        $feedbacks_by_nm = [];
         foreach ($result->data->feedbacks as $feedback) {
             $total += 1;
-            $productValuation = $feedback->product_valuation;
+            $productValuation = $feedback->productValuation;
+            $total_valuation += $productValuation;
+            if (!isset($feedbacks_by_nm[$feedback->productDetails->nmId])) {
+                $feedbacks_by_nm[$feedback->productDetails->nmId] = 1;
+            } else {
+                $feedbacks_by_nm[$feedback->productDetails->nmId] += 1;
+            }
+
             if ($productValuation < 3) {
                 $low++;
             } elseif ($productValuation > 3 && $productValuation < 4) {
@@ -214,6 +229,19 @@ class Seller extends Model
             }
         }
 
-        return ['total' => $total, 'low' => $low, 'med'=> $med, 'hig'=> $hig];
+
+        $pr_low = 0;
+        $pr_mid = 0;
+        foreach ($feedbacks_by_nm as $value) {
+            if ($value < 5) {
+                $pr_low++;
+            } else if ($value < 15) {
+                $pr_mid++;
+            }
+        }
+
+        $avg = $total > 0 ? $total_valuation / $total : 0;
+
+        return ['total' => $total, 'low' => $low, 'med' => $med, 'hig' => $hig, 'avg' => $avg, 'pr_low' => $pr_low, 'pr_mid' => $pr_mid];
     }
 }
