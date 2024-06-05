@@ -47,7 +47,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/seller/{seller}', [SellerController::class, 'show'])->name('seller-page');
     Route::get('/telegram', [AuthController::class, 'telegram'])->name('telegram');
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
-    Route::get('/profile/edit', [UserController::class, 'edit'])->name('edit-profile');
+    Route::get('/profile/edit', [UserController::class, 'update'])->name('edit-profile');
+    Route::post('/profile/update', [UserController::class, 'edit'])->name('edit-profile-post');
     Route::get('/project/{project_id}', [ProjectController::class, 'selectBloggers'])->name('select-bloggers');
     Route::get('/admin-panel', [AdminController::class, 'index']);
     Route::resource('projects', ProjectController::class);
@@ -67,6 +68,7 @@ Route::prefix('apist')->group(function () {
 
     Route::post('/works', [WorkController::class, 'store'])->name('create-work');
     Route::post('/works/{work_id}/accept', [WorkController::class, 'accept']);
+    Route::get('/works/{work_id}/accept', [WorkController::class, 'accept']);
     Route::post('/works/{work_id}/confirm', [WorkController::class, 'confirm']);
 
     Route::post('/messages/create', [MessageController::class, 'store']);

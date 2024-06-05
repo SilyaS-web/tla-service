@@ -239,7 +239,18 @@
                             </div>
                             <div class="dashboard__items">
                                 <div class="dashboard__content active" id="wb">
-                                    <div class="dashboard__row dashboard__item--feedback feedback-dashboard">
+                                    <div class="dashboard__row dashboard__item--feedback feedback-dashboard" style="{{ !empty(auth()->user()->seller->wb_api_key) ?: 'padding: 0;' }}">
+                                        @if (empty(auth()->user()->seller->wb_api_key))
+                                        <div class="dashboard__placeholder" style="z-index: 9999">
+                                            <div class="dashboard__placeholder-text">
+                                                Введите API ключ в настройках профиля
+                                            </div>
+                                            <div class="dashboard__placeholder-overflow">
+
+                                            </div>
+                                        </div>
+                                        @endif
+
                                         <div class="dashboard__col dashboard__item--sm dashboard-sm">
                                             <div class="dashboard-sm__title">
                                                 Рейтинг на основе отзывов

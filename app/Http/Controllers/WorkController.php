@@ -6,6 +6,7 @@ use App\Models\Message;
 use App\Models\Notification;
 use App\Models\Work;
 use App\Models\User;
+use App\Services\TgService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -43,12 +44,14 @@ class WorkController extends Controller
         $validated['seller_id'] = $seller->id;
         $validated['status'] = Work::PENDING;
 
-        Work::create($validated);
+        $work = Work::create($validated);
         Notification::create([
             'user_id' => $validated['blogger_id'],
             'type' => 'Новая заявка',
             'text' => 'Вам поступила новая заявка от ' . $seller->user->name,
         ]);
+
+        TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, 'Вам поступила новая заявка от ' . $seller->user->name);
         return redirect()->route('profile')->with('success', 'Заявка успешно отправлена');
     }
 
@@ -62,8 +65,9 @@ class WorkController extends Controller
         Message::create([
             'work_id' => $work->id,
             'user_id' => 0,
-            'message' => $user->role . ' готов приступить к работе',
+            'message' => $user->name . ' готов приступить к работе',
         ]);
+
         if ($work->isBothAcceptd() && $work->status = Work::PENDING) {
             $work->status = Work::IN_PROGRESS;
             $work->save();
@@ -72,6 +76,9 @@ class WorkController extends Controller
                 'user_id' => 0,
                 'message' => 'Работа начата',
             ]);
+            TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, $user->name . ' готов приступить к работе');
+        } else {
+            TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, $user->name . ' готов приступить к работе');
         }
 
         return response()->json('success', 200);
@@ -105,6 +112,7 @@ class WorkController extends Controller
                 'type' => 'Подтверждение',
                 'text' => 'Блогер отправил запрос на подтверждение выполнения проекта ' . $work->project->project_name,
             ]);
+            TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, 'Блогер отправил запрос на подтверждение выполнения проекта ' . $work->project->project_name);
         } else {
             Message::create([
                 'work_id' => $work->id,
@@ -118,6 +126,7 @@ class WorkController extends Controller
                 'type' => 'Подтверждение',
                 'text' => 'Селлер подтвердил выполнение проекта ' . $work->project->project_name,
             ]);
+            TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, 'Селлер подтвердил выполнение проекта ' . $work->project->project_name);
         }
 
         return redirect()->route('profile')->with('success');

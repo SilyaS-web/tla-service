@@ -139,15 +139,43 @@ class UserController extends Controller
         return compact('unverified_users', 'bloggers', 'sellers', 'platforms');
     }
 
-    public function edit()
+    public function edit(Request $request)
     {
         $user = Auth::user();
+
+        if ($user->role == 'seller') {
+            $validator = Validator::make(request()->all(), [
+                // 'name' => 'required|min:3',
+                // 'email' => 'required|email|unique:users,email',
+                // 'phone' => 'required|unique:users,phone',
+                // 'role' => ['required', Rule::in(User::TYPES)],
+                // 'password' => 'required|confirmed|min:8',
+                'wb_api_key' => 'string|nullable',
+                'marketplace_link' => 'string|nullable',
+                'inn' => 'string|nullable',
+            ]);
+
+            if ($validator->fails()) {
+                return redirect()->back()->withErrors($validator)->withInput();
+            }
+
+            $validated = $validator->validated();
+            $user->seller->update([
+                'wb_api_key' => $validated['wb_api_key'],
+                'inn' => $validated['inn'],
+                'platform_link' => $validated['marketplace_link'],
+            ]);
+        }
 
         return view('profile.edit.' . $user->role, compact('user'));
     }
 
     public function update(Request $request)
     {
+        $user = Auth::user();
+
+        return view('profile.edit.' . $user->role, compact('user'));
+
         $validated = request()->validate([
             'name' => 'required|min:3',
             'email' => 'required|email|unique:users,email',
