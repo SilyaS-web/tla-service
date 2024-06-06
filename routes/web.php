@@ -31,7 +31,6 @@ Route::get('/', function () {
     }
 });
 
-
 Route::get('/policy', function () {
     return view('policy');
 })->name('policy');
@@ -42,51 +41,55 @@ Route::prefix('lnk')->group(function () {
     Route::get('/{link}', [DeepLinkController::class, 'index']);
 });
 
+Route::prefix('apist')->group(function () {
+    Route::post('/password/reset', [AuthController::class, 'resetPassword']);
+    Route::post('/tg/confirmed', [AuthController::class, 'isTgConfirmed']);
+    Route::post('/tg', [AuthController::class, 'setTGPhone']);
+});
+
 Route::middleware(['auth'])->group(function () {
     Route::get('/blogger/{blogger}', [BloggerController::class, 'show'])->name('blogger-page');
     Route::get('/seller/{seller}', [SellerController::class, 'show'])->name('seller-page');
-    Route::get('/telegram', [AuthController::class, 'telegram'])->name('telegram');
+
     Route::get('/profile', [UserController::class, 'profile'])->name('profile');
     Route::get('/profile/edit', [UserController::class, 'update'])->name('edit-profile');
     Route::post('/profile/update', [UserController::class, 'edit'])->name('edit-profile-post');
-    Route::get('/project/{project_id}', [ProjectController::class, 'selectBloggers'])->name('select-bloggers');
-    Route::get('/admin-panel', [AdminController::class, 'index']);
+
     Route::resource('projects', ProjectController::class);
+    Route::get('/project/{project_id}', [ProjectController::class, 'selectBloggers'])->name('select-bloggers');
+
     Route::get('/tariff', function () {
         return view('tariff');
     })->name('tariff');
     Route::post('/tariff', [SellerController::class, 'updateTariff']);
-});
 
-Route::prefix('apist')->group(function () {
-    Route::post('/projects', [ProjectController::class, 'index']);
-    Route::post('/projects/confirm', [WorkController::class, 'confirm']);
-    Route::post('/blogger/projects', [ProjectController::class, 'bloggerProjects']);
+    Route::prefix('apist')->group(function () {
+        Route::post('/projects', [ProjectController::class, 'index']);
+        Route::post('/projects/confirm', [WorkController::class, 'confirm']);
 
-    Route::post('/bloggers', [BloggerController::class, 'index']);
-    Route::post('/bloggers/create', [BloggerController::class, 'store']);
+        Route::post('/bloggers', [BloggerController::class, 'index']);
+        Route::post('/bloggers/create', [BloggerController::class, 'store'])->name('create-blogger');
+        Route::post('/blogger/projects', [ProjectController::class, 'bloggerProjects']);
 
-    Route::post('/works', [WorkController::class, 'store'])->name('create-work');
-    Route::post('/works/{work_id}/accept', [WorkController::class, 'accept']);
-    Route::get('/works/{work_id}/accept', [WorkController::class, 'accept']);
-    Route::post('/works/{work_id}/confirm', [WorkController::class, 'confirm']);
+        Route::post('/works', [WorkController::class, 'store'])->name('create-work');
+        Route::post('/works/{work_id}/accept', [WorkController::class, 'accept']);
+        Route::get('/works/{work_id}/accept', [WorkController::class, 'accept']);
+        Route::post('/works/{work_id}/confirm', [WorkController::class, 'confirm']);
 
-    Route::post('/messages/create', [MessageController::class, 'store']);
-    Route::post('/messages/count', [MessageController::class, 'count']);
-    Route::post('/messages', [MessageController::class, 'index']);
+        Route::post('/messages/create', [MessageController::class, 'store']);
+        Route::post('/messages/count', [MessageController::class, 'count']);
+        Route::post('/messages', [MessageController::class, 'index']);
 
-    Route::post('/admin/bloggers', [AdminController::class, 'bloggers']);
-    Route::post('/admin/sellers', [AdminController::class, 'sellers']);
-    Route::post('/admin/moderation', [AdminController::class, 'moderation']);
-    Route::post('/admin/bloggers/accept', [AdminController::class, 'accept']);
-    Route::get('/admin/deny/{user_id}', [AdminController::class, 'deny']);
-    Route::get('/admin/achievement/{user_id}', [AdminController::class, 'achievement']);
+        Route::post('/admin/bloggers', [AdminController::class, 'bloggers']);
+        Route::post('/admin/sellers', [AdminController::class, 'sellers']);
+        Route::post('/admin/moderation', [AdminController::class, 'moderation']);
+        Route::post('/admin/bloggers/accept', [AdminController::class, 'accept']);
+        Route::get('/admin/deny/{user_id}', [AdminController::class, 'deny']);
+        Route::get('/admin/achievement/{user_id}', [AdminController::class, 'achievement']);
 
-    Route::post('/password/reset', [AuthController::class, 'resetPassword']);
-    Route::post('/tg', [AuthController::class, 'setTGPhone']);
-    Route::post('/tg/confirmed', [AuthController::class, 'isTgConfirmed']);
-    Route::get('/notifications', [UserController::class, 'getNewNotifications']);
-    Route::get('/notifications/view', [NotificationController::class, 'view']);
+        Route::get('/notifications', [UserController::class, 'getNewNotifications']);
+        Route::get('/notifications/view', [NotificationController::class, 'view']);
 
-    Route::get('/coverage-data', [DeepLinkController::class, 'stats']);
+        Route::get('/coverage-data', [DeepLinkController::class, 'stats']);
+    });
 });

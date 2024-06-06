@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blogger;
+use App\Models\BloggerPlatform;
 use App\Models\Project;
 use App\Models\User;
 use App\Models\Work;
@@ -63,56 +64,53 @@ class BloggerController extends Controller
         return view("blogger.list", compact('bloggers'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        $validator = Validator::make(request()->all(), [
-            'user_id' => 'required|numeric',
-            'platform' => ['required', Rule::in(Blogger::PLATFORM_TYPES)],
-            'description' => 'required|string',
-            'subscriber_quantity' => 'required|numeric',
-            'coverage' => 'required|numeric',
-            'engagement_rate' => 'required|numeric',
-            'cost_per_mille' => 'required|numeric',
-            'gender_ratio' => 'required|numeric',
+        $validator = Validator::make($request->all(), [
+            'desc' => 'string|nullable',
+            'sex' => 'required|string',
+            'tg-link' => 'string|nullable',
+            'inst-link' => 'string|nullable',
+            'yt-link' => 'string|nullable',
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+             return redirect()->back()->withErrors($validator)->withInput();
         }
 
+        $user = Auth::user();
         $validated = $validator->validated();
-        Blogger::create([
-            'user_id' => $validated['user_id'],
-            'platform' => $validated['platform'],
-            'description' => $validated['description'],
-            'subscriber_quantity' => $validated['subscriber_quantity'],
-            'coverage' => $validated['coverage'],
-            'engagement_rate' => $validated['engagement_rate'],
-            'cost_per_mille' => $validated['cost_per_mille'],
-            'gender_ratio' => $validated['gender_ratio'],
+        $blogger = Blogger::create([
+            'user_id' => $user->id,
+            'description' => $validated['desc'] ?? null,
+            'sex' => $validated['sex'],
         ]);
 
-        $user = User::find($validated['user_id']);
-        $user->status = 1;
-        $user->save();
+        if ($validated['tg-link']) {
+            BloggerPlatform::create([
+                'blogger_id' => $blogger->id,
+                'name' => Blogger::TELEGRAM,
+                'link' => $validated['tg-link'],
+            ]);
+        }
 
-        return response()->json('success');
+        if ($validated['inst-link']) {
+            BloggerPlatform::create([
+                'blogger_id' => $blogger->id,
+                'name' => Blogger::INSTAGRAM,
+                'link' => $validated['inst-link'],
+            ]);
+        }
+
+        if ($validated['yt-link']) {
+            BloggerPlatform::create([
+                'blogger_id' => $blogger->id,
+                'name' => Blogger::YOUTUBE,
+                'link' => $validated['yt-link'],
+            ]);
+        }
+
+        return redirect()->route('profile');
     }
 
     public function show(Blogger $blogger)

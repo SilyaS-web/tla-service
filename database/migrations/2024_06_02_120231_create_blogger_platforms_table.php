@@ -17,11 +17,12 @@ class CreateBloggerPlatformsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('blogger_id');
             $table->foreign('blogger_id')->references('id')->on('bloggers')->cascadeOnDelete();
-            $table->string('name');
-            $table->integer('subscriber_quantity');
-            $table->integer('coverage');
-            $table->double('engagement_rate');
-            $table->double('cost_per_mille');
+            $table->string('name')->nullable();
+            $table->string('link');
+            $table->integer('subscriber_quantity')->nullable();
+            $table->integer('coverage')->nullable();
+            $table->double('engagement_rate')->nullable();
+            $table->double('cost_per_mille')->nullable();
             $table->timestamps();
         });
     }

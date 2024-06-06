@@ -27,6 +27,14 @@ class UserController extends Controller
                 break;
 
             case 'blogger':
+                if ($user->status == 0) {
+                    if (!$user->blogger) {
+                        return view('auth.blogger-verify');
+                    }
+
+                    return view('auth.moderation');
+                }
+
                 $data = $this->getBloggerProfileData();
                 break;
 

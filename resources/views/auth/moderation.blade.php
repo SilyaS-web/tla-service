@@ -8,16 +8,12 @@
                 <div class="form auth__form">
                     <div class="auth__header">
                         <div class="auth__title title">
-                            Подтвердите личность
+                            Ваш аккаунт находится на модерации
                         </div>
                         <p class="auth__subtitle">
-                            Для того чтобы подтвердить личность нужно перейти по ссылке ниже и ответить боту в телеграме
+                            Как только администратор обработает ваш аккаунт, вам придёт уведомление в
+                            <a target="_blank" href="https://t.me/tla_service_bot" class="">телеграм-боте</a>
                         </p>
-                    </div>
-                    <div class="auth__form-btns" style="justify-content: center;">
-                        <a href="{{ route('profile') }}" class="btn btn-primary telegram-link">
-                            Перейти в телеграмм
-                        </a>
                     </div>
                 </div>
             </div>

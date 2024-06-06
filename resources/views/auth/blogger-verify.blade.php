@@ -7,7 +7,7 @@
             <div class="auth__title title">
                 Заполните поля
             </div>
-            <form class="form auth__form" method="POST" action="{{ route('') }}">
+            <form class="form auth__form" method="POST" action="{{ route('create-blogger') }}">
                 <div class="form-group">
                     <label for="tg-link">Ссылка на телеграм</label>
                     <input type="text" id="tg-link" name="tg-link" placeholder="Ссылка" class="input input--tg-link" value="{{ old('tg-link') }}">
@@ -29,6 +29,13 @@
                     <span class="error">{{ $message }}</span>
                     @enderror
                 </div>
+                  <div class="form-group">
+                    <label for="city">Город</label>
+                    <input type="text" id="city" name="city" placeholder="Москва" class="input input--yt-link" value="{{ old('city') }}">
+                    @error('city')
+                    <span class="error">{{ $message }}</span>
+                    @enderror
+                </div>
                 <div class="form-group">
                     <label for="desc">Описание канала</label>
                     <textarea name="desc" id="desc" cols="30" rows="10" class="textarea" placeholder="Введите текст"></textarea>
@@ -36,16 +43,16 @@
                 <div class="form-group">
                     <label for="sex">Ваш пол</label>
                     <select name="sex" id="sex" name="sex" class="input input--sex select">
-                        <option value="seller">Мужской</option>
-                        <option value="blogger">Женский</option>
+                        <option value="male">Мужской</option>
+                        <option value="female">Женский</option>
                     </select>
-                    @error('role')
+                    @error('sex')
                         <span class="error">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-btns auth__form-btns">
                     <button class="btn btn-primary next" type="submit">
-                        Сохранить
+                        Отправить на модерацию
                     </button>
                 </div>
                 <p class="form-addit">
@@ -55,21 +62,4 @@
         </div>
     </div>
 </section>
-@endsection
-
-
-@section('scripts')
-<script src="libs/qr/qrcode.min.js"></script>
-<script>
-    var qrcode = new QRCode("tg-qr", {
-        text: "https://t.me/tla_service_bot"
-        , width: 125
-        , height: 125
-        , colorDark: "#000000"
-        , colorLight: "#ffffff"
-        , correctLevel: QRCode.CorrectLevel.H
-    });
-
-</script>
-<script src="{{ asset('js/tg.js') }}"></script>
 @endsection

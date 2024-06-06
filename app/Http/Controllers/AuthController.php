@@ -24,11 +24,6 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function telegram()
-    {
-        return view('auth.telegram');
-    }
-
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [

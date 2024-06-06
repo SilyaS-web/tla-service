@@ -6,6 +6,7 @@ use App\Models\Blogger;
 use App\Models\BloggerPlatform;
 use App\Models\Seller;
 use App\Models\User;
+use App\Services\TgService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
@@ -14,10 +15,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class AdminController extends Controller
 {
-    public function index()
-    {
-    }
-
     public function accept(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -45,8 +42,8 @@ class AdminController extends Controller
         }
 
         $validated = $validator->validated();
-        $blogger = Blogger::create([
-            'user_id' => $validated['user_id'],
+        $blogger = Blogger::where('user_id', $validated['user_id'])->first();
+        $blogger->update([
             'description' => $validated['desc'] ?? null,
             'sex' => $validated['sex'],
             'gender_ratio' => $validated['gender_ratio'],
@@ -54,41 +51,72 @@ class AdminController extends Controller
         ]);
 
         if ($validated['tg_subs']) {
-            BloggerPlatform::create([
-                'blogger_id' => $blogger->id,
-                'name' => Blogger::TELEGRAM,
-                'subscriber_quantity' => $validated['tg_subs'],
-                'coverage' => $validated['tg_cover'],
-                'engagement_rate' => $validated['tg_er'],
-                'cost_per_mille' => $validated['tg_cpm'],
-            ]);
+            $tg_platform = $blogger->platforms()->where('name', Blogger::TELEGRAM)->first();
+            if ($tg_platform) {
+                $tg_platform->update([
+                    'subscriber_quantity' => $validated['tg_subs'],
+                    'coverage' => $validated['tg_cover'],
+                    'engagement_rate' => $validated['tg_er'],
+                    'cost_per_mille' => $validated['tg_cpm'],
+                ]);
+            } else {
+                BloggerPlatform::create([
+                    'blogger_id' => $blogger->id,
+                    'name' => Blogger::TELEGRAM,
+                    'subscriber_quantity' => $validated['tg_subs'],
+                    'coverage' => $validated['tg_cover'],
+                    'engagement_rate' => $validated['tg_er'],
+                    'cost_per_mille' => $validated['tg_cpm'],
+                ]);
+            }
         }
 
         if ($validated['inst_subs']) {
-            BloggerPlatform::create([
-                'blogger_id' => $blogger->id,
-                'name' => Blogger::INSTAGRAM,
-                'subscriber_quantity' => $validated['inst_subs'],
-                'coverage' => $validated['inst_cover'],
-                'engagement_rate' => $validated['inst_er'],
-                'cost_per_mille' => $validated['inst_cpm'],
-            ]);
+            $inst_platform = $blogger->platforms()->where('name', Blogger::INSTAGRAM)->first();
+            if ($inst_platform) {
+                $inst_platform->update([
+                    'subscriber_quantity' => $validated['inst_subs'],
+                    'coverage' => $validated['inst_cover'],
+                    'engagement_rate' => $validated['inst_er'],
+                    'cost_per_mille' => $validated['inst_cpm'],
+                ]);
+            } else {
+                BloggerPlatform::create([
+                    'blogger_id' => $blogger->id,
+                    'name' => Blogger::INSTAGRAM,
+                    'subscriber_quantity' => $validated['inst_subs'],
+                    'coverage' => $validated['inst_cover'],
+                    'engagement_rate' => $validated['inst_er'],
+                    'cost_per_mille' => $validated['inst_cpm'],
+                ]);
+            }
         }
 
         if ($validated['yt_subs']) {
-            BloggerPlatform::create([
-                'blogger_id' => $blogger->id,
-                'name' => Blogger::YOUTUBE,
-                'subscriber_quantity' => $validated['yt_subs'],
-                'coverage' => $validated['yt_cover'],
-                'engagement_rate' => $validated['yt_er'],
-                'cost_per_mille' => $validated['yt_cpm'],
-            ]);
+            $yt_platform = $blogger->platforms()->where('name', Blogger::YOUTUBE)->first();
+            if ($yt_platform) {
+                $yt_platform->update([
+                    'subscriber_quantity' => $validated['yt_subs'],
+                    'coverage' => $validated['yt_cover'],
+                    'engagement_rate' => $validated['yt_er'],
+                    'cost_per_mille' => $validated['yt_cpm'],
+                ]);
+            } else {
+                BloggerPlatform::create([
+                    'blogger_id' => $blogger->id,
+                    'name' => Blogger::YOUTUBE,
+                    'subscriber_quantity' => $validated['yt_subs'],
+                    'coverage' => $validated['yt_cover'],
+                    'engagement_rate' => $validated['yt_er'],
+                    'cost_per_mille' => $validated['yt_cpm'],
+                ]);
+            }
         }
 
         $user = User::find($validated['user_id']);
         $user->status = 1;
         $user->save();
+        TgService::notify($blogger->user->tgPhone->chat_id, 'Вы успешно прошли модерацию');
 
         return response()->json('success', 200);
     }

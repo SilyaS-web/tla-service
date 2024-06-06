@@ -29,6 +29,8 @@ class Blogger extends Model
         'sex',
         'is_achievement',
         'gender_ratio',
+        'city',
+        'country'
     ];
 
     public function user()

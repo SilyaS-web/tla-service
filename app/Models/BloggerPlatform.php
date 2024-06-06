@@ -14,6 +14,7 @@ class BloggerPlatform extends Model
         'name',
         'subscriber_quantity',
         'coverage',
+        'link',
         'engagement_rate',
         'cost_per_mille',
     ];
