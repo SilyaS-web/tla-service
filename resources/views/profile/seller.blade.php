@@ -82,20 +82,7 @@
                                                 <span class="error">{{ $message }}</span>
                                                 @enderror
                                             </div>
-                                            <div class="form-group" style="flex:1 1">
-                                                <label for="" style="display:unset">Количество мест на интеграцию</label>
-                                                <div class="quantity-w" data-max="100">
-                                                    <div class="quantity-minus">
-                                                        <img src="{{ asset('img/minus-icon.svg') }}" alt="">
-                                                    </div>
-                                                    <div class="quantity-input">
-                                                        <input type="number" class="input" value="0" name="quantity">
-                                                    </div>
-                                                    <div class="quantity-plus">
-                                                        <img src="{{ asset('img/plus-icon.svg') }}" alt="">
-                                                    </div>
-                                                </div>
-                                            </div>
+
                                         </div>
                                         <div class="form-group form-group--file create-project__files upload-files">
                                             <div class="upload-files__title">
@@ -124,11 +111,22 @@
                                         <div class="form-group marketing-format">
                                             <label for="format">Выберите формат рекламы</label>
                                             @error('project_type')
-                                            <span class="error">{{ $message }}</span>
+                                                <span class="error">{{ $message }}</span>
                                             @enderror
                                             <div class="input-checkbox-w">
                                                 <input type="checkbox" class="checkbox" name="project_type" value="feedback" id="product-feedback">
                                                 <label for="product-feedback">Отзыв на товар - Бартер</label>
+                                                <div class="quantity-w" data-max="100">
+                                                    <div class="quantity-minus">
+                                                        <img src="{{ asset('img/minus-icon.svg') }}" alt="">
+                                                    </div>
+                                                    <div class="quantity-input">
+                                                        <input type="number" class="input" value="0" name="feedback-quantity" id="feedback-quantity">
+                                                    </div>
+                                                    <div class="quantity-plus">
+                                                        <img src="{{ asset('img/plus-icon.svg') }}" alt="">
+                                                    </div>
+                                                </div>
                                                 <div class="format-tooltip" data-hint="feedback">
                                                     ?
                                                     <div class="format-hint format-hint--text" id="feedback">
@@ -142,10 +140,21 @@
                                                 </div>
 
                                             </div>
-                                            <div class="input-checkbox-w disabled">
-                                                <input type="checkbox" class="checkbox" id="product-inst">
+                                            <div class="input-checkbox-w">
+                                                <input type="checkbox" class="checkbox" name="project_type" value="feedback" id="product-feedback">
                                                 <label for="product-inst">Рекламная интеграция (Inst) - Бартер</label>
-                                                <div class="format-tooltip" data-hint="inst">
+                                                <div class="quantity-w" data-max="100">
+                                                    <div class="quantity-minus">
+                                                        <img src="{{ asset('img/minus-icon.svg') }}" alt="">
+                                                    </div>
+                                                    <div class="quantity-input">
+                                                        <input type="number" class="input" value="0" name="inst-quantity" id="inst-quantity">
+                                                    </div>
+                                                    <div class="quantity-plus">
+                                                        <img src="{{ asset('img/plus-icon.svg') }}" alt="">
+                                                    </div>
+                                                </div>
+                                                <div class="format-tooltip" data-hint="feedback">
                                                     ?
                                                     <div class="format-hint format-hint--text" id="inst">
                                                         <div class="format-hint__title">
@@ -161,6 +170,17 @@
                                             <div class="input-checkbox-w disabled">
                                                 <input type="checkbox" class="checkbox" id="product-youtube">
                                                 <label for="product-youtube">Рекламная интеграция (YouTube) - Бартер</label>
+                                                <div class="quantity-w" data-max="100">
+                                                    <div class="quantity-minus">
+                                                        <img src="{{ asset('img/minus-icon.svg') }}" alt="">
+                                                    </div>
+                                                    <div class="quantity-input">
+                                                        <input type="number" class="input" value="0" name="quantity">
+                                                    </div>
+                                                    <div class="quantity-plus">
+                                                        <img src="{{ asset('img/plus-icon.svg') }}" alt="">
+                                                    </div>
+                                                </div>
                                                 <div class="format-tooltip" data-hint="youtube">
                                                     ?
                                                     <div class="format-hint format-hint--text" id="youtube">
@@ -177,6 +197,17 @@
                                             <div class="input-checkbox-w disabled">
                                                 <input type="checkbox" class="checkbox" id="product-other">
                                                 <label for="product-other">Другие площадки для интеграций - Бартер</label>
+                                                <div class="quantity-w" data-max="100">
+                                                    <div class="quantity-minus">
+                                                        <img src="{{ asset('img/minus-icon.svg') }}" alt="">
+                                                    </div>
+                                                    <div class="quantity-input">
+                                                        <input type="number" class="input" value="0" name="quantity">
+                                                    </div>
+                                                    <div class="quantity-plus">
+                                                        <img src="{{ asset('img/plus-icon.svg') }}" alt="">
+                                                    </div>
+                                                </div>
                                                 <div class="format-tooltip" data-hint="other">
                                                     ?
                                                     <div class="format-hint format-hint--text" id="other">
@@ -193,6 +224,17 @@
                                             <div class="input-checkbox-w disabled">
                                                 <input type="checkbox" class="checkbox" id="product-payment">
                                                 <label for="product-payment">Платные интеграции</label>
+                                                <div class="quantity-w" data-max="100">
+                                                    <div class="quantity-minus">
+                                                        <img src="{{ asset('img/minus-icon.svg') }}" alt="">
+                                                    </div>
+                                                    <div class="quantity-input">
+                                                        <input type="number" class="input" value="0" name="quantity">
+                                                    </div>
+                                                    <div class="quantity-plus">
+                                                        <img src="{{ asset('img/plus-icon.svg') }}" alt="">
+                                                    </div>
+                                                </div>
                                                 <div class="format-tooltip" data-hint="payment">
                                                     ?
                                                     <div class="format-hint format-hint--text" id="payment">
@@ -315,12 +357,26 @@
                                                     </div>
                                                     <div class="feedback-item__stats">
                                                         @if($wb_stats['low'] > 0)
-                                                        <div class="feedback-item__stat">
-                                                            <div class="feedback-item__stat-quest danger">
-                                                                !
+                                                            <div class="feedback-item__stat">
+                                                                <div class="feedback-item__stat-quest danger">
+                                                                    !
+                                                                </div>
+                                                                У вас {{ $wb_stats['low'] }} товар(ов) с очень низкой оценкой
+                                                                <div class="feedback-item__stat-products">
+                                                                    <div class="" style="background-color: #fff">
+                                                                        <a href="#" class="profile-projects__status">
+                                                                            122333444
+                                                                        </a>
+                                                                        <a href="#" class="profile-projects__status">
+                                                                            122333444
+                                                                        </a>
+                                                                        <a href="#" class="profile-projects__status">
+                                                                            122333444
+                                                                        </a>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            У вас {{ $wb_stats['low'] }} товар(ов) с очень низкой оценкой
-                                                        </div>
+
                                                         @endif
                                                         @if($wb_stats['med'] > 0)
                                                         <div class="feedback-item__stat">

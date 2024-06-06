@@ -2,17 +2,23 @@
 <p style="font-size: 14px; color: rgba(0, 0, 0, 0.4)">Нет новых уведомлений</p>
 @else
 @forelse ($notifications as $notification)
-<div class="notif-header__row ">
-    <div class="notif-header__col notif-header__img">
-        <img src="img/profile-icon.svg" alt="">
+<div class="notif-header__col ">
+    <div class="notif-header__row">
+        <div class="notif-header__col notif-header__img">
+            <img src="img/profile-icon.svg" alt="">
+        </div>
+        <div class="notif-header__col">
+            <div class="notif-header__title">
+                {{ $notification->text ?? 'Новая заявка' }}
+            </div>
+            <div class="notif-header__text">
+                {{ $notification->text }}
+            </div>
+        </div>
     </div>
-    <div class="notif-header__col">
-        <div class="notif-header__title">
-            {{ $notification->text ?? 'Новая заявка' }}
-        </div>
-        <div class="notif-header__text">
-            {{ $notification->text }}
-        </div>
+    <div class="notif-header__btns">
+        <a href="#" class="notif-header__goto" data-work-id="5">Перейти</a>
+        <a href="#" class="notif-header__hide">Скрыть</a>
     </div>
 </div>
 @empty

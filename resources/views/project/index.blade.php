@@ -14,6 +14,9 @@
                 </div>
             </div>
             <div class="profile-projects__row">
+                <p>Артикул товара: <b>{{ $project->product_nm }}</b></p>
+            </div>
+            <div class="profile-projects__row">
                 <div class="profile-projects__formats">
                     <div class="profile-projects__format">
                         Рекламные посты
@@ -518,7 +521,7 @@
                         </div>
                     </div>
                     <div class="view-project__props-col">
-                        <div class="projects-statistics__title">
+                        {{-- <div class="projects-statistics__title">
                             Статистика по товару (OZON)
                         </div>
                         <div class="view-project__props-total">
@@ -533,12 +536,14 @@
                         </div>
                         <div class="view-project__props-graph">
                             <canvas id="prices-graph-desktop" class=""></canvas>
-                        </div>
+                        </div> --}}
                         <div class="view-project__props-ph">
-                            <div class="view-project__props-ph_title">
+                            <div class="view-project__props-ph_title" style="text-align: center">
+                                Статистика по товару (OZON)<br>
                                 Раздел находится в разработке
                             </div>
                         </div>
+                        <div class="view-project__props-overflow" style="background-image: url('{{ asset('img/Remove-bg 1.png') }}'); background-size:contain; background-position:center; background-repeat:no-repeat;"></div>
                     </div>
                 </div>
             </div>

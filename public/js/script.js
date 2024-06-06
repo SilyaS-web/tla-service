@@ -107,6 +107,14 @@ class CreateProject extends Quest {
             get: ()=>{
                 return $(this.node).find('.marketing-format').find('input:checked').attr('id');
             }
+        },
+        feedback_q: {
+            set: ()=>{
+
+            },
+            get: ()=>{
+                return $(this.node).find('#feedback-quantity').find('input:checked').attr('id');
+            }
         }
     }
 
@@ -601,6 +609,8 @@ class Chat {
             this.currentChatId = false;
         });
 
+
+
         var mediaQuery = window.matchMedia('(max-width: 700px)')
 
         if (mediaQuery.matches) {
@@ -699,6 +709,8 @@ class Chat {
                 else{
                     $(self.node).find('.btn-action').prop('href', `#`);
                 }
+
+                $(self.node).find(`.item-chat[data-id="${self.currentChatId}"]`).addClass('current')
             }
 
 
@@ -1020,6 +1032,14 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
+    $(document).on('click', '.notif-header__goto', function(e){
+        e.preventDefault();
+        $(document).find('.chat-link').click();
+        console.log($(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`));
+        $(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`).click();
+        $(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`).addClass('current');
+    })
+
     var quant = $(document).find('.quantity-w');
 
     quant.on('click', function(e){
