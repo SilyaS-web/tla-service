@@ -71,6 +71,9 @@
                             </div>
                         </div>
                     </div>
+                    <div class="card__row card__stats-row">
+                        <button class="btn btn-secondary btn-bloggers-in_work">Блогеры в работе</button>
+                    </div>
                 </div>
             </div>
 
@@ -78,7 +81,7 @@
                 <button class="btn btn-primary btn-bloggers tablet">Заявки от блогеров</button>
             </div> --}}
         </div>
-        <div class="profile-projects__row profile-projects__blogers projects-blogers owl-carousel">
+        <div class="profile-projects__row profile-projects__blogers projects-blogers projects-blogers--leads owl-carousel">
             <div class="list-blogers__item bloger-item card" data-id="1">
                 <div class="card__row card__content">
                     <div class="card__col">
@@ -490,6 +493,412 @@
                             </button>
                             <button class="btn btn-secondary" data-project-id="">
                                 Отклонить
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="profile-projects__row profile-projects__blogers projects-blogers projects-blogers--in_work owl-carousel">
+            <div class="list-blogers__item bloger-item card" data-id="1">
+                <div class="card__row card__content">
+                    <div class="card__col">
+                        <div class="card__row card__header">
+                            <div class="card__img">
+                                <img src="img/profile-icon.svg" alt="">
+                                <div class="card__achive">
+                                    <img src="img/achive-icon.svg" alt="">
+                                </div>
+                            </div>
+                            <div class="card__name">
+                                <p class="card__name-name">
+                                    Чертовски мило
+                                </p>
+                            </div>
+                            <div class="card__platform">
+                                <img src="img/inst-icon.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="card__row card__tags">
+                            <div class="card__tags-item">
+                                <span>Животные и Природа</span>
+                            </div>
+                            <div class="card__tags-item">
+                                <span>Развлечения и Юмор</span>
+                            </div>
+                            <div class="card__tags-item">
+                                <span>Другое</span>
+                            </div>
+                        </div>
+                        {{-- <div class="card__row card__desc-title">
+                            <p style="font-weight: 500; font-size: 18px;">
+                                Сообщение от блогера
+                            </p>
+                        </div> --}}
+                        {{-- <div class="card__row card__desc">
+                            <p>
+                                Коллекция позитивных, светлых и чертовски милых видео!
+                                Платёжеспособная женская аудитория от 25 лет
+                            </p>
+                        </div> --}}
+                    </div>
+                    <div class="card__col card__stats">
+                        <div class="card__col card__stats-stats">
+                            <div class="card__row card__stats-row">
+
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>Подписчики</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>108 729</span>
+                                    </div>
+                                </div>
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>Просмотры</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>800</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card__row card__stats-row">
+
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>ER</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>51%</span>
+                                    </div>
+                                </div>
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>CPM</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>263₽</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card__col card__column--gender">
+                            <div class="card__stats-title">
+                                <span>Пол аудитории</span>
+                            </div>
+                            <div class="card__row" style="align-items: center; gap:5px">
+                                <div class="card__diagram-icon"><img src="img/blogers-list/male-icon.svg" alt=""></div>
+                                <div class="card__diagram-line"><span style="width:50%;"></span></div>
+                                <div class="card__diagram-icon"><img src="img/blogers-list/female-icon.svg" alt=""></div>
+                            </div>
+                        </div>
+                        <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap">
+                            <button class="btn btn-primary" data-project-id="">
+                                Перейти в диалог
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-blogers__item bloger-item card" data-id="1">
+                <div class="card__row card__content">
+                    <div class="card__col">
+                        <div class="card__row card__header">
+                            <div class="card__img">
+                                <img src="img/profile-icon.svg" alt="">
+                                <div class="card__achive">
+                                    <img src="img/achive-icon.svg" alt="">
+                                </div>
+                            </div>
+                            <div class="card__name">
+                                <p class="card__name-name">
+                                    Чертовски мило
+                                </p>
+                            </div>
+                            <div class="card__platform">
+                                <img src="img/inst-icon.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="card__row card__tags">
+                            <div class="card__tags-item">
+                                <span>Животные и Природа</span>
+                            </div>
+                            <div class="card__tags-item">
+                                <span>Развлечения и Юмор</span>
+                            </div>
+                            <div class="card__tags-item">
+                                <span>Другое</span>
+                            </div>
+                        </div>
+                        {{-- <div class="card__row card__desc-title">
+                            <p style="font-weight: 500; font-size: 18px;">
+                                Сообщение от блогера
+                            </p>
+                        </div> --}}
+                        {{-- <div class="card__row card__desc">
+                            <p>
+                                Коллекция позитивных, светлых и чертовски милых видео!
+                                Платёжеспособная женская аудитория от 25 лет
+                            </p>
+                        </div> --}}
+                    </div>
+                    <div class="card__col card__stats">
+                        <div class="card__col card__stats-stats">
+                            <div class="card__row card__stats-row">
+
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>Подписчики</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>108 729</span>
+                                    </div>
+                                </div>
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>Просмотры</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>800</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card__row card__stats-row">
+
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>ER</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>51%</span>
+                                    </div>
+                                </div>
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>CPM</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>263₽</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card__col card__column--gender">
+                            <div class="card__stats-title">
+                                <span>Пол аудитории</span>
+                            </div>
+                            <div class="card__row" style="align-items: center; gap:5px">
+                                <div class="card__diagram-icon"><img src="img/blogers-list/male-icon.svg" alt=""></div>
+                                <div class="card__diagram-line"><span style="width:50%;"></span></div>
+                                <div class="card__diagram-icon"><img src="img/blogers-list/female-icon.svg" alt=""></div>
+                            </div>
+                        </div>
+                        <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap">
+                            <button class="btn btn-primary" data-project-id="">
+                                Перейти в диалог
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-blogers__item bloger-item card" data-id="1">
+                <div class="card__row card__content">
+                    <div class="card__col">
+                        <div class="card__row card__header">
+                            <div class="card__img">
+                                <img src="img/profile-icon.svg" alt="">
+                                <div class="card__achive">
+                                    <img src="img/achive-icon.svg" alt="">
+                                </div>
+                            </div>
+                            <div class="card__name">
+                                <p class="card__name-name">
+                                    Чертовски мило
+                                </p>
+                            </div>
+                            <div class="card__platform">
+                                <img src="img/inst-icon.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="card__row card__tags">
+                            <div class="card__tags-item">
+                                <span>Животные и Природа</span>
+                            </div>
+                            <div class="card__tags-item">
+                                <span>Развлечения и Юмор</span>
+                            </div>
+                            <div class="card__tags-item">
+                                <span>Другое</span>
+                            </div>
+                        </div>
+                        {{-- <div class="card__row card__desc-title">
+                            <p style="font-weight: 500; font-size: 18px;">
+                                Сообщение от блогера
+                            </p>
+                        </div> --}}
+                        {{-- <div class="card__row card__desc">
+                            <p>
+                                Коллекция позитивных, светлых и чертовски милых видео!
+                                Платёжеспособная женская аудитория от 25 лет
+                            </p>
+                        </div> --}}
+                    </div>
+                    <div class="card__col card__stats">
+                        <div class="card__col card__stats-stats">
+                            <div class="card__row card__stats-row">
+
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>Подписчики</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>108 729</span>
+                                    </div>
+                                </div>
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>Просмотры</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>800</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card__row card__stats-row">
+
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>ER</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>51%</span>
+                                    </div>
+                                </div>
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>CPM</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>263₽</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card__col card__column--gender">
+                            <div class="card__stats-title">
+                                <span>Пол аудитории</span>
+                            </div>
+                            <div class="card__row" style="align-items: center; gap:5px">
+                                <div class="card__diagram-icon"><img src="img/blogers-list/male-icon.svg" alt=""></div>
+                                <div class="card__diagram-line"><span style="width:50%;"></span></div>
+                                <div class="card__diagram-icon"><img src="img/blogers-list/female-icon.svg" alt=""></div>
+                            </div>
+                        </div>
+                        <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap">
+                            <button class="btn btn-primary" data-project-id="">
+                                Перейти в диалог
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-blogers__item bloger-item card" data-id="1">
+                <div class="card__row card__content">
+                    <div class="card__col">
+                        <div class="card__row card__header">
+                            <div class="card__img">
+                                <img src="img/profile-icon.svg" alt="">
+                                <div class="card__achive">
+                                    <img src="img/achive-icon.svg" alt="">
+                                </div>
+                            </div>
+                            <div class="card__name">
+                                <p class="card__name-name">
+                                    Чертовски мило
+                                </p>
+                            </div>
+                            <div class="card__platform">
+                                <img src="img/inst-icon.svg" alt="">
+                            </div>
+                        </div>
+                        <div class="card__row card__tags">
+                            <div class="card__tags-item">
+                                <span>Животные и Природа</span>
+                            </div>
+                            <div class="card__tags-item">
+                                <span>Развлечения и Юмор</span>
+                            </div>
+                            <div class="card__tags-item">
+                                <span>Другое</span>
+                            </div>
+                        </div>
+                        {{-- <div class="card__row card__desc-title">
+                            <p style="font-weight: 500; font-size: 18px;">
+                                Сообщение от блогера
+                            </p>
+                        </div> --}}
+                        {{-- <div class="card__row card__desc">
+                            <p>
+                                Коллекция позитивных, светлых и чертовски милых видео!
+                                Платёжеспособная женская аудитория от 25 лет
+                            </p>
+                        </div> --}}
+                    </div>
+                    <div class="card__col card__stats">
+                        <div class="card__col card__stats-stats">
+                            <div class="card__row card__stats-row">
+
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>Подписчики</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>108 729</span>
+                                    </div>
+                                </div>
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>Просмотры</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>800</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card__row card__stats-row">
+
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>ER</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>51%</span>
+                                    </div>
+                                </div>
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>CPM</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>263₽</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card__col card__column--gender">
+                            <div class="card__stats-title">
+                                <span>Пол аудитории</span>
+                            </div>
+                            <div class="card__row" style="align-items: center; gap:5px">
+                                <div class="card__diagram-icon"><img src="img/blogers-list/male-icon.svg" alt=""></div>
+                                <div class="card__diagram-line"><span style="width:50%;"></span></div>
+                                <div class="card__diagram-icon"><img src="img/blogers-list/female-icon.svg" alt=""></div>
+                            </div>
+                        </div>
+                        <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap">
+                            <button class="btn btn-primary" data-project-id="">
+                                Перейти в диалог
                             </button>
                         </div>
                     </div>
@@ -537,13 +946,56 @@
                         <div class="view-project__props-graph">
                             <canvas id="prices-graph-desktop" class=""></canvas>
                         </div> --}}
-                        <div class="view-project__props-ph">
+                        {{-- <div class="view-project__props-ph">
                             <div class="view-project__props-ph_title" style="text-align: center">
                                 Статистика по товару (OZON)<br>
                                 Раздел находится в разработке
                             </div>
                         </div>
-                        <div class="view-project__props-overflow" style="background-image: url('{{ asset('img/Remove-bg 1.png') }}'); background-size:contain; background-position:center; background-repeat:no-repeat;"></div>
+                        <div class="view-project__props-overflow" style="background-image: url('{{ asset('img/Remove-bg 1.png') }}'); background-size:contain; background-position:center; background-repeat:no-repeat;"></div> --}}
+                        <div class="card__col card__stats-stats">
+                            <div class="projects-statistics__title" style="margin-bottom: 0">
+                                Статистика по интеграциям
+                            </div>
+                            <div class="card__row card__stats-row">
+
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>Охватов</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>120</span>
+                                    </div>
+                                </div>
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>Переходов</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>12000</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card__row card__stats-row">
+
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>ER</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>3800</span>
+                                    </div>
+                                </div>
+                                <div class="card__col card__stats-item">
+                                    <div class="card__stats-title">
+                                        <span>CPM</span>
+                                    </div>
+                                    <div class="card__stats-val">
+                                        <span>4200₽</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
