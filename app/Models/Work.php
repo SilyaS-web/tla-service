@@ -29,6 +29,7 @@ class Work extends Model
         'confirmed_by_blogger_at',
         'confirmed_by_seller_at',
         'status',
+        'created_by'
     ];
 
     public function blogger()
