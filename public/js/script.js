@@ -990,6 +990,75 @@ class PopupChangePassword extends Popup{
     }
 }
 
+class PopupBloggerSendStatistics extends Popup{
+    constructor(node){
+        super(node);
+
+        this.node = node;
+
+        $(this.node).find('.send-data').on('click', this.sendData)
+
+        return this;
+    }
+
+    node = '';
+    sendUri = "";
+    workId = false;
+
+    dataProps = {
+        subs: {
+            set: (val) => {console.log(val);},
+            get: () =>{
+                return $(this.node).find('#subs').val();
+            }
+        },
+        views: {
+            set: (val) => {console.log(val);},
+            get: () =>{
+                return $(this.node).find('#views').val();
+            }
+        },
+        reposts: {
+            set: (val) => {console.log(val);},
+            get: () =>{
+                return $(this.node).find('#reposts').val();
+            }
+        },
+        likes: {
+            set: (val) => {console.log(val);},
+            get: () =>{
+                return $(this.node).find('#likes').val();
+            }
+        },
+        stats: {
+            get: () =>{
+                return $(this.node).find('#statistics-file').prop('files');
+            }
+        }
+    }
+
+    sendData = () => {
+        var self = this,
+            data = new FormData();
+
+        for(let k in this.dataProps){
+            data.append(k, this.dataProps[k].get())
+        }
+
+        $.ajax({
+            url: `/apist/works/${self.work_id}/stats`,
+            data: data,
+            method: 'POST',
+            processData: false,
+            contentType: false,
+            success: (res)=>{
+                self.closePopup();
+                notify('info', {title: 'Успешно!', message: 'Статистика успешно отправлена'});
+            }
+        })
+    }
+}
+
 class DashboardTabs extends Tabs{
     constructor(node){
         super(node);
@@ -1032,10 +1101,17 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
+    $(document).on('click', '#send-stats-blogger-btn', function(e){
+        var btn = $(e.target).closest('#send-stats-blogger-btn');
+        var form = new PopupBloggerSendStatistics('#send-statistics-blogger');
+
+        form.workId = $(btn).data('id');
+        form.openPopup()
+    })
     $(document).on('click', '.notif-header__goto', function(e){
         e.preventDefault();
+
         $(document).find('.chat-link').click();
-        console.log($(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`));
         $(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`).click();
         $(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`).addClass('current');
     })

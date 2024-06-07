@@ -135,6 +135,22 @@ a.btn:hover{
     font-weight: 500;
     margin-bottom: 15px;
 }
+.form-formats{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.form-format{
+    border-radius: 5px;
+    background-color: var(--pale);
+    padding:5px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+.form-format label{
+    margin-bottom: 0;
+}
 .input {
     border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, .05) ;
@@ -2573,6 +2589,11 @@ input[type='range']::-webkit-slider-runnable-track{
     font-size: 14px;
     color: rgba(0, 0, 0, .4);
 }
+.item-chat__project-link{
+    font-size: 12px;
+    margin-top: 15px;
+    display: block;
+}
 .chat__right {
     flex: 1 1 auto;
     display: flex;
@@ -2732,6 +2753,18 @@ input[type='range']::-webkit-slider-runnable-track{
     box-shadow: 0px 0px 10px 6px rgba(254,94,0,.2);
     outline: none;
 }
+.chat-img__w{
+    position: relative;
+    padding-top:95%;
+}
+.chat-img{
+    object-fit: contain;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+}
+
 .btn {
 }
 .btn-primary {

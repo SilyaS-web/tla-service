@@ -12,9 +12,9 @@
                     <p class="card__name-name">
                         <a class="btn-add-to-project" href="{{ route('blogger-page', $blogger->id) }}" style="color:#000">
                             {{ $blogger->user->name}}
-                        </a><br/>
+                        </a>
                         <p style="font-size: 12px">
-
+                            Россия, Димитровград
                         </p>
                     </p>
                 </div>
