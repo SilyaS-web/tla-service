@@ -75,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/works/{work_id}/accept', [WorkController::class, 'accept']);
         Route::get('/works/{work_id}/accept', [WorkController::class, 'accept']);
         Route::post('/works/{work_id}/confirm', [WorkController::class, 'confirm']);
+        Route::post('/works/{work_id}/stats', [WorkController::class, 'statst']);
 
         Route::post('/messages/create', [MessageController::class, 'store']);
         Route::post('/messages/count', [MessageController::class, 'count']);
