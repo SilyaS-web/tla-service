@@ -399,9 +399,47 @@
                             <label for="comment">Комментарий</label>
                             <textarea name="comment" id="comment" cols="30" rows="10" class="textarea" placeholder="Введите сообщение"></textarea>
                         </div>
+                        <button class="btn btn-primary send-data">
+                            Отправить
+                        </button>
+                    </div>
+                    <div class="close-popup">
+                        <img src="{{ asset('img/close-icon.svg') }}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="popup" id="send-statistics-blogger" style="">
+            <div class="popup__container _container">
+                <div class="popup__body">
+                    <div class="popup__header">
+                        <div class="popup__title title">
+                            Заполните статистику
+                        </div>
+                        <div class="popup__subtitle">
+                            После того, как вы прикрепите статистику по интеграции, проект будет завершен
+                        </div>
+                    </div>
+                    <div class="popup__form">
+                        <div class="form-group">
+                            <label for="subs">Количество подписчиков</label>
+                            <input id="subs" name="subs" type="subs" class="input">
+                        </div>
+                        <div class="form-group">
+                            <label for="views">Просмотры</label>
+                            <input id="views" name="views" type="views" class="input">
+                        </div>
+                        <div class="form-group">
+                            <label for="likes">Лайки</label>
+                            <input id="likes" name="likes" type="likes" class="input">
+                        </div>
+                        <div class="form-group">
+                            <label for="reposts">Репосты</label>
+                            <input id="reposts" name="reposts" type="reposts" class="input">
+                        </div>
                         <div class="input-file input-file--stat" style="padding-left:0; margin-bottom:20px;">
                             <label for="statistics-file">Прикрепить отчет по статитстике</label>
-                            <input id="statistics-file" type="file" hidden>
+                            <input id="statistics-file" type="file" multiple hidden>
                         </div>
                         <button class="btn btn-primary send-data">
                             Отправить
@@ -415,8 +453,10 @@
         </div>
         <div class="popup" id="chat-img" style="">
             <div class="popup__container _container">
-                <div class="popup__body">
-                    <img src="" alt="" class="chat-img" style="width:100%">
+                <div class="popup__body" style="max-width:790px">
+                    <div class="chat-img__w">
+                        <img src="" alt="" class="chat-img" style="width:100%">
+                    </div>
                     <div class="close-popup">
                         <img src="{{ asset('img/close-icon.svg') }}" alt="">
                     </div>

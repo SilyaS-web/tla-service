@@ -148,6 +148,12 @@
                         </div>
                         <div class="form-stat__content">
                             <div class="form-stat__row">
+                                <div class="form-group" style="width:100%; max-width:100%">
+                                    <label for="tg_link">Ссылка</label>
+                                    <input id = "tg_link" type="text" class="input" name = "" style="width:100%; max-width:100%">
+                                </div>
+                            </div>
+                            <div class="form-stat__row">
                                 <div class="form-group">
                                     <label for="tg_subs">Подписчики</label>
                                     <input id = "tg_subs" type="text" class="input" name = "">
@@ -174,6 +180,12 @@
                             Instagram
                         </div>
                         <div class="form-stat__content">
+                            <div class="form-stat__row">
+                                <div class="form-group" style="width:100%; max-width:100%">
+                                    <label for="inst_link">Ссылка</label>
+                                    <input id = "inst_link" type="text" class="input" name = "" style="width:100%; max-width:100%">
+                                </div>
+                            </div>
                             <div class="form-stat__row">
                                 <div class="form-group">
                                     <label for="inst_subs">Подписчики</label>
@@ -202,6 +214,12 @@
                         </div>
                         <div class="form-stat__content">
                             <div class="form-stat__row">
+                                <div class="form-group" style="width:100%; max-width:100%">
+                                    <label for="yt_link">Ссылка</label>
+                                    <input id = "yt_link" type="text" class="input" name = "" style="width:100%; max-width:100%">
+                                </div>
+                            </div>
+                            <div class="form-stat__row">
                                 <div class="form-group">
                                     <label for="yt_subs">Подписчики</label>
                                     <input id = "yt_subs" type="text" class="input" name = "">
@@ -223,26 +241,80 @@
                             </div>
                         </div>
                     </div>
+                    <div class="popup__form-row popup__form-stat form-stat">
+                        <div class="form-stat__title">
+                            Вконтакте
+                        </div>
+                        <div class="form-stat__content">
+                            <div class="form-stat__row" >
+                                <div class="form-group" style="width:100%; max-width:100%">
+                                    <label for="vk_link">Ссылка</label>
+                                    <input id = "vk_link" type="text" class="input" name = "" style="width:100%; max-width:100%">
+                                </div>
+                            </div>
+                            <div class="form-stat__row">
+                                <div class="form-group">
+                                    <label for="vk_subs">Подписчики</label>
+                                    <input id = "vk_subs" type="text" class="input" name = "">
+                                </div>
+                                <div class="form-group">
+                                    <label for="vk_cover">Охваты</label>
+                                    <input id = "vk_cover" type="text" class="input" name = "">
+                                </div>
+                            </div>
+                            <div class="form-stat__row">
+                                <div class="form-group">
+                                    <label for="vk_er">ER</label>
+                                    <input id = "vk_er" type="text" class="input" name = "">
+                                </div>
+                                <div class="form-group">
+                                    <label for="vk_cpm">CPM</label>
+                                    <input id = "vk_cpm" type="text" class="input" name = "">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="form-group">
                         <label for="desc">Описание канала</label>
                         <textarea name="desc" id="desc" cols="30" rows="10" class="textarea" placeholder="Введите текст"></textarea>
                     </div>
                     <div class="form-row filter__item" style="display: flex; gap:10px;">
                         <div class="form-group">
-                            <label for="gender_ratio">Мужчины, %</label>
-                            <input id="gender_ratio" name="gender_ratio" type="text" class="input">
+                            <label for="gender_ratio_m">Мужчины, %</label>
+                            <input id="gender_ratio_m" name="gender_ratio_m" type="number" class="input">
                         </div>
                         <div class="form-group">
-                            <label for="female">Женщины, %</label>
-                            <input id="female" name="female" type="text" class="input">
+                            <label for="gender_ratio_f">Женщины, %</label>
+                            <input id="gender_ratio_f" name="gender_ratio_f" type="number" class="input">
                         </div>
                     </div>
+                    <script>
+                        $("#gender_ratio_m").on('change', function(e){
+                            $('#gender_ratio_f').val(100 - Number($(e.target).val()))
+                        })
+                        $("#gender_ratio_f").on('change', function(e){
+                            $('#gender_ratio_m').val(100 - Number($(e.target).val()))
+                        })
+                    </script>
                     <div class="form-row filter__item">
                         <div class="form-group">
                             <label for="sex">Пол блогера</label>
                             <select name="sex" id="sex" class="input">
                                 <option value="male" class="">Мужской</option>
                                 <option value="female" class="">Женский</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Страна блогера</label>
+                            <select name="country" id="country" class="input">
+                                <option value="1" class="">Россия</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">Город блогера</label>
+                            <select name="city" id="city" class="input">
+                                <option value="1" class="">Димитровград</option>
+                                <option value="2" class="">Самара</option>
                             </select>
                         </div>
                         <div class="form-group">
