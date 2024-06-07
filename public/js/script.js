@@ -1169,14 +1169,34 @@ $(window).on('load', function(){
     $(document).on('click', '.profile-projects__item .btn-bloggers', function(e){
         $(e.target).closest('.profile-projects__item').toggleClass('active-bloggers');
         $(e.target).closest('.profile-projects__item').removeClass('active-statistics');
+        $(e.target).closest('.profile-projects__item').removeClass('active-bloggers-in_work');
     })
 
     $(document).on('click', '.profile-projects__item .btn-statistics', function(e){
         $(e.target).closest('.profile-projects__item').toggleClass('active-statistics');
         $(e.target).closest('.profile-projects__item').removeClass('active-bloggers');
+        $(e.target).closest('.profile-projects__item').removeClass('active-bloggers-in_work');
     })
 
-    $('.profile-projects__item').find('.owl-carousel').owlCarousel({
+    $(document).on('click', '.profile-projects__item .btn-bloggers-in_work', function(e){
+        $(e.target).closest('.profile-projects__item').removeClass('active-statistics');
+        $(e.target).closest('.profile-projects__item').removeClass('active-bloggers');
+        $(e.target).closest('.profile-projects__item').toggleClass('active-bloggers-in_work');
+    })
+
+    $('.profile-projects__item').find('.projects-blogers--leads').owlCarousel({
+        margin: 5,
+        nav: true,
+        responsive: {
+            0:{
+                items: 1
+            },
+            1180: {
+                items:2
+            }
+        }
+    });
+    $('.profile-projects__item').find('.projects-blogers--in_work').owlCarousel({
         margin: 5,
         nav: true,
         responsive: {

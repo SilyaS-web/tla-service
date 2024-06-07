@@ -605,7 +605,7 @@ input[type='range']::-webkit-slider-runnable-track{
 .profile-projects__statistics .view-project__props-graph>*{
     width: 100%!important;
 }
-.profile-projects__item.active-bloggers .profile-projects__blogers.owl-carousel  {
+.profile-projects__item.active-bloggers .projects-blogers--leads.owl-carousel  {
     opacity: 1;
     height:100%;
     overflow: visible;
@@ -616,6 +616,16 @@ input[type='range']::-webkit-slider-runnable-track{
 .profile-projects__item.active-statistics .btn.btn-statistics {
     box-shadow: 0px 0px 10px 6px rgba(254,94,0,.2);
 }
+
+.profile-projects__item.active-bloggers-in_work .projects-blogers--in_work.owl-carousel  {
+    opacity: 1;
+    height:100%;
+    overflow: visible;
+}
+.profile-projects__item.active-bloggers-in_work .btn.btn-bloggers-in_work {
+    box-shadow: 0px 0px 10px 6px rgba(254,94,0,.2);
+}
+
 .profile-projects__item.active-bloggers .btn.btn-bloggers {
     box-shadow: 0px 0px 10px 6px rgba(254,94,0,.2);
 }
