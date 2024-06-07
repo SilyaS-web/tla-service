@@ -67,10 +67,11 @@ class UserController extends Controller
         $works = Work::where([['blogger_id', $user_id]])->get();
         $projects = Project::whereIn('id', $works->pluck('project_id'))->get();
         $all_projects = Project::where($validator->validated())->get();
+        $blogger_orders = Work::where([['blogger_id', $user_id]])->where('created_by', '<>', $user_id)->where('accepted_by_blogger_at', null)->get();
 
         $role = $user->role;
 
-        return compact('projects', 'all_projects', 'works', 'role', 'user_id');
+        return compact('projects', 'all_projects', 'blogger_orders', 'works', 'role', 'user_id');
     }
 
 

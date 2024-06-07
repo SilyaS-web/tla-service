@@ -14,7 +14,7 @@
                             Все проекты
                         </a>
                         <a href="#" class="nav-menu__item nav-menu__link tab projects-avail-link" data-content = "avail-projects">
-                            Доступные проекты
+                            Заявки от селлеров
                         </a>
                         <a href="#" class="nav-menu__item nav-menu__link tab chat-link" data-content = "chat">
                             Чат с селлерами
@@ -31,7 +31,7 @@
                         <div class="profile-projects__body">
                             <div class="projects-list__header">
                                 <div class="list-projects__title title">
-                                    Проекты в работе
+                                    Принятые проекты
                                 </div>
                                 <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
                                     <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
@@ -156,14 +156,14 @@
                         <div class="profile-projects__body">
                             <div class="projects-list__header">
                                 <div class="list-projects__title title">
-                                    Доступные проекты
+                                    Заявки от селлеров
                                 </div>
                                 <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
                                     <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
                                 </div>
                             </div>
                             <div class="list-projects__items">
-                                @include('project.blogger-list', ['projects' => $all_projects, 'all' => true, 'type' => 'avail'])
+                                @include('project.blogger-list', ['projects' => $blogger_orders, 'all' => true, 'type' => 'avail'])
                             </div>
                         </div>
                         <div class="profile-projects__filters">
@@ -218,8 +218,4 @@
         </div>
     </div>
 </section>
-@endsection
-
-
-@section('scripts')
 @endsection

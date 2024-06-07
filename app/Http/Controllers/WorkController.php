@@ -31,27 +31,37 @@ class WorkController extends Controller
         if (!$user) {
             $user = User::find($request->user_id);
         }
-        $seller = $user->seller;
-        if ($seller) {
-            if ($seller->remaining_tariff < 1) {
-                return response()->json(['extend tariff', $seller->remaining_tariff], 400);
+        if ($user->role == 'seller') {
+            $seller = $user->seller;
+            if ($seller) {
+                if ($seller->remaining_tariff < 1) {
+                    return response()->json(['extend tariff', $seller->remaining_tariff], 400);
+                }
+            } else {
+                return response()->json(['seller not found'], 400);
             }
-        } else {
-            return response()->json(['seller not found'], 400);
-        }
-        $seller->remaining_tariff -= 1;
-        $seller->save();
-        $validated['seller_id'] = $seller->id;
-        $validated['status'] = Work::PENDING;
 
+            $seller->remaining_tariff -= 1;
+            $seller->save();
+
+            $validated['seller_id'] = $seller->id;
+            $validated['status'] = Work::PENDING;
+
+        } else {
+            $blogger = $user->blogger;
+            $validated['blogger_id'] = $blogger->id;
+            $validated['status'] = Work::PENDING;
+        }
+        $validated['created_by'] = $user->id;
         $work = Work::create($validated);
+
         Notification::create([
-            'user_id' => $validated['blogger_id'],
+            'user_id' => $work->getPartnerUser($user)->id,
             'type' => 'Новая заявка',
-            'text' => 'Вам поступила новая заявка от ' . $seller->user->name,
+            'text' => 'Вам поступила новая заявка от ' . $user->name,
         ]);
 
-        TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, 'Вам поступила новая заявка от ' . $seller->user->name);
+        TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, 'Вам поступила новая заявка от ' . $user->name);
         return redirect()->route('profile')->with('success', 'Заявка успешно отправлена');
     }
 

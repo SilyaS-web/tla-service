@@ -26,6 +26,8 @@ class CreateWorksTable extends Migration
             $table->timestamp('accepted_by_seller_at')->nullable();
             $table->timestamp('confirmed_by_blogger_at')->nullable();
             $table->timestamp('confirmed_by_seller_at')->nullable();
+            $table->unsignedBigInteger('created_by');
+            $table->foreign('created_by')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamps();
             $table->softDeletes();
         });

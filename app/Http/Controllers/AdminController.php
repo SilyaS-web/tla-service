@@ -21,20 +21,20 @@ class AdminController extends Controller
             'user_id' => 'required|numeric',
             'desc' => 'string|nullable',
             'sex' => 'required|string',
-            'is_achievement' => 'string',
+            'is_achievement' => 'string|nullable',
             'gender_ratio' => 'required|numeric',
-            'tg_subs' => 'numeric',
-            'tg_cover' => 'numeric',
-            'tg_er' => 'numeric',
-            'tg_cpm' => 'numeric',
-            'inst_subs' => 'numeric',
-            'inst_cover' => 'numeric',
-            'inst_er' => 'numeric',
-            'inst_cpm' => 'numeric',
-            'yt_subs' => 'numeric',
-            'yt_cover' => 'numeric',
-            'yt_er' => 'numeric',
-            'yt_cpm' => 'numeric',
+            'tg_subs' => 'numeric|nullable',
+            'tg_cover' => 'numeric|nullable',
+            'tg_er' => 'numeric|nullable',
+            'tg_cpm' => 'numeric|nullable',
+            'inst_subs' => 'numeric|nullable',
+            'inst_cover' => 'numeric|nullable',
+            'inst_er' => 'numeric|nullable',
+            'inst_cpm' => 'numeric|nullable',
+            'yt_subs' => 'numeric|nullable',
+            'yt_cover' => 'numeric|nullable',
+            'yt_er' => 'numeric|nullable',
+            'yt_cpm' => 'numeric|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -43,6 +43,7 @@ class AdminController extends Controller
 
         $validated = $validator->validated();
         $blogger = Blogger::where('user_id', $validated['user_id'])->first();
+
         $blogger->update([
             'description' => $validated['desc'] ?? null,
             'sex' => $validated['sex'],
