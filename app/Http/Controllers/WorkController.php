@@ -43,15 +43,9 @@ class WorkController extends Controller
 
             $seller->remaining_tariff -= 1;
             $seller->save();
-
-            $validated['seller_id'] = $seller->id;
-            $validated['status'] = Work::PENDING;
-
-        } else {
-            $blogger = $user->blogger;
-            $validated['blogger_id'] = $blogger->id;
-            $validated['status'] = Work::PENDING;
         }
+
+        $validated['status'] = Work::PENDING;
         $validated['created_by'] = $user->id;
         $work = Work::create($validated);
 
