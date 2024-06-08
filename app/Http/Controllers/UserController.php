@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blogger;
+use App\Models\BloggerPlatform;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,7 +57,7 @@ class UserController extends Controller
 
         $validator = Validator::make(request()->all(), [
             'project_type' => [Rule::in(Project::TYPES)],
-            'project_name' => '',
+            'product_name' => '',
             'status' => '',
         ]);
 
@@ -82,7 +83,7 @@ class UserController extends Controller
 
         $validator = Validator::make(request()->all(), [
             'project_type' => [Rule::in(Project::TYPES)],
-            'project_name' => '',
+            'product_name' => '',
             'status' => '',
         ]);
 
@@ -95,11 +96,13 @@ class UserController extends Controller
         }])->get();
 
         $bloggers = Blogger::get();
+        $blogger_platforms = BloggerPlatform::get();
 
         $works = Work::where([['seller_id', $user_id]])->get();
         $role = $user->role;
         $chat_role = "blogger";
-        return compact('projects', 'bloggers', 'works', 'role', 'user_id', 'chat_role');
+        $platforms = BloggerPlatform::PLATFORM_TYPES;
+        return compact('projects', 'bloggers', 'works', 'role', 'user_id', 'chat_role', 'blogger_platforms', 'platforms');
     }
 
     public function getAdminProfileData()

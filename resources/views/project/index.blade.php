@@ -1,4 +1,4 @@
-<div class="profile-projects__items 12312312313">
+<div class="profile-projects__items">
     @forelse ($projects as $project)
     <div class="profile-projects__row profile-projects__item">
         <div class="profile-projects__col profile-projects__img">
@@ -6,8 +6,8 @@
         </div>
         <div class="profile-projects__col profile-projects__content" style="padding:15px 0px;">
             <div class="profile-projects__row" style="align-items: start">
-                <div class="profile-projects__item-title" title="{{ $project->project_name }}">
-                    {{ $project->project_name }}
+                <div class="profile-projects__item-title" title="{{ $project->product_name }}">
+                    {{ $project->product_name }}
                 </div>
                 <div class="profile-projects__status active">
                     {{ $project->active == 0 ? 'Активно' : 'Выполнено' }}
@@ -18,9 +18,11 @@
             </div>
             <div class="profile-projects__row">
                 <div class="profile-projects__formats">
+                    @foreach ($project->getProjectWorkNames() as $format)
                     <div class="profile-projects__format">
-                        Рекламные посты
+                        {{ $format }}
                     </div>
+                    @endforeach
                 </div>
             </div>
             <div class="profile-projects__row" style="margin-top:auto">
@@ -937,86 +939,87 @@
                             <div class="view-project__props-orders">
                                 Заказы за 30 дн<br>
                                 <span class="count">{{$stats->orders ?? 0}} шт</span>
-                            </div>
-                            <div class="view-project__props-money">
-                                Выручка за 30 дн<br>
-                                <span class="money">{{$stats->earnings ?? 0}} ₽</span>
-                            </div>
-                        </div>
-                        <div class="view-project__props-graph">
-                            <canvas id="prices-graph-desktop" class=""></canvas>
-                        </div> --}}
-                        {{-- <div class="view-project__props-ph">
+                    </div>
+                    <div class="view-project__props-money">
+                        Выручка за 30 дн<br>
+                        <span class="money">{{$stats->earnings ?? 0}} ₽</span>
+                    </div>
+                </div>
+                <div class="view-project__props-graph">
+                    <canvas id="prices-graph-desktop" class=""></canvas>
+                </div> --}}
+                {{-- <div class="view-project__props-ph">
                             <div class="view-project__props-ph_title" style="text-align: center">
                                 Статистика по товару (OZON)<br>
                                 Раздел находится в разработке
                             </div>
                         </div>
-                        <div class="view-project__props-overflow" style="background-image: url('{{ asset('img/Remove-bg 1.png') }}'); background-size:contain; background-position:center; background-repeat:no-repeat;"></div> --}}
-                        <div class="card__col card__stats-stats">
-                            <div class="projects-statistics__title" style="margin-bottom: 0">
-                                Статистика по интеграциям
-                            </div>
-                            <div class="card__row card__stats-row">
+                        <div class="view-project__props-overflow" style="background-image: url('{{ asset('img/Remove-bg 1.png') }}'); background-size:contain; background-position:center; background-repeat:no-repeat;">
+            </div> --}}
+            <div class="card__col card__stats-stats">
+                <div class="projects-statistics__title" style="margin-bottom: 0">
+                    Статистика по интеграциям
+                </div>
+                <div class="card__row card__stats-row">
 
-                                <div class="card__col card__stats-item">
-                                    <div class="card__stats-title">
-                                        <span>Охватов</span>
-                                    </div>
-                                    <div class="card__stats-val">
-                                        <span>120</span>
-                                    </div>
-                                </div>
-                                <div class="card__col card__stats-item">
-                                    <div class="card__stats-title">
-                                        <span>Переходов</span>
-                                    </div>
-                                    <div class="card__stats-val">
-                                        <span>12000</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card__row card__stats-row">
+                    <div class="card__col card__stats-item">
+                        <div class="card__stats-title">
+                            <span>Охватов</span>
+                        </div>
+                        <div class="card__stats-val">
+                            <span>120</span>
+                        </div>
+                    </div>
+                    <div class="card__col card__stats-item">
+                        <div class="card__stats-title">
+                            <span>Переходов</span>
+                        </div>
+                        <div class="card__stats-val">
+                            <span>12000</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="card__row card__stats-row">
 
-                                <div class="card__col card__stats-item">
-                                    <div class="card__stats-title">
-                                        <span>ER</span>
-                                    </div>
-                                    <div class="card__stats-val">
-                                        <span>3800</span>
-                                    </div>
-                                </div>
-                                <div class="card__col card__stats-item">
-                                    <div class="card__stats-title">
-                                        <span>CPM</span>
-                                    </div>
-                                    <div class="card__stats-val">
-                                        <span>4200₽</span>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="card__col card__stats-item">
+                        <div class="card__stats-title">
+                            <span>ER</span>
+                        </div>
+                        <div class="card__stats-val">
+                            <span>3800</span>
+                        </div>
+                    </div>
+                    <div class="card__col card__stats-item">
+                        <div class="card__stats-title">
+                            <span>CPM</span>
+                        </div>
+                        <div class="card__stats-val">
+                            <span>4200₽</span>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="view-project__props view-project__props--mobile">
-                <div class="view-project__props-wrap">
-                    <div class="view-project__props-orders">
-                        Заказы за 30 дн<br>
-                        <span class="count">2 637 шт</span>
-                    </div>
-                    <canvas id="orders-graph-mobile" class=""></canvas>
-                </div>
-                <div class="view-project__props-wrap">
-                    <div class="view-project__props-money">
-                        Выручка за 30 дн<br>
-                        <span class="money">4 750 732 ₽</span>
-                    </div>
-                    <canvas id="prices-graph-mobile" class=""></canvas>
-                </div>
-            </div>
         </div>
-        {{-- <div class="profile-projects__control-btns">
+    </div>
+</div>
+<div class="view-project__props view-project__props--mobile">
+    <div class="view-project__props-wrap">
+        <div class="view-project__props-orders">
+            Заказы за 30 дн<br>
+            <span class="count">2 637 шт</span>
+        </div>
+        <canvas id="orders-graph-mobile" class=""></canvas>
+    </div>
+    <div class="view-project__props-wrap">
+        <div class="view-project__props-money">
+            Выручка за 30 дн<br>
+            <span class="money">4 750 732 ₽</span>
+        </div>
+        <canvas id="prices-graph-mobile" class=""></canvas>
+    </div>
+</div>
+</div>
+{{-- <div class="profile-projects__control-btns">
             <div class="profile-projects__edit">
                 <img src="img/pencil-icon.svg" alt="">
             </div>
@@ -1027,10 +1030,10 @@
                 <img src="img/delete-icon.svg" alt="">
             </div>
         </div> --}}
-    </div>
-    @empty
-    Нет проетков
-    @endforelse
+</div>
+@empty
+Нет проетков
+@endforelse
 </div>
 
 <script>

@@ -10,17 +10,6 @@ class Blogger extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public const YOUTUBE = 'Youtube';
-    public const INSTAGRAM = 'Instagram';
-    public const VK = 'VK';
-    public const TELEGRAM = 'Telegram';
-
-    const PLATFORM_TYPES = [
-        self::YOUTUBE,
-        self::INSTAGRAM,
-        self::VK,
-        self::TELEGRAM,
-    ];
 
     protected $fillable = [
         'user_id',

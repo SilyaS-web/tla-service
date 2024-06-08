@@ -9,6 +9,25 @@ class BloggerPlatform extends Model
 {
     use HasFactory;
 
+    public const YOUTUBE = 'Youtube';
+    public const INSTAGRAM = 'Instagram';
+    public const VK = 'VK';
+    public const TELEGRAM = 'Telegram';
+
+    const PLATFORM_TYPES = [
+        self::YOUTUBE,
+        self::INSTAGRAM,                                                                          
+        self::VK,
+        self::TELEGRAM,
+    ];
+
+    const PLATFORM_ICON_URLS = [
+        self::YOUTUBE => 'img/youtube-icon.svg',
+        self::INSTAGRAM => 'img/inst-icon.svg',
+        self::VK => 'img/vk-icon.svg',
+        self::TELEGRAM => 'img/telegram-icon.svg',
+    ];
+
     protected $fillable = [
         'blogger_id',
         'name',
@@ -22,5 +41,10 @@ class BloggerPlatform extends Model
     public function blogger()
     {
         return $this->belongsTo(Blogger::class, 'id', 'blogger_id');
+    }
+
+    public function getIconURL()
+    {
+        return asset(self::PLATFORM_ICON_URLS[$this->name]);
     }
 }

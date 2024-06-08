@@ -4,9 +4,11 @@
             <div class="card__row card__header">
                 <div class="card__img">
                     <img src="img/profile-icon.svg" alt="">
+                    @if($blogger->is_achievement)
                     <div class="card__achive">
-                        <img src="img/achive-icon.svg" alt="">
+                        <img src="{{ asset('img/achive-icon.svg') }}" alt="">
                     </div>
+                    @endif
                 </div>
                 <div class="card__name">
                     <p class="card__name-name">
@@ -14,12 +16,14 @@
                             {{ $blogger->user->name}}
                         </a>
                         <p style="font-size: 12px">
-                            Россия, Димитровград
+                            {{ $blogger->country }} {{ $blogger->city }}
                         </p>
                     </p>
                 </div>
                 <div class="card__platform">
-                    <img src="img/inst-icon.svg" alt="">
+                    @foreach ($blogger->platforms as $platform)
+                    <img src="{{ $platform->getIconURL() }}" alt="">
+                    @endforeach
                 </div>
             </div>
             {{-- <div class="card__row card__tags">

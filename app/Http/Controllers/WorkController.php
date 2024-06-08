@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use App\Models\Notification;
+use App\Models\ProjectWork;
 use App\Models\Work;
 use App\Models\User;
 use App\Services\TgService;
@@ -19,6 +20,7 @@ class WorkController extends Controller
             'blogger_id' => 'exists:users,id|nullable',
             'seller_id' => 'exists:users,id|nullable',
             'project_id' => 'required|exists:projects,id',
+            'project_work_id' => 'required|exists:project_works,id',
         ]);
 
         if ($validator->fails()) {
@@ -47,6 +49,7 @@ class WorkController extends Controller
 
         $validated['status'] = Work::PENDING;
         $validated['created_by'] = $user->id;
+        $validated['projecy_work_id'] = ProjectWork::find($validated['project_work_id']);
         $work = Work::create($validated);
 
         Notification::create([
@@ -114,9 +117,9 @@ class WorkController extends Controller
             Notification::create([
                 'user_id' => $work->seller->user->id,
                 'type' => 'Подтверждение',
-                'text' => 'Блогер отправил запрос на подтверждение выполнения проекта ' . $work->project->project_name,
+                'text' => 'Блогер отправил запрос на подтверждение выполнения проекта ' . $work->project->product_name,
             ]);
-            TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, 'Блогер отправил запрос на подтверждение выполнения проекта ' . $work->project->project_name);
+            TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, 'Блогер отправил запрос на подтверждение выполнения проекта ' . $work->project->product_name);
         } else {
             Message::create([
                 'work_id' => $work->id,
@@ -128,9 +131,9 @@ class WorkController extends Controller
             Notification::create([
                 'user_id' => $work->blogger->user->id,
                 'type' => 'Подтверждение',
-                'text' => 'Селлер подтвердил выполнение проекта ' . $work->project->project_name,
+                'text' => 'Селлер подтвердил выполнение проекта ' . $work->project->product_name,
             ]);
-            TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, 'Селлер подтвердил выполнение проекта ' . $work->project->project_name);
+            TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, 'Селлер подтвердил выполнение проекта ' . $work->project->product_name);
         }
 
         return redirect()->route('profile')->with('success');

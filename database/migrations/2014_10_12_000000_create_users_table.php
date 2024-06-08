@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class CreateUsersTable extends Migration
@@ -28,6 +29,32 @@ class CreateUsersTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        DB::table('users')->insert(
+            array(
+                'id' => 0,
+                'name' => 'Системное сообщение',
+                'email' => 'system@adswap.ru',
+                'phone' => '+70000000001',
+                'role' => 'admin',
+                'password' => bcrypt('systempassword'),
+                'status' => 1,
+                'tg_phone_id' => 1,
+            ),
+        );
+
+        DB::table('users')->insert(
+            array(
+                'id' => 0,
+                'name' => 'Админ',
+                'email' => 'admin@adswap.ru',
+                'phone' => '+70000000000',
+                'role' => 'admin',
+                'password' => bcrypt('adminpassword'),
+                'status' => 1,
+                'tg_phone_id' => 2,
+            ),
+        );
     }
 
     /**

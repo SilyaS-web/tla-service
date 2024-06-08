@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blogger;
 use App\Models\Project;
 use App\Models\ProjectFile;
+use App\Models\ProjectWork;
 use App\Models\User;
 use App\Models\Work;
 use Illuminate\Http\Request;
@@ -23,7 +24,7 @@ class ProjectController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'project_type' => [Rule::in(Project::TYPES)],
-            'project_name' => '',
+            'product_name' => '',
             'status' => '',
             'user_id' => 'exists:users,id|nullable',
         ]);
@@ -41,16 +42,12 @@ class ProjectController extends Controller
         }
 
         $filter = [];
-        if (isset($validated['project_type']) && !empty($validated['project_type'])) {
-            $filter[] = ['project_type', $validated['project_type']];
-        }
-
         if (isset($validated['status']) && !empty($validated['status'])) {
             $filter[] = ['status', $validated['status']];
         }
 
-        if (isset($validated['project_name']) && !empty($validated['project_name'])) {
-            $filter[] = ['project_name', 'like', '%' . $validated['project_name'] . '%'];
+        if (isset($validated['product_name']) && !empty($validated['product_name'])) {
+            $filter[] = ['product_name', 'like', '%' . $validated['product_name'] . '%'];
         }
         $projects = $user->projects()->where($filter)->withCount(['works' => function (Builder $query) {
             $query->where('status', 1);
@@ -79,9 +76,11 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'project_type' => ['required', Rule::in(Project::TYPES)],
+            'feedback' => 'nullable',
+            'feedback-quantity' => 'numeric|nullable',
+            'inst' => 'nullable',
+            'inst-quantity' => 'numeric|nullable',
             'product_name' => 'required|min:3',
-            'project_name' => 'required|min:3',
             'product_nm' => 'required|min:3|numeric',
             'product_link' => 'required|min:3',
             'product_price' => 'required|numeric',
@@ -98,6 +97,22 @@ class ProjectController extends Controller
 
         $project = Project::create($validated);
 
+        if ($validated['feedback']) {
+            ProjectWork::create([
+                'type' => Project::FEEDBACK,
+                'quantity' => $validated['feedback-quantity'],
+                'project_id' => $project->id,
+            ]);
+        }
+
+        if ($validated['inst']) {
+            ProjectWork::create([
+                'type' => Project::INSTAGRAM,
+                'quantity' => $validated['inst-quantity'],
+                'project_id' => $project->id,
+            ]);
+        }
+
         $product_images = $request->file('images');
         foreach ($product_images as $product_image) {
             $image_path = $product_image->store('projects', 'public');
@@ -112,13 +127,6 @@ class ProjectController extends Controller
     }
 
     public function selectBloggers($project_id){
-        // $validator = Validator::make($request->all(), [
-        //     'project_id' => 'required',
-        // ]);
-
-        // if ($validator->fails()) {
-        //     return response()->json($validator->errors(), 400);
-        // }
         $project = Project::find($project_id);
         $bloggers = Blogger::get();
         return view('seller.select-blogger', compact('project', 'bloggers'));
@@ -131,8 +139,7 @@ class ProjectController extends Controller
         $role = $user->role;
 
         $validator = Validator::make(request()->all(), [
-            'project_type' => [Rule::in(Project::TYPES)],
-            'project_name' => '',
+            'product_name' => '',
             'status' => '',
         ]);
 
@@ -176,8 +183,6 @@ class ProjectController extends Controller
     public function update(Project $project)
     {
         $validator = Validator::make(request()->all(), [
-            'project_type' => ['required', Rule::in(Project::TYPES)],
-            'project_name' => 'required|min:3',
             'product_name' => 'required|min:3',
             'product_link' => 'required|min:3',
             'product_price' => 'required|numeric',
