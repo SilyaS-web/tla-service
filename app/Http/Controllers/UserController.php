@@ -146,7 +146,7 @@ class UserController extends Controller
         } else {
             $sellers = Seller::get();
         }
-        $platforms = Blogger::PLATFORM_TYPES;
+        $platforms = BloggerPlatform::PLATFORM_TYPES;
 
         return compact('unverified_users', 'bloggers', 'sellers', 'platforms');
     }
