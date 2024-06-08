@@ -16,7 +16,7 @@ class ProjectWork extends Model
     ];
 
     public function project() {
-        return $this->belongsTo(ProjectWork::class, 'id', 'project_id');
+        return $this->belongsTo(Project::class, 'project_id', 'id');
     }
 
     public function getProjectWorkName()

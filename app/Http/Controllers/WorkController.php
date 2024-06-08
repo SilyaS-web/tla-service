@@ -17,22 +17,17 @@ class WorkController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'blogger_id' => 'exists:users,id|nullable',
-            'seller_id' => 'exists:users,id|nullable',
-            'project_id' => 'required|exists:projects,id',
             'project_work_id' => 'required|exists:project_works,id',
+            'blogger_id' => 'exists:project_works,id|nullable',
         ]);
 
         if ($validator->fails()) {
-            // return redirect()->route('profile')->withErrors($validator);
             return response()->json($validator->errors(), 400);
         }
+
         $validated = $validator->validated();
-        // $seller = User::find($validated['seller_id'])->seller;
         $user = Auth::user();
-        if (!$user) {
-            $user = User::find($request->user_id);
-        }
+
         if ($user->role == 'seller') {
             $seller = $user->seller;
             if ($seller) {
@@ -47,10 +42,15 @@ class WorkController extends Controller
             $seller->save();
         }
 
-        $validated['status'] = Work::PENDING;
-        $validated['created_by'] = $user->id;
-        $validated['projecy_work_id'] = ProjectWork::find($validated['project_work_id']);
-        $work = Work::create($validated);
+        $project_work = ProjectWork::find($validated['project_work_id']);
+        $work = Work::create([
+            'project_id' => $project_work->project->id,
+            'blogger_id' => $user->role == 'seller' ? $validated['blogger_id'] : $user->id,
+            'seller_id' => $user->role == 'seller' ? $user->id : $project_work->project->seller_id,
+            'status' => Work::PENDING,
+            'project_work_id' => $project_work->id,
+            'created_by' => $user->id,
+        ]);
 
         Notification::create([
             'user_id' => $work->getPartnerUser($user)->id,
@@ -59,16 +59,14 @@ class WorkController extends Controller
         ]);
 
         TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, 'Вам поступила новая заявка от ' . $user->name);
-        return redirect()->route('profile')->with('success', 'Заявка успешно отправлена');
+        return response()->json(['success'], 200);
     }
 
     public function accept($work_id)
     {
         $work = Work::find($work_id);
         $user = Auth::user();
-        $param = 'accepted_by_' . $user->role . '_at';
-        $work->$param = date('Y-m-d H:i');
-        $work->save();
+        $work->accept($user);
         Message::create([
             'work_id' => $work->id,
             'user_id' => 0,

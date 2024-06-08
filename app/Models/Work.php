@@ -29,7 +29,8 @@ class Work extends Model
         'confirmed_by_blogger_at',
         'confirmed_by_seller_at',
         'status',
-        'created_by'
+        'created_by',
+        'project_work_id'
     ];
 
     public function blogger()
@@ -44,19 +45,21 @@ class Work extends Model
 
     public function project()
     {
-        return $this->hasOne(Project::class, 'id', 'project_work_id');
+        return $this->hasOne(Project::class, 'id', 'project_id');
     }
 
-    public function messages() {
-        return $this->hasMany(Message::class,'work_id','id');
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'work_id', 'id');
     }
 
     public function projectWork()
     {
-        return $this->hasOne(ProjectWork::class, 'project_id', 'id');
+        return $this->hasOne(ProjectWork::class, 'project_work_id', 'id');
     }
 
-    public function getPartnerUser($role) {
+    public function getPartnerUser($role)
+    {
         if ($role == 'seller') {
             return $this->blogger->user;
         } else {
@@ -64,17 +67,42 @@ class Work extends Model
         }
     }
 
-    public function accept($user) {
-
+    public function accept($user)
+    {
+        $param = 'accepted_by_' . $user->role . '_at';
+        $this->$param = date('Y-m-d H:i');
+        $this->save();
     }
 
-    public function confirm($user) {
+    public function confirm($user)
+    {
         $param = 'confirmed_by_' . $user->role . '_at';
         $this->$param = date('Y-m-d H:i');
         $this->save();
     }
 
-    public function isBothAcceptd() {
+    public function isBothAcceptd()
+    {
         return !empty($this->accepted_by_seller_at) && !empty($this->accepted_by_blogger_at);
+    }
+
+    public function isAcceptedByUser($user)
+    {
+        $param = 'accepted_by_' . $user->role . '_at';
+        if ($this->$param) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public function isConfirmedByUser($user)
+    {
+        $param = 'confirmed_by_' . $user->role . '_at';
+        if ($this->$param) {
+            return true;
+        }
+
+        return false;
     }
 }

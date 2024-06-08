@@ -35,11 +35,11 @@
             @switch($type)
 
             @case('all')
-            <a href="/apist/works?project_work_id={{ $project_work->id }}&" class="btn btn-primary">Откликнуться</a>
+            <button class="btn btn-primary" style="width:100%" onclick="sendProjectToSeller({{ $project_work->id }}, this)">Откликнуться</button>
             @break
 
             @case('start')
-            <a href="/apist/work/{{ $project_work->id }}/accept" class="btn btn-primary" id="accept-btn">Начать работу</a>
+            <button class="btn btn-primary" onclick="sendProjectToSeller({{ $project_work->id }}, this)">Начать работу</button>
             @break
 
             @case('finish')
@@ -54,3 +54,31 @@
 @empty
 Нет проектов
 @endforelse
+
+<script>
+    function sendProjectToSeller(project_work_id, el) {
+        el.innerHTML = '<div class="lds-dual-ring"></div>';
+        $.post({
+            url: '/apist/works'
+            , data: {
+                project_work_id: project_work_id
+            }
+            , success: function(data, textStatus, jqXHR) {
+                el.innerHTML = 'Заявка отправлена';
+                el.disabled = true;
+                notify('info', {
+                    title: 'Успешно!'
+                    , message: 'Ваша заявка была отправлена селлеру!'
+                })
+            }
+            , error: function(jqXHR, textStatus, errorThrown) {
+                el.innerHTML = 'Откликнуться';
+                notify('error', {
+                    title: 'Ошибка!'
+                    , message: 'Не удалось отправить заявку!'
+                });
+            }
+        });
+    }
+
+</script>

@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="{{ asset('libs/meter/style.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
 
     <script src="{{ asset('libs/chart/chart.js') }}"></script>
     <script src="{{ asset('libs/funnel/funnel-chart.js') }}"></script>
