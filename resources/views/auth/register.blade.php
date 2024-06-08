@@ -71,7 +71,7 @@
                                 Перейдите в телеграмм и подтведите свою личность, чтобы получать уведомления о новостях на площадкке.
                             </div>
                             <div class="tg-confirmation__btn">
-                                <a target="_blank" href="https://t.me/tla_service_bot" class="">Перейти</a>
+                                <a target="_blank" href="https://t.me/adswap_bot" class="">Перейти</a>
                             </div>
                         </div>
                         <div class="tg-confirmation__col">
@@ -109,7 +109,7 @@
 <script src="libs/qr/qrcode.min.js"></script>
 <script>
     var qrcode = new QRCode("tg-qr", {
-        text: "https://t.me/tla_service_bot"
+        text: "https://t.me/adswap_bot"
         , width: 125
         , height: 125
         , colorDark: "#000000"

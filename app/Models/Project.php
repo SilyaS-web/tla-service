@@ -23,8 +23,6 @@ class Project extends Model
         self::INSTAGRAM
     ];
 
-
-
     /**
      * The attributes that are mass assignable.
      *
@@ -134,8 +132,8 @@ class Project extends Model
         $ch = curl_init();
 
         $ch = curl_init();
-        $url ='https://card.wb.ru/cards/detail?nm=' . $this->product_nm . '&appType=1&locale=ru&lang=ru&curr=rub&dest=1';
-        curl_setopt($ch, CURLOPT_URL, $url );
+        $url = 'https://card.wb.ru/cards/detail?nm=' . $this->product_nm . '&appType=1&locale=ru&lang=ru&curr=rub&dest=1';
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
         $response = curl_exec($ch);
@@ -143,6 +141,6 @@ class Project extends Model
         curl_close($ch);
         $response = json_decode($response);
 
-        return $httpcode == 200 && !empty($response->data->products)? $response->data->products[0] : false;
+        return $httpcode == 200 && !empty($response->data->products) ? $response->data->products[0] : false;
     }
 }

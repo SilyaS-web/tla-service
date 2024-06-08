@@ -12,7 +12,7 @@
                         </div>
                         <p class="auth__subtitle">
                             Как только администратор обработает ваш аккаунт, вам придёт уведомление в
-                            <a target="_blank" href="https://t.me/tla_service_bot" class="">телеграм-боте</a>
+                            <a target="_blank" href="https://t.me/adswap_bot" class="">телеграм-боте</a>
                         </p>
                     </div>
                 </div>
