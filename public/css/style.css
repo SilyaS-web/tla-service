@@ -1619,6 +1619,57 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .list-projects__item {
 }
+
+
+.current-project{
+    display: flex;
+    gap: 30px;
+    justify-content: space-between;
+    margin:20px 0px;
+    padding: 15px;
+    background-color: var(--pale);
+    border-radius: 20px;
+    align-items: center;
+    width: fit-content;
+}
+.current-project__img{
+    width: 80px;
+    height:80px;
+    overflow: hidden;
+    border-radius: 10px;
+}
+.current-project__title{
+    padding-top:10px;
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+}
+.current-project__title .name{
+    font-size: 15px;
+}
+.current-project__title .articul{
+    color: rgba(0, 0, 0, .4);
+    font-size: 14px;
+}
+.current-project__col{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.current-project__row{
+    display: flex;
+    gap: 12px;
+}
+.current-project__btn a{
+    display: block;
+}
+.current-project__format select{
+    padding:10px;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+
 .project-item {
     width:calc(100% / 4 - 10px);
     background-color: #fff;

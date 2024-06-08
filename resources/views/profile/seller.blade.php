@@ -662,7 +662,7 @@
                                 <div class="list-projects__title title">
                                     Список блогеров
                                 </div>
-                                <div class="" style="display: flex; align-items: center; gap: 15px">
+                                {{-- <div class="" style="display: flex; align-items: center; gap: 15px">
                                     <p style="text-wrap:nowrap">Выберите проект:</p>
                                     <div class="form-group filter__item" style="margin-bottom: 0;">
                                         @if ($projects->isNotEmpty())
@@ -675,9 +675,33 @@
                                         <p style="font-size: 14px; color: rgba(0, 0, 0, 0.4)">У вас нет активных проектов, <button onclick="selectTab('create-project')" class="btn-link">создать проект</button></p>
                                         @endif
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
                                     <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
+                                    <button class="btn btn-primary projects-list__choose-btn">Выберите проект</button>
+                                </div>
+                            </div>
+                            <div class="projects-list__row projects-list__current-project current-project" style="di">
+                                <div class="current-project__col">
+                                    <div class="current-project__row">
+                                        <div class="current-project__img">
+                                            <img src="{{ asset('img/profile-icon.svg') }}" alt="">
+                                        </div>
+                                        <div class="current-project__title">
+                                            <p class="name"><b>Тестовый проект</b></p>
+                                            <p class="articul">Артикул товара: <span class="">12233312</span></p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="current-project__format">
+                                    <select name="" id="">
+                                        <option value="0">Выберите формат</option>
+                                        <option value="1">Отзыв на товар</option>
+                                        <option value="1">Рекламная интеграция(Inst)</option>
+                                    </select>
+                                </div>
+                                <div class="current-project__btn">
+                                    <a href="" class="btn btn-secondary projects-list__choose-btn">Выбрать другой проект</a>
                                 </div>
                             </div>
                             @include('blogger.list')
@@ -761,6 +785,60 @@
                     </div>
                     <div class="profile-chat tab-content" id="chat">
                         @include('shared.chat.index')
+                    </div>
+                    <div class="profile-projects tab-content" id="profile-projects-choose">
+                        <div class="profile-projects__body">
+                            <div class="projects-list__header">
+                                <div class="list-projects__title title">
+                                    Список моих проектов
+                                </div>
+                                <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                    <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
+                                </div>
+                            </div>
+                            @include('project.seller-list')
+                        </div>
+                        <div class="profile-projects__filters">
+                            <div class="projects-list__filter filter">
+                                <div class="filter__body">
+                                    <div class="filter__top">
+                                        <p class="filter__title">
+                                            Фильтр
+                                        </p>
+                                        <a href="#" class="filter__reset">
+                                            Сбросить
+                                        </a>
+                                    </div>
+                                    <div class="filter__items">
+                                        <div class="form-group filter__item">
+                                            <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию">
+                                        </div>
+                                        <div class="form-group filter__item">
+                                            <label for="">Формат рекламы</label>
+                                            <select name="project_type" id="filter-format" class="input">
+                                                <option value="feedback" class="">Отзыв на товар</option>
+                                                <option value="2" class="">Рекламная интеграция(Instagram)</option>
+                                                <option value="3" class="">Рекламная интеграция(Youtube)</option>
+                                                <option value="4" class="">Другие площадки для интеграций</option>
+                                                <option value="5" class="">Платные интеграции</option>
+                                            </select>
+                                        </div>
+                                        {{-- <div class="form-group filter__item">
+                                                <label for="">Страна</label>
+                                                <select name="filter-country" id="filter-country" class="input">
+                                                    <option value="1" class="">Россия</option>
+                                                    <option value="2" class="">Казахстан</option>
+                                                    <option value="3" class="">Грузия</option>
+                                                </select>
+                                            </div> --}}
+
+                                        <div class="filter__btns">
+                                            <button class="btn btn-primary btn-filter-send">Применить</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
