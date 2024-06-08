@@ -494,6 +494,9 @@ input[type='range']::-webkit-slider-runnable-track{
 .profile-projects__item:hover{
     background-color: var(--pale);
 }
+.profile-projects__item.hovered{
+    background-color: var(--pale);
+}
 .profile-projects__item-title{
     font-size: 20px;
     font-weight: 600;
@@ -1631,6 +1634,9 @@ input[type='range']::-webkit-slider-runnable-track{
     transition: box-shadow .2s linear;
 }
 .project-item:hover{
+    box-shadow: 0px 0px 10px 6px rgba(254,94,0,.1);
+}
+.project-item.hovered{
     box-shadow: 0px 0px 10px 6px rgba(254,94,0,.1);
 }
 .project-item__img {
@@ -3166,6 +3172,9 @@ input[type='range']::-webkit-slider-runnable-track{
 ._container {
 }
 .footer__body {
+    display: flex;
+    justify-content: center;
+    gap: 15%;
 }
 .footer__top {
     display: flex;

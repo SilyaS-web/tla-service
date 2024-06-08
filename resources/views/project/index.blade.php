@@ -1,6 +1,6 @@
 <div class="profile-projects__items">
     @forelse ($projects as $project)
-    <div class="profile-projects__row profile-projects__item">
+    <div class="profile-projects__row profile-projects__item" data-id="{{$project->id}}">
         <div class="profile-projects__col profile-projects__img">
             <img src="{{ $project->getImageUrl(true) }}" alt="">
         </div>
@@ -1045,72 +1045,84 @@
         prices_ctx = $(stat).find('#prices-graph-desktop');
         orders_ctx = $(stat).find('#orders-graph-desktop');
 
-        var data = $(stat).data('stats')
+        var data = $(stat).data('stats'),
+            lineData = [], barData = [];
+        console.log(data);
+        datasets = [
+            {
+                label: 'Выручка',
+                data: data.prices_history.map(item => item.price),
+                showLine: true,
+                type: 'line',
+                bloggers: data.prices_history.map(()=>{ return Math.floor(Math.random() * 15) }),
+                backgroundColor: data.prices_history.map(()=>{ return 'rgb(255, 99, 132, 0.5)' })
+                // bloggers: data.prices_history.map(item => item.bloggers)
+            },
+            {
+                label: 'Заказы',
+                data: data.orders_history.map(item => item.orders),
+                showLine: true,
+                type: 'bar',
+                bloggers: data.orders_history.map(()=>{ return Math.floor(Math.random() * 15) }),
+                backgroundColor: data.orders_history.map(()=>{ return 'rgb(54, 162, 235, 0.5)' })
+                // bloggers: data.orders_history.map(item => item.bloggers)
+            },
+        ]
 
-        new Chart(orders_ctx, {
+        var prodsStatistics = new Chart(orders_ctx, {
+            type: 'scatter',
             data: {
-                labels: data.prices_history.map(item => `${item.dt.split('-')[2]} мая`)
-                , datasets: [{
-                        label: 'Заказы'
-                        , data: data.orders_history.map(item => item.orders)
-                        , order: 0
-                        , type: 'bar'
-                    , }
-                    , {
-                        label: 'Выручка'
-                        , data: data.prices_history.map(item => item.price)
-                        , type: 'line'
-                        , order: 1
-                        , tension: 0.1
-                    }
-                , ]
-            , }
-            , options: {
+                labels: data.prices_history.map(item =>{
+                    return `${item.dt.split('-')[2]} мая`
+                }),
+                datasets: datasets
+            },
+            options: {
+                plugins: {
+                    tooltip: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
+                            title: (item, data) => {
+                                var cItem = item[0],
+                                    cLabel = prodsStatistics.data.labels[cItem.dataIndex];
+
+                                if(cItem.dataset.bloggers[cItem.dataIndex] > 0){
+                                    return cLabel + ', Блогер(ов) завершило работу: ' + cItem.dataset.bloggers[cItem.dataIndex]
+                                }
+                            },
+
+                        }
+                    },
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
                 scales: {
-                    y: {
-                        beginAtZero: true
-                        , type: 'logarithmic'
-                    }
-                }
-                , plugins: {
-                    legend: {
-                        position: 'top'
-                    , }
-                , }
+                },
             }
         });
-        new Chart(prices_ctx, {
-            data: {
-                labels: data.prices_history.map(item => `${item.dt.split('-')[2]} мая`)
-                , datasets: [{
-                        label: 'Заказы'
-                        , data: data.orders_history.map(item => item.orders)
-                        , order: 0
-                        , type: 'bar'
-                    , }
-                    , {
-                        label: 'Выручка'
-                        , data: data.prices_history.map(item => item.price)
-                        , type: 'line'
-                        , order: 1
-                        , tension: 0.1
-                    }
-                , ]
-            , }
-            , options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                        , type: 'logarithmic'
-                    }
-                }
-                , plugins: {
-                    legend: {
-                        position: 'top'
-                    , }
-                , }
+
+        var dataset = prodsStatistics.data.datasets[1];
+        var colors = {};
+
+        // Loop through data values
+        dataset.bloggers.forEach(function(value, index) {
+            if(value > 0){
+                colors[index] = '#FE5E00'
             }
         });
+
+        var dataset = prodsStatistics.data.datasets[1];
+        console.log(dataset);
+        for (var i = 0; i < dataset.data.length; i++) {
+            if (colors[i]) {
+                dataset.backgroundColor[i] = 'rgba(254,94,0, 0.5)';
+            }
+        }
+        console.log(dataset);
+        prodsStatistics.update();
     })
 
 </script>

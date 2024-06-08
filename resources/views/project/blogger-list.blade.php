@@ -1,7 +1,7 @@
 @forelse ($projects as $project)
 @foreach ($project->projectWorks as $project_work)
 @php($lost_seats = $project_work->quantity - $project->works()->where('project_work_id', $project_work->id)->count())
-<div class="list-projects__item project-item">
+<div class="list-projects__item project-item" data-id="{{ $project->id }}">
     <div class="owl-carousel project-item__carousel">
         <div class="project-item__img">
             <img src="{{ $project->getImageURL(true) }}" alt="">
