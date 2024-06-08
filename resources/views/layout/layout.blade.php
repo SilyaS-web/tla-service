@@ -225,34 +225,15 @@
         <footer class="footer">
             <div class="footer__container _container">
                 <div class="footer__body">
-                    <div class="footer__top">
-                        <div class="logo footer__logo-w">
-                            <img src="{{ asset('img/logo.svg') }}" alt="" class="logo__logo footer__logo">
-                        </div>
-                        <a href="#" class="btn btn-primary footer__contact-us" id="contact-us">
-                            Свяжитесь с нами
-                        </a>
-                    </div>
-                    <div class="footer__bottom">
-                        <div class="footer__addits">
-                            <a href="#" class="footer__policy">
-                                Политика конфиденциальности
-                            </a>
-                            <p class="footer__copyright">
-                                ©️ Все права защищены
-                            </p>
-                        </div>
-                        <div class="footer__contacts">
-                            <div class="footer__contacts-contacts">
-                                <div class="footer__contacts-phone">
-                                    +7(999)194-44-47
-                                </div>
-                                <div class="footer__contacts-phone">
-                                    hello@tla-agency.ru
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <a href="{{ route('policy') }}" class="footer__policy">
+                        Политика конфиденциальности
+                    </a>
+                    <a href="#" class="footer__policy">
+                        Публичная оферта
+                    </a>
+                    <a href="#" class="footer__policy">
+                        hello@tla-agency.ru
+                    </a>
                 </div>
             </div>
         </footer>

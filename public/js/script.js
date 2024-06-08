@@ -1101,6 +1101,38 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
+    $(document).on('click', '.item-chat__project-link--seller', function(e){
+        var pId = $(e.target).closest('.item-chat__project-link--seller').data('project-id');
+
+        $(document).find('.projects-list-link').click();
+
+        $(`.profile-projects__item[data-id="${pId}"]`).addClass('hovered')
+
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $(`.profile-projects__item[data-id="${pId}"]`).offset().top
+            });
+
+        setTimeout(()=>{
+            $(`.profile-projects__item[data-id="${pId}"]`).removeClass('hovered')
+        }, 3000)
+    })
+
+    $(document).on('click', '.item-chat__project-link--blogger', function(e){
+        var pId = $(e.target).closest('.item-chat__project-link--blogger').data('project-id');
+
+        $(document).find('.projects-work-link').click();
+
+        $(`.project-item[data-id="${pId}"]`).addClass('hovered')
+
+        $([document.documentElement, document.body]).animate({
+            scrollTop: $(`.project-item[data-id="${pId}"]`).offset().top
+            });
+
+        setTimeout(()=>{
+            $(`.project-item[data-id="${pId}"]`).removeClass('hovered')
+        }, 3000)
+    })
+
     $(document).on('click', '#send-stats-blogger-btn', function(e){
         var btn = $(e.target).closest('#send-stats-blogger-btn');
         var form = new PopupBloggerSendStatistics('#send-statistics-blogger');

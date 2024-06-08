@@ -1,5 +1,5 @@
 @forelse ($projects as $project)
-    <div class="list-projects__item project-item">
+    <div class="list-projects__item project-item" data-id="{{ $project->id }}">
         <div class="owl-carousel project-item__carousel">
             <div class="project-item__img">
                 <img src="{{ $project->getImageURL(true) }}" alt="">
