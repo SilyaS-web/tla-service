@@ -16,13 +16,6 @@
                             <!-- <span class="quest__step-arrow next"></span> -->
                         </div>
                         <div class="form-group">
-                            <label for="project-name">Название проекта</label>
-                            <input type="text" id="project-name" name="project_name" placeholder="Введите наименование проекта" class="input input--project_name">
-                            @error('project_name')
-                            <span class="error">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <div class="form-group">
                             <label for="product-name">Название товара</label>
                             <input type="text" id="product-name" name="product_name" placeholder="Введите наименование товара" class="input input--product_name">
                             @error('product_name')

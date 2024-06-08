@@ -15,7 +15,7 @@
                 <div class="view-project__content">
                     <div class="view-project__header">
                         <div class="view-project__title">
-                            {{ $project->project_name }}
+                            {{ $project->product_name }}
                         </div>
                         <div class="view-project__status active">
                             {{ $project->status == 0 ? 'Активно' : 'Завершено' }}

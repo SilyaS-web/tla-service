@@ -60,7 +60,7 @@
                                         Цена — {{ $project->product_price }} ₽
                                     </div>
                                     <a class="project-item__participants" title="Гель для душа парфюмированный, 1000 мл.">
-                                        {{ $project->seller->user->name }} / {{ $project->project_name }}.
+                                        {{ $project->seller->user->name }} / {{ $project->product_name }}.
                                     </a>
                                     <div class="project-item__format-tags card__row card__tags">
                                         <div class="card__tags-item">

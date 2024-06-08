@@ -46,13 +46,6 @@
                                             <!-- <span class="quest__step-arrow next"></span> -->
                                         </div>
                                         <div class="form-group">
-                                            <label for="project-name">Название проекта</label>
-                                            <input type="text" id="project-name" name="project_name" placeholder="Введите наименование проекта" class="input input--project_name">
-                                            @error('project_name')
-                                            <span class="error">{{ $message }}</span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group">
                                             <label for="product-name">Название товара</label>
                                             <input type="text" id="product-name" name="product_name" placeholder="Введите наименование товара" class="input input--product_name">
                                             @error('product_name')
@@ -111,10 +104,10 @@
                                         <div class="form-group marketing-format">
                                             <label for="format">Выберите формат рекламы</label>
                                             @error('project_type')
-                                                <span class="error">{{ $message }}</span>
+                                            <span class="error">{{ $message }}</span>
                                             @enderror
                                             <div class="input-checkbox-w">
-                                                <input type="checkbox" class="checkbox" name="project_type" value="feedback" id="product-feedback">
+                                                <input type="checkbox" class="checkbox" name="feedback" value="feedback" id="product-feedback">
                                                 <label for="product-feedback">Отзыв на товар - Бартер</label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
@@ -141,7 +134,7 @@
 
                                             </div>
                                             <div class="input-checkbox-w">
-                                                <input type="checkbox" class="checkbox" name="project_type" value="feedback" id="product-feedback">
+                                                <input type="checkbox" class="checkbox" name="inst" value="inst-barter" id="product-inst">
                                                 <label for="product-inst">Рекламная интеграция (Inst) - Бартер</label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
@@ -154,7 +147,7 @@
                                                         <img src="{{ asset('img/plus-icon.svg') }}" alt="">
                                                     </div>
                                                 </div>
-                                                <div class="format-tooltip" data-hint="feedback">
+                                                <div class="format-tooltip" data-hint="inst-barter">
                                                     ?
                                                     <div class="format-hint format-hint--text" id="inst">
                                                         <div class="format-hint__title">
@@ -357,25 +350,25 @@
                                                     </div>
                                                     <div class="feedback-item__stats">
                                                         @if($wb_stats['low'] > 0)
-                                                            <div class="feedback-item__stat">
-                                                                <div class="feedback-item__stat-quest danger">
-                                                                    !
-                                                                </div>
-                                                                У вас {{ $wb_stats['low'] }} товар(ов) с очень низкой оценкой
-                                                                <div class="feedback-item__stat-products">
-                                                                    <div class="" style="background-color: #fff">
-                                                                        <a href="#" class="profile-projects__status">
-                                                                            122333444
-                                                                        </a>
-                                                                        <a href="#" class="profile-projects__status">
-                                                                            122333444
-                                                                        </a>
-                                                                        <a href="#" class="profile-projects__status">
-                                                                            122333444
-                                                                        </a>
-                                                                    </div>
+                                                        <div class="feedback-item__stat">
+                                                            <div class="feedback-item__stat-quest danger">
+                                                                !
+                                                            </div>
+                                                            У вас {{ $wb_stats['low'] }} товар(ов) с очень низкой оценкой
+                                                            <div class="feedback-item__stat-products">
+                                                                <div class="" style="background-color: #fff">
+                                                                    <a href="#" class="profile-projects__status">
+                                                                        122333444
+                                                                    </a>
+                                                                    <a href="#" class="profile-projects__status">
+                                                                        122333444
+                                                                    </a>
+                                                                    <a href="#" class="profile-projects__status">
+                                                                        122333444
+                                                                    </a>
                                                                 </div>
                                                             </div>
+                                                        </div>
 
                                                         @endif
                                                         @if($wb_stats['med'] > 0)
@@ -675,7 +668,7 @@
                                         @if ($projects->isNotEmpty())
                                         <select name="send-project" id="send-project-el" class="input" style="padding: 3px 10px; margin-bottom: 0; background-color: #fff; width:100%" data-send-project-element="true">
                                             @foreach ($projects as $project)
-                                            <option value="{{ $project->id }}" class="">{{ $project->project_name }}</option>
+                                            <option value="{{ $project->id }}" class="">{{ $project->product_name }}</option>
                                             @endforeach
                                         </select>
                                         @else
@@ -715,9 +708,9 @@
                                     <div class="form-group filter__item">
                                         <label for="">Платформа</label>
                                         <select name="filter-platform" id="filter-platform" class="input">
-                                            <option value="Youtube" class="">Youtube</option>
-                                            <option value="Telegram" class="">Telegram</option>
-                                            <option value="Instagram" class="">Instagram</option>
+                                            @foreach ($platforms as $platform)
+                                            <option value="{{ $platform }}">{{ $platform }}</option>
+                                            @endforeach
                                         </select>
                                     </div>
                                     {{-- <div class="form-group filter__item">
@@ -736,10 +729,10 @@
                                     <div class="form-group filter__item">
                                         <label for="">Количество подписчиков</label>
                                         <div class="input-range-w">
-                                            <input id="subs-range" name="" type="range" class="input input-range" min="{{ $bloggers->min('subscriber_quantity') ?? 0 }}" max="{{ $bloggers->max('subscriber_quantity') ?? 0 }}">
+                                            <input id="subs-range" name="" type="range" class="input input-range" min="{{ $blogger_platforms->min('subscriber_quantity') ?? 0 }}" max="{{ $blogger_platforms->max('subscriber_quantity') ?? 0 }}">
                                             <div class="input-range-content">
-                                                <input id="subs-min" type="number" class="input input-number" value="{{ $bloggers->min('subscriber_quantity') ?? 0 }}">
-                                                <input id="subs-max" type="number" class="input input-number" value="{{ $bloggers->max('subscriber_quantity') ?? 0 }}">
+                                                <input id="subs-min" type="number" class="input input-number" value="{{ $blogger_platforms->min('subscriber_quantity') ?? 0 }}">
+                                                <input id="subs-max" type="number" class="input input-number" value="{{ $blogger_platforms->max('subscriber_quantity') ?? 0 }}">
                                             </div>
                                         </div>
                                     </div>

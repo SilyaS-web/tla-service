@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blogger;
+use App\Models\BloggerPlatform;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -56,7 +57,7 @@ class UserController extends Controller
 
         $validator = Validator::make(request()->all(), [
             'project_type' => [Rule::in(Project::TYPES)],
-            'project_name' => '',
+            'product_name' => '',
             'status' => '',
         ]);
 
@@ -67,10 +68,11 @@ class UserController extends Controller
         $works = Work::where([['blogger_id', $user_id]])->get();
         $projects = Project::whereIn('id', $works->pluck('project_id'))->get();
         $all_projects = Project::where($validator->validated())->get();
+        $blogger_orders = Work::where([['blogger_id', $user_id]])->where('created_by', '<>', $user_id)->where('accepted_by_blogger_at', null)->get();
 
         $role = $user->role;
 
-        return compact('projects', 'all_projects', 'works', 'role', 'user_id');
+        return compact('projects', 'all_projects', 'blogger_orders', 'works', 'role', 'user_id');
     }
 
 
@@ -81,7 +83,7 @@ class UserController extends Controller
 
         $validator = Validator::make(request()->all(), [
             'project_type' => [Rule::in(Project::TYPES)],
-            'project_name' => '',
+            'product_name' => '',
             'status' => '',
         ]);
 
@@ -94,11 +96,13 @@ class UserController extends Controller
         }])->get();
 
         $bloggers = Blogger::get();
+        $blogger_platforms = BloggerPlatform::get();
 
         $works = Work::where([['seller_id', $user_id]])->get();
         $role = $user->role;
         $chat_role = "blogger";
-        return compact('projects', 'bloggers', 'works', 'role', 'user_id', 'chat_role');
+        $platforms = BloggerPlatform::PLATFORM_TYPES;
+        return compact('projects', 'bloggers', 'works', 'role', 'user_id', 'chat_role', 'blogger_platforms', 'platforms');
     }
 
     public function getAdminProfileData()
@@ -142,7 +146,7 @@ class UserController extends Controller
         } else {
             $sellers = Seller::get();
         }
-        $platforms = Blogger::PLATFORM_TYPES;
+        $platforms = BloggerPlatform::PLATFORM_TYPES;
 
         return compact('unverified_users', 'bloggers', 'sellers', 'platforms');
     }

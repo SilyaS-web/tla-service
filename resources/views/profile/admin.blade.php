@@ -280,8 +280,8 @@
                     </div>
                     <div class="form-row filter__item" style="display: flex; gap:10px;">
                         <div class="form-group">
-                            <label for="gender_ratio_m">Мужчины, %</label>
-                            <input id="gender_ratio_m" name="gender_ratio_m" type="number" class="input">
+                            <label for="gender_ratio">Мужчины, %</label>
+                            <input id="gender_ratio" name="gender_ratio" type="number" class="input">
                         </div>
                         <div class="form-group">
                             <label for="gender_ratio_f">Женщины, %</label>
@@ -289,11 +289,11 @@
                         </div>
                     </div>
                     <script>
-                        $("#gender_ratio_m").on('change', function(e){
+                        $("#gender_ratio").on('change', function(e){
                             $('#gender_ratio_f').val(100 - Number($(e.target).val()))
                         })
                         $("#gender_ratio_f").on('change', function(e){
-                            $('#gender_ratio_m').val(100 - Number($(e.target).val()))
+                            $('#gender_ratio').val(100 - Number($(e.target).val()))
                         })
                     </script>
                     <div class="form-row filter__item">

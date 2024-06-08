@@ -11,9 +11,16 @@ class Project extends Model
     use HasFactory, SoftDeletes;
 
     public const FEEDBACK = 'feedback';
+    public const INSTAGRAM = 'inst';
+
+    public const TYPE_NAMES = [
+        self::FEEDBACK => 'Отзыв на товар',
+        self::INSTAGRAM => 'Рекламная интеграция (inst)'
+    ];
 
     public const TYPES = [
         self::FEEDBACK,
+        self::INSTAGRAM
     ];
 
     /**
@@ -22,8 +29,6 @@ class Project extends Model
      * @var array<int, string>
      */
     protected $fillable = [
-        'project_type',
-        'project_name',
         'product_name',
         'product_nm',
         'product_link',
@@ -40,14 +45,33 @@ class Project extends Model
     {
         return $this->hasMany(ProjectFile::class, 'source_id', 'id');
     }
+    public function projectWorks()
+    {
+        return $this->hasMany(ProjectWork::class, 'project_id', 'id');
+    }
 
     public function works()
     {
         return $this->hasMany(Work::class, 'project_id', 'id');
     }
 
-    public function countActiveBloggers()
+    public function seller()
     {
+        return $this->hasOne(Seller::class, 'user_id', 'seller_id');
+    }
+
+    public function getProjectWorkNames()
+    {
+        $project_works = $this->projectWorks;
+        $names = [];
+
+        foreach ($project_works as $project_work) {
+            if (isset(self::TYPE_NAMES[$project_work->type])) {
+                $names[] = self::TYPE_NAMES[$project_work->type];
+            }
+        }
+
+        return $names;
     }
 
     public function getImageURL($only_primary = false)
@@ -108,8 +132,8 @@ class Project extends Model
         $ch = curl_init();
 
         $ch = curl_init();
-        $url ='https://card.wb.ru/cards/detail?nm=' . $this->product_nm . '&appType=1&locale=ru&lang=ru&curr=rub&dest=1';
-        curl_setopt($ch, CURLOPT_URL, $url );
+        $url = 'https://card.wb.ru/cards/detail?nm=' . $this->product_nm . '&appType=1&locale=ru&lang=ru&curr=rub&dest=1';
+        curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
         $response = curl_exec($ch);
@@ -117,11 +141,6 @@ class Project extends Model
         curl_close($ch);
         $response = json_decode($response);
 
-        return $httpcode == 200 && !empty($response->data->products)? $response->data->products[0] : false;
-    }
-
-    public function seller()
-    {
-        return $this->hasOne(Seller::class, 'user_id', 'seller_id');
+        return $httpcode == 200 && !empty($response->data->products) ? $response->data->products[0] : false;
     }
 }

@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class ProjectWorks extends Model
+class BloggerTheme extends Model
 {
     use HasFactory;
 }

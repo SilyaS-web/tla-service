@@ -29,6 +29,7 @@ class Work extends Model
         'confirmed_by_blogger_at',
         'confirmed_by_seller_at',
         'status',
+        'created_by'
     ];
 
     public function blogger()
@@ -43,11 +44,16 @@ class Work extends Model
 
     public function project()
     {
-        return $this->hasOne(Project::class, 'id', 'project_id');
+        return $this->hasOne(Project::class, 'id', 'project_work_id');
     }
 
     public function messages() {
         return $this->hasMany(Message::class,'work_id','id');
+    }
+
+    public function projectWork()
+    {
+        return $this->hasOne(ProjectWork::class, 'project_id', 'id');
     }
 
     public function getPartnerUser($role) {
