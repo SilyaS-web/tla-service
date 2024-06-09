@@ -36,13 +36,6 @@
                     <span class="error">{{ $message }}</span>
                     @enderror
                 </div>
-                  <div class="form-group">
-                    <label for="city">Город</label>
-                    <input type="text" id="city" name="city" placeholder="Москва" class="input input--yt-link" value="{{ old('city') }}">
-                    @error('city')
-                    <span class="error">{{ $message }}</span>
-                    @enderror
-                </div>
                 <div class="form-group">
                     <label for="desc">Описание канала</label>
                     <textarea name="desc" id="desc" cols="30" rows="10" class="textarea" placeholder="Введите текст"></textarea>

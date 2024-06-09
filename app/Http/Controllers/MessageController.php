@@ -49,8 +49,29 @@ class MessageController extends Controller
         $works = Work::where($filter)->get();
         if (!empty($validated['work_id'])) {
             $work = $works->first();
-            $btn_class = $work->status == Work::PENDING ? 'accept-btn' : 'confirm-completion-btn';
-            $btn_text = $work->status == Work::PENDING ? 'Принять в работу' : 'Завершить проект';
+            $btn_class = 'accept-btn';
+            $btn_text = 'Принять в работу';
+
+            if ($work->status == Work::PENDING) {
+                if ($work->isAcceptedByUser($user)) {
+                    $btn_text = 'Ожидаем ответа от ' . $work->getPartnerUser($user)->name;
+                    $btn_class = 'disabled';
+                }
+            } else if ($work->status == Work::IN_PROGRESS) {
+                if ($work->isConfirmedByUser($user)) {
+                    $btn_class = 'disabled';
+                    $btn_text =  'Ожидаем ответа от ' . $work->getPartnerUser($user)->name;
+                } else {
+                    $btn_class = 'confirm-completion-btn';
+                    $btn_text = 'Завершить проект';
+                }
+            } else if ($work->status == Work::COMPLETED) {
+                if ($user->role == 'blogger') {
+                    $btn_class = 'confirm-completion-btn';
+                    $btn_text = 'Прикрепить статистику';
+                }
+            }
+
             Message::where('work_id', $validated['work_id'])->where('viewed_at', null)->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
             return response()->json(['view' => view('shared.chat.messages', compact('work', 'user_id', 'role'))->render(), 'btn-class' => $btn_class, 'btn-text' => $btn_text]);
         }

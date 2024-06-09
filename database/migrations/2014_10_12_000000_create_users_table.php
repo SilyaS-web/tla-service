@@ -45,7 +45,6 @@ class CreateUsersTable extends Migration
 
         DB::table('users')->insert(
             array(
-                'id' => 0,
                 'name' => 'Админ',
                 'email' => 'admin@adswap.ru',
                 'phone' => '+70000000000',

@@ -65,7 +65,7 @@ class UserController extends Controller
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
-        $works = Work::where([['blogger_id', $user_id]])->get();
+        $works = Work::where([['blogger_id', $user_id]])->where('status', Work::IN_PROGRESS)->get();
         $projects = Project::whereIn('id', $works->pluck('project_id'))->get();
         $all_projects = Project::where($validator->validated())->get();
         $blogger_orders = Work::where([['blogger_id', $user_id]])->where('created_by', '<>', $user_id)->where('accepted_by_blogger_at', null)->get();
