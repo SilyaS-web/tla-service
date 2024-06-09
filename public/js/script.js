@@ -1101,6 +1101,34 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
+    $(document).on('click', '.projects-list__choose-btn', function(e){
+        e.preventDefault();
+        var headerBtn = $(e.target).closest('.projects-list__choose-btn');
+
+        $('#profile-projects-choose').addClass('active');
+        $('#profile-blogers-list').removeClass('active');
+
+        $(document).on('click', '.btn-choose-project', function(e){
+            $('.current-project').show();
+            headerBtn.hide();
+
+            $('.current-project').find('.projects-list__choose-btn').show();
+            $('#profile-projects-choose').removeClass('active');
+            $('#profile-blogers-list').addClass('active');
+
+            var articul = $(e.target).closest('.btn-choose-project').data('articul');
+            var name = $(e.target).closest('.project-item').find('.project-item__subtitle').text();
+            var project_id = $(e.target).closest('.btn-choose-project').data('project-id');
+            var imgUrl = $(e.target).closest('.project-item').find('.project-item__img img').attr('src');
+
+            $('.current-project').find('.current-project__title .articul span').text(articul)
+            $('.current-project').find('.current-project__title .name b').text(name)
+            $('.current-project').find('.current-project__img img').attr('src', imgUrl)
+
+            $('.current-project').data('id', project_id)
+        })
+    })
+  
     $(document).on('click', '.item-chat__project-link--seller', function(e){
         var pId = $(e.target).closest('.item-chat__project-link--seller').data('project-id');
 
