@@ -24,15 +24,15 @@ class CreateTariffsTable extends Migration
             $table->timestamps();
         });
 
-        DB::table('tariffs')->insert(
-            array(
-                'title' => 'Админ',
-                'description' => 'admin@adswap.ru',
-                'price' => '+70000000000',
-                'options' => '{"options":[]}',
-                'is_active' => true
-            ),
-        );
+        // DB::table('tariffs')->insert(
+        //     array(
+        //         'title' => 'Админ',
+        //         'description' => 'admin@adswap.ru',
+        //         'price' => '+70000000000',
+        //         'options' => '{"options":[]}',
+        //         'is_active' => true
+        //     ),
+        // );
     }
 
     /**
