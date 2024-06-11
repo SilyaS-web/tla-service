@@ -55,6 +55,7 @@ class AdminController extends Controller
             $tg_platform = $blogger->platforms()->where('name', BloggerPlatform::TELEGRAM)->first();
             if ($tg_platform) {
                 $tg_platform->update([
+                    'link' => '123',
                     'subscriber_quantity' => $validated['tg_subs'],
                     'coverage' => $validated['tg_cover'],
                     'engagement_rate' => $validated['tg_er'],
