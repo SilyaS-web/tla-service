@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DeepLink;
 use App\Models\Message;
 use App\Models\Notification;
 use App\Models\ProjectWork;
@@ -11,6 +12,7 @@ use App\Services\TgService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class WorkController extends Controller
 {
@@ -47,7 +49,7 @@ class WorkController extends Controller
             'project_id' => $project_work->project->id,
             'blogger_id' => $user->role == 'seller' ? $validated['blogger_id'] : $user->id,
             'seller_id' => $user->role == 'seller' ? $user->id : $project_work->project->seller_id,
-            'status' => Work::PENDING,
+            'status' => null,
             'project_work_id' => $project_work->id,
             'created_by' => $user->id,
         ]);
@@ -62,6 +64,21 @@ class WorkController extends Controller
         return response()->json(['success'], 200);
     }
 
+    public function start($work_id)
+    {
+        $work = Work::find($work_id);
+        $user = Auth::user();
+
+        if (!$work->status && $work->created_by != $user->id) {
+            $work->status = Work::PENDING;
+            $work->save();
+            TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, $user->name . ' принял вашу заявку');
+            return response()->json('success', 200);
+        }
+
+        return response()->json('success', 400);
+    }
+
     public function accept($work_id)
     {
         $work = Work::find($work_id);
@@ -73,20 +90,42 @@ class WorkController extends Controller
             'message' => $user->name . ' готов приступить к работе',
         ]);
 
+
         if ($work->isBothAcceptd() && $work->status = Work::PENDING) {
             $work->status = Work::IN_PROGRESS;
             $work->save();
-            Message::create([
-                'work_id' => $work->id,
-                'user_id' => 0,
-                'message' => 'Работа начата',
-            ]);
+            $deeplink = $this->createDeepLinkByWork($work);
+            $link = request()->getSchemeAndHttpHost() . '/lnk/' . $deeplink->link;
+                Message::create([
+                    'work_id' => $work->id,
+                    'user_id' => 0,
+                    'message' => 'Работа начата - ссылка для сбора статистики <a target="_blank" href="' . $link . '">' . $link . '</a>',
+                ]);
             TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, $user->name . ' готов приступить к работе');
         } else {
             TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, $user->name . ' готов приступить к работе');
         }
 
         return response()->json('success', 200);
+    }
+
+    public function createDeepLinkByWork($work)
+    {
+        $user = Auth::user();
+        $data = [
+            'user_id' => $user->id,
+            'work_id' => $work->id,
+            'link' => Str::random(10),
+            'destination' => $work->project->product_link,
+        ];
+
+        while (DeepLink::where("link", $data['link'])->first()) {
+            $data['link'] = Str::random(10);
+        }
+
+        $deep_link = DeepLink::create($data);
+
+        return $deep_link;
     }
 
     public function confirm(Request $request)

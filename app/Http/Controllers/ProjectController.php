@@ -92,12 +92,16 @@ class ProjectController extends Controller
             return redirect()->route('profile')->withErrors($validator)->withInput();
         }
 
+        if (!isset($validated['feedback']) && !isset($validated['inst'])) {
+            return redirect()->route('profile')->with('success', 'Количество видов рекламы не было выбрано')->withInput();
+        }
+
         $validated = $validator->validated();
         $validated['seller_id'] = Auth::user()->id;
 
         $project = Project::create($validated);
 
-        if ($validated['feedback']) {
+        if (isset($validated['feedback'])) {
             ProjectWork::create([
                 'type' => Project::FEEDBACK,
                 'quantity' => $validated['feedback-quantity'],
@@ -105,7 +109,7 @@ class ProjectController extends Controller
             ]);
         }
 
-        if ($validated['inst']) {
+        if (isset($validated['inst'])) {
             ProjectWork::create([
                 'type' => Project::INSTAGRAM,
                 'quantity' => $validated['inst-quantity'],

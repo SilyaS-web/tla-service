@@ -688,8 +688,8 @@
                                             <img src="{{ asset('img/profile-icon.svg') }}" alt="">
                                         </div>
                                         <div class="current-project__title">
-                                            <p class="name"><b>Тестовый проект</b></p>
-                                            <p class="articul">Артикул товара: <span class="">12233312</span></p>
+                                            <p class="name"><b>Проект не выбран</b></p>
+                                            <p class="articul">Артикул товара: <span class=""></span></p>
                                         </div>
                                     </div>
                                 </div>

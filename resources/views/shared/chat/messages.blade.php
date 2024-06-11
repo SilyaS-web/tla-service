@@ -11,7 +11,11 @@
         </div>
     </div>
     <div class="messages-chat__item-msg">
+        @if($message->user_id == 0)
+        {!! $message->message !!}
+        @else
         {{ $message->message }}
+        @endif
         @foreach ($message->images as $image)
         <img src="{{ $image->getURL() }}" alt="" class="chat-img-popup" data-popup="#chat-img">
         @endforeach

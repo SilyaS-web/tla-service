@@ -60,10 +60,18 @@ class Project extends Model
         return $this->hasOne(Seller::class, 'user_id', 'seller_id');
     }
 
-    public function getProjectWorkNames()
+    public function getProjectWorkNames($format = null)
     {
         $project_works = $this->projectWorks;
         $names = [];
+        if ($format) {
+            if (self::TYPE_NAMES[$format]) {
+                return self::TYPE_NAMES[$format];
+            }
+
+            return null;
+        }
+
 
         foreach ($project_works as $project_work) {
             if (isset(self::TYPE_NAMES[$project_work->type])) {

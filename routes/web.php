@@ -61,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tariff', function () {
         return view('tariff');
     })->name('tariff');
+
     Route::post('/tariff', [SellerController::class, 'updateTariff']);
 
     Route::prefix('apist')->group(function () {

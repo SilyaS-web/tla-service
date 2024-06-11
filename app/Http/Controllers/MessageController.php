@@ -46,7 +46,7 @@ class MessageController extends Controller
             $filter['id'] = $validated['work_id'];
         }
 
-        $works = Work::where($filter)->get();
+        $works = Work::where($filter)->where('status', '<>', null)->get();
         if (!empty($validated['work_id'])) {
             $work = $works->first();
             $btn_class = 'accept-btn';
@@ -55,11 +55,11 @@ class MessageController extends Controller
             if ($work->status == Work::PENDING) {
                 if ($work->isAcceptedByUser($user)) {
                     $btn_text = 'Ожидаем ответа от ' . $work->getPartnerUser($user)->name;
-                    $btn_class = 'disabled';
+                    $btn_class = 'btn-chat-action disabled';
                 }
             } else if ($work->status == Work::IN_PROGRESS) {
                 if ($work->isConfirmedByUser($user)) {
-                    $btn_class = 'disabled';
+                    $btn_class = 'btn-chat-action disabled';
                     $btn_text =  'Ожидаем ответа от ' . $work->getPartnerUser($user)->name;
                 } else {
                     $btn_class = 'confirm-completion-btn';
@@ -69,6 +69,9 @@ class MessageController extends Controller
                 if ($user->role == 'blogger') {
                     $btn_class = 'confirm-completion-btn';
                     $btn_text = 'Прикрепить статистику';
+                } else {
+                    $btn_class = 'btn-chat-action disabled';
+                    $btn_text =  'Проект завершён';
                 }
             }
 

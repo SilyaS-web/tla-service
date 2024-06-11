@@ -64,6 +64,7 @@ class DeepLinkController extends Controller
             'work_id' => 'exists:works,id',
             'destination' => 'required|url',
         ]);
+        
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }

@@ -23,7 +23,7 @@ class CreateWorksTable extends Migration
             $table->foreign('project_id')->references('id')->on('projects')->cascadeOnDelete();
             $table->unsignedBigInteger('project_work_id');
             $table->foreign('project_work_id')->references('id')->on('project_works')->cascadeOnDelete();
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->timestamp('accepted_by_blogger_at')->nullable();
             $table->timestamp('accepted_by_seller_at')->nullable();
             $table->timestamp('confirmed_by_blogger_at')->nullable();
