@@ -69,6 +69,7 @@ class AdminController extends Controller
                     'coverage' => $validated['tg_cover'],
                     'engagement_rate' => $validated['tg_er'],
                     'cost_per_mille' => $validated['tg_cpm'],
+                    'link' => 'link'
                 ]);
             }
         }
