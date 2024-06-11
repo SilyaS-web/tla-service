@@ -89,7 +89,7 @@ class BloggerController extends Controller
         if ($validated['tg-link']) {
             BloggerPlatform::create([
                 'blogger_id' => $blogger->id,
-                'name' => Blogger::TELEGRAM,
+                'name' => BloggerPlatform::TELEGRAM,
                 'link' => $validated['tg-link'],
             ]);
         }
@@ -97,7 +97,7 @@ class BloggerController extends Controller
         if ($validated['inst-link']) {
             BloggerPlatform::create([
                 'blogger_id' => $blogger->id,
-                'name' => Blogger::INSTAGRAM,
+                'name' => BloggerPlatform::INSTAGRAM,
                 'link' => $validated['inst-link'],
             ]);
         }
@@ -105,7 +105,7 @@ class BloggerController extends Controller
         if ($validated['yt-link']) {
             BloggerPlatform::create([
                 'blogger_id' => $blogger->id,
-                'name' => Blogger::YOUTUBE,
+                'name' => BloggerPlatform::YOUTUBE,
                 'link' => $validated['yt-link'],
             ]);
         }
