@@ -52,7 +52,7 @@ class AdminController extends Controller
         ]);
 
         if ($validated['tg_subs']) {
-            $tg_platform = $blogger->platforms()->where('name', Blogger::TELEGRAM)->first();
+            $tg_platform = $blogger->platforms()->where('name', BloggerPlatform::TELEGRAM)->first();
             if ($tg_platform) {
                 $tg_platform->update([
                     'subscriber_quantity' => $validated['tg_subs'],
@@ -63,7 +63,7 @@ class AdminController extends Controller
             } else {
                 BloggerPlatform::create([
                     'blogger_id' => $blogger->id,
-                    'name' => Blogger::TELEGRAM,
+                    'name' => BloggerPlatform::TELEGRAM,
                     'subscriber_quantity' => $validated['tg_subs'],
                     'coverage' => $validated['tg_cover'],
                     'engagement_rate' => $validated['tg_er'],
@@ -73,7 +73,7 @@ class AdminController extends Controller
         }
 
         if ($validated['inst_subs']) {
-            $inst_platform = $blogger->platforms()->where('name', Blogger::INSTAGRAM)->first();
+            $inst_platform = $blogger->platforms()->where('name', BloggerPlatform::INSTAGRAM)->first();
             if ($inst_platform) {
                 $inst_platform->update([
                     'subscriber_quantity' => $validated['inst_subs'],
@@ -84,7 +84,7 @@ class AdminController extends Controller
             } else {
                 BloggerPlatform::create([
                     'blogger_id' => $blogger->id,
-                    'name' => Blogger::INSTAGRAM,
+                    'name' => BloggerPlatform::INSTAGRAM,
                     'subscriber_quantity' => $validated['inst_subs'],
                     'coverage' => $validated['inst_cover'],
                     'engagement_rate' => $validated['inst_er'],
@@ -94,7 +94,7 @@ class AdminController extends Controller
         }
 
         if ($validated['yt_subs']) {
-            $yt_platform = $blogger->platforms()->where('name', Blogger::YOUTUBE)->first();
+            $yt_platform = $blogger->platforms()->where('name', BloggerPlatform::YOUTUBE)->first();
             if ($yt_platform) {
                 $yt_platform->update([
                     'subscriber_quantity' => $validated['yt_subs'],
@@ -105,7 +105,7 @@ class AdminController extends Controller
             } else {
                 BloggerPlatform::create([
                     'blogger_id' => $blogger->id,
-                    'name' => Blogger::YOUTUBE,
+                    'name' => BloggerPlatform::YOUTUBE,
                     'subscriber_quantity' => $validated['yt_subs'],
                     'coverage' => $validated['yt_cover'],
                     'engagement_rate' => $validated['yt_er'],
