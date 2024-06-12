@@ -42,7 +42,7 @@ class AdminController extends Controller
         }
 
         $validated = $validator->validated();
-        $blogger = Blogger::where('user_id', $validated['user_id'])->first();
+        $blogger = Blogger::find($validated['user_id'])->first();
 
         $blogger->update([
             'description' => $validated['desc'] ?? null,
