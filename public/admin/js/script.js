@@ -325,7 +325,7 @@ class PopupAcceptBloger extends Popup{
         var self = this;
 
         $.post(self.sendUri, {
-            user_id: self.blogger_id,
+            blogger_id: self.blogger_id,
             gender_ratio: self.dataProps.gender_ratio.get(),
             sex: self.dataProps.sex.get(),
             is_achievement: Number(self.dataProps.is_achievement.get()),
