@@ -478,11 +478,6 @@
 </body>
 <script src="{{ asset("libs/owl/owl.carousel.min.js") }}"></script>
 <script src="{{ asset("js/script.js") }}"></script>
-<script>
-    $(window).on('load', function(){
-        $(document).find('.nav-menu__link[data-content="create-project"]').click();
-    })
-</script>
 @yield('scripts')
 
 @if(session()->has('success'))
