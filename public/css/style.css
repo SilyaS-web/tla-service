@@ -440,6 +440,9 @@ input[type='range']::-webkit-slider-runnable-track{
     width: 100%;
     max-width: 1030px;
 }
+#profile-projects .profile-projects__body{
+    max-width: 1000px;
+}
 #blogger .profile-projects__body{
     max-width:1200px;
 }
@@ -1768,6 +1771,10 @@ input[type='range']::-webkit-slider-runnable-track{
     position: relative;
     margin-bottom: 10px;
     width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    padding-top: 120%;
+    border-radius: 10px;
 }
 .project-item__img img{
     border-radius: 10px;
