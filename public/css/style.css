@@ -438,7 +438,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .profile-projects__body {
     width: 100%;
-    max-width: 1000px;
+    max-width: 1030px;
 }
 #blogger .profile-projects__body{
     max-width:1200px;
@@ -508,6 +508,9 @@ input[type='range']::-webkit-slider-runnable-track{
     max-height: 190px;
     border-radius: 5px;
     overflow: hidden;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 0 0;
 }
 .profile-projects__col {
     display: flex;
@@ -1029,6 +1032,54 @@ input[type='range']::-webkit-slider-runnable-track{
 .auth__header .title{
     margin-bottom: 12px;
 }
+.form-stat{
+    padding: 15px;
+    border: 1px solid rgba(0, 0, 0, .05);
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+.form-stat__title{
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+}
+.form-stat__title::after{
+    content:"";
+    width: 18px; height: 18px;
+    background-image: url('../img/arrow-alt.svg');
+    background-position: center;
+    background-size: contain;
+    transition: transform .1s linear;
+}
+.form-stat__row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 0 10px;
+}
+.form-stat__row>.form-group{
+    width:calc(50% - 4px);
+}
+.form-stat__row label{
+    font-size: 14px;
+}
+.form-stat__content{
+    height: 0;
+    overflow: hidden;
+}
+.form-stat.active .form-stat__content{
+    height: 100% !important;
+}
+.form-stat.active .form-stat__title{
+    margin-bottom: 20px;
+}
+.form-stat.active .form-stat__title::after{
+    transform: rotate(180deg);
+}
+
 .tg-confirmation{
     margin-bottom: 32px;
 }
@@ -1477,7 +1528,27 @@ input[type='range']::-webkit-slider-runnable-track{
     background-color: var(--pale);
     padding:8px;
     font-size: 12px;
-    color:rgba(0, 0, 0, .6)
+    color:rgba(0, 0, 0, .6);
+    position: relative;
+}
+.card__tags-item.card__tags-item--others {
+    background-color: #fff;
+    border: 1px solid rgba(0, 0, 0, .1);
+    cursor: pointer;
+}
+.card__tags-item .card__tags-item-w{
+    display: none;
+    background-color: #fff;
+    border-radius: 10px;
+    padding:10px;
+    flex-wrap: wrap;
+    gap: 8px;
+    position: absolute;
+    top:calc(100% + 1px); left:0;
+    width: 300px;
+}
+.card__tags-item:hover .card__tags-item-w{
+    display: flex;
 }
 .card__desc {
     max-width: 450px;
@@ -1640,9 +1711,11 @@ input[type='range']::-webkit-slider-runnable-track{
     height:80px;
     overflow: hidden;
     border-radius: 10px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: 0 0;
 }
 .current-project__title{
-    padding-top:10px;
     display: flex;
     gap: 8px;
     flex-direction: column;
@@ -1662,6 +1735,7 @@ input[type='range']::-webkit-slider-runnable-track{
 .current-project__row{
     display: flex;
     gap: 12px;
+    align-items: center;
 }
 .current-project__btn a{
     display: block;
@@ -1693,9 +1767,11 @@ input[type='range']::-webkit-slider-runnable-track{
 .project-item__img {
     position: relative;
     margin-bottom: 10px;
+    width: 100%;
 }
 .project-item__img img{
     border-radius: 10px;
+    width: 100%;
 }
 .project-item__status {
     position: absolute;
@@ -2139,7 +2215,7 @@ input[type='range']::-webkit-slider-runnable-track{
     max-width:calc(100% / 2 - 6px);
     position: relative;
     transition: all .2s linear;
-
+    overflow: hidden;
 }
 .dashboard__item:hover{
     cursor: pointer;
@@ -2908,6 +2984,9 @@ input[type='range']::-webkit-slider-runnable-track{
     --labelBg: #fdb72e;
     --labelColor: #fff;
   }
+  .planItem--current {
+    background-color: var(--pale);
+  }
   .planItem--entp {
     --bgColor: var(--blue);
   }
@@ -2930,6 +3009,7 @@ input[type='range']::-webkit-slider-runnable-track{
     --titleColor: #000;
     --descColor: var(--baseColor);
     padding:0;
+    background-color: unset;
   }
   .plans .card__header {
     display: flex;
@@ -2977,7 +3057,7 @@ input[type='range']::-webkit-slider-runnable-track{
     color: var(--color);
     align-items: center;
     gap: 0.5625rem;
-    font-weight: 600;
+    font-weight: 700;
     font-size: 2rem;
     margin: var(--priceMargin);
   }

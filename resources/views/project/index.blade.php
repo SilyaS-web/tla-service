@@ -1,10 +1,10 @@
 <div class="profile-projects__items">
     @forelse ($projects as $project)
     <div class="profile-projects__row profile-projects__item" data-id="{{$project->id}}">
-        <div class="profile-projects__col profile-projects__img">
-            <img src="{{ $project->getImageUrl(true) }}" alt="">
+        <div class="profile-projects__col profile-projects__img" style="background-image: url({{ $project->getImageUrl(true) }})">
+            {{-- <img src="{{ $project->getImageUrl(true) }}" alt=""> --}}
         </div>
-        <div class="profile-projects__col profile-projects__content" style="padding:15px 0px;">
+        <div class="profile-projects__col profile-projects__content" style="padding:5px 0px;">
             <div class="profile-projects__row" style="align-items: start">
                 <div class="profile-projects__item-title" title="{{ $project->product_name }}">
                     {{ $project->product_name }}
@@ -32,11 +32,10 @@
                 </div>
             </div>
         </div>
-        <div class="profile-projects__col profile-projects__content profile-projects__info" style="padding:15px 0px;">
-            <div class="card__col card__stats">
-                <div class="card__col card__stats-stats">
+        <div class="profile-projects__col profile-projects__content profile-projects__info" style="padding:5px 0px;">
+            <div class="card__col card__stats" style="flex: 1 1 auto">
+                <div class="card__col card__stats-stats" style="flex: 1 1 auto">
                     <div class="card__row card__stats-row">
-
                         <div class="card__col card__stats-item">
                             <div class="card__stats-title">
                                 <span>Блогеров в работе</span>
@@ -73,7 +72,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card__row card__stats-row">
+                    <div class="card__row card__stats-row" style="margin-top:auto">
                         <button class="btn btn-secondary btn-bloggers-in_work">Блогеры в работе</button>
                     </div>
                 </div>

@@ -7,23 +7,19 @@
 </div>
 <script>
     function sendProjectToBlogger(user_id) {
-        let project_input = document.getElementById('send-project-el');
+        let p_id = $(document).find('.current-project').data('id') || null;
 
-        if (!project_input) {
+        if (!p_id) {
             notify('info', {
-                title: 'Ошибка'
-                , message: 'Выберите проект!'
+                title: 'Ошибка', message: 'Выберите проект!'
             });
         } else {
-            let project_id = project_input.value;
             $.post('/apist/works', {
-                seller_id: document.querySelector('[data-user-id]').dataset.userId
-                , blogger_id: user_id
-                , project_id: project_id
+                blogger_id: user_id,
+                project_work_id: p_id
             }, function(res) {
                 notify('info', {
-                    title: 'Успешно!'
-                    , message: 'Заявка успешно отправлена!'
+                    title: 'Успешно!', message: 'Заявка успешно отправлена!'
                 });
             })
         }

@@ -107,7 +107,7 @@
                                             <span class="error">{{ $message }}</span>
                                             @enderror
                                             <div class="input-checkbox-w">
-                                                <input type="checkbox" class="checkbox" name="feedback" value="feedback" id="product-feedback">
+                                                {{-- <input type="checkbox" class="checkbox" name="feedback" value="feedback" id="product-feedback"> --}}
                                                 <label for="product-feedback">Отзыв на товар - Бартер</label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
@@ -134,7 +134,7 @@
 
                                             </div>
                                             <div class="input-checkbox-w">
-                                                <input type="checkbox" class="checkbox" name="inst" value="inst-barter" id="product-inst">
+                                                {{-- <input type="checkbox" class="checkbox" name="inst" value="inst-barter" id="product-inst"> --}}
                                                 <label for="product-inst">Рекламная интеграция (Inst) - Бартер</label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
@@ -161,7 +161,7 @@
 
                                             </div>
                                             <div class="input-checkbox-w disabled">
-                                                <input type="checkbox" class="checkbox" id="product-youtube">
+                                                {{-- <input type="checkbox" class="checkbox" id="product-youtube"> --}}
                                                 <label for="product-youtube">Рекламная интеграция (YouTube) - Бартер</label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
@@ -188,7 +188,7 @@
 
                                             </div>
                                             <div class="input-checkbox-w disabled">
-                                                <input type="checkbox" class="checkbox" id="product-other">
+                                                {{-- <input type="checkbox" class="checkbox" id="product-other"> --}}
                                                 <label for="product-other">Другие площадки для интеграций - Бартер</label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
@@ -215,7 +215,7 @@
 
                                             </div>
                                             <div class="input-checkbox-w disabled">
-                                                <input type="checkbox" class="checkbox" id="product-payment">
+                                                {{-- <input type="checkbox" class="checkbox" id="product-payment"> --}}
                                                 <label for="product-payment">Платные интеграции</label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
@@ -681,11 +681,10 @@
                                     <button class="btn btn-primary projects-list__choose-btn">Выберите проект</button>
                                 </div>
                             </div>
-                            <div class="projects-list__row projects-list__current-project current-project" style="di">
-                                <div class="current-project__col">
+                            <div class="projects-list__row projects-list__current-project current-project" style="display:none">
+                                <div class="current-project__col current-project__main">
                                     <div class="current-project__row">
-                                        <div class="current-project__img">
-                                            <img src="{{ asset('img/profile-icon.svg') }}" alt="">
+                                        <div class="current-project__img" style="{{ asset('img/profile-icon.svg') }}">
                                         </div>
                                         <div class="current-project__title">
                                             <p class="name"><b>Проект не выбран</b></p>
@@ -693,12 +692,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="current-project__format">
-                                    <select name="" id="">
-                                        <option value="0">Выберите формат</option>
-                                        <option value="1">Отзыв на товар</option>
-                                        <option value="1">Рекламная интеграция(Inst)</option>
-                                    </select>
+                                <div class="current-project__col current-project__format">
+                                    <div class="current-project__row">
+                                        <div class="current-project__title">
+                                            <p class="name"><b>Формат рекламы</b></p>
+                                            <p class="articul">Отзыв на товар </p>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="current-project__btn">
                                     <a href="" class="btn btn-secondary projects-list__choose-btn">Выбрать другой проект</a>
@@ -796,7 +796,9 @@
                                     <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
                                 </div>
                             </div>
-                            @include('project.seller-list')
+                            <div class="list-projects__items">
+                                @include('project.seller-list')
+                            </div>
                         </div>
                         <div class="profile-projects__filters">
                             <div class="projects-list__filter filter">

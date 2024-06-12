@@ -55,6 +55,7 @@ class PopupAcceptBloger extends Popup{
     }
 
     sendUri = '/apist/admin/bloggers/accept';
+    getUri = 'apist/bloggers/';
 
     blogger_id = '';
 
@@ -151,6 +152,10 @@ class PopupAcceptBloger extends Popup{
                 return $(this.node).find('#yt_cpm').val();
             }
         },
+    }
+
+    getData = () => {
+
     }
 
     sendData = () => {
