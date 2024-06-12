@@ -105,9 +105,9 @@
                 <div class="burger-menu__nav nav-burger">
                     <a href="{{ route('profile') }}" class="nav-burger__link nav__link">
                         @if ( auth()->user()->role == 'seller')
-                            Дашборд
+                        Дашборд
                         @elseif (auth()->user()->blogger)
-                            Главная
+                        Главная
                         @endif
                     </a>
                     <a href="#" class="nav-burger__link nav__link">База знаний</a>
@@ -142,9 +142,9 @@
                         <div class="nav__items">
                             <a href="{{ route('profile') }}" class="nav__link">
                                 @if ( auth()->user()->role == 'seller')
-                                    Дашборд
+                                Дашборд
                                 @elseif (auth()->user()->blogger)
-                                    Главная
+                                Главная
                                 @endif
                             </a>
                             <a href="" class="nav__link disabled">
@@ -479,5 +479,24 @@
 <script src="{{ asset("libs/owl/owl.carousel.min.js") }}"></script>
 <script src="{{ asset("js/script.js") }}"></script>
 @yield('scripts')
+
+@if(session()->has('success'))
+<script>
+    notify('info', {
+        title: 'Внимание!'
+        , message: "{{ session('success') }}"
+    });
+
+</script>
+@endif
+
+@if(session()->has('switch-tab'))
+<script>
+    $(window).on('load', function() {
+        console.log($(document).find('.nav-menu__link[data-content="{{ session('switch-tab') }}"]'));
+        $(document).find('.nav-menu__link[data-content="create-project"]').click();
+    })
+</script>
+@endif
 
 </html>

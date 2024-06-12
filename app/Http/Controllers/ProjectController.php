@@ -76,9 +76,7 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'feedback' => 'nullable',
             'feedback-quantity' => 'numeric|nullable',
-            'inst' => 'nullable',
             'inst-quantity' => 'numeric|nullable',
             'product_name' => 'required|min:3',
             'product_nm' => 'required|min:3|numeric',
@@ -93,15 +91,15 @@ class ProjectController extends Controller
         }
 
         $validated = $validator->validated();
-        if (!isset($validated['feedback']) && !isset($validated['inst'])) {
-            return redirect()->route('profile')->with('success', 'Количество видов рекламы не было выбрано')->withInput();
+        if ((!isset($validated['feedback-quantity']) || $validated['feedback-quantity'] < 1) && (!isset($validated['inst-quantity']) || $validated['inst-quantity'] < 1)) {
+            return redirect()->route('profile')->with('success', 'Количество видов рекламы не было выбрано')->with('switch-tab', 'create-project')->withInput();
         }
 
         $validated['seller_id'] = Auth::user()->id;
 
         $project = Project::create($validated);
 
-        if (isset($validated['feedback'])) {
+        if (isset($validated['feedback-quantity']) && $validated['feedback-quantity'] > 0) {
             ProjectWork::create([
                 'type' => Project::FEEDBACK,
                 'quantity' => $validated['feedback-quantity'],
@@ -109,7 +107,7 @@ class ProjectController extends Controller
             ]);
         }
 
-        if (isset($validated['inst'])) {
+        if (isset($validated['inst-quantity']) && $validated['inst-quantity'] > 0) {
             ProjectWork::create([
                 'type' => Project::INSTAGRAM,
                 'quantity' => $validated['inst-quantity'],
