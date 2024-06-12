@@ -297,8 +297,7 @@
                                 </div>
                             </div>
                             <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap">
-
-                                <button class="btn btn-primary" data-project-id="{{ $project->id }}">
+                                <button class="btn btn-primary" data-project-id="{{ $project->id }}" onclick="(function(){ $(document).find('.chat-link').click(); $(document).find( '.item-chat[ data-id={{ $active_work->id }} ]' ).click() })()">
                                     Перейти в диалог
                                 </button>
                             </div>
@@ -450,32 +449,48 @@
         var data = $(stat).data('stats')
             , lineData = []
             , barData = [];
-        console.log(data);
+
         datasets = [{
-                label: 'Выручка'
-                , data: data.prices_history.map(item => item.price)
-                , showLine: true
-                , type: 'line'
-                , bloggers: data.prices_history.map(() => {
-                    return Math.floor(Math.random() * 15)
-                })
-                , backgroundColor: data.prices_history.map(() => {
+                label: 'Выручка',
+                data: data.prices_history.map((item, index) =>{ return item.price * data.orders_history[index].orders } ),
+                showLine: true,
+                type: 'line',
+                // bloggers: data.prices_history.map(() => {
+                //     return Math.floor(Math.random() * 15)
+                // })
+                backgroundColor: data.prices_history.map(() => {
                     return 'rgb(255, 99, 132, 0.5)'
-                })
-                // bloggers: data.prices_history.map(item => item.bloggers)
+                }),
+                bloggers: data.prices_history.map(item => item.bloggers),
+                order: 0,
             }
             , {
-                label: 'Заказы'
-                , data: data.orders_history.map(item => item.orders)
-                , showLine: true
-                , type: 'bar'
-                , bloggers: data.orders_history.map(() => {
-                    return Math.floor(Math.random() * 15)
-                })
-                , backgroundColor: data.orders_history.map(() => {
+                label: 'Заказы',
+                data: data.orders_history.map(item => item.orders),
+                showLine: true,
+                type: 'bar',
+                // , bloggers: data.orders_history.map(() => {
+                //     return Math.floor(Math.random() * 15)
+                // })
+                backgroundColor: data.orders_history.map(() => {
                     return 'rgb(54, 162, 235, 0.5)'
-                })
-                // bloggers: data.orders_history.map(item => item.bloggers)
+                }),
+                bloggers: data.orders_history.map(item => item.bloggers),
+                order: 1,
+                tension: 0.1
+            }
+            , {
+                label: 'Блоггеров завершило работу',
+                data: data.orders_history.map(item => item.bloggers),
+                // data: data.orders_history.map(() => {
+                //     return 1
+                // }),
+                showLine: true,
+                type: 'bar',
+                backgroundColor: data.orders_history.map(() => {
+                    return 'rgb(254,94,0, 0.4)'
+                }),
+                order: 2
             }
         , ]
 
@@ -490,9 +505,9 @@
             , options: {
                 plugins: {
                     tooltip: {
-                        mode: 'index'
-                        , intersect: false
-                        , callbacks: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
                             title: (item, data) => {
                                 var cItem = item[0]
                                     , cLabel = prodsStatistics.data.labels[cItem.dataIndex];
@@ -503,13 +518,18 @@
                             },
 
                         }
+                    },
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        type: 'logarithmic'
                     }
-                , }
-                , hover: {
-                    mode: 'nearest'
-                    , intersect: true
                 }
-                , scales: {}
             , }
         });
 
@@ -524,13 +544,13 @@
         });
 
         var dataset = prodsStatistics.data.datasets[1];
-        console.log(dataset);
+
         for (var i = 0; i < dataset.data.length; i++) {
             if (colors[i]) {
                 dataset.backgroundColor[i] = 'rgba(254,94,0, 0.5)';
             }
         }
-        console.log(dataset);
+
         prodsStatistics.update();
     })
 

@@ -367,6 +367,32 @@
                 </div>
             </div>
         </div>
+        <div class="popup" id="blogger-send-offer" style="">
+            <div class="popup__container _container">
+                <div class="popup__body">
+                    <div class="popup__header">
+                        <div class="popup__title title">
+                            Заполните данные
+                        </div>
+                        <div class="popup__subtitle">
+
+                        </div>
+                    </div>
+                    <div class="popup__form">
+                        <div class="form-group">
+                            <label for="message">Комментарий</label>
+                            <textarea name="message" id="message" cols="30" rows="10" class="textarea" placeholder="Введите сообщение"></textarea>
+                        </div>
+                        <button class="btn btn-primary send-data">
+                            Отправить
+                        </button>
+                    </div>
+                    <div class="close-popup">
+                        <img src="{{ asset('img/close-icon.svg') }}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="popup" id="confirm-completion-blogger" style="">
             <div class="popup__container _container">
                 <div class="popup__body">
@@ -478,11 +504,6 @@
 </body>
 <script src="{{ asset("libs/owl/owl.carousel.min.js") }}"></script>
 <script src="{{ asset("js/script.js") }}"></script>
-<script>
-    $(window).on('load', function(){
-        $(document).find('.nav-menu__link[data-content="create-project"]').click();
-    })
-</script>
 @yield('scripts')
 
 </html>

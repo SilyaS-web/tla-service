@@ -1063,6 +1063,57 @@ class PopupBloggerSendStatistics extends Popup{
     }
 }
 
+class PopupBloggerSendOffer extends Popup{
+    constructor(node){
+        super(node);
+
+        this.node = node;
+
+        $(this.node).find('.send-data').on('click', this.sendData)
+
+        return this;
+    }
+
+    node = '';
+    sendUri = "/apist/works";
+    projectWorkId = false;
+
+    dataProps = {
+        message: {
+            set: (val) => {console.log(val);},
+            get: () =>{
+                return $(this.node).find('#message').val();
+            }
+        },
+    }
+
+    sendData = () => {
+        var self = this,
+            data = new FormData();
+
+        for(let k in this.dataProps){
+            data.append(k, this.dataProps[k].get())
+        }
+
+        data.append('project_work_id', self.projectWorkId)
+
+        $.ajax({
+            url: `${self.sendUri}`,
+            data: data,
+            method: 'POST',
+            processData: false,
+            contentType: false,
+            success: (res)=>{
+                self.closePopup();
+                notify('info', {title: 'Успешно!', message: 'Отклик успешно отправлен'});
+
+                $(document).find(`.btn-blogger-send-offer[data-project-work="${self.projectWorkId}"]`).text('Начать работу')
+                $(document).find(`.btn-blogger-send-offer[data-project-work="${self.projectWorkId}"]`).removeClass('btn-blogger-send-offer')
+            }
+        })
+    }
+}
+
 class PopupSellerChooseProjectsFormat extends Popup{
     constructor(node){
         super(node);
@@ -1180,6 +1231,15 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
+    $(document).on('click', '.btn-blogger-send-offer', function(e){
+        var btn = $(e.target).closest('.btn-blogger-send-offer');
+
+        var popup = new PopupBloggerSendOffer('#blogger-send-offer');
+
+        popup.openPopup();
+        popup.projectWorkId = btn.data('project-work');
+    })
+
     $(document).find('.form-stat__title').on('click', function(e){
         $(e.target).closest('.form-stat').toggleClass('active');
     })
