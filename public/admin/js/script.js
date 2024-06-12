@@ -55,59 +55,103 @@ class PopupAcceptBloger extends Popup{
     }
 
     sendUri = '/apist/admin/bloggers/accept';
-    getUri = 'apist/bloggers/';
+    getUri = '/apist/bloggers';
 
     blogger_id = '';
 
     statCardClick = (e) => {
-        console.log($(e.target).closest('.form-stat'));
         $(e.target).closest('.form-stat').toggleClass('active');
     }
 
     dataProps = {
+        desc: {
+            set: (val)=>{
+                $(this.node).find('#desc').val(val);
+            },
+            get: ()=>{
+                return $(this.node).find('#desc').val();
+            }
+        },
         gender_ratio: {
-            set: (value)=>{
-                console.log(value)
+            set: (val)=>{
+                $(this.node).find('#gender_ratio').val(val);
+                $(this.node).find('#gender_ratio_f').val(100 - Number(val));
             },
             get: ()=>{
                 return $(this.node).find('#gender_ratio').val();
             }
         },
+        country: {
+            set: (val)=>{
+                $(this.node).find('#country').val(val);
+            },
+            get: ()=>{
+                return $(this.node).find('#country').val();
+            }
+        },
+        city: {
+            set: (val)=>{
+                $(this.node).find('#city').val(val);
+            },
+            get: ()=>{
+                return $(this.node).find('#city').val();
+            }
+        },
         sex: {
-            set: (value)=>{
-                console.log(value)
+            set: (val)=>{
+                $(this.node).find('#sex').val(val);
             },
             get: ()=>{
                 return $(this.node).find('#sex').val();
             }
         },
         is_achievement: {
-            set: (value)=>{
-                console.log(value)
+            set: (val)=>{
+                if(val == 1) $(this.node).find('#is_achievement').prop('checked', true)
             },
             get: ()=>{
-                return $(this.node).find('#is_achievement').val();
+                return $(this.node).find('#is_achievement').is(':checked');
             }
         },
 
         tg_subs: {
+            set: (val)=>{
+                $(this.node).find('#tg_subs').val(val)
+            },
             get: ()=>{
                 return $(this.node).find('#tg_subs').val();
             }
         },
         tg_cover: {
+            set: (val)=>{
+                $(this.node).find('#tg_cover').val(val)
+            },
             get: ()=>{
                 return $(this.node).find('#tg_cover').val();
             }
         },
         tg_er: {
+            set: (val)=>{
+                $(this.node).find('#tg_er').val(val)
+            },
             get: ()=>{
                 return $(this.node).find('#tg_er').val();
             }
         },
         tg_cpm: {
+            set: (val)=>{
+                $(this.node).find('#tg_cpm').val(val)
+            },
             get: ()=>{
                 return $(this.node).find('#tg_cpm').val();
+            }
+        },
+        tg_link: {
+            set: (val)=>{
+                $(this.node).find('#tg_link').val(val)
+            },
+            get: ()=>{
+                return $(this.node).find('#tg_link').val();
             }
         },
 
@@ -131,31 +175,150 @@ class PopupAcceptBloger extends Popup{
                 return $(this.node).find('#inst_cpm').val();
             }
         },
+        inst_link: {
+            get: ()=>{
+                return $(this.node).find('#inst_cpm').val();
+            }
+        },
 
         yt_subs: {
+            set: (val)=>{
+                $(this.node).find('#yt_subs').val(val)
+            },
             get: ()=>{
                 return $(this.node).find('#yt_subs').val();
             }
         },
         yt_cover: {
+            set: (val)=>{
+                $(this.node).find('#yt_cover').val(val)
+            },
             get: ()=>{
                 return $(this.node).find('#yt_cover').val();
             }
         },
         yt_er: {
+            set: (val)=>{
+                $(this.node).find('#yt_er').val(val)
+            },
             get: ()=>{
                 return $(this.node).find('#yt_er').val();
             }
         },
         yt_cpm: {
+            set: (val)=>{
+                $(this.node).find('#yt_cpm').val(val)
+            },
             get: ()=>{
                 return $(this.node).find('#yt_cpm').val();
+            }
+        },
+        yt_link: {
+            set: (val)=>{
+                $(this.node).find('#yt_link').val(val)
+            },
+            get: ()=>{
+                return $(this.node).find('#yt_link').val();
+            }
+        },
+
+        vk_subs: {
+            set: (val)=>{
+                $(this.node).find('#yt_subs').val(val)
+            },
+            get: ()=>{
+                return $(this.node).find('#yt_subs').val();
+            }
+        },
+        vk_cover: {
+            set: (val)=>{
+                $(this.node).find('#yt_cover').val(val)
+            },
+            get: ()=>{
+                return $(this.node).find('#yt_cover').val();
+            }
+        },
+        vk_er: {
+            set: (val)=>{
+                $(this.node).find('#yt_er').val(val)
+            },
+            get: ()=>{
+                return $(this.node).find('#yt_er').val();
+            }
+        },
+        vk_cpm: {
+            set: (val)=>{
+                $(this.node).find('#yt_cpm').val(val)
+            },
+            get: ()=>{
+                return $(this.node).find('#yt_cpm').val();
+            }
+        },
+        vk_link: {
+            set: (val)=>{
+                $(this.node).find('#yt_link').val(val)
+            },
+            get: ()=>{
+                return $(this.node).find('#yt_link').val();
             }
         },
     }
 
     getData = () => {
+        var self = this;
 
+        $.get(`${self.getUri}/${self.blogger_id}`, {}, function(res){
+            console.log(res);
+
+            self.setPlatforms(res.platforms);
+            self.setUsersData(res.blogger)
+        })
+    }
+
+    setUsersData = (blogger)=>{
+        this.dataProps.gender_ratio.set(blogger.gender_ratio || 0);
+        this.dataProps.is_achievement.set(blogger.is_achievement);
+        this.dataProps.desc.set(blogger.description || '');
+        this.dataProps.sex.set(blogger.sex || '');
+        this.dataProps.country.set(blogger.country_id || '');
+        this.dataProps.city.set(blogger.city || '');
+    }
+
+    setPlatforms = (platforms) => {
+        var self = this;
+
+        platforms.forEach(item=>{
+            switch(item.name){
+                case 'Telegram':
+                    self.dataProps.tg_subs.set(item.subscriber_quantity);
+                    self.dataProps.tg_link.set(item.link);
+                    self.dataProps.tg_cpm.set(item.cost_per_mille);
+                    self.dataProps.tg_er.set(item.engagement_rate);
+                    self.dataProps.tg_cover.set(item.coverage);
+                break;
+                case 'Instagram':
+                    self.dataProps.inst_subs.set(item.subscriber_quantity);
+                    self.dataProps.inst_link.set(item.link);
+                    self.dataProps.inst_cpm.set(item.cost_per_mille);
+                    self.dataProps.inst_er.set(item.engagement_rate);
+                    self.dataProps.inst_cover.set(item.coverage);
+                break;
+                case 'Youtube':
+                    self.dataProps.yt_subs.set(item.subscriber_quantity);
+                    self.dataProps.yt_link.set(item.link);
+                    self.dataProps.yt_cpm.set(item.cost_per_mille);
+                    self.dataProps.yt_er.set(item.engagement_rate);
+                    self.dataProps.yt_cover.set(item.coverage);
+                break;
+                case 'VK':
+                    self.dataProps.vk_subs.set(item.subscriber_quantity);
+                    self.dataProps.vk_link.set(item.link);
+                    self.dataProps.vk_cpm.set(item.cost_per_mille);
+                    self.dataProps.vk_er.set(item.engagement_rate);
+                    self.dataProps.vk_cover.set(item.coverage);
+                break
+            }
+        })
     }
 
     sendData = () => {
@@ -165,22 +328,34 @@ class PopupAcceptBloger extends Popup{
             user_id: self.blogger_id,
             gender_ratio: self.dataProps.gender_ratio.get(),
             sex: self.dataProps.sex.get(),
-            is_achievement: self.dataProps.is_achievement.get(),
+            is_achievement: Number(self.dataProps.is_achievement.get()),
+            country_id: self.dataProps.country.get(),
+            city: self.dataProps.city.get(),
+            desc: self.dataProps.desc.get(),
 
             tg_subs: self.dataProps.tg_subs.get(),
             tg_cover: self.dataProps.tg_cover.get(),
             tg_er: self.dataProps.tg_er.get(),
             tg_cpm: self.dataProps.tg_cpm.get(),
+            tg_link: self.dataProps.tg_cpm.get(),
 
             inst_subs: self.dataProps.inst_subs.get(),
             inst_cover: self.dataProps.inst_cover.get(),
             inst_er: self.dataProps.inst_er.get(),
             inst_cpm: self.dataProps.inst_cpm.get(),
+            inst_link: self.dataProps.inst_cpm.get(),
 
             yt_subs: self.dataProps.yt_subs.get(),
             yt_cover: self.dataProps.yt_cover.get(),
             yt_er: self.dataProps.yt_er.get(),
             yt_cpm: self.dataProps.yt_cpm.get(),
+            yt_link: self.dataProps.yt_cpm.get(),
+
+            vk_subs: self.dataProps.yt_subs.get(),
+            vk_cover: self.dataProps.yt_cover.get(),
+            vk_er: self.dataProps.yt_er.get(),
+            vk_cpm: self.dataProps.yt_cpm.get(),
+            vk_link: self.dataProps.yt_cpm.get(),
         }, function(res){
             notify('info', {title: 'Успешно!', message: ''});
             self.closePopup();
@@ -248,6 +423,7 @@ $(window).on('load', function(){
         }
 
         acceptBlogerForm.blogger_id = e.target.dataset.id
+        acceptBlogerForm.getData()
         acceptBlogerForm.openPopup()
     })
 
