@@ -72,6 +72,7 @@ class BloggerController extends Controller
             'tg-link' => 'string|nullable',
             'inst-link' => 'string|nullable',
             'yt-link' => 'string|nullable',
+            'vk-link' => 'string|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -86,7 +87,7 @@ class BloggerController extends Controller
             'sex' => $validated['sex'],
         ]);
 
-        if ($validated['tg-link']) {
+        if (isset($validated['tg-link'])) {
             BloggerPlatform::create([
                 'blogger_id' => $blogger->id,
                 'name' => BloggerPlatform::TELEGRAM,
@@ -94,7 +95,7 @@ class BloggerController extends Controller
             ]);
         }
 
-        if ($validated['inst-link']) {
+        if (isset($validated['inst-link'])) {
             BloggerPlatform::create([
                 'blogger_id' => $blogger->id,
                 'name' => BloggerPlatform::INSTAGRAM,
@@ -102,11 +103,19 @@ class BloggerController extends Controller
             ]);
         }
 
-        if ($validated['yt-link']) {
+        if (isset($validated['yt-link'])) {
             BloggerPlatform::create([
                 'blogger_id' => $blogger->id,
                 'name' => BloggerPlatform::YOUTUBE,
                 'link' => $validated['yt-link'],
+            ]);
+        }
+
+        if (isset($validated['vk-link'])) {
+            BloggerPlatform::create([
+                'blogger_id' => $blogger->id,
+                'name' => BloggerPlatform::VK,
+                'link' => $validated['vk-link'],
             ]);
         }
 
