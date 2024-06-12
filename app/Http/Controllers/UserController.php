@@ -105,10 +105,10 @@ class UserController extends Controller
         $chat_role = "blogger";
         $platforms = BloggerPlatform::PLATFORM_TYPES;
 
-        $deep_link_ids = DeepLink::whereIn('work_id', $works->pluck('id'))->get();
-        $bloggers = DeepLinkStat::whereHas('deep_links', function (Builder $query) use ($deep_link) {
-            $query->where('name', 'like', '%' . $validated['blogger_name'] . '%');
-        })->get();
+        // $deep_link_ids = DeepLink::whereIn('work_id', $works->pluck('id'))->get();
+        // $bloggers = DeepLinkStat::whereHas('deep_links', function (Builder $query) use ($deep_link) {
+        //     $query->where('name', 'like', '%' . $validated['blogger_name'] . '%');
+        // })->get();
 
         return compact('projects', 'bloggers', 'works', 'role', 'user_id', 'chat_role', 'blogger_platforms', 'platforms');
     }
