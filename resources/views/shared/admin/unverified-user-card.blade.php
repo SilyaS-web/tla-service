@@ -1,5 +1,5 @@
 @if ($unverified_user->blogger)
-<div class="list-blogers__item seller-item card" data-id="{{ $unverified_user->id }}">
+<div class="list-blogers__item seller-item card" data-id="{{ $unverified_user->blogger->id }}">
     <div class="card__row card__content">
         <div class="card__col">
             <div class="card__row card__header">
