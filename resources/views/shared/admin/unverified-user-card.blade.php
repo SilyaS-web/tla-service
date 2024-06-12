@@ -1,4 +1,4 @@
-        <div class="list-blogers__item seller-item card" data-id="{{ $unverified_user->id }}">
+        <div class="list-blogers__item seller-item card" data-id="{{ $unverified_user->blogger->id }}">
             <div class="card__row card__content">
                 <div class="card__col">
                     <div class="card__row card__header">
@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     <div class="admin-bloger__btns">
-                        <a href="#" class="btn btn-primary btn-accept" data-id={{ $unverified_user->id }}>Принять</a>
+                        <a href="#" class="btn btn-primary btn-accept" data-id={{ $unverified_user->blogger->id }}>Принять</a>
                         {{-- <a href="{{route('admin/deny' . $unverified_user->id)}}" class="btn btn-secondary">Отклонить</a> --}}
                         <a href="/admin/deny" class="btn btn-secondary">Отклонить</a>
                     </div>

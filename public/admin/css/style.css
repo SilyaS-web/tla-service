@@ -225,7 +225,9 @@ label{
 .form-stat__row label{
     font-size: 14px;
 }
-
+.form-stat__row>.form-group{
+    width:calc(50% - 4px);
+}
 .form-stat__content{
     height: 0;
     overflow: hidden;
