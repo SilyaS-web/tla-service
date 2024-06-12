@@ -52,7 +52,7 @@ class WorkController extends Controller
             'seller_id' => $user->role == 'seller' ? $user->id : $project_work->project->seller_id,
             'status' => null,
             'project_work_id' => $project_work->id,
-            'message' => $validated['message'],
+            'message' => $validated['message'] ?? null,
             'created_by' => $user->id,
         ]);
 
