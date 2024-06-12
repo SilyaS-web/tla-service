@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blogger;
 use App\Models\DeepLink;
 use App\Models\Message;
 use App\Models\Notification;
@@ -20,7 +21,8 @@ class WorkController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'project_work_id' => 'required|exists:project_works,id',
-            'blogger_id' => 'exists:project_works,id|nullable',
+            'blogger_id' => 'exists:bloggers,id|nullable',
+            'message' => 'string|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -44,13 +46,16 @@ class WorkController extends Controller
             $seller->save();
         }
 
+        $blogger_user = Blogger::find($validated['blogger_id']);
+
         $project_work = ProjectWork::find($validated['project_work_id']);
         $work = Work::create([
             'project_id' => $project_work->project->id,
-            'blogger_id' => $user->role == 'seller' ? $validated['blogger_id'] : $user->id,
+            'blogger_id' => $user->role == 'seller' ? $blogger_user->user->id : $user->id,
             'seller_id' => $user->role == 'seller' ? $user->id : $project_work->project->seller_id,
             'status' => null,
             'project_work_id' => $project_work->id,
+            'message' => $validated['message'] ?? null,
             'created_by' => $user->id,
         ]);
 

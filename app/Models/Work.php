@@ -24,6 +24,7 @@ class Work extends Model
         'blogger_id',
         'seller_id',
         'project_id',
+        'message',
         'accepted_by_blogger_at',
         'accepted_by_seller_at',
         'confirmed_by_blogger_at',

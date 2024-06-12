@@ -67,27 +67,7 @@
                         <div class="form-stat__row">
                             <div class="form-group" style="width:100%; max-width:100%">
                                 <label for="tg_link">Ссылка</label>
-                                <input id = "tg_link" type="text" class="input" name = "" style="width:100%; max-width:100%">
-                            </div>
-                        </div>
-                        <div class="form-stat__row">
-                            <div class="form-group">
-                                <label for="tg_subs">Подписчики</label>
-                                <input id = "tg_subs" type="text" class="input" name = "">
-                            </div>
-                            <div class="form-group">
-                                <label for="tg_cover">Охваты</label>
-                                <input id = "tg_cover" type="text" class="input" name = "">
-                            </div>
-                        </div>
-                        <div class="form-stat__row">
-                            <div class="form-group">
-                                <label for="tg_er">ER</label>
-                                <input id = "tg_er" type="text" class="input" name = "">
-                            </div>
-                            <div class="form-group">
-                                <label for="tg_cpm">CPM</label>
-                                <input id = "tg_cpm" type="text" class="input" name = "">
+                                <input id = "tg_link" type="text" class="input" name = "tg-link" style="width:100%; max-width:100%">
                             </div>
                         </div>
                     </div>
@@ -100,27 +80,7 @@
                         <div class="form-stat__row">
                             <div class="form-group" style="width:100%; max-width:100%">
                                 <label for="inst_link">Ссылка</label>
-                                <input id = "inst_link" type="text" class="input" name = "" style="width:100%; max-width:100%">
-                            </div>
-                        </div>
-                        <div class="form-stat__row">
-                            <div class="form-group">
-                                <label for="inst_subs">Подписчики</label>
-                                <input id = "inst_subs" type="text" class="input" name = "">
-                            </div>
-                            <div class="form-group">
-                                <label for="inst_cover">Охваты</label>
-                                <input id = "inst_cover" type="text" class="input" name = "">
-                            </div>
-                        </div>
-                        <div class="form-stat__row">
-                            <div class="form-group">
-                                <label for="inst_er">ER</label>
-                                <input id = "inst_er" type="text" class="input" name = "">
-                            </div>
-                            <div class="form-group">
-                                <label for="inst_cpm">CPM</label>
-                                <input id = "inst_cpm" type="text" class="input" name = "">
+                                <input id = "inst_link" type="text" class="input" name = "inst-link" style="width:100%; max-width:100%">
                             </div>
                         </div>
                     </div>
@@ -136,26 +96,6 @@
                                 <input id = "yt_link" type="text" class="input" name = "" style="width:100%; max-width:100%">
                             </div>
                         </div>
-                        <div class="form-stat__row">
-                            <div class="form-group">
-                                <label for="yt_subs">Подписчики</label>
-                                <input id = "yt_subs" type="text" class="input" name = "">
-                            </div>
-                            <div class="form-group">
-                                <label for="yt_cover">Охваты</label>
-                                <input id = "yt_cover" type="text" class="input" name = "">
-                            </div>
-                        </div>
-                        <div class="form-stat__row">
-                            <div class="form-group">
-                                <label for="yt_er">ER</label>
-                                <input id = "yt_er" type="text" class="input" name = "">
-                            </div>
-                            <div class="form-group">
-                                <label for="yt_cpm">CPM</label>
-                                <input id = "yt_cpm" type="text" class="input" name = "">
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="popup__form-row popup__form-stat form-stat">
@@ -166,27 +106,7 @@
                         <div class="form-stat__row" >
                             <div class="form-group" style="width:100%; max-width:100%">
                                 <label for="vk_link">Ссылка</label>
-                                <input id = "vk_link" type="text" class="input" name = "" style="width:100%; max-width:100%">
-                            </div>
-                        </div>
-                        <div class="form-stat__row">
-                            <div class="form-group">
-                                <label for="vk_subs">Подписчики</label>
-                                <input id = "vk_subs" type="text" class="input" name = "">
-                            </div>
-                            <div class="form-group">
-                                <label for="vk_cover">Охваты</label>
-                                <input id = "vk_cover" type="text" class="input" name = "">
-                            </div>
-                        </div>
-                        <div class="form-stat__row">
-                            <div class="form-group">
-                                <label for="vk_er">ER</label>
-                                <input id = "vk_er" type="text" class="input" name = "">
-                            </div>
-                            <div class="form-group">
-                                <label for="vk_cpm">CPM</label>
-                                <input id = "vk_cpm" type="text" class="input" name = "">
+                                <input id = "vk_link" type="text" class="input" name = "vk-link" style="width:100%; max-width:100%">
                             </div>
                         </div>
                     </div>

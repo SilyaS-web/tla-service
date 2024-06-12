@@ -1,6 +1,4 @@
-<?
-    $isSuccess = session()->has('success');
-?>
+@php ($isSuccess = session()->has('success'))
 
 <div class="notification" style="display:none">
     <div class="notification__body">
@@ -10,9 +8,3 @@
         </div>
     </div>
 </div>
-
-<? if($isSuccess): ?>
-    <script>
-        notify({'Внимание!', <?php echo session('success')?>})
-    </script>
-<? endif ?>

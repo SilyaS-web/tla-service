@@ -18,23 +18,31 @@ class AdminController extends Controller
     public function accept(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'required|numeric',
+            'blogger_id' => 'required|numeric',
             'desc' => 'string|nullable',
             'sex' => 'required|string',
             'is_achievement' => 'string|nullable',
             'gender_ratio' => 'required|numeric',
+            'tg_link' => 'numeric|nullable',
             'tg_subs' => 'numeric|nullable',
             'tg_cover' => 'numeric|nullable',
             'tg_er' => 'numeric|nullable',
             'tg_cpm' => 'numeric|nullable',
+            'inst_link' => 'numeric|nullable',
             'inst_subs' => 'numeric|nullable',
             'inst_cover' => 'numeric|nullable',
             'inst_er' => 'numeric|nullable',
             'inst_cpm' => 'numeric|nullable',
+            'yt_link' => 'numeric|nullable',
             'yt_subs' => 'numeric|nullable',
             'yt_cover' => 'numeric|nullable',
             'yt_er' => 'numeric|nullable',
             'yt_cpm' => 'numeric|nullable',
+            'vk_link' => 'numeric|nullable',
+            'vk_subs' => 'numeric|nullable',
+            'vk_cover' => 'numeric|nullable',
+            'vk_er' => 'numeric|nullable',
+            'vk_cpm' => 'numeric|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -42,7 +50,7 @@ class AdminController extends Controller
         }
 
         $validated = $validator->validated();
-        $blogger = Blogger::where('user_id', $validated['user_id'])->first();
+        $blogger = Blogger::find($validated['blogger_id'])->first();
 
         $blogger->update([
             'description' => $validated['desc'] ?? null,
@@ -55,7 +63,7 @@ class AdminController extends Controller
             $tg_platform = $blogger->platforms()->where('name', BloggerPlatform::TELEGRAM)->first();
             if ($tg_platform) {
                 $tg_platform->update([
-                    'link' => '123',
+                    'link' => $validated['tg_link'],
                     'subscriber_quantity' => $validated['tg_subs'],
                     'coverage' => $validated['tg_cover'],
                     'engagement_rate' => $validated['tg_er'],
@@ -64,12 +72,12 @@ class AdminController extends Controller
             } else {
                 BloggerPlatform::create([
                     'blogger_id' => $blogger->id,
+                    'link' => $validated['tg_link'],
                     'name' => BloggerPlatform::TELEGRAM,
                     'subscriber_quantity' => $validated['tg_subs'],
                     'coverage' => $validated['tg_cover'],
                     'engagement_rate' => $validated['tg_er'],
                     'cost_per_mille' => $validated['tg_cpm'],
-                    'link' => 'link'
                 ]);
             }
         }
@@ -78,6 +86,7 @@ class AdminController extends Controller
             $inst_platform = $blogger->platforms()->where('name', BloggerPlatform::INSTAGRAM)->first();
             if ($inst_platform) {
                 $inst_platform->update([
+                    'link' => $validated['inst_link'],
                     'subscriber_quantity' => $validated['inst_subs'],
                     'coverage' => $validated['inst_cover'],
                     'engagement_rate' => $validated['inst_er'],
@@ -87,6 +96,7 @@ class AdminController extends Controller
                 BloggerPlatform::create([
                     'blogger_id' => $blogger->id,
                     'name' => BloggerPlatform::INSTAGRAM,
+                    'link' => $validated['inst_link'],
                     'subscriber_quantity' => $validated['inst_subs'],
                     'coverage' => $validated['inst_cover'],
                     'engagement_rate' => $validated['inst_er'],
@@ -99,6 +109,7 @@ class AdminController extends Controller
             $yt_platform = $blogger->platforms()->where('name', BloggerPlatform::YOUTUBE)->first();
             if ($yt_platform) {
                 $yt_platform->update([
+                    'link' => $validated['yt_link'],
                     'subscriber_quantity' => $validated['yt_subs'],
                     'coverage' => $validated['yt_cover'],
                     'engagement_rate' => $validated['yt_er'],
@@ -109,6 +120,7 @@ class AdminController extends Controller
                     'blogger_id' => $blogger->id,
                     'name' => BloggerPlatform::YOUTUBE,
                     'subscriber_quantity' => $validated['yt_subs'],
+                    'link' => $validated['yt_link'],
                     'coverage' => $validated['yt_cover'],
                     'engagement_rate' => $validated['yt_er'],
                     'cost_per_mille' => $validated['yt_cpm'],
@@ -116,7 +128,30 @@ class AdminController extends Controller
             }
         }
 
-        $user = User::find($validated['user_id']);
+        if ($validated['vk_subs']) {
+            $vk_platform = $blogger->platforms()->where('name', BloggerPlatform::VK)->first();
+            if ($vk_platform) {
+                $vk_platform->update([
+                    'link' => $validated['vk_link'],
+                    'subscriber_quantity' => $validated['vk_subs'],
+                    'coverage' => $validated['vk_cover'],
+                    'engagement_rate' => $validated['vk_er'],
+                    'cost_per_mille' => $validated['vk_cpm'],
+                ]);
+            } else {
+                BloggerPlatform::create([
+                    'blogger_id' => $blogger->id,
+                    'name' => BloggerPlatform::VK,
+                    'link' => $validated['vk_link'],
+                    'subscriber_quantity' => $validated['vk_subs'],
+                    'coverage' => $validated['vk_cover'],
+                    'engagement_rate' => $validated['vk_er'],
+                    'cost_per_mille' => $validated['vk_cpm'],
+                ]);
+            }
+        }
+
+        $user = $blogger->user;
         $user->status = 1;
         $user->save();
         TgService::notify($blogger->user->tgPhone->chat_id, 'Вы успешно прошли модерацию');

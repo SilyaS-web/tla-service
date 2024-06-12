@@ -36,7 +36,8 @@
                         </div>
                         <script>
                             $(function() {
-                                $("#phone").mask("8(999) 999-9999");
+                                $.mask.definitions['h'] = "[0|1|3|4|5|6|7|9]"
+                                $("#phone").mask("+7 (h99) 999-99-99");
                             });
 
                         </script>
@@ -55,15 +56,15 @@
                             <label for="">ИНН</label>
                             <input type="text" class="input" id="inn" name="inn" value="{{ $user->seller->inn }}">
                         </div>
-                          <div class="form-group">
+                        <div class="form-group">
                             <label for="">Ключ API WB</label>
                             <input type="text" class="input" id="inn" name="wb_api_key" value="{{ $user->seller->wb_api_key }}">
                         </div>
                     </div>
                     <button class="btn btn-primary mobile" type='submit'>Сохранить</button>
                 </div>
-            </div>
         </div>
+    </div>
     </div>
 </section>
 
