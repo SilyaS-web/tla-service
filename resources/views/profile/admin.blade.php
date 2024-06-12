@@ -141,7 +141,47 @@
                     Заполните данные
                 </div>
                 <div class="popup__form">
-                    <label for="">Статистика по блогеру</label>
+                    <div class="form-group">
+                        <label for="desc">Описание канала</label>
+                        <textarea name="desc" id="desc" cols="30" rows="10" class="textarea" placeholder="Введите текст"></textarea>
+                    </div>
+                    <div class="form-row filter__item" style="display: flex; gap:10px;">
+                        <div class="form-group">
+                            <label for="gender_ratio">Мужчины, %</label>
+                            <input id="gender_ratio" name="gender_ratio" type="number" class="input">
+                        </div>
+                        <div class="form-group">
+                            <label for="gender_ratio_f">Женщины, %</label>
+                            <input id="gender_ratio_f" name="gender_ratio_f" type="number" class="input">
+                        </div>
+                    </div>
+                    <script>
+                        $("#gender_ratio").on('change', function(e){
+                            $('#gender_ratio_f').val(100 - Number($(e.target).val()))
+                        })
+                        $("#gender_ratio_f").on('change', function(e){
+                            $('#gender_ratio').val(100 - Number($(e.target).val()))
+                        })
+                    </script>
+                    <div class="form-row filter__item">
+                        <div class="form-group">
+                            <label for="sex">Пол блогера</label>
+                            <select name="sex" id="sex" class="input">
+                                <option value="male" class="">Мужской</option>
+                                <option value="female" class="">Женский</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Страна блогера</label>
+                            <select name="country" id="country" class="input">
+                                <option value="1" class="">Россия</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">Город блогера</label>
+                            <input id="city" name="city" type="text" class="input">
+                        </div>
+                        <label for="">Статистика по блогеру</label>
                     <div class="popup__form-row popup__form-stat form-stat">
                         <div class="form-stat__title">
                             Telegram
@@ -274,49 +314,6 @@
                             </div>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="desc">Описание канала</label>
-                        <textarea name="desc" id="desc" cols="30" rows="10" class="textarea" placeholder="Введите текст"></textarea>
-                    </div>
-                    <div class="form-row filter__item" style="display: flex; gap:10px;">
-                        <div class="form-group">
-                            <label for="gender_ratio">Мужчины, %</label>
-                            <input id="gender_ratio" name="gender_ratio" type="number" class="input">
-                        </div>
-                        <div class="form-group">
-                            <label for="gender_ratio_f">Женщины, %</label>
-                            <input id="gender_ratio_f" name="gender_ratio_f" type="number" class="input">
-                        </div>
-                    </div>
-                    <script>
-                        $("#gender_ratio").on('change', function(e){
-                            $('#gender_ratio_f').val(100 - Number($(e.target).val()))
-                        })
-                        $("#gender_ratio_f").on('change', function(e){
-                            $('#gender_ratio').val(100 - Number($(e.target).val()))
-                        })
-                    </script>
-                    <div class="form-row filter__item">
-                        <div class="form-group">
-                            <label for="sex">Пол блогера</label>
-                            <select name="sex" id="sex" class="input">
-                                <option value="male" class="">Мужской</option>
-                                <option value="female" class="">Женский</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="country">Страна блогера</label>
-                            <select name="country" id="country" class="input">
-                                <option value="1" class="">Россия</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="city">Город блогера</label>
-                            <select name="city" id="city" class="input">
-                                <option value="1" class="">Димитровград</option>
-                                <option value="2" class="">Самара</option>
-                            </select>
-                        </div>
                         <div class="form-group">
                             <div class="input-checkbox-w">
                                 <input name="is_achievement" type="checkbox" class="checkbox whois" id="is_achievement">
