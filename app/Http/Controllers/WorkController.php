@@ -20,7 +20,7 @@ class WorkController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'project_work_id' => 'required|exists:project_works,id',
-            'blogger_id' => 'exists:project_works,id|nullable',
+            'blogger_id' => 'exists:blogger,id|nullable',
             'message' => 'string|nullable',
         ]);
 
