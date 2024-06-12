@@ -116,7 +116,7 @@
                 </div>
             </div>
             <div class="card__row card__row" style="flex-direction: column; gap: 5px">
-                <button class="btn btn-primary btn-add-to-project" onclick="sendProjectToBlogger({{ $blogger->user_id }})" data-project-id="">
+                <button class="btn btn-primary btn-add-to-project" onclick="sendProjectToBlogger({{ $blogger->id }})" data-project-id="">
                     Отправить заявку
                 </button>
 
