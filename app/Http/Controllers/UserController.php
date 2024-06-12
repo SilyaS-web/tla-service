@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blogger;
 use App\Models\BloggerPlatform;
+use App\Models\DeepLink;
 use App\Models\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -102,6 +103,9 @@ class UserController extends Controller
         $role = $user->role;
         $chat_role = "blogger";
         $platforms = BloggerPlatform::PLATFORM_TYPES;
+
+        $deep_link = DeepLink::whereIn('work_id', $works->pluck('id'));
+
         return compact('projects', 'bloggers', 'works', 'role', 'user_id', 'chat_role', 'blogger_platforms', 'platforms');
     }
 
@@ -188,40 +192,40 @@ class UserController extends Controller
 
         return view('profile.edit.' . $user->role, compact('user'));
 
-        $validated = request()->validate([
-            'name' => 'required|min:3',
-            'email' => 'required|email|unique:users,email',
-            'phone' => 'required|unique:users,phone',
-            'role' => ['required', Rule::in(User::TYPES)],
-            'password' => 'required|confirmed|min:8'
-        ]);
+        // $validated = request()->validate([
+        //     'name' => 'required|min:3',
+        //     'email' => 'required|email|unique:users,email',
+        //     'phone' => 'required|unique:users,phone',
+        //     'role' => ['required', Rule::in(User::TYPES)],
+        //     'password' => 'required|confirmed|min:8'
+        // ]);
 
-        if ($validated['role'] == 'seller') {
-            $validated['status'] = 1;
-        } else {
-            $validated['status'] = 0;
-        }
-        $phone_for_search = str_replace(['(', ')', ' ', '-'], '', $validated['phone']);
-        $phone_for_search = '+7' . mb_substr($phone_for_search, 1);
-        $tgPhone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
-        if (!$tgPhone) {
-            return redirect()->route('register')->with('success', 'Необходимо подтвердить телеграм')->withInput();
-        }
+        // if ($validated['role'] == 'seller') {
+        //     $validated['status'] = 1;
+        // } else {
+        //     $validated['status'] = 0;
+        // }
+        // $phone_for_search = str_replace(['(', ')', ' ', '-'], '', $validated['phone']);
+        // $phone_for_search = '+7' . mb_substr($phone_for_search, 1);
+        // $tgPhone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
+        // if (!$tgPhone) {
+        //     return redirect()->route('register')->with('success', 'Необходимо подтвердить телеграм')->withInput();
+        // }
 
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'phone' => $validated['phone'],
-            'role' => $validated['role'],
-            'status' => $validated['status'],
-            'password' => bcrypt($validated['password']),
-        ]);
+        // $user = User::create([
+        //     'name' => $validated['name'],
+        //     'email' => $validated['email'],
+        //     'phone' => $validated['phone'],
+        //     'role' => $validated['role'],
+        //     'status' => $validated['status'],
+        //     'password' => bcrypt($validated['password']),
+        // ]);
 
-        if ($validated['role'] == 'seller') {
-            Seller::create([
-                'user_id' => $user->id
-            ]);
-        }
+        // if ($validated['role'] == 'seller') {
+        //     Seller::create([
+        //         'user_id' => $user->id
+        //     ]);
+        // }
     }
 
     public function getNewNotifications(Request $request)

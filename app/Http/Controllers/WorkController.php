@@ -21,6 +21,7 @@ class WorkController extends Controller
         $validator = Validator::make($request->all(), [
             'project_work_id' => 'required|exists:project_works,id',
             'blogger_id' => 'exists:project_works,id|nullable',
+            'message' => 'string|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -51,6 +52,7 @@ class WorkController extends Controller
             'seller_id' => $user->role == 'seller' ? $user->id : $project_work->project->seller_id,
             'status' => null,
             'project_work_id' => $project_work->id,
+            'message' => $validated['message'],
             'created_by' => $user->id,
         ]);
 
