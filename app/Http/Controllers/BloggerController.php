@@ -121,6 +121,13 @@ class BloggerController extends Controller
         return view('profile.public.blogger', compact('user', 'projects'));
     }
 
+    public function info(Blogger $blogger)
+    {
+        $user = $blogger->user;
+
+        return response()->json(['user' => $user, 'blogger' => $blogger, 'platforms'=> $blogger->platforms], 200);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
