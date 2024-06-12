@@ -36,7 +36,9 @@
                 <div class="header__col header__profile-items">
                     <div class="header__row">
                         <div href="#" class="header__profile-w header__profile-header header__profile-item--js">
-                            <img src="{{ asset('img/profile-icon.svg') }}" alt="" class="header__profile">
+                            <a href="/">
+                                <img src="{{ asset('img/profile-icon.svg') }}" alt="" class="header__profile">
+                            </a>
                             <div class="header__profile-col">
                                 <span class="header__profile-name">
                                     {{ auth()->user()->name }}
@@ -53,10 +55,10 @@
                                 <a href="{{ route('edit-profile') }}" class="row">
                                     Личные данные
                                 </a>
-                                <a href="#" class="row">
+                                <a href="{{ route('tariff') }}" class="row">
                                     Тарифы
                                 </a>
-                                <a href="#" class="row">
+                                <a href="{{ route('logout') }}" class="row">
                                     Выход
                                 </a>
                             </div>
@@ -103,9 +105,9 @@
                 <div class="burger-menu__nav nav-burger">
                     <a href="{{ route('profile') }}" class="nav-burger__link nav__link">
                         @if ( auth()->user()->role == 'seller')
-                        Дашборд
+                            Дашборд
                         @elseif (auth()->user()->blogger)
-                        Главная
+                            Главная
                         @endif
                     </a>
                     <a href="#" class="nav-burger__link nav__link">База знаний</a>
@@ -140,9 +142,9 @@
                         <div class="nav__items">
                             <a href="{{ route('profile') }}" class="nav__link">
                                 @if ( auth()->user()->role == 'seller')
-                                Дашборд
+                                    Дашборд
                                 @elseif (auth()->user()->blogger)
-                                Главная
+                                    Главная
                                 @endif
                             </a>
                             <a href="" class="nav__link disabled">
@@ -425,6 +427,31 @@
                         </div>
                         <button class="btn btn-primary send-data">
                             Отправить
+                        </button>
+                    </div>
+                    <div class="close-popup">
+                        <img src="{{ asset('img/close-icon.svg') }}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="popup" id="choose-projects-adv-format" style="">
+            <div class="popup__container _container">
+                <div class="popup__body">
+                    <div class="popup__header">
+                        <div class="popup__title title">
+                            Выберите формат рекламы
+                        </div>
+                        <div class="popup__subtitle">
+                            Выберите из списка нужный формат рекламы, который вы хотите предложить блогеру, после выбора формата вы вернетесь к выбору блогера
+                        </div>
+                    </div>
+                    <div class="popup__form">
+                        <div class="popup__formats">
+
+                        </div>
+                        <button class="btn btn-primary btn-confirm">
+                            Выбрать
                         </button>
                     </div>
                     <div class="close-popup">

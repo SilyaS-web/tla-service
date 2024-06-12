@@ -26,11 +26,40 @@
                     @endforeach
                 </div>
             </div>
-            {{-- <div class="card__row card__tags">
+            <div class="card__row card__tags">
                 <div class="card__tags-item">
                     <span>Животные и Природа</span>
                 </div>
-            </div> --}}
+                <div class="card__tags-item">
+                    <span>Технологии</span>
+                </div>
+                <div class="card__tags-item">
+                    <span>Садоводство</span>
+                </div>
+                <div class="card__tags-item card__tags-item--others">
+                    <span>Посмотреть все +5шт</span>
+                    <div class="card__tags-item-w">
+                        <div class="card__tags-item">
+                            <span>Авто</span>
+                        </div>
+                        <div class="card__tags-item">
+                            <span>Математика</span>
+                        </div>
+                        <div class="card__tags-item">
+                            <span>Древесина</span>
+                        </div>
+                        <div class="card__tags-item">
+                            <span>Вещи, шопинг</span>
+                        </div>
+                        <div class="card__tags-item">
+                            <span>Реклама</span>
+                        </div>
+                        <div class="card__tags-item">
+                            <span>Всякая всячина</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <div class="card__row card__desc">
                 {{ $blogger->description }}
             </div>

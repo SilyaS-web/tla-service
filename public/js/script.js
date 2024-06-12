@@ -1,3 +1,7 @@
+//----To next dev guy-----
+//If you watching this it means I've save myself and leave
+//All I wanna say is Sorry :3
+
 class Quest {
     constructor(node) {
         this.node = node;
@@ -1059,6 +1063,81 @@ class PopupBloggerSendStatistics extends Popup{
     }
 }
 
+class PopupSellerChooseProjectsFormat extends Popup{
+    constructor(node){
+        super(node);
+
+        this.node = node;
+
+        $(this.node).find('.btn-confirm').on('click', this.confirm);
+        $(this.node).on('click', '.input-checkbox-w', function(e){
+            var wrap = $(e.target).closest('.input-checkbox-w'),
+                cRadio = wrap.find('input[type="radio"]'),
+                allRadio = $(e.target).closest('.popup__form').find(`.popup__formats .input-checkbox-w[data-id!="${cRadio.closest('.input-checkbox-w').data('id')}"] input[type="radio"]`);
+
+            allRadio.prop('checked', false);
+        })
+
+
+        return this;
+    }
+
+    node = '';
+    projectNode = null;
+
+    formatTemplate = `<div class="input-checkbox-w" data-id="%%ID%%">
+        <input id="format_%%COUNTER%%" name="format_%%COUNTER%%" type="radio" class="checkbox">
+        <label for="format_%%COUNTER%%">%%NAME%%</label>
+    </div>`;
+
+    addFormats = (list) => {
+        $(this.node).find('.popup__formats').empty();
+
+        list.each((i, v)=>{
+            var name = $(v).find('span').text(),
+                counter = i,
+                id = $(v).data('id');
+
+            var template = this.formatTemplate;
+
+            template = template.replaceAll('%%ID%%', id);
+            template = template.replaceAll('%%NAME%%', name);
+            template = template.replaceAll('%%COUNTER%%', counter);
+
+            $(this.node).find('.popup__formats').append(template);
+        })
+    }
+
+    confirm = () => {
+        var currentFormat = $(this.node).find('.popup__formats .input-checkbox-w input:checked');
+
+        if(currentFormat.length == 0){
+            notify('info', {title: 'Внимание!', message: 'Необходимо выбрать проект'});
+            return
+        }
+
+        $('.current-project').show();
+        $(document).find('#profile-blogers-list .projects-list__header .projects-list__choose-btn').hide();
+
+        $('.current-project').find('.projects-list__choose-btn').show();
+        $('#profile-projects-choose').removeClass('active');
+        $('#profile-blogers-list').addClass('active');
+
+        var articul = $(this.projectNode).find('.btn-choose-project').data('articul'),
+            name = $(this.projectNode).find('.project-item__subtitle').text(),
+            imgUrl = $(this.projectNode).find('.project-item__img img').attr('src');
+
+        $('.current-project').find('.current-project__main .current-project__title .articul span').text(articul)
+        $('.current-project').find('.current-project__main .current-project__title .name b').text(name)
+        $('.current-project').find('.current-project__img').css('backgroundImage', `url(${imgUrl})`)
+        $('.current-project').find('.current-project__format .articul').text(currentFormat.closest('.input-checkbox-w').find('label').text())
+        $('.current-project').data('id', currentFormat.closest('.input-checkbox-w').data('id'))
+
+        this.closePopup();
+        delete this;
+    }
+}
+
 class DashboardTabs extends Tabs{
     constructor(node){
         super(node);
@@ -1101,34 +1180,27 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
+    $(document).find('.form-stat__title').on('click', function(e){
+        $(e.target).closest('.form-stat').toggleClass('active');
+    })
+
     $(document).on('click', '.projects-list__choose-btn', function(e){
         e.preventDefault();
-        var headerBtn = $(e.target).closest('.projects-list__choose-btn');
 
         $('#profile-projects-choose').addClass('active');
         $('#profile-blogers-list').removeClass('active');
 
         $(document).on('click', '.btn-choose-project', function(e){
-            $('.current-project').show();
-            headerBtn.hide();
+            var choosePopup = new PopupSellerChooseProjectsFormat('#choose-projects-adv-format');
+            choosePopup.openPopup();
 
-            $('.current-project').find('.projects-list__choose-btn').show();
-            $('#profile-projects-choose').removeClass('active');
-            $('#profile-blogers-list').addClass('active');
+            var formats = $(e.target).closest('.project-item').find('.project-item__format-tags .card__tags-item');
+            choosePopup.addFormats(formats);
 
-            var articul = $(e.target).closest('.btn-choose-project').data('articul');
-            var name = $(e.target).closest('.project-item').find('.project-item__subtitle').text();
-            var project_id = $(e.target).closest('.btn-choose-project').data('project-id');
-            var imgUrl = $(e.target).closest('.project-item').find('.project-item__img img').attr('src');
-
-            $('.current-project').find('.current-project__title .articul span').text(articul)
-            $('.current-project').find('.current-project__title .name b').text(name)
-            $('.current-project').find('.current-project__img img').attr('src', imgUrl)
-
-            $('.current-project').data('id', project_id)
+            choosePopup.projectNode = $(e.target).closest('.project-item')
         })
     })
-  
+
     $(document).on('click', '.item-chat__project-link--seller', function(e){
         var pId = $(e.target).closest('.item-chat__project-link--seller').data('project-id');
 

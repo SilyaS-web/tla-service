@@ -214,15 +214,18 @@ label{
     background-image: url('../img/arrow-alt.svg');
     background-position: center;
     background-size: contain;
+    transition: transform .1s linear;
 }
 .form-stat__row{
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    margin: 0 10px;
 }
 .form-stat__row label{
     font-size: 14px;
 }
+
 .form-stat__content{
     height: 0;
     overflow: hidden;
@@ -233,6 +236,10 @@ label{
 .form-stat.active .form-stat__title{
     margin-bottom: 20px;
 }
+.form-stat.active .form-stat__title::after{
+    transform: rotate(180deg);
+}
+
 
 .header {
     border-bottom: 1px solid rgba(0, 0, 0, .12);
