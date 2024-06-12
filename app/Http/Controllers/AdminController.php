@@ -116,7 +116,7 @@ class AdminController extends Controller
             }
         }
 
-        $user = User::find($validated['user_id']);
+        $user = User::find($blogger->user_id);
         $user->status = 1;
         $user->save();
         TgService::notify($blogger->user->tgPhone->chat_id, 'Вы успешно прошли модерацию');
