@@ -1322,6 +1322,7 @@ $(window).on('load', function(){
     })
 
     $(document).on('click', '.projects-list__choose-btn', function(e){
+        console.log(e.target);
         e.preventDefault();
 
         $('#profile-projects-choose').addClass('active');
@@ -1514,12 +1515,13 @@ $(window).on('load', function(){
     var bloggerProjectsOffersFilter = new BloggerProjectsOffersFilter('.profile#blogger #avail-projects .projects-list__filter');
 
     $('.projects-list__filter-btn').on('click', function(){
-        console.log(123);
         $('.projects-list__filter').addClass('opened');
 
-        $(document).off('click').on('click', function(e){
-            if(!$(e.target).hasClass('projects-list__filter') && !$(e.target).hasClass('projects-list__filter-btn')){
+        $(document).off('click', '.projects-list__filter-btn').on('click', document, function(e){
+            console.log($(e.target).closest('.projects-list__filter'));
+            if(!$(e.target).closest('.projects-list__filter').length > 0 && !$(e.target).hasClass('projects-list__filter-btn')){
                 $('.projects-list__filter').removeClass('opened');
+                $(document).off('click', document)
             }
         })
     })

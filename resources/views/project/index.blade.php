@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="profile-projects__row" style="margin-top:auto">
-                <div class="profile-projects__btns">
+                <div class="profile-projects__btns" style="margin-top:0;">
                     <button class="btn btn-secondary btn-bloggers">Заявки от блогеров</button>
                     <button class="btn btn-secondary btn-statistics">Статистика</button>
                 </div>
