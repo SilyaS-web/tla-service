@@ -276,7 +276,7 @@
                                 <div class="dashboard__content active" id="wb">
                                     <div class="dashboard__row dashboard__item--feedback feedback-dashboard" style="{{ !empty(auth()->user()->seller->wb_api_key) ?: 'padding: 0;' }}">
                                         @if (empty(auth()->user()->seller->wb_api_key))
-                                        <div class="dashboard__placeholder" style="z-index: 9999">
+                                        <div class="dashboard__placeholder" style="z-index: 9998">
                                             <div class="dashboard__placeholder-text">
                                                 Введите API ключ в настройках профиля
                                             </div>

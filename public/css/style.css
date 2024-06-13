@@ -520,8 +520,8 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .profile-projects__img{
     width: 100%;
-    max-width: 190px;
-    max-height: 190px;
+    width: 190px;
+    height: 190px;
     border-radius: 5px;
     overflow: hidden;
     background-size: cover;
@@ -1763,13 +1763,13 @@ input[type='range']::-webkit-slider-runnable-track{
 .current-project{
     display: flex;
     gap: 30px;
-    justify-content: space-between;
     margin:20px 0px;
     padding: 15px;
     background-color: var(--pale);
     border-radius: 20px;
     align-items: center;
     width: fit-content;
+    flex-wrap: wrap;
 }
 .current-project__img{
     width: 80px;
@@ -1801,6 +1801,7 @@ input[type='range']::-webkit-slider-runnable-track{
     display: flex;
     gap: 12px;
     align-items: center;
+    flex-wrap: wrap;
 }
 .current-project__btn a{
     display: block;
@@ -3413,6 +3414,7 @@ input[type='range']::-webkit-slider-runnable-track{
     display: flex;
     justify-content: center;
     gap: 15%;
+    flex-wrap: wrap;
 }
 .footer__top {
     display: flex;
@@ -3504,10 +3506,11 @@ input[type='range']::-webkit-slider-runnable-track{
 
 @media(max-width: 1740px){
     #seller .projects-list__filter{
-        position: absolute;
+        position: fixed;
         left: -100%;
         top: 0;
         height: 100%;
+        overflow-y: auto;
     }
     #seller .projects-list__filter.opened{
         left:0;
@@ -3965,6 +3968,7 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .card{
         width: 100%;
+        min-width: unset;
     }
     .card__stats-item:not(:last-child){
         margin-right: 3%;
@@ -4152,6 +4156,13 @@ input[type='range']::-webkit-slider-runnable-track{
     .messages-chat__item-title{
         font-size: 14px;
     }
+
+    .card__name{
+        padding:6px 0;
+    }
+    .card__name-name{
+        font-size: 14px;
+    }
 }
 @media(max-width:447px){
     .quest{
@@ -4218,7 +4229,6 @@ input[type='range']::-webkit-slider-runnable-track{
         display: flex;
         align-items: center;
         justify-content: center;
-        display: block;
         transition: all .2s linear;
     }
     .profile__navigation.nav-menu .nav-menu__close img{
@@ -4241,5 +4251,23 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .profile__content{
         width:100%;
+    }
+
+    .card__desc{
+        font-size: 14px;
+    }
+    .card__tags-item{
+        font-size: 12px;
+    }
+
+    .notification{
+        left:20px;
+    }
+    .btn-bloggers-in_work{
+        align-self: baseline;
+        margin-top: 30px;
+    }
+    ._container{
+        padding:0 10px
     }
 }
