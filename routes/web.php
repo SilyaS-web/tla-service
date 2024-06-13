@@ -76,6 +76,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/works', [WorkController::class, 'store'])->name('create-work');
         Route::post('/works/{work_id}/accept', [WorkController::class, 'accept']);
         Route::get('/works/{work_id}/accept', [WorkController::class, 'accept']);
+        Route::get('/works/{work_id}/start', [WorkController::class, 'start']);
         Route::post('/works/{work_id}/confirm', [WorkController::class, 'confirm']);
         Route::post('/works/{work_id}/stats', [WorkController::class, 'statst']);
 

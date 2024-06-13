@@ -81,10 +81,10 @@ class WorkController extends Controller
             $work->status = Work::PENDING;
             $work->save();
             TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, $user->name . ' принял вашу заявку');
-            return response()->json('success', 200);
+            return redirect()->back()->with('success', 'Заявка успешно принята');
         }
 
-        return response()->json('success', 400);
+        return redirect()->back()->with('success', 'Не удалось принять заявку');
     }
 
     public function accept($work_id)
@@ -104,11 +104,11 @@ class WorkController extends Controller
             $work->save();
             $deeplink = $this->createDeepLinkByWork($work);
             $link = request()->getSchemeAndHttpHost() . '/lnk/' . $deeplink->link;
-                Message::create([
-                    'work_id' => $work->id,
-                    'user_id' => 0,
-                    'message' => 'Работа начата - ссылка для сбора статистики <a target="_blank" href="' . $link . '">' . $link . '</a>',
-                ]);
+            Message::create([
+                'work_id' => $work->id,
+                'user_id' => 0,
+                'message' => 'Работа начата - ссылка для сбора статистики <a target="_blank" href="' . $link . '">' . $link . '</a>',
+            ]);
             TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, $user->name . ' готов приступить к работе');
         } else {
             TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, $user->name . ' готов приступить к работе');
