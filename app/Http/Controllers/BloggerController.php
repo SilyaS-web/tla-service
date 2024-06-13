@@ -26,7 +26,9 @@ class BloggerController extends Controller
             'subscriber_quantity_max' => 'numeric',
             'city' => 'string|nullable',
             'country' => 'numeric|exists:countries,id|nullable',
-            'sex' => 'string|nullable'
+            'sex' => 'string|nullable',
+            'themes' => 'array|nullable',
+            'themes.*' => 'numeric',
         ]);
 
         if ($validator->fails()) {
@@ -59,6 +61,12 @@ class BloggerController extends Controller
             });
         }
 
+        if (isset($validated['themes']) && !empty($validated['themes'])) {
+            $bloggers->whereHas('themes', function (Builder $query) use ($validated) {
+                $query->whereIn('theme_id', $validated['themes']);
+            });
+        }
+
         if (isset($validated['platform'])  && !empty($validated['platform'])) {
             $bloggers->whereHas('platforms', function (Builder $query) use ($validated) {
                 $query->where('name', $validated['platform']);
@@ -74,7 +82,6 @@ class BloggerController extends Controller
                 $query->where('id', $validated['country']);
             });
         }
-
 
         if (isset($validated['sex'])  && !empty($validated['sex'])) {
             $sex_array = explode(',', $validated['sex']);
