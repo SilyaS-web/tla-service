@@ -803,9 +803,7 @@
                                     <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
                                 </div>
                             </div>
-                            <div class="profile-projects__items">
-                                @include('project.seller-list')
-                            </div>
+                            @include('project.seller-list')
                         </div>
                         <div class="profile-projects__filters profile-projects__filters--choose">
                             <div class="projects-list__filter filter">
