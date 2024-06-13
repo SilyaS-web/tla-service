@@ -193,9 +193,9 @@
                                 </div>
                             </div>
                             <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap">
-                                <button class="btn btn-primary" data-project-id="">
+                                <a href="apist/works/{{ $work_application->id }}/start" class="btn btn-primary" data-project-id="">
                                     Принять
-                                </button>
+                                </a>
                                 <button class="btn btn-secondary" data-project-id="">
                                     Отклонить
                                 </button>

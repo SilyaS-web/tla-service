@@ -1553,7 +1553,6 @@ $(window).on('load', function(){
         }
 
         let form = new PopupAddBlogerToProject('#add-to-project');
-        console.log(bId);
         form.blogerId = bId;
 
         form.openPopup();
@@ -1624,7 +1623,9 @@ setInterval(() => {
 selectTab = (tabName)=>{
     $('.tab').removeClass('active');
     $('.tab-content').removeClass('active');
+
     curTab = $(`[data-content=${tabName}]`);
     curTab.addClass('active');
+
     $(`#${tabName}`).addClass('active')
 }
