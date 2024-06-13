@@ -633,7 +633,7 @@
                                             <label for="">Формат рекламы</label>
                                             <select name="project_type" id="filter-format" class="input">
                                                 <option value="feedback" class="">Отзыв на товар</option>
-                                                <option value="2" class="">Рекламная интеграция(Instagram)</option>
+                                                <option value="inst" class="">Рекламная интеграция(Instagram)</option>
                                                 <option value="3" class="">Рекламная интеграция(Youtube)</option>
                                                 <option value="4" class="">Другие площадки для интеграций</option>
                                                 <option value="5" class="">Платные интеграции</option>
@@ -827,7 +827,7 @@
                                             <select name="project_type" id="filter-format" class="input">
                                                 <option value="" class="">Выберите формат</option>
                                                 <option value="feedback" class="">Отзыв на товар</option>
-                                                <option value="2" class="">Рекламная интеграция(Instagram)</option>
+                                                <option value="inst" class="">Рекламная интеграция(Instagram)</option>
                                                 <option value="3" class="">Рекламная интеграция(Youtube)</option>
                                                 <option value="4" class="">Другие площадки для интеграций</option>
                                                 <option value="5" class="">Платные интеграции</option>
