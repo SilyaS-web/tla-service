@@ -12,7 +12,7 @@
                         </div>
                         <div class="info-profile__col">
                             <div class="info-profile__name">
-                                {{ $user->blogger->name }}
+                                {{ $user->name }}
                             </div>
                             <div class="info-profile__id">
                                 На площадке с {{ date_format($user->created_at, 'd.m.Y') }}
@@ -29,17 +29,26 @@
                             </div>
                         </div>
                         <div class="info-profile__platrfoms blogger-platforms">
+                            @foreach ($user->blogger->platforms as $p )
+                            <?
+                                $types = [
+                                    'Telegram' => 'tg',
+                                    'Instagran' => 'inst',
+                                    'VK' => 'vk',
+                                    'Youtube' => 'yt'
+                                ]
+                            ?>
                             <div class="blogger-platforms__item item-platforms">
-                                <div class="item-platforms__title item-platforms__title--yt">
-                                    Youtube
+                                <div class="item-platforms__title item-platforms__title--{{ $types[$p->name] }}">
+                                    {{ $p->name }}
                                 </div>
                                 <div class="item-platforms__stats">
                                     <div class="item-platforms__stat">
                                         <div class="item-platforms__stat-title">
-                                            Просмотры
+                                            Подписчики
                                         </div>
                                         <div class="item-platforms__stat-value">
-                                            1200
+                                            {{ $p->subscriber_quantity }}
                                         </div>
                                     </div>
                                     <div class="item-platforms__stat">
@@ -47,7 +56,7 @@
                                             Охваты
                                         </div>
                                         <div class="item-platforms__stat-value">
-                                            400
+                                            {{ $p->coverage }}
                                         </div>
                                     </div>
                                     <div class="item-platforms__stat">
@@ -55,7 +64,7 @@
                                             ER
                                         </div>
                                         <div class="item-platforms__stat-value">
-                                            1200
+                                            {{ $p->engagement_rate }}
                                         </div>
                                     </div>
                                     <div class="item-platforms__stat">
@@ -63,12 +72,13 @@
                                             CPM
                                         </div>
                                         <div class="item-platforms__stat-value">
-                                            724₽
+                                            {{ $p->cost_per_mille }}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="blogger-platforms__item item-platforms">
+                            @endforeach
+                            {{-- <div class="blogger-platforms__item item-platforms">
                                 <div class="item-platforms__title item-platforms__title--tg">
                                     Telegram
                                 </div>
@@ -145,7 +155,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="info-profile__row info-profile__desc">
@@ -162,32 +172,31 @@
                             </div>
                             <div class="list-projects__items">
                                 @forelse ($projects as $project)
-                                <div class="list-projects__item project-item">
-                                    <div class="owl-carousel project-item__carousel">
-                                        <div class="project-item__img">
-                                            <img src="{{ $project->getImageURL(true) }}" alt="">
-                                            {{-- <div class="project-item__status active">
-                                                {{ $project->active == 0 ? 'Активно' : 'Выполнено' }}
-                                            </div> --}}
-                                            {{-- <div class="project-item__country">
-                                                Россия
-                                            </div> --}}
+                                    <div class="list-projects__item project-item">
+                                        <div class="owl-carousel project-item__carousel">
+                                            <div class="project-item__img" style="background-image:url({{ $project->getImageURL(true) }})">
+                                                {{-- <div class="project-item__status active">
+                                                    {{ $project->active == 0 ? 'Активно' : 'Выполнено' }}
+                                                </div> --}}
+                                                {{-- <div class="project-item__country">
+                                                    Россия
+                                                </div> --}}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="project-item__content">
-                                        <div class="project-item__title">
-                                            {{ $project->product_price }}₽
-                                        </div>
-                                        <div class="project-item__subtitle" title="{{ $project->product_name }}">
-                                            {{ $project->product_name }}
-                                        </div>
-                                        <div class="project-item__format-tags card__row card__tags">
-                                            <div class="card__tags-item">
-                                                <span>Рекламный пост</span>
+                                        <div class="project-item__content">
+                                            <div class="project-item__title">
+                                                {{ $project->product_price }}₽
+                                            </div>
+                                            <div class="project-item__subtitle" title="{{ $project->product_name }}">
+                                                {{ $project->product_name }}
+                                            </div>
+                                            <div class="project-item__format-tags card__row card__tags">
+                                                <div class="card__tags-item">
+                                                    <span>Рекламный пост</span>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 @empty
                                     Пока что здесь пусть
                                 @endforelse

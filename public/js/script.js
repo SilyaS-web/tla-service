@@ -465,6 +465,7 @@ class BloggerProjectsFilter {
         var questData = {
             project_type: this.dataProps.format.get(),
             project_name: this.dataProps.projectName.get(),
+            type: 'works',
         }
 
         $.post(self.sendUri, questData, function(res){
@@ -513,7 +514,7 @@ class BloggerProjectsOffersFilter {
 
         var questData = {
             project_type: this.dataProps.format.get(),
-            project_name: this.dataProps.projectName.get(),
+            project_name: this.dataProps.projectName.get(), type: 'applications',
         }
 
         $.post(self.sendUri, questData, function(res){

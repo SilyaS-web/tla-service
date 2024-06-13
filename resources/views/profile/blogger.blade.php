@@ -76,7 +76,7 @@
                                                 <option value="3" class="">Грузия</option>
                                             </select>
                                         </div> --}}
-                                        <div class="form-group filter__item">
+                                        {{-- <div class="form-group filter__item">
                                             <label for="">Статус</label>
                                             <select name="filter-status" id="filter-status" class = "input">
                                                 <option value="" class="">Не выбран</option>
@@ -84,7 +84,7 @@
                                                 <option value="1" class="">В работе</option>
                                                 <option value="2" class="">Выполнен</option>
                                             </select>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="filter__btns">
                                             <button class="btn btn-primary btn-filter-send">Применить</button>

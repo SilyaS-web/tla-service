@@ -131,7 +131,7 @@
                                 <span class="price__desc">
                                     ?
                                     <div class="price__text">
-                                        <p>Цена за один отзыв</p>
+                                        <p>Цена за одну интеграцию</p>
                                     </div>
                                 </span>
                             </div>
@@ -158,7 +158,7 @@
                                 <span class="price__desc">
                                     ?
                                     <div class="price__text">
-                                        <p>Цена за один отзыв</p>
+                                        <p>Цена за одну интеграцию</p>
                                     </div>
                                 </span>
                             </div>
@@ -185,7 +185,7 @@
                                 <span class="price__desc">
                                     ?
                                     <div class="price__text">
-                                        <p>Цена за один отзыв</p>
+                                        <p>Цена за одну интеграцию</p>
                                     </div>
                                 </span>
                             </div>
@@ -218,7 +218,7 @@
                                 <span class="price__desc">
                                     ?
                                     <div class="price__text">
-                                        <p>Цена за один отзыв</p>
+                                        <p>Цена за одну интеграцию</p>
                                     </div>
                                 </span>
                             </div>
@@ -245,7 +245,7 @@
                                 <span class="price__desc">
                                     ?
                                     <div class="price__text">
-                                        <p>Цена за один отзыв</p>
+                                        <p>Цена за одну интеграцию</p>
                                     </div>
                                 </span>
                             </div>
@@ -272,7 +272,7 @@
                                 <span class="price__desc">
                                     ?
                                     <div class="price__text">
-                                        <p>Цена за один отзыв</p>
+                                        <p>Цена за одну интеграцию</p>
                                     </div>
                                 </span>
                             </div>
