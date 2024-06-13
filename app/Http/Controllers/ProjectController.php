@@ -42,17 +42,24 @@ class ProjectController extends Controller
             $filter[] = ['product_name', 'like', '%' . $validated['project_name'] . '%'];
         }
 
-        $projects = $user->projects()->where($filter)->withCount(['works' => function (Builder $query) {
-            $query->where('status', 1);
-        }])->get();
-
         if ($user->role == 'blogger') {
             $works = Work::where([['blogger_id', $user->id]])->get();
             $projects = Project::whereIn('id', $works->pluck('project_id'))->where($validated)->get();
             return view("project.blogger-list", compact('projects'));
         }
 
-        if ($validated['type' == 'select-project-page']) {
+        $projects = $user->projects()->where($filter)->withCount(['works' => function (Builder $query) {
+            $query->where('status', 1);
+        }]);
+
+        if (isset($validated['project_type']) && !empty($validated['project_type'])) {
+            $projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
+                $query->where('type', $validated['project_type']);
+            });
+        }
+
+        $projects = $projects->get();
+        if ($validated['type'] == 'select-project-page') {
             return view('project.seller-list', compact('projects'));
         }
 
