@@ -62,14 +62,12 @@ class UserController extends Controller
         $user_id = $user->id;
 
         $works = Work::where([['blogger_id', $user_id]])->where('status', Work::IN_PROGRESS)->get();
-        $projects =  Project::whereHas('works', function (Builder $query) use ($user_id) {
-            $query->where([['blogger_id', $user_id]])->where('created_by', '<>', $user_id)->where('accepted_by_blogger_at', null);
-        });
+        $projects = Project::whereIn('id', $works->pluck('project_id'))->get();
         $all_projects = Project::get();
 
         $blogger_orders = Project::whereHas('works', function (Builder $query) use ($user_id) {
             $query->where([['blogger_id', $user_id]])->where('created_by', '<>', $user_id)->where('accepted_by_blogger_at', null);
-        });
+        })->get();
         $role = $user->role;
 
         return compact('projects', 'all_projects', 'blogger_orders', 'works', 'role', 'user_id');
