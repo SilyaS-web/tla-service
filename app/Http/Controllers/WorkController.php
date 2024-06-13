@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Blogger;
 use App\Models\DeepLink;
+use App\Models\FinishStats;
 use App\Models\Message;
+use App\Models\MessageFile;
 use App\Models\Notification;
 use App\Models\ProjectWork;
 use App\Models\Work;
@@ -94,7 +96,7 @@ class WorkController extends Controller
         $work->accept($user);
         Message::create([
             'work_id' => $work->id,
-            'user_id' => 0,
+            'user_id' => 1,
             'message' => $user->name . ' готов приступить к работе',
         ]);
 
@@ -106,7 +108,7 @@ class WorkController extends Controller
             $link = request()->getSchemeAndHttpHost() . '/lnk/' . $deeplink->link;
             Message::create([
                 'work_id' => $work->id,
-                'user_id' => 0,
+                'user_id' => 1,
                 'message' => 'Работа начата - ссылка для сбора статистики <a target="_blank" href="' . $link . '">' . $link . '</a>',
             ]);
             TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, $user->name . ' готов приступить к работе');
@@ -156,7 +158,7 @@ class WorkController extends Controller
         if ($user->role == 'blogger') {
             Message::create([
                 'work_id' => $work->id,
-                'user_id' => 0,
+                'user_id' => 1,
                 'message' => 'Блогер запросил подтверждение проекта',
             ]);
             Notification::create([
@@ -168,7 +170,7 @@ class WorkController extends Controller
         } else {
             Message::create([
                 'work_id' => $work->id,
-                'user_id' => 0,
+                'user_id' => 1,
                 'message' => 'Проект успешно завершён',
             ]);
             $work->status = Work::COMPLETED;
@@ -180,6 +182,49 @@ class WorkController extends Controller
             ]);
             TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, 'Селлер подтвердил выполнение проекта ' . $work->project->product_name);
         }
+
+        return redirect()->route('profile')->with('success');
+    }
+
+    public function stats(Work $work, Request $request) {
+        $validator = Validator::make($request->all(), [
+            'subs' => 'numeric|nullable',
+            'views' => 'numeric|nullable',
+            'reposts' => 'numeric|nullable',
+            'likes' => 'numeric|nullable',
+            'stats' => 'image',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+
+        $message = Message::create([
+            'work_id' => $work->id,
+            'user_id' => 1,
+            'message' => 'Блогер прикрепил статистику к проекту'
+        ]);
+
+        if ($request->file('stats')) {
+            $product_image = $request->file('img');
+            $image_path = $product_image->store('messages', 'public');
+            MessageFile::create([
+                'source_id' => $message->id,
+                'type' => 0,
+                'link' => $image_path,
+            ]);
+        }
+
+        FinishStats::create([
+            'subs' => $validated['subs'],
+            'views' => $validated['views'],
+            'reposts' => $validated['reposts'],
+            'likes' => $validated['likes'],
+            'work_id' => $work->id,
+            'message_id' => $message->id
+        ]);
 
         return redirect()->route('profile')->with('success');
     }

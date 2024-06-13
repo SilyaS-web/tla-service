@@ -13,6 +13,9 @@
     <div class="messages-chat__item-msg">
         @if($message->user_id == 0)
         {!! $message->message !!}
+        @if($message->finishStats)
+        {{ $message->finishStats }}
+        @endif
         @else
         {{ $message->message }}
         @endif

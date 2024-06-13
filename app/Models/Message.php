@@ -31,4 +31,9 @@ class Message extends Model
     {
         return $this->hasMany(MessageFile::class, 'source_id', 'id');
     }
+
+    public function finishStats()
+    {
+        return $this->hasOne(FinishStats::class, 'message_id', 'id');
+    }
 }
