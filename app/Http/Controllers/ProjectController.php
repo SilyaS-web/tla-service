@@ -161,7 +161,7 @@ class ProjectController extends Controller
         $projects = Project::whereIn('id', $works->pluck('project_id'))->where($validated)->get();
 
         if (isset($validated['type']) && $validated['type'] == 'applications') {
-            $works->where('status', null)->where('created_by', '<>', $user->id);
+            $works->where('status', '<>', null)->where('created_by', '<>', $user->id);
         }
 
         $works->get();
