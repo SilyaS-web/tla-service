@@ -16,7 +16,7 @@
                             {{ $blogger->user->name}}
                         </a>
                         <p style="font-size: 12px">
-                            {{ $blogger->country }} {{ $blogger->city }}
+                            {{ $blogger->country->name }} {{ $blogger->city }}
                         </p>
                     </p>
                 </div>
@@ -27,16 +27,16 @@
                 </div>
             </div>
             <div class="card__row card__tags">
+                @php($themes = $blogger->themes)
+                @foreach ($themes->take(3) as $theme)
                 <div class="card__tags-item">
-                    <span>Животные и Природа</span>
+                    <span>{{ $theme->theme->theme }}</span>
                 </div>
-                <div class="card__tags-item">
-                    <span>Технологии</span>
-                </div>
-                <div class="card__tags-item">
-                    <span>Садоводство</span>
-                </div>
+                @endforeach
+                @if (count($themes) > 2)
                 <div class="card__tags-item card__tags-item--others">
+
+                @endif
                     <span>Посмотреть все +5шт</span>
                     <div class="card__tags-item-w">
                         <div class="card__tags-item">

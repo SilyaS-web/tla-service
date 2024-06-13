@@ -19,7 +19,7 @@ class Blogger extends Model
         'is_achievement',
         'gender_ratio',
         'city',
-        'country'
+        'country_id'
     ];
 
     public function user()
@@ -27,9 +27,19 @@ class Blogger extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
+    public function country()
+    {
+        return $this->hasOne(Country::class, 'id', 'country_id');
+    }
+
     public function platforms()
     {
         return $this->hasMany(BloggerPlatform::class, 'blogger_id', 'id');
+    }
+
+    public function themes()
+    {
+        return $this->hasMany(BloggerTheme::class, 'blogger_id', 'id');
     }
 
     public function getSubscribers()

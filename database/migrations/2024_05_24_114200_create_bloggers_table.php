@@ -20,7 +20,8 @@ class CreateBloggersTable extends Migration
             $table->string('description', 500)->nullable();
             $table->integer('is_achievement')->nullable();
             $table->string('name')->nullable();
-            $table->string('country')->nullable();
+            $table->unsignedBigInteger('country_id')->nullable();
+            $table->foreign('country_id')->references('id')->on('countries')->cascadeOnDelete();
             $table->string('city')->nullable();
             $table->double('gender_ratio')->nullable();
             $table->string('sex');

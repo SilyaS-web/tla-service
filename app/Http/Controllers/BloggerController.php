@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blogger;
 use App\Models\BloggerPlatform;
+use App\Models\BloggerTheme;
 use App\Models\Project;
 use App\Models\User;
 use App\Models\Work;
@@ -69,10 +70,13 @@ class BloggerController extends Controller
         $validator = Validator::make($request->all(), [
             'desc' => 'string|nullable',
             'sex' => 'required|string',
+            'city' => 'required|string',
+            'country' => 'required|numeric',
             'tg-link' => 'string|nullable',
             'inst-link' => 'string|nullable',
             'yt-link' => 'string|nullable',
             'vk-link' => 'string|nullable',
+            'themes' => 'required|array',
         ]);
 
         if ($validator->fails()) {
@@ -83,6 +87,8 @@ class BloggerController extends Controller
         $validated = $validator->validated();
         $blogger = Blogger::create([
             'user_id' => $user->id,
+            'city' => $validated['city'],
+            'country_id' => $validated['country'],
             'description' => $validated['desc'] ?? null,
             'sex' => $validated['sex'],
         ]);
@@ -116,6 +122,13 @@ class BloggerController extends Controller
                 'blogger_id' => $blogger->id,
                 'name' => BloggerPlatform::VK,
                 'link' => $validated['vk-link'],
+            ]);
+        }
+
+        foreach ($validated['themes'] as $theme_id) {
+            BloggerTheme::create([
+                'blogger_id' => $blogger->id,
+                'theme_id' => (int) $theme_id,
             ]);
         }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blogger;
 use App\Models\BloggerPlatform;
+use App\Models\Country;
 use App\Models\DeepLink;
 use App\Models\DeepLinkStat;
 use App\Models\Message;
@@ -14,6 +15,7 @@ use Illuminate\Validation\Rule;
 use App\Models\Project;
 use App\Models\Seller;
 use App\Models\TgPhone;
+use App\Models\Theme;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\User;
 use App\Models\Work;
@@ -32,7 +34,9 @@ class UserController extends Controller
             case 'blogger':
                 if ($user->status == 0) {
                     if (!$user->blogger) {
-                        return view('auth.blogger-verify');
+                        $countries = Country::get();
+                        $themes = Theme::get();
+                        return view('auth.blogger-verify', compact('countries', 'themes'));
                     }
 
                     return view('auth.moderation');
@@ -140,10 +144,12 @@ class UserController extends Controller
         $bloggers = [];
         if (!empty($validated['blogger_name'])) {
             $bloggers = Blogger::whereHas('user', function (Builder $query) use ($validated) {
-                $query->where('name', 'like', '%' . $validated['blogger_name'] . '%');
+                $query->where('name', 'like', '%' . $validated['blogger_name'] . '%')->where('status', 1);
             })->get();
         } else {
-            $bloggers = Blogger::get();
+            $bloggers = Blogger::whereHas('user', function (Builder $query) use ($validated) {
+                $query->where('status', 1);
+            })->get();
         }
 
         $sellers = [];
@@ -155,8 +161,9 @@ class UserController extends Controller
             $sellers = Seller::get();
         }
         $platforms = BloggerPlatform::PLATFORM_TYPES;
+        $countries = Country::get();
 
-        return compact('unverified_users', 'bloggers', 'sellers', 'platforms');
+        return compact('unverified_users', 'bloggers', 'sellers', 'platforms', 'countries');
     }
 
     public function edit(Request $request)

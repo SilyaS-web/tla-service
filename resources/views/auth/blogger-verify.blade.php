@@ -18,10 +18,12 @@
                 <div class="form-group">
                     <label for="country">Ваша страна (Страны СНГ)</label>
                     <select name="country" id="country" name="country" class="input input--country select">
-                        <option value="1">Россия</option>
+                        @foreach ($countries as $country)
+                        <option value="{{ $country->id }}">{{ $country->name }}</option>
+                        @endforeach
                     </select>
                     @error('country')
-                        <span class="error">{{ $message }}</span>
+                    <span class="error">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
@@ -31,7 +33,7 @@
                         <option value="female">Женский</option>
                     </select>
                     @error('sex')
-                        <span class="error">{{ $message }}</span>
+                    <span class="error">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
@@ -41,22 +43,12 @@
                 <div class="form-group" style="flex-direction: column;">
                     <label for="">Выберите тематику</label>
                     <div class="form-formats">
+                        @foreach ($themes as $theme)
                         <div class="form__row form-format">
-                            <input type="checkbox" id="format-1" name="format-1" class="form-format__check">
-                            <label for="format-1">Финансы</label>
+                            <input type="checkbox" id="theme-{{ $theme->id }}" name="themes[]" class="form-format__check" value="{{ $theme->id }}">
+                            <label for="theme-{{ $theme->id }}">{{ $theme->theme }}</label>
                         </div>
-                        <div class="form__row form-format">
-                            <input type="checkbox" id="format-2" name="format-2" class="form-format__check">
-                            <label for="format-2">Биология</label>
-                        </div>
-                        <div class="form__row form-format">
-                            <input type="checkbox" id="format-3" name="format-3" class="form-format__check">
-                            <label for="format-3">Животные и питомцы</label>
-                        </div>
-                        <div class="form__row form-format">
-                            <input type="checkbox" id="format-4" name="format-4" class="form-format__check">
-                            <label for="format-4">Другое</label>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="popup__form-row popup__form-stat form-stat">
@@ -67,7 +59,7 @@
                         <div class="form-stat__row">
                             <div class="form-group" style="width:100%; max-width:100%">
                                 <label for="tg_link">Ссылка</label>
-                                <input id = "tg_link" type="text" class="input" name = "tg-link" style="width:100%; max-width:100%">
+                                <input id="tg_link" type="text" class="input" name="tg-link" style="width:100%; max-width:100%">
                             </div>
                         </div>
                     </div>
@@ -80,7 +72,7 @@
                         <div class="form-stat__row">
                             <div class="form-group" style="width:100%; max-width:100%">
                                 <label for="inst_link">Ссылка</label>
-                                <input id = "inst_link" type="text" class="input" name = "inst-link" style="width:100%; max-width:100%">
+                                <input id="inst_link" type="text" class="input" name="inst-link" style="width:100%; max-width:100%">
                             </div>
                         </div>
                     </div>
@@ -93,7 +85,7 @@
                         <div class="form-stat__row">
                             <div class="form-group" style="width:100%; max-width:100%">
                                 <label for="yt_link">Ссылка</label>
-                                <input id = "yt_link" type="text" class="input" name = "" style="width:100%; max-width:100%">
+                                <input id="yt_link" type="text" class="input" name="" style="width:100%; max-width:100%">
                             </div>
                         </div>
                     </div>
@@ -103,10 +95,10 @@
                         Вконтакте
                     </div>
                     <div class="form-stat__content">
-                        <div class="form-stat__row" >
+                        <div class="form-stat__row">
                             <div class="form-group" style="width:100%; max-width:100%">
                                 <label for="vk_link">Ссылка</label>
-                                <input id = "vk_link" type="text" class="input" name = "vk-link" style="width:100%; max-width:100%">
+                                <input id="vk_link" type="text" class="input" name="vk-link" style="width:100%; max-width:100%">
                             </div>
                         </div>
                     </div>

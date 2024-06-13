@@ -49,7 +49,7 @@ class CreateUsersTable extends Migration
                 'email' => 'admin@adswap.ru',
                 'phone' => '+70000000000',
                 'role' => 'admin',
-                'password' => bcrypt('adminpassword'),
+                'password' => bcrypt('adminpass'),
                 'status' => 1,
                 'tg_phone_id' => 2,
             ),

@@ -45,8 +45,11 @@ class WorkController extends Controller
             $seller->remaining_tariff -= 1;
             $seller->save();
         }
-
-        $blogger_user = Blogger::find($validated['blogger_id']);
+        if ($user->role == 'blogger') {
+            $blogger_user = $user;
+        } else {
+            $blogger_user = Blogger::find($validated['blogger_id']);
+        }
 
         $project_work = ProjectWork::find($validated['project_work_id']);
         $work = Work::create([
