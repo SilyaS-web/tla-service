@@ -12,7 +12,7 @@
                     <label for="city">Ваш город</label>
                     <input type="text" id="city" name="city" placeholder="Введите название города" class="input input--city" value="{{ old('city') }}">
                     @error('city')
-                    <span class="error">{{ $message }}</span>
+                        <span class="error">{{ $city }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
@@ -23,7 +23,7 @@
                         @endforeach
                     </select>
                     @error('country')
-                    <span class="error">{{ $message }}</span>
+                        <span class="error">{{ $country }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
@@ -33,12 +33,15 @@
                         <option value="female">Женский</option>
                     </select>
                     @error('sex')
-                    <span class="error">{{ $message }}</span>
+                        <span class="error">{{ $sex }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="desc">Описание канала</label>
                     <textarea name="desc" id="desc" cols="30" rows="10" class="textarea" placeholder="Введите текст"></textarea>
+                    @error('description')
+                        <span class="error">{{ $description }}</span>
+                    @enderror
                 </div>
                 <div class="form-group" style="flex-direction: column;">
                     <label for="">Выберите тематику</label>
