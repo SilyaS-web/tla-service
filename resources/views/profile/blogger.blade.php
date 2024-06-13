@@ -67,7 +67,7 @@
                                                 <option value="5" class="">Платные интеграции</option>
                                             </select>
                                         </div>
-                                        <div class="form-group filter__item">
+                                        {{-- <div class="form-group filter__item">
                                             <label for="">Страна</label>
                                             <select name="filter-country" id="filter-country" class = "input">
                                                 <option value="" class="">Не выбрана</option>
@@ -75,7 +75,7 @@
                                                 <option value="2" class="">Казахстан</option>
                                                 <option value="3" class="">Грузия</option>
                                             </select>
-                                        </div>
+                                        </div> --}}
                                         <div class="form-group filter__item">
                                             <label for="">Статус</label>
                                             <select name="filter-status" id="filter-status" class = "input">
@@ -134,7 +134,7 @@
                                                 <option value="5" class="">Платные интеграции</option>
                                             </select>
                                         </div>
-                                        <div class="form-group filter__item">
+                                        {{-- <div class="form-group filter__item">
                                             <label for="">Страна</label>
                                             <select name="filter-country" id="filter-country" class = "input">
                                                 <option value="" class="">Не выбрана</option>
@@ -142,7 +142,7 @@
                                                 <option value="2" class="">Казахстан</option>
                                                 <option value="3" class="">Грузия</option>
                                             </select>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="filter__btns">
                                             <button class="btn btn-primary btn-filter-send">Применить</button>
@@ -192,7 +192,7 @@
                                                 <option value="5" class="">Платные интеграции</option>
                                             </select>
                                         </div>
-                                        <div class="form-group filter__item">
+                                        {{-- <div class="form-group filter__item">
                                             <label for="">Страна</label>
                                             <select name="filter-country" id="filter-country" class = "input">
                                                 <option value="" class="">Не выбрана</option>
@@ -200,7 +200,7 @@
                                                 <option value="2" class="">Казахстан</option>
                                                 <option value="3" class="">Грузия</option>
                                             </select>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="filter__btns">
                                             <button class="btn btn-primary btn-filter-send">Применить</button>

@@ -139,6 +139,19 @@ a.btn:hover{
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
+    max-height: 250px;
+    overflow-y: auto;
+}
+.form-formats::-webkit-scrollbar {
+    width: 12px;               /* ширина scrollbar */
+}
+.form-formats::-webkit-scrollbar-track {
+    background: #fff;        /* цвет дорожки */
+}
+.form-formats::-webkit-scrollbar-thumb {
+    background-color: #7A7674;    /* цвет плашки */
+    border-radius: 20px;       /* закругления плашки */
+    border: 3px solid #fff;  /* padding вокруг плашки */
 }
 .form-format{
     border-radius: 5px;
@@ -1398,7 +1411,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .filter__title {
     font-size: 18px;
-    font-weight: 500;
+    font-weight: 600;
 }
 .blogers-list__filter {
     flex:1 1 auto;
@@ -1620,6 +1633,37 @@ input[type='range']::-webkit-slider-runnable-track{
     font-weight: 600;
     color: var(--primary);
     line-height: 1;
+}
+.card__stats-val .card__stats-val--total {
+    position: relative;
+    color: #FE5E00;
+    border-radius: 50%;
+    border: 1px solid #FE5E00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    line-height: 1;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.card__stats-val .card__stats-val--total .card__stats-val--total-list {
+    position: absolute;
+    top:101%; left:0;
+    border-radius: 10px;
+    background-color: #fff;
+    padding: 20px 10px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, .4);
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    width:260px;z-index: 1;
+}
+.card__stats-val .card__stats-val--total:hover .card__stats-val--total-list {
+    display: flex;
 }
 .card__stats-val.card__stats-val--rait::before{
     content:"";
@@ -3007,6 +3051,9 @@ input[type='range']::-webkit-slider-runnable-track{
   }
   .planItem .price {
     --priceMargin: 2rem 0;
+    display: flex;
+    align-items: center;
+
   }
   .planItem--pro {
     --border: 0;
@@ -3098,7 +3145,35 @@ input[type='range']::-webkit-slider-runnable-track{
     font-weight: 400;
     color: var(--baseColor);
   }
-
+  .price span.price__desc{
+    position: relative;
+    color: #FE5E00;
+    border-radius: 50%;
+    border: 1px solid #FE5E00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width:18px; height:18px;
+    line-height: 1;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .price .price__desc .price__text{
+    position: absolute;
+    display: none;
+    background-color: #fff;
+    padding:10px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, .4);
+    width: 180px;
+    top: 101%;
+    left: 0;
+  }
+  .price span.price__desc:hover .price__text{
+    display: block;
+  }
   .featureList {
     --color: #000;
     --icon: var(--redTick);

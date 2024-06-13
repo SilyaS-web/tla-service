@@ -103,6 +103,12 @@
                         </div>
                     </div>
                 </div>
+                <div class="form-group form-group--file">
+                    <label class="tab-content__profile-img-upload input-file" for="profile-img">
+                        Загрузите изображение профиля
+                        <input type="file" name="name" class="" id="profile-img">
+                    </label>
+                </div>
                 <div class="form-btns auth__form-btns" style="margin-top:32px">
                     <button class="btn btn-primary next" type="submit">
                         Отправить на модерацию

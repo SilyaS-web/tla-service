@@ -706,7 +706,7 @@
                             </div>
                             @include('blogger.list')
                         </div>
-                        <div class="projects-list__filter filter">
+                        <div class="projects-list__filter filter blogers-list__filter">
                             <div class="filter__body">
                                 <div class="filter__top">
                                     <p class="filter__title">
@@ -732,24 +732,47 @@
                                     <div class="form-group filter__item">
                                         <label for="">Платформа</label>
                                         <select name="filter-platform" id="filter-platform" class="input">
+                                            <option value="">Выберите платформу</option>
                                             @foreach ($platforms as $platform)
-                                            <option value="{{ $platform }}">{{ $platform }}</option>
+                                                <option value="{{ $platform }}">{{ $platform }}</option>
                                             @endforeach
                                         </select>
                                     </div>
-                                    {{-- <div class="form-group filter__item">
-                                            <label for="">Пол блогера</label>
-                                            <div class="filter__item--sex">
-                                                <div class="input-checkbox-w">
-                                                    <input type="checkbox" class="checkbox" id="male">
-                                                    <label for="male">Мужской</label>
-                                                </div>
-                                                <div class="input-checkbox-w">
-                                                    <input type="checkbox" class="checkbox" id="female">
-                                                    <label for="femail">Женский</label>
-                                                </div>
+                                    <div class="form-group filter__item">
+                                        <label for="filter-country">Страна блогера</label>
+                                        <select name="filter-country" id="filter-country" class="input">
+                                            <option value="" class="">Выберите страну</option>
+                                            <option value="1" class="">Россия</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group filter__item">
+                                        <label for="filter-city">Город блогера</label>
+                                        <input type="text" class="input" name="filter-city" id="filter-city" placeholder="Введите город">
+                                    </div>
+                                    <div class="form-group" style="flex-direction: column;">
+                                        <label for="">Выберите тематику</label>
+                                        <div class="form-formats">
+                                            @foreach ($themes as $theme)
+                                            <div class="form__row form-format">
+                                                <input type="checkbox" id="theme-{{ $theme->id }}" name="themes[]" class="form-format__check" value="{{ $theme->id }}">
+                                                <label for="theme-{{ $theme->id }}">{{ $theme->theme }}</label>
                                             </div>
-                                        </div> --}}
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <div class="form-group filter__item">
+                                        <label for="">Пол блогера</label>
+                                        <div class="filter__item--sex" id = "filter__item--sex">
+                                            <div class="input-checkbox-w">
+                                                <input type="checkbox" class="checkbox" id="male">
+                                                <label for="male">Мужской</label>
+                                            </div>
+                                            <div class="input-checkbox-w">
+                                                <input type="checkbox" class="checkbox" id="female">
+                                                <label for="female">Женский</label>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <div class="form-group filter__item">
                                         <label for="">Количество подписчиков</label>
                                         <div class="input-range-w">
@@ -759,22 +782,6 @@
                                                 <input id="subs-max" type="number" class="input input-number" value="{{ $blogger_platforms->max('subscriber_quantity') ?? 0 }}">
                                             </div>
                                         </div>
-                                    </div>
-                                    {{-- <div class="form-group filter__item">
-                                            <label for="">Страна блогера</label>
-                                            <select name="filter-country" id="filter-country" class="input">
-                                                <option value="1" class="">Россия</option>
-                                                <option value="2" class="">Казахстан</option>
-                                                <option value="3" class="">Грузия</option>
-                                            </select>
-                                        </div> --}}
-                                    <div class="form-group filter__item">
-                                        <label for="">Город блогера</label>
-                                        <select name="filter-city" id="filter-city" class="input">
-                                            <option value="1" class="">Москва</option>
-                                            <option value="2" class="">Ульяновск</option>
-                                            <option value="3" class="">Самара</option>
-                                        </select>
                                     </div>
                                     <div class="filter__btns">
                                         <button class="btn btn-primary btn-filter-send">Применить</button>
@@ -796,11 +803,11 @@
                                     <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
                                 </div>
                             </div>
-                            <div class="list-projects__items">
+                            <div class="profile-projects__items">
                                 @include('project.seller-list')
                             </div>
                         </div>
-                        <div class="profile-projects__filters">
+                        <div class="profile-projects__filters profile-projects__filters--choose">
                             <div class="projects-list__filter filter">
                                 <div class="filter__body">
                                     <div class="filter__top">
@@ -818,6 +825,7 @@
                                         <div class="form-group filter__item">
                                             <label for="">Формат рекламы</label>
                                             <select name="project_type" id="filter-format" class="input">
+                                                <option value="" class="">Выберите формат</option>
                                                 <option value="feedback" class="">Отзыв на товар</option>
                                                 <option value="2" class="">Рекламная интеграция(Instagram)</option>
                                                 <option value="3" class="">Рекламная интеграция(Youtube)</option>

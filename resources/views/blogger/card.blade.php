@@ -16,7 +16,7 @@
                             {{ $blogger->user->name}}
                         </a>
                         <p style="font-size: 12px">
-                            {{ $blogger->country->name }} {{ $blogger->city }}
+                            {{ $blogger->country->name }}, {{ $blogger->city }}
                         </p>
                     </p>
                 </div>
