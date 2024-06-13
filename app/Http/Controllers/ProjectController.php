@@ -206,7 +206,7 @@ class ProjectController extends Controller
         $all = true;
         $type = 'all';
         $projects = [];
-        
+
         if (isset($validated['project_type']) && !empty($validated['project_type'])) {
             $projects = Project::whereHas('projectWorks', function (Builder $query) use ($validated) {
                 $query->where('type', $validated['project_type']);
@@ -214,6 +214,8 @@ class ProjectController extends Controller
 
             if (isset($validated['project_name']) && !empty($validated['project_name'])) {
                 $projects = $projects->where('product_name', 'like', '%' . $validated['project_name'] . '%')->get();
+            } else {
+                $projects = $projects->get();
             }
         } else {
             if (isset($validated['project_name']) && !empty($validated['project_name'])) {
