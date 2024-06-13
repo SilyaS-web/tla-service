@@ -67,7 +67,7 @@ class MessageController extends Controller
                 }
             } else if ($work->status == Work::COMPLETED) {
                 if ($user->role == 'blogger') {
-                    $btn_class = 'confirm-completion-btn';
+                    $btn_class = 'send-stats-blogger-btn';
                     $btn_text = 'Прикрепить статистику';
                 } else {
                     $btn_class = 'btn-chat-action disabled';
