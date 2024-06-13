@@ -27,7 +27,25 @@
                 </div>
             </div>
             <div class="card__row card__tags">
-
+                @php($themes = $blogger->themes)
+                @foreach ($themes->take(3) as $theme)
+                <div class="card__tags-item">
+                    <span>{{ $theme->theme->theme }}</span>
+                </div>
+                @endforeach
+                @if (count($themes) > 2)
+                @php($themes = $themes->skip(3))
+                <div class="card__tags-item card__tags-item--others">
+                    <span>Посмотреть все +{{ count($themes) }}шт</span>
+                    <div class="card__tags-item-w">
+                        @foreach ($themes as $theme)
+                        <div class="card__tags-item">
+                            <span>{{ $theme->theme->theme }}</span>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
             </div>
             <div class="card__row card__desc">
                 {{ $blogger->description }}

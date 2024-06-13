@@ -44,25 +44,25 @@ class Blogger extends Model
 
     public function getSubscribers()
     {
-        $quantity = $this->platforms()->max('subscriber_quantity');
+        $quantity = round($this->platforms()->max('subscriber_quantity'), 2);
         return $quantity;
     }
 
     public function getCoverage()
     {
-        $coverage = $this->platforms()->avg('coverage');
+        $coverage = round($this->platforms()->avg('coverage'), 2);
         return $coverage;
     }
 
     public function getER()
     {
-        $engagement_rate = $this->platforms()->avg('engagement_rate');
+        $engagement_rate = round($this->platforms()->avg('engagement_rate'), 2);
         return $engagement_rate;
     }
 
     public function getCPM()
     {
-        $cost_per_mille = $this->platforms()->avg('cost_per_mille');
+        $cost_per_mille = round($this->platforms()->avg('cost_per_mille'), 2);
         return $cost_per_mille;
     }
 }
