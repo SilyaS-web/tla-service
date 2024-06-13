@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
@@ -66,7 +67,9 @@ class Project extends Model
 
     public function getClicksCount() {
         $works = Work::where([['project_id', $this->id]])->get();
-        $clicks_count = DeepLinkStat::whereIn('work_id', $works->pluck('id'))->count();
+        $clicks_count = DeepLinkStat::whereHas('user', function (Builder $query) use ($works) {
+            $query->whereIn('work_id', $works->pluck('id'));
+        })->count();
         return $clicks_count;
     }
 
