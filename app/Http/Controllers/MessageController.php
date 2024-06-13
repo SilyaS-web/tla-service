@@ -51,7 +51,7 @@ class MessageController extends Controller
             $work = $works->first();
             $btn_class = 'accept-btn';
             $btn_text = 'Принять в работу';
-
+            $data_id = $work->id;
             if ($work->status == Work::PENDING) {
                 if ($work->isAcceptedByUser($user)) {
                     $btn_text = 'Ожидаем ответа от ' . $work->getPartnerUser($user)->name;
@@ -76,7 +76,7 @@ class MessageController extends Controller
             }
 
             Message::where('work_id', $validated['work_id'])->where('viewed_at', null)->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
-            return response()->json(['view' => view('shared.chat.messages', compact('work', 'user_id', 'role'))->render(), 'btn-class' => $btn_class, 'btn-text' => $btn_text]);
+            return response()->json(['view' => view('shared.chat.messages', compact('work', 'user_id', 'role'))->render(), 'btn-class' => $btn_class, 'btn-text' => $btn_text, 'data-id' => $data_id]);
         }
         $works_count = $works->count();
         return response()->json(['view' => view('shared.chat.chat-list', compact('works', 'user_id', 'role'))->render(), 'count' => $works_count]);
