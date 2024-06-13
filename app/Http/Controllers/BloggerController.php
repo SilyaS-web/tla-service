@@ -21,10 +21,12 @@ class BloggerController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'string|nullable',
-            'platform' => [Rule::in(Blogger::PLATFORM_TYPES)],
-            'user_id' => 'exists:users,id',
+            'platform' => [Rule::in(BloggerPlatform::PLATFORM_TYPES)],
             'subscriber_quantity_min' => 'numeric',
             'subscriber_quantity_max' => 'numeric',
+            'city' => 'string',
+            'country' => 'numeric|exists:coutries,id',
+            'sex' => 'string'
         ]);
 
         if ($validator->fails()) {
@@ -35,14 +37,7 @@ class BloggerController extends Controller
         $validated = $validator->validated();
 
         $user = Auth::user();
-        if (!$user) {
-            $user = User::find($request->user_id);
-        }
-
         $filter = [];
-        if (isset($validated['platform']) && !empty($validated['platform'])) {
-            $filter[] = ['platform', $validated['platform']];
-        }
 
         if (isset($validated['subscriber_quantity_min']) && !empty($validated['subscriber_quantity_min'])) {
             $filter[] = ['subscriber_quantity', '>=', $validated['subscriber_quantity_min']];
@@ -57,11 +52,34 @@ class BloggerController extends Controller
         if (!empty($validated['name']) && $validated['name'] != '') {
             $bloggers = Blogger::whereHas('user', function (Builder $query) use ($validated) {
                 $query->where('name', 'like', '%' . $validated['name'] . '%');
-            })->where($filter)->get();
+            })->where($filter);
         } else {
-            $bloggers = Blogger::where($filter)->get();
+            $bloggers = Blogger::where($filter);
         }
 
+        if (isset($validated['platform'])  && !empty($validated['platform'])) {
+            $bloggers->whereHas('platforms', function (Builder $query) use ($validated) {
+                $query->where('name', $validated['platform']);
+            });
+        }
+
+        if (isset($validated['city'])  && !empty($validated['city'])) {
+            $bloggers->where('city', $validated['city']);
+        }
+
+        if (isset($validated['country'])  && !empty($validated['country'])) {
+            $bloggers->whereHas('countries', function (Builder $query) use ($validated) {
+                $query->where('id', $validated['country']);
+            });
+        }
+
+
+        if (isset($validated['sex'])  && !empty($validated['sex'])) {
+            $sex_array = explode(',', $validated['sex']);
+            $bloggers->whereIn('sex', $sex_array);
+        }
+        
+        $bloggers = $bloggers->get();
         return view("blogger.list", compact('bloggers'));
     }
 
@@ -80,7 +98,7 @@ class BloggerController extends Controller
         ]);
 
         if ($validator->fails()) {
-             return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $user = Auth::user();
@@ -147,7 +165,7 @@ class BloggerController extends Controller
     {
         $user = $blogger->user;
 
-        return response()->json(['user' => $user, 'blogger' => $blogger, 'platforms'=> $blogger->platforms], 200);
+        return response()->json(['user' => $user, 'blogger' => $blogger, 'platforms' => $blogger->platforms], 200);
     }
 
     /**

@@ -60,6 +60,16 @@ class Project extends Model
         return $this->hasOne(Seller::class, 'user_id', 'seller_id');
     }
 
+    public function getCoverage() {
+        return 0;
+    }
+
+    public function getClicksCount() {
+        $works = Work::where([['project_id', $this->id]])->get();
+        $clicks_count = DeepLinkStat::whereIn('work_id', $works->pluck('id'))->count();
+        return $clicks_count;
+    }
+
     public function getProjectWorkNames($format = null)
     {
         $project_works = $this->projectWorks;

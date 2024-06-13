@@ -363,6 +363,7 @@
                         </div>
                         <div class="view-project__props-overflow" style="background-image: url('{{ asset('img/Remove-bg 1.png') }}'); background-size:contain; background-position:center; background-repeat:no-repeat;">
             </div> --}}
+            @php($clicks_count = $project->getClicksCount())
             <div class="card__col card__stats-stats">
                 <div class="projects-statistics__title" style="margin-bottom: 0">
                     Статистика по интеграциям
@@ -382,7 +383,7 @@
                             <span>Переходов</span>
                         </div>
                         <div class="card__stats-val">
-                            <span>12000</span>
+                            <span>{{ $clicks_count }}</span>
                         </div>
                     </div>
                 </div>
@@ -393,7 +394,7 @@
                             <span>ER</span>
                         </div>
                         <div class="card__stats-val">
-                            <span>3800</span>
+                            <span>{{ $clicks_count }}</span>
                         </div>
                     </div>
                     <div class="card__col card__stats-item">
