@@ -3,8 +3,8 @@
 @php($lost_seats = $project_work->quantity - $project->works()->where('project_work_id', $project_work->id)->count())
 <div class="list-projects__item project-item" data-id="{{ $project->id }}">
     <div class="owl-carousel project-item__carousel">
-        <div class="project-item__img">
-            <img src="{{ $project->getImageURL(true) }}" alt="">
+        <div class="project-item__img" style="background-image:url({{ $project->getImageURL(true) }})">
+            {{-- <img src="{{ $project->getImageURL(true) }}" alt=""> --}}
         </div>
         <div class="project-item__status active">
             {{ $project->active == 0 ? 'Активно' : 'Выполнено' }}
@@ -35,7 +35,7 @@
             @switch($type)
 
             @case('all')
-            <button class="btn btn-primary" style="width:100%" onclick="sendProjectToSeller({{ $project_work->id }}, this)">Откликнуться</button>
+            <button class="btn btn-primary btn-blogger-send-offer" style="width:100%" data-project-work="{{ $project_work->id }}">Откликнуться</button>
             @break
 
             @case('start')

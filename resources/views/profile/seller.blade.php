@@ -869,79 +869,31 @@
         pGraph = document.getElementById('projects');
     }
 
-    var data = {
-        "orders": 2637
-        , "earnings": 4750732.0
-        , "sale_percent": 0.0
-        , "fromDate": "2021-04-03"
-        , "prices_history": [{
-                "dt": "2024-04-18"
-                , "price": 1684.0
-            }
-            , {
-                "dt": "2024-04-19"
-                , "price": 1725.0
-            }
-            , {
-                "dt": "2024-04-20"
-                , "price": 1725.0
-            }
-            , {
-                "dt": "2024-04-21"
-                , "price": 1725.0
-            }
-            , {
-                "dt": "2024-04-22"
-                , "price": 1704.0
-            }
-            , {
-                "dt": "2024-04-23"
-                , "price": 1776.0
-            }
-            , {
-                "dt": "2024-04-24"
-                , "price": 1848.0
-            }
-            , {
-                "dt": "2024-04-25"
-                , "price": 1725.0
-            }
-            , {
-                "dt": "2024-04-26"
-                , "price": 1949.0
-            }
-            , {
-                "dt": "2024-04-27"
-                , "price": 1949.0
-            }
-            , {
-                "dt": "2024-04-28"
-                , "price": 1949.0
-            }
-            , {
-                "dt": "2024-04-29"
-                , "price": 1949.0
-            }
-            , {
-                "dt": "2024-04-30"
-                , "price": 1949.0
-            }
-            , {
-                "dt": "2024-05-01"
-                , "price": 1949.0
-            }
-        , ]
-    , }
+    var data = $(coverageGraph).data('coverage');
 
 
     new Chart(coverageGraph, {
         type: 'bar'
         , data: {
-            labels: data.prices_history.map(item => `${item.dt.split('-')[2]} Мая`)
-            , datasets: [{
-                label: 'Охваты'
-                , data: data.prices_history.map(item => item.price)
-            , }]
+            labels: data.coverage_history.map(item => `${item.dt.split('-')[2]} Мая`)
+            , datasets: [
+                {
+                    label: 'Охваты',
+                    data: data.coverage_history.map(item => item.coverage),
+                },
+                {
+                    label: 'Блоггеров завершило работу',
+                    data: data.coverage_history.map(item => item.bloggers),
+                    // data: data.orders_history.map(() => {
+                    //     return 1
+                    // }),
+                    showLine: true,
+                    type: 'bar',
+                    backgroundColor: data.orders_history.map(() => {
+                        return 'rgb(254,94,0, 0.4)'
+                    }),
+                }
+            ]
         }
         , options: {
             scales: {
