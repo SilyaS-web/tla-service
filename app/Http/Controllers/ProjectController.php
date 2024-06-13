@@ -162,7 +162,7 @@ class ProjectController extends Controller
         $user_id = $user->id;
         $role = $user->role;
 
-        if (isset($validated['type'])) {
+        if (isset($validated['type']) && !empty($validated['type'])) {
             if ($validated['type'] == 'applications') {
                 $projects = Project::whereHas('works', function (Builder $query) use ($user_id) {
                     $query->where([['blogger_id', $user_id]])->where('created_by', '<>', $user_id)->where('accepted_by_blogger_at', null);
@@ -206,7 +206,7 @@ class ProjectController extends Controller
         $all = true;
         $type = 'all';
         $projects = [];
-
+        
         if (isset($validated['project_type']) && !empty($validated['project_type'])) {
             $projects = Project::whereHas('projectWorks', function (Builder $query) use ($validated) {
                 $query->where('type', $validated['project_type']);
