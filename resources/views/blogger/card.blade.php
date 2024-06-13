@@ -35,8 +35,6 @@
                 @endforeach
                 @if (count($themes) > 2)
                 <div class="card__tags-item card__tags-item--others">
-
-                @endif
                     <span>Посмотреть все +5шт</span>
                     <div class="card__tags-item-w">
                         <div class="card__tags-item">
@@ -59,6 +57,7 @@
                         </div>
                     </div>
                 </div>
+                @endif
             </div>
             <div class="card__row card__desc">
                 {{ $blogger->description }}
