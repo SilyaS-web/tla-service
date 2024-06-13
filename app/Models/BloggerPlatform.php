@@ -16,7 +16,7 @@ class BloggerPlatform extends Model
 
     const PLATFORM_TYPES = [
         self::YOUTUBE,
-        self::INSTAGRAM,                                                                          
+        self::INSTAGRAM,
         self::VK,
         self::TELEGRAM,
     ];
@@ -46,5 +46,14 @@ class BloggerPlatform extends Model
     public function getIconURL()
     {
         return asset(self::PLATFORM_ICON_URLS[$this->name]);
+    }
+
+    public static function getLowerPlatforms() {
+        $platform_names = [];
+        foreach (self::PLATFORM_TYPES as $platform_type) {
+            $platform_names[] = strtolower($platform_type);
+        }
+
+        return $platform_names;
     }
 }
