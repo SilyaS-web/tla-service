@@ -23,10 +23,9 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'project_type' => [Rule::in(Project::TYPES)],
-            'product_name' => '',
-            'status' => '',
-            'user_id' => 'exists:users,id|nullable',
+            'project_type' => [Rule::in(Project::TYPES), 'nullable'],
+            'project_name' => 'string|nullable',
+            'type' => 'string|nullable'
         ]);
 
         if ($validator->fails()) {
@@ -35,20 +34,14 @@ class ProjectController extends Controller
         }
 
         $validated = $validator->validated();
-
         $user = Auth::user();
-        if (!$user) {
-            $user = User::find($request->user_id);
-        }
 
         $filter = [];
-        if (isset($validated['status']) && !empty($validated['status'])) {
-            $filter[] = ['status', $validated['status']];
+
+        if (isset($validated['project_name']) && !empty($validated['project_name'])) {
+            $filter[] = ['product_name', 'like', '%' . $validated['project_name'] . '%'];
         }
 
-        if (isset($validated['product_name']) && !empty($validated['product_name'])) {
-            $filter[] = ['product_name', 'like', '%' . $validated['product_name'] . '%'];
-        }
         $projects = $user->projects()->where($filter)->withCount(['works' => function (Builder $query) {
             $query->where('status', 1);
         }])->get();
@@ -57,6 +50,10 @@ class ProjectController extends Controller
             $works = Work::where([['blogger_id', $user->id]])->get();
             $projects = Project::whereIn('id', $works->pluck('project_id'))->where($validated)->get();
             return view("project.blogger-list", compact('projects'));
+        }
+
+        if ($validated['type' == 'select-project-page']) {
+            return view('project.seller-list', compact('projects'));
         }
 
         return view("project.index", compact('projects'));
@@ -128,7 +125,8 @@ class ProjectController extends Controller
         return redirect()->route('profile')->with('success', 'Проект успешно создан');
     }
 
-    public function selectBloggers($project_id){
+    public function selectBloggers($project_id)
+    {
         $project = Project::find($project_id);
         $bloggers = Blogger::get();
         return view('seller.select-blogger', compact('project', 'bloggers'));
