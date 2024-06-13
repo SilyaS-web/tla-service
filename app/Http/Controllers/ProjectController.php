@@ -146,8 +146,9 @@ class ProjectController extends Controller
         $role = $user->role;
 
         $validator = Validator::make(request()->all(), [
-            'product_name' => '',
-            'status' => '',
+            'product_name' => 'string|nullable',
+            'status' => 'string|nullable',
+            'type' => 'string|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -155,9 +156,14 @@ class ProjectController extends Controller
         }
 
         $validated = $validator->validated();
-        $works = Work::where([['blogger_id', $user_id]])->get();
+        $works = Work::where([['blogger_id', $user_id]]);
         $projects = Project::whereIn('id', $works->pluck('project_id'))->where($validated)->get();
 
+        if ($validated['type'] == 'applications') {
+            $works->where('status', null)->where('created_by', '<>', $user->id);
+        }
+
+        $works->get();
         return view('project.blogger-list', compact('projects', 'works', 'role', 'user_id'));
     }
 
