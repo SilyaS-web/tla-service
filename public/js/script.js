@@ -194,12 +194,17 @@ class BlogersFilter {
                 return $(this.node).find('#filter-name').val();
             }
         },
-        category: {
+        themes: {
             set: (value)=>{
-                $(this.node).find('#filter-cat').val(value);
+                $(this.node).find('.form-formats').find('.form-format__check').prop('checked', false);
             },
             get: ()=>{
-                return $(this.node).find('#filter-cat').val();
+                var themes = $(this.node).find('.form-formats').find('.form-format__check:checked'),
+                    values = [];
+
+                themes.each((i, v) => { values.push($(v).val()) })
+
+                return values;
             }
         },
         platform: {
@@ -212,10 +217,22 @@ class BlogersFilter {
         },
         sex: {
             set: (value)=>{
+                if(!value || value == '') $(this.node).find('#filter__item--sex').find('input').prop('checked', false);
+
                 $(this.node).find('#filter__item--sex').find(`#${value}`).prop('checked', true);
             },
             get: ()=>{
-                return $(this.node).find('#filter__item--sex').find('input:checked').prop('id')
+                var male = $(this.node).find('#filter__item--sex').find('input#male:checked').prop('id') || false,
+                    female = $(this.node).find('#filter__item--sex').find('input#female:checked').prop('id') || false;
+
+                var arr = [];
+
+                if(male)
+                    arr.push(male);
+                if(female)
+                    arr.push(female);
+
+                return arr.join(',');
             }
         },
         subscribers: {
@@ -266,9 +283,12 @@ class BlogersFilter {
             platform: this.dataProps.platform.get().toLowerCase(),
             subscriber_quantity_min: this.dataProps.subscribers.get()['min'],
             subscriber_quantity_max: this.dataProps.subscribers.get()['max'],
-            city: this.dataProps.city.get()
+            city: this.dataProps.city.get(),
+            country: this.dataProps.country.get(),
+            sex: this.dataProps.sex.get(),
+            themes: this.dataProps.themes.get(),
         }
-        console.log(questData);
+
         $.post(self.sendUri, questData, function(res){
             $(document).find('.blogers-list__list.list-blogers').remove();
             $(document).find('.profile-blogers__body').append(res);
@@ -277,16 +297,21 @@ class BlogersFilter {
 }
 
 class ProjectsFilter {
-    constructor(node) {
+    constructor(node, type = false) {
         this.node = node;
 
         $(this.node).find('.btn-filter-send').on('click', this.sendData);
         $(this.node).find('.filter__reset').on('click', this.resetFilters);
 
+        if(type)
+            this.type = type;
+
         return this;
     }
     node = '';
     sendUri = '/apist/projects';
+    type = null;
+
     dataProps = {
         projectName: {
             set: (value)=>{
@@ -324,11 +349,13 @@ class ProjectsFilter {
         var questData = {
             project_type: this.dataProps.format.get(),
             project_name: this.dataProps.projectName.get(),
+            type: this.type,
         }
 
         $.post(self.sendUri, questData, function(res){
-            $(document).find('.profile-projects__items').remove();
-            $(document).find('.profile-projects__body').append(res);
+            console.log($(self.node).closest('.profile-projects'), $(self.node));
+            $(self.node).closest('.profile-projects').find('.profile-projects__items').remove();
+            $(self.node).closest('.profile-projects').find('.profile-projects__body').append(res);
         })
     }
 }
@@ -384,8 +411,8 @@ class BloggerAllProjectsFilter {
         }
 
         $.post(self.sendUri, questData, function(res){
-            $(document).find('.list-projects__items').empty();
-            $(document).find('.list-projects__items').append(res);
+            $(self.node).closest('.profile-projects').find('.list-projects__items').empty();
+            $(self.node).closest('.profile-projects').find('.list-projects__items').append(res);
         })
     }
 }
@@ -441,11 +468,61 @@ class BloggerProjectsFilter {
         }
 
         $.post(self.sendUri, questData, function(res){
-            $(document).find('.list-projects__items').empty();
-            $(document).find('.list-projects__items').append(res);
+            $(self.node).closest('.profile-projects').find('.list-projects__items').empty();
+            $(self.node).closest('.profile-projects').find('.list-projects__items').append(res);
         })
     }
 }
+
+class BloggerProjectsOffersFilter {
+    constructor(node) {
+        this.node = node;
+
+        $(this.node).find('.btn-filter-send').on('click', this.sendData);
+        $(this.node).find('.filter__reset').on('click', this.resetFilters);
+
+        return this;
+    }
+    node = '';
+    sendUri = '/apist/blogger/projects';
+    dataProps = {
+        projectName: {
+            set: (value)=>{
+                $(this.node).find('#filter-name').val(value);
+            },
+            get: ()=>{
+                return $(this.node).find('#filter-name').val();
+            }
+        },
+        format: {
+            set: (value)=>{
+                $(this.node).find('#filter-format').val(value);
+            },
+            get: ()=>{
+                return $(this.node).find('#filter-format').val();
+            }
+        }
+    }
+    resetFilters = () => {
+        for(var key in this.dataProps){
+            this.dataProps[key].set('');
+        }
+    }
+    sendData = ()=>{
+        var self = this;
+
+        var questData = {
+            project_type: this.dataProps.format.get(),
+            project_name: this.dataProps.projectName.get(),
+        }
+
+        $.post(self.sendUri, questData, function(res){
+            $(self.node).closest('.profile-projects').find('.list-projects__items').empty();
+            $(self.node).closest('.profile-projects').find('.list-projects__items').append(res);
+        })
+    }
+}
+
 
 class Tabs {
     constructor(node) {
@@ -1176,11 +1253,11 @@ class PopupSellerChooseProjectsFormat extends Popup{
 
         var articul = $(this.projectNode).find('.btn-choose-project').data('articul'),
             name = $(this.projectNode).find('.project-item__subtitle').text(),
-            imgUrl = $(this.projectNode).find('.project-item__img img').attr('src');
+            imgUrl = $(this.projectNode).find('.project-item__img').css('backgroundImage');
 
         $('.current-project').find('.current-project__main .current-project__title .articul span').text(articul)
         $('.current-project').find('.current-project__main .current-project__title .name b').text(name)
-        $('.current-project').find('.current-project__img').css('backgroundImage', `url(${imgUrl})`)
+        $('.current-project').find('.current-project__img').css('backgroundImage', imgUrl)
         $('.current-project').find('.current-project__format .articul').text(currentFormat.closest('.input-checkbox-w').find('label').text())
         $('.current-project').data('id', currentFormat.closest('.input-checkbox-w').data('id'))
 
@@ -1430,9 +1507,11 @@ $(window).on('load', function(){
     })
 
     //projects filters
-    var projectsFilters = new ProjectsFilter('.profile#seller .projects-list__filter');
+    var projectsFilters = new ProjectsFilter('.profile#seller #profile-projects .projects-list__filter', 'projects-page');
+    var projectsFiltersChoose = new ProjectsFilter('.profile#seller #profile-projects-choose .projects-list__filter', 'select-project-page');
     var blogersProjectsFilters = new BloggerProjectsFilter('.profile#blogger #my-projects .projects-list__filter');
     var blogersAllProjectsFilters = new BloggerAllProjectsFilter('.profile#blogger #profile-projects .projects-list__filter');
+    var bloggerProjectsOffersFilter = new BloggerProjectsOffersFilter('.profile#blogger #avail-projects .projects-list__filter');
 
     $('.projects-list__filter-btn').on('click', function(){
         console.log(123);

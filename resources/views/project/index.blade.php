@@ -42,6 +42,14 @@
                             </div>
                             <div class="card__stats-val">
                                 <span>{{ $project->works()->where('status', '<>', null)->count() }}</span>
+                                <span class = "card__stats-val--total">
+                                    ?
+                                    <div class="card__stats-val--total-list">
+                                        <p>Всего в зайдействовано — 12</p>
+                                        <p>Всего в работе — 8</p>
+                                        <p>Всего выполнило работу — 4</p>
+                                    </div>
+                                </span>
                             </div>
                         </div>
                         <div class="card__col card__stats-item" style="flex: 1: width: auto">
@@ -440,7 +448,7 @@
         </div> --}}
 </div>
 @empty
-Нет проетков
+Нет проектов
 @endforelse
 </div>
 
