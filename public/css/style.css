@@ -1502,9 +1502,10 @@ input[type='range']::-webkit-slider-runnable-track{
 .card__name {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     padding:12px 0;
+    gap: 8px;
 }
+
 .card__name-name {
     display: flex;
     flex-direction: column;
@@ -1514,10 +1515,27 @@ input[type='range']::-webkit-slider-runnable-track{
     font-size: 15px;
     color: rgba(0, 0, 0, .4);
 }
-.card__platform {
-    padding-top: 12px;
-    width: 24px; height:24px;
+.card__platforms{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
     margin-left: auto;
+    margin-top: 12px;
+}
+.card__platform {
+    width: 24px; height:24px;
+}
+.card__platform.telegram{
+    filter: brightness(0) saturate(100%) invert(62%) sepia(21%) saturate(6297%) hue-rotate(169deg) brightness(93%) contrast(83%);
+}
+.card__platform.vk{
+    filter: brightness(0) saturate(100%) invert(28%) sepia(78%) saturate(2778%) hue-rotate(202deg) brightness(102%) contrast(105%);
+}
+.card__platform.instagram{
+    filter: brightness(0) saturate(100%) invert(39%) sepia(49%) saturate(5779%) hue-rotate(351deg) brightness(102%) contrast(99%);
+}
+.card__platform.youtube{
+    filter: brightness(0) saturate(100%) invert(11%) sepia(95%) saturate(7296%) hue-rotate(358deg) brightness(95%) contrast(111%);
 }
 .card__tags {
     display: flex;
@@ -1773,7 +1791,7 @@ input[type='range']::-webkit-slider-runnable-track{
     width: 100%;
     background-repeat: no-repeat;
     background-size: cover;
-    padding-top: 120%;
+    padding-top:270px;
     border-radius: 10px;
 }
 .project-item__img img{
@@ -1788,6 +1806,9 @@ input[type='range']::-webkit-slider-runnable-track{
     padding:5px;
     font-size: 14px;
 }
+.project-item__btns{
+    margin-top: auto;
+}
 .project-item__status.active{
     color: rgb(255,193,7);
 }
@@ -1801,10 +1822,14 @@ input[type='range']::-webkit-slider-runnable-track{
     display: flex;
     flex-direction: column;
     justify-content: end;
+    flex: 1 1 auto;
+    margin-top: 15px;
 }
 .project-item__carousel{
     flex: 1 1 auto;
     display: block;
+    max-height: 270px;
+    overflow: hidden;
 }
 .project-item__title {
     font-size: 24px;

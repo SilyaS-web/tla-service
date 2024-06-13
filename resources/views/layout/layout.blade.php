@@ -134,9 +134,9 @@
         <header class="header">
             <div class="header__container _container">
                 <div class="header__body">
-                    <div class="logo header__logo-w">
+                    <a href="/" class="logo header__logo-w">
                         <img src="{{ asset('img/logo.svg') }}" alt="" class="logo__logo header__logo">
-                    </div>
+                    </a>
                     @auth
                     <nav class="nav header__nav">
                         <div class="nav__items">

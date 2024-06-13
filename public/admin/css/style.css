@@ -170,21 +170,23 @@ label{
     display: none;
 }
 .notification{
-    padding: 15px;
+    padding:30px 20px;
     box-shadow: 0px 0px 10px 6px rgba(254,94,0,.2);
     background-color: #fff;
     border-radius: 10px;
-    right: 15px;bottom: 15px;
+    right: 20px;bottom: 40px;
     position: fixed;
-    max-width: 300px;
+    max-width: 400px;
+    z-index: 9999;
 }
 .notification__title{
-    font-size: 16px;
-    font-weight: 500;
-    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 18px;
 }
 .notification__text{
-    font-size: 13px;
+    font-size: 18px;
+    font-weight: 500;
 }
 .notification.error{
     color: rgb(175,0,42);

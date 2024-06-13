@@ -20,45 +20,14 @@
                         </p>
                     </p>
                 </div>
-                <div class="card__platform">
+                <div class="card__platforms">
                     @foreach ($blogger->platforms as $platform)
-                    <img src="{{ $platform->getIconURL() }}" alt="">
+                        <div class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></div>
                     @endforeach
                 </div>
             </div>
             <div class="card__row card__tags">
-                @php($themes = $blogger->themes)
-                @foreach ($themes->take(3) as $theme)
-                <div class="card__tags-item">
-                    <span>{{ $theme->theme->theme }}</span>
-                </div>
-                @endforeach
-                @if (count($themes) > 2)
-                <div class="card__tags-item card__tags-item--others">
 
-                @endif
-                    <span>Посмотреть все +5шт</span>
-                    <div class="card__tags-item-w">
-                        <div class="card__tags-item">
-                            <span>Авто</span>
-                        </div>
-                        <div class="card__tags-item">
-                            <span>Математика</span>
-                        </div>
-                        <div class="card__tags-item">
-                            <span>Древесина</span>
-                        </div>
-                        <div class="card__tags-item">
-                            <span>Вещи, шопинг</span>
-                        </div>
-                        <div class="card__tags-item">
-                            <span>Реклама</span>
-                        </div>
-                        <div class="card__tags-item">
-                            <span>Всякая всячина</span>
-                        </div>
-                    </div>
-                </div>
             </div>
             <div class="card__row card__desc">
                 {{ $blogger->description }}

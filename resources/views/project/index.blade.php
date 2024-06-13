@@ -92,19 +92,22 @@
                                 <div class="card__img">
                                     <img src="{{ $blogger->user->getImageURL() }}" alt="">
                                     @if ($blogger->is_achievement)
-                                    <div class="card__achive">
-                                        <img src="{{ asset('img/achive-icon.svg') }}" alt="">
-                                    </div>
+                                        <div class="card__achive">
+                                            <img src="{{ asset('img/achive-icon.svg') }}" alt="">
+                                        </div>
                                     @endif
                                 </div>
                                 <div class="card__name">
                                     <p class="card__name-name">
-                                        {{ $blogger->name }}
+                                        {{ $blogger->user->name }}
+                                    </p>
+                                    <p style="font-size: 12px">
+                                        {{ $blogger->country->name }}, {{ $blogger->city }}
                                     </p>
                                 </div>
-                                <div class="card__platform">
+                                <div class="card__platforms">
                                     @foreach ($blogger->platforms as $platform)
-                                    <img src="{{ $platform->getIconURL() }}" alt="">
+                                        <div class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></div>
                                     @endforeach
                                 </div>
                             </div>
@@ -126,7 +129,7 @@
                             </div>
                             <div class="card__row card__desc">
                                 <p>
-                                    {{ $blogger->description }}
+                                    {{ $blogger->message }}
                                 </p>
                             </div>
                         </div>
@@ -207,19 +210,22 @@
                                 <div class="card__img">
                                     <img src="{{ $blogger->user->getImageURL() }}" alt="">
                                     @if ($blogger->is_achievement)
-                                    <div class="card__achive">
-                                        <img src="{{ asset('img/achive-icon.svg') }}" alt="">
-                                    </div>
+                                        <div class="card__achive">
+                                            <img src="{{ asset('img/achive-icon.svg') }}" alt="">
+                                        </div>
                                     @endif
                                 </div>
                                 <div class="card__name">
                                     <p class="card__name-name">
-                                        {{ $blogger->name }}
+                                        {{ $blogger->user->name }}
+                                    </p>
+                                    <p style="font-size: 12px">
+                                        {{ $blogger->country->name }}, {{ $blogger->city }}
                                     </p>
                                 </div>
-                                <div class="card__platform">
+                                <div class="card__platforms">
                                     @foreach ($blogger->platforms as $platform)
-                                    <img src="{{ $platform->getIconURL() }}" alt="">
+                                        <div class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></div>
                                     @endforeach
                                 </div>
                             </div>
@@ -236,7 +242,7 @@
                             </div>
                             <div class="card__row card__desc-title">
                                 <p style="font-weight: 500; font-size: 18px;">
-                                    Сообщение от блогера
+                                    Описание канала
                                 </p>
                             </div>
                             <div class="card__row card__desc">
@@ -446,9 +452,7 @@
         prices_ctx = $(stat).find('#prices-graph-desktop');
         orders_ctx = $(stat).find('#orders-graph-desktop');
 
-        var data = $(stat).data('stats')
-            , lineData = []
-            , barData = [];
+        var data = $(stat).data('stats'), lineData = [], barData = [];
 
         datasets = [{
                 label: 'Выручка',
