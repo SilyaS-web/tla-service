@@ -169,12 +169,24 @@ class ProjectController extends Controller
                 })->whereHas('projectWorks', function (Builder $query) use ($validated) {
                     $query->where('type', $validated['project_type']);
                 });
+
+                if (isset($validated['project_name']) && !empty($validated['project_name'])) {
+                    $projects->where('product_name', 'like', '%' . $validated['project_name'] . '%');
+                }
+
+                $projects->get();
                 $all = true;
                 $type = 'avail';
                 return view('project.blogger-list', compact('projects','role', 'user_id', 'all', 'type'));
             } else if ($validated['type'] == 'works') {
                 $works = Work::where([['blogger_id', $user_id]])->where('status', Work::IN_PROGRESS)->get();
-                $projects = Project::whereIn('id', $works->pluck('project_id'))->get();
+                $projects = Project::whereIn('id', $works->pluck('project_id'));
+
+                if (isset($validated['project_name']) && !empty($validated['project_name'])) {
+                    $projects->where('product_name', 'like', '%' . $validated['project_name'] . '%');
+                }
+
+                $projects->get();
                 $all = false;
                 $type = 'start';
                 return view('project.blogger-list', compact('projects', 'role', 'user_id', 'all', 'type'));
@@ -183,7 +195,13 @@ class ProjectController extends Controller
 
         $all = true;
         $type = 'all';
-        $projects = Project::get();
+
+        if (isset($validated['project_name']) && !empty($validated['project_name'])) {
+            $projects = Project::where('product_name', 'like', '%' . $validated['project_name'] . '%')->get();
+        } else {
+            $projects = Project::get();
+        }
+
         return view('project.blogger-list', compact('projects', 'role', 'user_id', 'all', 'type'));
     }
 
