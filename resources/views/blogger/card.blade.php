@@ -34,27 +34,15 @@
                 </div>
                 @endforeach
                 @if (count($themes) > 2)
+                @php($themes = $themes->skip(3))
                 <div class="card__tags-item card__tags-item--others">
-                    <span>Посмотреть все +5шт</span>
+                    <span>Посмотреть все +{{ count($themes) }}шт</span>
                     <div class="card__tags-item-w">
+                        @foreach ($themes as $theme)
                         <div class="card__tags-item">
-                            <span>Авто</span>
+                            <span>{{ $theme->theme->theme }}</span>
                         </div>
-                        <div class="card__tags-item">
-                            <span>Математика</span>
-                        </div>
-                        <div class="card__tags-item">
-                            <span>Древесина</span>
-                        </div>
-                        <div class="card__tags-item">
-                            <span>Вещи, шопинг</span>
-                        </div>
-                        <div class="card__tags-item">
-                            <span>Реклама</span>
-                        </div>
-                        <div class="card__tags-item">
-                            <span>Всякая всячина</span>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
                 @endif
