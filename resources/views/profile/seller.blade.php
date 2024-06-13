@@ -106,7 +106,7 @@
                                             @error('project_type')
                                             <span class="error">{{ $message }}</span>
                                             @enderror
-                                            <div class="input-checkbox-w">
+                                            <div class="marketing-format__item input-checkbox-w">
                                                 {{-- <input type="checkbox" class="checkbox" name="feedback" value="feedback" id="product-feedback"> --}}
                                                 <label for="product-feedback">Отзыв на товар - Бартер</label>
                                                 <div class="quantity-w" data-max="100">
@@ -133,7 +133,7 @@
                                                 </div>
 
                                             </div>
-                                            <div class="input-checkbox-w">
+                                            <div class="marketing-format__item input-checkbox-w">
                                                 {{-- <input type="checkbox" class="checkbox" name="inst" value="inst-barter" id="product-inst"> --}}
                                                 <label for="product-inst">Рекламная интеграция (Inst) - Бартер</label>
                                                 <div class="quantity-w" data-max="100">
@@ -160,7 +160,7 @@
                                                 </div>
 
                                             </div>
-                                            <div class="input-checkbox-w disabled">
+                                            <div class="marketing-format__item input-checkbox-w disabled">
                                                 {{-- <input type="checkbox" class="checkbox" id="product-youtube"> --}}
                                                 <label for="product-youtube">Рекламная интеграция (YouTube) - Бартер</label>
                                                 <div class="quantity-w" data-max="100">
@@ -187,7 +187,7 @@
                                                 </div>
 
                                             </div>
-                                            <div class="input-checkbox-w disabled">
+                                            <div class="marketing-format__item input-checkbox-w disabled">
                                                 {{-- <input type="checkbox" class="checkbox" id="product-other"> --}}
                                                 <label for="product-other">Другие площадки для интеграций - Бартер</label>
                                                 <div class="quantity-w" data-max="100">
@@ -214,7 +214,7 @@
                                                 </div>
 
                                             </div>
-                                            <div class="input-checkbox-w disabled">
+                                            <div class="marketing-format__item input-checkbox-w disabled">
                                                 {{-- <input type="checkbox" class="checkbox" id="product-payment"> --}}
                                                 <label for="product-payment">Платные интеграции</label>
                                                 <div class="quantity-w" data-max="100">
@@ -276,7 +276,7 @@
                                 <div class="dashboard__content active" id="wb">
                                     <div class="dashboard__row dashboard__item--feedback feedback-dashboard" style="{{ !empty(auth()->user()->seller->wb_api_key) ?: 'padding: 0;' }}">
                                         @if (empty(auth()->user()->seller->wb_api_key))
-                                        <div class="dashboard__placeholder" style="z-index: 9999">
+                                        <div class="dashboard__placeholder" style="z-index: 9998">
                                             <div class="dashboard__placeholder-text">
                                                 Введите API ключ в настройках профиля
                                             </div>
