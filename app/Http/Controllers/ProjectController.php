@@ -147,9 +147,8 @@ class ProjectController extends Controller
         $role = $user->role;
 
         $validator = Validator::make(request()->all(), [
-            'product_name' => 'string|nullable',
-            'status' => 'string|nullable',
-            'type' => 'string|nullable',
+            'project_name' => 'string|nullable',
+            'project_type' => 'string|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -158,14 +157,34 @@ class ProjectController extends Controller
 
         $validated = $validator->validated();
         $works = Work::where([['blogger_id', $user_id]]);
-        $projects = Project::whereIn('id', $works->pluck('project_id'))->where($validated)->get();
 
-        if (isset($validated['type']) && $validated['type'] == 'applications') {
-            $works->where('status', '<>', null)->where('created_by', '<>', $user->id);
+        $user = Auth::user();
+        $user_id = $user->id;
+        $role = $user->role;
+
+        if (isset($validated['type'])) {
+            if ($validated['type'] == 'applications') {
+                $projects = Project::whereHas('works', function (Builder $query) use ($user_id) {
+                    $query->where([['blogger_id', $user_id]])->where('created_by', '<>', $user_id)->where('accepted_by_blogger_at', null);
+                })->whereHas('projectWorks', function (Builder $query) use ($validated) {
+                    $query->where('type', $validated['project_type']);
+                });
+                $all = true;
+                $type = 'avail';
+                return view('project.blogger-list', compact('projects','role', 'user_id', 'all', 'type'));
+            } else if ($validated['type'] == 'works') {
+                $works = Work::where([['blogger_id', $user_id]])->where('status', Work::IN_PROGRESS)->get();
+                $projects = Project::whereIn('id', $works->pluck('project_id'))->get();
+                $all = false;
+                $type = 'start';
+                return view('project.blogger-list', compact('projects', 'role', 'user_id', 'all', 'type'));
+            }
         }
 
-        $works->get();
-        return view('project.blogger-list', compact('projects', 'works', 'role', 'user_id'));
+        $all = true;
+        $type = 'all';
+        $projects = Project::get();
+        return view('project.blogger-list', compact('projects', 'role', 'user_id', 'all', 'type'));
     }
 
     /**
