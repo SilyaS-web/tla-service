@@ -91,7 +91,7 @@
             </div> --}}
         </div>
         <div class="profile-projects__row profile-projects__blogers projects-blogers projects-blogers--leads owl-carousel">
-            @forelse ($project->works('created_by', '<>', $project->seller->user->id)->where('status', null)->get() as $work_application)
+            @forelse ($project->works()->where('created_by', '<>', $project->seller_id)->where('status', null)->get() as $work_application)
                 @php($blogger = $work_application->blogger)
                 <div class="list-blogers__item bloger-item card" data-id="{{ $work_application->id }}">
                     <div class="card__row card__content">
