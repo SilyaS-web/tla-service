@@ -57,7 +57,7 @@ class BloggerController extends Controller
 
         if (isset($validated['subscriber_quantity_max']) && !empty($validated['subscriber_quantity_max'])) {
             $bloggers->whereHas('platforms', function (Builder $query) use ($validated) {
-                $query->where('subscriber_quantity', '>=', $validated['subscriber_quantity_max']);
+                $query->where('subscriber_quantity', '<=', $validated['subscriber_quantity_max']);
             });
         }
 
