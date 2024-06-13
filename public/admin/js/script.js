@@ -158,27 +158,42 @@ class PopupAcceptBloger extends Popup{
         inst_subs: {
             get: ()=>{
                 return $(this.node).find('#inst_subs').val();
-            }
+            },
+            set: (val)=>{
+                $(this.node).find('#inst_subs').val(val);
+            },
         },
         inst_cover: {
             get: ()=>{
                 return $(this.node).find('#inst_cover').val();
-            }
+            },
+            set: (val)=>{
+                $(this.node).find('#inst_cover').val(val);
+            },
         },
         inst_er: {
             get: ()=>{
                 return $(this.node).find('#inst_er').val();
-            }
+            },
+            set: (val)=>{
+                $(this.node).find('#inst_er').val(val);
+            },
         },
         inst_cpm: {
             get: ()=>{
                 return $(this.node).find('#inst_cpm').val();
-            }
+            },
+            set: (val)=>{
+                $(this.node).find('#inst_cpm').val(val);
+            },
         },
         inst_link: {
             get: ()=>{
-                return $(this.node).find('#inst_cpm').val();
-            }
+                return $(this.node).find('#inst_link').val();
+            },
+            set: (val)=>{
+                $(this.node).find('#inst_link').val(val);
+            },
         },
 
         yt_subs: {
@@ -224,42 +239,42 @@ class PopupAcceptBloger extends Popup{
 
         vk_subs: {
             set: (val)=>{
-                $(this.node).find('#yt_subs').val(val)
+                $(this.node).find('#vk_subs').val(val)
             },
             get: ()=>{
-                return $(this.node).find('#yt_subs').val();
+                return $(this.node).find('#vk_subs').val();
             }
         },
         vk_cover: {
             set: (val)=>{
-                $(this.node).find('#yt_cover').val(val)
+                $(this.node).find('#vk_cover').val(val)
             },
             get: ()=>{
-                return $(this.node).find('#yt_cover').val();
+                return $(this.node).find('#vk_cover').val();
             }
         },
         vk_er: {
             set: (val)=>{
-                $(this.node).find('#yt_er').val(val)
+                $(this.node).find('#vk_er').val(val)
             },
             get: ()=>{
-                return $(this.node).find('#yt_er').val();
+                return $(this.node).find('#vk_er').val();
             }
         },
         vk_cpm: {
             set: (val)=>{
-                $(this.node).find('#yt_cpm').val(val)
+                $(this.node).find('#vk_cpm').val(val)
             },
             get: ()=>{
-                return $(this.node).find('#yt_cpm').val();
+                return $(this.node).find('#vk_cpm').val();
             }
         },
         vk_link: {
             set: (val)=>{
-                $(this.node).find('#yt_link').val(val)
+                $(this.node).find('#vk_link').val(val)
             },
             get: ()=>{
-                return $(this.node).find('#yt_link').val();
+                return $(this.node).find('#vk_link').val();
             }
         },
     }
@@ -280,7 +295,7 @@ class PopupAcceptBloger extends Popup{
         this.dataProps.is_achievement.set(blogger.is_achievement);
         this.dataProps.desc.set(blogger.description || '');
         this.dataProps.sex.set(blogger.sex || '');
-        this.dataProps.country.set(blogger.country_id || '');
+        this.dataProps.country.set(blogger.country || '');
         this.dataProps.city.set(blogger.city || '');
     }
 

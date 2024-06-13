@@ -2,8 +2,7 @@
 @php($lost_seats = $project->projectWorks()->sum('quantity') - $project->works()->where('status', '<>', null)->count())
 <div class="list-projects__item project-item">
     <div class="owl-carousel project-item__carousel">
-        <div class="project-item__img">
-            <img src="{{ $project->getImageURL(true) }}" alt="">
+        <div class="project-item__img" style="background-image: url({{ $project->getImageURL(true) }})">
         </div>
         <div class="project-item__status active">
             {{ $project->active == 0 ? 'Активно' : 'Выполнено' }}
