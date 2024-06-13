@@ -160,7 +160,7 @@ class ProjectController extends Controller
         $works = Work::where([['blogger_id', $user_id]]);
         $projects = Project::whereIn('id', $works->pluck('project_id'))->where($validated)->get();
 
-        if ($validated['type'] == 'applications') {
+        if (isset($validated['type']) && $validated['type'] == 'applications') {
             $works->where('status', null)->where('created_by', '<>', $user->id);
         }
 
