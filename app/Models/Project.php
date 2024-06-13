@@ -67,7 +67,7 @@ class Project extends Model
 
     public function getClicksCount() {
         $works = Work::where([['project_id', $this->id]])->get();
-        $clicks_count = DeepLinkStat::whereHas('user', function (Builder $query) use ($works) {
+        $clicks_count = DeepLinkStat::whereHas('deepLink', function (Builder $query) use ($works) {
             $query->whereIn('work_id', $works->pluck('id'));
         })->count();
         return $clicks_count;
