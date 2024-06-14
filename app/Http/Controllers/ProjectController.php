@@ -83,9 +83,9 @@ class ProjectController extends Controller
         $validator = Validator::make($request->all(), [
             'feedback-quantity' => 'numeric|nullable',
             'inst-quantity' => 'numeric|nullable',
-            'product_name' => 'required|min:3',
+            'product_name' => 'required|min:3|max:250',
             'product_nm' => 'required|min:3|numeric',
-            'product_link' => 'required|min:3',
+            'product_link' => 'required|min:3|max:250',
             'product_price' => 'required|numeric',
             'images' => 'required|array',
             'images.*' => 'image|max:10240',
@@ -206,7 +206,7 @@ class ProjectController extends Controller
         $all = true;
         $type = 'all';
         $projects = [];
-        
+
         if (isset($validated['project_type']) && !empty($validated['project_type'])) {
             $projects = Project::whereHas('projectWorks', function (Builder $query) use ($validated) {
                 $query->where('type', $validated['project_type']);
