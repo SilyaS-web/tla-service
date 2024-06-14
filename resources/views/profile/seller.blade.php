@@ -356,7 +356,7 @@
                                                             </div>
                                                             У вас {{ $wb_stats['low'] }} товар(ов) с очень низкой оценкой
                                                             <div class="feedback-item__stat-products">
-                                                                <div class="" style="background-color: #fff">
+                                                                {{-- <div class="" style="background-color: #fff">
                                                                     <a href="#" class="profile-projects__status">
                                                                         122333444
                                                                     </a>
@@ -366,7 +366,7 @@
                                                                     <a href="#" class="profile-projects__status">
                                                                         122333444
                                                                     </a>
-                                                                </div>
+                                                                </div> --}}
                                                             </div>
                                                         </div>
 
