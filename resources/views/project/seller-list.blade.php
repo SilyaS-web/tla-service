@@ -1,4 +1,4 @@
-<div class="profile-projects__items">
+<div class="profile-projects__items list-projects__items" style="max-width:1030px">
     @forelse ($projects as $project)
     @php($lost_seats = $project->projectWorks()->sum('quantity') - $project->works()->where('status', '<>', null)->count())
         <div class="list-projects__item project-item">
