@@ -372,48 +372,53 @@
                         <div class="view-project__props-overflow" style="background-image: url('{{ asset('img/Remove-bg 1.png') }}'); background-size:contain; background-position:center; background-repeat:no-repeat;">
             </div> --}}
             @php($clicks_count = $project->getClicksCount())
+            @php($suscribers = $project->getSuscribers())
             <div class="card__col card__stats-stats">
                 <div class="projects-statistics__title" style="margin-bottom: 0">
                     Статистика по интеграциям
                 </div>
-                <div class="card__row card__stats-row">
+                @if($clicks_count < 1 || $suscribers < 1)
+                    Статистики пока нет
+                @else
+                    <div class="card__row card__stats-row">
 
-                    <div class="card__col card__stats-item">
-                        <div class="card__stats-title">
-                            <span>Охватов</span>
+                        <div class="card__col card__stats-item">
+                            <div class="card__stats-title">
+                                <span>Охватов</span>
+                            </div>
+                            <div class="card__stats-val">
+                                <span>{{ $suscribers }}</span>
+                            </div>
                         </div>
-                        <div class="card__stats-val">
-                            <span>120</span>
+                        <div class="card__col card__stats-item">
+                            <div class="card__stats-title">
+                                <span>Переходов</span>
+                            </div>
+                            <div class="card__stats-val">
+                                <span>{{ $clicks_count }}</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="card__col card__stats-item">
-                        <div class="card__stats-title">
-                            <span>Переходов</span>
-                        </div>
-                        <div class="card__stats-val">
-                            <span>{{ $clicks_count }}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="card__row card__stats-row">
+                    <div class="card__row card__stats-row">
 
-                    <div class="card__col card__stats-item">
-                        <div class="card__stats-title">
-                            <span>ER</span>
+                        <div class="card__col card__stats-item">
+                            <div class="card__stats-title">
+                                <span>ER</span>
+                            </div>
+                            <div class="card__stats-val">
+                                <span>{{ ($clicks_count / ($suscribers == 0 ? 1 : $suscribers)) * 100 }}</span>
+                            </div>
                         </div>
-                        <div class="card__stats-val">
-                            <span>{{ $clicks_count }}</span>
+                        <div class="card__col card__stats-item">
+                            <div class="card__stats-title">
+                                <span>CPM</span>
+                            </div>
+                            <div class="card__stats-val">
+                                <span>{{ ($project->product_price / ($clicks_count == 0 ? 1 : $clicks_count)) * 1000 }}₽</span>
+                            </div>
                         </div>
                     </div>
-                    <div class="card__col card__stats-item">
-                        <div class="card__stats-title">
-                            <span>CPM</span>
-                        </div>
-                        <div class="card__stats-val">
-                            <span>4200₽</span>
-                        </div>
-                    </div>
-                </div>
+                @endif
             </div>
         </div>
     </div>

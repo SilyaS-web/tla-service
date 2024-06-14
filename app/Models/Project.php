@@ -73,6 +73,17 @@ class Project extends Model
         return $clicks_count;
     }
 
+    public function getSuscribers() {
+        $project_id = $this->id;
+        $bloggers = Blogger::whereHas('works', function (Builder $query) use ($project_id) {
+            $query->where('project_id', $project_id);
+        })->get();
+
+        $subscribers = BloggerPlatform::whereIn('blogger_id', $bloggers->pluck('id'))->sum('subscriber_quantity');
+
+        return $subscribers;
+    }
+
     public function getProjectWorkNames($format = null)
     {
         $project_works = $this->projectWorks;
