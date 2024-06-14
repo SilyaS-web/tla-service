@@ -33,7 +33,7 @@
                             <?
                                 $types = [
                                     'Telegram' => 'tg',
-                                    'Instagran' => 'inst',
+                                    'Instagram' => 'inst',
                                     'VK' => 'vk',
                                     'Youtube' => 'yt'
                                 ]
