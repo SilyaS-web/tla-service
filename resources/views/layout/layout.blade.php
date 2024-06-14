@@ -398,10 +398,7 @@
                 <div class="popup__body">
                     <div class="popup__header">
                         <div class="popup__title title">
-                            Заполните данные
-                        </div>
-                        <div class="popup__subtitle">
-                            Выберите оценку, не забудьте добавить комментарий, это очень важно для развития площадки и улучшения сообщества
+                            Заполните комментарий
                         </div>
                     </div>
                     <div class="popup__form">

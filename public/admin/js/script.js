@@ -352,25 +352,25 @@ class PopupAcceptBloger extends Popup{
             tg_cover: self.dataProps.tg_cover.get(),
             tg_er: self.dataProps.tg_er.get(),
             tg_cpm: self.dataProps.tg_cpm.get(),
-            tg_link: self.dataProps.tg_cpm.get(),
+            tg_link: self.dataProps.tg_link.get(),
 
             inst_subs: self.dataProps.inst_subs.get(),
             inst_cover: self.dataProps.inst_cover.get(),
             inst_er: self.dataProps.inst_er.get(),
             inst_cpm: self.dataProps.inst_cpm.get(),
-            inst_link: self.dataProps.inst_cpm.get(),
+            inst_link: self.dataProps.inst_link.get(),
 
             yt_subs: self.dataProps.yt_subs.get(),
             yt_cover: self.dataProps.yt_cover.get(),
             yt_er: self.dataProps.yt_er.get(),
             yt_cpm: self.dataProps.yt_cpm.get(),
-            yt_link: self.dataProps.yt_cpm.get(),
+            yt_link: self.dataProps.yt_link.get(),
 
-            vk_subs: self.dataProps.yt_subs.get(),
-            vk_cover: self.dataProps.yt_cover.get(),
-            vk_er: self.dataProps.yt_er.get(),
-            vk_cpm: self.dataProps.yt_cpm.get(),
-            vk_link: self.dataProps.yt_cpm.get(),
+            vk_subs: self.dataProps.vk_subs.get(),
+            vk_cover: self.dataProps.vk_cover.get(),
+            vk_er: self.dataProps.vk_er.get(),
+            vk_cpm: self.dataProps.vk_cpm.get(),
+            vk_link: self.dataProps.vk_link.get(),
         }, function(res){
             notify('info', {title: 'Успешно!', message: ''});
             self.closePopup();

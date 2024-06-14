@@ -12,9 +12,9 @@
                 <div class="chat__left">
                     <div class="chat__chat-items">
                         @forelse ($works as $work)
-                        @include('shared.chat.item')
+                            @include('shared.chat.item')
                         @empty
-                        <p class="chat__chat-empty">Переписка пустая, <span style="color:var(--primary); cursor:pointer" onclick="(function(){ $(document).find('.nav-menu__item.project-link').click() })();">создайте проект</span> и начните работу с блогерами</p>
+                            <p class="chat__chat-empty">Переписка пустая, <span style="color:var(--primary); cursor:pointer" onclick="(function(){ $(document).find('.nav-menu__item.project-link').click() })();">создайте проект</span> и начните работу с блогерами</p>
                         @endforelse
                     </div>
                 </div>
@@ -48,15 +48,15 @@
 
                     <div class="chat__overflow">
                         <div class="chat__overflow-text">
-                            <?if(count($works) == 0):?>
-                                <? if(auth()->user()->role == 'seller'): ?>
+                            @if(count($works) == 0)
+                                @if(auth()->user()->role == 'seller')
                                     Сейчас у вас нет возможности переписываться с блоеграми. Чтобы отправлять сообщения создайте проект, начните работу с блогерами
-                                <?else:?>
+                                @else
                                     Сейчас у вас нет возможности переписываться. Чтобы начать переписываться, начните работу с селлерами.
-                                <?endif?>
-                            <?else:?>
+                                @endif
+                            @else
                                 Выберите чат, чтобы начать переписку
-                            <?endif?>
+                            @endif
                         </div>
                     </div>
                 </div>

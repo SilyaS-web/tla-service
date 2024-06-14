@@ -151,7 +151,7 @@ class CreateProject extends Quest {
 
         for(let key in this.dataProps){
             let value = this.dataProps[key].get();
-            console.log(value);
+
             if(value == '' || value == null || value == undefined){
                 isAnyFieldEmpty = true;
                 notify('error', {'title': 'Ошибка.', 'message': `Поле "${this.emptyErrorsKeys[key]}" должно быть заполнено`})
@@ -370,7 +370,7 @@ class BloggerAllProjectsFilter {
         return this;
     }
     node = '';
-    sendUri = '/apist/projects';
+    sendUri = '/apist/blogger/projects';
     dataProps = {
         projectName: {
             set: (value)=>{
@@ -784,6 +784,7 @@ class Chat {
 
                 $(self.node).find('.btn-action').text(res['btn-text']);
                 $(self.node).find('.btn-action').prop('id', res['btn-class']);
+                $(self.node).find('.btn-action').data('id', res['data-id']);
 
                 if(res['btn-class'] == 'accept-btn'){
                     $(self.node).find('.btn-action').prop('href', `/apist/works/${self.currentChatId}/accept`);
@@ -1089,30 +1090,41 @@ class PopupBloggerSendStatistics extends Popup{
 
     dataProps = {
         subs: {
-            set: (val) => {console.log(val);},
+            set: (val) => {
+                if(!val) $(this.node).find('#subs').val('');
+            },
             get: () =>{
                 return $(this.node).find('#subs').val();
             }
         },
         views: {
-            set: (val) => {console.log(val);},
+            set: (val) => {
+                if(!val) $(this.node).find('#views').val('');
+            },
             get: () =>{
                 return $(this.node).find('#views').val();
             }
         },
         reposts: {
-            set: (val) => {console.log(val);},
+            set: (val) => {
+                if(!val) $(this.node).find('#reposts').val('');
+            },
             get: () =>{
                 return $(this.node).find('#reposts').val();
             }
         },
         likes: {
-            set: (val) => {console.log(val);},
+            set: (val) => {
+                if(!val) $(this.node).find('#likes').val('');
+            },
             get: () =>{
                 return $(this.node).find('#likes').val();
             }
         },
         stats: {
+            set: (val) => {
+                if(!val) $(this.node).find('#statistics-file').val( '');
+            },
             get: () =>{
                 return $(this.node).find('#statistics-file').prop('files');
             }
@@ -1124,20 +1136,36 @@ class PopupBloggerSendStatistics extends Popup{
             data = new FormData();
 
         for(let k in this.dataProps){
-            data.append(k, this.dataProps[k].get())
+            if(k != 'stats')
+                data.append(k, this.dataProps[k].get())
+        }
+
+        var images = this.dataProps.stats.get()
+
+        for (let i = 0; i < images.length; i++) {
+            data.append('images[]', images[i]);
         }
 
         $.ajax({
-            url: `/apist/works/${self.work_id}/stats`,
+            url: `/apist/works/${self.workId}/stats`,
             data: data,
             method: 'POST',
+            type: 'POST',
             processData: false,
             contentType: false,
             success: (res)=>{
                 self.closePopup();
                 notify('info', {title: 'Успешно!', message: 'Статистика успешно отправлена'});
+                for(let k in self.dataProps){
+                    self.dataProps[k].set(false);
+                }
+                self.desctructor()
             }
         })
+    }
+
+    desctructor = ()=> {
+        delete this;
     }
 }
 

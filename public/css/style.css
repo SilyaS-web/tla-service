@@ -990,6 +990,9 @@ input[type='range']::-webkit-slider-runnable-track{
 .item-platforms__title.item-platforms__title--inst::before{
     background-image: url(../img/inst-icon.svg);
 }
+.item-platforms__title.item-platforms__title--vk::before{
+    background-image: url(../img/vk-icon.svg);
+}
 .item-platforms__stats{
     display: flex;
     flex-wrap: wrap;
@@ -1494,6 +1497,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .card__header {
     gap: 5px;
+    align-items: flex-start;
 }
 .card__img {
     max-width: 100px;
@@ -1534,14 +1538,18 @@ input[type='range']::-webkit-slider-runnable-track{
     gap: 6px;
     margin-left: auto;
     margin-top: 12px;
+    width:80px
 }
 .card__platform {
-    width: 24px; height:24px;
+    width: 20px; height:20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-.card__platform.telegram{
+/* .card__platform.telegram{
     filter: brightness(0) saturate(100%) invert(62%) sepia(21%) saturate(6297%) hue-rotate(169deg) brightness(93%) contrast(83%);
 }
-.card__platform.vk{
+/* .card__platform.vk{
     filter: brightness(0) saturate(100%) invert(28%) sepia(78%) saturate(2778%) hue-rotate(202deg) brightness(102%) contrast(105%);
 }
 .card__platform.instagram{
@@ -1549,7 +1557,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .card__platform.youtube{
     filter: brightness(0) saturate(100%) invert(11%) sepia(95%) saturate(7296%) hue-rotate(358deg) brightness(95%) contrast(111%);
-}
+} */
 .card__tags {
     display: flex;
     flex-wrap: wrap;
