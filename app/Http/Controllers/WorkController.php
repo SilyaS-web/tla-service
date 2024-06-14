@@ -192,7 +192,8 @@ class WorkController extends Controller
             'views' => 'numeric|nullable',
             'reposts' => 'numeric|nullable',
             'likes' => 'numeric|nullable',
-            'stats' => 'image',
+            'stats' => 'array',
+            'stats.*' => 'image',
         ]);
 
         if ($validator->fails()) {
