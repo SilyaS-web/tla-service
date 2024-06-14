@@ -186,14 +186,15 @@ class WorkController extends Controller
         return redirect()->route('profile')->with('success');
     }
 
-    public function stats(Work $work, Request $request) {
+    public function stats(Work $work, Request $request)
+    {
         $validator = Validator::make($request->all(), [
-            'subs' => 'numeric|nullable',
-            'views' => 'numeric|nullable',
-            'reposts' => 'numeric|nullable',
-            'likes' => 'numeric|nullable',
+            'subs' => 'numeric',
+            'views' => 'numeric',
+            'reposts' => 'numeric',
+            'likes' => 'numeric',
             'stats' => 'array',
-            'stats.*' => 'image',
+            // 'stats.*' => 'image',
         ]);
 
         if ($validator->fails()) {
@@ -209,13 +210,15 @@ class WorkController extends Controller
         ]);
 
         if ($request->file('stats')) {
-            $product_image = $request->file('img');
-            $image_path = $product_image->store('messages', 'public');
-            MessageFile::create([
-                'source_id' => $message->id,
-                'type' => 0,
-                'link' => $image_path,
-            ]);
+            foreach ($request->file('stats') as $image) {
+                $product_image = $image;
+                $image_path = $product_image->store('messages', 'public');
+                MessageFile::create([
+                    'source_id' => $message->id,
+                    'type' => 0,
+                    'link' => $image_path,
+                ]);
+            }
         }
 
         FinishStats::create([
