@@ -193,8 +193,8 @@ class WorkController extends Controller
             'views' => 'numeric',
             'reposts' => 'numeric',
             'likes' => 'numeric',
-            'stats' => 'array',
-            // 'stats.*' => 'image',
+            'images' => 'array',
+            'images.*' => 'image',
         ]);
 
         if ($validator->fails()) {
@@ -230,6 +230,6 @@ class WorkController extends Controller
             'message_id' => $message->id
         ]);
 
-        return redirect()->route('profile')->with('success');
+        return response()->json('success', 200);
     }
 }
