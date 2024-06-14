@@ -209,10 +209,14 @@ class WorkController extends Controller
             'message' => 'Блогер прикрепил статистику к проекту'
         ]);
 
+        if ($files = $request->file('images')) {
+            foreach ($files as $key => $file) {
+            }
+        }
+
         if ($request->file('images')) {
             foreach ($request->file('images') as $image) {
-                $product_image = $image;
-                $image_path = $product_image->store('messages', 'public');
+                $image_path = $image->store('messages', 'public');
                 MessageFile::create([
                     'source_id' => $message->id,
                     'type' => 0,
