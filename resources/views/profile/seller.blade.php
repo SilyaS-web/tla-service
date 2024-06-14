@@ -415,6 +415,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    @if(1 == 0)
                                     <div class="dashboard__row">
                                         <div class="dashboard__col dashboard__item dashboard__item--cover">
                                             <div class="dashboard__item-cover">
@@ -471,6 +472,7 @@
                                             </div>
                                         </div> --}}
                                     </div>
+                                    @endif
                                     <div class="dashboard__row">
                                         <div class="dashboard__col dashboard__item">
                                             <img src="img/statistics-ph.png" alt="" class="">
