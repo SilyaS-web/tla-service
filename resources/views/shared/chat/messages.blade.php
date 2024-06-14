@@ -1,6 +1,6 @@
 @foreach ($work->messages as $message)
 @php($is_author = $message->user_id == $user_id)
-@php($message_class = $message->user_id == 0 ? 'messages-chat__item--system' : ($message->user_id == $user_id ? 'messages-chat__item--author' : '' ) )
+@php($message_class = $message->user_id == 1 ? 'messages-chat__item--system' : ($message->user_id == $user_id ? 'messages-chat__item--author' : '' ) )
 <div class="messages-chat__item {{ $message_class }}">
     <div class="messages-chat__item-header">
         <div class="messages-chat__item-title">
@@ -11,7 +11,7 @@
         </div>
     </div>
     <div class="messages-chat__item-msg">
-        @if($message->user_id == 0)
+        @if($message->user_id == 1)
         {!! $message->message !!}
         @if($message->finishStats)
         {{ $message->finishStats }}
