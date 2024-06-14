@@ -209,8 +209,8 @@ class WorkController extends Controller
             'message' => 'Блогер прикрепил статистику к проекту'
         ]);
 
-        if ($request->file('stats')) {
-            foreach ($request->file('stats') as $image) {
+        if ($request->file('images')) {
+            foreach ($request->file('images') as $image) {
                 $product_image = $image;
                 $image_path = $product_image->store('messages', 'public');
                 MessageFile::create([
