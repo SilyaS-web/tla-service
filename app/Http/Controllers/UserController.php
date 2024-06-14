@@ -61,7 +61,7 @@ class UserController extends Controller
         $user = Auth::user();
         $user_id = $user->id;
 
-        $works = Work::where([['blogger_id', $user_id]])->where('status', Work::IN_PROGRESS)->get();
+        $works = Work::where([['blogger_id', $user_id]])->where('status', '<>', null)->get();
         $projects = Project::whereIn('id', $works->pluck('project_id'))->get();
         $all_projects = Project::get();
 
