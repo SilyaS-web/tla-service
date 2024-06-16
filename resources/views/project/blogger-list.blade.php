@@ -2,9 +2,14 @@
 @foreach ($project->projectWorks as $project_work)
 @php($lost_seats = $project_work->quantity - $project->works()->where('project_work_id', $project_work->id)->count())
 <div class="list-projects__item project-item" data-id="{{ $project->id }}">
-    <div class="owl-carousel project-item__carousel">
-        <div class="project-item__img" style="background-image:url({{ $project->getImageURL(true) }})">
-            {{-- <img src="{{ $project->getImageURL(true) }}" alt=""> --}}
+    <div class="project-item__carousel">
+        <div class="project-item__carousel--carousel owl-carousel">
+            <div class="project-item__img" style="background-image:url({{ $project->getImageURL(true) }})">
+                {{-- <img src="{{ $project->getImageURL(true) }}" alt=""> --}}
+            </div>
+            <div class="project-item__img" style="background-image:url({{ $project->getImageURL(true) }})">
+                {{-- <img src="{{ $project->getImageURL(true) }}" alt=""> --}}
+            </div>
         </div>
         <div class="project-item__status active">
             {{ $project->active == 0 ? 'Активно' : 'Выполнено' }}

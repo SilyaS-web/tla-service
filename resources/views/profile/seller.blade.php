@@ -135,7 +135,7 @@
                                             </div>
                                             <div class="marketing-format__item input-checkbox-w">
                                                 {{-- <input type="checkbox" class="checkbox" name="inst" value="inst-barter" id="product-inst"> --}}
-                                                <label for="product-inst">Рекламная интеграция (Inst) - Бартер</label>
+                                                <label for="product-inst">Рекламная интеграция (Instagram) - Бартер</label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
                                                         <img src="{{ asset('img/minus-icon.svg') }}" alt="">
@@ -188,8 +188,8 @@
 
                                             </div>
                                             <div class="marketing-format__item input-checkbox-w disabled">
-                                                {{-- <input type="checkbox" class="checkbox" id="product-other"> --}}
-                                                <label for="product-other">Другие площадки для интеграций - Бартер</label>
+                                                {{-- <input type="checkbox" class="checkbox" id="product-youtube"> --}}
+                                                <label for="product-youtube">Рекламная интеграция (VK) - Бартер</label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
                                                         <img src="{{ asset('img/minus-icon.svg') }}" alt="">
@@ -201,11 +201,11 @@
                                                         <img src="{{ asset('img/plus-icon.svg') }}" alt="">
                                                     </div>
                                                 </div>
-                                                <div class="format-tooltip" data-hint="other">
+                                                <div class="format-tooltip" data-hint="youtube">
                                                     ?
-                                                    <div class="format-hint format-hint--text" id="other">
+                                                    <div class="format-hint format-hint--text" id="youtube">
                                                         <div class="format-hint__title">
-                                                            Другие площадки для интеграций - Бартер
+                                                            Рекламная интеграция (YouTube) - Бартер
                                                         </div>
                                                         <div class="format-hint__body">
                                                             ...
@@ -215,8 +215,8 @@
 
                                             </div>
                                             <div class="marketing-format__item input-checkbox-w disabled">
-                                                {{-- <input type="checkbox" class="checkbox" id="product-payment"> --}}
-                                                <label for="product-payment">Платные интеграции</label>
+                                                {{-- <input type="checkbox" class="checkbox" id="product-youtube"> --}}
+                                                <label for="product-youtube">Рекламная интеграция (Telegram) - Бартер</label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
                                                         <img src="{{ asset('img/minus-icon.svg') }}" alt="">
@@ -228,11 +228,11 @@
                                                         <img src="{{ asset('img/plus-icon.svg') }}" alt="">
                                                     </div>
                                                 </div>
-                                                <div class="format-tooltip" data-hint="payment">
+                                                <div class="format-tooltip" data-hint="youtube">
                                                     ?
-                                                    <div class="format-hint format-hint--text" id="payment">
+                                                    <div class="format-hint format-hint--text" id="youtube">
                                                         <div class="format-hint__title">
-                                                            Платные интеграции
+                                                            Рекламная интеграция (YouTube) - Бартер
                                                         </div>
                                                         <div class="format-hint__body">
                                                             ...
@@ -278,7 +278,7 @@
                                         @if (empty(auth()->user()->seller->wb_api_key))
                                         <div class="dashboard__placeholder" style="z-index: 9998">
                                             <div class="dashboard__placeholder-text">
-                                                Введите API ключ в настройках профиля
+                                                <a href="{{ route("edit-profile") }}">Введите API ключ</a> в настройках профиля
                                             </div>
                                             <div class="dashboard__placeholder-overflow">
 
@@ -335,7 +335,7 @@
                                         </div>
                                         <div class="dashboard__col feedback-dashboard__fb">
                                             <div class="feedback-dashboard__fb-title">
-                                                У вас {{ auth()->user()->seller->getCountUnansweredWB() }} отзывов без ответа, для улучшения оценки, требуется исправить
+                                                Отзывов без ответа — {{ auth()->user()->seller->getCountUnansweredWB() }}
                                             </div>
                                             <div class="feedback-dashboard__fb-items">
                                                 <div class="feedback-dashboard__fb-row feedback-item">
@@ -358,13 +358,13 @@
                                                             <div class="feedback-item__stat-products">
                                                                 <div class="" style="background-color: #fff">
                                                                     <a href="#" class="profile-projects__status">
-                                                                        122333444
+                                                                        Арт: 122333444
                                                                     </a>
                                                                     <a href="#" class="profile-projects__status">
-                                                                        122333444
+                                                                        Арт: 122333444
                                                                     </a>
                                                                     <a href="#" class="profile-projects__status">
-                                                                        122333444
+                                                                        Арт: 122333444
                                                                     </a>
                                                                 </div>
                                                             </div>
@@ -398,7 +398,7 @@
                                                                 <div class="feedback-item__stat-quest danger">
                                                                     !
                                                                 </div>
-                                                                На {{ $wb_stats['pr_low'] }} товарах очень мало отзывов, требуется исправить
+                                                                На {{ $wb_stats['pr_low'] }} товаре(ах) очень мало отзывов, требуется исправить
                                                             </div>
                                                             @endif
                                                             @if($wb_stats['pr_mid'] > 0)
@@ -406,7 +406,7 @@
                                                                 <div class="feedback-item__stat-quest warning">
                                                                     !
                                                                 </div>
-                                                                У вас {{ $wb_stats['pr_mid'] }} товаров со среднем количеством отзывов, требуется улучшение
+                                                                У вас {{ $wb_stats['pr_mid'] }} товар(ов) со среднем количеством отзывов, требуется улучшение
                                                             </div>
                                                             @endif
                                                         </div>
@@ -429,7 +429,7 @@
                                         <div class="dashboard__col dashboard__item funnel-statistics">
                                             <div class="dashboard__col">
                                                 <div class="dashboard__item-title">
-                                                    Воронка показателей эффективности за 14 дней
+                                                    Поĸазатели эффеĸтивности за 14 дней
                                                 </div>
                                                 <div class="dashboard__row">
                                                     <canvas id="funnel-graph"></canvas>
@@ -476,7 +476,7 @@
                                             <img src="img/statistics-ph.png" alt="" class="">
                                             <div class="dashboard__placeholder">
                                                 <div class="dashboard__placeholder-text">
-                                                    Раздел находится в разработке
+                                                    Раздел статистики Instagram находится в разработке
                                                 </div>
                                                 <div class="dashboard__placeholder-overflow">
 
@@ -487,7 +487,7 @@
                                             <img src="img/1_GZq1SvhxjrbQbqkag4XH3w.jpg" alt="" class="">
                                             <div class="dashboard__placeholder">
                                                 <div class="dashboard__placeholder-text">
-                                                    Раздел находится в разработке
+                                                    Раздел статистики Youtube находится в разработке
                                                 </div>
                                                 <div class="dashboard__placeholder-overflow">
 

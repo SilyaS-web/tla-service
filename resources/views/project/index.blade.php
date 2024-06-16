@@ -468,6 +468,8 @@
 
         var data = $(stat).data('stats'), lineData = [], barData = [];
 
+        console.log(data);
+
         datasets = [{
                 label: 'Выручка',
                 data: data.prices_history.map((item, index) =>{ return item.price * data.orders_history[index].orders } ),
@@ -512,11 +514,13 @@
             }
         , ]
 
+        var month = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+
         var prodsStatistics = new Chart(orders_ctx, {
             type: 'scatter'
             , data: {
                 labels: data.prices_history.map(item => {
-                    return `${item.dt.split('-')[2]} мая`
+                    return `${item.dt.split('-')[2]} ${month[Number(item.dt.split('-')[1]) - 1]}`
                 })
                 , datasets: datasets
             }

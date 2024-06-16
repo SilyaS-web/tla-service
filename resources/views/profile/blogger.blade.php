@@ -57,6 +57,10 @@
                                             <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию">
                                         </div>
                                         <div class="form-group filter__item">
+                                            <label for="filter-category">Категория</label>
+                                            <input type="text" class="input" name="filter-category" id="filter-category" placeholder="Введите категорию">
+                                        </div>
+                                        <div class="form-group filter__item">
                                             <label for="">Формат рекламы</label>
                                             <select name="filter-format" id="filter-format" class = "input">
                                                 <option value="" class="">Не выбран</option>
@@ -124,6 +128,10 @@
                                             <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию">
                                         </div>
                                         <div class="form-group filter__item">
+                                            <label for="filter-category">Категория</label>
+                                            <input type="text" class="input" name="filter-category" id="filter-category" placeholder="Введите категорию">
+                                        </div>
+                                        <div class="form-group filter__item">
                                             <label for="">Формат рекламы</label>
                                             <select name="filter-format" id="filter-format" class = "input">
                                                 <option value="" class="">Не выбран</option>
@@ -182,6 +190,10 @@
                                             <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию">
                                         </div>
                                         <div class="form-group filter__item">
+                                            <label for="filter-category">Категория</label>
+                                            <input type="text" class="input" name="filter-category" id="filter-category" placeholder="Введите категорию">
+                                        </div>
+                                        <div class="form-group filter__item">
                                             <label for="">Формат рекламы</label>
                                             <select name="filter-format" id="filter-format" class = "input">
                                                 <option value="" class="">Не выбран</option>
@@ -218,4 +230,105 @@
         </div>
     </div>
 </section>
+<div class="popup" id="project-item-info" style="">
+    <div class="popup__container _container">
+        <div class="popup__body">
+            <div class="popup__inner popup-project">
+                <div class="popup-project__left">
+                    <div class="popup-project__carousel owl-carousel">
+                        <div class="popup-project__img" style="background-image:url(http://tla/storage/projects/MLFUVyW0CcBdOeEfk7lBJwVoPravrIr19oDOEuhY.webp)"></div>
+                        <div class="popup-project__img" style="background-image:url(http://tla/storage/projects/MLFUVyW0CcBdOeEfk7lBJwVoPravrIr19oDOEuhY.webp)"></div>
+                    </div>
+                </div>
+                <div class="popup-project__right">
+                    <div class="popup-project__info">
+                        <div class="popup-project__title">
+                            Титул
+                        </div>
+                        <div class="popup-project__row">
+                            <div class="popup-project__mark">
+                                <div class="popup-project__mark-star">
+                                    <img src="{{ asset('img/star-icon.svg') }}" alt="" srcset="">
+                                </div>
+                                <div class="popup-project__mark-text">
+                                    4.2
+                                </div>
+                            </div>
+                            <div class="popup-project__articul">
+                                <p>Арт: 123123123</p>
+                            </div>
+                        </div>
+                        <div class="popup-project__row popup-project__cost">
+                            1240₽
+                        </div>
+                        <div class="popup-project__addit characteristics">
+                            <p class="popup-project__addit-title">Дополнительная информация</p>
+                            <div class="characteristics__category">
+                                Категория: Тестовая
+                            </div>
+                            <div class="characteristics-items">
+                                <div class="characteristics__row">
+                                    <div class="characteristics__row-left">
+                                        <div class="characteristics__title">
+                                            заголовок
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    <div class="characteristics__row-right">
+                                        <div class="characteristics__desc">
+                                            Как принято считать, непосредственные участники технического прогресса призывают нас к новым свершениям, которые, в свою очередь, должны быть смешаны с не уникальными данными до степени совершенной неузнаваемости, из-за чего возрастает их статус бесполезности.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="characteristics__row">
+                                    <div class="characteristics__row-left">
+                                        <div class="characteristics__title">
+                                            заголовок 123123
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    <div class="characteristics__row-right">
+                                        <div class="characteristics__desc">
+                                            Как принято считать, непосредственные участники технического прогресса призывают нас к новым свершениям, которые, в свою очередь, должны быть смешаны с не уникальными данными до степени совершенной неузнаваемости, из-за чего возрастает их статус бесполезности.
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="characteristics__row">
+                                    <div class="characteristics__row-left">
+                                        <div class="characteristics__title">
+                                            заголовок
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    <div class="characteristics__row-right">
+                                        <div class="characteristics__desc">
+                                            Как принято считать, непосредственные участники технического прогресса призывают нас к новым свершениям, которые, в свою очередь, должны быть смешаны с не уникальными данными до степени совершенной неузнаваемости, из-за чего возрастает их статус бесполезности.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-item__left" style="margin-bottom: 12px;">
+                            <div class="line">
+                                <div class="line__val" style="width:60%"></div>
+                            </div>
+                            Осталось мест на интеграцию <span style="font-weight: 700;">5/3</span>
+                        </div>
+                        <div class="project-item__format-tags card__row card__tags">
+                            <div class="card__tags-item">
+                                Отзыв на товар
+                            </div>
+                        </div>
+                        <div class="project-item__btns">
+                            <button class="btn btn-primary btn-blogger-send-offer" style="width:100%" data-project-work="">Откликнуться</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="close-popup">
+                <img src="{{ asset('img/close-icon.svg') }}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
