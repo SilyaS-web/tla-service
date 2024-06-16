@@ -21,6 +21,7 @@ class CreateTariffsTable extends Migration
             $table->float('price');
             $table->string('options');
             $table->boolean('is_active');
+            $table->timestamp('period');
             $table->timestamps();
         });
 
