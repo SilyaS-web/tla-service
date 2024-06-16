@@ -92,9 +92,9 @@
                         Ваш тариф — {{ auth()->user()->seller->tariff }}
                         <div class="tarrif-header__items">
                             <div class="tarrif-header__item tarrif-header__adv">
-                                Рекламные посты <b><span class="counter">{{ auth()->user()->seller->remaining_tariff }}</span> шт.</b>
+                                Рекламные посты - <b><span class="counter">{{ auth()->user()->seller->remaining_tariff }}</span> шт.</b>
                                 <div class="tarrif-header__date">
-                                    До 2 Июня
+                                    Действует до 30 Июня
                                 </div>
                                 <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
                             </div>
@@ -166,9 +166,9 @@
                             Ваш тариф — {{ auth()->user()->seller->tariff }}
                             <div class="tarrif-header__items">
                                 <div class="tarrif-header__item tarrif-header__adv">
-                                    Рекламные посты <b><span class="counter">{{ auth()->user()->seller->remaining_tariff }}</span> шт.</b>
+                                    Рекламные посты - <b><span class="counter">{{ auth()->user()->seller->remaining_tariff }}</span> шт.</b>
                                     <div class="tarrif-header__date">
-                                        {{-- 02 Мая — 02 Июня --}}
+                                        Действует до 30 Июня
                                     </div>
                                     <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
                                 </div>
