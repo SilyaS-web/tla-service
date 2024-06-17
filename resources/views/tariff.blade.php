@@ -31,7 +31,7 @@
                         <div class="planItem planItem--current">
                             <div class="card" style="margin-bottom:auto;">
                                 <div class="card__header">
-                                    <h2>Стартовый</h2>
+                                    <h2>Стартовый - 10 отзывов</h2>
                                 </div>
                                 <div class="card__desc">Оплатив этот тариф вы получите возможность создавать 10 отзывов на вашу продукцию</div>
                             </div>
@@ -57,7 +57,7 @@
                         <div class="planItem">
                             <div class="card" style="margin-bottom:auto;">
                                 <div class="card__header">
-                                    <h2>Оптимальный</h2>
+                                    <h2>Оптимальный - 30 отзывов</h2>
                                 </div>
                                 <div class="card__desc">Оплатив этот тариф вы получите возможность создавать 30 отзывов на вашу продукцию</div>
                             </div>
@@ -84,7 +84,7 @@
                         <div class="planItem">
                             <div class="card" style="margin-bottom:auto;">
                                 <div class="card__header">
-                                    <h2>Максимальный</h2>
+                                    <h2>Максимальный - 50 отзывов</h2>
                                 </div>
                                 <div class="card__desc">Оплатив этот тариф вы получите возможность создавать 50 отзывов на вашу продукцию</div>
                             </div>
@@ -123,7 +123,7 @@
                         <div class="planItem planItem--current">
                             <div class="card" style="margin-bottom:auto;">
                                 <div class="card__header">
-                                    <h2>Стартовый</h2>
+                                    <h2>Стартовый - 10 интеграций</h2>
                                 </div>
                                 <div class="card__desc">Оплатив этот тариф вы получите возможность создавать 10 интеграций с блогерами</div>
                             </div>
@@ -149,7 +149,7 @@
                         <div class="planItem">
                             <div class="card" style="margin-bottom:auto;">
                                 <div class="card__header">
-                                    <h2>Оптимальный</h2>
+                                    <h2>Оптимальный - 30 интеграций</h2>
                                 </div>
                                 <div class="card__desc">Оплатив этот тариф вы получите возможность создавать 30 интеграций с блогерами</div>
                             </div>
@@ -176,7 +176,7 @@
                         <div class="planItem">
                             <div class="card" style="margin-bottom:auto;">
                                 <div class="card__header">
-                                    <h2>Максимальный</h2>
+                                    <h2>Максимальный - 50 интеграций</h2>
                                 </div>
                                 <div class="card__desc">Оплатив этот тариф вы получите возможность создавать 50 интеграций с блогерами</div>
                             </div>
@@ -210,7 +210,7 @@
                         <div class="planItem">
                             <div class="card" style="margin-bottom:auto;">
                                 <div class="card__header">
-                                    <h2>Стартовый</h2>
+                                    <h2>Стартовый - 10 интеграций</h2>
                                 </div>
                                 <div class="card__desc">Оплатив этот тариф вы получите возможность создавать 10 интеграций с блогерами</div>
                             </div>
@@ -236,7 +236,7 @@
                         <div class="planItem">
                             <div class="card" style="margin-bottom:auto;">
                                 <div class="card__header">
-                                    <h2>Оптимальный</h2>
+                                    <h2>Оптимальный - 30 интеграций</h2>
                                 </div>
                                 <div class="card__desc">Оплатив этот тариф вы получите возможность создавать 30 интеграций с блогерами</div>
                             </div>
@@ -263,7 +263,7 @@
                         <div class="planItem">
                             <div class="card" style="margin-bottom:auto;">
                                 <div class="card__header">
-                                    <h2>Максимальный</h2>
+                                    <h2>Максимальный - 50 интеграций</h2>
                                 </div>
                                 <div class="card__desc">Оплатив этот тариф вы получите возможность создавать 50 интеграций с блогерами</div>
                             </div>
