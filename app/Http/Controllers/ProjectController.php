@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 class ProjectController extends Controller
 {
@@ -313,11 +314,24 @@ class ProjectController extends Controller
         }
         $validated = $validator->validated();
         $categories = [];
-        
+
         if (isset($validated['category']) && !empty($validated['category'])) {
             $categories = Theme::where('theme', 'like', '%' . $validated['category'] . '%')->get();
         }
 
         return response()->json(['categories' => $categories], 200);
+    }
+
+    public function getWBInfo(Project $project)
+    {
+        return response()->json([
+            'category' => Str::random(25),
+            'product_name' => Str::random(25),
+            'description' => Str::random(500),
+            'rate' => rand(0, 6),
+            'product_code' => $project->product_nm,
+            'price' =>  $project->product_price,
+            'images' => $project->getImageURL()
+        ], 200);
     }
 }
