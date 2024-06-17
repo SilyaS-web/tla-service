@@ -349,11 +349,11 @@ class ProjectsFilter {
         var questData = {
             project_type: this.dataProps.format.get(),
             project_name: this.dataProps.projectName.get(),
+            category: this.dataProps.category.get(),
             type: this.type,
         }
 
         $.post(self.sendUri, questData, function(res){
-            console.log($(self.node).closest('.profile-projects'), $(self.node));
             $(self.node).closest('.profile-projects').find('.profile-projects__items').remove();
             $(self.node).closest('.profile-projects').find('.profile-projects__body').append(res);
         })
@@ -367,10 +367,49 @@ class BloggerAllProjectsFilter {
         $(this.node).find('.btn-filter-send').on('click', this.sendData);
         $(this.node).find('.filter__reset').on('click', this.resetFilters);
 
+        $(this.node).find('#filter-category').on('input', (e) => {
+            var search = $(e.target).val();
+
+            this.searchTimeout = setTimeout(()=>{
+                this.getCategories(search)
+            }, 300)
+        });
+
+        $(this.node).find('#filter-category').on('focus', (e)=>{
+            $(this.node).on('click', (e) => {
+                if($(e.target).closest('.filter-tooltip__row').length > 0){
+                    var el = $(e.target).closest('.filter-tooltip__row'),
+                        text = el.text(),
+                        id = el.data('id');
+
+                    $(this.node).find('#filter-category').val(text.trim());
+                    this.dataProps.category.set(id)
+
+                    clearTimeout(this.searchTimeout);
+                    this.searchTimeout = false;
+
+                    $(this.node).find('.filter-tooltip').hide();
+                }
+                else if(!$(e.target).closest('.filter-category').length > 0){
+                    clearTimeout(this.searchTimeout);
+                    this.searchTimeout = false;
+                    $(this.node).find('.filter-tooltip').hide();
+                }
+            })
+        })
+
         return this;
     }
     node = '';
     sendUri = '/apist/blogger/projects';
+    getCategoryUri = 'apist/projects/categories';
+
+    searchTimeout = false;
+
+    searchCategoryItemTemplate = `<div class="filter-tooltip__row" data-id="%%ID%%">
+                                    %%NAME%%
+                                </div>`
+
     dataProps = {
         projectName: {
             set: (value)=>{
@@ -395,19 +434,63 @@ class BloggerAllProjectsFilter {
             get: ()=>{
                 return $(this.node).find('#filter-country').val();
             }
+        },
+        category: {
+            set: (value)=>{
+                $(this.node).find('#filter-category-id').val(value);
+            },
+            get: ()=>{
+                return $(this.node).find('#filter-category-id').val();
+            }
         }
     }
+
+    getCategories = (search) => {
+        var self = this;
+
+        $.get(self.getCategoryUri, {
+            category: search
+        }, function(res){
+            self.insertCategorySearchResults(res.categories);
+        })
+    }
+
+    insertCategorySearchResults = (categories) => {
+        if(categories.length > 0){
+            var wrap = $(this.node).find('.filter-tooltip'),
+                categoryItemsWrap = wrap.find('.filter-tooltip__items');
+
+            categoryItemsWrap.empty();
+
+            for(var k in categories){
+                var template = this.searchCategoryItemTemplate;
+
+                template = template.replaceAll('%%ID%%', categories[k].id);
+                template = template.replaceAll('%%NAME%%', categories[k].theme);
+
+                categoryItemsWrap.append(template);
+            }
+
+            wrap.show();
+        }
+        else{
+            $(this.node).find('.filter-tooltip').hide();
+        }
+    }
+
     resetFilters = () => {
         for(var key in this.dataProps){
             this.dataProps[key].set('');
         }
     }
+
     sendData = ()=>{
         var self = this;
 
         var questData = {
             project_type: this.dataProps.format.get(),
             project_name: this.dataProps.projectName.get(),
+            category: this.dataProps.category.get(),
         }
 
         $.post(self.sendUri, questData, function(res){
@@ -423,11 +506,48 @@ class BloggerProjectsFilter {
 
         $(this.node).find('.btn-filter-send').on('click', this.sendData);
         $(this.node).find('.filter__reset').on('click', this.resetFilters);
+        $(this.node).find('#filter-category').on('input', (e) => {
+            var search = $(e.target).val();
+
+            this.searchTimeout = setTimeout(()=>{
+                this.getCategories(search)
+            }, 300)
+        });
+
+        $(this.node).find('#filter-category').on('focus', (e)=>{
+            $(this.node).on('click', (e) => {
+                if($(e.target).closest('.filter-tooltip__row').length > 0){
+                    var el = $(e.target).closest('.filter-tooltip__row'),
+                        text = el.text(),
+                        id = el.data('id');
+
+                    $(this.node).find('#filter-category').val(text.trim());
+                    this.dataProps.category.set(id)
+
+                    clearTimeout(this.searchTimeout);
+                    this.searchTimeout = false;
+                    $(this.node).find('.filter-tooltip').hide();
+                }
+                else if(!$(e.target).closest('.filter-category').length > 0){
+                    clearTimeout(this.searchTimeout);
+                    this.searchTimeout = false;
+                    $(this.node).find('.filter-tooltip').hide();
+                }
+            })
+        })
 
         return this;
     }
     node = '';
     sendUri = '/apist/blogger/projects';
+    getCategoryUri = 'apist/projects/categories';
+
+    searchTimeout = false;
+
+    searchCategoryItemTemplate = `<div class="filter-tooltip__row" data-id="%%ID%%">
+                                    %%NAME%%
+                                </div>`
+
     dataProps = {
         projectName: {
             set: (value)=>{
@@ -445,26 +565,62 @@ class BloggerProjectsFilter {
                 return $(this.node).find('#filter-format').val();
             }
         },
-        country: {
+        category: {
             set: (value)=>{
-                $(this.node).find('#filter-country').val(value);
+                $(this.node).find('#filter-category-id').val(value);
             },
             get: ()=>{
-                return $(this.node).find('#filter-country').val();
+                return $(this.node).find('#filter-category-id').val();
             }
         }
     }
+
+    getCategories = (search) => {
+        var self = this;
+
+        $.get(self.getCategoryUri, {
+            category: search
+        }, function(res){
+            self.insertCategorySearchResults(res.categories);
+        })
+    }
+
+    insertCategorySearchResults = (categories) => {
+        if(categories.length > 0){
+            var wrap = $(this.node).find('.filter-tooltip'),
+                categoryItemsWrap = wrap.find('.filter-tooltip__items');
+
+            categoryItemsWrap.empty();
+
+            for(var k in categories){
+                var template = this.searchCategoryItemTemplate;
+
+                template = template.replaceAll('%%ID%%', categories[k].id);
+                template = template.replaceAll('%%NAME%%', categories[k].theme);
+
+                categoryItemsWrap.append(template);
+            }
+
+            wrap.show();
+        }
+        else{
+            $(this.node).find('.filter-tooltip').hide();
+        }
+    }
+
     resetFilters = () => {
         for(var key in this.dataProps){
             this.dataProps[key].set('');
         }
     }
+
     sendData = ()=>{
         var self = this;
 
         var questData = {
             project_type: this.dataProps.format.get(),
             project_name: this.dataProps.projectName.get(),
+            category: this.dataProps.category.get(),
             type: 'works',
         }
 
@@ -482,10 +638,49 @@ class BloggerProjectsOffersFilter {
         $(this.node).find('.btn-filter-send').on('click', this.sendData);
         $(this.node).find('.filter__reset').on('click', this.resetFilters);
 
+        $(this.node).find('#filter-category').on('input', (e) => {
+            var search = $(e.target).val();
+
+            this.searchTimeout = setTimeout(()=>{
+                this.getCategories(search)
+            }, 300)
+        });
+
+        $(this.node).find('#filter-category').on('focus', (e)=>{
+            $(this.node).on('click', (e) => {
+                if($(e.target).closest('.filter-tooltip__row').length > 0){
+                    var el = $(e.target).closest('.filter-tooltip__row'),
+                        text = el.text(),
+                        id = el.data('id');
+
+                    $(this.node).find('#filter-category').val(text.trim());
+                    this.dataProps.category.set(id)
+
+                    clearTimeout(this.searchTimeout);
+                    this.searchTimeout = false;
+                    $(this.node).find('.filter-tooltip').hide();
+                }
+                else if(!$(e.target).closest('.filter-category').length > 0){
+                    clearTimeout(this.searchTimeout);
+                    this.searchTimeout = false;
+                    $(this.node).find('.filter-tooltip').hide();
+                }
+            })
+        })
+
         return this;
     }
     node = '';
     sendUri = '/apist/blogger/projects';
+
+    getCategoryUri = 'apist/projects/categories';
+
+    searchTimeout = false;
+
+    searchCategoryItemTemplate = `<div class="filter-tooltip__row" data-id="%%ID%%">
+                                    %%NAME%%
+                                </div>`
+
     dataProps = {
         projectName: {
             set: (value)=>{
@@ -502,19 +697,63 @@ class BloggerProjectsOffersFilter {
             get: ()=>{
                 return $(this.node).find('#filter-format').val();
             }
+        },
+        category: {
+            set: (value)=>{
+                $(this.node).find('#filter-category-id').val(value);
+            },
+            get: ()=>{
+                return $(this.node).find('#filter-category-id').val();
+            }
         }
     }
+
     resetFilters = () => {
         for(var key in this.dataProps){
             this.dataProps[key].set('');
         }
     }
+
+    getCategories = (search) => {
+        var self = this;
+
+        $.get(self.getCategoryUri, {
+            category: search
+        }, function(res){
+            self.insertCategorySearchResults(res.categories);
+        })
+    }
+
+    insertCategorySearchResults = (categories) => {
+        if(categories.length > 0){
+            var wrap = $(this.node).find('.filter-tooltip'),
+                categoryItemsWrap = wrap.find('.filter-tooltip__items');
+
+            categoryItemsWrap.empty();
+
+            for(var k in categories){
+                var template = this.searchCategoryItemTemplate;
+
+                template = template.replaceAll('%%ID%%', categories[k].id);
+                template = template.replaceAll('%%NAME%%', categories[k].theme);
+
+                categoryItemsWrap.append(template);
+            }
+
+            wrap.show();
+        }
+        else{
+            $(this.node).find('.filter-tooltip').hide();
+        }
+    }
+
     sendData = ()=>{
         var self = this;
 
         var questData = {
             project_type: this.dataProps.format.get(),
             project_name: this.dataProps.projectName.get(), type: 'applications',
+            category: this.dataProps.category.get(),
         }
 
         $.post(self.sendUri, questData, function(res){

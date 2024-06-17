@@ -1439,6 +1439,51 @@ input[type='range']::-webkit-slider-runnable-track{
     background-color: #fff;
     padding-left:0;
 }
+.filter-tooltip{
+    width: 100%;
+    margin: 10px 0px;
+    border-radius: 10px;
+    border: 1px solid rgba(0, 0, 0, .05);
+    background-color: var(--pale);
+    padding:10px;
+    overflow-y: auto;
+    max-height: 250px;
+    flex: 1 1 auto;
+}
+.filter-tooltip::-webkit-scrollbar {
+    width: 12px;               /* ширина scrollbar */
+}
+.filter-tooltip::-webkit-scrollbar-track {
+    background: #fff;        /* цвет дорожки */
+}
+.filter-tooltip::-webkit-scrollbar-thumb {
+    background-color: #7A7674;    /* цвет плашки */
+    border-radius: 20px;       /* закругления плашки */
+    border: 3px solid #fff;  /* padding вокруг плашки */
+}
+.filter-tooltip__items{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 100%;
+}
+.filter-tooltip__row{
+    font-size: 14px;
+    color:rgba(0, 0, 0, .4);
+    background-color: #fff;
+    border-radius: 5px;
+    text-wrap: nowrap;
+    padding: 10px 5px;
+    text-overflow: ellipsis;
+    overflow-x: hidden;
+    transition: all .1s linear;
+    cursor: pointer;
+}
+
+.filter-tooltip__row:hover{
+    color: #000;
+    font-weight:500;
+}
 .input-range {
     width: 100%;
 }
