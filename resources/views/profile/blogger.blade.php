@@ -260,7 +260,7 @@
                         <div class="popup-project__title">
                             Титул
                         </div>
-                        <div class="popup-project__row">
+                        <div class="popup-project__row" style="line-height:1">
                             <div class="popup-project__mark">
                                 <div class="popup-project__mark-star">
                                     <img src="{{ asset('img/star-icon.svg') }}" alt="" srcset="">
@@ -282,19 +282,6 @@
                                 Категория: Тестовая
                             </div>
                             <div class="characteristics-items">
-                                <div class="characteristics__row">
-                                    <div class="characteristics__row-left">
-                                        <div class="characteristics__title">
-                                            заголовок
-                                        </div>
-                                        <hr>
-                                    </div>
-                                    <div class="characteristics__row-right">
-                                        <div class="characteristics__desc">
-                                            Как принято считать, непосредственные участники технического прогресса призывают нас к новым свершениям, которые, в свою очередь, должны быть смешаны с не уникальными данными до степени совершенной неузнаваемости, из-за чего возрастает их статус бесполезности.
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="project-item__left" style="margin-bottom: 24px;">

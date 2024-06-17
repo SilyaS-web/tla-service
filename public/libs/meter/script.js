@@ -1,6 +1,6 @@
 $(window).on('load', function(){
 	const mediaQueryBig = window.matchMedia('(max-width: 1380px)')
-	const mediaQueryAv = window.matchMedia('(max-width: 1200px)')
+	const mediaQueryAv = window.matchMedia('(max-width: 1300px)')
 	const mediaQuerySmall = window.matchMedia('(max-width: 612px)')
 	const mediaQuerySmaller = window.matchMedia('(max-width: 450px)')
 	var r = 190;

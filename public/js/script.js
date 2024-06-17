@@ -438,6 +438,9 @@ class BloggerAllProjectsFilter {
         category: {
             set: (value)=>{
                 $(this.node).find('#filter-category-id').val(value);
+                if(value == ''){
+                    $(this.node).find('#filter-category').val('');
+                }
             },
             get: ()=>{
                 return $(this.node).find('#filter-category-id').val();
@@ -568,6 +571,9 @@ class BloggerProjectsFilter {
         category: {
             set: (value)=>{
                 $(this.node).find('#filter-category-id').val(value);
+                if(value == ''){
+                    $(this.node).find('#filter-category').val('');
+                }
             },
             get: ()=>{
                 return $(this.node).find('#filter-category-id').val();
@@ -701,6 +707,9 @@ class BloggerProjectsOffersFilter {
         category: {
             set: (value)=>{
                 $(this.node).find('#filter-category-id').val(value);
+                if(value == ''){
+                    $(this.node).find('#filter-category').val('');
+                }
             },
             get: ()=>{
                 return $(this.node).find('#filter-category-id').val();
@@ -1550,7 +1559,7 @@ class PopupBlogerProjectMoreInfo extends Popup{
     getProjectInfoUri = 'apist/projects/%%PROJECT_ID%%/wb-info'
     projectId = false
 
-    formatTemplate = `<div class="characteristics__row">
+    characteristicsTemplate = `<div class="characteristics__row">
                         <div class="characteristics__row-left">
                             <div class="characteristics__title">
                                 %%TITLE%%
@@ -1564,6 +1573,59 @@ class PopupBlogerProjectMoreInfo extends Popup{
                         </div>
                     </div>`;
 
+    projectImgTemplate = `<div class="popup-project__img" style="background-image:url(%%URL%%)"></div>`
+
+    setCharacteristics = (chars)=>{
+        var wrap = $(this.node).find('.characteristics-items');
+
+        wrap.empty();
+
+        for(var k in chars){
+            var template = this.characteristicsTemplate;
+
+            template = template.replaceAll('%%TITLE%%', chars[k].name);
+            template = template.replaceAll('%%DESC%%', chars[k].value);
+
+            wrap.append(template);
+        }
+    }
+
+    carousel = false;
+
+    setImages = (imgs)=>{
+        var wrap = $(this.node).find('.popup-project__carousel');
+
+        wrap.empty();
+
+        for(var k in imgs){
+            var template = this.projectImgTemplate;
+
+            template = template.replaceAll('%%URL%%', imgs[k]);
+
+            wrap.append(template);
+        }
+        if(typeof $(this.node).find('.popup-project__carousel').data('owl.carousel') != 'undefined'){
+            if (typeof $(this.node).find('.popup-project__carousel').data('owl.carousel') != 'undefined') {
+                $(this.node).find('.popup-project__carousel').data('owl.carousel').destroy();
+            }
+            $(this.node).find('.popup-project__carousel').removeClass(['owl-carousel', 'owl-hidden']);
+        }
+        $(this.node).find('.popup-project__carousel').addClass('owl-carousel');
+        $(this.node).find('.popup-project__carousel').owlCarousel({
+            margin: 5,
+            nav: false,
+            dots: true,
+            responsive: {
+                0:{
+                    items: 1
+                },
+                1180: {
+                    items:1
+                }
+            }
+        })
+    }
+
     getProjectInfo = () => {
         var self = this;
         this.getProjectInfoUri = this.getProjectInfoUri.replaceAll('%%PROJECT_ID%%', this.projectId);
@@ -1575,9 +1637,27 @@ class PopupBlogerProjectMoreInfo extends Popup{
             processData: false,
             contentType: false,
             success: (res)=>{
-                console.log(res);
+                var options = res.optioins,
+                    images = res.images;
+
+                self.setCharacteristics(options);
+                self.setImages(images);
+
+                $(self.node).find('.popup-project__title').text(res.product_name)
+                $(self.node).find('.popup-project__articul').text(`Арт: ${res.product_code}`)
+                $(self.node).find('.popup-project__mark-text').text(res.rate)
+                $(self.node).find('.characteristics__category').text(`Категория: ${res.rate}`)
+                $(self.node).find('.popup-project__cost').text(`${res.price}₽`)
+                $(self.node).find('.project-item__left span').text(`${res.total_quantity}/${res.lost_quantity}`)
+                $(self.node).find('.project-item__left .line__val').css('width', `${(res.lost_quantity * 100) / res.total_quantity }%`)
             }
         })
+    }
+
+    closePopup = () => {
+        $(this.node).removeClass('opened');
+
+        delete this;
     }
 }
 
@@ -1803,19 +1883,6 @@ $(window).on('load', function(){
         }
     });
     $('.list-projects__item').find('.project-item__carousel--carousel').owlCarousel({
-        margin: 5,
-        nav: false,
-        dots: true,
-        responsive: {
-            0:{
-                items: 1
-            },
-            1180: {
-                items:1
-            }
-        }
-    });
-    $('.popup-project__carousel').owlCarousel({
         margin: 5,
         nav: false,
         dots: true,
