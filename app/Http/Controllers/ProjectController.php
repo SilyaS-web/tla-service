@@ -324,14 +324,25 @@ class ProjectController extends Controller
 
     public function getWBInfo(Project $project)
     {
+        $options = [];
+        for ($i=0; $i <  rand(1, 5); $i++) {
+            $options[] = [
+                'name' => Str::random(15),
+                'value' => Str::random(rand(15, 100)),
+            ];
+        }
+
         return response()->json([
             'category' => Str::random(25),
             'product_name' => Str::random(25),
             'description' => Str::random(500),
             'rate' => rand(0, 6),
+            'total_quantity' => rand(7, 10),
+            'lost_quantity' => rand(1, 7),
             'product_code' => $project->product_nm,
             'price' =>  $project->product_price,
-            'images' => $project->getImageURL()
+            'images' => $project->getImageURL(),
+            'optioins' => $options,
         ], 200);
     }
 }
