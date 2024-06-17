@@ -295,45 +295,19 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="characteristics__row">
-                                    <div class="characteristics__row-left">
-                                        <div class="characteristics__title">
-                                            заголовок 123123
-                                        </div>
-                                        <hr>
-                                    </div>
-                                    <div class="characteristics__row-right">
-                                        <div class="characteristics__desc">
-                                            Как принято считать, непосредственные участники технического прогресса призывают нас к новым свершениям, которые, в свою очередь, должны быть смешаны с не уникальными данными до степени совершенной неузнаваемости, из-за чего возрастает их статус бесполезности.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="characteristics__row">
-                                    <div class="characteristics__row-left">
-                                        <div class="characteristics__title">
-                                            заголовок
-                                        </div>
-                                        <hr>
-                                    </div>
-                                    <div class="characteristics__row-right">
-                                        <div class="characteristics__desc">
-                                            Как принято считать, непосредственные участники технического прогресса призывают нас к новым свершениям, которые, в свою очередь, должны быть смешаны с не уникальными данными до степени совершенной неузнаваемости, из-за чего возрастает их статус бесполезности.
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
-                        <div class="project-item__left" style="margin-bottom: 12px;">
+                        <div class="project-item__left" style="margin-bottom: 24px;">
                             <div class="line">
                                 <div class="line__val" style="width:60%"></div>
                             </div>
                             Осталось мест на интеграцию <span style="font-weight: 700;">5/3</span>
                         </div>
-                        <div class="project-item__format-tags card__row card__tags">
+                        {{-- <div class="project-item__format-tags card__row card__tags">
                             <div class="card__tags-item">
                                 Отзыв на товар
                             </div>
-                        </div>
+                        </div> --}}
                         <div class="project-item__btns">
                             <button class="btn btn-primary btn-blogger-send-offer" style="width:100%" data-project-work="">Откликнуться</button>
                         </div>

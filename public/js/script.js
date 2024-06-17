@@ -1087,6 +1087,7 @@ class Popup{
 
     closePopup = () => {
         $(this.node).removeClass('opened');
+        delete this;
     }
 }
 
@@ -1534,6 +1535,52 @@ class PopupSellerChooseProjectsFormat extends Popup{
     }
 }
 
+class PopupBlogerProjectMoreInfo extends Popup{
+    constructor(node){
+        super(node);
+
+        this.node = node;
+
+
+
+        return this;
+    }
+
+    node = '';
+    getProjectInfoUri = 'apist/projects/%%PROJECT_ID%%/wb-info'
+    projectId = false
+
+    formatTemplate = `<div class="characteristics__row">
+                        <div class="characteristics__row-left">
+                            <div class="characteristics__title">
+                                %%TITLE%%
+                            </div>
+                            <hr>
+                        </div>
+                        <div class="characteristics__row-right">
+                            <div class="characteristics__desc">
+                                %%DESC%%
+                            </div>
+                        </div>
+                    </div>`;
+
+    getProjectInfo = () => {
+        var self = this;
+        this.getProjectInfoUri = this.getProjectInfoUri.replaceAll('%%PROJECT_ID%%', this.projectId);
+
+        $.ajax({
+            url: `${self.getProjectInfoUri}`,
+            data: {},
+            method: 'GET',
+            processData: false,
+            contentType: false,
+            success: (res)=>{
+                console.log(res);
+            }
+        })
+    }
+}
+
 class DashboardTabs extends Tabs{
     constructor(node){
         super(node);
@@ -1583,6 +1630,15 @@ $(window).on('load', function(){
 
         popup.openPopup();
         popup.projectWorkId = btn.data('project-work');
+    })
+
+    $(document).on('click', '#blogger .project-item', function(e){
+        if($(e.target).closest('.project-item__btns').length == 0){
+            var popup = new PopupBlogerProjectMoreInfo('#project-item-info');
+            popup.projectId = $(e.target).closest('.project-item').data('id');
+            popup.getProjectInfo()
+            popup.openPopup();
+        }
     })
 
     $(document).find('.form-stat__title').on('click', function(e){
