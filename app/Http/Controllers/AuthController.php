@@ -171,6 +171,9 @@ class AuthController extends Controller
         $user->save();
 
         TgService::sendResetPassword($tg_phone->chat_id, $password);
-        return response()->json('success', 200);
+        return response()->json(['status' => 'success', 'data' => [
+            'password' => $password,
+            'chatId' => $tg_phone->chat_id
+        ]], 200);
     }
 }
