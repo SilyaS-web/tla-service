@@ -59,6 +59,11 @@
                                         <div class="form-group filter__item">
                                             <label for="filter-category">Категория</label>
                                             <input type="text" class="input" name="filter-category" id="filter-category" placeholder="Введите категорию">
+                                            <input type="text" id = "filter-category-id" hidden>
+                                            <div class="filter-tooltip" style="display: none">
+                                                <div class="filter-tooltip__items">
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group filter__item">
                                             <label for="">Формат рекламы</label>
@@ -130,6 +135,11 @@
                                         <div class="form-group filter__item">
                                             <label for="filter-category">Категория</label>
                                             <input type="text" class="input" name="filter-category" id="filter-category" placeholder="Введите категорию">
+                                            <input type="text" id = "filter-category-id" hidden>
+                                            <div class="filter-tooltip" style="display: none">
+                                                <div class="filter-tooltip__items">
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group filter__item">
                                             <label for="">Формат рекламы</label>
@@ -192,6 +202,11 @@
                                         <div class="form-group filter__item">
                                             <label for="filter-category">Категория</label>
                                             <input type="text" class="input" name="filter-category" id="filter-category" placeholder="Введите категорию">
+                                            <input type="text" id = "filter-category-id" hidden>
+                                            <div class="filter-tooltip" style="display: none">
+                                                <div class="filter-tooltip__items">
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="form-group filter__item">
                                             <label for="">Формат рекламы</label>
