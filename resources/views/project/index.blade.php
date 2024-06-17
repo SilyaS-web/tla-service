@@ -25,7 +25,7 @@
                     @endforeach
                 </div>
             </div>
-            <div class="profile-projects__row" style="margin-top:auto">
+            <div class="profile-projects__row card-btns-desktop" style="margin-top:auto">
                 <div class="profile-projects__btns" style="margin-top:0;">
                     <button class="btn btn-secondary btn-bloggers">Заявки от блогеров</button>
                     <button class="btn btn-secondary btn-statistics">Статистика</button>
@@ -80,12 +80,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="card__row card__stats-row" style="margin-top:auto">
+                    <div class="card__row card__stats-row card-btns-desktop" style="margin-top:auto">
                         <button class="btn btn-secondary btn-bloggers-in_work">Блогеры в работе</button>
                     </div>
                 </div>
+                <div class="card__row card__stats-row card-btns-mobile" style="margin-top:auto">
+                    <button class="btn btn-secondary btn-bloggers-in_work">Блогеры в работе</button>
+                    <button class="btn btn-secondary btn-statistics">Статистика</button>
+                    <button class="btn btn-secondary btn-bloggers">Заявки от блогеров</button>
+                </div>
             </div>
-
             {{-- <div class="profile-projects__row profile-projects__btns" style="margin-top:auto">
                 <button class="btn btn-primary btn-bloggers tablet">Заявки от блогеров</button>
             </div> --}}

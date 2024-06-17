@@ -1,6 +1,6 @@
-@extends('layout.layout')
+@extends("layout.layout")
 
-@section('content')
+@section("content")
 <section class="profile" id="seller">
     <div class="profile__container _container">
         <div class="profile__body">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="nav-menu__close">
-                    <img src="{{asset('img/arrow-alt.svg')}}" alt="">
+                    <img src="{{asset("img/arrow-alt.svg")}}" alt="">
                 </div>
             </div>
             <div class="profile__content">
@@ -38,7 +38,7 @@
                             <div class="create-project__title title">
                                 Создать проект
                             </div>
-                            <form class="create-project__quest quest" enctype="multipart/form-data" method="POST" action="{{ route('projects.store') }}">
+                            <form class="create-project__quest quest" enctype="multipart/form-data" method="POST" action="{{ route("projects.store") }}">
                                 <div class="quest__steps">
                                     <div id="step_1" class="quest__step step current">
                                         <div class="quest__step-title">
@@ -48,7 +48,7 @@
                                         <div class="form-group">
                                             <label for="product-name">Название товара</label>
                                             <input type="text" id="product-name" name="product_name" placeholder="Введите наименование товара" class="input input--product_name">
-                                            @error('product_name')
+                                            @error("product_name")
                                             <span class="error">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -56,7 +56,7 @@
                                             <div class="form-group">
                                                 <label for="project-price">Артикул товара</label>
                                                 <input type="text" id="product-articul" name="product_nm" placeholder="Введите артикул" class="input input--product_price">
-                                                @error('product_nm')
+                                                @error("product_nm")
                                                 <span class="error">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -71,7 +71,7 @@
                                             <div class="form-group" style="flex:1 1 auto">
                                                 <label for="project-link">Ссылка на товар</label>
                                                 <input type="text" id="project-link" name="product_link" placeholder="Ссылка" class="input input--product_link">
-                                                @error('product_link')
+                                                @error("product_link")
                                                 <span class="error">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -86,7 +86,7 @@
 
                                                 </div>
                                             </div>
-                                            @error('images')
+                                            @error("images")
                                             <span class="error">{{ $message }}</span>
                                             @enderror
                                         </div>
@@ -103,7 +103,7 @@
                                         </div>
                                         <div class="form-group marketing-format">
                                             <label for="format">Выберите формат рекламы</label>
-                                            @error('project_type')
+                                            @error("project_type")
                                             <span class="error">{{ $message }}</span>
                                             @enderror
                                             <div class="marketing-format__item input-checkbox-w">
@@ -111,13 +111,13 @@
                                                 <label for="product-feedback">Отзыв на товар - Бартер</label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
-                                                        <img src="{{ asset('img/minus-icon.svg') }}" alt="">
+                                                        <img src="{{ asset("img/minus-icon.svg") }}" alt="">
                                                     </div>
                                                     <div class="quantity-input">
                                                         <input type="number" class="input" value="0" name="feedback-quantity" id="feedback-quantity">
                                                     </div>
                                                     <div class="quantity-plus">
-                                                        <img src="{{ asset('img/plus-icon.svg') }}" alt="">
+                                                        <img src="{{ asset("img/plus-icon.svg") }}" alt="">
                                                     </div>
                                                 </div>
                                                 <div class="format-tooltip" data-hint="feedback">
@@ -138,13 +138,13 @@
                                                 <label for="product-inst">Рекламная интеграция (Instagram) - Бартер</label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
-                                                        <img src="{{ asset('img/minus-icon.svg') }}" alt="">
+                                                        <img src="{{ asset("img/minus-icon.svg") }}" alt="">
                                                     </div>
                                                     <div class="quantity-input">
                                                         <input type="number" class="input" value="0" name="inst-quantity" id="inst-quantity">
                                                     </div>
                                                     <div class="quantity-plus">
-                                                        <img src="{{ asset('img/plus-icon.svg') }}" alt="">
+                                                        <img src="{{ asset("img/plus-icon.svg") }}" alt="">
                                                     </div>
                                                 </div>
                                                 <div class="format-tooltip" data-hint="inst-barter">
@@ -165,13 +165,13 @@
                                                 <label for="product-youtube">Рекламная интеграция (YouTube) - Бартер</label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
-                                                        <img src="{{ asset('img/minus-icon.svg') }}" alt="">
+                                                        <img src="{{ asset("img/minus-icon.svg") }}" alt="">
                                                     </div>
                                                     <div class="quantity-input">
                                                         <input type="number" class="input" value="0" name="quantity">
                                                     </div>
                                                     <div class="quantity-plus">
-                                                        <img src="{{ asset('img/plus-icon.svg') }}" alt="">
+                                                        <img src="{{ asset("img/plus-icon.svg") }}" alt="">
                                                     </div>
                                                 </div>
                                                 <div class="format-tooltip" data-hint="youtube">
@@ -192,13 +192,13 @@
                                                 <label for="product-youtube">Рекламная интеграция (VK) - Бартер</label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
-                                                        <img src="{{ asset('img/minus-icon.svg') }}" alt="">
+                                                        <img src="{{ asset("img/minus-icon.svg") }}" alt="">
                                                     </div>
                                                     <div class="quantity-input">
                                                         <input type="number" class="input" value="0" name="quantity">
                                                     </div>
                                                     <div class="quantity-plus">
-                                                        <img src="{{ asset('img/plus-icon.svg') }}" alt="">
+                                                        <img src="{{ asset("img/plus-icon.svg") }}" alt="">
                                                     </div>
                                                 </div>
                                                 <div class="format-tooltip" data-hint="youtube">
@@ -219,13 +219,13 @@
                                                 <label for="product-youtube">Рекламная интеграция (Telegram) - Бартер</label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
-                                                        <img src="{{ asset('img/minus-icon.svg') }}" alt="">
+                                                        <img src="{{ asset("img/minus-icon.svg") }}" alt="">
                                                     </div>
                                                     <div class="quantity-input">
                                                         <input type="number" class="input" value="0" name="quantity">
                                                     </div>
                                                     <div class="quantity-plus">
-                                                        <img src="{{ asset('img/plus-icon.svg') }}" alt="">
+                                                        <img src="{{ asset("img/plus-icon.svg") }}" alt="">
                                                     </div>
                                                 </div>
                                                 <div class="format-tooltip" data-hint="youtube">
@@ -274,7 +274,7 @@
                             </div>
                             <div class="dashboard__items">
                                 <div class="dashboard__content active" id="wb">
-                                    <div class="dashboard__row dashboard__item--feedback feedback-dashboard" style="{{ !empty(auth()->user()->seller->wb_api_key) ?: 'padding: 0;' }}">
+                                    <div class="dashboard__row dashboard__item--feedback feedback-dashboard" style="{{ !empty(auth()->user()->seller->wb_api_key) ?: "padding: 0;" }}">
                                         @if (empty(auth()->user()->seller->wb_api_key))
                                         <div class="dashboard__placeholder" style="z-index: 9998">
                                             <div class="dashboard__placeholder-text">
@@ -293,11 +293,11 @@
 
                                             @php( $wb_stats = auth()->user()->seller->getTotalFeedbacksWB() )
                                             <div class="dashboard-sm__sm" id=wrapper>
-                                                <input id="wb_total" value="{{ $wb_stats['total'] }}" hidden>
-                                                <input id="wb_low" value="{{ $wb_stats['low'] }}" hidden>
-                                                <input id="wb_med" value="{{ $wb_stats['med'] }}" hidden>
-                                                <input id="wb_hig" value="{{ $wb_stats['hig'] }}" hidden>
-                                                <input id="wb_avg" value="{{ $wb_stats['avg'] }}" hidden>
+                                                <input id="wb_total" value="{{ $wb_stats["total"] }}" hidden>
+                                                <input id="wb_low" value="{{ $wb_stats["low"] }}" hidden>
+                                                <input id="wb_med" value="{{ $wb_stats["med"] }}" hidden>
+                                                <input id="wb_hig" value="{{ $wb_stats["hig"] }}" hidden>
+                                                <input id="wb_avg" value="{{ $wb_stats["avg"] }}" hidden>
                                                 <svg id="meter">
                                                     <circle id="outline_curves" class="circle outline" cx="50%" cy="50%">
                                                     </circle>
@@ -318,11 +318,11 @@
                                                         5
                                                     </div>
                                                 </div>
-                                                <img id="meter_needle" src="libs/meter/svg-meter-gauge-needle.svg" alt="" data-percents='{{ round($wb_stats['avg'], 2) * 20 }}'>
+                                                <img id="meter_needle" src="libs/meter/svg-meter-gauge-needle.svg" alt="" data-percents="{{ round($wb_stats["avg"], 2) * 20 }}">
                                             </div>
                                             <div class="dashboard-sm__desc">
                                                 {{-- У вас отличные показатели, <br> --}}
-                                                Ваш средний балл по отзывам {{ round($wb_stats['avg'], 2) }}
+                                                Ваш средний балл по отзывам {{ round($wb_stats["avg"], 2) }}
                                                 <div class="dashboard-sm__quest">
                                                     ?
                                                     <div class="dashboard-sm__desc-inner">
@@ -349,12 +349,12 @@
                                                         </div>
                                                     </div>
                                                     <div class="feedback-item__stats">
-                                                        @if($wb_stats['low'] > 0)
+                                                        @if($wb_stats["low"] > 0)
                                                         <div class="feedback-item__stat">
                                                             <div class="feedback-item__stat-quest danger">
                                                                 !
                                                             </div>
-                                                            У вас {{ $wb_stats['low'] }} товар(ов) с очень низкой оценкой
+                                                            У вас {{ $wb_stats["low"] }} товар(ов) с очень низкой оценкой
                                                             <div class="feedback-item__stat-products">
                                                                 {{-- <div class="" style="background-color: #fff">
                                                                     <a href="#" class="profile-projects__status">
@@ -371,12 +371,12 @@
                                                         </div>
 
                                                         @endif
-                                                        @if($wb_stats['med'] > 0)
+                                                        @if($wb_stats["med"] > 0)
                                                         <div class="feedback-item__stat">
                                                             <div class="feedback-item__stat-quest warning">
                                                                 !
                                                             </div>
-                                                            У вас {{ $wb_stats['med'] }} товаров с удовлетворительной оценкой, требуется улучшение
+                                                            У вас {{ $wb_stats["med"] }} товаров с удовлетворительной оценкой, требуется улучшение
                                                         </div>
                                                         @endif
                                                     </div>
@@ -393,20 +393,20 @@
                                                             </div>
                                                         </div>
                                                         <div class="feedback-item__stats">
-                                                            @if($wb_stats['pr_low'] > 0)
+                                                            @if($wb_stats["pr_low"] > 0)
                                                             <div class="feedback-item__stat">
                                                                 <div class="feedback-item__stat-quest danger">
                                                                     !
                                                                 </div>
-                                                                На {{ $wb_stats['pr_low'] }} товаре(ах) очень мало отзывов, требуется исправить
+                                                                На {{ $wb_stats["pr_low"] }} товаре(ах) очень мало отзывов, требуется исправить
                                                             </div>
                                                             @endif
-                                                            @if($wb_stats['pr_mid'] > 0)
+                                                            @if($wb_stats["pr_mid"] > 0)
                                                             <div class="feedback-item__stat">
                                                                 <div class="feedback-item__stat-quest warning">
                                                                     !
                                                                 </div>
-                                                                У вас {{ $wb_stats['pr_mid'] }} товар(ов) со среднем количеством отзывов, требуется улучшение
+                                                                У вас {{ $wb_stats["pr_mid"] }} товар(ов) со среднем количеством отзывов, требуется улучшение
                                                             </div>
                                                             @endif
                                                         </div>
@@ -415,14 +415,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                    @if(1 == 0)
                                     <div class="dashboard__row">
                                         <div class="dashboard__col dashboard__item dashboard__item--cover">
                                             <div class="dashboard__item-cover">
                                                 <div class="dashboard__item-title">
                                                     Переходы по интеграциям
                                                 </div>
-                                                <canvas class="graph" id="coverage-graph">
+                                                <canvas class="graph" id="coverage-graph" data-coverage='{"coverage": [{"dt": "2024-05-20", "coverage": 59, "bloggers": 1},{"dt": "2024-05-21", "coverage": 46, "bloggers": 1},{"dt": "2024-05-22", "coverage": 42, "bloggers": 1},{"dt": "2024-05-23", "coverage": 58, "bloggers": 1},{"dt": "2024-05-24", "coverage": 80, "bloggers": 1},{"dt": "2024-05-25", "coverage": 62, "bloggers": 1},{"dt": "2024-05-26", "coverage": 47, "bloggers": 1},{"dt": "2024-05-27", "coverage": 49, "bloggers": 1},{"dt": "2024-05-28", "coverage": 48, "bloggers": 1},{"dt": "2024-05-29", "coverage": 57, "bloggers": 1},{"dt": "2024-05-30", "coverage": 82, "bloggers": 1},{"dt": "2024-05-31", "coverage": 33, "bloggers": 1},{"dt": "2024-06-01", "coverage": 42, "bloggers": 1},{"dt": "2024-06-02", "coverage": 43, "bloggers": 1},{"dt": "2024-06-03", "coverage": 56, "bloggers": 1},{"dt": "2024-06-04", "coverage": 78, "bloggers": 1},{"dt": "2024-06-05", "coverage": 70, "bloggers": 1},{"dt": "2024-06-06", "coverage": 80, "bloggers": 1},{"dt": "2024-06-07", "coverage": 74, "bloggers": 1},{"dt": "2024-06-08", "coverage": 64, "bloggers": 1},{"dt": "2024-06-09", "coverage": 110, "bloggers": 1},{"dt": "2024-06-10", "coverage": 114, "bloggers": 1},{"dt": "2024-06-11", "coverage": 77, "bloggers": 1},{"dt": "2024-06-12", "coverage": 72, "bloggers": 1},{"dt": "2024-06-13", "coverage": 79, "bloggers": 1},{"dt": "2024-06-14", "coverage": 82, "bloggers": 1},{"dt": "2024-06-15", "coverage": 78, "bloggers": 1}]}'>
 
                                                 </canvas>
                                             </div>
@@ -472,7 +471,6 @@
                                             </div>
                                         </div> --}}
                                     </div>
-                                    @endif
                                     <div class="dashboard__row">
                                         <div class="dashboard__col dashboard__item">
                                             <img src="img/statistics-ph.png" alt="" class="">
@@ -614,7 +612,7 @@
                                     <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
                                 </div>
                             </div>
-                            @include('project.index')
+                            @include("project.index")
                         </div>
                         <div class="profile-projects__filters">
                             <div class="projects-list__filter filter">
@@ -674,7 +672,7 @@
                                             @endforeach
                                         </select>
                                         @else
-                                        <p style="font-size: 14px; color: rgba(0, 0, 0, 0.4)">У вас нет активных проектов, <button onclick="selectTab('create-project')" class="btn-link">создать проект</button></p>
+                                        <p style="font-size: 14px; color: rgba(0, 0, 0, 0.4)">У вас нет активных проектов, <button onclick="selectTab("create-project")" class="btn-link">создать проект</button></p>
                                         @endif
                                     </div>
                                 </div> --}}
@@ -686,7 +684,7 @@
                             <div class="projects-list__row projects-list__current-project current-project" style="display:none">
                                 <div class="current-project__col current-project__main">
                                     <div class="current-project__row">
-                                        <div class="current-project__img" style="{{ asset('img/profile-icon.svg') }}">
+                                        <div class="current-project__img" style="{{ asset("img/profile-icon.svg") }}">
                                         </div>
                                         <div class="current-project__title">
                                             <p class="name"><b>Проект не выбран</b></p>
@@ -706,7 +704,7 @@
                                     <a href="" class="btn btn-secondary projects-list__choose-btn">Выбрать другой проект</a>
                                 </div>
                             </div>
-                            @include('blogger.list')
+                            @include("blogger.list")
                         </div>
                         <div class="projects-list__filter filter blogers-list__filter">
                             <div class="filter__body">
@@ -778,10 +776,10 @@
                                     <div class="form-group filter__item">
                                         <label for="">Количество подписчиков</label>
                                         <div class="input-range-w">
-                                            <input id="subs-range" name="" type="range" class="input input-range" min="{{ $blogger_platforms->min('subscriber_quantity') ?? 0 }}" max="{{ $blogger_platforms->max('subscriber_quantity') ?? 0 }}">
+                                            <input id="subs-range" name="" type="range" class="input input-range" min="{{ $blogger_platforms->min("subscriber_quantity") ?? 0 }}" max="{{ $blogger_platforms->max("subscriber_quantity") ?? 0 }}">
                                             <div class="input-range-content">
-                                                <input id="subs-min" type="number" class="input input-number" value="{{ $blogger_platforms->min('subscriber_quantity') ?? 0 }}">
-                                                <input id="subs-max" type="number" class="input input-number" value="{{ $blogger_platforms->max('subscriber_quantity') ?? 0 }}">
+                                                <input id="subs-min" type="number" class="input input-number" value="{{ $blogger_platforms->min("subscriber_quantity") ?? 0 }}">
+                                                <input id="subs-max" type="number" class="input input-number" value="{{ $blogger_platforms->max("subscriber_quantity") ?? 0 }}">
                                             </div>
                                         </div>
                                     </div>
@@ -793,7 +791,7 @@
                         </div>
                     </div>
                     <div class="profile-chat tab-content" id="chat">
-                        @include('shared.chat.index')
+                        @include("shared.chat.index")
                     </div>
                     <div class="profile-projects tab-content" id="profile-projects-choose">
                         <div class="profile-projects__body">
@@ -805,7 +803,7 @@
                                     <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
                                 </div>
                             </div>
-                            @include('project.seller-list')
+                            @include("project.seller-list")
                         </div>
                         <div class="profile-projects__filters profile-projects__filters--choose">
                             <div class="projects-list__filter filter">
@@ -858,55 +856,81 @@
 @endsection
 
 
-@section('scripts')
+@section("scripts")
 <script src="{{ asset("libs/meter/script.js") }}"></script>
 <script>
-    var mediaQuery = window.matchMedia('(max-width: 911px)');
+    var mediaQuery = window.matchMedia("(max-width: 911px)");
 
     var coverageGraph;
 
     if (mediaQuery.matches) {
-        coverageGraph = document.getElementById('coverage-graph');
-        erGraph = document.getElementById('er');
-        cpmGraph = document.getElementById('cpm');
-        pGraph = document.getElementById('projects');
+        coverageGraph = document.getElementById("coverage-graph");
+        erGraph = document.getElementById("er");
+        cpmGraph = document.getElementById("cpm");
+        pGraph = document.getElementById("projects");
     } else {
-        coverageGraph = document.getElementById('coverage-graph');
-        erGraph = document.getElementById('er');
-        cpmGraph = document.getElementById('cpm');
-        pGraph = document.getElementById('projects');
+        coverageGraph = document.getElementById("coverage-graph");
+        erGraph = document.getElementById("er");
+        cpmGraph = document.getElementById("cpm");
+        pGraph = document.getElementById("projects");
     }
 
-    var data = $(coverageGraph).data('coverage');
+    var data = $(coverageGraph).data("coverage");
+    var month = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
 
+    console.log(data);
 
     new Chart(coverageGraph, {
-        type: 'bar'
-        , data: {
-            labels: data.coverage_history.map(item => `${item.dt.split('-')[2]} Мая`)
-            , datasets: [
+        type: 'scatter',
+        data: {
+            labels: data.coverage.map(item => `${item.dt.split("-")[2]} ${month[Number(item.dt.split("-")[1]) - 1]}`),
+            datasets: [
                 {
-                    label: 'Охваты',
-                    data: data.coverage_history.map(item => item.coverage),
+                    label: "Охваты",
+                    data: data.coverage.map(item => item.coverage),
+                    backgroundColor: data.coverage.map(() => {
+                        return "rgb(152,203,237, 1)"
+                    }),
+                    order:0,
+                    type: "bar",
                 },
                 {
-                    label: 'Блоггеров завершило работу',
-                    data: data.coverage_history.map(item => item.bloggers),
+                    label: "Блоггеров завершило работу",
+                    data: data.coverage.map(item => item.bloggers),
                     // data: data.orders_history.map(() => {
                     //     return 1
                     // }),
-                    showLine: true,
-                    type: 'bar',
-                    backgroundColor: data.orders_history.map(() => {
-                        return 'rgb(254,94,0, 0.4)'
+                    type: "bar",
+                    backgroundColor: data.coverage.map(() => {
+                        return "rgb(254,94,0, 0.4)"
                     }),
+                    order: 1,
                 }
             ]
-        }
-        , options: {
+        },
+        options: {
+            responsive: true,
+            // maintainAspectRatio: false,
+            onResize: (chart, size) => {
+                var media = window.matchMedia('(max-width: 500px)');
+                if(media.matches){
+                    chart.height = 200;
+                }
+            },
+            plugins: {
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                },
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
             scales: {
                 y: {
-                    beginAtZero: true
+                    beginAtZero: true,
+                    type: 'logarithmic'
                 }
             }
         }
@@ -917,21 +941,21 @@
     var data = {
         labels: labels
         , datasets: [{
-            label: 'ER'
+            label: "ER"
             , data: [10, 32, 45, 9, 55, 89, 123, 15, 102, 11, 15, 245]
-            , borderColor: '#FE5E00'
-            , backgroundColor: '#FAF5EF'
+            , borderColor: "#FE5E00"
+            , backgroundColor: "#FAF5EF"
         , }, ]
     };
 
     new Chart(erGraph, {
-        type: 'line'
+        type: "line"
         , data: data
         , options: {
             responsive: true
             , plugins: {
                 legend: {
-                    position: 'top'
+                    position: "top"
                 , }
             , }
         }
@@ -942,50 +966,50 @@
     var data = {
         labels: labels
         , datasets: [{
-            label: 'CPM'
+            label: "CPM"
             , data: [144, 12, 555, 9, 55, 123, 123, 15, 102, 11, 51, 245]
-            , borderColor: '#FE5E00'
-            , backgroundColor: '#FAF5EF'
+            , borderColor: "#FE5E00"
+            , backgroundColor: "#FAF5EF"
         , }, ]
     };
 
     new Chart(cpmGraph, {
-        type: 'line'
+        type: "line"
         , data: data
         , options: {
             responsive: true
             , plugins: {
                 legend: {
-                    position: 'top'
+                    position: "top"
                 , }
             , }
         }
     , });
 
     var data = {
-        labels: ['Всего', 'Выполнено']
+        labels: ["Всего", "Выполнено"]
         , datasets: [{
-            label: 'Интеграции'
+            label: "Интеграции"
             , data: [126, 120]
-            , backgroundColor: ['#98CBED', '#FE5E00']
+            , backgroundColor: ["#98CBED", "#FE5E00"]
         , }]
     };
 
     new Chart(pGraph, {
-        type: 'pie'
+        type: "pie"
         , data: data
         , options: {
             responsive: true
             , plugins: {
                 legend: {
-                    position: 'top'
+                    position: "top"
                 , }
             , }
         }
     , });
 
     var config = {
-        type: 'funnel'
+        type: "funnel"
         , data: {
             datasets: [{
                 data: [30, 60, 90]
@@ -1007,24 +1031,24 @@
             ]
         }
     }
-    // var funnel = document.getElementById('funnel-graph').getContext('2d');
+    // var funnel = document.getElementById("funnel-graph").getContext("2d");
     // console.log(funnel);
-    FunnelChart('funnel-graph', {
+    FunnelChart("funnel-graph", {
         values: [3512, 891, 652]
-        , sectionColor: ['#98CBED', '#F0C457', '#FD6567']
+        , sectionColor: ["#98CBED", "#F0C457", "#FD6567"]
         , displayPercentageChange: false
         , pSectionHeightPercent: 100
-        , font: '"Inter", sans-serif'
-        , labelWidthPercent: 28
-        , labelFontColor: '#000'
+        , font: "Inter, sans-serif"
+        , labelWidthPercent: 30
+        , labelFontColor: "#000"
         , labels: [
-            'Переходы'
-            , 'ER, %'
-            , 'CPM, Руб.'
+            "Переходы"
+            , "ER, %"
+            , "CPM, Руб."
         , ]
-        , maxFontSize: 20
+        , maxFontSize: 18
     , });
 
 </script>
-<script src="{{ asset('js/wb.js') }}"></script>
+<script src="{{ asset("js/wb.js") }}"></script>
 @endsection
