@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Notification;
+use Illuminate\Support\Facades\Log;
 
 class TgService
 {
@@ -27,6 +28,9 @@ class TgService
                 'Content-Type: application/json'
             ),
         ));
+
+        Log::info("chat_id " . $chat_id);
+        Log::info("text " . $password);
 
         $response = curl_exec($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
@@ -56,6 +60,9 @@ class TgService
                 'Content-Type: application/json'
             ),
         ));
+
+        Log::info("chat_id " . $chat_id);
+        Log::info("text " . $text);
 
         $response = curl_exec($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
