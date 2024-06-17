@@ -68,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/projects', [ProjectController::class, 'index']);
         Route::post('/projects/confirm', [WorkController::class, 'confirm']);
         Route::get('/projects/categories', [ProjectController::class, 'categories']);
-        Route::get('/projects/{project}/wb-ifo', [ProjectController::class, 'getWBInfo']);
+        Route::get('/projects/{project}/wb-info', [ProjectController::class, 'getWBInfo']);
 
         Route::post('/bloggers', [BloggerController::class, 'index']);
         Route::get('/bloggers/{blogger}', [BloggerController::class, 'info']);

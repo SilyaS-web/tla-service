@@ -1876,6 +1876,7 @@ input[type='range']::-webkit-slider-runnable-track{
     flex-direction: column;
     max-width: 320px;
     transition: box-shadow .2s linear;
+    cursor: pointer;
 }
 .project-item:hover{
     box-shadow: 0px 0px 10px 6px rgba(254,94,0,.1);
