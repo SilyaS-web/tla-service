@@ -68,6 +68,8 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/projects', [ProjectController::class, 'index']);
         Route::post('/projects/confirm', [WorkController::class, 'confirm']);
 
+        Route::get('/projects/categories', [ProjectController::class, 'categories']);
+
         Route::post('/bloggers', [BloggerController::class, 'index']);
         Route::get('/bloggers/{blogger}', [BloggerController::class, 'info']);
         Route::post('/bloggers/create', [BloggerController::class, 'store'])->name('create-blogger');

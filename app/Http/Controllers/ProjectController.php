@@ -6,6 +6,7 @@ use App\Models\Blogger;
 use App\Models\Project;
 use App\Models\ProjectFile;
 use App\Models\ProjectWork;
+use App\Models\Theme;
 use App\Models\User;
 use App\Models\Work;
 use Illuminate\Http\Request;
@@ -298,5 +299,25 @@ class ProjectController extends Controller
         }
 
         return redirect()->route('profile')->with('success', 'Произошла ошибка при удалении проекта');
+    }
+
+    public function categories()
+    {
+        $validator = Validator::make(request()->all(), [
+            'category' => 'string|nullable',
+
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+        $validated = $validator->validated();
+        $categories = [];
+        
+        if (isset($validated['category']) && !empty($validated['category'])) {
+            $categories = Theme::where('theme', 'like', '%' . $validated['category'] . '%')->get();
+        }
+
+        return response()->json(['categories' => $categories], 200);
     }
 }
