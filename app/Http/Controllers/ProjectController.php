@@ -104,6 +104,14 @@ class ProjectController extends Controller
 
         $validated['seller_id'] = Auth::user()->id;
 
+        $card = $this->curlWBStats($validated['product_nm']);
+        if ($card) {
+            $validated['wb_category'] = $card->subj_name;
+            $validated['wb_product_name'] = $card->imt_name;
+            $validated['wb_description'] = $card->description;
+            $validated['wb_options'] = json_encode($card->options);
+        }
+
         $project = Project::create($validated);
 
         if (isset($validated['feedback-quantity']) && $validated['feedback-quantity'] > 0) {
@@ -324,30 +332,23 @@ class ProjectController extends Controller
 
     public function getWBInfo(Project $project)
     {
-        $card = $this->curlWBStats($project);
-        if (!$card) {
-            return response()->json("error", 400);
-        }
-
-        $options = $card->options;
-
         return response()->json([
-            'category' => $card->subj_name,
-            'product_name' => $card->imt_name,
-            'description' => $card->description,
+            'category' => $project->wb_category,
+            'product_name' => $project->wb_product_name,
+            'description' => $project->wb_description,
             'rate' => rand(7, 10),
             'total_quantity' => rand(7, 10),
             'lost_quantity' => rand(1, 7),
             'product_code' => $project->product_nm,
             'price' =>  $project->product_price,
             'images' => $project->getImageURL(),
-            'optioins' => $options,
+            'optioins' => json_decode($project->wb_options),
         ], 200);
     }
 
-    public function curlWBStats(Project $project)
+    public function curlWBStats(int $product_nm)
     {
-        $r = $project->product_nm;
+        $r = $product_nm;
         $n = ~~($r / 1e5);
         $a = ~~($r / 1e3);
         $o = $this->getHost($n);
@@ -361,9 +362,9 @@ class ProjectController extends Controller
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        if ($http_code != 200) {
-            return false;
-        }
+        // if ($http_code != 200) {
+        //     return false;
+        // }
 
         $card = json_decode($response);
 

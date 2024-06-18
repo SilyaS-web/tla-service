@@ -35,7 +35,12 @@ class Project extends Model
         'product_link',
         'product_price',
         'status',
-        'seller_id'
+        'seller_id',
+        'wb_category',
+        'wb_product_name',
+        'wb_description',
+        'wb_options',
+        'wb_rate',
     ];
 
     public function executor()

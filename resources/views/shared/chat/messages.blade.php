@@ -12,10 +12,15 @@
     </div>
     <div class="messages-chat__item-msg">
         @if($message->user_id == 1)
-        {!! $message->message !!}
-        @if($message->finishStats)
-        {{ $message->finishStats }}
-        @endif
+            {!! $message->message !!}
+            @if($message->finishStats)
+            <div class="messages-chat__item-stats">
+                Подписчики: {{ $message->finishStats->subs }}
+                Просмотры: {{ $message->finishStats->views }}
+                Репосты: {{ $message->finishStats->reposts }}
+                Лайки: {{ $message->finishStats->likes }}
+            </div>
+            @endif
         @else
         {{ $message->message }}
         @endif
