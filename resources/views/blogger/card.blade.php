@@ -3,7 +3,7 @@
         <div class="card__col">
             <div class="card__row card__header">
                 <div class="card__img">
-                    <img src="img/profile-icon.svg" alt="">
+                    <img src="{{ $blogger->user->getImageURL() }}" alt="">
                     @if($blogger->is_achievement)
                     <div class="card__achive">
                         <img src="{{ asset('img/achive-icon.svg') }}" alt="">
@@ -22,7 +22,7 @@
                 </div>
                 <div class="card__platforms">
                     @foreach ($blogger->platforms as $platform)
-                        <div class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></div>
+                    <div class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></div>
                     @endforeach
                 </div>
             </div>

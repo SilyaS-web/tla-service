@@ -24,9 +24,11 @@
                             Дополнительная информация
                         </div>
                         <div class="info-profile__tags-items">
+                            @if($user->blogger->is_achievement)
                             <div class="info-profile__tags-item">
                                 Проверенный блогер
                             </div>
+                            @endif
                         </div>
                         <div class="info-profile__platrfoms blogger-platforms">
                             @foreach ($user->blogger->platforms as $p )
@@ -164,49 +166,49 @@
                 </div>
             </div>
             <? if(count($projects) > 0): ?>
-                <div class="user-view__projects">
-                    <div class="profile-projects tab-content active" id="my-projects">
-                        <div class="profile-projects__body">
-                            <div class="profile-projects__title title">
-                                Список выполненных интеграций
-                            </div>
-                            <div class="list-projects__items">
-                                @forelse ($projects as $project)
-                                    <div class="list-projects__item project-item">
-                                        <div class="owl-carousel project-item__carousel">
-                                            <div class="project-item__img" style="background-image:url({{ $project->getImageURL(true) }})">
-                                                {{-- <div class="project-item__status active">
+            <div class="user-view__projects">
+                <div class="profile-projects tab-content active" id="my-projects">
+                    <div class="profile-projects__body">
+                        <div class="profile-projects__title title">
+                            Список выполненных интеграций
+                        </div>
+                        <div class="list-projects__items">
+                            @forelse ($projects as $project)
+                            <div class="list-projects__item project-item">
+                                <div class="owl-carousel project-item__carousel">
+                                    <div class="project-item__img" style="background-image:url({{ $project->getImageURL(true) }})">
+                                        {{-- <div class="project-item__status active">
                                                     {{ $project->active == 0 ? 'Активно' : 'Выполнено' }}
-                                                </div> --}}
-                                                {{-- <div class="project-item__country">
+                                    </div> --}}
+                                    {{-- <div class="project-item__country">
                                                     Россия
                                                 </div> --}}
-                                            </div>
-                                        </div>
-                                        <div class="project-item__content">
-                                            <div class="project-item__title">
-                                                {{ $project->product_price }}₽
-                                            </div>
-                                            <div class="project-item__subtitle" title="{{ $project->product_name }}">
-                                                {{ $project->product_name }}
-                                            </div>
-                                            <div class="project-item__format-tags card__row card__tags">
-                                                <div class="card__tags-item">
-                                                    <span>Рекламный пост</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                </div>
+                            </div>
+                            <div class="project-item__content">
+                                <div class="project-item__title">
+                                    {{ $project->product_price }}₽
+                                </div>
+                                <div class="project-item__subtitle" title="{{ $project->product_name }}">
+                                    {{ $project->product_name }}
+                                </div>
+                                <div class="project-item__format-tags card__row card__tags">
+                                    <div class="card__tags-item">
+                                        <span>Рекламный пост</span>
                                     </div>
-                                @empty
-                                    Пока что здесь пусть
-                                @endforelse
-
+                                </div>
                             </div>
                         </div>
+                        @empty
+                        Пока что здесь пусть
+                        @endforelse
+
                     </div>
                 </div>
-            <? endif ?>
+            </div>
         </div>
+        <? endif ?>
+    </div>
     </div>
 </section>
 

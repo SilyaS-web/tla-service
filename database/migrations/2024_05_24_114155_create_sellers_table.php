@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class CreateSellersTable extends Migration
 {
@@ -30,6 +31,12 @@ class CreateSellersTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        DB::table('sellers')->insert([
+            [
+                'user_id' => 5,
+            ]
+        ]);
     }
 
     /**

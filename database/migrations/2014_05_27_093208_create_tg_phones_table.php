@@ -22,26 +22,40 @@ class CreateTgPhonesTable extends Migration
             $table->softDeletes();
         });
 
-        DB::table('tg_phones')->insert(
-            array(
-                'phone' => '+70000000001',
-                'chat_id' => 0,
-            )
-        );
-
-        DB::table('tg_phones')->insert(
-            array(
-                'phone' => '+70000000000',
-                'chat_id' => 0,
-            )
-        );
-
-        DB::table('tg_phones')->insert(
-            array(
-                'phone' => '+71111111111',
-                'chat_id' => 0,
-            )
-        );
+        DB::table('tg_phones')->insert([
+            [
+                'phone' => '+70000000001', // 1
+                'chat_id' => 470155536,
+            ],
+            [
+                'phone' => '+70000000000', // 2
+                'chat_id' => 470155536,
+            ],
+            [
+                'phone' => '+79998880001', // 3
+                'chat_id' => 470155536,
+            ],
+            [
+                'phone' => '+79998880002', // 4
+                'chat_id' => 470155536,
+            ],
+            [
+                'phone' => '+79998880003', // 5
+                'chat_id' => 470155536,
+            ],
+            [
+                'phone' => '+79998880004', // 6
+                'chat_id' => 470155536,
+            ],
+            [
+                'phone' => '+79998880005', // 7
+                'chat_id' => 470155536,
+            ],
+            [
+                'phone' => '+79998880006', // 8
+                'chat_id' => 470155536,
+            ]
+        ]);
     }
 
     /**

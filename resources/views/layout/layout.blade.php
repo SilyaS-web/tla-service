@@ -37,7 +37,7 @@
                     <div class="header__row">
                         <div href="#" class="header__profile-w header__profile-header header__profile-item--js">
                             <a href="/">
-                                <img src="{{ asset('img/profile-icon.svg') }}" alt="" class="header__profile">
+                                <img src="{{ auth()->user()->getImageURL() }}" alt="" class="header__profile">
                             </a>
                             <div class="header__profile-col">
                                 <span class="header__profile-name">
@@ -187,7 +187,7 @@
                             </div>
                         </a>
                         <div href="#" class="header__profile-w header__profile-header header__profile-item--js">
-                            <img src="{{ asset('img/profile-icon.svg') }}" alt="" class="header__profile">
+                            <img src="{{ auth()->user()->getImageURL() }}" alt="" class="header__profile">
                             <div class="header__profile-col">
                                 <span class="header__profile-name" data-user-id="{{ auth()->user()->id }}">
                                     {{ auth()->user()->name }}
@@ -516,9 +516,11 @@
 @if(session()->has('switch-tab'))
 <script>
     $(window).on('load', function() {
-        console.log($(document).find('.nav-menu__link[data-content="{{ session('switch-tab') }}"]'));
+        console.log($(document).find('.nav-menu__link[data-content="{{ session('
+            switch -tab ') }}"]'));
         $(document).find('.nav-menu__link[data-content="create-project"]').click();
     })
+
 </script>
 @endif
 

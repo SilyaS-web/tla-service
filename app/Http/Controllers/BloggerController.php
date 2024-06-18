@@ -34,7 +34,6 @@ class BloggerController extends Controller
         if ($validator->fails()) {
             $bloggers = [];
             return response()->json($validator->errors(), 400);
-            return view('blogger.list', compact('bloggers'));
         }
 
         $validated = $validator->validated();
@@ -99,6 +98,7 @@ class BloggerController extends Controller
             'sex' => 'required|string',
             'city' => 'required|string',
             'country' => 'required|numeric',
+            'image' => 'image|nullable',
             'tg-link' => 'string|nullable',
             'inst-link' => 'string|nullable',
             'yt-link' => 'string|nullable',
@@ -150,6 +150,13 @@ class BloggerController extends Controller
                 'name' => BloggerPlatform::VK,
                 'link' => $validated['vk-link'],
             ]);
+        }
+
+        if ($request->file('image')) {
+            $product_image = $request->file('image');
+            $image_path = $product_image->store('profile', 'public');
+            $user->image = $image_path;
+            $user->save();
         }
 
         foreach ($validated['themes'] as $theme_id) {

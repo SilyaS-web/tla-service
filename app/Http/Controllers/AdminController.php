@@ -21,6 +21,8 @@ class AdminController extends Controller
             'blogger_id' => 'required|numeric',
             'desc' => 'string|nullable',
             'sex' => 'required|string',
+            'country_id' => 'required|exists:countries,id',
+            // 'city' => 'required|string',
             'is_achievement' => 'string|nullable',
             'gender_ratio' => 'required|numeric',
             'tg_link' => 'string|nullable',
@@ -50,13 +52,14 @@ class AdminController extends Controller
         }
 
         $validated = $validator->validated();
-        $blogger = Blogger::find($validated['blogger_id'])->first();
+        $blogger = Blogger::find($validated['blogger_id']);
 
         $blogger->update([
             'description' => $validated['desc'] ?? null,
             'sex' => $validated['sex'],
+            'country_id' => $validated['country_id'],
             'gender_ratio' => $validated['gender_ratio'],
-            'is_achievement' => $validated['is_achievement'] == 'on',
+            'is_achievement' => $validated['is_achievement'] ?? 0,
         ]);
 
         if ($validated['tg_subs']) {

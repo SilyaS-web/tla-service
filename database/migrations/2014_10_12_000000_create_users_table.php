@@ -30,30 +30,53 @@ class CreateUsersTable extends Migration
             $table->softDeletes();
         });
 
-        DB::table('users')->insert(
-            array(
-                'id' => 0,
-                'name' => 'Системное сообщение',
+        DB::table('users')->insert([
+            [
+                'name' => 'Системное сообщение', // 1
                 'email' => 'system@adswap.ru',
-                'phone' => '+70000000001',
+                'phone' => '+7 (000) 000-00-01',
                 'role' => 'admin',
                 'password' => bcrypt('systempassword'),
                 'status' => 1,
                 'tg_phone_id' => 1,
-            ),
-        );
-
-        DB::table('users')->insert(
-            array(
-                'name' => 'Админ',
+            ],
+            [
+                'name' => 'Админ', // 2
                 'email' => 'admin@adswap.ru',
-                'phone' => '+70000000000',
+                'phone' => '+7 (000) 000-00-00',
                 'role' => 'admin',
                 'password' => bcrypt('adminpass'),
-                'status' => 1,
+                'status' => 0,
                 'tg_phone_id' => 2,
-            ),
-        );
+            ],
+            [
+                'name' => 'Блогер 1', // 3
+                'email' => 'blogger1@adswap.ru',
+                'phone' => '+7 (999) 888-00-01',
+                'role' => 'blogger',
+                'password' => bcrypt('bloggerpass'),
+                'status' => 0,
+                'tg_phone_id' => 3,
+            ],
+            [
+                'name' => 'Блогер 2', // 4
+                'email' => 'blogger2@adswap.ru',
+                'phone' => '+7 (999) 888-00-02',
+                'role' => 'blogger',
+                'password' => bcrypt('bloggerpass'),
+                'status' => 0,
+                'tg_phone_id' => 4,
+            ],
+            [
+                'name' => 'Селлер 1', // 5
+                'email' => 'seller@adswap.ru',
+                'phone' => '+7 (999) 888-00-03',
+                'role' => 'seller',
+                'password' => bcrypt('sellerpass'),
+                'status' => 0,
+                'tg_phone_id' => 5,
+            ]
+        ]);
     }
 
     /**

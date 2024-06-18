@@ -324,30 +324,18 @@ class ProjectController extends Controller
 
     public function getWBInfo(Project $project)
     {
-        $options = [
-            [
-                'name' => 'Комплектация',
-                'value' => 'Футболка - 1 шт',
-            ],
-            [
-                'name' => 'Особенности модели',
-                'value' => 'дышащий материал',
-            ],
-            [
-                'name' => 'Комплектация',
-                'value' => 'Колпачок - 1шт; фибровые палочки - 5шт.; Диффузор ароматический - 1 шт; подарочная коробка',
-            ],
-            [
-                'name' => 'Аромат',
-                'value' => 'французский кофе; кофе; Сливки',
-            ],
-        ];
+        $card = $this->curlWBStats($project);
+        if (!$card) {
+            return response()->json("error", 400);
+        }
+
+        $options = $card->options;
 
         return response()->json([
-            'category' => Str::random(25),
-            'product_name' => Str::random(25),
-            'description' => Str::random(500),
-            'rate' => rand(0, 6),
+            'category' => $card->subj_name,
+            'product_name' => $card->imt_name,
+            'description' => $card->description,
+            'rate' => rand(7, 10),
             'total_quantity' => rand(7, 10),
             'lost_quantity' => rand(1, 7),
             'product_code' => $project->product_nm,
@@ -355,5 +343,89 @@ class ProjectController extends Controller
             'images' => $project->getImageURL(),
             'optioins' => $options,
         ], 200);
+    }
+
+    public function curlWBStats(Project $project)
+    {
+        $r = $project->product_nm;
+        $n = ~~($r / 1e5);
+        $a = ~~($r / 1e3);
+        $o = $this->getHost($n);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://$o/vol$n/part$a/$r/info/ru/card.json");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+
+        $response = curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($http_code != 200) {
+            return false;
+        }
+
+        $card = json_decode($response);
+
+
+        return $card;
+    }
+
+    public function getHost($e)
+    {
+        $t = "01";
+        switch (!0) {
+            case $e >= 0 && $e <= 143:
+                $t = "01";
+                break;
+            case $e >= 144 && $e <= 287:
+                $t = "02";
+                break;
+            case $e >= 288 && $e <= 431:
+                $t = "03";
+                break;
+            case $e >= 432 && $e <= 719:
+                $t = "04";
+                break;
+            case $e >= 720 && $e <= 1007:
+                $t = "05";
+                break;
+            case $e >= 1008 && $e <= 1061:
+                $t = "06";
+                break;
+            case $e >= 1062 && $e <= 1115:
+                $t = "07";
+                break;
+            case $e >= 1116 && $e <= 1169:
+                $t = "08";
+                break;
+            case $e >= 1170 && $e <= 1313:
+                $t = "09";
+                break;
+            case $e >= 1314 && $e <= 1601:
+                $t = "10";
+                break;
+            case $e >= 1602 && $e <= 1655:
+                $t = "11";
+                break;
+            case $e >= 1656 && $e <= 1919:
+                $t = "12";
+                break;
+            case $e >= 1920 && $e <= 2045:
+                $t = "13";
+                break;
+            case $e >= 2046 && $e <= 2189:
+                $t = "14";
+                break;
+            case $e >= 2090 && $e <= 2405:
+                $t = "15";
+                break;
+            case $e >= 2406 && $e <= 2621:
+                $t = "16";
+                break;
+            default:
+                $t = "17";
+        }
+        return "basket-$t.wbbasket.ru";
     }
 }

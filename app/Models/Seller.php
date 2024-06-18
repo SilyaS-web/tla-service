@@ -33,6 +33,7 @@ class Seller extends Model
         'is_agent',
         'description',
         'wb_api_key',
+        'inn',
         'finish_date',
         'remaining_tariff',
         'tariff',
@@ -130,8 +131,8 @@ class Seller extends Model
         }
 
         $result = json_decode($response);
-        $valuation = $result->data->valuation;
-        $feedbacksCount = $result->data->feedbacksCount;
+        $valuation = $result->data->valuation ?? 0;
+        $feedbacksCount = $result->data->feedbacksCount ?? 0;
 
         return ['valuation' => $valuation, 'feedbacksCount' => $feedbacksCount];
     }
@@ -164,7 +165,7 @@ class Seller extends Model
         $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
         if (200 != $http_code) {
-            return 1;
+            return 0;
         }
 
         $result = json_decode($response);
@@ -200,7 +201,7 @@ class Seller extends Model
         $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
         if (200 != $http_code) {
-            return [];
+            return ['total' => 0, 'low' => 0, 'med' => 0, 'hig' => 0, 'avg' => 0, 'pr_low' => 0, 'pr_mid' => 0];
         }
         $result = json_decode($response);
 

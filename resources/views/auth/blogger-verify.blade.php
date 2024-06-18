@@ -7,12 +7,12 @@
             <div class="auth__title title">
                 Заполните поля
             </div>
-            <form class="form auth__form" method="POST" action="{{ route('create-blogger') }}">
+            <form class="form auth__form" enctype="multipart/form-data" method="POST" action="{{ route('create-blogger') }}">
                 <div class="form-group">
                     <label for="city">Ваш город</label>
                     <input type="text" id="city" name="city" placeholder="Введите название города" class="input input--city" value="{{ old('city') }}">
                     @error('city')
-                        <span class="error">{{ $city }}</span>
+                    <span class="error">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
@@ -23,7 +23,7 @@
                         @endforeach
                     </select>
                     @error('country')
-                        <span class="error">{{ $country }}</span>
+                    <span class="error">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
@@ -33,14 +33,14 @@
                         <option value="female">Женский</option>
                     </select>
                     @error('sex')
-                        <span class="error">{{ $sex }}</span>
+                    <span class="error">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group">
                     <label for="desc">Описание канала</label>
                     <textarea name="desc" id="desc" cols="30" rows="10" class="textarea" placeholder="Введите текст"></textarea>
                     @error('description')
-                        <span class="error">{{ $description }}</span>
+                    <span class="error">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="form-group" style="flex-direction: column;">
@@ -53,6 +53,9 @@
                         </div>
                         @endforeach
                     </div>
+                    @error('themes')
+                    <span class="error">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="popup__form-row popup__form-stat form-stat">
                     <div class="form-stat__title">
@@ -65,6 +68,9 @@
                                 <input id="tg_link" type="text" class="input" name="tg-link" style="width:100%; max-width:100%">
                             </div>
                         </div>
+                        @error('tg-link')
+                        <span class="error">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="popup__form-row popup__form-stat form-stat">
@@ -78,6 +84,9 @@
                                 <input id="inst_link" type="text" class="input" name="inst-link" style="width:100%; max-width:100%">
                             </div>
                         </div>
+                        @error('inst-link')
+                        <span class="error">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="popup__form-row popup__form-stat form-stat">
@@ -88,9 +97,12 @@
                         <div class="form-stat__row">
                             <div class="form-group" style="width:100%; max-width:100%">
                                 <label for="yt_link">Ссылка</label>
-                                <input id="yt_link" type="text" class="input" name="" style="width:100%; max-width:100%">
+                                <input id="yt_link" type="text" class="input" name="yt-link" style="width:100%; max-width:100%">
                             </div>
                         </div>
+                        @error('yt-link')
+                        <span class="error">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="popup__form-row popup__form-stat form-stat">
@@ -104,13 +116,19 @@
                                 <input id="vk_link" type="text" class="input" name="vk-link" style="width:100%; max-width:100%">
                             </div>
                         </div>
+                        @error('vk-link')
+                        <span class="error">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <div class="form-group form-group--file">
                     <label class="tab-content__profile-img-upload input-file" for="profile-img">
                         Загрузите изображение профиля
-                        <input type="file" name="name" class="" id="profile-img">
+                        <input type="file" name="image" class="" id="profile-img">
                     </label>
+                    @error('image')
+                    <span class="error">{{ $message }}</span>
+                    @enderror
                 </div>
                 <div class="form-btns auth__form-btns" style="margin-top:32px">
                     <button class="btn btn-primary next" type="submit">

@@ -19,6 +19,7 @@ use App\Models\Theme;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\User;
 use App\Models\Work;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -162,74 +163,93 @@ class UserController extends Controller
     public function edit(Request $request)
     {
         $user = Auth::user();
-
-        if ($user->role == 'seller') {
-            $validator = Validator::make(request()->all(), [
-                // 'name' => 'required|min:3',
-                // 'email' => 'required|email|unique:users,email',
-                // 'phone' => 'required|unique:users,phone',
-                // 'role' => ['required', Rule::in(User::TYPES)],
-                // 'password' => 'required|confirmed|min:8',
-                'wb_api_key' => 'string|nullable',
-                'marketplace_link' => 'string|nullable',
-                'inn' => 'string|nullable',
-            ]);
-
-            if ($validator->fails()) {
-                return redirect()->back()->withErrors($validator)->withInput();
-            }
-
-            $validated = $validator->validated();
-            $user->seller->update([
-                'wb_api_key' => $validated['wb_api_key'],
-                'inn' => $validated['inn'],
-                'platform_link' => $validated['marketplace_link'],
-            ]);
-        }
-
-        return view('profile.edit.' . $user->role, compact('user'));
+        $countries = Country::get();
+        return view('profile.edit.' . $user->role, compact('user', "countries"));
     }
 
     public function update(Request $request)
     {
         $user = Auth::user();
+        $countries = Country::get();
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required|min:3',
+            'email' => 'required|email',
+            'image' => 'image|nullable'
+        ]);
 
-        return view('profile.edit.' . $user->role, compact('user'));
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
 
-        // $validated = request()->validate([
-        //     'name' => 'required|min:3',
-        //     'email' => 'required|email|unique:users,email',
-        //     'phone' => 'required|unique:users,phone',
-        //     'role' => ['required', Rule::in(User::TYPES)],
-        //     'password' => 'required|confirmed|min:8'
-        // ]);
+        $validated = $validator->validated();
 
-        // if ($validated['role'] == 'seller') {
-        //     $validated['status'] = 1;
-        // } else {
-        //     $validated['status'] = 0;
-        // }
-        // $phone_for_search = str_replace(['(', ')', ' ', '-'], '', $validated['phone']);
-        // $phone_for_search = '+7' . mb_substr($phone_for_search, 1);
-        // $tgPhone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
-        // if (!$tgPhone) {
-        //     return redirect()->route('register')->with('success', 'Необходимо подтвердить телеграм')->withInput();
-        // }
+        $user->name = $validated['name'];
+        if ($user->email != $validated['email']) {
+            $user->email = $validated['email'];
+        }
 
-        // $user = User::create([
-        //     'name' => $validated['name'],
-        //     'email' => $validated['email'],
-        //     'phone' => $validated['phone'],
-        //     'role' => $validated['role'],
-        //     'status' => $validated['status'],
-        //     'password' => bcrypt($validated['password']),
-        // ]);
+        if ($request->file('image')) {
+            if (Storage::exists($user->getImageURL())) {
+                Storage::delete($user->getImageURL());
+            }
 
-        // if ($validated['role'] == 'seller') {
-        //     Seller::create([
-        //         'user_id' => $user->id
-        //     ]);
-        // }
+            $product_image = $request->file('image');
+            $image_path = $product_image->store('profile', 'public');
+            $user->image = $image_path;
+        }
+
+        $user->save();
+
+        if ($user->role == 'seller') {
+            $this->updateSeller();
+        } else {
+            $this->updateBlogger();
+        }
+
+        return redirect()->route('edit-profile')->with('success', 'Данные успешно обновлены');
+    }
+
+    public function updateBlogger()
+    {
+        $blogger = Auth::user()->blogger;
+        $validator = Validator::make(request()->all(), [
+            'country_id' => 'required|exists:countries,id',
+            'city' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $validated = $validator->validated();
+
+        $blogger->country_id = $validated['country_id'];
+        $blogger->city = $validated['city'];
+
+        $blogger->save();
+    }
+
+    public function updateSeller()
+    {
+        $seller = Auth::user()->seller;
+        $validator = Validator::make(request()->all(), [
+            'wb_api_key' => 'string|nullable',
+            'platform_link' => 'string|nullable',
+            'inn' => 'string|nullable',
+            'organization_type' => 'string|nullable',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $validated = $validator->validated();
+        $seller->update([
+            'wb_api_key' => $validated['wb_api_key'],
+            'inn' => $validated['inn'],
+            'platform_link' => $validated['platform_link'],
+            'organization_type' => $validated['organization_type'],
+        ]);
     }
 
     public function getNewNotifications(Request $request)
