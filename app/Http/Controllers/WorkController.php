@@ -69,6 +69,8 @@ class WorkController extends Controller
             'user_id' => $work->getPartnerUser($user->role)->id,
             'type' => 'Новая заявка',
             'text' => 'Вам поступила новая заявка от ' . $user->name,
+            'work_id' => $work->id,
+            'from_user_id' => $user->id,
         ]);
 
         TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Вам поступила новая заявка от ' . $user->name);
@@ -88,6 +90,8 @@ class WorkController extends Controller
                 'user_id' => $work->getPartnerUser($user->role)->id,
                 'type' => 'Новая заявка',
                 'text' => $user->name . ' принял вашу заявку',
+                'work_id' => $work->id,
+                'from_user_id' => $user->id,
             ]);
 
             TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' принял вашу заявку');
@@ -117,6 +121,8 @@ class WorkController extends Controller
             'user_id' => $partner_user->id,
             'type' => 'Подтверждение',
             'text' => $partner_user->name . ' принял вашу заявку по проекту ' . $work->project->product_name,
+            'work_id' => $work->id,
+            'from_user_id' => $user->id,
         ]);
     }
 
@@ -145,6 +151,8 @@ class WorkController extends Controller
                 'user_id' => $work->getPartnerUser($user->role)->id,
                 'type' => 'Согласование проекта',
                 'text' => 'Можно приступать к выполнению проекта ' . $work->project->product_name,
+                'work_id' => $work->id,
+                'from_user_id' => $user->id,
             ]);
 
             Message::create([
@@ -159,6 +167,8 @@ class WorkController extends Controller
                 'user_id' => $work->getPartnerUser($user->role)->id,
                 'type' => 'Согласование проекта',
                 'text' => $user->name . ' готов приступить к работе по проекту ' . $work->project->product_name,
+                'work_id' => $work->id,
+                'from_user_id' => $user->id,
             ]);
 
             TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' готов приступить к работе по проекту ' . $work->project->product_name);
@@ -213,6 +223,8 @@ class WorkController extends Controller
                 'user_id' => $work->seller->user->id,
                 'type' => 'Подтверждение',
                 'text' => 'Блогер отправил запрос на подтверждение выполнения проекта ' . $work->project->product_name,
+                'work_id' => $work->id,
+                'from_user_id' => $user->id,
             ]);
             TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Блогер отправил запрос на подтверждение выполнения проекта ' . $work->project->product_name);
         } else {
@@ -227,6 +239,8 @@ class WorkController extends Controller
                 'user_id' => $work->blogger->user->id,
                 'type' => 'Подтверждение',
                 'text' => 'Селлер подтвердил выполнение проекта ' . $work->project->product_name,
+                'work_id' => $work->id,
+                'from_user_id' => $user->id,
             ]);
             TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Селлер подтвердил выполнение проекта ' . $work->project->product_name);
         }
@@ -262,6 +276,8 @@ class WorkController extends Controller
             'user_id' => $work->seller->user->id,
             'type' => 'Статистика по проекту',
             'text' => 'Блогер ' . $work->getPartnerUser($user->role) . ' прикрепил статистику к проекту ' . $work->project->product_name,
+            'work_id' => $work->id,
+            'from_user_id' => $user->id,
         ]);
         TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Блогер ' . $work->getPartnerUser($user->role) . ' прикрепил статистику к проекту ' . $work->project->product_name);
 

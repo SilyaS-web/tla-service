@@ -64,16 +64,16 @@ class UserController extends Controller
         $user = Auth::user();
         $user_id = $user->id;
 
-        $works = Work::where([['blogger_id', $user_id]])->where('status', '<>', null)->get();
+        $works = Work::where([['blogger_id', $user_id]])->where('status', Work::IN_PROGRESS)->get();
 
-        $active_project_works = ProjectWork::whereIn('id', $works->pluck('project_id'))->get();
+        $active_project_works = ProjectWork::whereIn('id', $works->pluck('project_work_id'))->get();
         $all_project_works = ProjectWork::get();
 
         $application_works = Work::where([['blogger_id', $user_id]])->where('status', null)->where('created_by', '<>', $user_id)->where('accepted_by_blogger_at', null)->get();
-        $application_project_works = ProjectWork::whereIn('id', $works->pluck('project_work_id'))->get();
+        // $application_project_works = ProjectWork::whereIn('id', $works->pluck('project_work_id'))->get();
         $role = $user->role;
 
-        return compact('active_project_works', 'all_project_works', 'application_project_works', 'application_works', 'works', 'role', 'user_id');
+        return compact('active_project_works', 'all_project_works', 'application_works', 'works', 'role', 'user_id');
     }
 
 
