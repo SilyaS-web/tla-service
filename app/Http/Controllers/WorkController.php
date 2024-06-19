@@ -8,6 +8,7 @@ use App\Models\FinishStats;
 use App\Models\Message;
 use App\Models\MessageFile;
 use App\Models\Notification;
+use App\Models\Project;
 use App\Models\ProjectWork;
 use App\Models\Work;
 use App\Models\User;
@@ -104,12 +105,16 @@ class WorkController extends Controller
         if ($work->isBothAcceptd() && $work->status = Work::PENDING) {
             $work->status = Work::IN_PROGRESS;
             $work->save();
-            $deeplink = $this->createDeepLinkByWork($work);
-            $link = request()->getSchemeAndHttpHost() . '/lnk/' . $deeplink->link;
+            $message_text = 'Работа начата';
+            if ($work->projectWork->type != Project::FEEDBACK) {
+                $deeplink = $this->createDeepLinkByWork($work);
+                $link = request()->getSchemeAndHttpHost() . '/lnk/' . $deeplink->link;
+                $message_text .= ' - ссылка для сбора статистики <a target="_blank" href="' . $link . '">' . $link . '</a>';
+            }
             Message::create([
                 'work_id' => $work->id,
                 'user_id' => 1,
-                'message' => 'Работа начата - ссылка для сбора статистики <a target="_blank" href="' . $link . '">' . $link . '</a>',
+                'message' => $message_text
             ]);
             TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, $user->name . ' готов приступить к работе');
         } else {

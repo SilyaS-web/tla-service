@@ -111,7 +111,6 @@ class Project extends Model
             return null;
         }
 
-
         foreach ($project_works as $project_work) {
             if (isset(self::TYPE_NAMES[$project_work->type])) {
                 $names[] = self::TYPE_NAMES[$project_work->type];
