@@ -2,10 +2,12 @@
 <p style="font-size: 14px; color: rgba(0, 0, 0, 0.4)">Нет новых уведомлений</p>
 @else
 @forelse ($notifications as $notification)
-<div class="notif-header__col ">
+@php($img = $notification->fromUser ? $notification->fromUser->getImageURL() : asset('img/profile-icon.svg'))
+<div class="notif-header__col ">            <img src="" alt="">
+
     <div class="notif-header__row">
         <div class="notif-header__col notif-header__img">
-            <img src="img/profile-icon.svg" alt="">
+            <img src="{{ $img }}" alt="">
         </div>
         <div class="notif-header__col">
             <div class="notif-header__title">
@@ -30,7 +32,7 @@
 @forelse ($old_notifications as $notification)
 <div class="notif-header__row ">
     <div class="notif-header__col notif-header__img">
-        <img src="{{ asset('img/profile-icon.svg') }}" alt="">
+        <img src="{{ $img }} }}" alt="">
     </div>
     <div class="notif-header__col">
         <div class="notif-header__title">

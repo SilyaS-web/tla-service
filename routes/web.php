@@ -98,7 +98,5 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/notifications/view/{notification}', [NotificationController::class, 'view']);
 
         Route::get('/coverage-data', [DeepLinkController::class, 'stats']);
-
-        Route::get('/test-wb-data/{product_nm}', [ProjectController::class, 'curlWBStats']);
     });
 });

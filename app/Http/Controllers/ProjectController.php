@@ -159,6 +159,8 @@ class ProjectController extends Controller
         $validator = Validator::make(request()->all(), [
             'project_name' => 'string|nullable',
             'project_type' => 'string|nullable',
+            'category' => 'string|nullable',
+            'type' => 'string|nullable'
         ]);
 
         if ($validator->fails()) {
@@ -174,68 +176,88 @@ class ProjectController extends Controller
 
         if (isset($validated['type']) && !empty($validated['type'])) {
             if ($validated['type'] == 'applications') {
-                $projects = Project::whereHas('works', function (Builder $query) use ($user_id) {
-                    $query->where([['blogger_id', $user_id]])->where('created_by', '<>', $user_id)->where('accepted_by_blogger_at', null);
-                });
+                $application_works = Work::where([['blogger_id', $user_id]])->where('created_by', '<>', $user_id)->where('accepted_by_blogger_at', null);
 
                 if (isset($validated['project_type']) && !empty($validated['project_type'])) {
-                    $projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
+                    $application_works->whereHas('projectWork', function (Builder $query) use ($validated) {
                         $query->where('type', $validated['project_type']);
                     });
                 }
 
                 if (isset($validated['project_name']) && !empty($validated['project_name'])) {
-                    $projects->where('product_name', 'like', '%' . $validated['project_name'] . '%');
+                    $application_works->whereHas('project', function (Builder $query) use ($validated) {
+                        $query->where('product_name', 'like', '%' . $validated['project_name'] . '%');
+                    });
                 }
 
-                $ptojects = $projects->get();
-                $all = true;
-                $type = 'avail';
-                return view('project.blogger-list', compact('projects', 'role', 'user_id', 'all', 'type'));
+                if (isset($validated['category']) && !empty($validated['project_name'])) {
+                    $application_works->whereHas('project', function (Builder $query) use ($validated) {
+                        $query->where('wb_category', 'like', '%' . $validated['category'] . '%');
+                    });
+                }
+
+                $project_works = $application_works->get();
+                $type = 'applications';
+                return view('project.blogger-list', compact('project_works', 'role', 'user_id', 'type'));
             } else if ($validated['type'] == 'works') {
                 $works = Work::where([['blogger_id', $user_id]])->where('status', Work::IN_PROGRESS)->get();
-                $projects = Project::whereIn('id', $works->pluck('project_id'));
+                $active_project_works = ProjectWork::whereIn('id', $works->pluck('project_work_id'));
 
                 if (isset($validated['project_type']) && !empty($validated['project_type'])) {
-                    $projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
-                        $query->where('type', $validated['project_type']);
-                    });
+                    $active_project_works->where('type', $validated['project_type']);
                 }
 
                 if (isset($validated['project_name']) && !empty($validated['project_name'])) {
-                    $projects->where('product_name', 'like', '%' . $validated['project_name'] . '%');
+                    $active_project_works->whereHas('project', function (Builder $query) use ($validated) {
+                        $query->where('product_name', 'like', '%' . $validated['project_name'] . '%');
+                    });
+                }
+                if (isset($validated['category']) && !empty($validated['project_name'])) {
+                    $active_project_works->whereHas('project', function (Builder $query) use ($validated) {
+                        $query->where('wb_category', 'like', '%' . $validated['category'] . '%');
+                    });
                 }
 
-                $ptojects = $projects->get();
-                $all = false;
-                $type = 'start';
-                return view('project.blogger-list', compact('projects', 'role', 'user_id', 'all', 'type'));
+                $project_works = $active_project_works->get();
+                $type = 'active';
+                return view('project.blogger-list', compact('project_works', 'role', 'user_id', 'type'));
             }
         }
 
         $all = true;
         $type = 'all';
-        $projects = [];
+        $works = Work::where([['blogger_id', $user_id]]);
+        $all_project_works = ProjectWork::whereIn('id', $works->pluck('project_id'));
 
         if (isset($validated['project_type']) && !empty($validated['project_type'])) {
-            $projects = Project::whereHas('projectWorks', function (Builder $query) use ($validated) {
-                $query->where('type', $validated['project_type']);
-            });
+            $all_project_works->where('type', $validated['project_type']);
+
 
             if (isset($validated['project_name']) && !empty($validated['project_name'])) {
-                $projects = $projects->where('product_name', 'like', '%' . $validated['project_name'] . '%')->get();
-            } else {
-                $projects = $projects->get();
+                $all_project_works->whereHas('project', function (Builder $query) use ($validated) {
+                    $query->where('product_name', 'like', '%' . $validated['project_name'] . '%');
+                });
+            }
+
+            if (isset($validated['category']) && !empty($validated['project_name'])) {
+                $all_project_works->whereHas('project', function (Builder $query) use ($validated) {
+                    $query->where('wb_category', 'like', '%' . $validated['category'] . '%');
+                });
             }
         } else {
-            if (isset($validated['project_name']) && !empty($validated['project_name'])) {
-                $projects = Project::where('product_name', 'like', '%' . $validated['project_name'] . '%')->get();
-            } else {
-                $projects = Project::get();
+            $all_project_works->whereHas('project', function (Builder $query) use ($validated) {
+                $query->where('product_name', 'like', '%' . $validated['project_name'] . '%');
+            });
+
+            if (isset($validated['category']) && !empty($validated['project_name'])) {
+                $all_project_works->whereHas('project', function (Builder $query) use ($validated) {
+                    $query->where('wb_category', 'like', '%' . $validated['category'] . '%');
+                });
             }
         }
 
-        return view('project.blogger-list', compact('projects', 'role', 'user_id', 'all', 'type'));
+        $project_works = $all_project_works->get();
+        return view('project.blogger-list', compact('project_works', 'role', 'user_id', 'all', 'type'));
     }
 
     /**
@@ -320,11 +342,12 @@ class ProjectController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
+
         $validated = $validator->validated();
         $categories = [];
 
         if (isset($validated['category']) && !empty($validated['category'])) {
-            $categories = Theme::where('theme', 'like', '%' . $validated['category'] . '%')->get();
+            $categories = Project::selectRaw('wb_category as theme')->where('wb_category', 'like', '%' . $validated['category'] . '%')->distinct('wb_category')->get();
         }
 
         return response()->json(['categories' => $categories], 200);

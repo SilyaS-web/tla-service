@@ -1,6 +1,6 @@
 <div class="chat__chat-item item-chat" data-id="{{$work->id}}"> {{--current--}}
     <div class="item-chat__img">
-        <img src="img/profile-icon.svg" alt="">
+        <img src="{{ $work->getPartnerUser(auth()->user()->role)->getImageURL() }}" alt="">
     </div>
     <div class="item-chat__text">
         <div class="item-chat__title">{{ $work->getPartnerUser(auth()->user()->role)->name }}</div>

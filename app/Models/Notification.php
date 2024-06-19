@@ -14,6 +14,17 @@ class Notification extends Model
         'user_id',
         'type',
         'text',
+        'work_id',
+        'from_user_id',
         'viewed_at'
     ];
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+    public function fromUser()
+    {
+        return $this->hasOne(User::class, 'id', 'from_user_id');
+    }
 }

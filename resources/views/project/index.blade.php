@@ -44,9 +44,10 @@
                                     <span class="card__stats-val--total">
                                         ?
                                         <div class="card__stats-val--total-list">
-                                            <p>Всего в зайдействовано — 12</p>
-                                            <p>Всего в работе — 8</p>
-                                            <p>Всего выполнило работу — 4</p>
+                                            <p>Заявка отправлены — {{ $project->works()->where('status', null)->where('created_by', auth()->user()->id)->count() }}</p>
+                                            <p>На согласовании — {{ $project->works()->where('status', 'pending')->count() }}</p>
+                                            <p>В работе — {{ $project->works()->where('status', 'progress')->count() }}</p>
+                                            <p>Выполнило работу — {{ $project->works()->where('status', 'completed')->count() }}</p>
                                         </div>
                                     </span>
                                 </div>
