@@ -56,6 +56,18 @@
                     @error('themes')
                     <span class="error">{{ $message }}</span>
                     @enderror
+                    <script>
+                        $(window).on('load', function(){
+                            $('.form-format .form-format__check').on('change', function(e){
+                                var list = $('.form-format .form-format__check:checked');
+
+                                if(list.length > 3){
+                                    $(e.target).prop('checked', false);
+                                    notify('info', {title: 'Внимание', message: 'Нельзя выбрать больше 3-х тематик'});
+                                }
+                            })
+                        })
+                    </script>
                 </div>
                 <div class="popup__form-row popup__form-stat form-stat">
                     <div class="form-stat__title">
@@ -123,12 +135,20 @@
                 </div>
                 <div class="form-group form-group--file">
                     <label class="tab-content__profile-img-upload input-file" for="profile-img">
-                        Загрузите изображение профиля
+                        <span>Загрузите изображение профиля</span>
                         <input type="file" name="image" class="" id="profile-img">
                     </label>
                     @error('image')
                     <span class="error">{{ $message }}</span>
                     @enderror
+                    <script>
+                        $(window).on('load', function(){
+                           $('#profile-img').on('change', function(e){
+                               $(e.target).closest('.tab-content__profile-img-upload').addClass('uploaded');
+                               $(e.target).closest('.tab-content__profile-img-upload').find('span').text('Изображение загружено');
+                           })
+                       })
+                   </script>
                 </div>
                 <div class="form-btns auth__form-btns" style="margin-top:32px">
                     <button class="btn btn-primary next" type="submit">

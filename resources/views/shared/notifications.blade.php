@@ -11,7 +11,7 @@
         </div>
         <div class="notif-header__col">
             <div class="notif-header__title">
-                {{ $notification->text ?? 'Новая заявка' }}
+                {{ $notification->type ?? 'Новая заявка' }}
             </div>
             <div class="notif-header__text">
                 {{ $notification->text }}
@@ -20,7 +20,7 @@
     </div>
     <div class="notif-header__btns">
         <a href="#" class="notif-header__goto" data-work-id="{{ $notification->work_id }}">Перейти</a>
-        <a href="#" class="notif-header__hide">Скрыть</a>
+        <a href="#" class="notif-header__hide" data-id="{{ $notification->id }}">Скрыть</a>
     </div>
 </div>
 @empty
@@ -36,7 +36,7 @@
     </div>
     <div class="notif-header__col">
         <div class="notif-header__title">
-            {{ $notification->text ?? 'Новая заявка' }}
+            {{ $notification->type ?? 'Новая заявка' }}
         </div>
         <div class="notif-header__text">
             {{ $notification->text }}

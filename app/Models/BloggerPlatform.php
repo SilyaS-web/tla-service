@@ -22,7 +22,7 @@ class BloggerPlatform extends Model
     ];
 
     const PLATFORM_ICON_URLS = [
-        self::YOUTUBE => 'img/youtube-icon.svg',
+        self::YOUTUBE => 'img/youtube-colored-icon.svg',
         self::INSTAGRAM => 'img/inst-icon.svg',
         self::VK => 'img/vk-icon.svg',
         self::TELEGRAM => 'img/telegram-icon.svg',
