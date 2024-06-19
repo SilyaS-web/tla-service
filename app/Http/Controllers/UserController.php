@@ -129,7 +129,7 @@ class UserController extends Controller
             }
         }
 
-        foreach ($deep_link_stats as $deep_link_stat) {
+        foreach ($bloggers_finish as $blogger_finish) {
             if (isset($total_stats[$deep_link_stat->date])) {
                 $total_stats[$deep_link_stat->date]['bloggers'] += 1;
             } else {
@@ -148,7 +148,7 @@ class UserController extends Controller
         $total_stats = json_encode(array_values($total_stats));
 
         $avg_price = $projects->avg('product_price');
-   
+
         return compact('projects', 'bloggers', 'works', 'role', 'user_id', 'chat_role', 'blogger_platforms', 'platforms', 'themes', 'total_stats', 'total_clicks', 'subscribers', 'avg_price');
     }
 
