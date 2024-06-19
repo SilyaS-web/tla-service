@@ -32,7 +32,7 @@
             <div class="line">
                 <div class="line__val" style="width:{{ ($lost_seats / $project_work->quantity) * 100 }}%"></div>
             </div>
-            Осталось мест на интеграцию <span style="font-weight: 700;">{{ $project_work->quantity }}/{{ $lost_seats }}</span>
+            Осталось мест на интеграцию <span style="font-weight: 700;">{{ $lost_seats }}/{{ $project_work->quantity }}</span>
         </div>
         <div class="project-item__format-tags card__row card__tags">
             <div class="card__tags-item">
