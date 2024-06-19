@@ -17,7 +17,7 @@ class ProjectsWbStatsColumns extends Migration
             $table->string('wb_category')->nullable();
             $table->string('wb_product_name', 500)->nullable();
             $table->string('wb_description', 2500)->nullable();
-            $table->string('wb_options', 15000)->nullable();
+            $table->text('wb_options')->nullable();
             $table->unsignedInteger('wb_rate')->nullable();
         });
     }
