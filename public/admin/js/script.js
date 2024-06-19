@@ -295,7 +295,7 @@ class PopupAcceptBloger extends Popup{
         this.dataProps.is_achievement.set(blogger.is_achievement);
         this.dataProps.desc.set(blogger.description || '');
         this.dataProps.sex.set(blogger.sex || '');
-        this.dataProps.country.set(blogger.country || '');
+        this.dataProps.country.set(blogger.country_id || 0);
         this.dataProps.city.set(blogger.city || '');
     }
 
