@@ -95,7 +95,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/achievement/{user_id}', [AdminController::class, 'achievement']);
 
         Route::get('/notifications', [UserController::class, 'getNewNotifications']);
-        Route::get('/notifications/view', [NotificationController::class, 'view']);
+        Route::get('/notifications/view/{notification}', [NotificationController::class, 'view']);
 
         Route::get('/coverage-data', [DeepLinkController::class, 'stats']);
 

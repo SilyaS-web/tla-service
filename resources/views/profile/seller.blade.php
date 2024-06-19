@@ -1043,7 +1043,7 @@
         , labelWidthPercent: 30
         , labelFontColor: "#000"
         , labels: [
-            "Переходы"
+            "Охваты"
             , "ER, %"
             , "CPC, Руб."
         , ]

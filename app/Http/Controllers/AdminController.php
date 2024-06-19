@@ -157,6 +157,7 @@ class AdminController extends Controller
         $user = $blogger->user;
         $user->status = 1;
         $user->save();
+
         TgService::notify($blogger->user->tgPhone->chat_id, 'Вы успешно прошли модерацию');
 
         return response()->json('success', 200);
@@ -177,6 +178,7 @@ class AdminController extends Controller
         $user->status = -1;
         $user->save();
 
+        TgService::notify($user->tgPhone->chat_id, 'Вы не прошли модерацию');
         return view('shared.admin.bloggers-list');
     }
 

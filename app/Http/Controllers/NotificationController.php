@@ -8,7 +8,10 @@ use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
 {
-    public function store($user_id, $text, $type) {
+    public function view(Notification $notification) {
+        $notification->viewed_at = date('Y-m-d H:i');
+        $notification->save();
 
+        return response()->json("success", 200);
     }
 }
