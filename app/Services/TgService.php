@@ -33,6 +33,7 @@ class TgService
         Log::info("text " . $password);
 
         $response = curl_exec($curl);
+        dd($response);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         curl_close($curl);
