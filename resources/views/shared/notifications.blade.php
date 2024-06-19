@@ -3,8 +3,7 @@
 @else
 @forelse ($notifications as $notification)
 @php($img = $notification->fromUser ? $notification->fromUser->getImageURL() : asset('img/profile-icon.svg'))
-<div class="notif-header__col ">            <img src="" alt="">
-
+<div class="notif-header__col ">
     <div class="notif-header__row">
         <div class="notif-header__col notif-header__img">
             <img src="{{ $img }}" alt="">
@@ -30,6 +29,7 @@
 <p style='font-size:8px'>просмотренные уведомления</p>
 @endif
 @forelse ($old_notifications as $notification)
+@php($img = $notification->fromUser ? $notification->fromUser->getImageURL() : asset('img/profile-icon.svg'))
 <div class="notif-header__row ">
     <div class="notif-header__col notif-header__img">
         <img src="{{ $img }} }}" alt="">
