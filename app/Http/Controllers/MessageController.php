@@ -54,13 +54,13 @@ class MessageController extends Controller
             $data_id = $work->id;
             if ($work->status == Work::PENDING) {
                 if ($work->isAcceptedByUser($user)) {
-                    $btn_text = 'Ожидаем ответа от ' . $work->getPartnerUser($user)->name;
+                    $btn_text = 'Ожидаем ответа от ' . $work->getPartnerUser($user->role)->name;
                     $btn_class = 'btn-chat-action disabled';
                 }
             } else if ($work->status == Work::IN_PROGRESS) {
                 if ($work->isConfirmedByUser($user)) {
                     $btn_class = 'btn-chat-action disabled';
-                    $btn_text =  'Ожидаем ответа от ' . $work->getPartnerUser($user)->name;
+                    $btn_text =  'Ожидаем ответа от ' . $work->getPartnerUser($user->role)->name;
                 } else {
                     $btn_class = 'confirm-completion-btn';
                     $btn_text = 'Завершить проект';
@@ -145,7 +145,7 @@ class MessageController extends Controller
             'type' => 'message',
             'text' => 'Вам поступило новое сообщение от ' . $user->name,
         ]);
-        TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, 'Вам поступило новое сообщение от ' . $user->name);
+        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Вам поступило новое сообщение от ' . $user->name);
 
         return response()->json(['message' => 'success'], 200);
     }

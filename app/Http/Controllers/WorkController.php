@@ -71,7 +71,7 @@ class WorkController extends Controller
             'text' => 'Вам поступила новая заявка от ' . $user->name,
         ]);
 
-        TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, 'Вам поступила новая заявка от ' . $user->name);
+        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Вам поступила новая заявка от ' . $user->name);
         return response()->json(['success'], 200);
     }
 
@@ -90,7 +90,7 @@ class WorkController extends Controller
                 'text' => $user->name . ' принял вашу заявку',
             ]);
 
-            TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, $user->name . ' принял вашу заявку');
+            TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' принял вашу заявку');
             return redirect()->back()->with('success', 'Заявка успешно принята');
         }
 
@@ -142,7 +142,7 @@ class WorkController extends Controller
             }
 
             Notification::create([
-                'user_id' => $work->getPartnerUser($user)->id,
+                'user_id' => $work->getPartnerUser($user->role)->id,
                 'type' => 'Согласование проекта',
                 'text' => 'Можно приступать к выполнению проекта ' . $work->project->product_name,
             ]);
@@ -153,15 +153,15 @@ class WorkController extends Controller
                 'message' => $message_text
             ]);
 
-            TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, $user->name . ' готов приступить к работе');
+            TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' готов приступить к работе');
         } else {
             Notification::create([
-                'user_id' => $work->getPartnerUser($user)->id,
+                'user_id' => $work->getPartnerUser($user->role)->id,
                 'type' => 'Согласование проекта',
                 'text' => $user->name . ' готов приступить к работе по проекту ' . $work->project->product_name,
             ]);
 
-            TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, $user->name . ' готов приступить к работе по проекту ' . $work->project->product_name);
+            TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' готов приступить к работе по проекту ' . $work->project->product_name);
         }
 
         return response()->json('success', 200);
@@ -214,7 +214,7 @@ class WorkController extends Controller
                 'type' => 'Подтверждение',
                 'text' => 'Блогер отправил запрос на подтверждение выполнения проекта ' . $work->project->product_name,
             ]);
-            TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, 'Блогер отправил запрос на подтверждение выполнения проекта ' . $work->project->product_name);
+            TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Блогер отправил запрос на подтверждение выполнения проекта ' . $work->project->product_name);
         } else {
             Message::create([
                 'work_id' => $work->id,
@@ -228,7 +228,7 @@ class WorkController extends Controller
                 'type' => 'Подтверждение',
                 'text' => 'Селлер подтвердил выполнение проекта ' . $work->project->product_name,
             ]);
-            TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, 'Селлер подтвердил выполнение проекта ' . $work->project->product_name);
+            TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Селлер подтвердил выполнение проекта ' . $work->project->product_name);
         }
 
         return redirect()->route('profile')->with('success');
@@ -263,7 +263,7 @@ class WorkController extends Controller
             'type' => 'Статистика по проекту',
             'text' => 'Блогер ' . $work->getPartnerUser($user->role) . ' прикрепил статистику к проекту ' . $work->project->product_name,
         ]);
-        TgService::notify($work->getPartnerUser($user)->tgPhone->chat_id, 'Блогер ' . $work->getPartnerUser($user->role) . ' прикрепил статистику к проекту ' . $work->project->product_name);
+        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Блогер ' . $work->getPartnerUser($user->role) . ' прикрепил статистику к проекту ' . $work->project->product_name);
 
         if ($request->file('images')) {
             foreach ($request->file('images') as $image) {
