@@ -66,11 +66,13 @@ class Project extends Model
         return $this->hasOne(Seller::class, 'user_id', 'seller_id');
     }
 
-    public function getCoverage() {
+    public function getCoverage()
+    {
         return 0;
     }
 
-    public function getClicksCount() {
+    public function getClicksCount()
+    {
         $works = Work::where([['project_id', $this->id]])->get();
         $clicks_count = DeepLinkStat::whereHas('deepLink', function (Builder $query) use ($works) {
             $query->whereIn('work_id', $works->pluck('id'));
@@ -78,18 +80,23 @@ class Project extends Model
         return $clicks_count;
     }
 
-    public function getSuscribers() {
+    public function getSuscribers()
+    {
         $project_id = $this->id;
         $bloggers = Blogger::whereHas('works', function (Builder $query) use ($project_id) {
             $query->where('project_id', $project_id);
         })->get();
 
-        $subscribers = BloggerPlatform::whereIn('blogger_id', $bloggers->pluck('id'))->sum('subscriber_quantity');
+        $subscribers = 0;
+        foreach ($bloggers as $blogger) {
+            $subscribers += BloggerPlatform::where('blogger_id', $blogger->id)->avg('subscriber_quantity');
+        }
 
         return $subscribers;
     }
 
-    public function getFinishStats() {
+    public function getFinishStats()
+    {
         $project_id = $this->id;
         $finishStats = FinishStats::selectRaw('sum(subs) as total_subs, sum(views) as total_views, sum(reposts) as total_reposts, sum(likes) as total_likes')->whereHas('work', function (Builder $query) use ($project_id) {
             $query->where('project_id', $project_id);

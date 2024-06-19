@@ -422,7 +422,7 @@
                                                     Переходы по интеграциям
                                                 </div>
                                                 @php($stats = 1)
-                                                <canvas class="graph" id="coverage-graph" data-coverage='{"coverage": [{"dt": "2024-05-20", "coverage": 59, "bloggers": 1},{"dt": "2024-05-21", "coverage": 46, "bloggers": 1},{"dt": "2024-05-22", "coverage": 42, "bloggers": 1},{"dt": "2024-05-23", "coverage": 58, "bloggers": 1},{"dt": "2024-05-24", "coverage": 80, "bloggers": 1},{"dt": "2024-05-25", "coverage": 62, "bloggers": 1},{"dt": "2024-05-26", "coverage": 47, "bloggers": 1},{"dt": "2024-05-27", "coverage": 49, "bloggers": 1},{"dt": "2024-05-28", "coverage": 48, "bloggers": 1},{"dt": "2024-05-29", "coverage": 57, "bloggers": 1},{"dt": "2024-05-30", "coverage": 82, "bloggers": 1},{"dt": "2024-05-31", "coverage": 33, "bloggers": 1},{"dt": "2024-06-01", "coverage": 42, "bloggers": 1},{"dt": "2024-06-02", "coverage": 43, "bloggers": 1},{"dt": "2024-06-03", "coverage": 56, "bloggers": 1},{"dt": "2024-06-04", "coverage": 78, "bloggers": 1},{"dt": "2024-06-05", "coverage": 70, "bloggers": 1},{"dt": "2024-06-06", "coverage": 80, "bloggers": 1},{"dt": "2024-06-07", "coverage": 74, "bloggers": 1},{"dt": "2024-06-08", "coverage": 64, "bloggers": 1},{"dt": "2024-06-09", "coverage": 110, "bloggers": 1},{"dt": "2024-06-10", "coverage": 114, "bloggers": 1},{"dt": "2024-06-11", "coverage": 77, "bloggers": 1},{"dt": "2024-06-12", "coverage": 72, "bloggers": 1},{"dt": "2024-06-13", "coverage": 79, "bloggers": 1},{"dt": "2024-06-14", "coverage": 82, "bloggers": 1},{"dt": "2024-06-15", "coverage": 78, "bloggers": 1}]}'>
+                                                <canvas class="graph" id="coverage-graph" data-coverage='{"coverage": {{ $total_stats }} }'>
 
                                                 </canvas>
                                             </div>
@@ -1035,7 +1035,7 @@
     // var funnel = document.getElementById("funnel-graph").getContext("2d");
     // console.log(funnel);
     FunnelChart("funnel-graph", {
-        values: [3512, 891, 652]
+        values: [ {{ $total_clicks }}, {{ $total_clicks / ($subscribers == 0 ? 1 : $subscribers) }}, {{ $avg_price / ($total_clicks == 0 ? 1 : $total_clicks) }}]
         , sectionColor: ["#98CBED", "#F0C457", "#FD6567"]
         , displayPercentageChange: false
         , pSectionHeightPercent: 100
@@ -1045,7 +1045,7 @@
         , labels: [
             "Переходы"
             , "ER, %"
-            , "CPM, Руб."
+            , "CPC, Руб."
         , ]
         , maxFontSize: 18
     , });

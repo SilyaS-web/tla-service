@@ -410,9 +410,9 @@
                                         Статистики пока нет
                                     @else
                                         <div class="card__row card__stats-row">
-                                            <div class="card__col card__stats-item">
+                                        <div class="card__col card__stats-item">
                                                 <div class="card__stats-title">
-                                                    <span>Охватов</span>
+                                                    <span>Подписчиков</span>
                                                 </div>
                                                 <div class="card__stats-val">
                                                     <span>{{ $suscribers }}</span>
@@ -433,15 +433,15 @@
                                                     <span>ER</span>
                                                 </div>
                                                 <div class="card__stats-val">
-                                                    <span>{{ ($clicks_count / ($suscribers == 0 ? 1 : $suscribers)) * 100 }}</span>
+                                                    <span>{{ round(($clicks_count / ($suscribers == 0 ? 1 : $suscribers)) * 100, 3) }}</span>
                                                 </div>
                                             </div>
                                             <div class="card__col card__stats-item">
                                                 <div class="card__stats-title">
-                                                    <span>CPM</span>
+                                                    <span>CPC</span>
                                                 </div>
                                                 <div class="card__stats-val">
-                                                    <span>{{ ($project->product_price / ($clicks_count == 0 ? 1 : $clicks_count)) * 1000 }}₽</span>
+                                                    <span>{{ round(($project->product_price / ($clicks_count == 0 ? 1 : $clicks_count)), 1) }}₽</span>
                                                 </div>
                                             </div>
                                         </div>

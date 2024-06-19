@@ -56,7 +56,7 @@ class Work extends Model
 
     public function projectWork()
     {
-        return $this->hasOne(ProjectWork::class, 'project_work_id', 'id');
+        return $this->hasOne(ProjectWork::class, 'id', 'project_work_id');
     }
 
     public function getPartnerUser($role)

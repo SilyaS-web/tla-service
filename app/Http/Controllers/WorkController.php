@@ -90,6 +90,28 @@ class WorkController extends Controller
         return redirect()->back()->with('success', 'Не удалось принять заявку');
     }
 
+    public function acceptApplication(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'work_id' => 'required|exists:works,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+
+        $user = Auth::user();
+        $work = Work::find($validated['work_id']);
+        $work->update(['status' => Work::PENDING]);
+        $partner_user = $work->getPartnerUser($user->role);
+        Notification::create([
+            'user_id' => $partner_user->id,
+            'type' => 'Подтверждение',
+            'text' => $partner_user->name . ' принял вашу заявку по проекту ' . $work->project->product_name,
+        ]);
+    }
+
     public function accept($work_id)
     {
         $work = Work::find($work_id);
@@ -100,7 +122,6 @@ class WorkController extends Controller
             'user_id' => 1,
             'message' => $user->name . ' готов приступить к работе',
         ]);
-
 
         if ($work->isBothAcceptd() && $work->status = Work::PENDING) {
             $work->status = Work::IN_PROGRESS;

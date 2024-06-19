@@ -13,12 +13,14 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use App\Models\Project;
+use App\Models\ProjectWork;
 use App\Models\Seller;
 use App\Models\TgPhone;
 use App\Models\Theme;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\User;
 use App\Models\Work;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -63,15 +65,15 @@ class UserController extends Controller
         $user_id = $user->id;
 
         $works = Work::where([['blogger_id', $user_id]])->where('status', '<>', null)->get();
-        $projects = Project::whereIn('id', $works->pluck('project_id'))->get();
-        $all_projects = Project::get();
 
-        $blogger_orders = Project::whereHas('works', function (Builder $query) use ($user_id) {
-            $query->where([['blogger_id', $user_id]])->where('created_by', '<>', $user_id)->where('accepted_by_blogger_at', null);
-        })->get();
+        $active_project_works = ProjectWork::whereIn('id', $works->pluck('project_id'))->get();
+        $all_project_works = ProjectWork::get();
+
+        $application_works = Work::where([['blogger_id', $user_id]])->where('status', null)->where('created_by', '<>', $user_id)->where('accepted_by_blogger_at', null)->get();
+        $application_project_works = ProjectWork::whereIn('id', $works->pluck('project_work_id'))->get();
         $role = $user->role;
 
-        return compact('projects', 'all_projects', 'blogger_orders', 'works', 'role', 'user_id');
+        return compact('active_project_works', 'all_project_works', 'application_project_works', 'application_works', 'works', 'role', 'user_id');
     }
 
 
@@ -103,12 +105,51 @@ class UserController extends Controller
         $platforms = BloggerPlatform::PLATFORM_TYPES;
         $themes = Theme::get();
 
-        // $deep_link_ids = DeepLink::whereIn('work_id', $works->pluck('id'))->get();
-        // $deep_link_stats = DeepLinkStat::whereHas('deep_links', function (Builder $query) use ($deep_link) {
-        //     $query->where('name', 'like', '%' . $validated['blogger_name'] . '%');
-        // })->get();
 
-        return compact('projects', 'bloggers', 'works', 'role', 'user_id', 'chat_role', 'blogger_platforms', 'platforms', 'themes');
+        $start_date = now()->subDays(30);
+        $end_date = now();
+        $deep_link_ids = DeepLink::whereIn('work_id', $works->pluck('id'))->get()->pluck('id');
+        $deep_link_stats = DeepLinkStat::selectRaw('DATE_FORMAT(created_at, "%Y-%m-%e") as date')->whereHas('deepLink', function (Builder $query) use ($deep_link_ids) {
+            $query->whereIn('link_id', $deep_link_ids);
+        })->whereBetween('created_at', [$start_date, $end_date])->get();
+
+        $bloggers_finish = Work::selectRaw('DATE_FORMAT(created_at, "%Y-%m-%e") as date')->where('seller_id', $user_id)->where('status', Work::COMPLETED)->whereBetween('created_at', [$start_date, $end_date])->get();
+        $total_stats = [];
+        $total_clicks = 0;
+        foreach ($deep_link_stats as $deep_link_stat) {
+            $total_clicks += 1;
+            if (isset($total_stats[$deep_link_stat->date])) {
+                $total_stats[$deep_link_stat->date]['coverage'] += 1;
+            } else {
+                $total_stats[$deep_link_stat->date] = [
+                    'dt' => $deep_link_stat->date,
+                    'coverage' => 1,
+                    'bloggers' => 0
+                ];
+            }
+        }
+
+        foreach ($deep_link_stats as $deep_link_stat) {
+            if (isset($total_stats[$deep_link_stat->date])) {
+                $total_stats[$deep_link_stat->date]['bloggers'] += 1;
+            } else {
+                $total_stats[$deep_link_stat->date] = [
+                    'dt' => $deep_link_stat->date,
+                    'coverage' => 0,
+                    'bloggers' => 1
+                ];
+            }
+        }
+        $subscribers = 0;
+        foreach ($projects as $project) {
+            $subscribers = ($subscribers + $project->getSuscribers()) / 2;
+        }
+
+        $total_stats = json_encode(array_values($total_stats));
+
+        $avg_price = $projects->avg('product_price');
+   
+        return compact('projects', 'bloggers', 'works', 'role', 'user_id', 'chat_role', 'blogger_platforms', 'platforms', 'themes', 'total_stats', 'total_clicks', 'subscribers', 'avg_price');
     }
 
     public function getAdminProfileData()

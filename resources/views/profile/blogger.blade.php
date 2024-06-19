@@ -38,7 +38,7 @@
                                 </div>
                             </div>
                             <div class="list-projects__items">
-                                @include('project.blogger-list', ['projects' => $projects, 'all' => false, 'type' => 'start']) {{-- types start, complete --}}
+                                @include('project.blogger-list', ['project_works' => $active_project_works, 'type' => 'active'])
                             </div>
                         </div>
                         <div class="profile-projects__filters">
@@ -114,7 +114,7 @@
                                 </div>
                             </div>
                             <div class="profile-projects__items list-projects__items">
-                                @include('project.blogger-list', ['projects' => $all_projects, 'all' => true, 'type' => 'all'])
+                                @include('project.blogger-list', ['project_works' => $all_project_works, 'type' => 'all'])
                             </div>
                         </div>
                         <div class="profile-projects__filters">
@@ -181,7 +181,7 @@
                                 </div>
                             </div>
                             <div class="list-projects__items">
-                                @include('project.blogger-list', ['projects' => $blogger_orders, 'all' => true, 'type' => 'avail'])
+                                @include('project.blogger-list', ['project_works' => $application_works, 'type' => 'applications'])
                             </div>
                         </div>
                         <div class="profile-projects__filters">
