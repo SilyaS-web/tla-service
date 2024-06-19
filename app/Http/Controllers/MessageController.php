@@ -66,7 +66,7 @@ class MessageController extends Controller
                     $btn_text = 'Завершить проект';
                 }
             } else if ($work->status == Work::COMPLETED) {
-                if ($user->role == 'blogger') {
+                if ($user->role == 'blogger' && $work->projectWork->type !== Project::FEEDBACK) {
                     $btn_class = 'send-stats-blogger-btn';
                     $btn_text = 'Прикрепить статистику';
                 } else {
