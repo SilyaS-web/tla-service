@@ -36,7 +36,6 @@ class TgService
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         curl_close($curl);
-        dd()
         return $httpcode == 200 ? true : false;
     }
 
