@@ -172,7 +172,7 @@ class BloggerController extends Controller
     public function show(Blogger $blogger)
     {
         $user = $blogger->user;
-        $works = Work::where([['blogger_id', $user->id]])->get();
+        $works = Work::where([['blogger_id', $user->id]])->where('status', Work::COMPLETED)->get();
         $projects = Project::whereIn('id', $works->pluck('project_id'))->get();
         return view('profile.public.blogger', compact('user', 'projects'));
     }

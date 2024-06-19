@@ -59,7 +59,11 @@
                     <div class="tab-content__form-left">
                         <div class="form-group" style="margin-top: 20px;">
                             <label for="">Тип организации</label>
-                            <input type="text" class="input" id="type" name="organization_type" name="organization_type" value="{{ $user->seller->organization_type }}">
+                            <select class="input" id="type" name="organization_type">
+                                <option value="ООО" {{ $user->seller->organization_type == "ООО" ? "selected" : ''}}>ООО</option>
+                                <option value="ИП" {{ $user->seller->organization_type == "ИП" ? "selected" : ''}}>ИП</option>
+                                <option value="ОАО" {{ $user->seller->organization_type == "ОАО" ? "selected" : ''}}>ОАО</option>
+                            </select>
                             @error('organization_type')
                             <span class="error">{{ $message }}</span>
                             @enderror

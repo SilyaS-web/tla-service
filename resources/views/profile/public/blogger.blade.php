@@ -15,7 +15,10 @@
                                 {{ $user->name }}
                             </div>
                             <div class="info-profile__id">
+                                <p style="font-size: 12px">
+                                    {{ $user->blogger->country->name }}, {{ $user->blogger->city }}<br>
                                 На площадке с {{ date_format($user->created_at, 'd.m.Y') }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -170,7 +173,7 @@
                 <div class="profile-projects tab-content active" id="my-projects">
                     <div class="profile-projects__body">
                         <div class="profile-projects__title title">
-                            Список выполненных интеграций
+                            Список выполненных проектов
                         </div>
                         <div class="list-projects__items">
                             @forelse ($projects as $project)
