@@ -315,12 +315,12 @@
                                 </div>
                                 <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap">
                                     @if ($active_work->status == null)
-                                    <button class="btn btn-primary" data-project-id="{{ $project->id }}" onclick="(function(){ $(document).find('.chat-link').click(); $(document).find( '.item-chat[ data-id={{ $active_work->id }} ]' ).click() })()">
-                                        Перейти в диалог
+                                    <button class="btn btn-secondary" data-project-id="{{ $project->id }}" onclick="(function(){ $(document).find('.chat-link').click(); $(document).find( '.item-chat[ data-id={{ $active_work->id }} ]' ).click() })()">
+                                        Заявка отправлена
                                     </button>
                                     @else
                                     <button class="btn btn-primary" disabled>
-                                        Заявка отправлена
+                                        Перейти в диалог
                                     </button>
                                     @endif
                                 </div>
