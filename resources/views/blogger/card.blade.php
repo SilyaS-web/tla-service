@@ -1,5 +1,5 @@
-<div class="list-blogers__item bloger-item card" data-id="{{ $blogger->id }}">
-    <div class="card__row card__content">
+<div class="list-blogers__item bloger-item card" style="display: flex; flex-direction: column;" data-id="{{ $blogger->id }}">
+    <div class="card__row card__content" style="flex: 1 1 auto">
         <div class="card__col">
             <div class="card__row card__header">
                 <div class="card__img">
@@ -51,7 +51,7 @@
                 {{ $blogger->description }}
             </div>
         </div>
-        <div class="card__col card__stats">
+        <div class="card__col card__stats" style="margin-top:auto;">
             <div class="card__col card__stats-stats">
                 <div class="card__row card__stats-row">
 
@@ -86,8 +86,12 @@
                         <div class="card__stats-title">
                             <span>CPM</span>
                         </div>
-                        <div class="card__stats-val">
-                            <span>{{ $blogger->getCPM() }}₽</span>
+                        <div class="card__stats-val card__stats-val--empty">
+                            {{-- <span>{{ $blogger->getCPM() }}₽</span> --}}
+                            <span class = "card__stats-val">?</span>
+                            <div class="stats-tooltip">
+                                Выберите проект для расчёта стоимости за тысячу показов
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -103,7 +107,7 @@
                 </div>
             </div>
             <div class="card__row" style="text-align: center; justify-content:center">
-                <a href="{{ route('blogger-page', $blogger->id) }}" class="" style="color:rgba(0,0,0,.4); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -20px;">Подробности</a>
+                <a href="{{ route('blogger-page', $blogger->id) }}" class="" style="color:rgba(0,0,0,.4); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -20px;">Подробнее</a>
             </div>
             <div class="card__row card__row" style="flex-direction: column; gap: 5px">
                 <button class="btn btn-primary btn-add-to-project" onclick="sendProjectToBlogger({{ $blogger->id }})" data-project-id="">

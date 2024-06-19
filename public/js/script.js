@@ -383,7 +383,7 @@ class BloggerAllProjectsFilter {
                         id = el.data('id');
 
                     $(this.node).find('#filter-category').val(text.trim());
-                    this.dataProps.category.set(id)
+                    this.dataProps.category.set(text.trim())
 
                     clearTimeout(this.searchTimeout);
                     this.searchTimeout = false;
@@ -525,7 +525,7 @@ class BloggerProjectsFilter {
                         id = el.data('id');
 
                     $(this.node).find('#filter-category').val(text.trim());
-                    this.dataProps.category.set(id)
+                    this.dataProps.category.set(text.trim())
 
                     clearTimeout(this.searchTimeout);
                     this.searchTimeout = false;
@@ -660,7 +660,7 @@ class BloggerProjectsOffersFilter {
                         id = el.data('id');
 
                     $(this.node).find('#filter-category').val(text.trim());
-                    this.dataProps.category.set(id)
+                    this.dataProps.category.set(text.trim())
 
                     clearTimeout(this.searchTimeout);
                     this.searchTimeout = false;
@@ -1012,11 +1012,14 @@ class Chat {
 
     getNewMessages = (id = false) => {
         var self = this,
-            data = {};
+            data = {}, scroll = false;
 
-        if(!id) id = self.currentChatId;
+        if(!id)
+            id = self.currentChatId;
 
-        if(id) data = { work_id: id }
+        if(id) {
+            data = { work_id: id }
+        }
 
         $.post(self.getMsgUri, data, function(res){
             if(!id){
@@ -1074,6 +1077,12 @@ class Chat {
                 $(self.node).find('.messages-create__textarea').val('')
                 $(self.node).find('.textarea-upload__text').text('Прикрепите файл');
                 $(self.node).find('.textarea-upload #chat-upload').val('');
+
+                setTimeout(()=>{
+                    $(self.node).find(".messages-chat").animate({
+                        scrollTop: $(self.node).find(".messages-chat").find('.messages-chat__item').length * 150
+                    }, 100)
+                }, 150)
             }
         })
     }
@@ -1550,8 +1559,6 @@ class PopupBlogerProjectMoreInfo extends Popup{
 
         this.node = node;
 
-
-
         return this;
     }
 
@@ -1646,7 +1653,7 @@ class PopupBlogerProjectMoreInfo extends Popup{
                 $(self.node).find('.popup-project__title').text(res.product_name)
                 $(self.node).find('.popup-project__articul').text(`Арт: ${res.product_code}`)
                 $(self.node).find('.popup-project__mark-text').text(res.rate)
-                $(self.node).find('.characteristics__category').text(`Категория: ${res.rate}`)
+                $(self.node).find('.characteristics__category').text(`Категория: ${res.category || 'Нет'}`)
                 $(self.node).find('.popup-project__cost').text(`${res.price}₽`)
                 $(self.node).find('.project-item__left span').text(`${res.total_quantity}/${res.lost_quantity}`)
                 $(self.node).find('.project-item__left .line__val').css('width', `${(res.lost_quantity * 100) / res.total_quantity }%`)
@@ -1789,6 +1796,22 @@ $(window).on('load', function(){
         $(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`).click();
         $(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`).addClass('current');
     })
+    $(document).on('click', '.notif-header__hide', function(e){
+        e.preventDefault();
+
+        var id = $(e.target).closest('.notif-header__hide').data('id');
+
+        $.ajax({
+            url: `apist/notifications/view/${id}`,
+            method: 'GET',
+            success: (res)=>{
+                $(e.target).closest('.notif-header__col').remove();
+
+                var nCount = Number($('#header-notif-count').text());
+                $('#header-notif-count').text(nCount > 0 ? nCount - 1 : 0);
+            }
+        })
+    })
 
     var quant = $(document).find('.quantity-w');
 
@@ -1826,8 +1849,10 @@ $(window).on('load', function(){
         $(e.target).closest('.header__profile-w').toggleClass('active')
     })
     $(document).on('click', '.header__notif', function(e){
-        $('.header__profile-item--js').not((e.target).closest('.header__notif')).removeClass('active')
-        $(e.target).closest('.header__notif').toggleClass('active')
+        if($(e.target).closest('.notif-header__hide').length == 0){
+            $('.header__profile-item--js').not((e.target).closest('.header__notif')).removeClass('active')
+            $(e.target).closest('.header__notif').toggleClass('active')
+        }
     })
 
 

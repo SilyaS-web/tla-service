@@ -350,26 +350,33 @@
                                                     </div>
                                                     <div class="feedback-item__stats">
                                                         @if($wb_stats["low"] > 0)
-                                                        <div class="feedback-item__stat">
-                                                            <div class="feedback-item__stat-quest danger">
-                                                                !
-                                                            </div>
-                                                            У вас {{ $wb_stats["low"] }} товар(ов) с очень низкой оценкой
-                                                            <div class="feedback-item__stat-products">
-                                                                {{-- <div class="" style="background-color: #fff">
-                                                                    <a href="#" class="profile-projects__status">
-                                                                        Арт: 122333444
-                                                                    </a>
-                                                                    <a href="#" class="profile-projects__status">
-                                                                        Арт: 122333444
-                                                                    </a>
-                                                                    <a href="#" class="profile-projects__status">
-                                                                        Арт: 122333444
-                                                                    </a>
-                                                                </div> --}}
-                                                            </div>
-                                                        </div>
+                                                            <div class="feedback-item__stat">
+                                                                <div class="feedback-item__stats-row">
+                                                                    <div class="feedback-item__stat-quest danger">
+                                                                        !
+                                                                    </div>
+                                                                    У вас {{ $wb_stats["low"] }} товар(ов) с очень низкой оценкой
 
+                                                                    <div class="feedback-item__stat-arrow">
+                                                                        <img src="{{ asset('img/arrow-alt.svg') }}" alt="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="feedback-item__stats-row">
+                                                                    <div class="feedback-item__stat-products">
+                                                                        <div class="" style="background-color: #fff">
+                                                                            <a href="#" class="profile-projects__status">
+                                                                                Арт: 122333444
+                                                                            </a>
+                                                                            <a href="#" class="profile-projects__status">
+                                                                                Арт: 122333444
+                                                                            </a>
+                                                                            <a href="#" class="profile-projects__status">
+                                                                                Арт: 122333444
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
                                                         @endif
                                                         @if($wb_stats["med"] > 0)
                                                         <div class="feedback-item__stat">
@@ -395,18 +402,59 @@
                                                         <div class="feedback-item__stats">
                                                             @if($wb_stats["pr_low"] > 0)
                                                             <div class="feedback-item__stat">
-                                                                <div class="feedback-item__stat-quest danger">
-                                                                    !
+                                                                <div class="feedback-item__stats-row">
+                                                                    <div class="feedback-item__stat-quest danger">
+                                                                        !
+                                                                    </div>
+                                                                    На {{ $wb_stats["pr_low"] }} товаре(ах) очень мало отзывов, требуется исправить
+                                                                    <div class="feedback-item__stat-arrow">
+                                                                        <img src="{{ asset('img/arrow-alt.svg') }}" alt="">
+                                                                    </div>
                                                                 </div>
-                                                                На {{ $wb_stats["pr_low"] }} товаре(ах) очень мало отзывов, требуется исправить
+                                                                <div class="feedback-item__stats-row">
+                                                                    <div class="feedback-item__stat-products">
+                                                                        <div class="" style="background-color: #fff">
+                                                                            <a href="#" class="profile-projects__status">
+                                                                                Арт: 122333444
+                                                                            </a>
+                                                                            <a href="#" class="profile-projects__status">
+                                                                                Арт: 122333444
+                                                                            </a>
+                                                                            <a href="#" class="profile-projects__status">
+                                                                                Арт: 122333444
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
                                                             @endif
                                                             @if($wb_stats["pr_mid"] > 0)
                                                             <div class="feedback-item__stat">
-                                                                <div class="feedback-item__stat-quest warning">
-                                                                    !
+                                                                <div class="feedback-item__stats-row">
+                                                                    <div class="feedback-item__stat-quest warning">
+                                                                        !
+                                                                    </div>
+                                                                    У вас {{ $wb_stats["pr_mid"] }} товар(ов) со среднем количеством отзывов, требуется улучшение
+                                                                    <div class="feedback-item__stat-arrow">
+                                                                        <img src="{{ asset('img/arrow-alt.svg') }}" alt="">
+                                                                    </div>
                                                                 </div>
-                                                                У вас {{ $wb_stats["pr_mid"] }} товар(ов) со среднем количеством отзывов, требуется улучшение
+                                                                <div class="feedback-item__stats-row">
+                                                                    <div class="feedback-item__stat-products">
+                                                                        <div class="" style="background-color: #fff">
+                                                                            <a href="#" class="profile-projects__status">
+                                                                                Арт: 122333444
+                                                                            </a>
+                                                                            <a href="#" class="profile-projects__status">
+                                                                                Арт: 122333444
+                                                                            </a>
+                                                                            <a href="#" class="profile-projects__status">
+                                                                                Арт: 122333444
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
                                                             </div>
                                                             @endif
                                                         </div>
@@ -415,6 +463,13 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <script>
+                                        $(window).on('load', ()=>{
+                                            $('.feedback-item__stat').on('click', function(e){
+                                                $(e.target).closest('.feedback-item__stat').toggleClass('active')
+                                            })
+                                        })
+                                    </script>
                                     <div class="dashboard__row">
                                         <div class="dashboard__col dashboard__item dashboard__item--cover">
                                             <div class="dashboard__item-cover">

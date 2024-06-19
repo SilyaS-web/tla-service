@@ -16,12 +16,20 @@
                         <p>Фото профиля</p>
                         <div class="form-group form-group--file">
                             <label class="tab-content__profile-img-upload input-file" for="profile-img">
-                                Загрузите изображение
+                                <span>Загрузите изображение</span>
                                 <input type="file" name="image" class="" id="profile-img">
                             </label>
                             @error('image')
                             <span class="error">{{ $message }}</span>
                             @enderror
+                            <script>
+                                 $(window).on('load', function(){
+                                    $('#profile-img').on('change', function(e){
+                                        $(e.target).closest('.tab-content__profile-img-upload').addClass('uploaded');
+                                        $(e.target).closest('.tab-content__profile-img-upload').find('span').text('Изображение загружено');
+                                    })
+                                })
+                            </script>
                         </div>
                     </div>
                 </div>
