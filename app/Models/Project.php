@@ -89,6 +89,16 @@ class Project extends Model
         return $subscribers;
     }
 
+    public function getFinishStats() {
+        $project_id = $this->id;
+        $finishStats = FinishStats::selectRaw('sum(subs) as total_subs, sum(views) as total_views, sum(reposts) as total_reposts, sum(likes) as total_likes')->whereHas('work', function (Builder $query) use ($project_id) {
+            $query->where('project_id', $project_id);
+        })->first();
+
+        return $finishStats;
+    }
+
+
     public function getProjectWorkNames($format = null)
     {
         $project_works = $this->projectWorks;
@@ -109,6 +119,24 @@ class Project extends Model
         }
 
         return $names;
+    }
+
+    public function getProjectWorkNamesWithQuantity()
+    {
+        $project_works = $this->projectWorks;
+        $formats = [];
+
+        foreach ($project_works as $project_work) {
+            if (isset(self::TYPE_NAMES[$project_work->type])) {
+                $formats[] = [
+                    'name' => self::TYPE_NAMES[$project_work->type],
+                    'total_quantity' => $project_work->quantity,
+                    'lost_quantity' => $project_work->quantity - $this->works()->where('project_work_id', $project_work->id)->count()
+                ];
+            }
+        }
+
+        return $formats;
     }
 
     public function getImageURL($only_primary = false)
