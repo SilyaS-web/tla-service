@@ -130,11 +130,11 @@ class UserController extends Controller
         }
 
         foreach ($bloggers_finish as $blogger_finish) {
-            if (isset($total_stats[$deep_link_stat->date])) {
-                $total_stats[$deep_link_stat->date]['bloggers'] += 1;
+            if (isset($total_stats[$blogger_finish->date])) {
+                $total_stats[$blogger_finish->date]['bloggers'] += 1;
             } else {
-                $total_stats[$deep_link_stat->date] = [
-                    'dt' => $deep_link_stat->date,
+                $total_stats[$blogger_finish->date] = [
+                    'dt' => $blogger_finish->date,
                     'coverage' => 0,
                     'bloggers' => 1
                 ];

@@ -26,7 +26,7 @@ class MessageWorkColumn extends Migration
      */
     public function down()
     {
-        Schema::table('projects', function (Blueprint $table) {
+        Schema::table('notifications', function (Blueprint $table) {
             $table->dropColumn(['work_id', 'from_user_id']);
         });
     }

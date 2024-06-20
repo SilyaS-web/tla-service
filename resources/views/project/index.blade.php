@@ -394,21 +394,23 @@
                                         </div>
                                     </div>
                                     <div class="table-stats__body">
+                                        @forelse ($project->works as $work)
+                                        @if ($work->finishStats)
                                         <div class="table-stats__row">
                                             <div class="table-stats__col table-stats__blogger-img" style="width:50px; height:50px;">
-                                                <img src="{{ asset('img/profile-icon.svg') }}" alt="">
+                                                <img src="{{ $work->blogger->user->getImageURL() }}" alt="">
                                             </div>
                                             <div class="table-stats__col" style="width:75px;">
-                                                Илья Давыдов
+                                                {{ $work->blogger->user->name }}
                                             </div>
                                             <div class="table-stats__col"style="width: 80px;">
-                                                1200000
+                                                {{ $work->finishStats->subs }}
                                             </div>
                                             <div class="table-stats__col" style="width: 57px;">
-                                                1200
+                                                {{ $work->finishStats->views }}
                                             </div>
                                             <div class="table-stats__col" style="width: 70px;">
-                                                475
+                                                {{ $work->getTotlaClicks() }}
                                             </div>
                                             <div class="table-stats__col" style="width:45px;">
                                                 0.1
@@ -417,217 +419,14 @@
                                                 298.5₽
                                             </div>
                                             <div class="table-stats__col" style="width: 80px;">
-                                                24.12.2024
+                                                {{-- {{ date_format($work->confirmed_by_seller_at, 'd.m.Y') }} --}}
+                                                {{$work->confirmed_by_seller_at}}
                                             </div>
                                         </div>
-                                        <div class="table-stats__row">
-                                            <div class="table-stats__col table-stats__blogger-img" style="width:50px; height:50px;">
-                                                <img src="{{ asset('img/approved-aproved-confirm-2-svgrepo-com.svg') }}" alt="">
-                                            </div>
-                                            <div class="table-stats__col" style="width:75px;">
-                                                Hesus AVGN
-                                            </div>
-                                            <div class="table-stats__col"style="width: 80px;">
-                                                2000000
-                                            </div>
-                                            <div class="table-stats__col" style="width: 57px;">
-                                                12000
-                                            </div>
-                                            <div class="table-stats__col" style="width: 70px;">
-                                                567
-                                            </div>
-                                            <div class="table-stats__col" style="width:45px;">
-                                                0.3
-                                            </div>
-                                            <div class="table-stats__col" style="width:65px;">
-                                                475.5₽
-                                            </div>
-                                            <div class="table-stats__col" style="width: 80px;">
-                                                24.12.2024
-                                            </div>
-                                        </div>
-                                        <div class="table-stats__row">
-                                            <div class="table-stats__col table-stats__blogger-img" style="width:50px; height:50px;">
-                                                <img src="{{ asset('img/projects-list/1.webp') }}" alt="">
-                                            </div>
-                                            <div class="table-stats__col" style="width:75px;">
-                                                Куплинов Play
-                                            </div>
-                                            <div class="table-stats__col"style="width: 80px;">
-                                                40000000
-                                            </div>
-                                            <div class="table-stats__col" style="width: 57px;">
-                                                12000
-                                            </div>
-                                            <div class="table-stats__col" style="width: 70px;">
-                                                567
-                                            </div>
-                                            <div class="table-stats__col" style="width:45px;">
-                                                0.3
-                                            </div>
-                                            <div class="table-stats__col" style="width:65px;">
-                                                475.5₽
-                                            </div>
-                                            <div class="table-stats__col" style="width: 80px;">
-                                                24.12.2024
-                                            </div>
-                                        </div>
-                                        <div class="table-stats__row">
-                                            <div class="table-stats__col table-stats__blogger-img" style="width:50px; height:50px;">
-                                                <img src="{{ asset('img/profile-icon.svg') }}" alt="">
-                                            </div>
-                                            <div class="table-stats__col" style="width:75px;">
-                                                Илья Давыдов
-                                            </div>
-                                            <div class="table-stats__col"style="width: 80px;">
-                                                1200000
-                                            </div>
-                                            <div class="table-stats__col" style="width: 57px;">
-                                                1200
-                                            </div>
-                                            <div class="table-stats__col" style="width: 70px;">
-                                                475
-                                            </div>
-                                            <div class="table-stats__col" style="width:45px;">
-                                                0.1
-                                            </div>
-                                            <div class="table-stats__col" style="width:65px;">
-                                                298.5₽
-                                            </div>
-                                            <div class="table-stats__col" style="width: 80px;">
-                                                24.12.2024
-                                            </div>
-                                        </div>
-                                        <div class="table-stats__row">
-                                            <div class="table-stats__col table-stats__blogger-img" style="width:50px; height:50px;">
-                                                <img src="{{ asset('img/approved-aproved-confirm-2-svgrepo-com.svg') }}" alt="">
-                                            </div>
-                                            <div class="table-stats__col" style="width:75px;">
-                                                Hesus AVGN
-                                            </div>
-                                            <div class="table-stats__col"style="width: 80px;">
-                                                2000000
-                                            </div>
-                                            <div class="table-stats__col" style="width: 57px;">
-                                                12000
-                                            </div>
-                                            <div class="table-stats__col" style="width: 70px;">
-                                                567
-                                            </div>
-                                            <div class="table-stats__col" style="width:45px;">
-                                                0.3
-                                            </div>
-                                            <div class="table-stats__col" style="width:65px;">
-                                                475.5₽
-                                            </div>
-                                            <div class="table-stats__col" style="width: 80px;">
-                                                24.12.2024
-                                            </div>
-                                        </div>
-                                        <div class="table-stats__row">
-                                            <div class="table-stats__col table-stats__blogger-img" style="width:50px; height:50px;">
-                                                <img src="{{ asset('img/projects-list/1.webp') }}" alt="">
-                                            </div>
-                                            <div class="table-stats__col" style="width:75px;">
-                                                Куплинов Play
-                                            </div>
-                                            <div class="table-stats__col"style="width: 80px;">
-                                                40000000
-                                            </div>
-                                            <div class="table-stats__col" style="width: 57px;">
-                                                12000
-                                            </div>
-                                            <div class="table-stats__col" style="width: 70px;">
-                                                567
-                                            </div>
-                                            <div class="table-stats__col" style="width:45px;">
-                                                0.3
-                                            </div>
-                                            <div class="table-stats__col" style="width:65px;">
-                                                475.5₽
-                                            </div>
-                                            <div class="table-stats__col" style="width: 80px;">
-                                                24.12.2024
-                                            </div>
-                                        </div>
-                                        <div class="table-stats__row">
-                                            <div class="table-stats__col table-stats__blogger-img" style="width:50px; height:50px;">
-                                                <img src="{{ asset('img/profile-icon.svg') }}" alt="">
-                                            </div>
-                                            <div class="table-stats__col" style="width:75px;">
-                                                Илья Давыдов
-                                            </div>
-                                            <div class="table-stats__col"style="width: 80px;">
-                                                1200000
-                                            </div>
-                                            <div class="table-stats__col" style="width: 57px;">
-                                                1200
-                                            </div>
-                                            <div class="table-stats__col" style="width: 70px;">
-                                                475
-                                            </div>
-                                            <div class="table-stats__col" style="width:45px;">
-                                                0.1
-                                            </div>
-                                            <div class="table-stats__col" style="width:65px;">
-                                                298.5₽
-                                            </div>
-                                            <div class="table-stats__col" style="width: 80px;">
-                                                24.12.2024
-                                            </div>
-                                        </div>
-                                        <div class="table-stats__row">
-                                            <div class="table-stats__col table-stats__blogger-img" style="width:50px; height:50px;">
-                                                <img src="{{ asset('img/approved-aproved-confirm-2-svgrepo-com.svg') }}" alt="">
-                                            </div>
-                                            <div class="table-stats__col" style="width:75px;">
-                                                Hesus AVGN
-                                            </div>
-                                            <div class="table-stats__col"style="width: 80px;">
-                                                2000000
-                                            </div>
-                                            <div class="table-stats__col" style="width: 57px;">
-                                                12000
-                                            </div>
-                                            <div class="table-stats__col" style="width: 70px;">
-                                                567
-                                            </div>
-                                            <div class="table-stats__col" style="width:45px;">
-                                                0.3
-                                            </div>
-                                            <div class="table-stats__col" style="width:65px;">
-                                                475.5₽
-                                            </div>
-                                            <div class="table-stats__col" style="width: 80px;">
-                                                24.12.2024
-                                            </div>
-                                        </div>
-                                        <div class="table-stats__row">
-                                            <div class="table-stats__col table-stats__blogger-img" style="width:50px; height:50px;">
-                                                <img src="{{ asset('img/projects-list/1.webp') }}" alt="">
-                                            </div>
-                                            <div class="table-stats__col" style="width:75px;">
-                                                Куплинов Play
-                                            </div>
-                                            <div class="table-stats__col"style="width: 80px;">
-                                                40000000
-                                            </div>
-                                            <div class="table-stats__col" style="width: 57px;">
-                                                12000
-                                            </div>
-                                            <div class="table-stats__col" style="width: 70px;">
-                                                567
-                                            </div>
-                                            <div class="table-stats__col" style="width:45px;">
-                                                0.3
-                                            </div>
-                                            <div class="table-stats__col" style="width:65px;">
-                                                475.5₽
-                                            </div>
-                                            <div class="table-stats__col" style="width: 80px;">
-                                                24.12.2024
-                                            </div>
-                                        </div>
+                                        @endif
+                                        @empty
+                                        @endforelse
+
                                     </div>
                                 </div>
                                 {{-- @if($finish_stats->total_subs < 1 || $finish_stats->total_views < 1 || $finish_stats->total_reposts < 1 || $finish_stats->total_likes < 1)

@@ -59,6 +59,16 @@ class Work extends Model
         return $this->hasOne(ProjectWork::class, 'id', 'project_work_id');
     }
 
+    public function FinishStats()
+    {
+        return $this->hasOne(FinishStats::class, 'work_id', 'id');
+    }
+
+    public function deepLink()
+    {
+        return $this->hasOne(DeepLink::class, 'work_id', 'id');
+    }
+
     public function getPartnerUser($role)
     {
         if ($role == 'seller') {
@@ -105,5 +115,17 @@ class Work extends Model
         }
 
         return false;
+    }
+
+    public function getTotlaClicks()
+    {
+        $total_clicks = 0;
+
+        $deepLink = $this->deepLink;
+        if ($deepLink) {
+            $total_clicks = $deepLink->getClicksCount();
+        }
+
+        return $total_clicks;
     }
 }
