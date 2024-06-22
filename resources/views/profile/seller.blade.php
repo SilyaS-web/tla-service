@@ -108,7 +108,19 @@
                                             @enderror
                                             <div class="marketing-format__item input-checkbox-w">
                                                 {{-- <input type="checkbox" class="checkbox" name="feedback" value="feedback" id="product-feedback"> --}}
-                                                <label for="product-feedback">Отзыв на товар - Бартер</label>
+                                                <label for="product-feedback">Отзыв на товар - Бартер
+                                                    <div class="format-tooltip format-tooltip--mobile" data-hint="feedback">
+                                                        ?
+                                                        <div class="format-hint format-hint--text" id="feedback">
+                                                            <div class="format-hint__title">
+                                                                Рекламный пост
+                                                            </div>
+                                                            <div class="format-hint__body">
+                                                                Приятно, граждане, наблюдать, как акционеры крупнейших компаний формируют глобальную экономическую сеть и при этом — объявлены нарушающими общечеловеческие нормы этики и морали
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
                                                         <img src="{{ asset("img/minus-icon.svg") }}" alt="">
@@ -135,7 +147,20 @@
                                             </div>
                                             <div class="marketing-format__item input-checkbox-w">
                                                 {{-- <input type="checkbox" class="checkbox" name="inst" value="inst-barter" id="product-inst"> --}}
-                                                <label for="product-inst">Рекламная интеграция (Instagram) - Бартер</label>
+                                                <label for="product-inst">
+                                                    Рекламная интеграция (Instagram) - Бартер
+                                                    <div class="format-tooltip format-tooltip--mobile" data-hint="inst">
+                                                        ?
+                                                        <div class="format-hint format-hint--text" id="inst">
+                                                            <div class="format-hint__title">
+                                                                Рекламная интеграция (Instagram) - Бартер
+                                                            </div>
+                                                            <div class="format-hint__body">
+                                                                Приятно, граждане, наблюдать, как акционеры крупнейших компаний формируют глобальную экономическую сеть и при этом — объявлены нарушающими общечеловеческие нормы этики и морали
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
                                                         <img src="{{ asset("img/minus-icon.svg") }}" alt="">
@@ -162,7 +187,20 @@
                                             </div>
                                             <div class="marketing-format__item input-checkbox-w disabled">
                                                 {{-- <input type="checkbox" class="checkbox" id="product-youtube"> --}}
-                                                <label for="product-youtube">Рекламная интеграция (YouTube) - Бартер</label>
+                                                <label for="product-youtube">
+                                                    Рекламная интеграция (YouTube) - Бартер
+                                                    <div class="format-tooltip format-tooltip--mobile" data-hint="youtube">
+                                                        ?
+                                                        <div class="format-hint format-hint--text" id="youtube">
+                                                            <div class="format-hint__title">
+                                                                Рекламная интеграция (YouTube) - Бартер
+                                                            </div>
+                                                            <div class="format-hint__body">
+                                                                ...
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
                                                         <img src="{{ asset("img/minus-icon.svg") }}" alt="">
@@ -189,7 +227,20 @@
                                             </div>
                                             <div class="marketing-format__item input-checkbox-w disabled">
                                                 {{-- <input type="checkbox" class="checkbox" id="product-youtube"> --}}
-                                                <label for="product-youtube">Рекламная интеграция (VK) - Бартер</label>
+                                                <label for="product-vk">
+                                                    Рекламная интеграция (VK) - Бартер
+                                                    <div class="format-tooltip format-tooltip--mobile " data-hint="vk">
+                                                        ?
+                                                        <div class="format-hint format-hint--text" id="vk">
+                                                            <div class="format-hint__title">
+                                                                Рекламная интеграция (VK) - Бартер
+                                                            </div>
+                                                            <div class="format-hint__body">
+                                                                ...
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
                                                         <img src="{{ asset("img/minus-icon.svg") }}" alt="">
@@ -205,7 +256,7 @@
                                                     ?
                                                     <div class="format-hint format-hint--text" id="youtube">
                                                         <div class="format-hint__title">
-                                                            Рекламная интеграция (YouTube) - Бартер
+                                                            Рекламная интеграция (VK) - Бартер
                                                         </div>
                                                         <div class="format-hint__body">
                                                             ...
@@ -216,7 +267,20 @@
                                             </div>
                                             <div class="marketing-format__item input-checkbox-w disabled">
                                                 {{-- <input type="checkbox" class="checkbox" id="product-youtube"> --}}
-                                                <label for="product-youtube">Рекламная интеграция (Telegram) - Бартер</label>
+                                                <label for="product-tg">
+                                                    Рекламная интеграция (Telegram) - Бартер
+                                                    <div class="format-tooltip format-tooltip--mobile" data-hint="tg">
+                                                        ?
+                                                        <div class="format-hint format-hint--text" id="tg">
+                                                            <div class="format-hint__title">
+                                                                Рекламная интеграция (Telegram) - Бартер
+                                                            </div>
+                                                            <div class="format-hint__body">
+                                                                ...
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </label>
                                                 <div class="quantity-w" data-max="100">
                                                     <div class="quantity-minus">
                                                         <img src="{{ asset("img/minus-icon.svg") }}" alt="">

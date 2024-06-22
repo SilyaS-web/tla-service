@@ -78,7 +78,7 @@
                         <div class="card__stats-title">
                             <span>ER</span>
                         </div>
-                        <div class="card__stats-val">
+                        <div class="card__stats-val coverage">
                             <span>{{ $blogger->getER() }}</span>
                         </div>
                     </div>
@@ -86,7 +86,7 @@
                         <div class="card__stats-title">
                             <span>CPM</span>
                         </div>
-                        <div class="card__stats-val card__stats-val--empty">
+                        <div class="card__stats-val cpm card__stats-val--empty">
                             {{-- <span>{{ $blogger->getCPM() }}₽</span> --}}
                             <span class = "card__stats-val">?</span>
                             <div class="stats-tooltip">

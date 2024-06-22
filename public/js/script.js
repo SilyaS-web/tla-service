@@ -1540,7 +1540,17 @@ class PopupSellerChooseProjectsFormat extends Popup{
 
         var articul = $(this.projectNode).find('.btn-choose-project').data('articul'),
             name = $(this.projectNode).find('.project-item__subtitle').text(),
-            imgUrl = $(this.projectNode).find('.project-item__img').css('backgroundImage');
+            imgUrl = $(this.projectNode).find('.project-item__img').css('backgroundImage'),
+            price = $(this.projectNode).find('.project-item__price').text();
+
+        var bloggers = $('#profile-blogers-list .bloger-item.card');
+
+        bloggers.each((i, v)=>{
+            var coverage = $(v).find('.card__stats-val.coverage').text();
+
+            $(v).find('.card__stats-val.cpm span').text(`${Math.round((Number(price) / Number(coverage)) * 1000)}₽`)
+            $(v).find('.card__stats-val.card__stats-val--empty').removeClass('card__stats-val--empty')
+        })
 
         $('.current-project').find('.current-project__main .current-project__title .articul span').text(articul)
         $('.current-project').find('.current-project__main .current-project__title .name b').text(name)
@@ -2053,7 +2063,7 @@ function ibg(){
         if(img = $(item).find('img')){
             $(item).css("background-image", 'url("' + img.attr('src') + '")');
         }
-    })ну 
+    })
 }
 
 window.addEventListener('load', ibg)
