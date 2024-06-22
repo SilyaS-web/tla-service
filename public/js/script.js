@@ -1869,6 +1869,17 @@ $(window).on('load', function(){
         $(e.target).closest('.profile-projects__item').toggleClass('active-bloggers');
         $(e.target).closest('.profile-projects__item').removeClass('active-statistics');
         $(e.target).closest('.profile-projects__item').removeClass('active-bloggers-in_work');
+
+        var id = $(e.target).closest('.profile-projects__item').data('id');
+
+        console.log(id);
+
+        $.ajax({
+            url: `apist/notifications/${id}/viewed`,
+        })
+        .done(function() {
+            $(e.target).closest('.profile-projects__item').find('.notifs-application').hide();
+        });
     })
 
     $(document).on('click', '.profile-projects__item .btn-statistics', function(e){
@@ -2052,12 +2063,34 @@ setInterval(() => {
         url: '/apist/notifications',
     })
     .done(function( data ) {
-        document.querySelector('#header-notif-container').innerHTML = data.view;
-        document.querySelector('#header-notif-count').innerHTML = data.count;
+        $('#header-notif-container').html(data.view);
+        $('#header-notif-count').html(data.count);
         if (data.count == 0) {
-            document.querySelector('#header-notif-count').style.display = 'none';
+            $('#header-notif-count').hide();
         } else {
-            document.querySelector('#header-notif-count').style.display = 'block';
+            $('#header-notif-count').show();
+        }
+    });
+}, 5000)
+
+setInterval(() => {
+    $.ajax({
+        url: '/apist/applications_count',
+    })
+    .done(function( data ) {
+        var apps = data.applications || [];
+
+        if(apps.length > 0){
+            for(var k in apps){
+                var cProjectNotifs = $(`#seller .profile-projects__item[data-id="${k}"]`).find('.notifs-application');
+
+                if(Number(apps[k]) > 0)
+                    cProjectNotifs.show();
+                else
+                    cProjectNotifs.hide();
+
+                cProjectNotifs.text(apps[k]);
+            }
         }
     });
 }, 5000)

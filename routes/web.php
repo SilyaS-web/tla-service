@@ -48,6 +48,10 @@ Route::prefix('apist')->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
+    Route::get('/project/edit', function () {
+        return view('project.edit');
+    })->name('');
+
     Route::get('/blogger/{blogger}', [BloggerController::class, 'show'])->name('blogger-page');
     Route::get('/seller/{seller}', [SellerController::class, 'show'])->name('seller-page');
 

@@ -110,9 +110,7 @@
                         Главная
                         @endif
                     </a>
-                    <a href="#" class="nav-burger__link nav__link">База знаний</a>
                     <a href="#" class="nav-burger__link nav__link">Инструкции</a>
-                    <a href="#" class="nav-burger__link nav__link">Кейсы</a>
                 </div>
                 <a href="#" class="burger-menu__close">
                     <img src="{{ asset('img/close-icon.svg') }}" alt="">
@@ -148,13 +146,7 @@
                                 @endif
                             </a>
                             <a href="" class="nav__link disabled">
-                                База знаний
-                            </a>
-                            <a href="" class="nav__link disabled">
                                 Инструкции
-                            </a>
-                            <a href="" class="nav__link disabled">
-                                Кейсы
                             </a>
                         </div>
                     </nav>
