@@ -97,6 +97,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/notifications', [UserController::class, 'getNewNotifications']);
         Route::get('/notifications/view/{notification}', [NotificationController::class, 'view']);
 
+        Route::get('/notifications/{project_id}/view', [NotificationController::class, 'view']);
+
         Route::get('/coverage-data', [DeepLinkController::class, 'stats']);
     });
 });
