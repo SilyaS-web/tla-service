@@ -2053,7 +2053,7 @@ function ibg(){
         if(img = $(item).find('img')){
             $(item).css("background-image", 'url("' + img.attr('src') + '")');
         }
-    })
+    })ну 
 }
 
 window.addEventListener('load', ibg)
