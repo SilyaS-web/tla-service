@@ -1214,6 +1214,7 @@ input[type='range']::-webkit-slider-runnable-track{
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
+    filter: brightness(0) saturate(100%) invert(95%) sepia(96%) saturate(23%) hue-rotate(279deg) brightness(103%) contrast(100%);
 }
 .tg-confirmation__block {
     display: none; gap: 10px;
