@@ -1424,6 +1424,9 @@ input[type='range']::-webkit-slider-runnable-track{
     cursor: pointer;
     position: relative;
 }
+.format-tooltip--mobile{
+    display: none;
+}
 .input-checkbox-w .format-tooltip:hover .format-hint{
     display: block;
     visibility: visible;
@@ -1871,6 +1874,17 @@ input[type='range']::-webkit-slider-runnable-track{
     max-width: 380px;
     border-radius: 0;
     height:fit-content;
+}
+.projects-list__filter::-webkit-scrollbar {
+    width: 12px;               /* ширина scrollbar */
+}
+.projects-list__filter::-webkit-scrollbar-track {
+    background: #fff;        /* цвет дорожки */
+}
+.projects-list__filter::-webkit-scrollbar-thumb {
+    background-color: #7A7674;    /* цвет плашки */
+    border-radius: 20px;       /* закругления плашки */
+    border: 3px solid #fff;  /* padding вокруг плашки */
 }
 .projects-list__filter.opened{
     left:0;
@@ -3884,15 +3898,10 @@ input[type='range']::-webkit-slider-runnable-track{
         max-width:1000px
     }
 }
-@media(max-width:1350px){
-    .projects-list__filter{
-        max-width: 320px;
-        padding: 20px;
-    }
+@media(max-width:1430px){
     #profile-projects .profile-projects__body{
         max-width:900px
     }
-
     .card-btns-desktop{
         display: none;
     }
@@ -3907,6 +3916,19 @@ input[type='range']::-webkit-slider-runnable-track{
     .card-btns-mobile .btn-statistics{
         margin-top: 0;
     }
+    .card__stats-row{
+        width: 50%;
+    }
+    .card-btns-mobile{
+        width: 100%;
+    }
+}
+@media(max-width:1350px){
+    .projects-list__filter{
+        max-width: 320px;
+        padding: 20px;
+    }
+
     .profile-projects__body{
         max-width:900px
     }
@@ -4066,6 +4088,13 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .profile-projects__body{
         max-width:800px
+    }
+
+    .view-project__props-wrap{
+        flex-direction: column;
+    }
+    .view-project__props-col{
+        width: 100%;
     }
 }
 @media(max-width:1045px){
@@ -4302,6 +4331,10 @@ input[type='range']::-webkit-slider-runnable-track{
     .profile-projects__body{
         max-width:500px;
     }
+
+    #seller .view-project__props-col .card__stats-stats{
+        flex-direction: column;
+    }
 }
 @media(max-width:760px){
     .card__info--mobile{
@@ -4336,6 +4369,14 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .card__diagram-row{
         justify-content: space-between;
+    }
+
+    .table-stats__blogger-img{
+        display: none;
+    }
+    .table-stats__col{
+        font-size: 8px;
+        padding: 5px;
     }
 }
 @media(max-width:720px){
@@ -4514,8 +4555,23 @@ input[type='range']::-webkit-slider-runnable-track{
         left:0
     }
     .marketing-format__item .format-tooltip{
-        order: 2;
-        margin-left: 0;
+        display: none;
+    }
+
+    .marketing-format__item .format-tooltip--mobile{
+        display: block;
+        margin-left: 15px;
+    }
+    .marketing-format__item .format-tooltip--mobile .format-hint{
+        left:unset;
+        right:100%;
+        padding:12px
+    }
+    .marketing-format__item label{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        align-items: center;
     }
 
     .popup-project__img{
@@ -4525,6 +4581,18 @@ input[type='range']::-webkit-slider-runnable-track{
     .footer__body{
         flex-direction: column;
         align-items: center;
+    }
+
+    .wrapper{
+        padding-bottom: 200px;
+    }
+
+    .projects-statistics__title{
+        font-size: 16px;
+    }
+
+    .table-stats__col{
+        font-size: 6px;
     }
 }
 @media(max-width:545px){
@@ -4673,6 +4741,19 @@ input[type='range']::-webkit-slider-runnable-track{
 
     .popup__header .popup__title{
         font-size: 20px;
+    }
+
+    ._container{
+        padding:0 10px
+    }
+
+    .profile-projects__statistics .view-project__props-graph>*{
+        /* height: 200px !important; */
+    }
+
+
+    .marketing-format__item .format-tooltip--mobile .format-hint{
+        right:0;
     }
 }
 @media(max-width:447px){

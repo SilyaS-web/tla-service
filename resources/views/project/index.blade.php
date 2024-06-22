@@ -615,6 +615,7 @@
                 , datasets: datasets
             }
             , options: {
+                responsive: true,
                 plugins: {
                     tooltip: {
                         mode: 'index'
