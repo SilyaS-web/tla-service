@@ -368,180 +368,128 @@
                             </div>
                         </div>
                         <div class="view-project__props-col">
+                            <div class="projects-statistics__title">
+                                Общая статистика
+                            </div>
+                            <div class="card__col card__stats-stats" style="flex: 1 1 auto">
+                                <div class="card__row card__stats-row">
+                                    <div class="card__col card__stats-item">
+                                        <div class="card__stats-title">
+                                            <span>Количество переходов</span>
+                                        </div>
+                                        <div class="card__stats-val">
+                                            <span>{{ $project->works()->where('status', '<>', null)->count() }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="card__col card__stats-item" style="flex: 1: width: auto">
+                                        <div class="card__stats-title">
+                                            <span>Охваты</span>
+                                        </div>
+                                        <div class="card__stats-val">
+                                            <span>{{ date_format($project->created_at, 'd.m.Y') }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card__row card__stats-row">
+                                    @php( $statCount = $project->getCountStatistics() )
+                                    <div class="card__col card__stats-item">
+                                        <div class="card__stats-title">
+                                            <span>CPM</span>
+                                        </div>
+                                        <div class="card__stats-val ">
+                                            <span>{{ $statCount->reviewRating ?? 0}}</span>
+                                        </div>
+                                    </div>
+                                    <div class="card__col card__stats-item" style="flex: 1: width: auto">
+                                        <div class="card__stats-title">
+                                            <span>CPC</span>
+                                        </div>
+                                        <div class="card__stats-val">
+                                            <span>{{ $statCount->feedbacks ?? 0}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="view-project__props-wrap" style="margin-top:30px;">
+                        <div class="view-project__props-col">
                             @php($finish_stats = $project->getFinishStats())
 
-                            <div class="card__col card__stats-stats">
+                            <div class="card__col card__stats-stats" style="width:100%">
                                 <div class="projects-statistics__title" style="margin-bottom: 0">
                                     Статистика по завершённым работам
                                 </div>
                                 <div class="card__stats-table table-stats">
                                     <div class="table-stats__header">
                                         <div class="table-stats__row">
-                                            <div class="table-stats__col table-stats__blogger-img" style="width:50px; height:50px;">
+                                            <div class="table-stats__col table-stats__blogger-img" style="width: 10%;height:50px;">
 
                                             </div>
-                                            <div class="table-stats__col" style="width:75px;">
+                                            <div class="table-stats__col" style="width: 12%;">
                                                 Nickname
                                             </div>
-                                            <div class="table-stats__col"style="width: 80px;">
+                                            <div class="table-stats__col" style="width: 12%;">
                                                 Подписчики
                                             </div>
-                                            <div class="table-stats__col" style="width: 57px;">
+                                            <div class="table-stats__col" style="width: 10%;">
                                                 Охваты
                                             </div>
-                                            <div class="table-stats__col" style="width: 70px;">
+                                            <div class="table-stats__col" style="width: 10%;">
                                                 Переходы
                                             </div>
-                                            <div class="table-stats__col" style="width:45px;">
+                                            <div class="table-stats__col" style="width: 5%;">
                                                 ER
                                             </div>
-                                            <div class="table-stats__col" style="width:65px;">
+                                            <div class="table-stats__col" style="width: 10%;">
                                                 CPM
                                             </div>
-                                            <div class="table-stats__col" style="width: 80px;">
+                                            <div class="table-stats__col" style="width: 10%;">
+                                                CTR
+                                            </div>
+                                            <div class="table-stats__col" style="width: 14%;">
                                                 Дата завершения
                                             </div>
                                         </div>
                                     </div>
                                     <div class="table-stats__body">
                                         @forelse ($project->works as $work)
-                                        @if ($work->finishStats)
-                                        <div class="table-stats__row">
-                                            <div class="table-stats__col table-stats__blogger-img" style="width:50px; height:50px;">
-                                                <img src="{{ $work->blogger->user->getImageURL() }}" alt="">
+                                            @if ($work->finishStats)
+                                            <div class="table-stats__row">
+                                                <div class="table-stats__col table-stats__blogger-img" style="width: 10%">
+                                                    <img src="{{ $work->blogger->user->getImageURL() }}" alt="">
+                                                </div>
+                                                <div class="table-stats__col" style="width: 12%;">
+                                                    {{ $work->blogger->user->name }}
+                                                </div>
+                                                <div class="table-stats__col" style="width: 12%;">
+                                                    {{ $work->finishStats->subs }}
+                                                </div>
+                                                <div class="table-stats__col" style="width: 10%;">
+                                                    {{ $work->finishStats->views }}
+                                                </div>
+                                                <div class="table-stats__col" style="width: 10%;">
+                                                    {{ $work->getTotlaClicks() }}
+                                                </div>
+                                                <div class="table-stats__col" style="width: 5%;">
+                                                    0.1
+                                                </div>
+                                                <div class="table-stats__col" style="width: 10%;">
+                                                    298.5₽
+                                                </div>
+                                                <div class="table-stats__col" style="width: 10%;">
+                                                    298.5₽
+                                                </div>
+                                                <div class="table-stats__col" style="width: 14%;">
+                                                    {{$work->confirmed_by_seller_at}}
+                                                </div>
                                             </div>
-                                            <div class="table-stats__col" style="width:75px;">
-                                                {{ $work->blogger->user->name }}
-                                            </div>
-                                            <div class="table-stats__col"style="width: 80px;">
-                                                {{ $work->finishStats->subs }}
-                                            </div>
-                                            <div class="table-stats__col" style="width: 57px;">
-                                                {{ $work->finishStats->views }}
-                                            </div>
-                                            <div class="table-stats__col" style="width: 70px;">
-                                                {{ $work->getTotlaClicks() }}
-                                            </div>
-                                            <div class="table-stats__col" style="width:45px;">
-                                                0.1
-                                            </div>
-                                            <div class="table-stats__col" style="width:65px;">
-                                                298.5₽
-                                            </div>
-                                            <div class="table-stats__col" style="width: 80px;">
-                                                {{-- {{ date_format($work->confirmed_by_seller_at, 'd.m.Y') }} --}}
-                                                {{$work->confirmed_by_seller_at}}
-                                            </div>
-                                        </div>
-                                        @endif
+                                            @endif
                                         @empty
                                         @endforelse
 
                                     </div>
                                 </div>
-                                {{-- @if($finish_stats->total_subs < 1 || $finish_stats->total_views < 1 || $finish_stats->total_reposts < 1 || $finish_stats->total_likes < 1)
-                                    Статистики пока нет
-                                @else
-                                    <div class="card__row card__stats-row">
-                                        <div class="card__col card__stats-item">
-                                            <div class="card__stats-title">
-                                                <span>Подписчики</span>
-                                            </div>
-                                            <div class="card__stats-val">
-                                                <span>{{ $finish_stats->total_subs }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="card__col card__stats-item">
-                                            <div class="card__stats-title">
-                                                <span>Просмотры</span>
-                                            </div>
-                                            <div class="card__stats-val">
-                                                <span>{{ $finish_stats->total_views }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card__row card__stats-row">
-                                        <div class="card__col card__stats-item">
-                                            <div class="card__stats-title">
-                                                <span>Репосты</span>
-                                            </div>
-                                            <div class="card__stats-val">
-                                                <span>{{ $finish_stats->total_reposts }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="card__col card__stats-item">
-                                            <div class="card__stats-title">
-                                                <span>CPM</span>
-                                            </div>
-                                            <div class="card__stats-val">
-                                                <span>{{ $finish_stats->total_subs }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                @endif --}}
-                                {{-- @php($clicks_count = $project->getClicksCount())
-                                @php($suscribers = $project->getSuscribers())
-                                <div class="card__col card__stats-stats">
-                                    <div class="projects-statistics__title" style="margin-bottom: 0">
-                                        Статистика по интеграциям
-                                    </div>
-                                    @if($clicks_count < 1 || $suscribers < 1)
-                                        Статистики пока нет
-                                    @else
-                                        <div class="card__row card__stats-row">
-                                        <div class="card__col card__stats-item">
-                                                <div class="card__stats-title">
-                                                    <span>Подписчиков</span>
-                                                </div>
-                                                <div class="card__stats-val">
-                                                    <span>{{ $suscribers }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="card__col card__stats-item">
-                                                <div class="card__stats-title">
-                                                    <span>Переходов</span>
-                                                </div>
-                                                <div class="card__stats-val">
-                                                    <span>{{ $clicks_count }}</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card__row card__stats-row">
-                                            <div class="card__col card__stats-item">
-                                                <div class="card__stats-title">
-                                                    <span>ER</span>
-                                                </div>
-                                                <div class="card__stats-val">
-                                                    <span>{{ round(($clicks_count / ($suscribers == 0 ? 1 : $suscribers)) * 100, 3) }}</span>
-                                                </div>
-                                            </div>
-                                            <div class="card__col card__stats-item">
-                                                <div class="card__stats-title">
-                                                    <span>CPC</span>
-                                                </div>
-                                                <div class="card__stats-val">
-                                                    <span>{{ round(($project->product_price / ($clicks_count == 0 ? 1 : $clicks_count)), 1) }}₽</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endif
-                                </div> --}}
-                            </div>
-                        </div>
-                        <div class="view-project__props view-project__props--mobile">
-                            <div class="view-project__props-wrap">
-                                <div class="view-project__props-orders">
-                                    Заказы за 30 дн<br>
-                                    <span class="count">2 637 шт</span>
-                                </div>
-                                <canvas id="orders-graph-mobile" class=""></canvas>
-                            </div>
-                            <div class="view-project__props-wrap">
-                                <div class="view-project__props-money">
-                                    Выручка за 30 дн<br>
-                                    <span class="money">4 750 732 ₽</span>
-                                </div>
-                                <canvas id="prices-graph-mobile" class=""></canvas>
                             </div>
                         </div>
                     </div>
@@ -586,7 +534,7 @@
         datasets = [{
                 label: 'Выручка'
                 , data: data.prices_history.map((item, index) => {
-                    return item.price * data.orders_history[index].orders
+                    return Math.round(item.price * data.orders_history[index].orders)
                 })
                 , showLine: true
                 , type: 'line',
@@ -601,7 +549,9 @@
             , }
             , {
                 label: 'Заказы'
-                , data: data.orders_history.map(item => item.orders)
+                , data: data.orders_history.map(item => {
+                    return Math.round(item.orders)
+                })
                 , showLine: true
                 , type: 'bar',
                 // , bloggers: data.orders_history.map(() => {
@@ -664,9 +614,20 @@
                 }
                 , scales: {
                     y: {
-                        beginAtZero: true
-                        , type: 'logarithmic'
-                    }
+                        beginAtZero: true,
+                        type: 'logarithmic',
+                        // ticks: {
+                        //     callback: (tick, index, array)=> {
+                        //         var newTick = '';
+
+                        //         if(Math.trunc(tick) === tick){
+                        //             newTick = tick
+                        //         }
+
+                        //         return tick === 0 ? 0 : newTick;
+                        //     }
+                        // },
+                    },
                 }
             , }
         });

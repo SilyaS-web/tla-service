@@ -792,7 +792,7 @@ input[type='range']::-webkit-slider-runnable-track{
 .table-stats__col{
     /* border-top:1px solid rgba(0, 0, 0, .1); */
     /* border-right:1px solid rgba(0, 0, 0, .1); */
-    font-size: 10px;
+    font-size: 12px;
     color:rgba(0, 0, 0, .6);
     padding:10px;
     text-align: center;
