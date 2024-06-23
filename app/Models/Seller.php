@@ -177,7 +177,7 @@ class Seller extends Model
     public function getTotalFeedbacksWB()
     {
         if (empty($this->wb_api_key)) {
-            return ['total' => 0, 'low' => 0, 'med' => 0, 'hig' => 0, 'avg' => 0, 'pr_low' => 0, 'pr_mid' => 0];
+            return ['total' => 0, 'low' => 0, 'mid' => 0, 'hig' => 0, 'avg' => 0, 'pr_low' => 0, 'pr_mid' => 0];
         }
 
         $curl = curl_init();
@@ -201,16 +201,29 @@ class Seller extends Model
         $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
         if (200 != $http_code) {
-            return ['total' => 0, 'low' => 0, 'med' => 0, 'hig' => 0, 'avg' => 0, 'pr_low' => 0, 'pr_mid' => 0];
+            return ['total' => 0, 'low' => 0, 'mid' => 0, 'hig' => 0, 'avg' => 0, 'pr_low' => 0, 'pr_mid' => 0];
         }
         $result = json_decode($response);
 
         $total = 0;
         $low = 0;
-        $med = 0;
+        $mid = 0;
         $hig = 0;
         $total_valuation = 0;
         $feedbacks_by_nm = [];
+        $products_by_valuation = [
+            'low' => [],
+            'mid' => [],
+            'hig' => [],
+
+        ];
+        $products_by_feedback_quantity = [
+            'low' => [],
+            'mid' => [],
+            'hig' => [],
+
+        ];
+
         foreach ($result->data->feedbacks as $feedback) {
             $total += 1;
             $productValuation = $feedback->productValuation;
@@ -222,27 +235,31 @@ class Seller extends Model
             }
 
             if ($productValuation < 3) {
+                $products_by_valuation['low'][$feedback->productDetails->nmId] = $feedback->productDetails->nmId;
                 $low++;
             } elseif ($productValuation > 3 && $productValuation < 4) {
-                $med++;
+                $products_by_valuation['mid'][$feedback->productDetails->nmId] = $feedback->productDetails->nmId;
+                $mid++;
             } else {
+                $products_by_valuation['hig'][$feedback->productDetails->nmId] = $feedback->productDetails->nmId;
                 $hig++;
             }
         }
 
-
         $pr_low = 0;
         $pr_mid = 0;
-        foreach ($feedbacks_by_nm as $value) {
+        foreach ($feedbacks_by_nm as $key => $value) {
             if ($value < 5) {
+                $products_by_feedback_quantity['low'][$key] = $key;
                 $pr_low++;
             } else if ($value < 15) {
+                $products_by_feedback_quantity['mid'][$key] = $key;
                 $pr_mid++;
             }
         }
 
         $avg = $total > 0 ? $total_valuation / $total : 0;
 
-        return ['total' => $total, 'low' => $low, 'med' => $med, 'hig' => $hig, 'avg' => $avg, 'pr_low' => $pr_low, 'pr_mid' => $pr_mid];
+        return ['total' => $total, 'low' => $low, 'mid' => $mid, 'hig' => $hig, 'avg' => $avg, 'pr_low' => $pr_low, 'pr_mid' => $pr_mid, 'products_by_feedback_quantity' => $products_by_feedback_quantity, 'products_by_valuation' => $products_by_valuation];
     }
 }

@@ -186,7 +186,7 @@
                                 </span>
                                 <span class="header__profile-org">
                                     @if ( auth()->user()->role == 'seller')
-                                    {{ auth()->user()->seller->organization_type }}
+                                    {{ auth()->user()->seller->organization_type }} "{{ auth()->user()->seller->platform }}"
                                     @elseif (auth()->user()->blogger)
                                     {{ auth()->user()->blogger->name }}
                                     @endif

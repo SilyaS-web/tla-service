@@ -111,7 +111,7 @@ class ProjectController extends Controller
             $validated['wb_description'] = $card->description;
             $validated['wb_options'] = json_encode($card->options);
         }
-
+        $validated['status'] = -1;
         $project = Project::create($validated);
 
         if (isset($validated['feedback-quantity']) && $validated['feedback-quantity'] > 0) {
@@ -330,6 +330,18 @@ class ProjectController extends Controller
         }
 
         return redirect()->route('profile')->with('success', 'Произошла ошибка при удалении проекта');
+    }
+
+    public function activate(Project $project)
+    {
+        $project->update(['status' => 0]);
+        return response()->json('success', 200);
+    }
+
+    public function ban(Project $project)
+    {
+        $project->update(['status' => -2]);
+        return response()->json('success', 200);
     }
 
     public function categories()
