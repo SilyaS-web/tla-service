@@ -436,6 +436,16 @@
                             <label for="reposts">Репосты</label>
                             <input id="reposts" name="reposts" type="reposts" class="input">
                         </div>
+                        <div class="form-group">
+                            <label for="platform">Площадки</label>
+                            <select id="platform" name="platform" class="input">
+                                <option value="">Не выбрано</option>
+                                <option value="">Youtube</option>
+                                <option value="">Instagram</option>
+                                <option value="">Telegram</option>
+                                <option value="">Vkontakte</option>
+                            </select>
+                        </div>
                         <div class="input-file input-file--stat" style="padding-left:0; margin-bottom:20px;">
                             <label for="statistics-file">Прикрепить отчет по статитстике</label>
                             <input id="statistics-file" type="file" multiple hidden>

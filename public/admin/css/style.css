@@ -303,6 +303,7 @@ label{
     background-color: var(--primary);
     padding: 3px;
     border-radius: 5px;
+    /* filter: brightness(0) saturate(100%) invert(98%) sepia(2%) saturate(699%) hue-rotate(15deg) brightness(114%) contrast(100%); */
 }
 .burger-menu__profile {
     margin-bottom: 30px;

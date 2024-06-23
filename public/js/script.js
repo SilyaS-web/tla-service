@@ -1386,7 +1386,15 @@ class PopupBloggerSendStatistics extends Popup{
             get: () =>{
                 return $(this.node).find('#statistics-file').prop('files');
             }
-        }
+        },
+        platform: {
+            set: (val) => {
+                if(!val) $(this.node).find('#platform').val( '');
+            },
+            get: () =>{
+                return $(this.node).find('#platform').val();
+            }
+        },
     }
 
     sendData = () => {

@@ -77,6 +77,16 @@
                                             </div>
 
                                         </div>
+                                        <div class="quest__step-row">
+                                            <div class="form-group" style="flex:1 1 auto">
+                                                <label for="project-brand">Бренд</label>
+                                                <input type="text" id="project-brand" name="product_brand" placeholder="Бренд" class="input input--product_brand">
+                                                @error("product_brand")
+                                                    <span class="error">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                        </div>
                                         <div class="form-group form-group--file create-project__files upload-files">
                                             <div class="upload-files__title">
                                                 Загрузите изображения товара
@@ -732,6 +742,36 @@
                                     <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
                                 </div>
                             </div>
+                            <div class="profile-projects__sort form-group" style="margin-bottom:32px;">
+                                <select name="projects-sort" id="projects-sort" style="border-radius:5px; border:1px solid rgba(0,0,0,.1); padding:0 8px; max-width:380px; height: 50px; font-size:18px">
+                                    <option value="">Выберите бренд</option>
+                                    <option value="axe">Axe</option>
+                                    <option value="nike">Nike</option>
+                                    <option value="adidas">Adidas</option>
+                                </select>
+                            </div>
+                            <script>
+                                $('#projects-sort').on('change', (e)=>{
+                                    var sort = $('#projects-sort').val(), counter = 0;
+
+                                    if(sort.length === 0){
+                                        $('.profile-projects__item').show()
+                                        return
+                                    }
+
+                                    $('.profile-projects__item').each((i, v)=>{
+                                        if( $(v).data('brand').toLowerCase() != sort.toLowerCase() ){
+                                            $(v).hide();
+                                            counter++;
+                                        }
+                                        else $(v).show()
+                                    })
+
+                                    if(counter === $('.profile-projects__item').length){
+                                        notify('info', {title: 'Внимание!', message: 'Проектов с таким брендом не найдено.'});
+                                    }
+                                })
+                            </script>
                             @include("project.index")
                         </div>
                         <div class="profile-projects__filters">
