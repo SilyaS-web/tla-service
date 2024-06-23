@@ -1090,7 +1090,18 @@
             scales: {
                 y: {
                     beginAtZero: true,
-                    type: 'logarithmic'
+                    type: 'logarithmic',
+                    ticks: {
+                        callback: (tick, index, array)=> {
+                            var newTick = '';
+
+                            if(Math.trunc(tick) === tick){
+                                newTick = tick
+                            }
+
+                            return tick === 0 ? 0 : newTick;
+                        }
+                    },
                 }
             }
         }
