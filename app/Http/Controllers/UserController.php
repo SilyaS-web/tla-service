@@ -278,6 +278,7 @@ class UserController extends Controller
             'platform_link' => 'string|nullable',
             'inn' => 'string|nullable',
             'organization_type' => 'string|nullable',
+            'organization_name' => 'string|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -290,6 +291,7 @@ class UserController extends Controller
             'inn' => $validated['inn'],
             'platform_link' => $validated['platform_link'],
             'organization_type' => $validated['organization_type'],
+            'platform' => $validated['organization_name'],
         ]);
     }
 
@@ -312,7 +314,7 @@ class UserController extends Controller
         $old_notifications = $user->notifications()->where('viewed_at', '<>', null)->latest()->limit(4)->get();
         $notifications = $user->notifications()->where('viewed_at', null)->get();
 
-        
+
         return response()->json(['view' => view('shared.notifications', compact('notifications', 'old_notifications'))->render(), 'count' => $notifications->count()]);
     }
 }

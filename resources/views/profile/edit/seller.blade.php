@@ -76,6 +76,13 @@
                             <span class="error">{{ $message }}</span>
                             @enderror
                         </div>
+                         <div class="form-group">
+                            <label for="organization_name">Название организации</label>
+                            <input type="text" class="input" id="organization_name" name="organization_name" value="{{ $user->seller->platform }}">
+                            @error('organization_name')
+                            <span class="error">{{ $message }}</span>
+                            @enderror
+                        </div>
                         <div class="form-group">
                             <label for="">ИНН</label>
                             <input type="text" class="input" id="inn" name="inn" value="{{ $user->seller->inn }}">

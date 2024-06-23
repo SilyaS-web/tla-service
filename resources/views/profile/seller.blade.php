@@ -369,7 +369,7 @@
                                             <div class="dashboard-sm__sm" id=wrapper>
                                                 <input id="wb_total" value="{{ $wb_stats["total"] }}" hidden>
                                                 <input id="wb_low" value="{{ $wb_stats["low"] }}" hidden>
-                                                <input id="wb_med" value="{{ $wb_stats["med"] }}" hidden>
+                                                <input id="wb_mid" value="{{ $wb_stats["mid"] }}" hidden>
                                                 <input id="wb_hig" value="{{ $wb_stats["hig"] }}" hidden>
                                                 <input id="wb_avg" value="{{ $wb_stats["avg"] }}" hidden>
                                                 <svg id="meter">
@@ -438,27 +438,40 @@
                                                                 <div class="feedback-item__stats-row">
                                                                     <div class="feedback-item__stat-products">
                                                                         <div class="" style="background-color: #fff">
-                                                                            <a href="#" class="profile-projects__status">
-                                                                                Арт: 122333444
-                                                                            </a>
-                                                                            <a href="#" class="profile-projects__status">
-                                                                                Арт: 122333444
-                                                                            </a>
-                                                                            <a href="#" class="profile-projects__status">
-                                                                                Арт: 122333444
-                                                                            </a>
+                                                                            @foreach ($wb_stats['products_by_valuation']['low'] as $product_nm)
+                                                                                <a target="_blank" href="https://www.wildberries.ru/catalog/{{ $product_nm }}/detail.aspx" class="profile-projects__status">
+                                                                                    Арт: {{ $product_nm }}
+                                                                                </a>
+                                                                            @endforeach
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         @endif
-                                                        @if($wb_stats["med"] > 0)
-                                                        <div class="feedback-item__stat">
-                                                            <div class="feedback-item__stat-quest warning">
-                                                                !
+                                                        @if($wb_stats["mid"] > 0)
+                                                            <div class="feedback-item__stat">
+                                                                <div class="feedback-item__stats-row">
+                                                                    <div class="feedback-item__stat-quest warning">
+                                                                        !
+                                                                    </div>
+                                                                    У вас {{ $wb_stats["mid"] }} товаров с удовлетворительной оценкой, требуется улучшение
+
+                                                                    <div class="feedback-item__stat-arrow">
+                                                                        <img src="{{ asset('img/arrow-alt.svg') }}" alt="">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="feedback-item__stats-row">
+                                                                    <div class="feedback-item__stat-products">
+                                                                        <div class="" style="background-color: #fff">
+                                                                            @foreach ($wb_stats['products_by_valuation']['mid'] as $product_nm)
+                                                                                <a target="_blank" href="https://www.wildberries.ru/catalog/{{ $product_nm }}/detail.aspx" class="profile-projects__status">
+                                                                                    Арт: {{ $product_nm }}
+                                                                                </a>
+                                                                            @endforeach
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
                                                             </div>
-                                                            У вас {{ $wb_stats["med"] }} товаров с удовлетворительной оценкой, требуется улучшение
-                                                        </div>
                                                         @endif
                                                     </div>
                                                 </div>
@@ -488,15 +501,11 @@
                                                                 <div class="feedback-item__stats-row">
                                                                     <div class="feedback-item__stat-products">
                                                                         <div class="" style="background-color: #fff">
-                                                                            <a href="#" class="profile-projects__status">
-                                                                                Арт: 122333444
-                                                                            </a>
-                                                                            <a href="#" class="profile-projects__status">
-                                                                                Арт: 122333444
-                                                                            </a>
-                                                                            <a href="#" class="profile-projects__status">
-                                                                                Арт: 122333444
-                                                                            </a>
+                                                                            @foreach ($wb_stats['products_by_feedback_quantity']['low'] as $product_nm)
+                                                                                <a target="_blank" href="https://www.wildberries.ru/catalog/{{ $product_nm }}/detail.aspx" class="profile-projects__status">
+                                                                                    Арт: {{ $product_nm }}
+                                                                                </a>
+                                                                            @endforeach
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -516,15 +525,11 @@
                                                                 <div class="feedback-item__stats-row">
                                                                     <div class="feedback-item__stat-products">
                                                                         <div class="" style="background-color: #fff">
-                                                                            <a href="#" class="profile-projects__status">
-                                                                                Арт: 122333444
-                                                                            </a>
-                                                                            <a href="#" class="profile-projects__status">
-                                                                                Арт: 122333444
-                                                                            </a>
-                                                                            <a href="#" class="profile-projects__status">
-                                                                                Арт: 122333444
-                                                                            </a>
+                                                                              @foreach ($wb_stats['products_by_feedback_quantity']['mid'] as $product_nm)
+                                                                                <a target="_blank" href="https://www.wildberries.ru/catalog/{{ $product_nm }}/detail.aspx" class="profile-projects__status">
+                                                                                    Арт: {{ $product_nm }}
+                                                                                </a>
+                                                                            @endforeach
                                                                         </div>
                                                                     </div>
                                                                 </div>

@@ -1,5 +1,13 @@
 <div class="profile-projects__items">
     @forelse ($projects as $project)
+    <?php
+        $project_status = 'Выполнено';
+        if ((time() - strtotime($project->created_at)) < 5 * 60) {
+            $project_status = 'Не активно';
+        } else if ($project->active == 0) {
+            $project_status = 'Активно';
+        }
+    ?>
         <div class="profile-projects__row profile-projects__item" data-id="{{$project->id}}" data-brand = "axe">
             <div class="profile-projects__col profile-projects__img" style="background-image: url({{ $project->getImageUrl(true) }})">
             </div>
@@ -9,7 +17,7 @@
                         {{ $project->product_name }}
                     </div>
                     <div class="profile-projects__status active">
-                        {{ $project->active == 0 ? 'Активно' : 'Выполнено' }}
+                        {{ $project_status }}
                     </div>
                 </div>
                 <div class="profile-projects__row">
