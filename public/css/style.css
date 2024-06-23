@@ -500,17 +500,54 @@ input[type='range']::-webkit-slider-runnable-track{
     cursor: pointer;
     transition: filter .2s linear;
 }
-.profile-projects__control-btns>*{
-    width:18px;
+.profile-projects__dots{
+    opacity: .4;
+    width:20px;
+    transition: opacity .1s linear;
 }
-.profile-projects__control-btns>*:hover{
-    filter: brightness(0) saturate(100%) invert(37%) sepia(68%) saturate(2003%) hue-rotate(2deg) brightness(102%) contrast(105%);
+.profile-projects__dots:hover{
+    opacity: 1;
 }
-.profile-projects__control-btns>.profile-projects__edit{
-    width:15px
+.profile-projects__opts{
+    position: absolute;
+    right:0;
+    top:30px;
+    display: none;
+    flex-direction: column;
+    background-color: #fff;
+    border-radius: 10px;
+    padding:10px;
+    width:150px
 }
-.profile-projects__control-btns>.profile-projects__delete{
-    width:15px;
+.profile-projects__opts-item{
+    padding:10px;
+    border-radius: 5px;
+    font-size: 12px;
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+    border:1px solid transparent;
+    width: 100%;
+    color:rgba(0, 0, 0, .65)
+}
+.profile-projects__opts-item:hover{
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    text-decoration: none;
+}
+.profile-projects__opts-item:hover img{
+    filter: brightness(0) saturate(100%) invert(44%) sepia(97%) saturate(2930%) hue-rotate(360deg) brightness(100%) contrast(107%);
+    opacity: 1;
+}
+.profile-projects__opts-item img{
+    width: 16px;
+    opacity: .65;
+}
+.profile-projects__edit img{
+    width: 12px;
+}
+.profile-projects__control-btns.active .profile-projects__opts{
+    display: flex;
 }
 .profile-projects__item:hover{
     background-color: var(--pale);
@@ -727,6 +764,10 @@ input[type='range']::-webkit-slider-runnable-track{
     justify-content: center;
     align-items: center;
     line-height: .65;
+    opacity: .45;
+}
+.owl-carousel .owl-nav button.owl-next:hover, .owl-carousel .owl-nav button.owl-prev:hover{
+    opacity: 1;
 }
 .profile-create-project .create-project__body{
     width: 100%;
@@ -2710,7 +2751,7 @@ input[type='range']::-webkit-slider-runnable-track{
     border-radius: 10px;
 }
 .dashboard__placeholder-overflow{
-    background-color: rgba(255,255,255, .65);
+    background-color: rgba(255,255,255, .8);
     backdrop-filter: blur(12px);
     position: absolute;
     z-index: 1;
@@ -3919,6 +3960,9 @@ input[type='range']::-webkit-slider-runnable-track{
     .card__stats-row{
         width: 50%;
     }
+    .bloger-item .card__stats-row{
+        width:100%;
+    }
     .card-btns-mobile{
         width: 100%;
     }
@@ -4254,7 +4298,7 @@ input[type='range']::-webkit-slider-runnable-track{
         max-width:250px;
     }
     .footer__body{
-        gap: 25px;
+        gap: 20px;
     }
 
     .planItem__container{
@@ -4313,7 +4357,9 @@ input[type='range']::-webkit-slider-runnable-track{
     #seller .profile-projects__item .card__stats-stats{
         flex-direction: unset;
     }
-
+    .bloger-item .card__stats-stats{
+        flex-direction: column;
+    }
     .chat__left{
         width:320px;
     }
@@ -4573,11 +4619,19 @@ input[type='range']::-webkit-slider-runnable-track{
         width: 100%;
         align-items: center;
     }
-
+    .quantity-w .quantity-plus img{
+        width: 12px;
+    }
+    .quantity-w .quantity-minus img{
+        width: 20px;
+    }
     .popup-project__img{
         height:475px;
     }
 
+    .footer__container{
+        padding:30px 15px;
+    }
     .footer__body{
         flex-direction: column;
         align-items: center;
@@ -4597,6 +4651,9 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 @media(max-width:545px){
     .title{
+        font-size: 28px;
+    }
+    .tariff__header .tariff__title{
         font-size: 28px;
     }
 
@@ -4628,7 +4685,12 @@ input[type='range']::-webkit-slider-runnable-track{
     .title{
         font-size: 24px;
     }
-
+    .tariff__header .tariff__title{
+        font-size: 24px;
+    }
+    .tariff__subtitle{
+        font-size: 16px;
+    }
     .card__stats-item:not(:last-child){
         margin-right: 8px;
     }
@@ -4654,6 +4716,9 @@ input[type='range']::-webkit-slider-runnable-track{
         gap: 10px;
         width: 50%;
         flex-direction: column;
+    }
+    .bloger-item .card__stats-row{
+        flex-direction: row;
     }
     .card{
         min-width: unset;
@@ -4745,6 +4810,10 @@ input[type='range']::-webkit-slider-runnable-track{
 
     ._container{
         padding:0 10px
+    }
+
+    .footer__container{
+        padding:30px 15px;
     }
 
     .profile-projects__statistics .view-project__props-graph>*{

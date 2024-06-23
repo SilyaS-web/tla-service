@@ -53,7 +53,7 @@
             @break
 
             @case('active')
-            <button class="btn btn-primary" onclick="sendProjectToSeller({{ $project_work->id }}, this)">Перейти в чат</button>
+            <button class="btn btn-primary" onclick="goToChat({{ $project_work->id }})">Перейти в чат</button>
             @break
             {{--
             @case('finish')
@@ -117,5 +117,10 @@
                 });
             }
         });
+    }
+
+    function goToChat(project_work_id) {
+        $('#blogger .chat-link').click();
+        $(`.item-chat[data-id="${project_work_id}"]`).click();
     }
 </script>

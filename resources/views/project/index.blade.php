@@ -8,7 +8,7 @@
             $project_status = 'Активно';
         }
     ?>
-        <div class="profile-projects__row profile-projects__item" data-id="{{$project->id}}">
+        <div class="profile-projects__row profile-projects__item" data-id="{{$project->id}}" data-brand = "axe">
             <div class="profile-projects__col profile-projects__img" style="background-image: url({{ $project->getImageUrl(true) }})">
             </div>
             <div class="profile-projects__col profile-projects__content" style="padding:5px 0px;">
@@ -34,7 +34,8 @@
                 </div>
                 <div class="profile-projects__row card-btns-desktop" style="margin-top:auto">
                     <div class="profile-projects__btns" style="margin-top:0;">
-                        <button class="btn btn-secondary btn-bloggers">Заявки от блогеров <div class="nav-menu__item-notifs notifs notifs-application" style="">1</div></button>
+                        {{-- <button class="btn btn-secondary btn-bloggers">Заявки от блогеров <div class="nav-menu__item-notifs notifs notifs-application" style="">1</div></button> --}}
+                        <a href="/apist/projects/{{$project->id}}/activate" class="btn btn-secondary" style="text-align: center">Выложить проект </a>
                         <button class="btn btn-secondary btn-statistics">Статистика</button>
                     </div>
                 </div>
@@ -95,7 +96,8 @@
                     <div class="card__row card__stats-row card-btns-mobile" style="margin-top:auto">
                         <button class="btn btn-secondary btn-bloggers-in_work">Блогеры в работе</button>
                         <button class="btn btn-secondary btn-statistics">Статистика</button>
-                        <button class="btn btn-secondary btn-bloggers">Заявки от блогеров <div class="nav-menu__item-notifs notifs notifs-application" style="">1</div></button>
+                        {{-- <button class="btn btn-secondary btn-bloggers">Заявки от блогеров <div class="nav-menu__item-notifs notifs notifs-application" style="">1</div></button> --}}
+                        <a href="/apist/projects/{{$project->id}}/activate" class="btn btn-secondary" style="text-align: center">Выложить проект </a>
                     </div>
                 </div>
                 {{-- <div class="profile-projects__row profile-projects__btns" style="margin-top:auto">
@@ -545,6 +547,17 @@
                     </div>
                 </div>
             </div>
+            <div class="profile-projects__control-btns">
+                <div class="profile-projects__dots" title="Опции">
+                    <img src="img/dots-icon.svg" alt="">
+                </div>
+                <div class="profile-projects__opts">
+                    <a href="apist/projects/{{$project->id}}/edit" class="profile-projects__opts-item profile-projects__edit">
+                        <img src="img/pencil-icon.svg" alt="">
+                        <div class="profile-projects__opts-name">Редактировать</div>
+                    </a>
+                </div>
+            </div>
         </div>
     @empty
     Нет проектов
@@ -552,6 +565,10 @@
 </div>
 
 <script>
+    $(document).on('click', '.profile-projects__control-btns', function(e){
+        $(e.target).closest('.profile-projects__control-btns').toggleClass('active')
+    })
+
     var mediaQuery = window.matchMedia('(max-width: 911px)');
 
     $(document).find('.profile-projects__row.projects-statistics').each((i, stat) => {
