@@ -560,6 +560,14 @@
 
                                                 </canvas>
                                             </div>
+                                            <div class="dashboard__placeholder" style="z-index: 1; top:0; left:0;">
+                                                <div class="dashboard__placeholder-text">
+                                                    Переверните экран, чтобы посмотреть статистику
+                                                </div>
+                                                <div class="dashboard__placeholder-overflow">
+
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="dashboard__col dashboard__item funnel-statistics">
                                             <div class="dashboard__col">
@@ -1185,11 +1193,11 @@
     , });
 
     var config = {
-        type: "funnel"
-        , data: {
+        type: "funnel",
+        data: {
             datasets: [{
-                data: [30, 60, 90]
-                , backgroundColor: [
+                data: [30, 60, 90],
+                backgroundColor: [
                     "#FF6384"
                     , "#36A2EB"
                     , "#FFCE56"
@@ -1207,9 +1215,7 @@
             ]
         }
     }
-    // var funnel = document.getElementById("funnel-graph").getContext("2d");
-    // console.log(funnel);
-    FunnelChart("funnel-graph", {
+    var funnelChart = FunnelChart("funnel-graph", {
         values: [ {{ $total_clicks }}, {{ round($total_clicks / ($subscribers == 0 ? 1 : $subscribers), 3) }}, {{ round($avg_price / ($total_clicks == 0 ? 1 : $total_clicks), 1) }}]
         , sectionColor: ["#98CBED", "#F0C457", "#FD6567"]
         , displayPercentageChange: false
@@ -1224,6 +1230,20 @@
         , ]
         , maxFontSize: 18
     , });
+
+    // $(window).on('resize', function(){
+    //     console.log(123121);
+    //     funnelChart.initialize()
+    // })
+    window
+        .matchMedia('(orientation: portrait)')
+        .addListener(function (m) {
+            if (m.matches) {
+            } else {
+                console.log(funnelChart);
+                funnelChart.initialize()
+            }
+        })
 
 </script>
 <script src="{{ asset("js/wb.js") }}"></script>

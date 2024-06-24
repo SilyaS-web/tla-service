@@ -55,9 +55,11 @@
                                 <a href="{{ route('edit-profile') }}" class="row">
                                     Личные данные
                                 </a>
-                                <a href="{{ route('tariff') }}" class="row">
-                                    Тарифы
-                                </a>
+                                @if ( auth()->user()->role == 'seller')
+                                    <a href="{{ route('tariff') }}" class="row">
+                                        Тарифы
+                                    </a>
+                                @endif
                                 <a href="{{ route('logout') }}" class="row">
                                     Выход
                                 </a>
@@ -197,9 +199,9 @@
                                     Личные данные
                                 </a>
                                 @if ( auth()->user()->role == 'seller')
-                                <a href="{{ route('tariff') }}" class="row">
-                                    Тарифы
-                                </a>
+                                    <a href="{{ route('tariff') }}" class="row">
+                                        Тарифы
+                                    </a>
                                 @endif
                                 <form action="{{ route('logout') }}" method="POST" class="row">
                                     @csrf
