@@ -349,7 +349,7 @@
             <div class="profile-projects__row profile-projects__statistics projects-statistics" data-stats="{{ $project->getStatistics() }}">
                 <div class="view-project__props view-project__props--desktop">
                     <div class="view-project__props-wrap">
-                        <div class="view-project__props-col">
+                        <div class="view-project__props-col" style="position: relative">
                             <div class="projects-statistics__title">
                                 Статистика по товару (WB)
                             </div>
@@ -365,6 +365,14 @@
                             </div>
                             <div class="view-project__props-graph">
                                 <canvas id="orders-graph-desktop" class=""></canvas>
+                            </div>
+                            <div class="dashboard__placeholder" style="z-index: 1; top:0; left:0;">
+                                <div class="dashboard__placeholder-text">
+                                    Переверните экран, чтобы посмотреть статистику
+                                </div>
+                                <div class="dashboard__placeholder-overflow">
+
+                                </div>
                             </div>
                         </div>
                         <div class="view-project__props-col">
@@ -590,7 +598,6 @@
                 , datasets: datasets
             }
             , options: {
-                responsive: true,
                 plugins: {
                     tooltip: {
                         mode: 'index'
@@ -651,6 +658,20 @@
         }
 
         prodsStatistics.update();
+
+        window
+            .matchMedia('(orientation: portrait)')
+            .addListener(function (m) {
+                if (m.matches) {
+                } else {
+                    prodsStatistics.resize()
+                }
+            })
+
+        // window.addEventListener('resize', function () {
+        //     prodsStatistics.resize()
+        //     console.log(prodsStatistics);
+        // })
     })
 
 </script>

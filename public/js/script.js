@@ -1102,9 +1102,11 @@ class Popup{
 
         $(this.node).find('.close-popup').on('click', this.closePopup)
 
-        return this;
-    }
+        if(!this.instance) this.instance = this;
 
+        return this.instance;
+    }
+    instance = null;
     node = '';
 
     openPopup = () => {
@@ -1113,7 +1115,6 @@ class Popup{
 
     closePopup = () => {
         $(this.node).removeClass('opened');
-        delete this;
     }
 }
 
@@ -1123,8 +1124,11 @@ class PopupCallUs extends Popup{
 
         $(this.node).find('.btn.send-data').on('click', this.sendData)
 
-        return this;
+        if(!this.instance) this.instance = this;
+
+        return this.instance;
     }
+    instance = null;
 
     sendUri = '/apist/feedback';
     dataProps = {
@@ -1174,8 +1178,11 @@ class PopupAddBlogerToProject extends Popup{//когда нибудь тут б�
 
         $(this.node).find('.popup__search .btn-search').on('click', this.searchProjects)
 
-        return this;
+        if(!this.instance) this.instance = this;
+
+        return this.instance;
     }
+    instance = null;
 
     searchUri = '#';
 
@@ -1225,8 +1232,11 @@ class PopupConfirmCompletion extends Popup{
         $(this.node).find('.mark-items__star').on('click', (e) => this.setMark(e));
         $(this.node).find('.btn.send-data').on('click', this.sendData);
 
-        return this;
+        if(!this.instance) this.instance = this;
+
+        return this.instance;
     }
+    instance = null;
 
     node = '';
     sendUri = "/apist/projects/confirm";
@@ -1270,8 +1280,11 @@ class PopupConfirmCompletionBlogger extends Popup{
         $(this.node).find('.btn.send-data').on('click', this.sendData);
         $(this.node).find('.input-file.input-file--stat input[type="file"]').on('change', this.uploadFile)
 
-        return this;
+        if(!this.instance) this.instance = this;
+
+        return this.instance;
     }
+    instance = null;
 
     node = '';
     sendUri = "/apist/projects/confirm";
@@ -1314,8 +1327,11 @@ class PopupChangePassword extends Popup{
 
         $(this.node).find('.send-data').on('click', this.sendData)
 
-        return this;
+        if(!this.instance) this.instance = this;
+
+        return this.instance;
     }
+    instance = null;
 
     node = '';
     sendUri = "/apist/password/reset";
@@ -1347,8 +1363,11 @@ class PopupBloggerSendStatistics extends Popup{
 
         $(this.node).find('.send-data').on('click', this.sendData)
 
-        return this;
+        if(!this.instance) this.instance = this;
+
+        return this.instance;
     }
+    instance = null;
 
     node = '';
     sendUri = "";
@@ -1450,9 +1469,12 @@ class PopupBloggerSendOffer extends Popup{
         this.node = node;
 
         $(this.node).find('.send-data').on('click', this.sendData)
+        console.log(this.instance);
+        if(!this.instance) this.instance = this;
 
-        return this;
+        return this.instance;
     }
+    instance = null;
 
     node = '';
     sendUri = "/apist/works";
@@ -1460,7 +1482,9 @@ class PopupBloggerSendOffer extends Popup{
 
     dataProps = {
         message: {
-            set: (val) => {console.log(val);},
+            set: (val) => {
+                return $(this.node).find('#message').val(val);
+            },
             get: () =>{
                 return $(this.node).find('#message').val();
             }
@@ -1486,7 +1510,9 @@ class PopupBloggerSendOffer extends Popup{
             success: (res)=>{
                 self.closePopup();
                 notify('info', {title: 'Успешно!', message: 'Отклик успешно отправлен'});
-
+                for(var k in self.dataProps){
+                    self.dataProps[k].set('')
+                }
                 $(document).find(`.btn-blogger-send-offer[data-project-work="${self.projectWorkId}"]`).text('Начать работу')
                 $(document).find(`.btn-blogger-send-offer[data-project-work="${self.projectWorkId}"]`).removeClass('btn-blogger-send-offer')
             }
@@ -1510,8 +1536,11 @@ class PopupSellerChooseProjectsFormat extends Popup{
         })
 
 
-        return this;
+        if(!this.instance) this.instance = this;
+
+        return this.instance;
     }
+    instance = null;
 
     node = '';
     projectNode = null;
@@ -1575,7 +1604,6 @@ class PopupSellerChooseProjectsFormat extends Popup{
         $('.current-project').data('id', currentFormat.closest('.input-checkbox-w').data('id'))
 
         this.closePopup();
-        delete this;
     }
 }
 
@@ -1585,8 +1613,11 @@ class PopupBlogerProjectMoreInfo extends Popup{
 
         this.node = node;
 
-        return this;
+        if(!this.instance) this.instance = this;
+
+        return this.instance;
     }
+    instance = null;
 
     node = '';
     getProjectInfoUri = 'apist/projects/%%PROJECT_ID%%/wb-info'
@@ -1736,21 +1767,27 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
+    var popupBloggerSendOffer = new PopupBloggerSendOffer('#blogger-send-offer');
+    var popupBlogerProjectMoreInfo = new PopupBlogerProjectMoreInfo('#project-item-info');
+    var choosePopup = new PopupSellerChooseProjectsFormat('#choose-projects-adv-format');
+    var popupBloggerSendStatistics = new PopupBloggerSendStatistics('#send-statistics-blogger');
+    var popupCallUs = new PopupCallUs('#contact-form');
+    var popupChangePassword = new PopupChangePassword('#change-password');
+    var popupConfirmCompletion = new PopupConfirmCompletion('#confirm-completion');
+    var popupConfirmCompletionBlogger = new PopupConfirmCompletionBlogger('#confirm-completion-blogger');
+
     $(document).on('click', '.btn-blogger-send-offer', function(e){
         var btn = $(e.target).closest('.btn-blogger-send-offer');
 
-        var popup = new PopupBloggerSendOffer('#blogger-send-offer');
-
-        popup.openPopup();
-        popup.projectWorkId = btn.data('project-work');
+        popupBloggerSendOffer.openPopup();
+        popupBloggerSendOffer.projectWorkId = btn.data('project-work');
     })
 
     $(document).on('click', '#blogger .project-item', function(e){
         if($(e.target).closest('.project-item__btns').length == 0){
-            var popup = new PopupBlogerProjectMoreInfo('#project-item-info');
-            popup.projectId = $(e.target).closest('.project-item').data('id');
-            popup.getProjectInfo()
-            popup.openPopup();
+            popupBlogerProjectMoreInfo.projectId = $(e.target).closest('.project-item').data('id');
+            popupBlogerProjectMoreInfo.getProjectInfo()
+            popupBlogerProjectMoreInfo.openPopup();
         }
     })
 
@@ -1766,7 +1803,6 @@ $(window).on('load', function(){
         $('#profile-blogers-list').removeClass('active');
 
         $(document).on('click', '.btn-choose-project', function(e){
-            var choosePopup = new PopupSellerChooseProjectsFormat('#choose-projects-adv-format');
             choosePopup.openPopup();
 
             var formats = $(e.target).closest('.project-item').find('.project-item__format-tags .card__tags-item');
@@ -1810,11 +1846,11 @@ $(window).on('load', function(){
 
     $(document).on('click', '#send-stats-blogger-btn', function(e){
         var btn = $(e.target).closest('#send-stats-blogger-btn');
-        var form = new PopupBloggerSendStatistics('#send-statistics-blogger');
 
-        form.workId = $(btn).data('id');
-        form.openPopup()
+        popupBloggerSendStatistics.workId = $(btn).data('id');
+        popupBloggerSendStatistics.openPopup()
     })
+
     $(document).on('click', '.notif-header__goto', function(e){
         e.preventDefault();
 
@@ -2012,8 +2048,7 @@ $(window).on('load', function(){
 
     //popups
     $(document).on('click', '#contact-us', function(){
-        let form = new PopupCallUs('#contact-form');
-        form.openPopup()
+        popupCallUs.openPopup()
     })
     $(document).on('click', '.btn-add-to-project', function(e){//здесь вообще так должно работать, что если мы не со страницы создания проекта пришли, то попапа нет, тк у нас есть айдишник проекта
         var pId = $(e.target).closest('.card').find('btn-add-to-project').data('project-id');
@@ -2038,24 +2073,20 @@ $(window).on('load', function(){
     })
 
     $(document).on('click', '#change-password-btn', function(){
-        let popup = new PopupChangePassword('#change-password');
-        popup.openPopup();
+        popupChangePassword.openPopup();
     })
 
 
     $(document).on('click', '#confirm-completion-btn', function(e){
         e.preventDefault();
-
-        let popup = new PopupConfirmCompletion('#confirm-completion');
-        popup.openPopup();
+        popupConfirmCompletion.openPopup();
     })
 
     $(document).on('click', '#confirm-completion-blogger-btn', function(e){
         e.preventDefault();
 
-        let popup = new PopupConfirmCompletionBlogger('#confirm-completion-blogger');
-        popup.workId = $(e.target).data('work-id');
-        popup.openPopup();
+        popupConfirmCompletionBlogger.workId = $(e.target).data('work-id');
+        popupConfirmCompletionBlogger.openPopup();
     })
 
 
