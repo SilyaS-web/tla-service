@@ -74,8 +74,12 @@ class MessageController extends Controller
                 }
             }
 
+            $is_new = false;
+            if (Message::where('work_id', $validated['work_id'])->where('viewed_at', null)->count() > 0) {
+                $is_new = true;
+            }
             Message::where('work_id', $validated['work_id'])->where('viewed_at', null)->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
-            return response()->json(['view' => view('shared.chat.messages', compact('work', 'user_id', 'role'))->render(), 'btn-class' => $btn_class, 'btn-text' => $btn_text, 'data-id' => $data_id]);
+            return response()->json(['view' => view('shared.chat.messages', compact('work', 'user_id', 'role'))->render(), 'btn-class' => $btn_class, 'btn-text' => $btn_text, 'data-id' => $data_id, 'is_new' => $is_new]);
         }
         $works_count = $works->count();
         return response()->json(['view' => view('shared.chat.chat-list', compact('works', 'user_id', 'role'))->render(), 'count' => $works_count]);

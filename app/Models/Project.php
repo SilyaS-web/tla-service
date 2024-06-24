@@ -24,7 +24,17 @@ class Project extends Model
         self::INSTAGRAM
     ];
 
-    public const PENDING = -3;
+    public const BANNED = -2;
+    public const PENDING = -1;
+    public const ACTIVE = 0;
+    public const COMPLETED = 1;
+
+    public const STATUSES = [
+        self::BANNED,
+        self::PENDING,
+        self::ACTIVE,
+        self::COMPLETED
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -43,6 +53,7 @@ class Project extends Model
         'wb_description',
         'wb_options',
         'wb_rate',
+        'is_blogger_access'
     ];
 
     public function executor()
