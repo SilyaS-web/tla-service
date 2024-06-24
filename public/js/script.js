@@ -1045,9 +1045,7 @@ class Chat {
                 else{
                     $(self.node).find('.btn-action').prop('href', `#`);
                 }
-
                 $(self.node).find(`.item-chat[data-id="${self.currentChatId}"]`).addClass('current');
-
                 if(res.is_new){
                     setTimeout(()=>{
                         $(self.node).find(".messages-chat").animate({
