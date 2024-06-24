@@ -102,6 +102,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/admin/deny/{user_id}', [AdminController::class, 'deny']);
         Route::get('/admin/achievement/{user_id}', [AdminController::class, 'achievement']);
 
+        Route::get('/applications-count', [AdminController::class, 'achievement']);
+
         Route::get('/notifications', [UserController::class, 'getNewNotifications']);
         Route::get('/notifications/view/{notification}', [NotificationController::class, 'view']);
 

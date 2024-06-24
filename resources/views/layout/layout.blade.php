@@ -60,9 +60,10 @@
                                         Тарифы
                                     </a>
                                 @endif
-                                <a href="{{ route('logout') }}" class="row">
-                                    Выход
-                                </a>
+                                <form action="{{ route('logout') }}" method="POST" class="row">
+                                    @csrf
+                                    <button type="submit">Выход</button>
+                                </form>
                             </div>
                         </div>
                         <a href="#" class="header__col header__notif header__profile-item--js" title="Уведомления">

@@ -19,15 +19,7 @@
                     </div>
                 </div>
                 <div class="chat__right">
-                    <div class="dashboard__placeholder" style="z-index: 1">
-                        <div class="dashboard__placeholder-text">
-                            Проект завершен
-                        </div>
-                        <div class="dashboard__placeholder-overflow">
-
-                        </div>
-                    </div>
-                    <div class="chat__back" style="z-index: 2;position: relative;">
+                    <div class="chat__back">
                         <img src="{{asset('img/arrow-alt.svg')}}" alt="">
                         <span> Вернуться </span>
                     </div>
