@@ -75,6 +75,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/projects/{project}/wb-info', [ProjectController::class, 'getWBInfo']);
         Route::get('/projects/{project}/activate', [ProjectController::class, 'activate']);
         Route::get('/projects/{project}/ban', [ProjectController::class, 'ban']);
+        Route::get('/projects/{project}/edit', [ProjectController::class, 'edit']);
+        Route::get('/projects/{project}/update', [ProjectController::class, 'update']);
 
         Route::post('/bloggers', [BloggerController::class, 'index']);
         Route::get('/bloggers/{blogger}', [BloggerController::class, 'info']);

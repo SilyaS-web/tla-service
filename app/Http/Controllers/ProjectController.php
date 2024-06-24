@@ -275,9 +275,9 @@ class ProjectController extends Controller
      *
      * @param  int  $id
      */
-    public function edit($id)
+    public function edit(Project $project)
     {
-        //
+        return view('project.edit', compact('project'));
     }
 
     /**
