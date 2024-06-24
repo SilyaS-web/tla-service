@@ -1022,6 +1022,7 @@ class Chat {
         }
 
         $.post(self.getMsgUri, data, function(res){
+            console.log(res);
             if(!id){
                 $(document).find('.chat__chat-items').remove();
                 $(document).find('#chat .chat__left').append(res.view);
@@ -1029,6 +1030,7 @@ class Chat {
                 $(self.node).find('.chat__overflow').show()
             }
             else{
+
                 $(self.node).find('.messages-chat').empty()
                 $(self.node).find('.messages-chat').append(res.view)
                 $(self.node).find('.chat__overflow').hide()
@@ -1045,6 +1047,13 @@ class Chat {
                 }
 
                 $(self.node).find(`.item-chat[data-id="${self.currentChatId}"]`).addClass('current')
+                if(res.is_new){
+                    setTimeout(()=>{
+                        $(self.node).find(".messages-chat").animate({
+                            scrollTop: $(self.node).find(".messages-chat").find('.messages-chat__item').length * 150
+                        }, 100)
+                    }, 50)
+                }
             }
 
 

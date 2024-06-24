@@ -426,28 +426,28 @@
                                             <div class="table-stats__col table-stats__blogger-img" style="width: 10%;height:50px;">
 
                                             </div>
-                                            <div class="table-stats__col" style="width: 12%;">
+                                            <div class="table-stats__col" style="width: 14%;">
                                                 Nickname
                                             </div>
                                             <div class="table-stats__col" style="width: 12%;">
                                                 Подписчики
                                             </div>
-                                            <div class="table-stats__col" style="width: 10%;">
+                                            <div class="table-stats__col" style="width: 12%;">
                                                 Охваты
                                             </div>
-                                            <div class="table-stats__col" style="width: 10%;">
+                                            <div class="table-stats__col" style="width: 12%;">
                                                 Переходы
                                             </div>
-                                            <div class="table-stats__col" style="width: 5%;">
+                                            <div class="table-stats__col" style="width: 6%;">
                                                 ER
                                             </div>
-                                            <div class="table-stats__col" style="width: 10%;">
+                                            <div class="table-stats__col" style="width: 11%;">
                                                 CPM
                                             </div>
-                                            <div class="table-stats__col" style="width: 10%;">
+                                            <div class="table-stats__col" style="width: 11%;">
                                                 CTR
                                             </div>
-                                            <div class="table-stats__col" style="width: 14%;">
+                                            <div class="table-stats__col" style="width: 16%;">
                                                 Дата завершения
                                             </div>
                                         </div>
@@ -459,28 +459,28 @@
                                                 <div class="table-stats__col table-stats__blogger-img" style="width: 10%">
                                                     <img src="{{ $work->blogger->user->getImageURL() }}" alt="">
                                                 </div>
-                                                <div class="table-stats__col" style="width: 12%;">
+                                                <div class="table-stats__col" style="width: 14%;">
                                                     {{ $work->blogger->user->name }}
                                                 </div>
                                                 <div class="table-stats__col" style="width: 12%;">
                                                     {{ $work->finishStats->subs }}
                                                 </div>
-                                                <div class="table-stats__col" style="width: 10%;">
+                                                <div class="table-stats__col" style="width: 12%;">
                                                     {{ $work->finishStats->views }}
                                                 </div>
-                                                <div class="table-stats__col" style="width: 10%;">
+                                                <div class="table-stats__col" style="width: 12%;">
                                                     {{ $work->getTotlaClicks() }}
                                                 </div>
-                                                <div class="table-stats__col" style="width: 5%;">
+                                                <div class="table-stats__col" style="width: 6%;">
                                                     0.1
                                                 </div>
-                                                <div class="table-stats__col" style="width: 10%;">
+                                                <div class="table-stats__col" style="width: 11%;">
                                                     298.5₽
                                                 </div>
-                                                <div class="table-stats__col" style="width: 10%;">
+                                                <div class="table-stats__col" style="width: 11%;">
                                                     298.5₽
                                                 </div>
-                                                <div class="table-stats__col" style="width: 14%;">
+                                                <div class="table-stats__col" style="width: 16%;">
                                                     {{$work->confirmed_by_seller_at}}
                                                 </div>
                                             </div>
