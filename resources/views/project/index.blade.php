@@ -35,7 +35,7 @@
                 <div class="profile-projects__row card-btns-desktop" style="margin-top:auto">
                     <div class="profile-projects__btns" style="margin-top:0;">
                         <button class="btn btn-secondary btn-bloggers">Заявки от блогеров <div class="nav-menu__item-notifs notifs notifs-application" style="">1</div></button>
-                        <a href="/apist/projects/{{$project->id}}/activate" class="btn btn-secondary" style="text-align: center">Выложить проект </a>
+                        {{-- <a href="/apist/projects/{{$project->id}}/activate" class="btn btn-secondary" style="text-align: center">Выложить проект </a> --}}
                         <button class="btn btn-secondary btn-statistics">Статистика</button>
                     </div>
                 </div>
