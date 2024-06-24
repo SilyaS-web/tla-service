@@ -24,6 +24,8 @@ class Project extends Model
         self::INSTAGRAM
     ];
 
+    public const PENDING = -3;
+
     /**
      * The attributes that are mass assignable.
      *

@@ -367,13 +367,15 @@ class ProjectController extends Controller
 
     public function getWBInfo(Project $project)
     {
+        $total_quantity = $project->projectWorks()->sum('quantity');
+        $lost_quantity = $total_quantity - $project->works()->where('status', '<>', null)->count();
+
         return response()->json([
             'category' => $project->wb_category,
             'product_name' => $project->wb_product_name,
             'description' => $project->wb_description,
-            'rate' => rand(7, 10),
-            'total_quantity' => rand(7, 10),
-            'lost_quantity' => rand(1, 7),
+            'total_quantity' => $total_quantity,
+            'lost_quantity' => $lost_quantity,
             'product_code' => $project->product_nm,
             'price' =>  $project->product_price,
             'images' => $project->getImageURL(),

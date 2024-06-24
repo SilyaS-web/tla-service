@@ -27,7 +27,6 @@ class MessageController extends Controller
             'new_only' => 'boolean',
         ]);
 
-
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
