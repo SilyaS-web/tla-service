@@ -14,7 +14,7 @@ class CreateColumnProjectsIsAccess extends Migration
     public function up()
     {
         Schema::table('projects', function (Blueprint $table) {
-            $table->boolean('is_blogger_access')->nullable();
+            $table->boolean('is_blogger_access')->nullable()->default(false);
         });
     }
 

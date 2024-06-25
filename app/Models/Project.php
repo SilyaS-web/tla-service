@@ -25,13 +25,11 @@ class Project extends Model
     ];
 
     public const BANNED = -2;
-    public const PENDING = -1;
     public const ACTIVE = 0;
     public const COMPLETED = 1;
 
     public const STATUSES = [
         self::BANNED,
-        self::PENDING,
         self::ACTIVE,
         self::COMPLETED
     ];
