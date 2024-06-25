@@ -424,10 +424,6 @@
                     </div>
                     <div class="popup__form">
                         <div class="form-group">
-                            <label for="subs">Количество подписчиков</label>
-                            <input id="subs" name="subs" type="subs" class="input">
-                        </div>
-                        <div class="form-group">
                             <label for="views">Просмотры</label>
                             <input id="views" name="views" type="views" class="input">
                         </div>
@@ -521,9 +517,7 @@
 @if(session()->has('switch-tab'))
 <script>
     $(window).on('load', function() {
-        console.log($(document).find('.nav-menu__link[data-content="{{ session('
-            switch -tab ') }}"]'));
-        $(document).find('.nav-menu__link[data-content="create-project"]').click();
+        $(document).find('.nav-menu__link[data-content="{{ session('switch-tab') }}"]').click();
     })
 
 </script>

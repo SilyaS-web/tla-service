@@ -29,7 +29,7 @@
                         @if($project->is_blogger_access)
                             <button class="btn btn-secondary btn-bloggers">Заявки от блогеров {{-- <div class="nav-menu__item-notifs notifs notifs-application" style="">1</div> --}} </button>
                         @else
-                            <a href="/apist/projects/{{$project->id}}/activate" class="btn btn-secondary" style="text-align: center">Выложить проект </a>
+                            <a href="/apist/projects/{{$project->id}}/activate" class="btn btn-primary" style="text-align: center">Выложить проект </a>
                         @endif
                         <button class="btn btn-secondary btn-statistics">Статистика</button>
                     </div>
@@ -91,8 +91,11 @@
                     <div class="card__row card__stats-row card-btns-mobile" style="margin-top:auto">
                         <button class="btn btn-secondary btn-bloggers-in_work">Блогеры в работе</button>
                         <button class="btn btn-secondary btn-statistics">Статистика</button>
-                        <button class="btn btn-secondary btn-bloggers">Заявки от блогеров {{-- <div class="nav-menu__item-notifs notifs notifs-application" style="">1</div> --}}</button>
-                        {{-- <a href="/apist/projects/{{$project->id}}/activate" class="btn btn-secondary" style="text-align: center">Выложить проект </a> --}}
+                        @if($project->is_blogger_access)
+                            <button class="btn btn-secondary btn-bloggers">Заявки от блогеров {{-- <div class="nav-menu__item-notifs notifs notifs-application" style="">1</div> --}}</button>
+                        @else
+                            <a href="/apist/projects/{{$project->id}}/activate" class="btn btn-primary" style="text-align: center">Выложить проект </a>
+                        @endif
                     </div>
                 </div>
                 {{-- <div class="profile-projects__row profile-projects__btns" style="margin-top:auto">

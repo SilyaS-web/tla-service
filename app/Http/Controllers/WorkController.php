@@ -251,7 +251,6 @@ class WorkController extends Controller
     public function stats(Work $work, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'subs' => 'numeric',
             'views' => 'numeric',
             'reposts' => 'numeric',
             'likes' => 'numeric',
@@ -270,6 +269,15 @@ class WorkController extends Controller
             'work_id' => $work->id,
             'user_id' => 1,
             'message' => 'Блогер прикрепил статистику к проекту'
+        ]);
+
+        FinishStats::create([
+            'subs' => 0,
+            'views' => $validated['views'],
+            'reposts' => $validated['reposts'],
+            'likes' => $validated['likes'],
+            'work_id' => $work->id,
+            'message_id' => $message->id
         ]);
 
         Notification::create([
@@ -291,15 +299,6 @@ class WorkController extends Controller
                 ]);
             }
         }
-
-        FinishStats::create([
-            'subs' => $validated['subs'],
-            'views' => $validated['views'],
-            'reposts' => $validated['reposts'],
-            'likes' => $validated['likes'],
-            'work_id' => $work->id,
-            'message_id' => $message->id
-        ]);
 
         return response()->json('success', 200);
     }

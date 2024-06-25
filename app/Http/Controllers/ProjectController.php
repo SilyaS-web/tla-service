@@ -266,7 +266,7 @@ class ProjectController extends Controller
     public function activate(Project $project)
     {
         $project->update(['is_blogger_access' => true]);
-        return redirect()->route('profile')->with('switch-tab', 'profile-projects');
+        return redirect()->route('profile')->with('switch-tab', 'profile-projects')->with('success', 'Проект успешно выложен');
     }
 
     public function ban(Project $project)
