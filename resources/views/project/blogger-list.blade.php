@@ -4,9 +4,7 @@
 @else
     @php($project_work = $work)
 @endif
-@if((time() - strtotime($project_work->project->created_at)) < 5 * 60 || $project_work->project->status == -1)
-    @continue
-@endif
+
 {{-- @dd($work) --}}
 @php($lost_seats = $project_work->quantity - $project_work->project->works()->where('project_work_id', $project_work->id)->count())
 <div class="list-projects__item project-item" data-id="{{ $project_work->project->id }}">
@@ -17,7 +15,7 @@
             @endforeach
         </div>
         <div class="project-item__status active">
-            {{ $project_work->project->active == 0 ? 'Активно' : 'Выполнено' }}
+            {{ $project_work->project->getStatusName() }}
         </div>
         {{-- <div class="project-item__country">
             Россия

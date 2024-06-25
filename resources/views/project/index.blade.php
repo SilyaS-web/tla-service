@@ -1,13 +1,5 @@
 <div class="profile-projects__items">
     @forelse ($projects as $project)
-    <?php
-        $project_status = 'Выполнено';
-        if ((time() - strtotime($project->created_at)) < 5 * 60) {
-            $project_status = 'Не активно';
-        } else if ($project->active == 0) {
-            $project_status = 'Активно';
-        }
-    ?>
         <div class="profile-projects__row profile-projects__item" data-id="{{$project->id}}" data-brand = "axe">
             <div class="profile-projects__col profile-projects__img" style="background-image: url({{ $project->getImageUrl(true) }})">
             </div>
@@ -17,7 +9,7 @@
                         {{ $project->product_name }}
                     </div>
                     <div class="profile-projects__status active">
-                        {{ $project_status }}
+                        {{ $project->getStatusName() }}
                     </div>
                 </div>
                 <div class="profile-projects__row">
@@ -34,8 +26,11 @@
                 </div>
                 <div class="profile-projects__row card-btns-desktop" style="margin-top:auto">
                     <div class="profile-projects__btns" style="margin-top:0;">
-                        <button class="btn btn-secondary btn-bloggers">Заявки от блогеров <div class="nav-menu__item-notifs notifs notifs-application" style="">1</div></button>
-                        {{-- <a href="/apist/projects/{{$project->id}}/activate" class="btn btn-secondary" style="text-align: center">Выложить проект </a> --}}
+                        @if($project->is_blogger_access)
+                            <button class="btn btn-secondary btn-bloggers">Заявки от блогеров {{-- <div class="nav-menu__item-notifs notifs notifs-application" style="">1</div> --}} </button>
+                        @else
+                            <a href="/apist/projects/{{$project->id}}/activate" class="btn btn-secondary" style="text-align: center">Выложить проект </a>
+                        @endif
                         <button class="btn btn-secondary btn-statistics">Статистика</button>
                     </div>
                 </div>
@@ -53,7 +48,7 @@
                                     <span class="card__stats-val--total">
                                         ?
                                         <div class="card__stats-val--total-list">
-                                            <p>Заявка отправлены — {{ $project->works()->where('status', null)->where('created_by', auth()->user()->id)->count() }}</p>
+                                            <p>Заявок отправлено — {{ $project->works()->where('status', null)->where('created_by', auth()->user()->id)->count() }}</p>
                                             <p>На согласовании — {{ $project->works()->where('status', 'pending')->count() }}</p>
                                             <p>В работе — {{ $project->works()->where('status', 'progress')->count() }}</p>
                                             <p>Выполнило работу — {{ $project->works()->where('status', 'completed')->count() }}</p>
@@ -96,7 +91,7 @@
                     <div class="card__row card__stats-row card-btns-mobile" style="margin-top:auto">
                         <button class="btn btn-secondary btn-bloggers-in_work">Блогеры в работе</button>
                         <button class="btn btn-secondary btn-statistics">Статистика</button>
-                        <button class="btn btn-secondary btn-bloggers">Заявки от блогеров <div class="nav-menu__item-notifs notifs notifs-application" style="">1</div></button>
+                        <button class="btn btn-secondary btn-bloggers">Заявки от блогеров {{-- <div class="nav-menu__item-notifs notifs notifs-application" style="">1</div> --}}</button>
                         {{-- <a href="/apist/projects/{{$project->id}}/activate" class="btn btn-secondary" style="text-align: center">Выложить проект </a> --}}
                     </div>
                 </div>
@@ -226,7 +221,7 @@
             </div>
 
             <div class="profile-projects__row profile-projects__blogers projects-blogers projects-blogers--in_work owl-carousel">
-                @forelse ($project->works()->where('created_by', $project->seller_id)->orWhere('status', '<>', null)->get() as $active_work)
+                @forelse ($project->getActiveWorks() as $active_work)
                     @php($blogger = $active_work->blogger)
                     <div class="list-blogers__item bloger-item card" data-id="{{ $active_work->id }}">
                         <div class="card__row card__content">
@@ -379,130 +374,137 @@
                             <div class="projects-statistics__title">
                                 Общая статистика
                             </div>
-                            <div class="card__col card__stats-stats" style="flex: 1 1 auto">
-                                <div class="card__row card__stats-row">
-                                    <div class="card__col card__stats-item">
-                                        <div class="card__stats-title">
-                                            <span>Количество переходов</span>
+                            @php($finish_stats = $project->getFinishStats())
+                            @php($clicks_count = $project->getClicksCount())
+                            @if ($clicks_count > 1 || $finish_stats['total_subs'] > 1 || $finish_stats['total_views'] > 1)
+                                <div class="card__col card__stats-stats" style="flex: 1 1 auto">
+                                    <div class="card__row card__stats-row">
+                                        <div class="card__col card__stats-item">
+                                            <div class="card__stats-title">
+                                                <span>Количество переходов</span>
+                                            </div>
+                                            <div class="card__stats-val">
+                                                <span>{{ $clicks_count }}</span>
+                                            </div>
                                         </div>
-                                        <div class="card__stats-val">
-                                            <span>{{ $project->works()->where('status', '<>', null)->count() }}</span>
+                                        <div class="card__col card__stats-item" style="flex: 1: width: auto">
+                                            <div class="card__stats-title">
+                                                <span>Охваты</span>
+                                            </div>
+                                            <div class="card__stats-val">
+                                                <span>{{ $finish_stats['total_views'] }}</span>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="card__col card__stats-item" style="flex: 1: width: auto">
-                                        <div class="card__stats-title">
-                                            <span>Охваты</span>
+                                    <div class="card__row card__stats-row">
+                                        <div class="card__col card__stats-item">
+                                            <div class="card__stats-title">
+                                                <span>CPM</span>
+                                            </div>
+                                            <div class="card__stats-val ">
+                                                <span>{{ round(($finish_stats['total_views'] / ($project->product_price == 0 ? 1 : $project->product_price)) * 1000, 2) }}</span>
+                                            </div>
                                         </div>
-                                        <div class="card__stats-val">
-                                            <span>{{ date_format($project->created_at, 'd.m.Y') }}</span>
+                                        <div class="card__col card__stats-item" style="flex: 1: width: auto">
+                                            <div class="card__stats-title">
+                                                <span>CPC</span>
+                                            </div>
+                                            <div class="card__stats-val">
+                                                <span>{{ round(($project->product_price / ($clicks_count == 0 ? 1 : $clicks_count)), 2) }}</span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="card__row card__stats-row">
-                                    @php( $statCount = $project->getCountStatistics() )
-                                    <div class="card__col card__stats-item">
-                                        <div class="card__stats-title">
-                                            <span>CPM</span>
-                                        </div>
-                                        <div class="card__stats-val ">
-                                            <span>{{ $statCount->reviewRating ?? 0}}</span>
-                                        </div>
-                                    </div>
-                                    <div class="card__col card__stats-item" style="flex: 1: width: auto">
-                                        <div class="card__stats-title">
-                                            <span>CPC</span>
-                                        </div>
-                                        <div class="card__stats-val">
-                                            <span>{{ $statCount->feedbacks ?? 0}}</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            @else
+                                Нет данных
+                            @endif
                         </div>
                     </div>
                     <div class="view-project__props-wrap" style="margin-top:30px;">
                         <div class="view-project__props-col">
-                            @php($finish_stats = $project->getFinishStats())
-
                             <div class="card__col card__stats-stats" style="width:100%">
                                 <div class="projects-statistics__title" style="margin-bottom: 0">
                                     Статистика по завершённым работам
                                 </div>
-                                <div class="card__stats-table table-stats">
-                                    <div class="table-stats__header">
-                                        <div class="table-stats__row">
-                                            <div class="table-stats__col table-stats__blogger-img" style="width: 10%;height:50px;">
-
-                                            </div>
-                                            <div class="table-stats__col" style="width: 14%;">
-                                                Nickname
-                                            </div>
-                                            <div class="table-stats__col" style="width: 12%;">
-                                                Подписчики
-                                            </div>
-                                            <div class="table-stats__col" style="width: 12%;">
-                                                Охваты
-                                            </div>
-                                            <div class="table-stats__col" style="width: 12%;">
-                                                Переходы
-                                            </div>
-                                            <div class="table-stats__col" style="width: 6%;">
-                                                ER
-                                            </div>
-                                            <div class="table-stats__col" style="width: 11%;">
-                                                CPM
-                                            </div>
-                                            <div class="table-stats__col" style="width: 11%;">
-                                                CTR
-                                            </div>
-                                            <div class="table-stats__col" style="width: 16%;">
-                                                Дата завершения
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="table-stats__body">
-                                        @forelse ($project->works as $work)
-                                            @if ($work->finishStats)
+                                @if ($project->works()->has('finishStats')->count() < 1)
+                                    Нет данных
+                                @else
+                                    <div class="card__stats-table table-stats">
+                                        <div class="table-stats__header">
                                             <div class="table-stats__row">
-                                                <div class="table-stats__col table-stats__blogger-img" style="width: 10%">
-                                                    <img src="{{ $work->blogger->user->getImageURL() }}" alt="">
+                                                <div class="table-stats__col table-stats__blogger-img" style="width: 10%;height:50px;">
+
                                                 </div>
                                                 <div class="table-stats__col" style="width: 14%;">
-                                                    {{ $work->blogger->user->name }}
+                                                    Nickname
                                                 </div>
                                                 <div class="table-stats__col" style="width: 12%;">
-                                                    {{ $work->finishStats->subs }}
+                                                    Подписчики
                                                 </div>
                                                 <div class="table-stats__col" style="width: 12%;">
-                                                    {{ $work->finishStats->views }}
+                                                    Охваты
                                                 </div>
                                                 <div class="table-stats__col" style="width: 12%;">
-                                                    {{ $work->getTotlaClicks() }}
+                                                    Переходы
                                                 </div>
                                                 <div class="table-stats__col" style="width: 6%;">
-                                                    0.1
+                                                    ER
                                                 </div>
                                                 <div class="table-stats__col" style="width: 11%;">
-                                                    298.5₽
+                                                    CPM
                                                 </div>
                                                 <div class="table-stats__col" style="width: 11%;">
-                                                    298.5₽
+                                                    CTR
                                                 </div>
                                                 <div class="table-stats__col" style="width: 16%;">
-                                                    {{$work->confirmed_by_seller_at}}
+                                                    Дата завершения
                                                 </div>
                                             </div>
-                                            @endif
-                                        @empty
-                                        @endforelse
-
+                                        </div>
+                                        <div class="table-stats__body">
+                                            @forelse ($project->works as $work)
+                                                @if ($work->finishStats)
+                                                <div class="table-stats__row">
+                                                    <div class="table-stats__col table-stats__blogger-img" style="width: 10%">
+                                                        <img src="{{ $work->blogger->user->getImageURL() }}" alt="">
+                                                    </div>
+                                                    <div class="table-stats__col" style="width: 14%;">
+                                                        {{ $work->blogger->user->name }}
+                                                    </div>
+                                                    <div class="table-stats__col" style="width: 12%;">
+                                                        {{ $work->finishStats->subs }}
+                                                    </div>
+                                                    <div class="table-stats__col" style="width: 12%;">
+                                                        {{ $work->finishStats->views }}
+                                                    </div>
+                                                    <div class="table-stats__col" style="width: 12%;">
+                                                        {{ $work->getTotlaClicks() }}
+                                                    </div>
+                                                    <div class="table-stats__col" style="width: 6%;">
+                                                        {{ round($work->finishStats->views / ($work->finishStats->subs == 0 ? 1 : $work->finishStats->subs), 2) }}
+                                                    </div>
+                                                    <div class="table-stats__col" style="width: 11%;">
+                                                        {{ round($work->finishStats->views / ($project->product_price == 0 ? 1 : $project->product_price), 2)  }}
+                                                    </div>
+                                                    <div class="table-stats__col" style="width: 11%;">
+                                                        {{ round($work->getTotlaClicks() / ($work->finishStats->views == 0 ? 1 : $work->finishStats->views), 2)  }}
+                                                    </div>
+                                                    <div class="table-stats__col" style="width: 16%;">
+                                                        {{$work->confirmed_by_seller_at}}
+                                                    </div>
+                                                </div>
+                                                @endif
+                                            @empty
+                                            @endforelse
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            @if($project->works->count() < 1)
             <div class="profile-projects__control-btns">
                 <div class="profile-projects__dots" title="Опции">
                     <img src="img/dots-icon.svg" alt="">
@@ -514,6 +516,7 @@
                     </a>
                 </div>
             </div>
+            @endif
         </div>
     @empty
     Нет проектов

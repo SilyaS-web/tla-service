@@ -141,7 +141,7 @@ class AuthController extends Controller
         request()->session()->regenerateToken();
         request()->session()->invalidate();
 
-        return redirect()->route('login')->with('success', '');
+        return redirect()->route('login');
     }
 
     public function resetPassword()

@@ -5,12 +5,9 @@
 <section class="project-view">
     <div class="project-view__container _container">
         <div class="project-view__body">
-            <!-- <div class="project-view__title title">
-                        Реклама товара
-                    </div> -->
             <div class="project-view__project view-project">
                 <div class="view-project__img _ibg">
-                    <img src="{{ $project->getImageURL() }}" alt="">
+                    <img src="{{ $project->getImageURL()[0] }}" alt="">
                 </div>
                 <div class="view-project__content">
                     <div class="view-project__header">
@@ -18,7 +15,7 @@
                             {{ $project->product_name }}
                         </div>
                         <div class="view-project__status active">
-                            {{ $project->status == 0 ? 'Активно' : 'Завершено' }}
+                            {{ $project->getStatusName() }}
                         </div>
 
                     </div>

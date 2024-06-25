@@ -61,6 +61,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::resource('projects', ProjectController::class);
     Route::get('/project/{project_id}', [ProjectController::class, 'selectBloggers'])->name('select-bloggers');
+    Route::post('/projects/{project}/update', [ProjectController::class, 'update'])->name('update-project');
 
     Route::get('/tariff', function () {
         return view('tariff');
@@ -75,8 +76,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/projects/{project}/wb-info', [ProjectController::class, 'getWBInfo']);
         Route::get('/projects/{project}/activate', [ProjectController::class, 'activate']);
         Route::get('/projects/{project}/ban', [ProjectController::class, 'ban']);
+        Route::get('/projects/{project}/unban', [ProjectController::class, 'unban']);
         Route::get('/projects/{project}/edit', [ProjectController::class, 'edit']);
-        Route::get('/projects/{project}/update', [ProjectController::class, 'update']);
 
         Route::post('/bloggers', [BloggerController::class, 'index']);
         Route::get('/bloggers/{blogger}', [BloggerController::class, 'info']);

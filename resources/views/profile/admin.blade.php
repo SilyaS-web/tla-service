@@ -13,8 +13,6 @@
     <script src="{{ asset('libs/jquery/jquery-3.7.1.min.js') }}" crossorigin="anonymous"></script>
     <script src="{{ asset('libs/jquery/jquery.maskedinput.min.js') }}"></script>
 
-
-
     <title>Панель управления</title>
 </head>
 <body>
@@ -121,6 +119,20 @@
                                 </div>
                             </div>
                             @include('shared.admin.sellers-list')
+                        </div>
+                    </div>
+                    <div class="admin-view__blogers projects-list tab-content" id="projects-list">
+                        <div class="admin-blogers__body">
+                            <div class="admin-blogers__header">
+                                <div class="admin-blogers__title title">
+                                    Список проектов
+                                </div>
+                                <div class="admin-blogers__search form-group">
+                                    <input type="name" id="sellers-search" class="input" placeholder="Введите название">
+                                    <button class="btn btn-primary sellers-search-btn">Найти</button>
+                                </div>
+                            </div>
+                            @include('project.admin-list')
                         </div>
                     </div>
                 </div>

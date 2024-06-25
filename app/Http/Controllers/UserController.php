@@ -20,6 +20,7 @@ use App\Models\Theme;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\User;
 use App\Models\Work;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
@@ -67,15 +68,16 @@ class UserController extends Controller
         $works = Work::where([['blogger_id', $user_id]])->where('status', Work::IN_PROGRESS)->get();
 
         $active_project_works = ProjectWork::whereIn('id', $works->pluck('project_work_id'))->get();
-        $all_project_works = ProjectWork::get();
+
+        $all_project_works = ProjectWork::whereHas('project', function (Builder $query) {
+            $query->where('status', '<>', Project::BANNED)->where('is_blogger_access', 1)->where('created_at', '<', Carbon::now()->subMinutes(5));
+        })->get();
 
         $application_works = Work::where([['blogger_id', $user_id]])->where('status', null)->where('created_by', '<>', $user_id)->where('accepted_by_blogger_at', null)->get();
-        // $application_project_works = ProjectWork::whereIn('id', $works->pluck('project_work_id'))->get();
         $role = $user->role;
 
         return compact('active_project_works', 'all_project_works', 'application_works', 'works', 'role', 'user_id');
     }
-
 
     public function getSellerProfileData()
     {
@@ -197,8 +199,8 @@ class UserController extends Controller
         }
         $platforms = BloggerPlatform::PLATFORM_TYPES;
         $countries = Country::get();
-
-        return compact('unverified_users', 'bloggers', 'sellers', 'platforms', 'countries');
+        $all_projects = Project::get();
+        return compact('unverified_users', 'bloggers', 'sellers', 'platforms', 'countries', 'all_projects');
     }
 
     public function edit(Request $request)

@@ -58,6 +58,7 @@ class ProjectController extends Controller
             $projects = $projects->get();
             return view("project.blogger-list", compact('projects'));
         }
+
         $projects = $projects->get();
 
         if ($validated['type'] == 'select-project-page') {
@@ -65,11 +66,6 @@ class ProjectController extends Controller
         }
 
         return view("project.index", compact('projects'));
-    }
-
-    public function create()
-    {
-        return view("project.create");
     }
 
     public function store(Request $request)
@@ -104,7 +100,7 @@ class ProjectController extends Controller
             $validated['wb_options'] = json_encode($card->options);
         }
 
-        $validated['status'] = Project::PENDING;
+        $validated['status'] = Project::ACTIVE;
         $project = Project::create($validated);
 
         if (isset($validated['feedback-quantity']) && $validated['feedback-quantity'] > 0) {
@@ -133,7 +129,7 @@ class ProjectController extends Controller
             ]);
         }
 
-        return redirect()->route('profile')->with('success', 'Проект успешно создан');
+        return redirect()->route('profile')->with('success', 'Проект успешно создан')->with('switch-tab', 'create-project');
     }
 
     public function selectBloggers($project_id)
@@ -235,39 +231,28 @@ class ProjectController extends Controller
     public function update(Project $project)
     {
         $validator = Validator::make(request()->all(), [
-            'product_name' => 'required|min:3',
-            'product_link' => 'required|min:3',
+            'product_name' => 'required|min:3|max:250',
+            'product_nm' => 'required|min:3|numeric',
+            'product_link' => 'required|min:3|max:250',
             'product_price' => 'required|numeric',
-            'images' => 'required|array',
-            'images.*' => 'image|max:10240',
+            // 'images' => 'required|array',
+            // 'images.*' => 'image|max:10240',
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('profile')->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput();
         }
 
         $validated = $validator->validated();
 
-        $project->update($validated);
-
-        $product_images = request()->file('images');
-        foreach ($product_images as $product_image) {
-            $image_path = $product_image->store('projects', 'public');
-            ProjectFile::create([
-                'source_id' => $project->id,
-                'type' => 0,
-                'link' => $image_path,
-            ]);
+        foreach ($project->projectFiles as $file) {
+            Storage::delete($file->link);
         }
 
-        return redirect()->route('profile')->with('success', 'Проект успешно обновлён');
-    }
+        $project->update($validated);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     */
+        return redirect()->back()->with('success', 'Проект успешно обновлён');
+    }
     public function destroy($id)
     {
         if ($project = Project::find($id)) {
@@ -281,13 +266,19 @@ class ProjectController extends Controller
     public function activate(Project $project)
     {
         $project->update(['is_blogger_access' => true]);
-        return response()->json('success', 200);
+        return redirect()->route('profile')->with('switch-tab', 'profile-projects');
     }
 
     public function ban(Project $project)
     {
         $project->update(['status' => Project::BANNED]);
-        return response()->json('success', 200);
+        return redirect()->route('profile')->with('switch-tab', 'projects-list');
+    }
+
+    public function unban(Project $project)
+    {
+        $project->update(['status' => Project::ACTIVE]);
+        return redirect()->route('profile')->with('switch-tab', 'projects-list');
     }
 
     public function categories()

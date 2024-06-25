@@ -6,7 +6,7 @@
                 <div class="project-item__img" style="background-image: url({{ $project->getImageURL(true) }})">
                 </div>
                 <div class="project-item__status active">
-                    {{ $project->active == 0 ? 'Активно' : 'Выполнено' }}
+                    {{ $project->getStatusName() }}
                 </div>
                 {{-- <div class="project-item__country">
                 Россия

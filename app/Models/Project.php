@@ -77,6 +77,17 @@ class Project extends Model
         return $this->hasOne(Seller::class, 'user_id', 'seller_id');
     }
 
+    public function getActiveWorks()
+    {
+        $project = $this;
+        $works = $this->works()->where(function (Builder $query) use ($project) {
+            return $query->where('created_by', $project->seller_id)
+                ->orWhere('status', '<>', null);
+        })->get();
+
+        return $works;
+    }
+
     public function getCoverage()
     {
         return 0;
@@ -116,6 +127,20 @@ class Project extends Model
         return $finishStats;
     }
 
+    public function getStatusName() {
+        switch ($this->status) {
+            case self::BANNED:
+                return "Заблокирован";
+
+            case self::ACTIVE:
+                return "Активно";
+
+            case self::COMPLETED:
+                return "завершено";
+        }
+
+        return "Активно";
+    }
 
     public function getProjectWorkNames($format = null)
     {
