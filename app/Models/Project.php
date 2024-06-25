@@ -127,7 +127,8 @@ class Project extends Model
         return $finishStats;
     }
 
-    public function getStatusName() {
+    public function getStatusName()
+    {
         switch ($this->status) {
             case self::BANNED:
                 return "Заблокирован";

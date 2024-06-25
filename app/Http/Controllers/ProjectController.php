@@ -401,4 +401,38 @@ class ProjectController extends Controller
         }
         return "basket-$t.wbbasket.ru";
     }
+
+    public function getOzonGeneralInfo(int $product_nm, int $client_id, string $api_key)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api-seller.ozon.ru/v2/product/info/list',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '{
+  "sku": ["' . $product_nm . '"]
+}',
+            CURLOPT_HTTPHEADER => array(
+                'Api-Key: ' . $api_key,
+                'Client-Id: '. $client_id,
+                'Content-Type: application/json',
+                'Cookie: abt_data=b89761760b8de852bf55c8ddb5c67e8d:832e12896ab719f7407396c381b35f3a3d643bbfa0faf7dc57be5fa479853d4abf58774b252ef432ca7222519c8c820723fbec410cfd0621dce2aa17bb312ad413cb085f1861a4f3740e3762e4d6ae0614e33e4c098957a50fd58f0af0978798359d6d40d544c115a7ab52adf63d59debd62021596171bf292470486511a05fb80c63d1c1b372b051eb5508704cdfd2479451d755c1f861efc363f5760900b1a40b1cf1f2d759ad9936fca12bfed8abd'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        echo $response;
+
+        $card = json_decode($response)->result->items[0];
+        return $card;
+    }
+
 }

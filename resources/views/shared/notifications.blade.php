@@ -10,7 +10,7 @@
         </div>
         <div class="notif-header__col">
             <div class="notif-header__title">
-                {{ $notification->type ?? 'Новая заявка' }}
+                {{ $notification->type ?? 'Новое уведомление' }}
             </div>
             <div class="notif-header__text">
                 {{ $notification->text }}

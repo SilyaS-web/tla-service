@@ -1692,8 +1692,7 @@ class PopupBlogerProjectMoreInfo extends Popup{
 
     getProjectInfo = () => {
         var self = this;
-        this.getProjectInfoUri = this.getProjectInfoUri.replaceAll('%%PROJECT_ID%%', this.projectId);
-
+        this.getProjectInfoUri = `apist/projects/${this.projectId}/wb-info`;
         $.ajax({
             url: `${self.getProjectInfoUri}`,
             data: {},
@@ -1785,6 +1784,7 @@ $(window).on('load', function(){
 
     $(document).on('click', '#blogger .project-item', function(e){
         if($(e.target).closest('.project-item__btns').length == 0){
+            console.log($(e.target).closest('.project-item').data('id'));
             popupBlogerProjectMoreInfo.projectId = $(e.target).closest('.project-item').data('id');
             popupBlogerProjectMoreInfo.getProjectInfo()
             popupBlogerProjectMoreInfo.openPopup();
