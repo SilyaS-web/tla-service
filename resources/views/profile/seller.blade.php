@@ -1224,9 +1224,9 @@
         , labelWidthPercent: 30
         , labelFontColor: "#000"
         , labels: [
-            "Охваты"
-            , "ER, %"
-            , "CPC, Руб."
+            "Охваты",
+            "ER, %",
+            "CPC, Руб."
         , ]
         , maxFontSize: 18
     , });

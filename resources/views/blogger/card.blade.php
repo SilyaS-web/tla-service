@@ -67,7 +67,7 @@
                         <div class="card__stats-title">
                             <span>Охваты</span>
                         </div>
-                        <div class="card__stats-val">
+                        <div class="card__stats-val coverage">
                             <span>{{ $blogger->getCoverage() }}</span>
                         </div>
                     </div>
@@ -78,7 +78,7 @@
                         <div class="card__stats-title">
                             <span>ER</span>
                         </div>
-                        <div class="card__stats-val coverage">
+                        <div class="card__stats-val">
                             <span>{{ $blogger->getER() }}</span>
                         </div>
                     </div>
