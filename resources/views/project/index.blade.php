@@ -347,10 +347,62 @@
                     Нет блогеров в работе
                     @endforelse
             </div>
+
             @php($stats = json_decode($project->getStatistics()))
             <div class="profile-projects__row profile-projects__statistics projects-statistics" data-stats="{{ $project->getStatistics() }}">
                 <div class="view-project__props view-project__props--desktop">
                     <div class="view-project__props-wrap">
+                        <div class="view-project__props-col">
+                            <div class="projects-statistics__title">
+                                Общая статистика
+                            </div>
+                            @php($finish_stats = $project->getFinishStats())
+                            @php($clicks_count = $project->getClicksCount())
+                            @if ($clicks_count > 1 || $finish_stats['total_subs'] > 1 || $finish_stats['total_views'] > 1)
+                                <div class="card__col card__stats-stats card__stats-stats--total" style="width:100%; flex-direction:row; flex-wrap:wrap; gap: 8px">
+                                    <div class="card__row card__stats-row" style="width:calc(100% / 2 - 4px)">
+                                        <div class="card__col card__stats-item">
+                                            <div class="card__stats-title">
+                                                <span>Количество переходов</span>
+                                            </div>
+                                            <div class="card__stats-val">
+                                                <span>{{ $clicks_count }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="card__col card__stats-item" style="flex: 1: width: auto">
+                                            <div class="card__stats-title">
+                                                <span>Охваты</span>
+                                            </div>
+                                            <div class="card__stats-val">
+                                                <span>{{ $finish_stats['total_views'] }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="card__row card__stats-row" style="width:calc(100% / 2 - 4px)">
+                                        <div class="card__col card__stats-item">
+                                            <div class="card__stats-title">
+                                                <span>CPM</span>
+                                            </div>
+                                            <div class="card__stats-val ">
+                                                <span>{{ round(($finish_stats['total_views'] / ($project->product_price == 0 ? 1 : $project->product_price)) * 1000, 2) }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="card__col card__stats-item" style="flex: 1: width: auto">
+                                            <div class="card__stats-title">
+                                                <span>CPC</span>
+                                            </div>
+                                            <div class="card__stats-val">
+                                                <span>{{ round(($project->product_price / ($clicks_count == 0 ? 1 : $clicks_count)), 2) }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @else
+                                Нет данных
+                            @endif
+                        </div>
+                    </div>
+                    <div class="view-project__props-wrap" style="margin-top:45px;">
                         <div class="view-project__props-col" style="position: relative">
                             <div class="projects-statistics__title">
                                 Статистика по товару (WB)
@@ -377,57 +429,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="view-project__props-col">
-                            <div class="projects-statistics__title">
-                                Общая статистика
-                            </div>
-                            @php($finish_stats = $project->getFinishStats())
-                            @php($clicks_count = $project->getClicksCount())
-                            @if ($clicks_count > 1 || $finish_stats['total_subs'] > 1 || $finish_stats['total_views'] > 1)
-                                <div class="card__col card__stats-stats" style="flex: 1 1 auto">
-                                    <div class="card__row card__stats-row">
-                                        <div class="card__col card__stats-item">
-                                            <div class="card__stats-title">
-                                                <span>Количество переходов</span>
-                                            </div>
-                                            <div class="card__stats-val">
-                                                <span>{{ $clicks_count }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="card__col card__stats-item" style="flex: 1: width: auto">
-                                            <div class="card__stats-title">
-                                                <span>Охваты</span>
-                                            </div>
-                                            <div class="card__stats-val">
-                                                <span>{{ $finish_stats['total_views'] }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card__row card__stats-row">
-                                        <div class="card__col card__stats-item">
-                                            <div class="card__stats-title">
-                                                <span>CPM</span>
-                                            </div>
-                                            <div class="card__stats-val ">
-                                                <span>{{ round(($finish_stats['total_views'] / ($project->product_price == 0 ? 1 : $project->product_price)) * 1000, 2) }}</span>
-                                            </div>
-                                        </div>
-                                        <div class="card__col card__stats-item" style="flex: 1: width: auto">
-                                            <div class="card__stats-title">
-                                                <span>CPC</span>
-                                            </div>
-                                            <div class="card__stats-val">
-                                                <span>{{ round(($project->product_price / ($clicks_count == 0 ? 1 : $clicks_count)), 2) }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @else
-                                Нет данных
-                            @endif
-                        </div>
                     </div>
-                    <div class="view-project__props-wrap" style="margin-top:30px;">
+                    <div class="view-project__props-wrap" style="margin-top:45px;">
                         <div class="view-project__props-col">
                             <div class="card__col card__stats-stats" style="width:100%">
                                 <div class="projects-statistics__title" style="margin-bottom: 0">
@@ -442,67 +445,81 @@
                                                 <div class="table-stats__col table-stats__blogger-img" style="width: 10%;height:50px;">
 
                                                 </div>
-                                                <div class="table-stats__col" style="width: 14%;">
+                                                <div class="table-stats__col" style="width: 13%;">
                                                     Nickname
                                                 </div>
-                                                <div class="table-stats__col" style="width: 12%;">
+                                                <div class="table-stats__col" style="width: 11%;">
                                                     Подписчики
                                                 </div>
-                                                <div class="table-stats__col" style="width: 12%;">
+                                                <div class="table-stats__col" style="width: 11%;">
                                                     Охваты
                                                 </div>
-                                                <div class="table-stats__col" style="width: 12%;">
+                                                <div class="table-stats__col" style="width: 11%;">
                                                     Переходы
                                                 </div>
                                                 <div class="table-stats__col" style="width: 6%;">
                                                     ER
                                                 </div>
-                                                <div class="table-stats__col" style="width: 11%;">
+                                                <div class="table-stats__col" style="width: 9%;">
                                                     CPM
                                                 </div>
-                                                <div class="table-stats__col" style="width: 11%;">
+                                                <div class="table-stats__col" style="width: 9%;">
                                                     CTR
                                                 </div>
-                                                <div class="table-stats__col" style="width: 16%;">
+                                                <div class="table-stats__col" style="width: 14%;">
                                                     Дата завершения
+                                                </div>
+                                                <div class="table-stats__col" style="width: 6%;">
+
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="table-stats__body">
                                             @forelse ($project->works as $work)
                                                 @if ($work->finishStats)
-                                                <div class="table-stats__row">
-                                                    <div class="table-stats__col table-stats__blogger-img" style="width: 10%">
-                                                        <img src="{{ $work->blogger->user->getImageURL() }}" alt="">
+                                                    <div class="table-stats__row table-stats__row--chat" style="cursor:pointer" data-work-id = "{{ $work->id }}">
+                                                        <div class="table-stats__col table-stats__blogger-img" style="width: 10%">
+                                                            <img src="{{ $work->blogger->user->getImageURL() }}" alt="">
+                                                        </div>
+                                                        <div class="table-stats__col" style="width: 13%;">
+                                                            {{ $work->blogger->user->name }}
+                                                        </div>
+                                                        <div class="table-stats__col" style="width: 11%;">
+                                                            {{ $work->finishStats->subs }}
+                                                        </div>
+                                                        <div class="table-stats__col" style="width: 11%;">
+                                                            {{ $work->finishStats->views }}
+                                                        </div>
+                                                        <div class="table-stats__col" style="width: 11%;">
+                                                            {{ $work->getTotlaClicks() }}
+                                                        </div>
+                                                        <div class="table-stats__col" style="width: 6%;">
+                                                            {{ round($work->finishStats->views / ($work->finishStats->subs == 0 ? 1 : $work->finishStats->subs), 2) }}
+                                                        </div>
+                                                        <div class="table-stats__col" style="width: 9%;">
+                                                            {{ round($work->finishStats->views / ($project->product_price == 0 ? 1 : $project->product_price), 2)  }}
+                                                        </div>
+                                                        <div class="table-stats__col" style="width: 9%;">
+                                                            {{ round($work->getTotlaClicks() / ($work->finishStats->views == 0 ? 1 : $work->finishStats->views), 2)  }}
+                                                        </div>
+                                                        <div class="table-stats__col" style="width: 14%;">
+                                                            {{$work->confirmed_by_seller_at}}
+                                                        </div>
+                                                        <div class="table-stats__col table-stats__col--chat" style="width: 6%;">
+                                                            <img src="{{ asset('img/chat-black-icon.svg') }}" alt="">
+                                                        </div>
                                                     </div>
-                                                    <div class="table-stats__col" style="width: 14%;">
-                                                        {{ $work->blogger->user->name }}
-                                                    </div>
-                                                    <div class="table-stats__col" style="width: 12%;">
-                                                        {{ $work->finishStats->subs }}
-                                                    </div>
-                                                    <div class="table-stats__col" style="width: 12%;">
-                                                        {{ $work->finishStats->views }}
-                                                    </div>
-                                                    <div class="table-stats__col" style="width: 12%;">
-                                                        {{ $work->getTotlaClicks() }}
-                                                    </div>
-                                                    <div class="table-stats__col" style="width: 6%;">
-                                                        {{ round($work->finishStats->views / ($work->finishStats->subs == 0 ? 1 : $work->finishStats->subs), 2) }}
-                                                    </div>
-                                                    <div class="table-stats__col" style="width: 11%;">
-                                                        {{ round($work->finishStats->views / ($project->product_price == 0 ? 1 : $project->product_price), 2)  }}
-                                                    </div>
-                                                    <div class="table-stats__col" style="width: 11%;">
-                                                        {{ round($work->getTotlaClicks() / ($work->finishStats->views == 0 ? 1 : $work->finishStats->views), 2)  }}
-                                                    </div>
-                                                    <div class="table-stats__col" style="width: 16%;">
-                                                        {{$work->confirmed_by_seller_at}}
-                                                    </div>
-                                                </div>
                                                 @endif
                                             @empty
                                             @endforelse
+                                            <script>
+                                                $(document).on('click', '.table-stats__row.table-stats__row--chat', function(e){
+                                                    var id = $(e.target).closest('.table-stats__row').data('work-id');
+
+                                                    $('.chat-link').click();
+                                                    $(`.item-chat[data-id="${id}"]`).click();
+                                                })
+                                            </script>
                                         </div>
                                     </div>
                                 @endif

@@ -54,18 +54,9 @@
                             <span class="error">{{ $message }}</span>
                             @enderror
                         </div>
-
-                        <div class="form-group">
-                            <label for="">Ссылка на маркетплейс</label>
-                            <input type="text" class="input" id="marketplace" name="platform_link" value="{{ $user->seller->platform_link }}">
-                            @error('platform_link')
-                            <span class="error">{{ $message }}</span>
-                            @enderror
-                        </div>
-                        <button class="btn btn-primary desktop">Сохранить</button>
                     </div>
                     <div class="tab-content__form-left">
-                        <div class="form-group" style="margin-top: 20px;">
+                        <div class="form-group" style="">
                             <label for="">Тип организации</label>
                             <select class="input" id="type" name="organization_type">
                                 <option value="ООО" {{ $user->seller->organization_type == "ООО" ? "selected" : ''}}>ООО</option>
@@ -90,30 +81,46 @@
                             <span class="error">{{ $message }}</span>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <label for="">Ключ API WB</label>
-                            <input type="text" class="input" id="wb_api_key" name="wb_api_key" value="{{ $user->seller->wb_api_key }}">
-                            @error('wb_api_key')
-                            <span class="error">{{ $message }}</span>
-                            @enderror
+                    </div>
+                </div>
+                <div class="tab-content__form tab-content__form--accent" style="flex-direction:column;">
+                    <label for="" class="tab-content__form--title">Работа с API</label>
+                    <div class="tab-content__form-row" style="">
+                        <div class="tab-content__form-right">
+                            <div class="form-group">
+                                <label for="">Ссылка на магазин WB</label>
+                                <input type="text" class="input" id="marketplace" name="platform_link" value="{{ $user->seller->platform_link }}">
+                                @error('platform_link')
+                                <span class="error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="">Ключ API WB</label>
+                                <input type="text" class="input" id="wb_api_key" name="wb_api_key" value="{{ $user->seller->wb_api_key }}">
+                                @error('wb_api_key')
+                                <span class="error">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
-                         <div class="form-group">
-                            <label for="ozon_api_key">Ключ API OZON</label>
-                            <input type="text" class="input" id="ozon_api_key" name="ozon_api_key" value="{{ $user->seller->ozon_api_key }}">
-                            @error('ozon_api_key')
-                            <span class="error">{{ $message }}</span>
-                            @enderror
-                        </div>
-                         <div class="form-group">
-                            <label for="ozon_client_id">Client ID OZON</label>
-                            <input type="text" class="input" id="ozon_client_id" name="ozon_client_id" value="{{ $user->seller->ozon_client_id }}">
-                            @error('ozon_client_id')
-                            <span class="error">{{ $message }}</span>
-                            @enderror
+                        <div class="tab-content__form-left">
+                             <div class="form-group">
+                                <label for="ozon_api_key">Ключ API OZON</label>
+                                <input type="text" class="input" id="ozon_api_key" name="ozon_api_key" value="{{ $user->seller->ozon_api_key }}">
+                                @error('ozon_api_key')
+                                <span class="error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                             <div class="form-group">
+                                <label for="ozon_client_id">Client ID OZON</label>
+                                <input type="text" class="input" id="ozon_client_id" name="ozon_client_id" value="{{ $user->seller->ozon_client_id }}">
+                                @error('ozon_client_id')
+                                <span class="error">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary mobile" type='submit'>Сохранить</button>
                 </div>
+                <button class="btn btn-primary desktop">Сохранить</button>
             </form>
         </div>
     </div>
