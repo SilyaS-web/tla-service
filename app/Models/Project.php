@@ -280,7 +280,6 @@ class Project extends Model
         return $httpcode == 200 ? $response : false;
     }
 
-
     public function getOzonStats(int $ozon_client_id, string $ozon_api_key)
     {
         $card = $this->getOzonGeneralInfo($ozon_client_id, $ozon_api_key);
