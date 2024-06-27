@@ -284,6 +284,10 @@ class Project extends Model
     public function getOzonStats(int $ozon_client_id, string $ozon_api_key)
     {
         $card = $this->getOzonGeneralInfo($ozon_client_id, $ozon_api_key);
+        if (!$card) {
+            return "";
+        }
+
         $date_from = date('Y-m-d', strtotime("-1 month"));
         $date_to = date('Y-m-d');
         $filters = [];
@@ -400,8 +404,12 @@ class Project extends Model
 
         $response = curl_exec($curl);
         curl_close($curl);
+        $result = json_decode($response);
+        $card = null;
+        if (isset($result->result)) {
+            $card = $result->result;
+        }
 
-        $card = json_decode($response)->result;
         return $card;
     }
 }
