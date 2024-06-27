@@ -609,4 +609,15 @@ class ProjectController extends Controller
         $description = json_decode($response)->result->description;
         return $description;
     }
+
+    public function getApplicationsCount() {
+        $user = Auth::user();
+        $projects = $user->projects;
+        $application_count_by_projects = [];
+        foreach ($projects as $project) {
+            $application_count_by_projects[$project->id] = $project->works()->where('status', null)->where('created_by', '<>', $user->id)->count();
+        }
+
+        return $application_count_by_projects;
+    }
 }
