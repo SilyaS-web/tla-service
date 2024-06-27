@@ -1216,7 +1216,7 @@
         }
     }
     var funnelChart = FunnelChart("funnel-graph", {
-        values: [ {{ $total_clicks }}, {{ round($total_clicks / ($subscribers == 0 ? 1 : $subscribers), 3) }}, {{ round($avg_price / ($total_clicks == 0 ? 1 : $total_clicks), 1) }}]
+        values: [ {{ $total_clicks }}, {{ round($total_clicks / ($subscribers == 0 ? 1 : $subscribers), 3) }}, {{ $total_clicks == 0 ? 0 : round($avg_price / $total_clicks, 1) }} ]
         , sectionColor: ["#98CBED", "#F0C457", "#FD6567"]
         , displayPercentageChange: false
         , pSectionHeightPercent: 100
