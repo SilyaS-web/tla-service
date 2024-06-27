@@ -94,7 +94,7 @@ class ProjectController extends Controller
         $validated['seller_id'] = $user->id;
         if (strripos($validated['product_link'], 'ozon') !== false && !empty($user->seller->ozon_client_id) && !empty($user->seller->ozon_api_key)) {
             $info = $this->getOzonInfo($validated['product_nm'], $user->seller->ozon_client_id, $user->seller->ozon_api_key);
-            if (isset($info['name'])) {
+            if (!$info) {
                 $validated['ozon_category'] = $info['category'];
                 $validated['wb_brand'] = $info['brand'];
                 $validated['ozon_product_name'] = $info['name'];
@@ -423,6 +423,8 @@ class ProjectController extends Controller
     public function getOzonInfo(int $product_nm, int $client_id, string $api_key)
     {
         $card = $this->getOzonGeneralInfo($product_nm, $client_id, $api_key);
+        if (!$card) false;
+
         $product_attributes_without_names = $this->getOzonProductAttributestInfo($card->id, $client_id, $api_key);
         $attributes = $this->getOzonAttributestInfo($card->description_category_id, $card->type_id, $client_id, $api_key);
         $product_attributes = [];
@@ -482,10 +484,12 @@ class ProjectController extends Controller
 
         $response = curl_exec($curl);
         curl_close($curl);
+        $result = json_decode($response);
+        if (!isset($result->result)) {
+            return false;
+        }
 
-        $card = json_decode($response)->result;
-
-        return $card;
+        return $result->result;
     }
 
     public function getOzonProductAttributestInfo(int $product_nm, int $client_id, string $api_key)
