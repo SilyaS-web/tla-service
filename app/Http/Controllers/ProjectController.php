@@ -141,7 +141,7 @@ class ProjectController extends Controller
             ]);
         }
 
-        return redirect()->route('profile')->with('success', 'Проект успешно создан')->with('switch-tab', 'create-project');
+        return redirect()->route('profile')->with('success', 'Проект успешно создан')->with('switch-tab', 'profile-projects');
     }
 
     public function selectBloggers($project_id)
