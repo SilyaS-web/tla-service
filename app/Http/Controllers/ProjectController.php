@@ -82,7 +82,7 @@ class ProjectController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->route('profile')->withErrors($validator)->withInput()->with('switch-tab', 'profile-projects');
+            return redirect()->route('profile')->withErrors($validator)->withInput()->with('switch-tab', 'create-project');
         }
 
         $validated = $validator->validated();
