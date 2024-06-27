@@ -348,7 +348,7 @@
                     @endforelse
             </div>
             @php($stats = json_decode($project->getStatistics()))
-            <div class="profile-projects__row profile-projects__statistics projects-statistics" data-stats="{{ $project->getStatistics() }}">
+            <div class="profile-projects__row profile-projects__statistics projects-statistics" data-stats="{{ $project->getStatistics(Auth()->user()->seller->ozon_client_id, Auth()->user()->seller->ozon_api_key) }}">
                 <div class="view-project__props view-project__props--desktop">
                     <div class="view-project__props-wrap">
                         <div class="view-project__props-col" style="position: relative">
@@ -552,7 +552,11 @@
         datasets = [{
                 label: 'Выручка'
                 , data: data.prices_history.map((item, index) => {
-                    return Math.round(item.price * data.orders_history[index].orders)
+                    if (item["earnings"] !== undefined) {
+                        return Math.round(item.earnings)
+                    } else {
+                        return Math.round(item.price * data.orders_history[index].orders)
+                    }
                 })
                 , showLine: true
                 , type: 'line',
