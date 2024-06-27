@@ -345,8 +345,8 @@
                     @endforelse
             </div>
 
-            @php($stats = json_decode($project->getStatistics()))
-            <div class="profile-projects__row profile-projects__statistics projects-statistics" data-stats="{{ $project->getStatistics(Auth()->user()->seller->ozon_client_id, Auth()->user()->seller->ozon_api_key) }}">
+            @php($stats = json_decode($project->getStatistics(Auth()->user()->seller->ozon_client_id, Auth()->user()->seller->ozon_api_key)))
+            <div class="profile-projects__row profile-projects__statistics projects-statistics" data-stats="{{ json_encode($stats) }}">
                 <div class="view-project__props view-project__props--desktop">
                     <div class="view-project__props-wrap">
                         <div class="view-project__props-col">
@@ -411,7 +411,7 @@
                                 </div>
                                 <div class="view-project__props-money">
                                     Выручка за 30 дн<br>
-                                    <span class="money">{{$stats->earnings ?? 0}} ₽</span>
+                                    <span class="money">{{number_format($stats->earnings, 0, '', ',') ?? 0}} ₽</span>
                                 </div>
                             </div>
                             <div class="view-project__props-graph">
