@@ -345,7 +345,7 @@ class ProjectsFilter {
     }
     sendData = ()=>{
         var self = this;
-        console.log(self);
+
         var questData = {
             project_type: this.dataProps.format.get(),
             project_name: this.dataProps.projectName.get(),
@@ -938,8 +938,6 @@ class Chat {
             this.currentChatId = false;
         });
 
-
-
         var mediaQuery = window.matchMedia('(max-width: 700px)')
 
         if (mediaQuery.matches) {
@@ -973,14 +971,11 @@ class Chat {
 
     getMsgCountInterval = null;
     getMsgInterval = null;
+    getChatsInterval = null;
 
     currentChatId = false;
 
     chooseChat = (e)=>{
-        if(!e){
-            this.getNewMessages()
-            return;
-        }
 
         var chat = $(e.target).closest('.item-chat');
 
@@ -989,6 +984,10 @@ class Chat {
 
         $(document).find('.item-chat.current').removeClass('current');
         chat.addClass('current');
+
+        if(this.getMsgInterval){
+            clearInterval(this.getMsgInterval);
+        }
 
         this.getMsgInterval = setInterval(this.getNewMessages, 5000);
     }
@@ -1021,7 +1020,6 @@ class Chat {
         }
 
         $.post(self.getMsgUri, data, function(res){
-            console.log(res);
             if(!id){
                 $(document).find('.chat__chat-items').remove();
                 $(document).find('#chat .chat__left').append(res.view);
@@ -1065,9 +1063,26 @@ class Chat {
                 }
             }
 
-
+            if(!this.getChatsInterval){
+                this.getChatsInterval = setInterval(this.getChats, 5000)
+            }
             if(!this.newMessagesInterval){
                 this.newMessagesInterval = setInterval(this.getNewMessages, 5000);
+            }
+        })
+    }
+
+    getChats = () => {
+        var self = this;
+
+        $.post(self.getMsgUri, data, function(res){
+            $(document).find('.chat__chat-items').remove();
+            $(document).find('#chat .chat__left').append(res.view);
+
+            if(this.currentChatId){
+                $(self.node).find('.item-chat').addClass('current');
+            }
+            else{
             }
         })
     }
@@ -1227,7 +1242,6 @@ class PopupAddBlogerToProject extends Popup{//когда нибудь тут б�
                 'name': this.dataProps.searchField.get(),
             },
             success: (data)=>{
-                console.log(data);
             }
         })
     }
@@ -1479,7 +1493,6 @@ class PopupBloggerSendOffer extends Popup{
         this.node = node;
 
         $(this.node).find('.send-data').on('click', this.sendData)
-        console.log(this.instance);
         if(!this.instance) this.instance = this;
 
         return this.instance;
@@ -1794,7 +1807,6 @@ $(window).on('load', function(){
 
     $(document).on('click', '#blogger .project-item', function(e){
         if($(e.target).closest('.project-item__btns').length == 0){
-            console.log($(e.target).closest('.project-item').data('id'));
             popupBlogerProjectMoreInfo.projectId = $(e.target).closest('.project-item').data('id');
             popupBlogerProjectMoreInfo.getProjectInfo()
             popupBlogerProjectMoreInfo.openPopup();
@@ -1806,7 +1818,6 @@ $(window).on('load', function(){
     })
 
     $(document).on('click', '.projects-list__choose-btn', function(e){
-        console.log(e.target);
         e.preventDefault();
 
         $('#profile-projects-choose').addClass('active');
@@ -1910,7 +1921,7 @@ $(window).on('load', function(){
     var dbTabs = new DashboardTabs('.dashboard');
 
     var chat = new Chat('.profile-chat__body');
-    $(document).find('.nav-menu__link.chat-link').on('click', () => chat.getNewMessages(false))
+    $(document).find('.nav-menu__link.chat-link').on('click', () => chat.getChats())
 
     $(document).on('click', '.tarrif-header', function(e){
         $('.header__profile-item--js').not($(e.target).closest('.tarrif-header')).removeClass('active')
@@ -1943,8 +1954,6 @@ $(window).on('load', function(){
         $(e.target).closest('.profile-projects__item').removeClass('active-bloggers-in_work');
 
         var id = $(e.target).closest('.profile-projects__item').data('id');
-
-        console.log(id);
 
         $.ajax({
             url: `apist/notifications/${id}/viewed`,
@@ -2043,7 +2052,6 @@ $(window).on('load', function(){
         $('.projects-list__filter').addClass('opened');
 
         $(document).off('click', '.projects-list__filter-btn').on('click', document, function(e){
-            console.log($(e.target).closest('.projects-list__filter'));
             if(!$(e.target).closest('.projects-list__filter').length > 0 && !$(e.target).hasClass('projects-list__filter-btn')){
                 $('.projects-list__filter').removeClass('opened');
                 $(document).off('click', document)
@@ -2150,7 +2158,6 @@ setInterval(() => {
         if(apps){
             for(var k in apps){
                 var cProjectNotifs = $(`#seller .profile-projects__item[data-id="${k}"]`).find('.notifs-application');
-                console.log(Number(apps[k]), cProjectNotifs);
                 if(Number(apps[k]) > 0)
                     cProjectNotifs.show();
                 else

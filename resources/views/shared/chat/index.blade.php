@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="chat__right">
-                    <div class="chat__overflow chat__overflow--completed" style="z-index: 1">
+                    <div class="chat__overflow chat__overflow--completed" style="z-index: 1; display:none">
                         <div class="chat__overflow-text">
                             Проект завершен
                         </div>
