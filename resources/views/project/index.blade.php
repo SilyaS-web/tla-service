@@ -28,7 +28,7 @@
                 <div class="profile-projects__row card-btns-desktop" style="margin-top:auto">
                     <div class="profile-projects__btns" style="margin-top:0;">
                         @if($project->is_blogger_access)
-                            <button class="btn btn-secondary btn-bloggers">Заявки от блогеров <div class="nav-menu__item-notifs notifs notifs-application" style="">1</div> </button>
+                            <button class="btn btn-secondary btn-bloggers">Заявки от блогеров <div class="nav-menu__item-notifs notifs notifs-application" style="display:none">1</div> </button>
                         @else
                             <a href="/apist/projects/{{$project->id}}/activate" class="btn btn-primary" style="text-align: center">Опубликовать</a>
                         @endif
@@ -93,7 +93,7 @@
                         <button class="btn btn-secondary btn-bloggers-in_work">Блогеры в работе</button>
                         <button class="btn btn-secondary btn-statistics">Статистика</button>
                         @if($project->is_blogger_access)
-                            <button class="btn btn-secondary btn-bloggers">Заявки от блогеров <div class="nav-menu__item-notifs notifs notifs-application" style="">1</div></button>
+                            <button class="btn btn-secondary btn-bloggers">Заявки от блогеров <div class="nav-menu__item-notifs notifs notifs-application" style="display:none">1</div></button>
                         @else
                             <a href="/apist/projects/{{$project->id}}/activate" class="btn btn-primary" style="text-align: center">Выложить проект </a>
                         @endif
@@ -212,9 +212,9 @@
                                     <a href="apist/works/{{ $work_application->id }}/start" class="btn btn-primary" data-project-id="">
                                         Принять
                                     </a>
-                                    <button class="btn btn-secondary" data-project-id="">
+                                    <a class="btn btn-secondary" href="apist/works/{{ $work_application->id }}/deny" data-project-id="">
                                         Отклонить
-                                    </button>
+                                    </a>
                                 </div>
                             </div>
                         </div>

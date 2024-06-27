@@ -3118,6 +3118,8 @@ input[type='range']::-webkit-slider-runnable-track{
     color:var(--primary);
     width: fit-content;
     display: none;
+    z-index: 2;
+    position: relative;
 }
 .chat__back img{
     filter: brightness(0) saturate(100%) invert(50%) sepia(74%) saturate(4903%) hue-rotate(2deg) brightness(104%) contrast(105%);
@@ -3133,7 +3135,7 @@ input[type='range']::-webkit-slider-runnable-track{
     justify-content: center;
     align-items: center;
     background-color: var(--pale);
-    opacity: .9;
+    opacity: 1;
     padding:10px;
 }
 .chat__overflow-text{
@@ -3143,6 +3145,7 @@ input[type='range']::-webkit-slider-runnable-track{
     font-weight: 500;
 }
 .chat__messages {
+    padding:3px;
 }
 .messages-chat {
     display: flex;

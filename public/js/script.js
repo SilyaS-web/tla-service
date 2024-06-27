@@ -1057,11 +1057,11 @@ class Chat {
 
                 if(res.is_completed){
                     $(self.node).find('.chat__overflow--completed').show();
-                    $(self.node).find('.chat__messages').hide();
+                    // $(self.node).find('.chat__messages').hide();
                 }
                 else{
                     $(self.node).find('.chat__overflow--completed').hide();
-                    $(self.node).find('.chat__messages').show();
+                    // $(self.node).find('.chat__messages').show();
                 }
             }
 
@@ -2145,12 +2145,12 @@ setInterval(() => {
         url: '/apist/applications-count',
     })
     .done(function( data ) {
-        var apps = data.applications || [];
+        var apps = data || false;
 
-        if(apps.length > 0){
+        if(apps){
             for(var k in apps){
                 var cProjectNotifs = $(`#seller .profile-projects__item[data-id="${k}"]`).find('.notifs-application');
-
+                console.log(Number(apps[k]), cProjectNotifs);
                 if(Number(apps[k]) > 0)
                     cProjectNotifs.show();
                 else
