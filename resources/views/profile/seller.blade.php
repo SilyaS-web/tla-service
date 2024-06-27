@@ -77,16 +77,6 @@
                                             </div>
 
                                         </div>
-                                        <div class="quest__step-row">
-                                            <div class="form-group" style="flex:1 1 auto">
-                                                <label for="project-brand">Бренд</label>
-                                                <input type="text" id="project-brand" name="product_brand" placeholder="Бренд" class="input input--product_brand">
-                                                @error("product_brand")
-                                                    <span class="error">{{ $message }}</span>
-                                                @enderror
-                                            </div>
-
-                                        </div>
                                         <div class="form-group form-group--file create-project__files upload-files">
                                             <div class="upload-files__title">
                                                 Загрузите изображения товара

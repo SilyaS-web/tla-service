@@ -285,7 +285,14 @@ class Project extends Model
     {
         $card = $this->getOzonGeneralInfo($ozon_client_id, $ozon_api_key);
         if (!$card) {
-            return "";
+            $result = [
+                'orders' => 0,
+                'earnings' => 0,
+                'prices_history' => [],
+                'orders_history' => [],
+            ];
+            
+            return json_encode($result);
         }
 
         $date_from = date('Y-m-d', strtotime("-1 month"));
