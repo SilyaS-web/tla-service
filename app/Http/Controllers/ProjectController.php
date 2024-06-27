@@ -75,7 +75,7 @@ class ProjectController extends Controller
             'inst-quantity' => 'numeric|nullable',
             'product_name' => 'required|min:3|max:250',
             'product_nm' => 'required|min:3|numeric',
-            'product_link' => 'required|min:3|max:250',
+            'product_link' => 'required|min:3|max:1000',
             'product_price' => 'required|numeric',
             'images' => 'required|array',
             'images.*' => 'image|max:10240',

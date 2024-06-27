@@ -27,7 +27,7 @@ class SellerOzonColumns extends Migration
     public function down()
     {
         Schema::table('sellers', function (Blueprint $table) {
-            $table->dropColumn(['ozon_api_key', 'ozon_clien_id']);
+            $table->dropColumn(['ozon_api_key', 'ozon_client_id']);
         });
     }
 }
