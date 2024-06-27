@@ -621,6 +621,9 @@ input[type='range']::-webkit-slider-runnable-track{
 .profile-projects__status.active {
     color: rgba(255, 193, 7, 1);
 }
+.profile-projects__status.disactive {
+    color: #FF0000;
+}
 .active {
 }
 .profile-projects__date {
