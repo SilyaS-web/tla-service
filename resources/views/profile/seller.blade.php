@@ -555,10 +555,13 @@
                                                 <div class="dashboard__item-title">
                                                     Переходы по интеграциям
                                                 </div>
-                                                @php($stats = 1)
-                                                <canvas class="graph" id="coverage-graph" data-coverage='{"coverage": {{ $total_stats }} }'>
+                                                @if($total_clicks > 10)
+                                                    <canvas class="graph" id="coverage-graph" data-coverage='{"coverage": {{ $total_stats }} }'>
 
-                                                </canvas>
+                                                    </canvas>
+                                                @else
+                                                    Недостаточно данных
+                                                @endif
                                             </div>
                                             <div class="dashboard__placeholder" style="z-index: 1; top:0; left:0;">
                                                 <div class="dashboard__placeholder-text">
@@ -575,7 +578,11 @@
                                                     Поĸазатели эффеĸтивности за 14 дней
                                                 </div>
                                                 <div class="dashboard__row">
+                                                @if($total_clicks > 10)
                                                     <canvas id="funnel-graph"></canvas>
+                                                @else
+                                                    Недостаточно данных
+                                                @endif
                                                 </div>
                                             </div>
                                         </div>
@@ -1059,7 +1066,7 @@
             labels: data.coverage.map(item => `${item.dt.split("-")[2]} ${month[Number(item.dt.split("-")[1]) - 1]}`),
             datasets: [
                 {
-                    label: "Охваты",
+                    label: "Переходы",
                     data: data.coverage.map(item => item.coverage),
                     backgroundColor: data.coverage.map(() => {
                         return "rgb(152,203,237, 1)"
@@ -1224,7 +1231,7 @@
         , labelWidthPercent: 30
         , labelFontColor: "#000"
         , labels: [
-            "Охваты",
+            "Переходы",
             "ER, %",
             "CPC, Руб."
         , ]
