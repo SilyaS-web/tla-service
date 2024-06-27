@@ -761,13 +761,13 @@
     $(window).on('load', function(){
         $('.projects-blogers--in_work .btn-to-chat').on('click', (e)=>{
             var id = $(e.target).closest('.btn-to-chat').data('work-id');
-
-            $(document).find('.chat-link').click();
-            $(document).find(`.item-chat[data-id="${id}"]`).click();
-            $([document.documentElement, document.body]).animate({
-                scrollTop: $(document).find(`.item-chat[data-id="${id}"]`).offset().top
-            }, 2000);
-            console.log();
+            if($(document).find(`.item-chat[data-id="${id}"]`).length > 0){
+                $(document).find('.chat-link').click();
+                $(document).find(`.item-chat[data-id="${id}"]`).click();
+                $([document.documentElement, document.body]).animate({
+                    scrollTop: $(document).find(`.item-chat[data-id="${id}"]`).offset().top
+                }, 2000);
+            }
         })
     })
 </script>

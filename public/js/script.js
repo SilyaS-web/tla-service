@@ -345,11 +345,10 @@ class ProjectsFilter {
     }
     sendData = ()=>{
         var self = this;
-
+        console.log(self);
         var questData = {
             project_type: this.dataProps.format.get(),
             project_name: this.dataProps.projectName.get(),
-            category: this.dataProps.category.get(),
             type: this.type,
         }
 
