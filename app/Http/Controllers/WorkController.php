@@ -254,6 +254,7 @@ class WorkController extends Controller
             'views' => 'numeric',
             'reposts' => 'numeric',
             'likes' => 'numeric',
+            'platform' => 'string|nullable',
             'images' => 'array',
             'images.*' => 'image',
         ]);
@@ -273,6 +274,7 @@ class WorkController extends Controller
 
         FinishStats::create([
             'subs' => 0,
+            'platform' => $validated['platform'],
             'views' => $validated['views'],
             'reposts' => $validated['reposts'],
             'likes' => $validated['likes'],

@@ -90,14 +90,25 @@ class ProjectController extends Controller
             return redirect()->route('profile')->with('success', 'Количество видов рекламы не было выбрано')->with('switch-tab', 'create-project')->withInput();
         }
 
-        $validated['seller_id'] = Auth::user()->id;
-
-        $card = $this->curlWBStats($validated['product_nm']);
-        if ($card) {
-            $validated['wb_category'] = $card->subj_name;
-            $validated['wb_product_name'] = $card->imt_name;
-            $validated['wb_description'] = $card->description;
-            $validated['wb_options'] = json_encode($card->options);
+        $user = Auth::user();
+        $validated['seller_id'] = $user->id;
+        if (strripos($validated['product_link'], 'ozon') !== false && !empty($user->seller->ozon_client_id) && !empty($user->seller->ozon_api_key)) {
+            $info = $this->getOzonInfo($validated['product_nm'], $user->seller->ozon_client_id, $user->seller->ozon_api_key);
+            if (isset($info['name'])) {
+                $validated['ozon_category'] = $info['category'];
+                $validated['ozon_brand'] = $info['brand'];
+                $validated['ozon_product_name'] = $info['name'];
+                $validated['ozon_description'] = $info['description'];
+                $validated['ozon_options'] = json_encode($info['options']);
+            }
+        } else {
+            $card = $this->curlWBStats($validated['product_nm']);
+            if ($card) {
+                $validated['wb_category'] = $card->subj_name;
+                $validated['wb_product_name'] = $card->imt_name;
+                $validated['wb_description'] = $card->description;
+                $validated['wb_options'] = json_encode($card->options);
+            }
         }
 
         $validated['status'] = Project::ACTIVE;
@@ -306,17 +317,22 @@ class ProjectController extends Controller
     {
         $total_quantity = $project->projectWorks()->sum('quantity');
         $lost_quantity = $total_quantity - $project->works()->where('status', '<>', null)->count();
-
+        $options = [];
+        if (!empty($project->wb_options)) {
+            $options = json_decode($project->wb_options);
+        } else if (!empty($project->ozon_options)) {
+            $options = json_decode($project->ozon_options);
+        }
         return response()->json([
-            'category' => $project->wb_category,
-            'product_name' => $project->wb_product_name,
-            'description' => $project->wb_description,
+            'category' => $project->wb_category ?? $project->ozon_category,
+            'product_name' => $project->wb_product_name ?? $project->ozon_product_name,
+            'description' => $project->wb_description ?? $project->ozon_description,
             'total_quantity' => $total_quantity,
             'lost_quantity' => $lost_quantity,
             'product_code' => $project->product_nm,
             'price' =>  $project->product_price,
             'images' => $project->getImageURL(),
-            'optioins' => json_decode($project->wb_options),
+            'optioins' => $options,
         ], 200);
     }
 
@@ -402,12 +418,49 @@ class ProjectController extends Controller
         return "basket-$t.wbbasket.ru";
     }
 
+
+    public function getOzonInfo(int $product_nm, int $client_id, string $api_key)
+    {
+        $card = $this->getOzonGeneralInfo($product_nm, $client_id, $api_key);
+        $product_attributes_without_names = $this->getOzonProductAttributestInfo($product_nm, $client_id, $api_key);
+        $attributes = $this->getOzonAttributestInfo($card->description_category_id, $card->type_id, $client_id, $api_key);
+        $product_attributes = [];
+        $product_brand = '';
+
+        foreach ($product_attributes_without_names as $product_attribute) {
+            foreach ($attributes as $attribute) {
+                if ($attribute->id == $product_attribute->attribute_id && is_string($product_attribute->values[0]->value)) {
+                    $product_attributes[] = [
+                        'name' => $attribute->name,
+                        'value' => $product_attribute->values[0]->value,
+                    ];
+
+                    if ($attribute->name == 'Бренд') {
+                        $product_brand = $product_attribute->values[0]->value;
+                    }
+
+                    break;
+                }
+            }
+        }
+        $product_description = $this->getOzonProductDescription($product_nm, $client_id, $api_key);
+
+        return [
+            'name' => $card->name,
+            'brand' => $product_brand,
+            'category' => '',
+            'options' => $product_attributes,
+            'description' => $product_description,
+        ];
+    }
+
+
     public function getOzonGeneralInfo(int $product_nm, int $client_id, string $api_key)
     {
         $curl = curl_init();
 
         curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api-seller.ozon.ru/v2/product/info/list',
+            CURLOPT_URL => 'https://api-seller.ozon.ru/v2/product/info',
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_ENCODING => '',
             CURLOPT_MAXREDIRS => 10,
@@ -416,11 +469,79 @@ class ProjectController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => '{
-  "sku": ["' . $product_nm . '"]
-}',
+                "product_id": ' . $product_nm . '
+            }',
             CURLOPT_HTTPHEADER => array(
                 'Api-Key: ' . $api_key,
-                'Client-Id: '. $client_id,
+                'Client-Id: ' . $client_id,
+                'Content-Type: application/json',
+                'Cookie: abt_data=b89761760b8de852bf55c8ddb5c67e8d:832e12896ab719f7407396c381b35f3a3d643bbfa0faf7dc57be5fa479853d4abf58774b252ef432ca7222519c8c820723fbec410cfd0621dce2aa17bb312ad413cb085f1861a4f3740e3762e4d6ae0614e33e4c098957a50fd58f0af0978798359d6d40d544c115a7ab52adf63d59debd62021596171bf292470486511a05fb80c63d1c1b372b051eb5508704cdfd2479451d755c1f861efc363f5760900b1a40b1cf1f2d759ad9936fca12bfed8abd'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        $card = json_decode($response)->result;
+
+        return $card;
+    }
+
+    public function getOzonProductAttributestInfo(int $product_nm, int $client_id, string $api_key)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api-seller.ozon.ru/v3/products/info/attributes',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '{
+                "filter" : {
+                    "product_id": ["' . $product_nm . '"]
+                },
+                "limit": 1
+            }',
+            CURLOPT_HTTPHEADER => array(
+                'Api-Key: ' . $api_key,
+                'Client-Id: ' . $client_id,
+                'Content-Type: application/json',
+                'Cookie: abt_data=b89761760b8de852bf55c8ddb5c67e8d:832e12896ab719f7407396c381b35f3a3d643bbfa0faf7dc57be5fa479853d4abf58774b252ef432ca7222519c8c820723fbec410cfd0621dce2aa17bb312ad413cb085f1861a4f3740e3762e4d6ae0614e33e4c098957a50fd58f0af0978798359d6d40d544c115a7ab52adf63d59debd62021596171bf292470486511a05fb80c63d1c1b372b051eb5508704cdfd2479451d755c1f861efc363f5760900b1a40b1cf1f2d759ad9936fca12bfed8abd'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        $attributes = json_decode($response)->result[0]->attributes;
+
+        return $attributes;
+    }
+
+    public function getOzonAttributestInfo(int $description_category_id, int $type_id, int $client_id, string $api_key)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api-seller.ozon.ru/v1/description-category/attribute',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '{
+                "description_category_id": ' . $description_category_id . ',
+                "type_id": ' . $type_id . '
+            }',
+            CURLOPT_HTTPHEADER => array(
+                'Api-Key: ' . $api_key,
+                'Client-Id: ' . $client_id,
                 'Content-Type: application/json',
                 'Cookie: abt_data=b89761760b8de852bf55c8ddb5c67e8d:832e12896ab719f7407396c381b35f3a3d643bbfa0faf7dc57be5fa479853d4abf58774b252ef432ca7222519c8c820723fbec410cfd0621dce2aa17bb312ad413cb085f1861a4f3740e3762e4d6ae0614e33e4c098957a50fd58f0af0978798359d6d40d544c115a7ab52adf63d59debd62021596171bf292470486511a05fb80c63d1c1b372b051eb5508704cdfd2479451d755c1f861efc363f5760900b1a40b1cf1f2d759ad9936fca12bfed8abd'
             ),
@@ -429,10 +550,39 @@ class ProjectController extends Controller
         $response = curl_exec($curl);
 
         curl_close($curl);
-        echo $response;
+        $attributes = json_decode($response)->result;
 
-        $card = json_decode($response)->result->items[0];
-        return $card;
+        return $attributes;
     }
 
+    public function getOzonProductDescription(int $product_nm, int $client_id, string $api_key)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api-seller.ozon.ru/v1/product/info/description',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '{
+                "product_id": ' . $product_nm . '
+            }',
+            CURLOPT_HTTPHEADER => array(
+                'Api-Key: ' . $api_key,
+                'Client-Id: ' . $client_id,
+                'Content-Type: application/json',
+                'Cookie: abt_data=b89761760b8de852bf55c8ddb5c67e8d:832e12896ab719f7407396c381b35f3a3d643bbfa0faf7dc57be5fa479853d4abf58774b252ef432ca7222519c8c820723fbec410cfd0621dce2aa17bb312ad413cb085f1861a4f3740e3762e4d6ae0614e33e4c098957a50fd58f0af0978798359d6d40d544c115a7ab52adf63d59debd62021596171bf292470486511a05fb80c63d1c1b372b051eb5508704cdfd2479451d755c1f861efc363f5760900b1a40b1cf1f2d759ad9936fca12bfed8abd'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        $description = json_decode($response)->result->description;
+        return $description;
+    }
 }

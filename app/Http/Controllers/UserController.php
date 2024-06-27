@@ -277,6 +277,8 @@ class UserController extends Controller
         $seller = Auth::user()->seller;
         $validator = Validator::make(request()->all(), [
             'wb_api_key' => 'string|nullable',
+            'ozon_client_id' => 'string|nullable',
+            'ozon_api_key' => 'string|nullable',
             'platform_link' => 'string|nullable',
             'inn' => 'string|nullable',
             'organization_type' => 'string|nullable',
@@ -290,6 +292,8 @@ class UserController extends Controller
         $validated = $validator->validated();
         $seller->update([
             'wb_api_key' => $validated['wb_api_key'],
+            'ozon_api_key' => $validated['ozon_api_key'],
+            'ozon_client_id' => $validated['ozon_client_id'],
             'inn' => $validated['inn'],
             'platform_link' => $validated['platform_link'],
             'organization_type' => $validated['organization_type'],

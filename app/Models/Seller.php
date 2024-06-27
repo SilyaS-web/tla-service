@@ -37,6 +37,8 @@ class Seller extends Model
         'finish_date',
         'remaining_tariff',
         'tariff',
+        'ozon_api_key',
+        'ozon_client_id',
     ];
 
     public function user()

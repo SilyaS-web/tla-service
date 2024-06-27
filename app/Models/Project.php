@@ -51,6 +51,13 @@ class Project extends Model
         'wb_description',
         'wb_options',
         'wb_rate',
+        'wb_brand',
+        'ozon_category',
+        'ozon_product_name',
+        'ozon_description',
+        'ozon_options',
+        'ozon_rate',
+        'ozon_brand',
         'is_blogger_access'
     ];
 

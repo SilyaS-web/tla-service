@@ -439,10 +439,10 @@
                             <label for="platform">Площадки</label>
                             <select id="platform" name="platform" class="input">
                                 <option value="">Не выбрано</option>
-                                <option value="">Youtube</option>
-                                <option value="">Instagram</option>
-                                <option value="">Telegram</option>
-                                <option value="">Vkontakte</option>
+                                <option value="Youtube">Youtube</option>
+                                <option value="Instagram">Instagram</option>
+                                <option value="Telegram">Telegram</option>
+                                <option value="VK">Vkontakte</option>
                             </select>
                         </div>
                         <div class="input-file input-file--stat" style="padding-left:0; margin-bottom:20px;">

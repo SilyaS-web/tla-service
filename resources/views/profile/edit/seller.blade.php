@@ -97,6 +97,20 @@
                             <span class="error">{{ $message }}</span>
                             @enderror
                         </div>
+                         <div class="form-group">
+                            <label for="ozon_api_key">Ключ API OZON</label>
+                            <input type="text" class="input" id="ozon_api_key" name="ozon_api_key" value="{{ $user->seller->ozon_api_key }}">
+                            @error('ozon_api_key')
+                            <span class="error">{{ $message }}</span>
+                            @enderror
+                        </div>
+                         <div class="form-group">
+                            <label for="ozon_client_id">Client ID OZON</label>
+                            <input type="text" class="input" id="ozon_client_id" name="ozon_client_id" value="{{ $user->seller->ozon_client_id }}">
+                            @error('ozon_client_id')
+                            <span class="error">{{ $message }}</span>
+                            @enderror
+                        </div>
                     </div>
                     <button class="btn btn-primary mobile" type='submit'>Сохранить</button>
                 </div>
