@@ -433,7 +433,7 @@
                                 <div class="projects-statistics__title" style="margin-bottom: 0">
                                     Статистика по завершённым работам
                                 </div>
-                                @if ($project->works()->has('finishStats')->count() < 1)
+                                @if ($project->works()->where('status', 'completed')->count() < 1)
                                     Нет данных
                                 @else
                                     <div class="card__stats-table table-stats">
@@ -472,41 +472,95 @@
                                             </div>
                                         </div>
                                         <div class="table-stats__body">
-                                            @forelse ($project->works as $work)
-                                                @if ($work->finishStats)
-                                                    <div class="table-stats__row table-stats__row--chat" style="cursor:pointer" data-work-id = "{{ $work->id }}">
-                                                        <div class="table-stats__col table-stats__blogger-img" style="width: 10%">
-                                                            <img src="{{ $work->blogger->user->getImageURL() }}" alt="">
-                                                        </div>
-                                                        <div class="table-stats__col" style="width: 13%;">
-                                                            {{ $work->blogger->user->name }}
-                                                        </div>
-                                                        <div class="table-stats__col" style="width: 11%;">
-                                                            {{ $work->finishStats->subs }}
-                                                        </div>
-                                                        <div class="table-stats__col" style="width: 11%;">
-                                                            {{ $work->finishStats->views }}
-                                                        </div>
-                                                        <div class="table-stats__col" style="width: 11%;">
-                                                            {{ $work->getTotlaClicks() }}
-                                                        </div>
-                                                        <div class="table-stats__col" style="width: 6%;">
-                                                            {{ round($work->finishStats->views / ($work->finishStats->subs == 0 ? 1 : $work->finishStats->subs), 2) }}
-                                                        </div>
-                                                        <div class="table-stats__col" style="width: 9%;">
-                                                            {{ round($work->finishStats->views / ($project->product_price == 0 ? 1 : $project->product_price), 2)  }}
-                                                        </div>
-                                                        <div class="table-stats__col" style="width: 9%;">
-                                                            {{ round($work->getTotlaClicks() / ($work->finishStats->views == 0 ? 1 : $work->finishStats->views), 2)  }}
-                                                        </div>
-                                                        <div class="table-stats__col" style="width: 14%;">
-                                                            {{$work->confirmed_by_seller_at}}
-                                                        </div>
-                                                        <div class="table-stats__col table-stats__col--chat" style="width: 6%;">
-                                                            <img src="{{ asset('img/chat-black-icon.svg') }}" alt="">
-                                                        </div>
+                                            @forelse ($project->works()->where('status', 'completed')->get() as $work)
+                                                <div class="table-stats__row table-stats__row--chat" style="cursor:pointer" data-work-id = "{{ $work->id }}">
+                                                    <div class="table-stats__col table-stats__blogger-img" style="width: 10%">
+                                                        <img src="{{ $work->blogger->user->getImageURL() }}" alt="">
                                                     </div>
-                                                @endif
+                                                    <div class="table-stats__col" style="width: 13%;">
+                                                        {{ $work->blogger->user->name }}
+                                                    </div>
+                                                    <div class="table-stats__col" style="width: 11%;">
+                                                        {{ $work->blogger->getSubscribers() }}
+                                                    </div>
+                                                    <div class="table-stats__col" style="width: 11%;">
+                                                        @if(!$work->finishStats)
+                                                            <div class="format-tooltip" data-hint="youtube">
+                                                                ?
+                                                                <div class="format-hint format-hint--text" id="youtube">
+                                                                    <div class="format-hint__title">
+                                                                        Блогер не прикрепил статистику
+                                                                    </div>
+                                                                    <div class="format-hint__body">
+                                                                        ...
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            {{ $work->finishStats->views }}
+                                                        @endif
+                                                    </div>
+                                                    <div class="table-stats__col" style="width: 11%;">
+                                                        {{ $work->getTotlaClicks() }}
+                                                    </div>
+                                                    <div class="table-stats__col" style="width: 6%;">
+                                                        @if(!$work->finishStats)
+                                                            <div class="format-tooltip" data-hint="youtube">
+                                                                ?
+                                                                <div class="format-hint format-hint--text" id="youtube">
+                                                                    <div class="format-hint__title">
+                                                                        Блогер не прикрепил статистику
+                                                                    </div>
+                                                                    <div class="format-hint__body">
+                                                                        ...
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            {{ round($work->finishStats->views / ($work->finishStats->subs == 0 ? 1 : $work->finishStats->subs)) }}
+                                                        @endif
+                                                    </div>
+                                                    <div class="table-stats__col" style="width: 9%;">
+                                                        @if(!$work->finishStats)
+                                                            <div class="format-tooltip" data-hint="youtube">
+                                                                ?
+                                                                <div class="format-hint format-hint--text" id="youtube">
+                                                                    <div class="format-hint__title">
+                                                                        Блогер не прикрепил статистику
+                                                                    </div>
+                                                                    <div class="format-hint__body">
+                                                                        ...
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            {{ round($work->finishStats->views / ($project->product_price == 0 ? 1 : $project->product_price), 2)  }}
+                                                        @endif
+                                                    </div>
+                                                    <div class="table-stats__col" style="width: 9%;">
+                                                        @if(!$work->finishStats)
+                                                            <div class="format-tooltip" data-hint="youtube">
+                                                                ?
+                                                                <div class="format-hint format-hint--text" id="youtube">
+                                                                    <div class="format-hint__title">
+                                                                        Блогер не прикрепил статистику
+                                                                    </div>
+                                                                    <div class="format-hint__body">
+                                                                        ...
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        @else
+                                                            {{ round($work->getTotlaClicks() / ($work->finishStats->views == 0 ? 1 : $work->finishStats->views), 2)  }}
+                                                        @endif
+                                                    </div>
+                                                    <div class="table-stats__col" style="width: 14%;">
+                                                        {{$work->confirmed_by_seller_at}}
+                                                    </div>
+                                                    <div class="table-stats__col table-stats__col--chat" style="width: 6%;">
+                                                        <img src="{{ asset('img/chat-black-icon.svg') }}" alt="">
+                                                    </div>
+                                                </div>
                                             @empty
                                             @endforelse
                                             <script>
