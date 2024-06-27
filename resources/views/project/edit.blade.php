@@ -46,14 +46,16 @@
                                 Загрузите изображения товара
                             </div>
                             <div class="upload-files__body">
-                                <div class="upload-files__item uploaded">
-                                    <div class="upload-files__path">1718692150_Убрать-лишний-текст-в-ВД.png</div>
-                                    <div class="upload-files__delete" onclick = '(function(){$(event.target).closest(".upload-files__item").remove()})()'>
+                                @foreach ($project->projectFiles as $key => $project_image)
+                                    <div class="upload-files__item uploaded">
+                                        <div class="upload-files__path">Изображение - {{ $key }}</div>
+                                        <div class="upload-files__delete" onclick = '(function(){$(event.target).closest(".upload-files__item").remove()})()'>
 
+                                        </div>
+                                        <input name="uploaded_images[]" value="{{ $project_image->id }}" hidden="">
                                     </div>
-                                    <input type="file" hidden="" name="images[]">
-                                    <input type="text" data-id="" hidden="">
-                                </div>
+                                @endforeach
+
                                 <div class="upload-files__plus">
 
                                 </div>

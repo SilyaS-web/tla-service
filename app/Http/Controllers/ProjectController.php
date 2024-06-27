@@ -247,8 +247,10 @@ class ProjectController extends Controller
             'product_nm' => 'required|min:3|numeric',
             'product_link' => 'required|min:3|max:250',
             'product_price' => 'required|numeric',
-            // 'images' => 'required|array',
-            // 'images.*' => 'image|max:10240',
+            'uploaded_images' => 'array',
+            'uploaded_images.*' => 'numeric',
+            'images' => 'array',
+            'images.*' => 'image|max:10240',
         ]);
 
         if ($validator->fails()) {
@@ -256,14 +258,31 @@ class ProjectController extends Controller
         }
 
         $validated = $validator->validated();
+        $product_images = request()->file('images');
+        if (empty($product_images) && empty($validated['uploaded_images'])) {
+            return redirect()->back()->with('success', 'Выберите хотя бы одно изображение для проекта');
+        }
 
         foreach ($project->projectFiles as $file) {
-            Storage::delete($file->link);
+            if (!isset($validated['uploaded_images']) || empty($validated['uploaded_images']) || !in_array($file->id, $validated['uploaded_images'])) {
+                $file->delete();
+            }
+        }
+
+        if (!empty($product_images)) {
+            foreach ($product_images as $product_image) {
+                $image_path = $product_image->store('projects', 'public');
+                ProjectFile::create([
+                    'source_id' => $project->id,
+                    'type' => 0,
+                    'link' => $image_path,
+                ]);
+            }
         }
 
         $project->update($validated);
 
-        return redirect()->back()->with('success', 'Проект успешно обновлён');
+        return redirect()->route('profile')->with('success', 'Проект успешно обновлён')->with('switch-tab', 'profile-projects');
     }
     public function destroy($id)
     {
