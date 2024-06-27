@@ -147,7 +147,7 @@ class MessageController extends Controller
         $work = Work::find($validated['work_id']);
         Notification::create([
             'user_id' => $work->getPartnerUser($user->role)->id,
-            'type' => 'message',
+            'type' => 'Новое сообщение',
             'text' => 'Вам поступило новое сообщение от ' . $user->name,
         ]);
         TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Вам поступило новое сообщение от ' . $user->name);
