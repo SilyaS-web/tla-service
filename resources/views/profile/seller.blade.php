@@ -560,7 +560,7 @@
 
                                                     </canvas>
                                                 @else
-                                                    Недостаточно данных
+                                                    Недостаточно данных для отображения статистики
                                                 @endif
                                             </div>
                                             <div class="dashboard__placeholder" style="z-index: 1; top:0; left:0;">
@@ -581,7 +581,7 @@
                                                 @if($total_clicks > 10)
                                                     <canvas id="funnel-graph"></canvas>
                                                 @else
-                                                    Недостаточно данных
+                                                    Недостаточно данных для отображения статистики
                                                 @endif
                                                 </div>
                                             </div>
