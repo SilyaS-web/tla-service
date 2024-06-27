@@ -353,6 +353,7 @@ class ProjectController extends Controller
             'price' =>  $project->product_price,
             'images' => $project->getImageURL(),
             'optioins' => $options,
+            'link' => $project->product_link,
         ], 200);
     }
 
