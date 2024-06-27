@@ -51,6 +51,7 @@ class MessageController extends Controller
             $btn_class = 'accept-btn';
             $btn_text = 'Принять в работу';
             $data_id = $work->id;
+            $is_completed = false;
             if ($work->status == Work::PENDING) {
                 if ($work->isAcceptedByUser($user)) {
                     $btn_text = 'Ожидаем ответа от ' . $work->getPartnerUser($user->role)->name;
@@ -65,12 +66,13 @@ class MessageController extends Controller
                     $btn_text = 'Завершить проект';
                 }
             } else if ($work->status == Work::COMPLETED) {
-                if ($user->role == 'blogger' && $work->projectWork->type !== Project::FEEDBACK) {
+                if ($user->role == 'blogger' && $work->projectWork->type !== Project::FEEDBACK && $work->FinishStats->count() == 0) {
                     $btn_class = 'send-stats-blogger-btn';
                     $btn_text = 'Прикрепить статистику';
                 } else {
                     $btn_class = 'btn-chat-action disabled';
                     $btn_text =  'Проект завершён';
+                    $is_completed = true;
                 }
             }
 
@@ -79,7 +81,7 @@ class MessageController extends Controller
                 $is_new = true;
             }
             Message::where('work_id', $validated['work_id'])->where('viewed_at', null)->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
-            return response()->json(['view' => view('shared.chat.messages', compact('work', 'user_id', 'role'))->render(), 'btn-class' => $btn_class, 'btn-text' => $btn_text, 'data-id' => $data_id, 'is_new' => $is_new]);
+            return response()->json(['view' => view('shared.chat.messages', compact('work', 'user_id', 'role'))->render(), 'btn-class' => $btn_class, 'btn-text' => $btn_text, 'data-id' => $data_id, 'is_new' => $is_new, 'is_completed' => $is_completed]);
         }
         $works_count = $works->count();
         return response()->json(['view' => view('shared.chat.chat-list', compact('works', 'user_id', 'role'))->render(), 'count' => $works_count]);
