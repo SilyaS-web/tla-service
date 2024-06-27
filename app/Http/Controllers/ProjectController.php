@@ -423,7 +423,8 @@ class ProjectController extends Controller
     public function getOzonInfo(int $product_nm, int $client_id, string $api_key)
     {
         $card = $this->getOzonGeneralInfo($product_nm, $client_id, $api_key);
-        $product_attributes_without_names = $this->getOzonProductAttributestInfo($product_nm, $client_id, $api_key);
+        dd($card);
+        $product_attributes_without_names = $this->getOzonProductAttributestInfo($card->id, $client_id, $api_key);
         $attributes = $this->getOzonAttributestInfo($card->description_category_id, $card->type_id, $client_id, $api_key);
         $product_attributes = [];
         $product_brand = '';
@@ -444,7 +445,7 @@ class ProjectController extends Controller
                 }
             }
         }
-        $product_description = $this->getOzonProductDescription($product_nm, $client_id, $api_key);
+        $product_description = $this->getOzonProductDescription($card->id, $client_id, $api_key);
 
         return [
             'name' => $card->name,
@@ -503,7 +504,7 @@ class ProjectController extends Controller
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => '{
                 "filter" : {
-                    "sku": ["' . $product_nm . '"]
+                    "product_id": ["' . $product_nm . '"]
                 },
                 "limit": 1
             }',
@@ -570,7 +571,7 @@ class ProjectController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => '{
-                "sku": ' . $product_nm . '
+                "product_id": ' . $product_nm . '
             }',
             CURLOPT_HTTPHEADER => array(
                 'Api-Key: ' . $api_key,
