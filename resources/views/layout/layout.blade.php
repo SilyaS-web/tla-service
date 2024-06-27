@@ -159,7 +159,7 @@
                     <div class=" header__profile-items header__profile-items--desktop header__row">
                         @if ( auth()->user()->role == 'seller')
                         <div href="#" class="header__col header__tarrif tarrif-header header__profile-item--js">
-                            Ваш тариф — Пробный
+                            Ваш тариф — Тестовый
                             <div class="tarrif-header__items">
                                 <div class="tarrif-header__item tarrif-header__adv">
                                     Отзыв - <b><span class="counter">{{ auth()->user()->seller->remaining_tariff }}</span> шт.</b>
