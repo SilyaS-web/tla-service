@@ -8,12 +8,16 @@
                     <div class="profile-projects__item-title" title="{{ $project->product_name }}">
                         {{ $project->product_name }}
                     </div>
-                    <div class="profile-projects__status active">
+                    {{-- <div class="profile-projects__status active">
                         {{ $project->getStatusName() }}
+                    </div> --}}
+                    <div class="profile-projects__status disactive">
+                        Неактивно
                     </div>
                 </div>
                 <div class="profile-projects__row">
                     <p>Артикул товара: <b>{{ $project->product_nm }}</b></p>
+                    <p>Цена товара: <b>{{ $project->product_price }}₽</b></p>
                 </div>
                 <div class="profile-projects__row">
                     <div class="profile-projects__formats">
@@ -695,3 +699,4 @@
         })
     })
 </script>
+

@@ -92,10 +92,11 @@
                     </div>
                     @if ( auth()->user()->role == 'seller')
                     <div href="#" class="header__col header__tarrif tarrif-header header__profile-item--js">
-                        Ваш тариф — {{ auth()->user()->seller->tariff }}
+                        {{-- Ваш тариф — {{ auth()->user()->seller->tariff }} --}}
+                        Ваш тариф — Пробный
                         <div class="tarrif-header__items">
                             <div class="tarrif-header__item tarrif-header__adv">
-                                Рекламные посты - <b><span class="counter">{{ auth()->user()->seller->remaining_tariff }}</span> шт.</b>
+                                Отзыв - <b><span class="counter">{{ auth()->user()->seller->remaining_tariff }}</span> шт.</b>
                                 <div class="tarrif-header__date">
                                     Действует до 30 Июня
                                 </div>
@@ -108,9 +109,9 @@
                 <div class="burger-menu__nav nav-burger">
                     <a href="{{ route('profile') }}" class="nav-burger__link nav__link">
                         @if ( auth()->user()->role == 'seller')
-                        Дашборд
+                            Дашборд
                         @elseif (auth()->user()->blogger)
-                        Главная
+                            Главная
                         @endif
                     </a>
                     <a href="#" class="nav-burger__link nav__link">Инструкции</a>
@@ -158,10 +159,10 @@
                     <div class=" header__profile-items header__profile-items--desktop header__row">
                         @if ( auth()->user()->role == 'seller')
                         <div href="#" class="header__col header__tarrif tarrif-header header__profile-item--js">
-                            Ваш тариф — {{ auth()->user()->seller->tariff }}
+                            Ваш тариф — Пробный
                             <div class="tarrif-header__items">
                                 <div class="tarrif-header__item tarrif-header__adv">
-                                    Рекламные посты - <b><span class="counter">{{ auth()->user()->seller->remaining_tariff }}</span> шт.</b>
+                                    Отзыв - <b><span class="counter">{{ auth()->user()->seller->remaining_tariff }}</span> шт.</b>
                                     <div class="tarrif-header__date">
                                         Действует до 30 Июня
                                     </div>
@@ -445,9 +446,17 @@
                                 <option value="VK">Vkontakte</option>
                             </select>
                         </div>
-                        <div class="input-file input-file--stat" style="padding-left:0; margin-bottom:20px;">
+                        <div class="input-file input-file--stat tab-content__profile-img-upload" style="padding-left:0; margin-bottom:20px;">
                             <label for="statistics-file">Прикрепить отчет по статитстике</label>
                             <input id="statistics-file" type="file" multiple hidden>
+                            <script>
+                                $(window).on('load', function(){
+                                    $('#send-statistics-blogger #statistics-file').on('change', function(e){
+                                        $(e.target).closest('.tab-content__profile-img-upload').addClass('uploaded');
+                                        $(e.target).closest('.tab-content__profile-img-upload').find('label').text('Изображение загружено');
+                                    })
+                                })
+                            </script>
                         </div>
                         <button class="btn btn-primary send-data">
                             Отправить

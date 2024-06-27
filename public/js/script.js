@@ -1593,7 +1593,7 @@ class PopupSellerChooseProjectsFormat extends Popup{
         bloggers.each((i, v)=>{
             var coverage = $(v).find('.card__stats-val.coverage').text();
 
-            $(v).find('.card__stats-val.cpm span').text(`${Math.round((Number(price) / Number(coverage)) * 1000)}₽`)
+            $(v).find('.card__stats-val.cpm span').text(`${((Number(price) / Number(coverage)) * 1000).toFixed(2)}₽`)
             $(v).find('.card__stats-val.card__stats-val--empty').removeClass('card__stats-val--empty')
         })
 
