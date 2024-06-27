@@ -26,9 +26,9 @@
                     Осталось мест на интеграцию <span style="font-weight: 700;">{{ $lost_seats }}/{{ $project->projectWorks()->sum('quantity') }}</span>
                 </div>
                 <div class="project-item__format-tags card__row card__tags">
-                    @foreach ($project->getProjectWorkNamesWithQuantity() as $format)
-                        <div class="card__tags-item">
-                            {{ $format['name'] }} — {{ $format['lost_quantity'] }}/{{ $format['total_quantity'] }}
+                     @foreach ($project->projectWorks as $project_work)
+                        <div class="card__tags-item" data-id="{{ $project_work->id }}">
+                            <span>{{ $project->getProjectWorkNames($project_work->type) }} - {{ $project_work->quantity - $project->works()->where('project_work_id', $project_work->id)->where('status', '<>', null)->count() }}/{{ $project_work->quantity }}</span>
                         </div>
                     @endforeach
                 </div>
