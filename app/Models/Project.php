@@ -392,7 +392,7 @@ class Project extends Model
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => '{
-                "product_id": ' . $this->product_nm . '
+                "sku": ' . $this->product_nm . '
             }',
             CURLOPT_HTTPHEADER => array(
                 'Api-Key: ' . $api_key,
