@@ -276,8 +276,18 @@ class Project extends Model
         $response = curl_exec($ch);
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
+        $result = [];
+        if ($httpcode != 200) {
+            $result = [
+                'orders' => 0,
+                'earnings' => 0,
+                'prices_history' => [],
+                'orders_history' => [],
+            ];
+        }
 
-        return $httpcode == 200 ? $response : false;
+        $result = $response;
+        return $result;
     }
 
     public function getOzonStats(int $ozon_client_id, string $ozon_api_key)
