@@ -100,7 +100,7 @@
                 project_work_id: project_work_id
             }
             , success: function(data, textStatus, jqXHR) {
-                el.innerHTML = 'Заявка отправлена';
+                el.innerHTML = 'Заявка принята';
                 el.disabled = true;
                 notify('info', {
                     title: 'Успешно!'
