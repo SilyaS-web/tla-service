@@ -194,7 +194,7 @@ class Project extends Model
                 $formats[] = [
                     'name' => self::TYPE_NAMES[$project_work->type],
                     'total_quantity' => $project_work->quantity,
-                    'lost_quantity' => $project_work->quantity - $this->works()->where('project_work_id', $project_work->id)->count()
+                    'lost_quantity' => $project_work->quantity - $this->works()->where('project_work_id', $project_work->id)->where('status', Work::IN_PROGRESS)->count()
                 ];
             }
         }
