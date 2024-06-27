@@ -307,6 +307,6 @@ class WorkController extends Controller
 
     public function deny(Work $work) {
         $work->delete();
-        return redirect()->route('profile')->with('success', 'Заявка откланена')->with('switch-tab', 'profile-projects')->withInput();
+        return redirect()->route('profile')->with('success', 'Заявка откланена')->with('switch-tab', 'profile-projects');
     }
 }
