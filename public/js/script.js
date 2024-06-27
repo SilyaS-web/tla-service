@@ -1027,7 +1027,8 @@ class Chat {
                 $(document).find('.chat__chat-items').remove();
                 $(document).find('#chat .chat__left').append(res.view);
 
-                $(self.node).find('.chat__overflow').show()
+                $(self.node).find('.chat__overflow').show();
+                $(self.node).find('.chat__overflow--completed').hide();
             }
             else{
 
@@ -1046,12 +1047,22 @@ class Chat {
                     $(self.node).find('.btn-action').prop('href', `#`);
                 }
                 $(self.node).find(`.item-chat[data-id="${self.currentChatId}"]`).addClass('current');
+
                 if(res.is_new){
                     setTimeout(()=>{
                         $(self.node).find(".messages-chat").animate({
                             scrollTop: $(self.node).find(".messages-chat").find('.messages-chat__item').length * 150
                         }, 100)
                     }, 50)
+                }
+
+                if(res.is_completed){
+                    $(self.node).find('.chat__overflow--completed').show();
+                    $(self.node).find('.chat__messages').hide();
+                }
+                else{
+                    $(self.node).find('.chat__overflow--completed').hide();
+                    $(self.node).find('.chat__messages').show();
                 }
             }
 
@@ -1711,7 +1722,7 @@ class PopupBlogerProjectMoreInfo extends Popup{
                 $(self.node).find('.popup-project__mark-text').text(res.rate)
                 $(self.node).find('.characteristics__category').text(`Категория: ${res.category || 'Нет'}`)
                 $(self.node).find('.popup-project__cost').text(`${res.price}₽`)
-                $(self.node).find('.project-item__left span').text(`${res.total_quantity}/${res.lost_quantity}`)
+                $(self.node).find('.project-item__left span').text(`${res.lost_quantity}/${res.total_quantity}`)
                 $(self.node).find('.project-item__left .line__val').css('width', `${(res.lost_quantity * 100) / res.total_quantity }%`)
             }
         })
