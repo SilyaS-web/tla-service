@@ -56,7 +56,7 @@ class Blogger extends Model
 
     public function getCoverage()
     {
-        $coverage = round($this->platforms()->avg('coverage'), 2);
+        $coverage = round($this->platforms()->avg('coverage'));
         return $coverage;
     }
 

@@ -59,7 +59,7 @@
 
                         <div class="card__col card__stats-item">
                             <div class="card__stats-title">
-                                <span>ER</span>
+                                <span>ER %</span>
                             </div>
                             <div class="card__stats-val">
                                 <span>{{ $blogger->engagement_rate }}</span>

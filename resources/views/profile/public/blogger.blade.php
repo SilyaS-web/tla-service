@@ -53,7 +53,7 @@
                                             Подписчики
                                         </div>
                                         <div class="item-platforms__stat-value">
-                                            {{ $p->subscriber_quantity }}
+                                            {{ $p->subscriber_quantity ?? 0 }}
                                         </div>
                                     </div>
                                     <div class="item-platforms__stat">
@@ -61,15 +61,15 @@
                                             Охваты
                                         </div>
                                         <div class="item-platforms__stat-value">
-                                            {{ $p->coverage }}
+                                            {{ $p->coverage ?? 0 }}
                                         </div>
                                     </div>
                                     <div class="item-platforms__stat">
                                         <div class="item-platforms__stat-title">
-                                            ER
+                                            ER %
                                         </div>
                                         <div class="item-platforms__stat-value">
-                                            {{ $p->engagement_rate }}
+                                            {{ $p->engagement_rate ?? 0 }}
                                         </div>
                                     </div>
                                     <div class="item-platforms__stat">
@@ -77,7 +77,7 @@
                                             CPM
                                         </div>
                                         <div class="item-platforms__stat-value">
-                                            {{ $p->cost_per_mille }}
+                                            {{ $p->cost_per_mille ?? 0}}
                                         </div>
                                     </div>
                                 </div>
@@ -106,7 +106,7 @@
                                     </div>
                                     <div class="item-platforms__stat">
                                         <div class="item-platforms__stat-title">
-                                            ER
+                                            ER %
                                         </div>
                                         <div class="item-platforms__stat-value">
                                             860
@@ -145,7 +145,7 @@
                                     </div>
                                     <div class="item-platforms__stat">
                                         <div class="item-platforms__stat-title">
-                                            ER
+                                            ER %
                                         </div>
                                         <div class="item-platforms__stat-value">
                                             1200

@@ -223,7 +223,7 @@
                                 </div>
                                 <div class="form-stat__row">
                                     <div class="form-group">
-                                        <label for="tg_er">ER</label>
+                                        <label for="tg_er">ER %</label>
                                         <input id="tg_er" type="text" class="input" name="">
                                     </div>
                                     <div class="form-group">
@@ -256,7 +256,7 @@
                                 </div>
                                 <div class="form-stat__row">
                                     <div class="form-group">
-                                        <label for="inst_er">ER</label>
+                                        <label for="inst_er">ER %</label>
                                         <input id="inst_er" type="text" class="input" name="">
                                     </div>
                                     <div class="form-group">
@@ -289,7 +289,7 @@
                                 </div>
                                 <div class="form-stat__row">
                                     <div class="form-group">
-                                        <label for="yt_er">ER</label>
+                                        <label for="yt_er">ER %</label>
                                         <input id="yt_er" type="text" class="input" name="">
                                     </div>
                                     <div class="form-group">
@@ -322,7 +322,7 @@
                                 </div>
                                 <div class="form-stat__row">
                                     <div class="form-group">
-                                        <label for="vk_er">ER</label>
+                                        <label for="vk_er">ER %</label>
                                         <input id="vk_er" type="text" class="input" name="">
                                     </div>
                                     <div class="form-group">

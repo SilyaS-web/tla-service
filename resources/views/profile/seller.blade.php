@@ -755,6 +755,7 @@
                             <div class="profile-projects__sort form-group" style="margin-bottom:32px;">
                                 <select name="projects-sort" id="projects-sort" style="border-radius:5px; border:1px solid rgba(0,0,0,.1); padding:0 8px; max-width:380px; height: 50px; font-size:18px">
                                     <option value="">Выберите бренд</option>
+                                    <option value="">Все бренды</option>
                                     @foreach ($brands as $brand)
                                         <option value="{{ $brand }}">{{ $brand }}</option>
                                     @endforeach
@@ -1122,7 +1123,7 @@
     var data = {
         labels: labels
         , datasets: [{
-            label: "ER"
+            label: "ER %"
             , data: [10, 32, 45, 9, 55, 89, 123, 15, 102, 11, 15, 245]
             , borderColor: "#FE5E00"
             , backgroundColor: "#FAF5EF"

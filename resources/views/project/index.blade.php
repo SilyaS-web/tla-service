@@ -179,7 +179,7 @@
 
                                         <div class="card__col card__stats-item">
                                             <div class="card__stats-title">
-                                                <span>ER</span>
+                                                <span>ER %</span>
                                             </div>
                                             <div class="card__stats-val">
                                                 <span>{{ $blogger->getER() }}</span>
@@ -300,7 +300,7 @@
 
                                         <div class="card__col card__stats-item">
                                             <div class="card__stats-title">
-                                                <span>ER</span>
+                                                <span>ER %</span>
                                             </div>
                                             <div class="card__stats-val">
                                                 <span>{{ $blogger->getER() }}</span>
@@ -455,7 +455,7 @@
                                                     Переходы
                                                 </div>
                                                 <div class="table-stats__col" style="width: 6%;">
-                                                    ER
+                                                    ER %
                                                 </div>
                                                 <div class="table-stats__col" style="width: 9%;">
                                                     CPM
