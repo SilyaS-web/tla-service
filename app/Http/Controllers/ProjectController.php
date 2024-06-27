@@ -470,7 +470,7 @@ class ProjectController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => '{
-                "product_id": ' . $product_nm . '
+                "sku": ' . $product_nm . '
             }',
             CURLOPT_HTTPHEADER => array(
                 'Api-Key: ' . $api_key,
@@ -503,7 +503,7 @@ class ProjectController extends Controller
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => '{
                 "filter" : {
-                    "product_id": ["' . $product_nm . '"]
+                    "sku": ["' . $product_nm . '"]
                 },
                 "limit": 1
             }',
@@ -570,7 +570,7 @@ class ProjectController extends Controller
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => '{
-                "product_id": ' . $product_nm . '
+                "sku": ' . $product_nm . '
             }',
             CURLOPT_HTTPHEADER => array(
                 'Api-Key: ' . $api_key,

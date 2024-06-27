@@ -136,6 +136,10 @@ class Project extends Model
 
     public function getStatusName()
     {
+        if ($this->is_blogger_access) {
+            return "Не опубликовано";
+        }
+
         switch ($this->status) {
             case self::BANNED:
                 return "Заблокирован";
@@ -148,6 +152,15 @@ class Project extends Model
         }
 
         return "Активно";
+    }
+
+    public function getStatusClass()
+    {
+        if ($this->is_blogger_access || $this->status == self::BANNED) {
+            return "disactive";
+        }
+
+        return "active";
     }
 
     public function getProjectWorkNames($format = null)
@@ -325,7 +338,13 @@ class Project extends Model
         $response = curl_exec($curl);
 
         curl_close($curl);
-        $result = json_decode($response)->result;
+
+        $result = json_decode($response);
+        if (!isset($result->result)) {
+            return "";
+        }
+
+        $result = $result->result;
         $date_array = [];
         foreach ($result->data as $data) {
             if (isset($date_array[$data->dimensions[1]->id])) {
