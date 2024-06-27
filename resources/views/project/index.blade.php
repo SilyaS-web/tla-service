@@ -8,7 +8,7 @@
                     <div class="profile-projects__item-title" title="{{ $project->product_name }}">
                         {{ $project->product_name }}
                     </div>
-                    <div class="profile-projects__status active">
+                    <div class="profile-projects__status {{ $project->getStatusClass() }}">
                         {{ $project->getStatusName() }}
                     </div>
                 </div>

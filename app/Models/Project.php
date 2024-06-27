@@ -136,7 +136,7 @@ class Project extends Model
 
     public function getStatusName()
     {
-        if ($this->is_blogger_access) {
+        if (!$this->is_blogger_access) {
             return "Не опубликовано";
         }
 
@@ -156,7 +156,7 @@ class Project extends Model
 
     public function getStatusClass()
     {
-        if ($this->is_blogger_access || $this->status == self::BANNED) {
+        if (!$this->is_blogger_access || $this->status == self::BANNED) {
             return "disactive";
         }
 
@@ -291,7 +291,7 @@ class Project extends Model
                 'prices_history' => [],
                 'orders_history' => [],
             ];
-            
+
             return json_encode($result);
         }
 
