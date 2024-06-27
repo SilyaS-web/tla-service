@@ -2739,9 +2739,6 @@ input[type='range']::-webkit-slider-runnable-track{
     flex-wrap: wrap;
     gap: 6px;
 }
-.feedback-item__stat:hover .feedback-item__stat-products{
-    display: flex
-}
 .feedback-item__stat .feedback-item__stat-arrow{
     transition: transform .1s linear;
     width: 20px;
