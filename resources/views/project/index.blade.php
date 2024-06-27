@@ -1,6 +1,6 @@
 <div class="profile-projects__items">
     @forelse ($projects as $project)
-        <div class="profile-projects__row profile-projects__item" data-id="{{$project->id}}" data-brand = "axe">
+        <div class="profile-projects__row profile-projects__item" data-id="{{$project->id}}" data-brand = "{{ $project->wb_brand }}">
             <div class="profile-projects__col profile-projects__img" style="background-image: url({{ $project->getImageUrl(true) }})">
             </div>
             <div class="profile-projects__col profile-projects__content" style="padding:5px 0px;">

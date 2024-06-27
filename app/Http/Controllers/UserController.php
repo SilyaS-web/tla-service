@@ -151,7 +151,8 @@ class UserController extends Controller
 
         $avg_price = $projects->avg('product_price');
 
-        return compact('projects', 'bloggers', 'works', 'role', 'user_id', 'chat_role', 'blogger_platforms', 'platforms', 'themes', 'total_stats', 'total_clicks', 'subscribers', 'avg_price');
+        $brands = $user->projects()->where('wb_brand', '<>', null)->pluck('wb_brand')->all();
+        return compact('projects', 'bloggers', 'works', 'role', 'user_id', 'chat_role', 'blogger_platforms', 'platforms', 'themes', 'total_stats', 'total_clicks', 'subscribers', 'avg_price', 'brands');
     }
 
     public function getAdminProfileData()

@@ -96,7 +96,7 @@ class ProjectController extends Controller
             $info = $this->getOzonInfo($validated['product_nm'], $user->seller->ozon_client_id, $user->seller->ozon_api_key);
             if (isset($info['name'])) {
                 $validated['ozon_category'] = $info['category'];
-                $validated['ozon_brand'] = $info['brand'];
+                $validated['wb_brand'] = $info['brand'];
                 $validated['ozon_product_name'] = $info['name'];
                 $validated['ozon_description'] = $info['description'];
                 $validated['ozon_options'] = json_encode($info['options']);
@@ -105,6 +105,7 @@ class ProjectController extends Controller
             $card = $this->curlWBStats($validated['product_nm']);
             if ($card) {
                 $validated['wb_category'] = $card->subj_name;
+                $validated['wb_brand'] = $card->selling->brand_name;
                 $validated['wb_product_name'] = $card->imt_name;
                 $validated['wb_description'] = $card->description;
                 $validated['wb_options'] = json_encode($card->options);

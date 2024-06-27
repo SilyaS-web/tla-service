@@ -765,9 +765,9 @@
                             <div class="profile-projects__sort form-group" style="margin-bottom:32px;">
                                 <select name="projects-sort" id="projects-sort" style="border-radius:5px; border:1px solid rgba(0,0,0,.1); padding:0 8px; max-width:380px; height: 50px; font-size:18px">
                                     <option value="">Выберите бренд</option>
-                                    <option value="axe">Axe</option>
-                                    <option value="nike">Nike</option>
-                                    <option value="adidas">Adidas</option>
+                                    @foreach ($brands as $brand)
+                                        <option value="{{ $brand }}">{{ $brand }}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <script>
