@@ -190,9 +190,11 @@
                                 </span>
                                 <span class="header__profile-org">
                                     @if ( auth()->user()->role == 'seller')
-                                    {{ auth()->user()->seller->organization_type }} "{{ auth()->user()->seller->platform }}"
+                                        @if (isset(auth()->user()->seller->platform) && !empty(auth()->user()->seller->platform))
+                                            {{ auth()->user()->seller->organization_type }} "{{ auth()->user()->seller->platform }}"
+                                        @endif
                                     @elseif (auth()->user()->blogger)
-                                    {{ auth()->user()->blogger->name }}
+                                        {{ auth()->user()->blogger->name }}
                                     @endif
                                 </span>
                             </div>

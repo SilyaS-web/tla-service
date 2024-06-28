@@ -229,7 +229,7 @@ class WorkController extends Controller
                 'work_id' => $work->id,
                 'from_user_id' => $user->id,
             ]);
-            TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Блогер отправил запрос на подтверждение выполнения проекта ' . $work->project->product_name);
+            TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' отправил запрос на подтверждение выполнения проекта ' . $work->project->product_name);
         } else {
             $work->update(['last_message_at' => date('Y-m-d H:i')]);
             Message::create([
@@ -246,7 +246,7 @@ class WorkController extends Controller
                 'work_id' => $work->id,
                 'from_user_id' => $user->id,
             ]);
-            TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Селлер подтвердил выполнение проекта ' . $work->project->product_name);
+            TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' подтвердил выполнение проекта ' . $work->project->product_name);
         }
 
         return redirect()->route('profile')->with('success');
@@ -290,11 +290,11 @@ class WorkController extends Controller
         Notification::create([
             'user_id' => $work->seller->user->id,
             'type' => 'Статистика по проекту',
-            'text' => 'Блогер ' . $work->getPartnerUser($user->role)->name . ' прикрепил статистику к проекту ' . $work->project->product_name,
+            'text' => $user->name . ' прикрепил статистику к проекту ' . $work->project->product_name,
             'work_id' => $work->id,
             'from_user_id' => $user->id,
         ]);
-        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Блогер ' . $work->getPartnerUser($user->role)->name . ' прикрепил статистику к проекту ' . $work->project->product_name);
+        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' прикрепил статистику к проекту ' . $work->project->product_name);
 
         if ($request->file('images')) {
             foreach ($request->file('images') as $image) {
