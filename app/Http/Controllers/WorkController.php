@@ -131,6 +131,7 @@ class WorkController extends Controller
         $work = Work::find($work_id);
         $user = Auth::user();
         $work->accept($user);
+        $work->update(['last_message_at' => date('Y-m-d H:i')]);
         Message::create([
             'work_id' => $work->id,
             'user_id' => 1,
@@ -155,6 +156,7 @@ class WorkController extends Controller
                 'from_user_id' => $user->id,
             ]);
 
+            $work->update(['last_message_at' => date('Y-m-d H:i')]);
             Message::create([
                 'work_id' => $work->id,
                 'user_id' => 1,
@@ -214,6 +216,7 @@ class WorkController extends Controller
         $work->save();
 
         if ($user->role == 'blogger') {
+            $work->update(['last_message_at' => date('Y-m-d H:i')]);
             Message::create([
                 'work_id' => $work->id,
                 'user_id' => 1,
@@ -228,6 +231,7 @@ class WorkController extends Controller
             ]);
             TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Блогер отправил запрос на подтверждение выполнения проекта ' . $work->project->product_name);
         } else {
+            $work->update(['last_message_at' => date('Y-m-d H:i')]);
             Message::create([
                 'work_id' => $work->id,
                 'user_id' => 1,
@@ -266,6 +270,7 @@ class WorkController extends Controller
         $user = Auth::user();
         $validated = $validator->validated();
 
+        $work->update(['last_message_at' => date('Y-m-d H:i')]);
         $message = Message::create([
             'work_id' => $work->id,
             'user_id' => 1,
@@ -285,11 +290,11 @@ class WorkController extends Controller
         Notification::create([
             'user_id' => $work->seller->user->id,
             'type' => 'Статистика по проекту',
-            'text' => 'Блогер ' . $work->getPartnerUser($user->role) . ' прикрепил статистику к проекту ' . $work->project->product_name,
+            'text' => 'Блогер ' . $work->getPartnerUser($user->role)->name . ' прикрепил статистику к проекту ' . $work->project->product_name,
             'work_id' => $work->id,
             'from_user_id' => $user->id,
         ]);
-        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Блогер ' . $work->getPartnerUser($user->role) . ' прикрепил статистику к проекту ' . $work->project->product_name);
+        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Блогер ' . $work->getPartnerUser($user->role)->name . ' прикрепил статистику к проекту ' . $work->project->product_name);
 
         if ($request->file('images')) {
             foreach ($request->file('images') as $image) {

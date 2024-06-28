@@ -318,10 +318,7 @@ class UserController extends Controller
             return response()->json(['count' => $message_count]);
         }
 
-        $old_notifications = $user->notifications()->where('viewed_at', '<>', null)->latest()->limit(4)->get();
         $notifications = $user->notifications()->where('viewed_at', null)->get();
-
-
-        return response()->json(['view' => view('shared.notifications', compact('notifications', 'old_notifications'))->render(), 'count' => $notifications->count()]);
+        return response()->json(['view' => view('shared.notifications', compact('notifications'))->render(), 'count' => $notifications->count()]);
     }
 }

@@ -1075,7 +1075,7 @@ class Chat {
     getChats = () => {
         var self = this;
 
-        $.post(self.getMsgUri, data, function(res){
+        $.post(self.getMsgUri, {}, function(res){
             $(document).find('.chat__chat-items').remove();
             $(document).find('#chat .chat__left').append(res.view);
 

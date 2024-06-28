@@ -31,7 +31,8 @@ class Work extends Model
         'confirmed_by_seller_at',
         'status',
         'created_by',
-        'project_work_id'
+        'project_work_id',
+        'last_message_at'
     ];
 
     public function blogger()

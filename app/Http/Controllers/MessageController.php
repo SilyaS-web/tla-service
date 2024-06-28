@@ -45,7 +45,7 @@ class MessageController extends Controller
             $filter['id'] = $validated['work_id'];
         }
 
-        $works = Work::where($filter)->where('status', '<>', null)->get();
+        $works = Work::where($filter)->where('status', '<>', null)->orderBy('last_message_at', 'desc')->get();
         if (!empty($validated['work_id'])) {
             $work = $works->first();
             $btn_class = 'accept-btn';
@@ -66,7 +66,7 @@ class MessageController extends Controller
                     $btn_text = 'Завершить проект';
                 }
             } else if ($work->status == Work::COMPLETED) {
-                if ($user->role == 'blogger' && $work->projectWork->type !== Project::FEEDBACK && $work->FinishStats->count() == 0) {
+                if ($user->role == 'blogger' && $work->projectWork->type !== Project::FEEDBACK && !$work->FinishStats) {
                     $btn_class = 'send-stats-blogger-btn';
                     $btn_text = 'Прикрепить статистику';
                 } else {
@@ -145,6 +145,7 @@ class MessageController extends Controller
         }
 
         $work = Work::find($validated['work_id']);
+        $work->update(['last_message_at' => date('Y-m-d H:i')]);
         Notification::create([
             'user_id' => $work->getPartnerUser($user->role)->id,
             'type' => 'Новое сообщение',
