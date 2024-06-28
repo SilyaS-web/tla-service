@@ -804,7 +804,6 @@ input[type='range']::-webkit-slider-runnable-track{
     align-items: center;
     justify-content: center;
     text-wrap: wrap;
-    overflow: hidden;
     text-overflow: ellipsis;
 }
 .table-stats__col--chat{
@@ -826,6 +825,37 @@ input[type='range']::-webkit-slider-runnable-track{
     font-weight: 500;
     color:#000;
 }
+.table-stats__quest{
+    position: relative;
+    color: #FE5E00;
+    border-radius: 50%;
+    border: 1px solid #FE5E00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    line-height: 1;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    overflow: visible;
+}
+.table-stats__quest-text{
+    position: absolute;
+    display: none;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, .4);
+    width: 180px;
+    top: 101%;
+    left: 0;
+}
+.table-stats__quest:hover .table-stats__quest-text{
+    display: block;
+  }
 .table-stats__header .table-stats__row{
     border-bottom: none;
     background-color: var(--pale);
@@ -842,6 +872,7 @@ input[type='range']::-webkit-slider-runnable-track{
 .table-stats__body{
     overflow-y: auto;
     max-height:250px;
+    min-height: 100px;
 }
 .table-stats__body::-webkit-scrollbar {
     width: 12px;               /* ширина scrollbar */
@@ -1719,7 +1750,7 @@ input[type='range']::-webkit-slider-runnable-track{
     gap: 6px;
     margin-left: auto;
     margin-top: 12px;
-    width:80px;
+    width:70px;
     justify-content: end;
 }
 .card__platform {
@@ -2078,6 +2109,9 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .project-item__btns{
     margin-top: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
 }
 .project-item__status.active{
     color: rgb(255,193,7);
@@ -2187,8 +2221,8 @@ input[type='range']::-webkit-slider-runnable-track{
     display: block;
 }
 .project-item__btns>.btn {
-    display: block;
     text-align: center;
+    flex: 1 1 auto;
 }
 .project-item__format-tags{
     gap: 8px;

@@ -284,7 +284,7 @@
                             <div class="characteristics-items">
                             </div>
                         </div>
-                        <div class="project-item__left" style="margin-bottom: 24px;">
+                        <div class="project-item__left" style="margin-bottom: 18px;">
                             <div class="line">
                                 <div class="line__val" style="width:60%"></div>
                             </div>
@@ -296,7 +296,8 @@
                             </div>
                         </div> --}}
                         <div class="project-item__btns">
-                            <button class="btn btn-primary btn-blogger-send-offer" style="width:100%" data-project-work="">Откликнуться</button>
+                            <button class="btn btn-primary btn-blogger-send-offer" style="" data-project-work="">Откликнуться</button>
+                            <a href="" class="btn btn-secondary btn-go-to-shop" style="" target="_blank">Подробнее</a>
                         </div>
                     </div>
                 </div>
