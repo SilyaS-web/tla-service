@@ -23,12 +23,13 @@
                             <span class="error">{{ $message }}</span>
                             @enderror
                             <script>
-                                 $(window).on('load', function(){
-                                    $('#profile-img').on('change', function(e){
+                                $(window).on('load', function() {
+                                    $('#profile-img').on('change', function(e) {
                                         $(e.target).closest('.tab-content__profile-img-upload').addClass('uploaded');
                                         $(e.target).closest('.tab-content__profile-img-upload').find('span').text('Изображение загружено');
                                     })
                                 })
+
                             </script>
                         </div>
                     </div>
@@ -74,6 +75,25 @@
                             @error('phone')
                             <span class="error">{{ $message }}</span>
                             @enderror
+                        </div>
+                        <div class="edit-profile__title title" style="font-size: 24px">
+                            Изменить пароль
+                        </div>
+                        <div class="tab-content__form">
+                            <div class="form-group">
+                                <label for="old_password">Старый пароль</label>
+                                <input type="text" class="input" id="old_password" name="old_password">
+                                @error('old_password')
+                                <span class="error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Новый пароль</label>
+                                <input type="text" class="input" id="password" name="password">
+                                @error('password')
+                                <span class="error">{{ $message }}</span>
+                                @enderror
+                            </div>
                         </div>
                         <button class="btn btn-primary desktop">Сохранить</button>
                     </div>

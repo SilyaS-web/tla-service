@@ -218,7 +218,9 @@ class UserController extends Controller
         $validator = Validator::make(request()->all(), [
             'name' => 'required|min:3',
             'email' => 'required|email',
-            'image' => 'image|nullable'
+            'image' => 'image|nullable',
+            'old_password' => 'min:8|nullable',
+            'password' => 'min:8|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -226,8 +228,17 @@ class UserController extends Controller
         }
 
         $validated = $validator->validated();
+        if (isset($validated['password'])) {
+            if (auth()->attempt(['phone' => $user->phone, 'password' => $validated['old_password']])) {
+                $user->password = bcrypt($validated['password']);
+                $user->save();
+            } else {
+                return redirect()->route('edit-profile')->with('success', 'Введён неверный пароль');
+            }
+        }
 
         $user->name = $validated['name'];
+
         if ($user->email != $validated['email']) {
             $user->email = $validated['email'];
         }

@@ -86,4 +86,8 @@ class User extends Authenticatable
 
         return url('storage/' . $this->image);
     }
+
+    public function getPassword() {
+        return $this->password;
+    }
 }

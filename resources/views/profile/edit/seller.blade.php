@@ -21,12 +21,13 @@
                             <span class="error">{{ $message }}</span>
                             @enderror
                             <script>
-                                $(window).on('load', function(){
-                                    $('#profile-img').on('change', function(e){
+                                $(window).on('load', function() {
+                                    $('#profile-img').on('change', function(e) {
                                         $(e.target).closest('.tab-content__profile-img-upload').addClass('uploaded');
                                         $(e.target).closest('.tab-content__profile-img-upload').find('span').text('Изображение загружено');
                                     })
                                 })
+
                             </script>
                         </div>
                     </div>
@@ -67,7 +68,7 @@
                             <span class="error">{{ $message }}</span>
                             @enderror
                         </div>
-                         <div class="form-group">
+                        <div class="form-group">
                             <label for="organization_name">Название организации</label>
                             <input type="text" class="input" id="organization_name" name="organization_name" value="{{ $user->seller->platform }}">
                             @error('organization_name')
@@ -103,14 +104,14 @@
                             </div>
                         </div>
                         <div class="tab-content__form-left">
-                             <div class="form-group">
+                            <div class="form-group">
                                 <label for="ozon_api_key">Ключ API OZON</label>
                                 <input type="text" class="input" id="ozon_api_key" name="ozon_api_key" value="{{ $user->seller->ozon_api_key }}">
                                 @error('ozon_api_key')
                                 <span class="error">{{ $message }}</span>
                                 @enderror
                             </div>
-                             <div class="form-group">
+                            <div class="form-group">
                                 <label for="ozon_client_id">Client ID OZON</label>
                                 <input type="text" class="input" id="ozon_client_id" name="ozon_client_id" value="{{ $user->seller->ozon_client_id }}">
                                 @error('ozon_client_id')
@@ -118,6 +119,25 @@
                                 @enderror
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="edit-profile__title title" style="font-size: 24px">
+                    Изменить пароль
+                </div>
+                <div class="tab-content__form">
+                    <div class="form-group">
+                        <label for="old_password">Старый пароль</label>
+                        <input type="text" class="input" id="old_password" name="old_password">
+                        @error('old_password')
+                        <span class="error">{{ $message }}</span>
+                        @enderror
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Новый пароль</label>
+                        <input type="text" class="input" id="password" name="password">
+                        @error('password')
+                        <span class="error">{{ $message }}</span>
+                        @enderror
                     </div>
                 </div>
                 <button class="btn btn-primary desktop">Сохранить</button>
