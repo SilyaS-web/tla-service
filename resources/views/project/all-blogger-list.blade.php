@@ -1,6 +1,6 @@
 @forelse ($all_projects as $project)
 @php($lost_seats = $project->projectWorks()->sum('quantity') - $project->works()->whereIn('status', ['progress', 'completed'])->count())
-    <div class="list-projects__item project-item">
+    <div class="list-projects__item project-item" data-id="{{ $project->id }}">
         <div class="owl-carousel project-item__carousel">
             <div class="project-item__img" style="background-image: url({{ $project->getImageURL(true) }})">
             </div>
