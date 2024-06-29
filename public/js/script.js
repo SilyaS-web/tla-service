@@ -1669,7 +1669,7 @@ class PopupBloggerChooseProjectsFormat extends Popup{
         list.each((i, v)=>{
             var name = $(v).find('span').text(),
                 counter = i,
-                id = $(v).data('id');
+                id = $(v).attr('data-id');
 
             var template = this.formatTemplate;
 
@@ -1692,9 +1692,9 @@ class PopupBloggerChooseProjectsFormat extends Popup{
         var popupBloggerSendOffer = new PopupBloggerSendOffer('#blogger-send-offer');
 
         popupBloggerSendOffer.openPopup();
-        console.log(this.projectID, currentFormat.data('id'));
+        console.log(this.projectID, currentFormat.closest('.input-checkbox-w').data('id'));
         popupBloggerSendOffer.projectWorkId = this.projectID;
-        popupBloggerSendOffer.projectFormat = currentFormat.data('id');
+        popupBloggerSendOffer.projectFormat = currentFormat.closest('.input-checkbox-w').data('id');
 
         this.closePopup();
     }

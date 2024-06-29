@@ -557,6 +557,14 @@
                                         </div>
                                     </div>
                                 @endif
+                                <div class="dashboard__placeholder" style="z-index: 1; top:0; left:0;">
+                                    <div class="dashboard__placeholder-text">
+                                        Переверните экран, чтобы посмотреть статистику
+                                    </div>
+                                    <div class="dashboard__placeholder-overflow">
+
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
