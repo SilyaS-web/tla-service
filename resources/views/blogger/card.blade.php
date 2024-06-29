@@ -110,7 +110,7 @@
                 <a href="{{ route('blogger-page', $blogger->id) }}" class="" style="color:rgba(0,0,0,.4); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -20px;">Подробнее</a>
             </div>
             <div class="card__row card__row" style="flex-direction: column; gap: 5px">
-                <button class="btn btn-primary btn-add-to-project" onclick="sendProjectToBlogger({{ $blogger->id }})" data-project-id="">
+                <button class="btn btn-primary btn-add-to-project" onclick="sendProjectToBlogger({{ $blogger->id }}, this)" data-project-id="">
                     Отправить заявку
                 </button>
             </div>
