@@ -32,7 +32,7 @@
                 @endforeach
             </div>
             <div class="project-item__btns">
-                <a href="#" data-project-id="{{ $project->id }}" data-articul="{{ $project->product_nm }}" class="btn btn-primary btn-choose-project">Откликнуться</a>
+                <button class="btn btn-primary btn-blogger-send-offer" style="width:100%" data-project-work="{{ $project->id }}">Откликнуться</button>
             </div>
         </div>
     </div>
