@@ -1523,8 +1523,7 @@ class PopupBloggerSendOffer extends Popup{
             data.append(k, this.dataProps[k].get())
         }
         console.log(self.projectWorkId, self.projectFormat);
-        data.append('project_work_id', self.projectWorkId)
-        data.append('project_work_format', self.projectFormat)
+        data.append('project_work_id', self.projectFormat)
 
         $.ajax({
             url: `${self.sendUri}`,
