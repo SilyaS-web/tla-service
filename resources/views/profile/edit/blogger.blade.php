@@ -34,8 +34,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="tab-content__form">
-                    <div class="tab-content__form-right">
+                <div class="tab-content__form tab-content__form--accent" style="flex-direction:column; max-width:680px;">
+                    <label for="" class="tab-content__form--title">Личные данные</label>
+                    <div class="tab-content__form-right" style="width:100%">
                         <div class="form-group">
                             <label for="">Имя</label>
                             <input type="text" class="input" name="name" id="name" value="{{ $user->name }}">
@@ -76,29 +77,28 @@
                             <span class="error">{{ $message }}</span>
                             @enderror
                         </div>
-                       <div class="tab-content__form tab-content__form--accent" style="flex-direction:column;">
-                            <label for="" class="tab-content__form--title">Изменить пароль</label>
-                            <div style="width: 100%">
-                                <div class="form-group">
-                                    <label for="old_password">Старый пароль</label>
-                                    <input class="input" id="old_password" type="password" name="old_password">
-                                    @error('old_password')
-                                    <span class="error">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                                <div class="form-group">
-                                    <label for="password">Новый пароль</label>
-                                    <input class="input" id="password" type="password" name="password">
-                                    @error('password')
-                                    <span class="error">{{ $message }}</span>
-                                    @enderror
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary desktop">Сохранить</button>
                     </div>
-                    <button class="btn btn-primary mobile">Сохранить</button>
                 </div>
+                <div class="tab-content__form tab-content__form--accent" style="flex-direction:column; max-width:680px;">
+                    <label for="" class="tab-content__form--title">Изменить пароль</label>
+                    <div style="width:100%">
+                        <div class="form-group">
+                            <label for="old_password">Старый пароль</label>
+                            <input class="input" id="old_password" type="password" name="old_password">
+                            @error('old_password')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Новый пароль</label>
+                            <input class="input" id="password" type="password" name="password">
+                            @error('password')
+                                <span class="error">{{ $message }}</span>
+                            @enderror
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary desktop">Сохранить</button>
             </form>
         </div>
     </div>

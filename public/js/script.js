@@ -960,9 +960,9 @@ class Chat {
         }
 
         if(!this.getChatsInterval){
-            this.getChatsInterval = setInterval(this.getChats, 1000);
+            this.getChatsInterval = setInterval(this.getChats, 5000);
         }
-        
+
         return this;
     }
 
@@ -1074,7 +1074,6 @@ class Chat {
 
     getChats = () => {
         var self = this;
-        console.log(self.getMsgUri)
         $.post(self.getMsgUri, {}, function(res){
             $(document).find('.chat__chat-items').remove();
             $(document).find('#chat .chat__left').append(res.view);
@@ -1636,7 +1635,7 @@ class PopupBloggerChooseProjectsFormat extends Popup{
         super(node);
 
         this.node = node;
-
+        console.log($(this.node).find('.btn-confirm'));
         $(this.node).find('.btn-confirm').on('click', this.confirm);
         $(this.node).on('click', '.input-checkbox-w', function(e){
             var wrap = $(e.target).closest('.input-checkbox-w'),
@@ -1687,11 +1686,11 @@ class PopupBloggerChooseProjectsFormat extends Popup{
             notify('info', {title: 'Внимание!', message: 'Необходимо выбрать проект'});
             return
         }
-
+        console.log(123123123);
         var popupBloggerSendOffer = new PopupBloggerSendOffer('#blogger-send-offer');
 
         popupBloggerSendOffer.openPopup();
-        console.log(this.projectID, currentFormat.closest('.input-checkbox-w').data('id'));
+
         popupBloggerSendOffer.projectWorkId = this.projectID;
         popupBloggerSendOffer.projectFormat = currentFormat.closest('.input-checkbox-w').data('id');
 
@@ -1895,7 +1894,7 @@ $(window).on('load', function(){
     var popupChangePassword = new PopupChangePassword('#change-password');
     var popupConfirmCompletion = new PopupConfirmCompletion('#confirm-completion');
     var popupConfirmCompletionBlogger = new PopupConfirmCompletionBlogger('#confirm-completion-blogger');
-    var choosePopupBlogger = new PopupBloggerChooseProjectsFormat('#choose-projects-adv-format');
+    var choosePopupBlogger = new PopupBloggerChooseProjectsFormat('#choose-projects-adv-format-blogger');
     var confirmPublic = new PopupConfirmPublication('#confirm-publication');
 
     $(document).on('click', '.btn-public', function(e){
@@ -1921,6 +1920,7 @@ $(window).on('load', function(){
 
     $(document).on('click', '#blogger .project-item', function(e){
         if($(e.target).closest('.project-item__btns').length == 0){
+            console.log(e.target);
             popupBlogerProjectMoreInfo.projectId = $(e.target).closest('.project-item').data('id');
             popupBlogerProjectMoreInfo.getProjectInfo()
             popupBlogerProjectMoreInfo.openPopup();
