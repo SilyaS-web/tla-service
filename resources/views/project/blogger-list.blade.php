@@ -42,10 +42,6 @@
         <div class="project-item__btns">
             @switch($type)
 
-            @case('all')
-                <button class="btn btn-primary btn-blogger-send-offer" style="width:100%" data-project-work="{{ $project_work->id }}">Откликнуться</button>
-            @break
-
             @case('applications')
                 <button class="btn btn-primary" onclick="acceptApplication({{ $work->id }}, this)">Принять заявку</button>
             @break
@@ -75,7 +71,7 @@
                 work_id: work_id
             },
             success: function(data, textStatus, jqXHR) {
-                el.innerHTML = 'Заявка отправлена';
+                el.innerHTML = 'Заявка принята';
                 el.disabled = true;
                 notify('info', {
                     title: 'Успешно!',
@@ -83,10 +79,10 @@
                 })
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                el.innerHTML = 'Откликнуться';
+                el.innerHTML = 'Принять заявку';
                 notify('error', {
                     title: 'Ошибка!',
-                    message: 'Не удалось отправить заявку!'
+                    message: 'Не удалось принять заявку!'
                 });
             }
         });
@@ -100,7 +96,7 @@
                 project_work_id: project_work_id
             }
             , success: function(data, textStatus, jqXHR) {
-                el.innerHTML = 'Заявка принята';
+                el.innerHTML = 'Заявка отправлена';
                 el.disabled = true;
                 notify('info', {
                     title: 'Успешно!'

@@ -206,9 +206,9 @@
                                     </div>
                                 </div>
                                 <div class="card__row" style="text-align: center;">
-                                    <a href="{{ route('blogger-page', $blogger->id) }}" class="" style="color:rgba(0,0,0,.4); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -10px;">Подробнее</a>
+                                    <a href="{{ route('blogger-page', $blogger->id) }}" class="" style="width: 100%; color:rgba(254,94,0); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -10px;">Подробнее</a>
                                 </div>
-                                <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap">
+                                <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap; justify-content: center">
                                     <a href="apist/works/{{ $work_application->id }}/start" class="btn btn-primary" data-project-id="">
                                         Принять
                                     </a>
@@ -411,7 +411,7 @@
                                 </div>
                                 <div class="view-project__props-money">
                                     Выручка за 30 дн<br>
-                                    <span class="money">{{number_format($stats->earnings, 0, '', ',') ?? 0}} ₽</span>
+                                    <span class="money">{{number_format($stats->earnings ?? 0, 0, '', ',') ?? 0}} ₽</span>
                                 </div>
                             </div>
                             <div class="view-project__props-graph">
@@ -485,17 +485,12 @@
                                                     </div>
                                                     <div class="table-stats__col" style="width: 11%;">
                                                         @if(!$work->finishStats)
-                                                            <div class="format-tooltip" data-hint="youtube">
+                                                            <span class="table-stats__quest">
                                                                 ?
-                                                                <div class="format-hint format-hint--text" id="youtube">
-                                                                    <div class="format-hint__title">
-                                                                        Блогер не прикрепил статистику
-                                                                    </div>
-                                                                    <div class="format-hint__body">
-                                                                        ...
-                                                                    </div>
+                                                                <div class="table-stats__quest-text">
+                                                                    <p>Запросите статистику у блогера</p>
                                                                 </div>
-                                                            </div>
+                                                            </span>
                                                         @else
                                                             {{ $work->finishStats->views }}
                                                         @endif
@@ -505,51 +500,36 @@
                                                     </div>
                                                     <div class="table-stats__col" style="width: 6%;">
                                                         @if(!$work->finishStats)
-                                                            <div class="format-tooltip" data-hint="youtube">
+                                                            <span class="table-stats__quest">
                                                                 ?
-                                                                <div class="format-hint format-hint--text" id="youtube">
-                                                                    <div class="format-hint__title">
-                                                                        Блогер не прикрепил статистику
-                                                                    </div>
-                                                                    <div class="format-hint__body">
-                                                                        ...
-                                                                    </div>
+                                                                <div class="table-stats__quest-text">
+                                                                    <p>Запросите статистику у блогера</p>
                                                                 </div>
-                                                            </div>
+                                                            </span>
                                                         @else
                                                             {{ round($work->finishStats->views / ($work->finishStats->subs == 0 ? 1 : $work->finishStats->subs)) }}
                                                         @endif
                                                     </div>
                                                     <div class="table-stats__col" style="width: 9%;">
                                                         @if(!$work->finishStats)
-                                                            <div class="format-tooltip" data-hint="youtube">
+                                                            <span class="table-stats__quest">
                                                                 ?
-                                                                <div class="format-hint format-hint--text" id="youtube">
-                                                                    <div class="format-hint__title">
-                                                                        Блогер не прикрепил статистику
-                                                                    </div>
-                                                                    <div class="format-hint__body">
-                                                                        ...
-                                                                    </div>
+                                                                <div class="table-stats__quest-text">
+                                                                    <p>Запросите статистику у блогера</p>
                                                                 </div>
-                                                            </div>
+                                                            </span>
                                                         @else
                                                             {{ round($work->finishStats->views / ($project->product_price == 0 ? 1 : $project->product_price), 2)  }}
                                                         @endif
                                                     </div>
                                                     <div class="table-stats__col" style="width: 9%;">
                                                         @if(!$work->finishStats)
-                                                            <div class="format-tooltip" data-hint="youtube">
+                                                            <span class="table-stats__quest">
                                                                 ?
-                                                                <div class="format-hint format-hint--text" id="youtube">
-                                                                    <div class="format-hint__title">
-                                                                        Блогер не прикрепил статистику
-                                                                    </div>
-                                                                    <div class="format-hint__body">
-                                                                        ...
-                                                                    </div>
+                                                                <div class="table-stats__quest-text">
+                                                                    <p>Запросите статистику у блогера</p>
                                                                 </div>
-                                                            </div>
+                                                            </span>
                                                         @else
                                                             {{ round($work->getTotlaClicks() / ($work->finishStats->views == 0 ? 1 : $work->finishStats->views), 2)  }}
                                                         @endif
@@ -569,6 +549,9 @@
 
                                                     $('.chat-link').click();
                                                     $(`.item-chat[data-id="${id}"]`).click();
+                                                })
+                                                $(document).on('click', '.table-stats__row .table-stats__quest', function(e){
+                                                    e.stopPropagation();
                                                 })
                                             </script>
                                         </div>
@@ -682,9 +665,9 @@
             , options: {
                 plugins: {
                     tooltip: {
-                        mode: 'index'
-                        , intersect: false
-                        , callbacks: {
+                        mode: 'index',
+                        intersect: false,
+                        callbacks: {
                             title: (item, data) => {
                                 var cItem = item[0]
                                     , cLabel = prodsStatistics.data.labels[cItem.dataIndex];
@@ -695,13 +678,13 @@
                             },
 
                         }
-                    }
-                , }
-                , hover: {
-                    mode: 'nearest'
-                    , intersect: true
-                }
-                , scales: {
+                    },
+                },
+                hover: {
+                    mode: 'nearest',
+                    intersect: true
+                },
+                scales: {
                     y: {
                         beginAtZero: true,
                         type: 'logarithmic',

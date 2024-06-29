@@ -1807,6 +1807,7 @@ class PopupBlogerProjectMoreInfo extends Popup{
                 $(self.node).find('.popup-project__cost').text(`${res.price}₽`)
                 $(self.node).find('.project-item__left span').text(`${res.lost_quantity}/${res.total_quantity}`)
                 $(self.node).find('.project-item__left .line__val').css('width', `${(res.lost_quantity * 100) / res.total_quantity }%`)
+                $(self.node).find('.btn-go-to-shop').attr('href', res.link)
             }
         })
     }

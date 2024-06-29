@@ -60,6 +60,7 @@
                         <div class="form-group" style="">
                             <label for="">Тип организации</label>
                             <select class="input" id="type" name="organization_type">
+                                <option value="">Не выбрано</option>
                                 <option value="ООО" {{ $user->seller->organization_type == "ООО" ? "selected" : ''}}>ООО</option>
                                 <option value="ИП" {{ $user->seller->organization_type == "ИП" ? "selected" : ''}}>ИП</option>
                                 <option value="ОАО" {{ $user->seller->organization_type == "ОАО" ? "selected" : ''}}>ОАО</option>
