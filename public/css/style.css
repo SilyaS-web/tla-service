@@ -4482,7 +4482,8 @@ input[type='range']::-webkit-slider-runnable-track{
         font-size: 10px;
     }
     .item-chat__img{
-        width: 50px; height: 50px;
+        max-width: 50px; height: 50px;
+        width:100%;
     }
 }
 @media(max-width:768px){
