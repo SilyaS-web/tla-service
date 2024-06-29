@@ -14,7 +14,7 @@
                 </div>
                 <div class="profile-projects__row">
                     <p>Артикул товара: <b>{{ $project->product_nm }}</b></p>
-                    <p>Цена товара: <b>{{ $project->product_price }}₽</b></p>
+                    <p>Цена товара: <b>{{ number_format($project->product_price, 0, '', ' ')  }}₽</b></p>
                 </div>
                 <div class="profile-projects__row">
                     <div class="profile-projects__formats">
@@ -73,7 +73,7 @@
                                     <span>Рейтинг</span>
                                 </div>
                                 <div class="card__stats-val card__stats-val--rait">
-                                    <span>{{ $statCount->reviewRating ?? 0}}</span>
+                                    <span>{{ number_format($statCount->reviewRating ?? 0, 0, '', ' ') }}</span>
                                 </div>
                             </div>
                             <div class="card__col card__stats-item" style="flex: 1: width: auto">
@@ -81,7 +81,7 @@
                                     <span>Отзывы</span>
                                 </div>
                                 <div class="card__stats-val card__stats-val--feedback">
-                                    <span>{{ $statCount->feedbacks ?? 0}}</span>
+                                    <span>{{ number_format($statCount->feedbacks ?? 0, 0, '', ' ') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -163,7 +163,7 @@
                                                 <span>Подписчики</span>
                                             </div>
                                             <div class="card__stats-val">
-                                                <span>{{ $blogger->getSubscribers() }}</span>
+                                                <span>{{ number_format($blogger->getSubscribers(), 0, '', ' ') }}</span>
                                             </div>
                                         </div>
                                         <div class="card__col card__stats-item">
@@ -171,7 +171,7 @@
                                                 <span>Охваты</span>
                                             </div>
                                             <div class="card__stats-val">
-                                                <span>{{ $blogger->getCoverage() }}</span>
+                                                <span>{{ number_format($blogger->getCoverage(), 0, '', ' ') }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -182,7 +182,7 @@
                                                 <span>ER %</span>
                                             </div>
                                             <div class="card__stats-val">
-                                                <span>{{ $blogger->getER() }}</span>
+                                                <span>{{ number_format($blogger->getER(), 0, '', ' ') }}</span>
                                             </div>
                                         </div>
                                         <div class="card__col card__stats-item">
@@ -190,7 +190,7 @@
                                                 <span>CPM</span>
                                             </div>
                                             <div class="card__stats-val">
-                                                <span>{{ $blogger->getCPM() }}₽</span>
+                                                <span>{{ number_format($blogger->getCPM(), 0, '', ' ') }}₽</span>
                                             </div>
                                         </div>
                                     </div>
@@ -284,7 +284,7 @@
                                                 <span>Подписчики</span>
                                             </div>
                                             <div class="card__stats-val">
-                                                <span>{{ $blogger->getSubscribers() }}</span>
+                                                <span>{{ number_format($blogger->getSubscribers(), 0, '', ' ') }}</span>
                                             </div>
                                         </div>
                                         <div class="card__col card__stats-item">
@@ -292,7 +292,7 @@
                                                 <span>Охваты</span>
                                             </div>
                                             <div class="card__stats-val">
-                                                <span>{{ $blogger->getCoverage() }}</span>
+                                                <span>{{ number_format($blogger->getCoverage(), 0, '', ' ') }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -303,7 +303,7 @@
                                                 <span>ER %</span>
                                             </div>
                                             <div class="card__stats-val">
-                                                <span>{{ $blogger->getER() }}</span>
+                                                <span>{{ number_format($blogger->getER(), 0, '', ' ') }}</span>
                                             </div>
                                         </div>
                                         <div class="card__col card__stats-item">
@@ -311,7 +311,7 @@
                                                 <span>CPM</span>
                                             </div>
                                             <div class="card__stats-val">
-                                                <span>{{ $blogger->getCPM() }}₽</span>
+                                                <span>{{ number_format($blogger->getCPM(), 0, '', ' ') }}₽</span>
                                             </div>
                                         </div>
                                     </div>
@@ -363,7 +363,7 @@
                                                 <span>Количество<br> переходов</span>
                                             </div>
                                             <div class="card__stats-val">
-                                                <span>{{ $clicks_count }}</span>
+                                                <span>{{ number_format($clicks_count, 0, '', ' ') }}</span>
                                             </div>
                                         </div>
                                         <div class="card__col card__stats-item" style="flex: 1: width: auto">
@@ -371,7 +371,7 @@
                                                 <span>Охваты</span>
                                             </div>
                                             <div class="card__stats-val">
-                                                <span>{{ $finish_stats['total_views'] }}</span>
+                                                <span>{{ number_format($finish_stats['total_views'], 0, '', ' ') }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -381,7 +381,7 @@
                                                 <span>CPM</span>
                                             </div>
                                             <div class="card__stats-val ">
-                                                <span>{{ round(($finish_stats['total_views'] / ($project->product_price == 0 ? 1 : $project->product_price)) * 1000, 2) }}</span>
+                                                <span>{{ number_format(round(($finish_stats['total_views'] / ($project->product_price == 0 ? 1 : $project->product_price)) * 1000, 2), 0, '', ' ') }}</span>
                                             </div>
                                         </div>
                                         <div class="card__col card__stats-item" style="flex: 1: width: auto">
@@ -389,7 +389,7 @@
                                                 <span>CPC</span>
                                             </div>
                                             <div class="card__stats-val">
-                                                <span>{{ round(($project->product_price / ($clicks_count == 0 ? 1 : $clicks_count)), 2) }}</span>
+                                                <span>{{ number_format(round(($project->product_price / ($clicks_count == 0 ? 1 : $clicks_count)), 2), 0, '', ' ') }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -407,11 +407,11 @@
                             <div class="view-project__props-total">
                                 <div class="view-project__props-orders">
                                     Заказы за 30 дн<br>
-                                    <span class="count">{{$stats->orders ?? 0}} шт</span>
+                                    <span class="count">{{ number_format($stats->orders ?? 0, 0, '', ' ') }} шт</span>
                                 </div>
                                 <div class="view-project__props-money">
                                     Выручка за 30 дн<br>
-                                    <span class="money">{{number_format($stats->earnings ?? 0, 0, '', ',') ?? 0}} ₽</span>
+                                    <span class="money">{{ number_format($stats->earnings ?? 0, 0, '', ' ') ?? 0  }} ₽</span>
                                 </div>
                             </div>
                             <div class="view-project__props-graph">
@@ -481,7 +481,7 @@
                                                         {{ $work->blogger->user->name }}
                                                     </div>
                                                     <div class="table-stats__col" style="width: 11%;">
-                                                        {{ $work->blogger->getSubscribers() }}
+                                                        {{ number_format($work->blogger->getSubscribers(), 0, '', ' ') }}
                                                     </div>
                                                     <div class="table-stats__col" style="width: 11%;">
                                                         @if(!$work->finishStats)
@@ -492,11 +492,11 @@
                                                                 </div>
                                                             </span>
                                                         @else
-                                                            {{ $work->finishStats->views }}
+                                                            {{ number_format($work->finishStats->views, 0, '', ' ') }}
                                                         @endif
                                                     </div>
                                                     <div class="table-stats__col" style="width: 11%;">
-                                                        {{ $work->getTotlaClicks() }}
+                                                        {{ number_format($work->getTotlaClicks(), 0, '', ' ') }}
                                                     </div>
                                                     <div class="table-stats__col" style="width: 6%;">
                                                         @if(!$work->finishStats)
@@ -507,7 +507,7 @@
                                                                 </div>
                                                             </span>
                                                         @else
-                                                            {{ round($work->finishStats->views / ($work->finishStats->subs == 0 ? 1 : $work->finishStats->subs)) }}
+                                                            {{ number_format(round($work->finishStats->views / ($work->finishStats->subs == 0 ? 1 : $work->finishStats->subs)), 0, '', ' ')  }}
                                                         @endif
                                                     </div>
                                                     <div class="table-stats__col" style="width: 9%;">
@@ -519,7 +519,7 @@
                                                                 </div>
                                                             </span>
                                                         @else
-                                                            {{ round($work->finishStats->views / ($project->product_price == 0 ? 1 : $project->product_price), 2)  }}
+                                                            {{ number_format(round($work->finishStats->views / ($project->product_price == 0 ? 1 : $project->product_price), 2), 0, '', ' ')   }}
                                                         @endif
                                                     </div>
                                                     <div class="table-stats__col" style="width: 9%;">
@@ -531,7 +531,7 @@
                                                                 </div>
                                                             </span>
                                                         @else
-                                                            {{ round($work->getTotlaClicks() / ($work->finishStats->views == 0 ? 1 : $work->finishStats->views), 2)  }}
+                                                            {{ number_format(round($work->getTotlaClicks() / ($work->finishStats->views == 0 ? 1 : $work->finishStats->views), 2), 0, '', ' ')   }}
                                                         @endif
                                                     </div>
                                                     <div class="table-stats__col" style="width: 14%;">

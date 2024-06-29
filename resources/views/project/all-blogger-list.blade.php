@@ -13,7 +13,7 @@
         </div>
         <div class="project-item__content">
             <div class="project-item__title">
-                <span class="project-item__price">{{ $project->product_price }}</span>₽
+                <span class="project-item__price">{{ number_format($project->product_price, 0, '', ' ') }}</span>₽
             </div>
             <div class="project-item__subtitle" title="{{ $project->product_name }}">
                 {{ $project->product_name }}

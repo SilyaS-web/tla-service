@@ -60,7 +60,7 @@
                             <span>Подписчики</span>
                         </div>
                         <div class="card__stats-val">
-                            <span>{{ $blogger->getSubscribers() }}</span>
+                            <span>{{ number_format($blogger->getSubscribers(), 0, '', ' ') }}</span>
                         </div>
                     </div>
                     <div class="card__col card__stats-item">
@@ -68,7 +68,7 @@
                             <span>Охваты</span>
                         </div>
                         <div class="card__stats-val coverage">
-                            <span>{{ round($blogger->getCoverage()) }}</span>
+                            <span>{{ number_format(round($blogger->getCoverage()), 0, '', ' ') }}</span>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@
                             <span>ER %</span>
                         </div>
                         <div class="card__stats-val">
-                            <span>{{ $blogger->getER() }}</span>
+                            <span>{{ number_format($blogger->getER(), 0, '', ' ') }}</span>
                         </div>
                     </div>
                     <div class="card__col card__stats-item">
