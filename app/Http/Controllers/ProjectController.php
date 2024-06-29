@@ -9,6 +9,7 @@ use App\Models\ProjectWork;
 use App\Models\Theme;
 use App\Models\User;
 use App\Models\Work;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -74,9 +75,9 @@ class ProjectController extends Controller
             'feedback-quantity' => 'numeric|nullable',
             'inst-quantity' => 'numeric|nullable',
             'product_name' => 'required|min:3|max:250',
-            'product_nm' => 'required|min:3|numeric|max:14',
+            'product_nm' => 'required|min_digits:3|numeric|max_digits:14',
             'product_link' => 'required|min:3|max:1000',
-            'product_price' => 'required|numeric|max:14',
+            'product_price' => 'required|numeric|max_digits:14',
             'images' => 'required|array',
             'images.*' => 'image|max:10240',
         ]);
@@ -196,6 +197,26 @@ class ProjectController extends Controller
             $project_works = $application_works->get();
             $type = 'applications';
             return view('project.blogger-list', compact('project_works', 'role', 'user_id', 'type'));
+        } else if (!isset($validated['type'])) {
+            $all_projects = Project::where('status', '<>', Project::BANNED)->where('created_at', '<', Carbon::now()->subMinutes(5))->where('is_blogger_access', true);
+
+            if (isset($validated['project_type']) && !empty($validated['project_type'])) {
+                $all_projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
+                    $query->where('type', $validated['project_type']);
+                });
+            }
+
+            if (isset($validated['project_name']) && !empty($validated['project_name'])) {
+                $all_projects->where('product_name', 'like', '%' . $validated['project_name'] . '%');
+            }
+
+            if (isset($validated['category']) && !empty($validated['category'])) {
+                $all_projects->where('wb_category', 'like', '%' . $validated['category'] . '%');
+            }
+
+            $all_projects = $all_projects->get();
+            $type = 'all';
+            return view('project.all-blogger-list', compact('all_projects', 'role', 'user_id', 'type'));
         }
 
         $works = Work::where([['blogger_id', $user_id]]);
@@ -227,6 +248,7 @@ class ProjectController extends Controller
         }
 
         $project_works = $project_works->get();
+
         return view('project.blogger-list', compact('project_works', 'type'));
     }
 

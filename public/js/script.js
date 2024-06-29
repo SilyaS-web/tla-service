@@ -959,7 +959,10 @@ class Chat {
             })
         }
 
-
+        if(!this.getChatsInterval){
+            this.getChatsInterval = setInterval(this.getChats, 1000);
+        }
+        
         return this;
     }
 
@@ -1063,9 +1066,6 @@ class Chat {
                 }
             }
 
-            if(!this.getChatsInterval){
-                this.getChatsInterval = setInterval(this.getChats, 5000)
-            }
             if(!this.newMessagesInterval){
                 this.newMessagesInterval = setInterval(this.getNewMessages, 5000);
             }
@@ -1074,7 +1074,7 @@ class Chat {
 
     getChats = () => {
         var self = this;
-
+        console.log(self.getMsgUri)
         $.post(self.getMsgUri, {}, function(res){
             $(document).find('.chat__chat-items').remove();
             $(document).find('#chat .chat__left').append(res.view);
