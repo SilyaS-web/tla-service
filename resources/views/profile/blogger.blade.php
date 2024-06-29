@@ -114,7 +114,7 @@
                                 </div>
                             </div>
                             <div class="profile-projects__items list-projects__items">
-                                @include('project.blogger-list', ['project_works' => $all_project_works, 'type' => 'all'])
+                                @include('project.all-blogger-list', ['all_projects' => $all_projects, 'type' => 'all'])
                             </div>
                         </div>
                         <div class="profile-projects__filters">
