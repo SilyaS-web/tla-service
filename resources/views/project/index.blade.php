@@ -381,7 +381,7 @@
                                                 <span>CPM</span>
                                             </div>
                                             <div class="card__stats-val ">
-                                                <span>{{ number_format(round(($finish_stats['total_views'] / ($project->product_price == 0 ? 1 : $project->product_price)) * 1000, 2), 0, '', ' ') }}</span>
+                                                <span>{{ number_format(round(($project->product_price / ($finish_stats['total_views'] == 0 ? 1 : $finish_stats['total_views'])) * 1000, 2), 0, '', ' ') }}</span>
                                             </div>
                                         </div>
                                         <div class="card__col card__stats-item" style="flex: 1: width: auto">
