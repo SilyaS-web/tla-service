@@ -6,7 +6,7 @@
 @endif
 
 {{-- @dd($work) --}}
-@php($lost_seats = $project_work->quantity - $project_work->project->works()->where('project_work_id', $project_work->id)->where('status', 'progress')->count())
+@php($lost_seats = $project_work->quantity - $project_work->project->works()->where('project_work_id', $project_work->id)->whereIn('status', ['progress', 'completed'])->count())
 <div class="list-projects__item project-item" data-id="{{ $project_work->project->id }}">
     <div class="project-item__carousel">
         <div class="project-item__carousel--carousel owl-carousel">

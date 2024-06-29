@@ -1,6 +1,6 @@
 <div class="profile-projects__items list-projects__items" style="max-width:1030px">
     @forelse ($projects as $project)
-    @php($lost_seats = $project->projectWorks()->sum('quantity') - $project->works()->where('status', '<>', null)->count())
+    @php($lost_seats = $project->projectWorks()->sum('quantity') - $project->works()->whereIn('status', ['progress', 'completed'])->count())
         <div class="list-projects__item project-item">
             <div class="owl-carousel project-item__carousel">
                 <div class="project-item__img" style="background-image: url({{ $project->getImageURL(true) }})">
@@ -28,7 +28,7 @@
                 <div class="project-item__format-tags card__row card__tags">
                      @foreach ($project->projectWorks as $project_work)
                         <div class="card__tags-item" data-id="{{ $project_work->id }}">
-                            <span>{{ $project->getProjectWorkNames($project_work->type) }} - {{ $project_work->quantity - $project->works()->where('project_work_id', $project_work->id)->where('status', '<>', null)->count() }}/{{ $project_work->quantity }}</span>
+                            <span>{{ $project->getProjectWorkNames($project_work->type) }} - {{ $project_work->quantity - $project->works()->where('project_work_id', $project_work->id)->whereIn('status', ['progress', 'completed'])->count() }}/{{ $project_work->quantity }}</span>
                         </div>
                     @endforeach
                 </div>
