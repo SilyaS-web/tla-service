@@ -2981,7 +2981,40 @@ input[type='range']::-webkit-slider-runnable-track{
 .tab-content__form-row>*{
     width:calc(100% / 2 - 55px)
 }
-.tab-content__form-right {
+.tab-content__form--api .tab-content__form-right,
+.tab-content__form--api .tab-content__form-left{
+    padding:30px 15px 20px 15px;
+    border-radius: 10px;
+    position: relative;
+}
+.tab-content__form--api .tab-content__form-row-title{
+    font-size: 16px;
+    font-weight: 700;
+    position: absolute;
+    left: 9px;
+    top: -10px;
+    padding:5px;
+    border-radius: 5px;
+    background-color: #fff;
+}
+.tab-content__form-left--ozon{
+    background-color:rgba(0,90,253, 1);
+    color:#fff;
+}
+.tab-content__form-right--wb{
+    background: linear-gradient(90deg, rgba(226,59,194,1) 0%, rgba(121,25,237,1) 100%);
+    color:#fff;
+}
+.tab-content__form-right--wb .input,
+.tab-content__form-left--ozon .input{
+    color:#000;
+}
+
+.tab-content__form-right--wb .input:focus{
+    box-shadow: 0px 0px 10px 6px rgba(255,255,255,.4);
+}
+.tab-content__form-left--ozon .input:focus{
+    box-shadow: 0px 0px 10px 6px rgba(247,12,81,.6);
 }
 .form-group {
 }

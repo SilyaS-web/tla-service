@@ -62,7 +62,7 @@
                                 @endif
                                 <form action="{{ route('logout') }}" method="POST" class="row">
                                     @csrf
-                                    <button type="submit">Выход</button>
+                                    <button type="submit" style="width:100%; text-align:left">Выход</button>
                                 </form>
                             </div>
                         </div>
@@ -209,7 +209,7 @@
                                 @endif
                                 <form action="{{ route('logout') }}" method="POST" class="row">
                                     @csrf
-                                    <button type="submit">Выход</button>
+                                    <button type="submit" style="width:100%; text-align:left">Выход</button>
                                 </form>
                             </div>
                         </div>
@@ -534,7 +534,31 @@
                 </div>
             </div>
         </div>
+        <div class="popup" id="choose-projects-adv-format-blogger" style="">
+            <div class="popup__container _container">
+                <div class="popup__body">
+                    <div class="popup__header">
+                        <div class="popup__title title">
+                            Выберите формат рекламы
+                        </div>
+                        <div class="popup__subtitle">
+                            Выберите из списка нужный формат рекламы, который вы хотите предложить блогеру, после выбора формата вы вернетесь к выбору блогера
+                        </div>
+                    </div>
+                    <div class="popup__form">
+                        <div class="popup__formats">
 
+                        </div>
+                        <button class="btn btn-primary btn-confirm">
+                            Выбрать
+                        </button>
+                    </div>
+                    <div class="close-popup">
+                        <img src="{{ asset('img/close-icon.svg') }}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
         @include('shared.success-message')
     </div>
 </body>
