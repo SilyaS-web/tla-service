@@ -411,7 +411,7 @@
                                 </div>
                                 <div class="view-project__props-money">
                                     Выручка за 30 дн<br>
-                                    <span class="money">{{number_format($stats->earnings, 0, '', ',') ?? 0}} ₽</span>
+                                    <span class="money">{{number_format($stats->earnings ?? 0, 0, '', ',') ?? 0}} ₽</span>
                                 </div>
                             </div>
                             <div class="view-project__props-graph">
