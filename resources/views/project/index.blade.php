@@ -357,10 +357,10 @@
                             @php($clicks_count = $project->getClicksCount())
                             @if ($clicks_count > 1 || $finish_stats['total_subs'] > 1 || $finish_stats['total_views'] > 1)
                                 <div class="card__col card__stats-stats card__stats-stats--total" style="width:100%; flex-direction:row; flex-wrap:wrap; gap: 8px">
-                                    <div class="card__row card__stats-row" style="width:calc(100% / 2 - 4px)">
+                                    <div class="card__row card__stats-row" style="width:calc(100% / 2 - 4px); margin-right:0!important">
                                         <div class="card__col card__stats-item">
                                             <div class="card__stats-title">
-                                                <span>Количество переходов</span>
+                                                <span>Количество<br> переходов</span>
                                             </div>
                                             <div class="card__stats-val">
                                                 <span>{{ $clicks_count }}</span>

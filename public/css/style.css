@@ -4858,6 +4858,9 @@ input[type='range']::-webkit-slider-runnable-track{
         width: 50%;
         flex-direction: column;
     }
+    .card__stats-stats--total .card__stats-row{
+        width:100%!important;
+    }
     .bloger-item .card__stats-row{
         flex-direction: row;
     }
