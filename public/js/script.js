@@ -1502,6 +1502,7 @@ class PopupBloggerSendOffer extends Popup{
     node = '';
     sendUri = "/apist/works";
     projectWorkId = false;
+    projectFormat = false;
 
     dataProps = {
         message: {
@@ -1521,8 +1522,9 @@ class PopupBloggerSendOffer extends Popup{
         for(let k in this.dataProps){
             data.append(k, this.dataProps[k].get())
         }
-
+        console.log(self.projectWorkId, self.projectFormat);
         data.append('project_work_id', self.projectWorkId)
+        data.append('project_work_format', self.projectFormat)
 
         $.ajax({
             url: `${self.sendUri}`,
@@ -1629,6 +1631,75 @@ class PopupSellerChooseProjectsFormat extends Popup{
         this.closePopup();
     }
 }
+
+class PopupBloggerChooseProjectsFormat extends Popup{
+    constructor(node){
+        super(node);
+
+        this.node = node;
+
+        $(this.node).find('.btn-confirm').on('click', this.confirm);
+        $(this.node).on('click', '.input-checkbox-w', function(e){
+            var wrap = $(e.target).closest('.input-checkbox-w'),
+                cRadio = wrap.find('input[type="radio"]'),
+                allRadio = $(e.target).closest('.popup__form').find(`.popup__formats .input-checkbox-w[data-id!="${cRadio.closest('.input-checkbox-w').data('id')}"] input[type="radio"]`);
+
+            allRadio.prop('checked', false);
+        })
+
+
+        if(!this.instance) this.instance = this;
+
+        return this.instance;
+    }
+    instance = null;
+
+    node = '';
+    projectNode = null;
+    projectID = null;
+
+    formatTemplate = `<div class="input-checkbox-w" data-id="%%ID%%">
+        <input id="format_%%COUNTER%%" name="format_%%COUNTER%%" type="radio" class="checkbox">
+        <label for="format_%%COUNTER%%">%%NAME%%</label>
+    </div>`;
+
+    addFormats = (list) => {
+        $(this.node).find('.popup__formats').empty();
+
+        list.each((i, v)=>{
+            var name = $(v).find('span').text(),
+                counter = i,
+                id = $(v).data('id');
+
+            var template = this.formatTemplate;
+
+            template = template.replaceAll('%%ID%%', id);
+            template = template.replaceAll('%%NAME%%', name);
+            template = template.replaceAll('%%COUNTER%%', counter);
+
+            $(this.node).find('.popup__formats').append(template);
+        })
+    }
+
+    confirm = () => {
+        var currentFormat = $(this.node).find('.popup__formats .input-checkbox-w input:checked');
+
+        if(currentFormat.length == 0){
+            notify('info', {title: 'Внимание!', message: 'Необходимо выбрать проект'});
+            return
+        }
+
+        var popupBloggerSendOffer = new PopupBloggerSendOffer('#blogger-send-offer');
+
+        popupBloggerSendOffer.openPopup();
+        console.log(this.projectID, currentFormat.data('id'));
+        popupBloggerSendOffer.projectWorkId = this.projectID;
+        popupBloggerSendOffer.projectFormat = currentFormat.data('id');
+
+        this.closePopup();
+    }
+}
+
 
 class PopupBlogerProjectMoreInfo extends Popup{
     constructor(node){
@@ -1747,6 +1818,34 @@ class PopupBlogerProjectMoreInfo extends Popup{
     }
 }
 
+class PopupConfirmPublication extends Popup{
+    constructor(node){
+        super(node);
+
+        this.node = node;
+
+        $(this.node).find('.close-popup-btn').on('click', this.closePopup())
+        $(this.node).find('.send-data').on('click', ()=>{
+
+            window.location.replace(this.sendDataUrl);
+        })
+
+        if(!this.instance) this.instance = this;
+
+        return this.instance;
+    }
+    instance = null;
+
+    node = '';
+    sendDataUrl = '';
+
+    closePopup = () => {
+        $(this.node).removeClass('opened');
+
+        delete this;
+    }
+}
+
 class DashboardTabs extends Tabs{
     constructor(node){
         super(node);
@@ -1789,7 +1888,6 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
-    var popupBloggerSendOffer = new PopupBloggerSendOffer('#blogger-send-offer');
     var popupBlogerProjectMoreInfo = new PopupBlogerProjectMoreInfo('#project-item-info');
     var choosePopup = new PopupSellerChooseProjectsFormat('#choose-projects-adv-format');
     var popupBloggerSendStatistics = new PopupBloggerSendStatistics('#send-statistics-blogger');
@@ -1797,12 +1895,28 @@ $(window).on('load', function(){
     var popupChangePassword = new PopupChangePassword('#change-password');
     var popupConfirmCompletion = new PopupConfirmCompletion('#confirm-completion');
     var popupConfirmCompletionBlogger = new PopupConfirmCompletionBlogger('#confirm-completion-blogger');
+    var choosePopupBlogger = new PopupBloggerChooseProjectsFormat('#choose-projects-adv-format');
+    var confirmPublic = new PopupConfirmPublication('#confirm-publication');
+
+    $(document).on('click', '.btn-public', function(e){
+        e.preventDefault()
+        var btn = $(e.target).closest('.btn-public');
+
+        confirmPublic.sendDataUrl = btn.data('href');
+        confirmPublic.openPopup()
+    })
 
     $(document).on('click', '.btn-blogger-send-offer', function(e){
         var btn = $(e.target).closest('.btn-blogger-send-offer');
 
-        popupBloggerSendOffer.openPopup();
-        popupBloggerSendOffer.projectWorkId = btn.data('project-work');
+        choosePopupBlogger.openPopup();
+
+        var formats = $(e.target).closest('.project-item').find('.project-item__format-tags .card__tags-item');
+
+        choosePopupBlogger.addFormats(formats);
+
+        choosePopupBlogger.projectNode = $(e.target).closest('.project-item')
+        choosePopupBlogger.projectID = $(btn).data('project-work')
     })
 
     $(document).on('click', '#blogger .project-item', function(e){

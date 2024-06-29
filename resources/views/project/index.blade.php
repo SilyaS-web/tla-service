@@ -30,7 +30,7 @@
                         @if($project->is_blogger_access)
                             <button class="btn btn-secondary btn-bloggers">Заявки от блогеров <div class="nav-menu__item-notifs notifs notifs-application" style="display:none">1</div> </button>
                         @else
-                            <a href="/apist/projects/{{$project->id}}/activate" class="btn btn-primary" style="text-align: center">Опубликовать</a>
+                            <a href="#" data-href="/apist/projects/{{$project->id}}/activate" class="btn btn-primary btn-public" style="text-align: center">Опубликовать</a>
                         @endif
                         <button class="btn btn-secondary btn-statistics">Статистика</button>
                     </div>
@@ -95,7 +95,7 @@
                         @if($project->is_blogger_access)
                             <button class="btn btn-secondary btn-bloggers">Заявки от блогеров <div class="nav-menu__item-notifs notifs notifs-application" style="display:none">1</div></button>
                         @else
-                            <a href="/apist/projects/{{$project->id}}/activate" class="btn btn-primary" style="text-align: center">Выложить проект </a>
+                            <a href="#" data-href="/apist/projects/{{$project->id}}/activate" class="btn btn-primary btn-public" style="text-align: center">Опубликовать</a>
                         @endif
                     </div>
                 </div>

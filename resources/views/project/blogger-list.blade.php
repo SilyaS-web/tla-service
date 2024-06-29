@@ -36,22 +36,22 @@
         </div>
         <div class="project-item__format-tags card__row card__tags">
             <div class="card__tags-item">
-                {{ $project_work->getProjectWorkName() }}
+                <span>{{ $project_work->getProjectWorkName() }}</span>
             </div>
         </div>
         <div class="project-item__btns">
             @switch($type)
 
             @case('all')
-            <button class="btn btn-primary btn-blogger-send-offer" style="width:100%" data-project-work="{{ $project_work->id }}">Откликнуться</button>
+                <button class="btn btn-primary btn-blogger-send-offer" style="width:100%" data-project-work="{{ $project_work->id }}">Откликнуться</button>
             @break
 
             @case('applications')
-            <button class="btn btn-primary" onclick="acceptApplication({{ $work->id }}, this)">Принять заявку</button>
+                <button class="btn btn-primary" onclick="acceptApplication({{ $work->id }}, this)">Принять заявку</button>
             @break
 
             @case('active')
-            <button class="btn btn-primary" onclick="goToChat({{ $project_work->id }})">Перейти в чат</button>
+                <button class="btn btn-primary" onclick="goToChat({{ $project_work->id }})">Перейти в чат</button>
             @break
             {{--
             @case('finish')
