@@ -75,9 +75,9 @@ class ProjectController extends Controller
             'feedback-quantity' => 'numeric|nullable',
             'inst-quantity' => 'numeric|nullable',
             'product_name' => 'required|min:3|max:250',
-            'product_nm' => 'required|min_digits:3|numeric|max_digits:14',
+            'product_nm' => 'required|numeric|digits_between:1,14',
             'product_link' => 'required|min:3|max:1000',
-            'product_price' => 'required|numeric|max_digits:14',
+            'product_price' => 'required|numeric|digits_between:1,14',
             'images' => 'required|array',
             'images.*' => 'image|max:10240',
         ]);
@@ -96,19 +96,19 @@ class ProjectController extends Controller
         if (strripos($validated['product_link'], 'ozon') !== false && !empty($user->seller->ozon_client_id) && !empty($user->seller->ozon_api_key)) {
             $info = $this->getOzonInfo($validated['product_nm'], $user->seller->ozon_client_id, $user->seller->ozon_api_key);
             if (!$info) {
-                $validated['ozon_category'] = $info['category'];
-                $validated['wb_brand'] = $info['brand'];
-                $validated['ozon_product_name'] = $info['name'];
-                $validated['ozon_description'] = $info['description'];
-                $validated['ozon_options'] = json_encode($info['options']);
+                $validated['ozon_category'] = $info['category'] ?? null;
+                $validated['wb_brand'] = $info['brand'] ?? null;
+                $validated['ozon_product_name'] = $info['name'] ?? null;
+                $validated['ozon_description'] = $info['description'] ?? null;
+                $validated['ozon_options'] = json_encode($info['options'] ?? null);
             }
         } else {
             $card = $this->curlWBStats($validated['product_nm']);
             if ($card) {
-                $validated['wb_category'] = $card->subj_name;
-                $validated['wb_brand'] = $card->selling->brand_name;
-                $validated['wb_product_name'] = $card->imt_name;
-                $validated['wb_description'] = $card->description;
+                $validated['wb_category'] = $card->subj_name ?? null;
+                $validated['wb_brand'] = $card->selling->brand_name ?? null;
+                $validated['wb_product_name'] = $card->imt_name ?? null;
+                $validated['wb_description'] = $card->description ?? null;
                 $validated['wb_options'] = json_encode($card->options);
             }
         }
