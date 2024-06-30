@@ -22,6 +22,13 @@ class CreateProjectsTable extends Migration
             $table->integer('status')->default(0);
             $table->unsignedBigInteger('seller_id');
             $table->foreign('seller_id')->references('id')->on('users')->cascadeOnDelete();
+            $table->string('marketplace_brand')->nullable();
+            $table->string('marketplace_category')->nullable();
+            $table->string('marketplace_product_name', 1000)->nullable();
+            $table->text('marketplace_description')->nullable();
+            $table->text('marketplace_options')->nullable();
+            $table->unsignedInteger('marketplace_rate')->nullable();
+            $table->boolean('is_blogger_access')->nullable()->default(false);
             $table->timestamps();
             $table->softDeletes();
         });

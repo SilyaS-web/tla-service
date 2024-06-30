@@ -19,7 +19,7 @@ class CreateDeepLinksTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->unsignedBigInteger('work_id')->nullable();
             $table->foreign('work_id')->references('id')->on('works')->cascadeOnDelete();
-            $table->string('destination');
+            $table->string('destination', 1500);
             $table->string('link');
             $table->timestamps();
             $table->softDeletes();

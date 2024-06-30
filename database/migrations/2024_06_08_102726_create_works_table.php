@@ -24,11 +24,12 @@ class CreateWorksTable extends Migration
             $table->unsignedBigInteger('project_work_id');
             $table->foreign('project_work_id')->references('id')->on('project_works')->cascadeOnDelete();
             $table->string('status')->nullable();
-            $table->string('message')->nullable();
+            $table->string('message', 1000)->nullable();
             $table->timestamp('accepted_by_blogger_at')->nullable();
             $table->timestamp('accepted_by_seller_at')->nullable();
             $table->timestamp('confirmed_by_blogger_at')->nullable();
             $table->timestamp('confirmed_by_seller_at')->nullable();
+            $table->timestamp('last_message_at')->nullable();
             $table->unsignedBigInteger('created_by');
             $table->foreign('created_by')->references('id')->on('users')->cascadeOnDelete();
             $table->timestamps();

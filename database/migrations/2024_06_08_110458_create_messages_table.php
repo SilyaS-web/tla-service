@@ -19,7 +19,7 @@ class CreateMessagesTable extends Migration
             $table->foreign('work_id')->references('id')->on('works')->cascadeOnDelete();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->string('message', 500);
+            $table->string('message', 1000);
             $table->timestamp('viewed_at')->nullable();
             $table->timestamps();
             $table->softDeletes();

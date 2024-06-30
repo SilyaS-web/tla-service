@@ -24,10 +24,13 @@ class CreateSellersTable extends Migration
             $table->integer('is_agent')->default(0);
             $table->string('inn', 50)->nullable();
             $table->string('description', 500)->nullable();
-            $table->string('platform')->nullable();
+            $table->string('name')->nullable();
             $table->timestamp('finish_date')->nullable();
-            $table->string('platform_link')->nullable();
+            $table->string('wb_link')->nullable();
             $table->string('wb_api_key', 500)->nullable();
+            $table->string('ozon_link')->nullable();
+            $table->string('ozon_api_key')->nullable();
+            $table->string('ozon_client_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
