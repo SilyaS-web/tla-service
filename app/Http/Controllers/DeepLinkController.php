@@ -44,7 +44,7 @@ class DeepLinkController extends Controller
 
         DeepLinkStat::create([
             'link_id' => $link_id,
-            'datatime' => date('Y-m-d'),
+            'datatime' => date('Y-m-d H:i'),
             'device' => $dd->getDeviceName(),
             'operating_system' => $dd->getOs('name') ?? null,
             'country' => $geoData['data']['country'] ?? null,
@@ -64,7 +64,7 @@ class DeepLinkController extends Controller
             'work_id' => 'exists:works,id',
             'destination' => 'required|url',
         ]);
-        
+
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
