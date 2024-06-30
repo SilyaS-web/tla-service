@@ -17,7 +17,7 @@ class CreateProjectsTable extends Migration
             $table->id();
             $table->string('product_name');
             $table->string('product_nm');
-            $table->string('product_link');
+            $table->string('product_link', 1000);
             $table->double('product_price');
             $table->integer('status')->default(0);
             $table->unsignedBigInteger('seller_id');
