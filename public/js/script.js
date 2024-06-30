@@ -1057,11 +1057,12 @@ class Chat {
                 }
 
                 if(res.is_completed){
-                    $(self.node).find('.chat__overflow--completed').show();
+                    $(self.node).find('.messages-create').css('pointerEvents', 'none');
                     // $(self.node).find('.chat__messages').hide();
                 }
                 else{
-                    $(self.node).find('.chat__overflow--completed').hide();
+                    $(self.node).find('.messages-create').css('pointerEvents', 'unset');
+                    // $(self.node).find('.chat__overflow--completed').hide();
                     // $(self.node).find('.chat__messages').show();
                 }
             }
