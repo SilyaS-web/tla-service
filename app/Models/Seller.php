@@ -74,15 +74,15 @@ class Seller extends Model
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => '{
-  "settings": {
-    "filter": {
-      "withPhoto": -1
-    },
-    "cursor": {
-      "limit": 100
-    }
-  }
-}',
+                "settings": {
+                    "filter": {
+                     "withPhoto": -1
+                    },
+                    "cursor": {
+                    "limit": 100
+                    }
+                }
+            }',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json',
                 'Accept: application/json',
@@ -177,92 +177,116 @@ class Seller extends Model
         return $countUnanswered;
     }
 
-    public function getTotalFeedbacksWB()
+    public function getWBFeedbackStats()
     {
         if (empty($this->wb_api_key)) {
-            return ['total' => 0, 'low' => 0, 'mid' => 0, 'hig' => 0, 'avg' => 0, 'pr_low' => 0, 'pr_mid' => 0];
+            return ['total' => 0, 'avg' => 0, 'low' => [], 'mid' => [], 'hig' => [], 'pr_low' => 0, 'pr_mid' => 0];
         }
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://feedbacks-api.wildberries.ru/api/v1/feedbacks?isAnswered=true&take=4500&skip=0',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                'Accept: application/json',
-                'Authorization: ' . $this->wb_api_key,
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        curl_close($curl);
-        if (200 != $http_code) {
-            return ['total' => 0, 'low' => 0, 'mid' => 0, 'hig' => 0, 'avg' => 0, 'pr_low' => 0, 'pr_mid' => 0];
-        }
-        $result = json_decode($response);
 
         $total = 0;
-        $low = 0;
-        $mid = 0;
-        $hig = 0;
+        $avg = 0;
+        $low = [];
+        $mid = [];
+        $hig = [];
+        $pr_low = [];
+        $pr_mid = [];
         $total_valuation = 0;
-        $feedbacks_by_nm = [];
-        $products_by_valuation = [
-            'low' => [],
-            'mid' => [],
-            'hig' => [],
+        $products_feedbacks = [];
 
-        ];
-        $products_by_feedback_quantity = [
-            'low' => [],
-            'mid' => [],
-            'hig' => [],
+        $feedbacks = $this->curlWBFeedbacks();
 
-        ];
+        if (empty($feedbacks)) {
+            return ['total' => 0, 'avg' => 0, 'low' => [], 'mid' => [], 'hig' => [], 'pr_low' => 0, 'pr_mid' => 0];
+        }
 
-        foreach ($result->data->feedbacks as $feedback) {
+        foreach ($feedbacks as $feedback) {
             $total += 1;
             $productValuation = $feedback->productValuation;
             $total_valuation += $productValuation;
-            if (!isset($feedbacks_by_nm[$feedback->productDetails->nmId])) {
-                $feedbacks_by_nm[$feedback->productDetails->nmId] = 1;
-            } else {
-                $feedbacks_by_nm[$feedback->productDetails->nmId] += 1;
-            }
 
-            if ($productValuation < 3) {
-                $products_by_valuation['low'][$feedback->productDetails->nmId] = $feedback->productDetails->nmId;
-                $low++;
-            } elseif ($productValuation > 3 && $productValuation < 4) {
-                $products_by_valuation['mid'][$feedback->productDetails->nmId] = $feedback->productDetails->nmId;
-                $mid++;
-            } else {
-                $products_by_valuation['hig'][$feedback->productDetails->nmId] = $feedback->productDetails->nmId;
-                $hig++;
-            }
+            $products_feedbacks[$feedback->productDetails->nmId]['count'] = ($products_feedbacks[$feedback->productDetails->nmId]['count'] ?? 0) + 1;
+            $products_feedbacks[$feedback->productDetails->nmId]['valution_sum'] = ($products_feedbacks[$feedback->productDetails->nmId]['valution_sum'] ?? 0) + $productValuation;
         }
 
-        $pr_low = 0;
-        $pr_mid = 0;
-        foreach ($feedbacks_by_nm as $key => $value) {
-            if ($value < 5) {
-                $products_by_feedback_quantity['low'][$key] = $key;
-                $pr_low++;
-            } else if ($value < 15) {
-                $products_by_feedback_quantity['mid'][$key] = $key;
-                $pr_mid++;
+        foreach ($products_feedbacks as $id => $feedback_stat) {
+            if ($feedback_stat['count'] < 25) {
+                $pr_low[] = $id;
+            } else if ($feedback_stat['count'] < 50) {
+                $pr_mid[] = $id;
+            }
+
+            $product_avg_valution = $feedback_stat['valution_sum'] / ($feedback_stat['count'] == 0 ? 1 : $feedback_stat['count']);
+            if ($product_avg_valution < 4.2) {
+                $low[] = $id;
+            } else if ($product_avg_valution < 4.5) {
+                $mid[] = $id;
+            } else {
+                $hig[] = $id;
             }
         }
 
         $avg = $total > 0 ? $total_valuation / $total : 0;
 
-        return ['total' => $total, 'low' => $low, 'mid' => $mid, 'hig' => $hig, 'avg' => $avg, 'pr_low' => $pr_low, 'pr_mid' => $pr_mid, 'products_by_feedback_quantity' => $products_by_feedback_quantity, 'products_by_valuation' => $products_by_valuation];
+        return [
+            'total' => $total,
+            'avg' => $avg,
+            'low' => $low,
+            'mid' => $mid,
+            'hig' => $hig,
+            'pr_low' => $pr_low,
+            'pr_mid' => $pr_mid,
+        ];
+    }
+
+    public function curlWBFeedbacks()
+    {
+        $take = 5000;
+        $skip = 0;
+        $is_answered = 'true';
+        $feedbacks = [];
+        $next = true;
+        do {
+            usleep(1100);
+            $curl = curl_init();
+            $url = "https://feedbacks-api.wildberries.ru/api/v1/feedbacks?isAnswered=" . $is_answered . "&take=" . $take. "&skip=" . $skip;
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => $url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array(
+                    'Accept: application/json',
+                    'Authorization: ' . $this->wb_api_key,
+                ),
+            ));
+
+            $response = curl_exec($curl);
+            $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            curl_close($curl);
+            $skip += 5000;
+            if ($http_code == 200) {
+                $result = json_decode($response);
+                $new_feedbacks = $result->data->feedbacks;
+
+                if (count($new_feedbacks) > 0) {
+                    $feedbacks = array_merge($feedbacks, $new_feedbacks);
+                } else {
+                    if ($is_answered == 'true') {
+                        $is_answered = 'false';
+                        $skip = 0;
+                    } else {
+                        $next = false;
+                    }
+                }
+            } else {
+                $next = false;
+            }
+        } while ($next);
+
+        return $feedbacks;
     }
 }
