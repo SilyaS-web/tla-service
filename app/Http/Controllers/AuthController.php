@@ -7,6 +7,7 @@ use App\Models\TgPhone;
 use App\Services\TgService;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Services\PhoneService;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -45,20 +46,16 @@ class AuthController extends Controller
             $validated['status'] = 0;
         }
 
-        $phone_for_search = str_replace(['(', ')', ' ', '-'], '', $validated['phone']);
-
-        $tg_phone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
+        $phone = PhoneService::format($validated['phone']);
+        $tg_phone = TgPhone::where([['phone', '=',  $phone]])->first();
         if (!$tg_phone) {
-            $tg_phone = TgPhone::where([['phone', '=',  mb_substr($phone_for_search, 1)]])->first();
-            if (!$tg_phone) {
-                return redirect()->route('register')->with('success', 'Необходимо подтвердить телеграм')->withInput();
-            }
+            return redirect()->route('register')->with('success', 'Необходимо подтвердить телеграм')->withInput();
         }
 
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
-            'phone' => $validated['phone'],
+            'phone' => $phone,
             'tg_phone_id' => $tg_phone->id,
             'role' => $validated['role'],
             'status' => $validated['status'],
@@ -91,7 +88,7 @@ class AuthController extends Controller
         }
 
         $validated = $validator->validated();
-
+        $validated['phone'] = PhoneService::format($validated['phone']);
         TgPhone::create($validated);
         return response()->json('success', 200);
     }
@@ -108,8 +105,8 @@ class AuthController extends Controller
 
         $validated = $validator->validated();
 
-        $phone_for_search = str_replace(['(', ')', ' ', '-'], '', $validated['phone']);
-        $tgPhone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
+        $phone = PhoneService::format($validated['phone']);
+        $tgPhone = TgPhone::where([['phone', '=',  $phone]])->first();
         if (!$tgPhone) {
             return response()->json('unconfirmed', 401);
         }
@@ -155,8 +152,9 @@ class AuthController extends Controller
         }
 
         $validated = $validator->validated();
-        $phone_for_search = str_replace(['(', ')', ' ', '-'], '', $validated['phone']);
-        $tg_phone = TgPhone::where([['phone', '=',  $phone_for_search]])->first();
+
+        $phone = PhoneService::format($validated['phone']);
+        $tg_phone = TgPhone::where([['phone', '=',  $phone]])->first();
         if (!$tg_phone) {
             return response()->json('error', 401);
         }
