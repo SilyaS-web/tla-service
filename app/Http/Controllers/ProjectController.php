@@ -74,6 +74,9 @@ class ProjectController extends Controller
         $validator = Validator::make($request->all(), [
             'feedback-quantity' => 'numeric|nullable',
             'inst-quantity' => 'numeric|nullable',
+            'youtube-quantity' => 'numeric|nullable',
+            'vk-quantity' => 'numeric|nullable',
+            'telegram-quantity' => 'numeric|nullable',
             'product_name' => 'required|min:3|max:250',
             'product_nm' => 'required|numeric|digits_between:1,14',
             'product_link' => 'required|min:3|max:1000',
@@ -128,6 +131,30 @@ class ProjectController extends Controller
             ProjectWork::create([
                 'type' => Project::INSTAGRAM,
                 'quantity' => $validated['inst-quantity'],
+                'project_id' => $project->id,
+            ]);
+        }
+
+        if (isset($validated['youtube-quantity']) && $validated['insyoutubet-quantity'] > 0) {
+            ProjectWork::create([
+                'type' => Project::YOUTUBE,
+                'quantity' => $validated['youtube-quantity'],
+                'project_id' => $project->id,
+            ]);
+        }
+
+        if (isset($validated['vk-quantity']) && $validated['vk-quantity'] > 0) {
+            ProjectWork::create([
+                'type' => Project::VK,
+                'quantity' => $validated['vk-quantity'],
+                'project_id' => $project->id,
+            ]);
+        }
+
+        if (isset($validated['telegram-quantity']) && $validated['telegram-quantity'] > 0) {
+            ProjectWork::create([
+                'type' => Project::TELEGRAM,
+                'quantity' => $validated['telegram-quantity'],
                 'project_id' => $project->id,
             ]);
         }

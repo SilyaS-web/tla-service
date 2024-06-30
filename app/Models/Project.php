@@ -13,15 +13,24 @@ class Project extends Model
 
     public const FEEDBACK = 'feedback';
     public const INSTAGRAM = 'inst';
+    public const YOUTUBE = 'youtube';
+    public const VK = 'vk';
+    public const TELEGRAM = 'telegram';
 
     public const TYPE_NAMES = [
-        self::FEEDBACK => 'Отзыв на товар',
-        self::INSTAGRAM => 'Рекламная интеграция (inst)'
+        self::FEEDBACK => 'Отзыв',
+        self::INSTAGRAM => 'Интеграция Inst',
+        self::YOUTUBE => 'Интеграция YouTube',
+        self::VK => 'Интеграция VK',
+        self::TELEGRAM => 'Интеграция Telegram',
     ];
 
     public const TYPES = [
         self::FEEDBACK,
-        self::INSTAGRAM
+        self::INSTAGRAM,
+        self::YOUTUBE,
+        self::VK,
+        self::TELEGRAM,
     ];
 
     public const BANNED = -2;
@@ -31,7 +40,7 @@ class Project extends Model
     public const STATUSES = [
         self::BANNED,
         self::ACTIVE,
-        self::COMPLETED
+        self::COMPLETED,
     ];
 
     /**
