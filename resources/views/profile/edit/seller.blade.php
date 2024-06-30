@@ -73,7 +73,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="organization_name">Название организации</label>
-                                <input type="text" class="input" id="organization_name" name="organization_name" value="{{ $user->seller->platform }}">
+                                <input type="text" class="input" id="organization_name" name="organization_name" value="{{ $user->seller->organization_name }}">
                                 @error('organization_name')
                                 <span class="error">{{ $message }}</span>
                                 @enderror
@@ -117,8 +117,8 @@
                         <div class="tab-content__form-right tab-content__form-right--wb">
                             <div class="form-group">
                                 <label for="">Ссылка на магазин WB</label>
-                                <input type="text" class="input" id="marketplace" name="platform_link" value="{{ $user->seller->platform_link }}">
-                                @error('platform_link')
+                                <input type="text" class="input" id="marketplace" name="wb_link" value="{{ $user->seller->wb_link }}">
+                                @error('wb_link')
                                 <span class="error">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -132,9 +132,9 @@
                         </div>
                         <div class="tab-content__form-left tab-content__form-left--ozon">
                             <div class="form-group">
-                                <label for="ozon_api_key">Ключ API OZON</label>
-                                <input type="text" class="input" id="ozon_api_key" name="ozon_api_key" value="{{ $user->seller->ozon_api_key }}">
-                                @error('ozon_api_key')
+                                <label for="ozon_link">Ссылка на магазин OZON</label>
+                                <input type="text" class="input" id="ozon_link" name="ozon_link" value="{{ $user->seller->ozon_link }}">
+                                @error('ozon_link')
                                 <span class="error">{{ $message }}</span>
                                 @enderror
                             </div>
@@ -142,6 +142,13 @@
                                 <label for="ozon_client_id">Client ID OZON</label>
                                 <input type="text" class="input" id="ozon_client_id" name="ozon_client_id" value="{{ $user->seller->ozon_client_id }}">
                                 @error('ozon_client_id')
+                                <span class="error">{{ $message }}</span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="ozon_api_key">Ключ API OZON</label>
+                                <input type="text" class="input" id="ozon_api_key" name="ozon_api_key" value="{{ $user->seller->ozon_api_key }}">
+                                @error('ozon_api_key')
                                 <span class="error">{{ $message }}</span>
                                 @enderror
                             </div>

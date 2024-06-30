@@ -24,7 +24,7 @@ class CreateSellersTable extends Migration
             $table->integer('is_agent')->default(0);
             $table->string('inn', 50)->nullable();
             $table->string('description', 500)->nullable();
-            $table->string('name')->nullable();
+            $table->string('organization_name')->nullable();
             $table->timestamp('finish_date')->nullable();
             $table->string('wb_link')->nullable();
             $table->string('wb_api_key', 500)->nullable();

@@ -149,7 +149,7 @@ class UserController extends Controller
 
         $avg_price = $projects->avg('product_price');
 
-        $brands = $user->projects()->distinct()->where('wb_brand', '<>', null)->pluck('wb_brand')->all();
+        $brands = $user->projects()->distinct()->where('marketplace_brand', '<>', null)->pluck('marketplace_brand')->all();
         return compact('projects', 'bloggers', 'works', 'role', 'user_id', 'chat_role', 'blogger_platforms', 'platforms', 'themes', 'total_stats', 'total_clicks', 'subscribers', 'avg_price', 'brands');
     }
 
@@ -286,10 +286,11 @@ class UserController extends Controller
     {
         $seller = Auth::user()->seller;
         $validator = Validator::make(request()->all(), [
+            'wb_link' => 'string|nullable',
             'wb_api_key' => 'string|nullable',
+            'ozon_link' => 'string|nullable',
             'ozon_client_id' => 'string|nullable',
             'ozon_api_key' => 'string|nullable',
-            'platform_link' => 'string|nullable',
             'inn' => 'string|nullable',
             'organization_type' => 'string|nullable',
             'organization_name' => 'string|nullable',
@@ -301,13 +302,14 @@ class UserController extends Controller
 
         $validated = $validator->validated();
         $seller->update([
+            'wb_link' => $validated['wb_link'],
             'wb_api_key' => $validated['wb_api_key'],
             'ozon_api_key' => $validated['ozon_api_key'],
+            'ozon_link' => $validated['ozon_link'],
             'ozon_client_id' => $validated['ozon_client_id'],
             'inn' => $validated['inn'],
-            'platform_link' => $validated['platform_link'],
             'organization_type' => $validated['organization_type'],
-            'platform' => $validated['organization_name'],
+            'organization_name' => $validated['organization_name'],
         ]);
     }
 

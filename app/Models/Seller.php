@@ -26,17 +26,18 @@ class Seller extends Model
 
     protected $fillable = [
         'user_id',
-        'platform',
-        'platform_link',
+        'organization_name',
         'organization_type',
         'is_achievement',
         'is_agent',
         'description',
-        'wb_api_key',
         'inn',
         'finish_date',
         'remaining_tariff',
         'tariff',
+        'wb_link',
+        'wb_api_key',
+        'ozon_link',
         'ozon_api_key',
         'ozon_client_id',
     ];
