@@ -1825,7 +1825,7 @@ class PopupBlogerProjectMoreInfo extends Popup{
                 $(self.node).find('.project-item__left .line__val').css('width', `${(res.lost_quantity * 100) / res.total_quantity }%`)
                 $(self.node).find('.btn-go-to-shop').attr('href', res.link)
                 if (!res.category) {
-                    $(self.node).find('.characteristics__category').text(`К сожалению, информация о товаре недоступна, однако вы можете ознакомиться с подробностями, нажав на кнопку подбробнее.`)
+                    $(self.node).find('.characteristics__category').text(`К сожалению, информация о товаре недоступна, однако вы можете ознакомиться с подробностями, нажав на кнопку подробнее.`)
                 } else {
                     $(self.node).find('.characteristics__category').text(`Категория: ${res.category}`)
                 }
