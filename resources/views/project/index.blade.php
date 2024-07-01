@@ -73,7 +73,7 @@
                                     <span>Рейтинг</span>
                                 </div>
                                 <div class="card__stats-val card__stats-val--rait">
-                                    <span>{{ number_format($statCount->reviewRating ?? 0, 0, '', ' ') }}</span>
+                                    <span>{{ $statCount->reviewRating ?? 0 }}</span>
                                 </div>
                             </div>
                             <div class="card__col card__stats-item" style="flex: 1: width: auto">

@@ -240,8 +240,9 @@ class Project extends Model
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
         $response = json_decode($response);
+        $product = ($httpcode == 200 && !empty($response->data->products)) ? $response->data->products[0] : false;
 
-        return $httpcode == 200 && !empty($response->data->products) ? $response->data->products[0] : false;
+        return $product;
     }
 
     public function getStatistics(string $ozon_client_id = null, string $ozon_api_key = null)
