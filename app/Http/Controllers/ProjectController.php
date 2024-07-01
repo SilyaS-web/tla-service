@@ -386,10 +386,10 @@ class ProjectController extends Controller
     {
         $total_quantity = $project->projectWorks()->sum('quantity');
         $lost_quantity = $total_quantity - $project->works()->where('status', '<>', null)->count();
-        $options = [];
+
         return response()->json([
             'category' => $project->marketplace_category,
-            'product_name' => $project->marketplace_product_name,
+            'product_name' => $project->marketplace_product_name ?? $project->product_name,
             'description' => $project->marketplace_description,
             'total_quantity' => $total_quantity,
             'lost_quantity' => $lost_quantity,

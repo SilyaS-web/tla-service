@@ -1818,9 +1818,9 @@ class PopupBlogerProjectMoreInfo extends Popup{
 
                 self.setCharacteristics(JSON.parse(options));
                 self.setImages(images);
-                if (!res.category && !res.product_name) {
-                    $(self.node).find('.popup-project__title').text('');
-                    $(self.node).find('.characteristics__category').text(`К сожалению, информация о товаре недоступна, однако вы можете ознакомиться с подробностями, перейдя по ссылке на маркетплейс.`)
+                if (!res.category) {
+                    $(self.node).find('.popup-project__title').text(res.product_name);
+                    $(self.node).find('.characteristics__category').text(`К сожалению, информация о товаре недоступна, однако вы можете ознакомиться с подробностями, нажав на кнопку подбробнее.`)
                 } else {
                     $(self.node).find('.popup-project__title').text(res.product_name)
                     $(self.node).find('.popup-project__articul').text(`Арт: ${res.product_code}`)
