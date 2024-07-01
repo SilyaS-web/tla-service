@@ -1759,7 +1759,7 @@ class PopupBlogerProjectMoreInfo extends Popup{
 
         for(var k in chars){
             var template = this.characteristicsTemplate;
-
+            console.log(chars);
             template = template.replaceAll('%%TITLE%%', chars[k].name);
             template = template.replaceAll('%%DESC%%', chars[k].value);
 
@@ -1816,7 +1816,7 @@ class PopupBlogerProjectMoreInfo extends Popup{
                 var options = res.optioins,
                     images = res.images;
 
-                self.setCharacteristics(options);
+                self.setCharacteristics(JSON.parse(options));
                 self.setImages(images);
 
                 $(self.node).find('.popup-project__title').text(res.product_name)

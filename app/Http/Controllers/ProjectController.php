@@ -388,7 +388,7 @@ class ProjectController extends Controller
         $lost_quantity = $total_quantity - $project->works()->where('status', '<>', null)->count();
         $options = [];
         return response()->json([
-            'category' => $project->marketplace_options,
+            'category' => $project->marketplace_category,
             'product_name' => $project->marketplace_product_name,
             'description' => $project->marketplace_description,
             'total_quantity' => $total_quantity,
@@ -396,7 +396,7 @@ class ProjectController extends Controller
             'product_code' => $project->product_nm,
             'price' =>  $project->product_price,
             'images' => $project->getImageURL(),
-            'optioins' => $options,
+            'optioins' => $project->marketplace_options,
             'link' => $project->product_link,
         ], 200);
     }
