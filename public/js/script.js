@@ -1,7 +1,7 @@
 //----To next dev guy-----
 //If you watching this it means I've save myself and leave
 //All I wanna say is Sorry :3
-
+let currentChatId = false;
 class Quest {
     constructor(node) {
         this.node = node;
@@ -984,7 +984,7 @@ class Chat {
 
         this.getNewMessages(chat.data('id'));
         this.currentChatId = chat.data('id');
-
+        currentChatId = chat.data('id');
         $(document).find('.item-chat.current').removeClass('current');
         chat.addClass('current');
 
@@ -1282,13 +1282,34 @@ class PopupConfirmCompletion extends Popup{
 
     sendData = () => {
         var self = this;
-        $.post(self.sendUri, {
-            message: $(self.node).find('#comment').val(),
-            mark: self.mark,
-            work_id: $(document).find('.item-chat.current').data('id')
-        }, function(res){
-            notify('info', {title: 'Успешно!', message: 'Вы успешно подтвердили выполнение проекта'});
-            self.closePopup();
+        let el =$(self.node).find('.btn.send-data');
+        el.innerHTML = '<div class="lds-dual-ring"></div>';
+        el.disabled = true;
+        $.post({
+            url: self.sendUri,
+            data: {
+                message: $(self.node).find('#comment').val(),
+                mark: self.mark,
+                work_id: $(document).find('.item-chat.current').data('id')
+            },
+            success: function(data, textStatus, jqXHR) {
+                el.innerHTML = 'Завершить проект';
+                el.disabled = false;
+                notify('info', {
+                    title: 'Успешно!',
+                    message: 'Вы успешно подтвердили выполнение проекта!'
+                })
+                self.closePopup();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                el.innerHTML = 'Завершить проект';
+                el.disabled = true;
+                notify('error', {
+                    title: 'Ошибка!',
+                    message: 'Не удалось завершить проект!'
+                });
+                self.closePopup();
+            }
         })
     }
 }
