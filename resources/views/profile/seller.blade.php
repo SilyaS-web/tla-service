@@ -301,7 +301,7 @@
                                                         <img src="{{ asset("img/minus-icon.svg") }}" alt="">
                                                     </div>
                                                     <div class="quantity-input">
-                                                        <input type="number" class="input" value="0" name="tg-quantity">
+                                                        <input type="number" class="input" value="0" name="telegram-quantity">
                                                     </div>
                                                     <div class="quantity-plus">
                                                         <img src="{{ asset("img/plus-icon.svg") }}" alt="">
