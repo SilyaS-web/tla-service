@@ -190,6 +190,6 @@ class AuthController extends Controller
     }
 
     public function banned() {
-        return view('shared.chat.chat-list');
+        return view('auth.banned');
     }
 }

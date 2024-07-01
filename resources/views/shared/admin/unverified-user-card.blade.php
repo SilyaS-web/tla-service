@@ -40,7 +40,7 @@
             </div>
             <div class="admin-bloger__btns">
                 <a href="#" class="btn btn-primary btn-accept" data-id={{ $unverified_user->blogger->id }}>Принять</a>
-                <button class="btn btn-secondary" onclick="banUser({{$seller->user->id}}, this)">
+                <button class="btn btn-secondary" onclick="banUser({{$unverified_user->id}}, this)">
                     Отклонить
                 </button>
             </div>

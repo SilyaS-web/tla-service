@@ -163,18 +163,8 @@ class AdminController extends Controller
         return response()->json('success', 200);
     }
 
-    public function deny()
+    public function deny(User $user)
     {
-        $validator = Validator::make(request()->all(), [
-            'user_id' => 'required|numeric',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
-
-        $validated = $validator->validated();
-        $user = User::find($validated['user_id']);
         $user->status = -1;
         $user->save();
         if ($user->status == 0) {
@@ -183,7 +173,7 @@ class AdminController extends Controller
             TgService::notify($user->tgPhone->chat_id, 'Вы были забанены');
         }
 
-        return redirect()->back()->with('success', 'Ползьватель заблокирован');
+        return response()->json('success', 200);
     }
 
     public function moderation(Request $request)
@@ -219,7 +209,8 @@ class AdminController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return [];
+            return response()->json('success', 200);
+
         }
         $validated = $validator->validated();
 
@@ -233,7 +224,7 @@ class AdminController extends Controller
             $bloggers = Blogger::get();
         }
 
-        return view('shared.admin.bloggers-list', compact('bloggers'));
+        return response()->json('success', 200);
     }
 
     public function sellers(Request $request)

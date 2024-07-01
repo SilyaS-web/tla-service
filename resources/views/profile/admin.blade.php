@@ -377,7 +377,7 @@
     function banUser(user_id, el) {
         el.innerHTML = '<div class="lds-dual-ring"></div>';
         $.get({
-            url: '/admin/deny/' . user_id,
+            url: '/apist/admin/deny/' + user_id,
             success: function(data, textStatus, jqXHR) {
                 el.innerHTML = 'Пользователь заблокирован';
                 el.disabled = true;
@@ -387,7 +387,7 @@
                 })
             },
             error: function(jqXHR, textStatus, errorThrown) {
-                el.innerHTML = 'Принять заявку';
+                el.innerHTML = 'Заблокировать';
                 notify('error', {
                     title: 'Ошибка!',
                     message: 'Не удалось заблокировать пользователя!'

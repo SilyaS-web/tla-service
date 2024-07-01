@@ -47,7 +47,7 @@ Route::prefix('apist')->group(function () {
     Route::post('/tg', [AuthController::class, 'setTGPhone']);
 });
 
-Route::middleware(['auth'])->group(function () {
+Route::middleware(['auth', 'banned'])->group(function () {
     Route::get('/project/edit', function () {
         return view('project.edit');
     })->name('');
@@ -101,7 +101,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/admin/sellers', [AdminController::class, 'sellers']);
         Route::post('/admin/moderation', [AdminController::class, 'moderation']);
         Route::post('/admin/bloggers/accept', [AdminController::class, 'accept']);
-        Route::get('/admin/deny/{user_id}', [AdminController::class, 'deny']);
+        Route::get('/admin/deny/{user}', [AdminController::class, 'deny']);
         Route::get('/admin/achievement/{user_id}', [AdminController::class, 'achievement']);
 
         Route::get('/applications-count', [ProjectController::class, 'getApplicationsCount']);

@@ -8,7 +8,7 @@
                 <div class="form auth__form">
                     <div class="auth__header">
                         <div class="auth__title title">
-                            Ваш аккаунт был заблокирован модерцией
+                            Ваш аккаунт был заблокирован модератором
                         </div>
                         <p class="auth__subtitle">
                             Напишете на почту
