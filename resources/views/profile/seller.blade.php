@@ -363,14 +363,14 @@
                                         <div class="dashboard__col dashboard__item--sm dashboard-sm">
                                             <div class="dashboard-sm__title">
                                                 Рейтинг на основе отзывов
-                                                <div class="dashboard__tabs">
+                                                {{-- <div class="dashboard__tabs">
                                                     <div class="dashboard__tab active" data-content="wb">
                                                         Wildberries
                                                     </div>
                                                     <div class="dashboard__tab disabled" data-content="ozon">
                                                         OZON
                                                     </div>
-                                                </div>
+                                                </div> --}}
                                             </div>
 
 
