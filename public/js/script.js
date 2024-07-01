@@ -1818,15 +1818,20 @@ class PopupBlogerProjectMoreInfo extends Popup{
 
                 self.setCharacteristics(JSON.parse(options));
                 self.setImages(images);
+                if (!res.category && !res.product_name) {
+                    $(self.node).find('.popup-project__title').text('');
+                    $(self.node).find('.characteristics__category').text(`К сожалению, информация о товаре недоступна, однако вы можете ознакомиться с подробностями, перейдя по ссылке на маркетплейс.`)
+                } else {
+                    $(self.node).find('.popup-project__title').text(res.product_name)
+                    $(self.node).find('.popup-project__articul').text(`Арт: ${res.product_code}`)
+                    // $(self.node).find('.popup-project__mark-text').text(res.rate)
+                    $(self.node).find('.characteristics__category').text(`Категория: ${res.category || 'Нет'}`)
+                    $(self.node).find('.popup-project__cost').text(`${res.price}₽`)
+                    $(self.node).find('.project-item__left span').text(`${res.lost_quantity}/${res.total_quantity}`)
+                    $(self.node).find('.project-item__left .line__val').css('width', `${(res.lost_quantity * 100) / res.total_quantity }%`)
+                    $(self.node).find('.btn-go-to-shop').attr('href', res.link)
+                }
 
-                $(self.node).find('.popup-project__title').text(res.product_name)
-                $(self.node).find('.popup-project__articul').text(`Арт: ${res.product_code}`)
-                $(self.node).find('.popup-project__mark-text').text(res.rate)
-                $(self.node).find('.characteristics__category').text(`Категория: ${res.category || 'Нет'}`)
-                $(self.node).find('.popup-project__cost').text(`${res.price}₽`)
-                $(self.node).find('.project-item__left span').text(`${res.lost_quantity}/${res.total_quantity}`)
-                $(self.node).find('.project-item__left .line__val').css('width', `${(res.lost_quantity * 100) / res.total_quantity }%`)
-                $(self.node).find('.btn-go-to-shop').attr('href', res.link)
             }
         })
     }

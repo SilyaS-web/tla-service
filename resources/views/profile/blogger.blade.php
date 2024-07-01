@@ -259,29 +259,26 @@
                 <div class="popup-project__right">
                     <div class="popup-project__info">
                         <div class="popup-project__title">
-                            Титул
                         </div>
                         <div class="popup-project__row" style="line-height:1">
                             <div class="popup-project__mark">
                             </div>
                             <div class="popup-project__articul">
-                                <p>Арт: </p>
+                                <p></p>
                             </div>
                         </div>
                         <div class="popup-project__row popup-project__cost">
-                            1240₽
                         </div>
                         <div class="popup-project__addit characteristics">
                             <p class="popup-project__addit-title">Дополнительная информация</p>
                             <div class="characteristics__category">
-                                Категория:
                             </div>
                             <div class="characteristics-items">
                             </div>
                         </div>
                         <div class="project-item__left" style="margin-bottom: 18px;">
                             <div class="line">
-                                <div class="line__val" style="width:60%"></div>
+                                <div class="line__val" style="width:100%"></div>
                             </div>
                             Осталось мест на интеграцию <span style="font-weight: 700;"></span>
                         </div>
