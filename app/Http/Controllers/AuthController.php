@@ -47,6 +47,10 @@ class AuthController extends Controller
         }
 
         $phone = PhoneService::format($validated['phone']);
+        if (User::where([['phone', '=',  $phone]])->first()) {
+            return redirect()->route('register')->with('success', 'Аккаунт с таким номером телефона уже существует')->withInput();
+        }
+
         $tg_phone = TgPhone::where([['phone', '=',  $phone]])->first();
         if (!$tg_phone) {
             return redirect()->route('register')->with('success', 'Необходимо подтвердить телеграм')->withInput();
@@ -68,7 +72,11 @@ class AuthController extends Controller
             ]);
         }
 
-        $credentials = request()->only('phone', 'password');
+        $credentials = [
+            'phone' => $phone,
+            'password' => $validated['password'],
+        ];
+        
         Auth::attempt($credentials);
         request()->session()->regenerate();
 
