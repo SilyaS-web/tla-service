@@ -382,7 +382,7 @@
                                                 <span>CPM</span>
                                             </div>
                                             <div class="card__stats-val ">
-                                                <span>{{ number_format(round(($project->product_price / ($finish_stats['total_views'] == 0 ? 1 : $finish_stats['total_views'])) * 1000, 2), 0, '', ' ') }}</span>
+                                                <span>{{ number_format(round(($project->product_price / ($finish_stats['total_views'] == 0 ? 1 : $finish_stats['total_views'])) * 1000, 2), 0, '', ' ') }} ₽</span>
                                             </div>
                                         </div>
                                         <div class="card__col card__stats-item" style="flex: 1: width: auto">
@@ -390,7 +390,7 @@
                                                 <span>CPC</span>
                                             </div>
                                             <div class="card__stats-val">
-                                                <span>{{ number_format(round(($project->product_price / ($clicks_count == 0 ? 1 : $clicks_count)), 2), 0, '', ' ') }}</span>
+                                                <span>{{ number_format(round(($project->product_price / ($clicks_count == 0 ? 1 : $clicks_count)), 2), 0, '', ' ') }} ₽</span>
                                             </div>
                                         </div>
                                     </div>
@@ -521,7 +521,7 @@
                                                                 </div>
                                                             </span>
                                                         @else
-                                                            {{ number_format(round($work->finishStats->views / ($project->product_price == 0 ? 1 : $project->product_price), 2), 0, '', ' ')   }}
+                                                            {{ number_format(round($work->finishStats->views / ($project->product_price == 0 ? 1 : $project->product_price), 2), 0, '', ' ') }} ₽
                                                         @endif
                                                     </div>
                                                     <div class="table-stats__col" style="width: 9%;">
