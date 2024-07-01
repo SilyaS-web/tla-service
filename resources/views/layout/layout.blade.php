@@ -45,7 +45,9 @@
                                 </span>
                                 <span class="header__profile-org">
                                     @if ( auth()->user()->role == 'seller')
-                                    {{ auth()->user()->seller->organization_type }}
+                                        @if (isset(auth()->user()->seller->organization_name) && !empty(auth()->user()->seller->organization_name))
+                                            {{ auth()->user()->seller->organization_type }} "{{ auth()->user()->seller->organization_name }}"
+                                        @endif
                                     @elseif (auth()->user()->blogger)
                                     {{ auth()->user()->blogger->name }}
                                     @endif
@@ -190,8 +192,8 @@
                                 </span>
                                 <span class="header__profile-org">
                                     @if ( auth()->user()->role == 'seller')
-                                        @if (isset(auth()->user()->seller->platform) && !empty(auth()->user()->seller->platform))
-                                            {{ auth()->user()->seller->organization_type }} "{{ auth()->user()->seller->platform }}"
+                                        @if (isset(auth()->user()->seller->organization_name) && !empty(auth()->user()->seller->organization_name))
+                                            {{ auth()->user()->seller->organization_type }} "{{ auth()->user()->seller->organization_name }}"
                                         @endif
                                     @elseif (auth()->user()->blogger)
                                         {{ auth()->user()->blogger->name }}
