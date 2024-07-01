@@ -205,22 +205,25 @@
                             </div>
                         </div>
                     </div>
-                    <div class="tariff__row">
-                        <p style="font-weight:500; font-size:18px; color:rgba(0,0,0,0.4)">Все тарифы действуют в течение 30 календарных дней после оплаты. Если вы не использовали свои отзывы и интеграции в течение оплаченного периода, они станут недоступными. Если вы общаетесь с блогерами в рамках открытых рекламных диалогов, то даже после окончания тарифа вы не потеряете доступ к сервису.</p>
-                    </div>
-                    {{-- <div class="tariff__title title">
-                        Интеграции Youtube
-                    </div>
-                    <div class="planItem__container">
 
-                        <div class="planItem">
+                    <div class="tariff__title title">
+                        Интеграции YouTube
+                        <div class="plans__current-item" style="margin-top: 15px">
+                            <p class="plans__current-title">
+                                Интеграций осталось: <b style="color:#FE5E00">10</b>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="planItem__container" style="margin-bottom:50px">
+
+                        <div class="planItem planItem--current">
                             <div class="card" style="margin-bottom:auto;">
                                 <div class="card__header">
-                                    <h2>Стартовый - 10 интеграций</h2>
+                                    <h2>СЕЛЛЕР - 10 интеграций</h2>
                                 </div>
-                                <div class="card__desc">Оплатив этот тариф вы получите возможность создавать 10 интеграций с блогерами</div>
+                                <div class="card__desc">Оплатив этот тариф, вы получаете доступ к получению 10 интеграций на свой товар в течение 30 дней.</div>
                             </div>
-                            <div class="price" title="">9900₽/<span  >990₽</span>
+                            <div class="price" title="">9900₽/<span>990₽</span>
                                 <span class="price__desc">
                                     ?
                                     <div class="price__text">
@@ -233,17 +236,21 @@
                                     <input hidden name="tariff" value="start" />
                                     <button class="btn btn-primary" style="" type="submit">Оплатить</button>
                                 </form>
+                                {{-- <form method="POST" action="{{ route('tariff') }}">
+                                    <input hidden name="tariff" value="start" />
+                                    <button class="btn btn-secondary" style="" type="submit">Оплатить на год</button>
+                                </form> --}}
                             </div>
                         </div>
-                        <div class="planItem">
+                        <div class="planItem planItem--business">
                             <div class="card" style="margin-bottom:auto;">
                                 <div class="card__header">
-                                    <h2>Оптимальный - 30 интеграций</h2>
+                                    <h2>БИЗНЕС - 30 интеграций</h2>
                                 </div>
-                                <div class="card__desc">Оплатив этот тариф вы получите возможность создавать 30 интеграций с блогерами</div>
+                                <div class="card__desc">Оплатив этот тариф, вы получаете доступ к получению 30 интеграций на свой товар в течение 30 дней.</div>
                             </div>
 
-                            <div class="price"  >26700₽/<span  >890₽</span>
+                            <div class="price"  >26700₽/<span>890₽</span>
                                 <span class="price__desc">
                                     ?
                                     <div class="price__text">
@@ -256,14 +263,18 @@
                                     <input hidden name="tariff" value="start" />
                                     <button class="btn btn-primary" style="" type="submit">Оплатить</button>
                                 </form>
+                                {{-- <form method="POST" action="{{ route('tariff') }}">
+                                    <input hidden name="tariff" value="start" />
+                                    <button class="btn btn-secondary" style="" type="submit">Оплатить на год</button>
+                                </form> --}}
                             </div>
                         </div>
                         <div class="planItem">
                             <div class="card" style="margin-bottom:auto;">
                                 <div class="card__header">
-                                    <h2>Максимальный - 50 интеграций</h2>
+                                    <h2>КОМПАНИЯ - 50 интеграций</h2>
                                 </div>
-                                <div class="card__desc">Оплатив этот тариф вы получите возможность создавать 50 интеграций с блогерами</div>
+                                <div class="card__desc">Оплатив этот тариф, вы получаете доступ к получению 50 интеграций на свой товар в течение 30 дней.</div>
                             </div>
 
                             <div class="price"  >39500₽/<span  >790₽</span>
@@ -279,9 +290,202 @@
                                     <input hidden name="tariff" value="start" />
                                     <button class="btn btn-primary" style="" type="submit">Оплатить</button>
                                 </form>
+                                {{-- <form method="POST" action="{{ route('tariff') }}">
+                                    <input hidden name="tariff" value="start" />
+                                    <button class="btn btn-secondary" style="" type="submit">Оплатить на год</button>
+                                </form> --}}
                             </div>
                         </div>
-                    </div> --}}
+                    </div>
+
+                    <div class="tariff__title title">
+                        Интеграции VK
+                        <div class="plans__current-item" style="margin-top: 15px">
+                            <p class="plans__current-title">
+                                Интеграций осталось: <b style="color:#FE5E00">10</b>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="planItem__container" style="margin-bottom:50px">
+
+                        <div class="planItem planItem--current">
+                            <div class="card" style="margin-bottom:auto;">
+                                <div class="card__header">
+                                    <h2>СЕЛЛЕР - 10 интеграций</h2>
+                                </div>
+                                <div class="card__desc">Оплатив этот тариф, вы получаете доступ к получению 10 интеграций на свой товар в течение 30 дней.</div>
+                            </div>
+                            <div class="price" title="">7900₽/<span>790₽</span>
+                                <span class="price__desc">
+                                    ?
+                                    <div class="price__text">
+                                        <p>Цена за одну интеграцию</p>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="planItem__row" style="display: flex; flex-wrap:wrap; gap:10px;">
+                                <form method="POST" action="{{ route('tariff') }}">
+                                    <input hidden name="tariff" value="start" />
+                                    <button class="btn btn-primary" style="" type="submit">Оплатить</button>
+                                </form>
+                                {{-- <form method="POST" action="{{ route('tariff') }}">
+                                    <input hidden name="tariff" value="start" />
+                                    <button class="btn btn-secondary" style="" type="submit">Оплатить на год</button>
+                                </form> --}}
+                            </div>
+                        </div>
+                        <div class="planItem planItem--business">
+                            <div class="card" style="margin-bottom:auto;">
+                                <div class="card__header">
+                                    <h2>БИЗНЕС - 30 интеграций</h2>
+                                </div>
+                                <div class="card__desc">Оплатив этот тариф, вы получаете доступ к получению 30 интеграций на свой товар в течение 30 дней.</div>
+                            </div>
+
+                            <div class="price"  >20700₽/<span  >690₽</span>
+                                <span class="price__desc">
+                                    ?
+                                    <div class="price__text">
+                                        <p>Цена за одну интеграцию</p>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="planItem__row" style="display: flex; flex-wrap:wrap; gap:10px;">
+                                <form method="POST" action="{{ route('tariff') }}">
+                                    <input hidden name="tariff" value="start" />
+                                    <button class="btn btn-primary" style="" type="submit">Оплатить</button>
+                                </form>
+                                {{-- <form method="POST" action="{{ route('tariff') }}">
+                                    <input hidden name="tariff" value="start" />
+                                    <button class="btn btn-secondary" style="" type="submit">Оплатить на год</button>
+                                </form> --}}
+                            </div>
+                        </div>
+                        <div class="planItem">
+                            <div class="card" style="margin-bottom:auto;">
+                                <div class="card__header">
+                                    <h2>КОМПАНИЯ - 50 интеграций</h2>
+                                </div>
+                                <div class="card__desc">Оплатив этот тариф, вы получаете доступ к получению 50 интеграций на свой товар в течение 30 дней.</div>
+                            </div>
+
+                            <div class="price"  >29500₽/<span  >590₽</span>
+                                <span class="price__desc">
+                                    ?
+                                    <div class="price__text">
+                                        <p>Цена за одну интеграцию</p>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="planItem__row" style="display: flex; flex-wrap:wrap; gap:10px;">
+                                <form method="POST" action="{{ route('tariff') }}">
+                                    <input hidden name="tariff" value="start" />
+                                    <button class="btn btn-primary" style="" type="submit">Оплатить</button>
+                                </form>
+                                {{-- <form method="POST" action="{{ route('tariff') }}">
+                                    <input hidden name="tariff" value="start" />
+                                    <button class="btn btn-secondary" style="" type="submit">Оплатить на год</button>
+                                </form> --}}
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tariff__title title">
+                        Интеграции Telegram
+                        <div class="plans__current-item" style="margin-top: 15px">
+                            <p class="plans__current-title">
+                                Интеграций осталось: <b style="color:#FE5E00">10</b>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="planItem__container" style="margin-bottom:50px">
+
+                        <div class="planItem planItem--current">
+                            <div class="card" style="margin-bottom:auto;">
+                                <div class="card__header">
+                                    <h2>СЕЛЛЕР - 10 интеграций</h2>
+                                </div>
+                                <div class="card__desc">Оплатив этот тариф, вы получаете доступ к получению 10 интеграций на свой товар в течение 30 дней.</div>
+                            </div>
+                            <div class="price" title="">7900₽/<span>790₽</span>
+                                <span class="price__desc">
+                                    ?
+                                    <div class="price__text">
+                                        <p>Цена за одну интеграцию</p>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="planItem__row" style="display: flex; flex-wrap:wrap; gap:10px;">
+                                <form method="POST" action="{{ route('tariff') }}">
+                                    <input hidden name="tariff" value="start" />
+                                    <button class="btn btn-primary" style="" type="submit">Оплатить</button>
+                                </form>
+                                {{-- <form method="POST" action="{{ route('tariff') }}">
+                                    <input hidden name="tariff" value="start" />
+                                    <button class="btn btn-secondary" style="" type="submit">Оплатить на год</button>
+                                </form> --}}
+                            </div>
+                        </div>
+                        <div class="planItem planItem--business">
+                            <div class="card" style="margin-bottom:auto;">
+                                <div class="card__header">
+                                    <h2>БИЗНЕС - 30 интеграций</h2>
+                                </div>
+                                <div class="card__desc">Оплатив этот тариф, вы получаете доступ к получению 30 интеграций на свой товар в течение 30 дней.</div>
+                            </div>
+
+                            <div class="price"  >20700₽/<span  >690₽</span>
+                                <span class="price__desc">
+                                    ?
+                                    <div class="price__text">
+                                        <p>Цена за одну интеграцию</p>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="planItem__row" style="display: flex; flex-wrap:wrap; gap:10px;">
+                                <form method="POST" action="{{ route('tariff') }}">
+                                    <input hidden name="tariff" value="start" />
+                                    <button class="btn btn-primary" style="" type="submit">Оплатить</button>
+                                </form>
+                                {{-- <form method="POST" action="{{ route('tariff') }}">
+                                    <input hidden name="tariff" value="start" />
+                                    <button class="btn btn-secondary" style="" type="submit">Оплатить на год</button>
+                                </form> --}}
+                            </div>
+                        </div>
+                        <div class="planItem">
+                            <div class="card" style="margin-bottom:auto;">
+                                <div class="card__header">
+                                    <h2>КОМПАНИЯ - 50 интеграций</h2>
+                                </div>
+                                <div class="card__desc">Оплатив этот тариф, вы получаете доступ к получению 50 интеграций на свой товар в течение 30 дней.</div>
+                            </div>
+
+                            <div class="price"  >29500₽/<span  >590₽</span>
+                                <span class="price__desc">
+                                    ?
+                                    <div class="price__text">
+                                        <p>Цена за одну интеграцию</p>
+                                    </div>
+                                </span>
+                            </div>
+                            <div class="planItem__row" style="display: flex; flex-wrap:wrap; gap:10px;">
+                                <form method="POST" action="{{ route('tariff') }}">
+                                    <input hidden name="tariff" value="start" />
+                                    <button class="btn btn-primary" style="" type="submit">Оплатить</button>
+                                </form>
+                                {{-- <form method="POST" action="{{ route('tariff') }}">
+                                    <input hidden name="tariff" value="start" />
+                                    <button class="btn btn-secondary" style="" type="submit">Оплатить на год</button>
+                                </form> --}}
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="tariff__row">
+                        <p style="font-weight:500; font-size:18px; color:rgba(0,0,0,0.4)">Все тарифы действуют в течение 30 календарных дней после оплаты. Если вы не использовали свои отзывы и интеграции в течение оплаченного периода, они станут недоступными. Если вы общаетесь с блогерами в рамках открытых рекламных диалогов, то даже после окончания тарифа вы не потеряете доступ к сервису.</p>
+                    </div>
                 </div>
             </div>
         </div>

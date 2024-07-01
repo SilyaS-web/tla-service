@@ -124,6 +124,37 @@ a.btn:hover{
     flex: 1 1 auto;
 }
 
+.tooltip{
+    position: relative;
+    color: #FE5E00;
+    border-radius: 50%;
+    border: 1px solid #FE5E00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    line-height: 1;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+}
+.tooltip__text{
+    position: absolute;
+    display: none;
+    background-color: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 14px;
+    color: rgba(0, 0, 0, .4);
+    width: 320px;
+    top: 101%;
+    left: 0;
+}
+.tooltip:hover .tooltip__text{
+    display: block;
+  }
+
 .form-group {
     margin-bottom: 14px;
     position: relative;
@@ -435,7 +466,7 @@ input[type='range']::-webkit-slider-runnable-track{
     width:320px;
     display: none;
     border-radius: 5px;
-    z-index: 3;
+    z-index: 9999;
     max-height:420px;
     overflow-y: auto;
 }
@@ -645,6 +676,9 @@ input[type='range']::-webkit-slider-runnable-track{
     font-weight: 600;
     font-size: 20px;
     margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 .view-project__props-orders{
     font-size: 14px;
@@ -985,7 +1019,7 @@ input[type='range']::-webkit-slider-runnable-track{
     gap: 5px;
     display: none;
     border-radius: 5px;
-    z-index: 3;
+    z-index: 9999;
 }
 .header__profile-settings>.row{
     padding:10px 5px;
@@ -1030,7 +1064,7 @@ input[type='range']::-webkit-slider-runnable-track{
     flex-direction: column;
     gap: 5px;
     border-radius: 5px;
-    z-index: 3;
+    z-index: 9999;
 }
 .tarrif-header__item{
     padding:10px 5px;
@@ -1114,6 +1148,27 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .user-view__info{
     margin-bottom: 35px;
+}
+.user-view__back{
+    border-radius: 10px;
+    padding:15px;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    color:var(--primary);
+    width: fit-content;
+    display: flex;
+    z-index: 2;
+    position: relative;
+    text-decoration: underline;
+    margin-bottom: 30px;
+    cursor:pointer
+}
+.user-view__back img{
+    filter: brightness(0) saturate(100%) invert(50%) sepia(74%) saturate(4903%) hue-rotate(2deg) brightness(104%) contrast(105%);
+    transform: rotate(90deg);
+    width: 12px; height: 12px;
 }
 .blogger-platforms{
     display: flex;
@@ -3261,7 +3316,7 @@ input[type='range']::-webkit-slider-runnable-track{
 .messages-chat__item--system {
     margin: 0 auto;
     text-align: center;
-    max-width: 80%;
+    max-width:70%;
     width: unset;
 }
 .messages-chat__item--system .messages-chat__item-msg {

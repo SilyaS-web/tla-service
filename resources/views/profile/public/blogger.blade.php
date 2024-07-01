@@ -4,6 +4,10 @@
 <section class="user-view">
     <div class="user-view__container _container">
         <div class="user-view__body">
+            <a href={{url('/profile/?switch-tab=' . request()->get("tab"))}} class="user-view__back">
+                <img src="{{asset('img/arrow-alt.svg')}}" alt="">
+                <span> Вернуться </span>
+            </a>
             <div class="user-view__info info-profile">
                 <div class="info-profile__body">
                     <div class="info-profile__row">
@@ -83,84 +87,6 @@
                                 </div>
                             </div>
                             @endforeach
-                            {{-- <div class="blogger-platforms__item item-platforms">
-                                <div class="item-platforms__title item-platforms__title--tg">
-                                    Telegram
-                                </div>
-                                <div class="item-platforms__stats">
-                                    <div class="item-platforms__stat">
-                                        <div class="item-platforms__stat-title">
-                                            Просмотры
-                                        </div>
-                                        <div class="item-platforms__stat-value">
-                                            850
-                                        </div>
-                                    </div>
-                                    <div class="item-platforms__stat">
-                                        <div class="item-platforms__stat-title">
-                                            Охваты
-                                        </div>
-                                        <div class="item-platforms__stat-value">
-                                            120
-                                        </div>
-                                    </div>
-                                    <div class="item-platforms__stat">
-                                        <div class="item-platforms__stat-title">
-                                            ER %
-                                        </div>
-                                        <div class="item-platforms__stat-value">
-                                            860
-                                        </div>
-                                    </div>
-                                    <div class="item-platforms__stat">
-                                        <div class="item-platforms__stat-title">
-                                            CPM
-                                        </div>
-                                        <div class="item-platforms__stat-value">
-                                            428₽
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="blogger-platforms__item item-platforms">
-                                <div class="item-platforms__title item-platforms__title--inst">
-                                    Instagram
-                                </div>
-                                <div class="item-platforms__stats">
-                                    <div class="item-platforms__stat">
-                                        <div class="item-platforms__stat-title">
-                                            Просмотры
-                                        </div>
-                                        <div class="item-platforms__stat-value">
-                                            1200
-                                        </div>
-                                    </div>
-                                    <div class="item-platforms__stat">
-                                        <div class="item-platforms__stat-title">
-                                            Охваты
-                                        </div>
-                                        <div class="item-platforms__stat-value">
-                                            400
-                                        </div>
-                                    </div>
-                                    <div class="item-platforms__stat">
-                                        <div class="item-platforms__stat-title">
-                                            ER %
-                                        </div>
-                                        <div class="item-platforms__stat-value">
-                                            1200
-                                        </div>
-                                    </div>
-                                    <div class="item-platforms__stat">
-                                        <div class="item-platforms__stat-title">
-                                            CPM
-                                        </div>
-                                        <div class="item-platforms__stat-value">
-                                            724₽
-                                        </div>
-                                    </div>
-                                </div>
-                            </div> --}}
                         </div>
                     </div>
                     <div class="info-profile__row info-profile__desc">
@@ -180,12 +106,6 @@
                             <div class="list-projects__item project-item">
                                 <div class="owl-carousel project-item__carousel">
                                     <div class="project-item__img" style="background-image:url({{ $project->getImageURL(true) }})">
-                                        {{-- <div class="project-item__status active">
-                                                    {{ $project->active == 0 ? 'Активно' : 'Выполнено' }}
-                                    </div> --}}
-                                    {{-- <div class="project-item__country">
-                                                    Россия
-                                                </div> --}}
                                 </div>
                             </div>
                             <div class="project-item__content">

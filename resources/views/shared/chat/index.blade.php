@@ -16,6 +16,7 @@
                         @empty
                             <p class="chat__chat-empty">Переписка пустая, <span style="color:var(--primary); cursor:pointer" onclick="(function(){ $(document).find('.nav-menu__item.project-link').click() })();">создайте проект</span> и начните работу с блогерами</p>
                         @endforelse
+
                     </div>
                 </div>
                 <div class="chat__right">

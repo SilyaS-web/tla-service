@@ -3,6 +3,7 @@
 @section('content')
 <section class="user-view">
     <div class="user-view__container _container">
+
         <div class="user-view__body">
             <div class="user-view__info info-profile">
                 <div class="info-profile__body">
