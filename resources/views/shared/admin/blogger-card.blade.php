@@ -90,7 +90,7 @@
                     <a href="{{ route('blogger-page', $blogger->id) }}" class="" style="color:rgba(0,0,0,.4); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -20px;">Подробнее</a>
                 </div>
                 <div class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn btn-primary">
+                    <button class="btn btn-primary" onclick="banUser({{$blogger->user->id}}, this)">
                         Заблокировать
                     </button>
                     <!-- <button class = "btn btn-secondary btn-achivments-form" data-project-id="">

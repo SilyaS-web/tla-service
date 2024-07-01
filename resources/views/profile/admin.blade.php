@@ -374,26 +374,23 @@
 <script src="{{ asset('admin/js/script.js') }}"></script>
 
 <script>
-    function acceptApplication(work_id, el) {
+    function banUser(user_id, el) {
         el.innerHTML = '<div class="lds-dual-ring"></div>';
-        $.post({
-            url: '/apist/works/accept-application',
-            data: {
-                work_id: work_id
-            },
+        $.get({
+            url: '/admin/deny/' . user_id,
             success: function(data, textStatus, jqXHR) {
-                el.innerHTML = 'Заявка принята';
+                el.innerHTML = 'Пользователь заблокирован';
                 el.disabled = true;
                 notify('info', {
                     title: 'Успешно!',
-                    message: 'Вы приняли заявку!'
+                    message: 'Пользователь заблокирован!'
                 })
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 el.innerHTML = 'Принять заявку';
                 notify('error', {
                     title: 'Ошибка!',
-                    message: 'Не удалось принять заявку!'
+                    message: 'Не удалось заблокировать пользователя!'
                 });
             }
         });
