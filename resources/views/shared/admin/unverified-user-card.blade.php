@@ -11,7 +11,7 @@
                         {{ $unverified_user->name }}
                     </p>
                     <p class="card__name-tag">
-                        {{ date_format($unverified_user->created_at, 'd.m.y') }}
+                        {{ $unverified_user->created_at ? date_format($unverified_user->created_at, 'd.m.y') :  date('d.m.y', strtotime("2003-01-22")) }}
                     </p>
                 </div>
             </div>
