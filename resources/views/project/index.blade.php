@@ -571,7 +571,7 @@
                     </div>
                 </div>
             </div>
-            @if($project->works->count() < 1)
+            @if($project->works->count() < 1 && !$project->is_blogger_access)
             <div class="profile-projects__control-btns">
                 <div class="profile-projects__dots" title="Опции">
                     <img src="img/dots-icon.svg" alt="">
