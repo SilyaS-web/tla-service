@@ -175,7 +175,7 @@ class UserController extends Controller
             $filter[] = ['user_name', 'like', '%' . $validated['user_name'] . '%'];
         }
 
-        $unverified_users = User::where($filter)->get();
+        $unverified_users = User::where($filter)->whereHas('blogger')->get();
 
         $bloggers = [];
         if (!empty($validated['blogger_name'])) {
