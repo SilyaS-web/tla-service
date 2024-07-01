@@ -5,9 +5,9 @@
                 <div class="card__img">
                     <img src="{{ $blogger->user->getImageURL() }}" alt="">
                     @if($blogger->is_achievement)
-                    <div class="card__achive">
-                        <img src="{{ asset('img/achive-icon.svg') }}" alt="">
-                    </div>
+                        <div class="card__achive">
+                            <img src="{{ asset('img/achive-icon.svg') }}" alt="">
+                        </div>
                     @endif
                 </div>
                 <div class="card__name">
