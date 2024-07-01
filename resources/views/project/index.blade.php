@@ -509,7 +509,7 @@
                                                             </span>
                                                         @else
                                                             @php($er = floor($work->finishStats->views / ($work->blogger->getSubscribers() == 0 ? 1 : $work->blogger->getSubscribers()) * 100) / 100 )
-                                                            {{ number_format($er, 2, '', ' ')  }}
+                                                            {{ number_format($er, 2, ',', ' ')  }}
                                                         @endif
                                                     </div>
                                                     <div class="table-stats__col" style="width: 9%;">
