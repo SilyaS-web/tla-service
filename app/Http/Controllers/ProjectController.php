@@ -294,7 +294,7 @@ class ProjectController extends Controller
         $validator = Validator::make(request()->all(), [
             'product_name' => 'required|min:3|max:250',
             'product_nm' => 'required|min:3|numeric',
-            'product_link' => 'required|min:3|max:250',
+            'product_link' => 'required|min:3|max:1000',
             'product_price' => 'required|numeric',
             'uploaded_images' => 'array',
             'uploaded_images.*' => 'numeric',
