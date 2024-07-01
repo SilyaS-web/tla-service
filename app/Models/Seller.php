@@ -180,7 +180,7 @@ class Seller extends Model
     public function getWBFeedbackStats()
     {
         if (empty($this->wb_api_key)) {
-            return ['total' => 0, 'avg' => 0, 'low' => [], 'mid' => [], 'hig' => [], 'pr_low' => 0, 'pr_mid' => 0];
+            return ['total' => 0, 'avg' => 0, 'low' => [], 'mid' => [], 'hig' => [], 'pr_low' => [], 'pr_mid' => []];
         }
 
         $total = 0;
@@ -196,7 +196,7 @@ class Seller extends Model
         $feedbacks = $this->curlWBFeedbacks();
 
         if (empty($feedbacks)) {
-            return ['total' => 0, 'avg' => 0, 'low' => [], 'mid' => [], 'hig' => [], 'pr_low' => 0, 'pr_mid' => 0];
+            return ['total' => 0, 'avg' => 0, 'low' => [], 'mid' => [], 'hig' => [], 'pr_low' => 0, 'pr_mid' => []];
         }
 
         foreach ($feedbacks as $feedback) {
