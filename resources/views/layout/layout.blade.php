@@ -577,14 +577,13 @@
 
 </script>
 @endif
-
-@if(session()->has('switch-tab'))
-<script>
-    $(window).on('load', function() {
-        $(document).find('.nav-menu__link[data-content="{{ session('switch-tab') }}"]').click();
-    })
-
-</script>
+@if(session()->has('switch-tab') || request()->get('switch-tab'))
+    @php($tab = request()->get('switch-tab') ?? session('switch-tab'))
+    <script>
+        $(window).on('load', function() {
+            $(document).find('.nav-menu__link[data-content="{{ $tab }}"]').click();
+            window.history.replaceState("", 'Дашборд', '{{ url()->current() }}');
+        })
+    </script>
 @endif
-
 </html>

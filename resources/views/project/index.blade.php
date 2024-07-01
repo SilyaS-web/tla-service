@@ -206,7 +206,7 @@
                                     </div>
                                 </div>
                                 <div class="card__row" style="text-align: center;">
-                                    <a href="{{ route('blogger-page', $blogger->id) }}" class="" style="width: 100%; color:rgba(254,94,0); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -10px;">Подробнее</a>
+                                    <a href="{{ route('blogger-page', $blogger->id) . '?tab=profile-projects' }}" class="" style="width: 100%; color:rgba(254,94,0); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -10px;">Подробнее</a>
                                 </div>
                                 <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap; justify-content: center">
                                     <a href="apist/works/{{ $work_application->id }}/start" class="btn btn-primary" data-project-id="">
@@ -402,7 +402,13 @@
                     <div class="view-project__props-wrap" style="margin-top:45px;">
                         <div class="view-project__props-col" style="position: relative">
                             <div class="projects-statistics__title">
-                                Статистика по товару (WB)
+                                Статистика по товару
+                                <div class="projects-statistics__title-tooltip tooltip">
+                                    ?
+                                    <div class="tooltip__text">
+                                        В случае отсутствия отображения статистики, необходимо ввести API-ключ в разделе 'Личные данные'.
+                                    </div>
+                                </div>
                             </div>
                             <div class="view-project__props-total">
                                 <div class="view-project__props-orders">
@@ -473,7 +479,7 @@
                                         </div>
                                         <div class="table-stats__body">
                                             @forelse ($project->works()->where('status', 'completed')->get() as $work)
-                                                <div class="table-stats__row table-stats__row--chat" style="cursor:pointer" data-work-id = "{{ $work->id }}">
+                                                <div class="table-stats__row" data-work-id = "{{ $work->id }}">
                                                     <div class="table-stats__col table-stats__blogger-img" style="width: 10%">
                                                         <img src="{{ $work->blogger->user->getImageURL() }}" alt="">
                                                     </div>
@@ -538,14 +544,14 @@
                                                     <div class="table-stats__col" style="width: 14%;">
                                                         {{$work->confirmed_by_seller_at}}
                                                     </div>
-                                                    <div class="table-stats__col table-stats__col--chat" style="width: 6%;">
+                                                    <div class="table-stats__col table-stats__col--chat" style="width: 6%; cursor:pointer">
                                                         <img src="{{ asset('img/chat-black-icon.svg') }}" alt="">
                                                     </div>
                                                 </div>
                                             @empty
                                             @endforelse
                                             <script>
-                                                $(document).on('click', '.table-stats__row.table-stats__row--chat', function(e){
+                                                $(document).on('click', '.table-stats__row .table-stats__col--chat ', function(e){
                                                     var id = $(e.target).closest('.table-stats__row').data('work-id');
 
                                                     $('.chat-link').click();
