@@ -5,8 +5,11 @@
                 <div class="card__img">
                     <img src="{{ $blogger->user->getImageURL() }}" alt="">
                     @if($blogger->is_achievement)
-                        <div class="card__achive">
+                        <div class="card__achive tooltip">
                             <img src="{{ asset('img/achive-icon.svg') }}" alt="">
+                            <div class="tooltip__text">
+                                <p>Проверенный блогер</p>
+                            </div>
                         </div>
                     @endif
                 </div>
