@@ -135,7 +135,7 @@ class ProjectController extends Controller
             ]);
         }
 
-        if (isset($validated['youtube-quantity']) && $validated['insyoutubet-quantity'] > 0) {
+        if (isset($validated['youtube-quantity']) && $validated['youtube-quantity'] > 0) {
             ProjectWork::create([
                 'type' => Project::YOUTUBE,
                 'quantity' => $validated['youtube-quantity'],
