@@ -15,3 +15,4 @@
         <div class="nav-menu__item-notifs notifs" style="">{{ $new_messages_count }}</div>
     @endif
 </div>
+
