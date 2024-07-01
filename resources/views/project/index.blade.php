@@ -327,7 +327,6 @@
                                     </div>
                                 </div>
                                 <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap">
-                                {{ $active_work->status }}
                                     @if ($active_work->status == null)
                                     <button class="btn btn-secondary" data-project-id="{{ $project->id }}" onclick="(function(){ $(document).find('.chat-link').click(); $(document).find( '.item-chat[ data-id={{ $active_work->id }} ]' ).click() })()">
                                         Заявка отправлена
