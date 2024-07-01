@@ -39,6 +39,8 @@ class CreateUsersTable extends Migration
                 'password' => bcrypt('systempassword'),
                 'status' => 1,
                 'tg_phone_id' => 1,
+                "created_at" =>  \Carbon\Carbon::now(),
+                "updated_at" => \Carbon\Carbon::now(),
             ],
             [
                 'name' => 'Админ', // 2
@@ -48,6 +50,8 @@ class CreateUsersTable extends Migration
                 'password' => bcrypt('adminpass'),
                 'status' => 0,
                 'tg_phone_id' => 2,
+                "created_at" =>  \Carbon\Carbon::now(),
+                "updated_at" => \Carbon\Carbon::now(),
             ],
             [
                 'name' => 'Блогер 1', // 3
@@ -57,6 +61,8 @@ class CreateUsersTable extends Migration
                 'password' => bcrypt('bloggerpass'),
                 'status' => 0,
                 'tg_phone_id' => 3,
+                "created_at" =>  \Carbon\Carbon::now(),
+                "updated_at" => \Carbon\Carbon::now(),
             ],
             [
                 'name' => 'Блогер 2', // 4
@@ -66,6 +72,8 @@ class CreateUsersTable extends Migration
                 'password' => bcrypt('bloggerpass'),
                 'status' => 0,
                 'tg_phone_id' => 4,
+                "created_at" =>  \Carbon\Carbon::now(),
+                "updated_at" => \Carbon\Carbon::now(),
             ],
             [
                 'name' => 'Селлер 1', // 5
@@ -75,6 +83,8 @@ class CreateUsersTable extends Migration
                 'password' => bcrypt('sellerpass'),
                 'status' => 0,
                 'tg_phone_id' => 5,
+                "created_at" =>  \Carbon\Carbon::now(),
+                "updated_at" => \Carbon\Carbon::now(),
             ]
         ]);
     }

@@ -17,7 +17,7 @@
                             <div class="info-profile__id">
                                 <p style="font-size: 12px">
                                     {{ $user->blogger->country->name }}, {{ $user->blogger->city }}<br>
-                                На площадке с {{ date_format($user->created_at, 'd.m.Y') }}
+                                    На площадке с {{ date_format($user->created_at, 'd.m.Y') }}
                                 </p>
                             </div>
                         </div>

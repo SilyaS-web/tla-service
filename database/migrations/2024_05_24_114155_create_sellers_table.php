@@ -38,6 +38,8 @@ class CreateSellersTable extends Migration
         DB::table('sellers')->insert([
             [
                 'user_id' => 5,
+                "created_at" =>  \Carbon\Carbon::now(),
+                "updated_at" => \Carbon\Carbon::now(),
             ]
         ]);
     }
