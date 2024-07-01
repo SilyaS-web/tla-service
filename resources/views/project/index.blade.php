@@ -508,7 +508,7 @@
                                                                 </div>
                                                             </span>
                                                         @else
-                                                            {{ number_format(round($work->finishStats->views / ($work->finishStats->subs == 0 ? 1 : $work->finishStats->subs)), 0, '', ' ')  }}
+                                                            {{ number_format(round($work->finishStats->views / ($work->blogger->getSubscribers() == 0 ? 1 : $work->blogger->getSubscribers())), 0, '', ' ')  }}
                                                         @endif
                                                     </div>
                                                     <div class="table-stats__col" style="width: 9%;">
