@@ -432,56 +432,52 @@
                                                         </div>
                                                     </div>
                                                     <div class="feedback-item__stats">
-                                                        @if(count($wb_stats["low"]) > 0)
-                                                            <div class="feedback-item__stat">
-                                                                <div class="feedback-item__stats-row">
-                                                                    <div class="feedback-item__stat-quest danger">
-                                                                        !
-                                                                    </div>
-                                                                    У вас {{ count($wb_stats["low"]) }} товар(ов) с очень низкой оценкой
-
-                                                                    <div class="feedback-item__stat-arrow">
-                                                                        <img src="{{ asset('img/arrow-alt.svg') }}" alt="">
-                                                                    </div>
+                                                        <div class="feedback-item__stat">
+                                                            <div class="feedback-item__stats-row">
+                                                                <div class="feedback-item__stat-quest danger">
+                                                                    !
                                                                 </div>
-                                                                <div class="feedback-item__stats-row">
-                                                                    <div class="feedback-item__stat-products">
-                                                                        <div class="" style="background-color: #fff">
-                                                                            @foreach ($wb_stats["low"] as $product_nm)
-                                                                                <a target="_blank" href="https://www.wildberries.ru/catalog/{{ $product_nm }}/detail.aspx" class="profile-projects__status">
-                                                                                    Арт: {{ $product_nm }}
-                                                                                </a>
-                                                                            @endforeach
-                                                                        </div>
+                                                                У вас {{ count($wb_stats["low"]) }} товар(ов) с очень низкой оценкой
+
+                                                                <div class="feedback-item__stat-arrow">
+                                                                    <img src="{{ asset('img/arrow-alt.svg') }}" alt="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="feedback-item__stats-row">
+                                                                <div class="feedback-item__stat-products">
+                                                                    <div class="" style="background-color: #fff">
+                                                                        @foreach ($wb_stats["low"] as $product_nm)
+                                                                            <a target="_blank" href="https://www.wildberries.ru/catalog/{{ $product_nm }}/detail.aspx" class="profile-projects__status">
+                                                                                Арт: {{ $product_nm }}
+                                                                            </a>
+                                                                        @endforeach
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        @endif
-                                                        @if(count($wb_stats["mid"]) > 0)
-                                                            <div class="feedback-item__stat">
-                                                                <div class="feedback-item__stats-row">
-                                                                    <div class="feedback-item__stat-quest warning">
-                                                                        !
-                                                                    </div>
-                                                                    У вас {{ count($wb_stats["mid"]) }} товаров с удовлетворительной оценкой, требуется улучшение
-
-                                                                    <div class="feedback-item__stat-arrow">
-                                                                        <img src="{{ asset('img/arrow-alt.svg') }}" alt="">
-                                                                    </div>
+                                                        </div>
+                                                        <div class="feedback-item__stat">
+                                                            <div class="feedback-item__stats-row">
+                                                                <div class="feedback-item__stat-quest warning">
+                                                                    !
                                                                 </div>
-                                                                <div class="feedback-item__stats-row">
-                                                                    <div class="feedback-item__stat-products">
-                                                                        <div class="" style="background-color: #fff">
-                                                                            @foreach ($wb_stats["mid"] as $product_nm)
-                                                                                <a target="_blank" href="https://www.wildberries.ru/catalog/{{ $product_nm }}/detail.aspx" class="profile-projects__status">
-                                                                                    Арт: {{ $product_nm }}
-                                                                                </a>
-                                                                            @endforeach
-                                                                        </div>
+                                                                У вас {{ count($wb_stats["mid"]) }} товаров с удовлетворительной оценкой, требуется улучшение
+
+                                                                <div class="feedback-item__stat-arrow">
+                                                                    <img src="{{ asset('img/arrow-alt.svg') }}" alt="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="feedback-item__stats-row">
+                                                                <div class="feedback-item__stat-products">
+                                                                    <div class="" style="background-color: #fff">
+                                                                        @foreach ($wb_stats["mid"] as $product_nm)
+                                                                            <a target="_blank" href="https://www.wildberries.ru/catalog/{{ $product_nm }}/detail.aspx" class="profile-projects__status">
+                                                                                Арт: {{ $product_nm }}
+                                                                            </a>
+                                                                        @endforeach
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        @endif
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="feedback-dashboard__fb-row">
@@ -496,7 +492,6 @@
                                                             </div>
                                                         </div>
                                                         <div class="feedback-item__stats">
-                                                            @if(count($wb_stats["pr_low"]) > 0)
                                                             <div class="feedback-item__stat">
                                                                 <div class="feedback-item__stats-row">
                                                                     <div class="feedback-item__stat-quest danger">
@@ -519,8 +514,6 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            @endif
-                                                            @if( count($wb_stats["pr_mid"]) > 0)
                                                             <div class="feedback-item__stat">
                                                                 <div class="feedback-item__stats-row">
                                                                     <div class="feedback-item__stat-quest warning">
@@ -542,9 +535,7 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-
                                                             </div>
-                                                            @endif
                                                         </div>
                                                     </div>
                                                 </div>
