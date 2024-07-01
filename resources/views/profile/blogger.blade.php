@@ -263,9 +263,6 @@
                         </div>
                         <div class="popup-project__row" style="line-height:1">
                             <div class="popup-project__mark">
-                                <div class="popup-project__mark-star">
-                                    <img src="{{ asset('img/star-icon.svg') }}" alt="" srcset="">
-                                </div>
                             </div>
                             <div class="popup-project__articul">
                                 <p>Арт: </p>
