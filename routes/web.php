@@ -73,7 +73,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/projects', [ProjectController::class, 'index']);
         Route::post('/projects/confirm', [WorkController::class, 'confirm']);
         Route::get('/projects/categories', [ProjectController::class, 'categories']);
-        Route::get('/projects/{project}/wb-info', [ProjectController::class, 'getWBInfo']);
+        Route::get('/projects/{project}/product-info', [ProjectController::class, 'getProductInfo']);
         Route::get('/projects/{project}/activate', [ProjectController::class, 'activate']);
         Route::get('/projects/{project}/ban', [ProjectController::class, 'ban']);
         Route::get('/projects/{project}/unban', [ProjectController::class, 'unban']);

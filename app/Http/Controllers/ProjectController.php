@@ -99,20 +99,20 @@ class ProjectController extends Controller
         if (strripos($validated['product_link'], 'ozon') !== false && !empty($user->seller->ozon_client_id) && !empty($user->seller->ozon_api_key)) {
             $info = $this->getOzonInfo($validated['product_nm'], $user->seller->ozon_client_id, $user->seller->ozon_api_key);
             if (!$info) {
-                $validated['ozon_category'] = $info['category'] ?? null;
-                $validated['wb_brand'] = $info['brand'] ?? null;
-                $validated['ozon_product_name'] = $info['name'] ?? null;
-                $validated['ozon_description'] = $info['description'] ?? null;
-                $validated['ozon_options'] = json_encode($info['options'] ?? null);
+                $validated['marketplace_category'] = $info['category'] ?? null;
+                $validated['marketplace_brand'] = $info['brand'] ?? null;
+                $validated['marketplace_product_name'] = $info['name'] ?? null;
+                $validated['marketplace_description'] = $info['description'] ?? null;
+                $validated['marketplace_options'] = json_encode($info['options'] ?? null);
             }
         } else {
             $card = $this->curlWBStats($validated['product_nm']);
             if ($card) {
-                $validated['wb_category'] = $card->subj_name ?? null;
-                $validated['wb_brand'] = $card->selling->brand_name ?? null;
-                $validated['wb_product_name'] = $card->imt_name ?? null;
-                $validated['wb_description'] = $card->description ?? null;
-                $validated['wb_options'] = json_encode($card->options);
+                $validated['marketplace_category'] = $card->subj_name ?? null;
+                $validated['marketplace_brand'] = $card->selling->brand_name ?? null;
+                $validated['marketplace_product_name'] = $card->imt_name ?? null;
+                $validated['marketplace_description'] = $card->description ?? null;
+                $validated['marketplace_options'] = json_encode($card->options);
             }
         }
 
@@ -217,7 +217,7 @@ class ProjectController extends Controller
 
             if (isset($validated['category']) && !empty($validated['project_name'])) {
                 $application_works->whereHas('project', function (Builder $query) use ($validated) {
-                    $query->where('wb_category', 'like', '%' . $validated['category'] . '%');
+                    $query->where('marketplace_category', 'like', '%' . $validated['category'] . '%');
                 });
             }
 
@@ -238,7 +238,7 @@ class ProjectController extends Controller
             }
 
             if (isset($validated['category']) && !empty($validated['category'])) {
-                $all_projects->where('wb_category', 'like', '%' . $validated['category'] . '%');
+                $all_projects->where('marketplace_category', 'like', '%' . $validated['category'] . '%');
             }
 
             $all_projects = $all_projects->get();
@@ -270,7 +270,7 @@ class ProjectController extends Controller
 
         if (isset($validated['category']) && !empty($validated['project_name'])) {
             $project_works->whereHas('project', function (Builder $query) use ($validated) {
-                $query->where('wb_category', 'like', '%' . $validated['category'] . '%');
+                $query->where('marketplace_category', 'like', '%' . $validated['category'] . '%');
             });
         }
 
@@ -376,26 +376,21 @@ class ProjectController extends Controller
         $categories = [];
 
         if (isset($validated['category']) && !empty($validated['category'])) {
-            $categories = Project::selectRaw('wb_category as theme')->where('wb_category', 'like', '%' . $validated['category'] . '%')->distinct('wb_category')->get();
+            $categories = Project::selectRaw('marketplace_category as theme')->where('marketplace_category', 'like', '%' . $validated['category'] . '%')->distinct('marketplace_category')->get();
         }
 
         return response()->json(['categories' => $categories], 200);
     }
 
-    public function getWBInfo(Project $project)
+    public function getProductInfo(Project $project)
     {
         $total_quantity = $project->projectWorks()->sum('quantity');
         $lost_quantity = $total_quantity - $project->works()->where('status', '<>', null)->count();
         $options = [];
-        if (!empty($project->wb_options)) {
-            $options = json_decode($project->wb_options);
-        } else if (!empty($project->ozon_options)) {
-            $options = json_decode($project->ozon_options);
-        }
         return response()->json([
-            'category' => $project->wb_category ?? $project->ozon_category,
-            'product_name' => $project->wb_product_name ?? $project->ozon_product_name,
-            'description' => $project->wb_description ?? $project->ozon_description,
+            'category' => $project->marketplace_options,
+            'product_name' => $project->marketplace_product_name,
+            'description' => $project->marketplace_description,
             'total_quantity' => $total_quantity,
             'lost_quantity' => $lost_quantity,
             'product_code' => $project->product_nm,

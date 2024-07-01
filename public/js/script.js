@@ -1713,7 +1713,7 @@ class PopupBlogerProjectMoreInfo extends Popup{
     instance = null;
 
     node = '';
-    getProjectInfoUri = 'apist/projects/%%PROJECT_ID%%/wb-info'
+    getProjectInfoUri = 'apist/projects/%%PROJECT_ID%%/product-info'
     projectId = false
 
     characteristicsTemplate = `<div class="characteristics__row">
@@ -1785,7 +1785,7 @@ class PopupBlogerProjectMoreInfo extends Popup{
 
     getProjectInfo = () => {
         var self = this;
-        this.getProjectInfoUri = `apist/projects/${this.projectId}/wb-info`;
+        this.getProjectInfoUri = `apist/projects/${this.projectId}/product-info`;
         $.ajax({
             url: `${self.getProjectInfoUri}`,
             data: {},
