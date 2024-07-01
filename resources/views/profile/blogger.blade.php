@@ -266,12 +266,9 @@
                                 <div class="popup-project__mark-star">
                                     <img src="{{ asset('img/star-icon.svg') }}" alt="" srcset="">
                                 </div>
-                                <div class="popup-project__mark-text">
-                                    4.2
-                                </div>
                             </div>
                             <div class="popup-project__articul">
-                                <p>Арт: 123123123</p>
+                                <p>Арт: </p>
                             </div>
                         </div>
                         <div class="popup-project__row popup-project__cost">
@@ -280,7 +277,7 @@
                         <div class="popup-project__addit characteristics">
                             <p class="popup-project__addit-title">Дополнительная информация</p>
                             <div class="characteristics__category">
-                                Категория: Тестовая
+                                Категория:
                             </div>
                             <div class="characteristics-items">
                             </div>
@@ -289,7 +286,7 @@
                             <div class="line">
                                 <div class="line__val" style="width:60%"></div>
                             </div>
-                            Осталось мест на интеграцию <span style="font-weight: 700;">5/3</span>
+                            Осталось мест на интеграцию <span style="font-weight: 700;"></span>
                         </div>
                         {{-- <div class="project-item__format-tags card__row card__tags">
                             <div class="card__tags-item">
