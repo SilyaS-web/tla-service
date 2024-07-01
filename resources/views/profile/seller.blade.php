@@ -575,7 +575,7 @@
                                         <div class="dashboard__col dashboard__item funnel-statistics">
                                             <div class="dashboard__col">
                                                 <div class="dashboard__item-title">
-                                                    Поĸазатели эффеĸтивности за 14 дней
+                                                    Поĸазатели эффеĸтивности за 30 дней
                                                 </div>
                                                 <div class="dashboard__row">
                                                 @if($total_clicks > 10)
