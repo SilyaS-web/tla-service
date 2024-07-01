@@ -70,6 +70,7 @@ class AuthController extends Controller
             Seller::create([
                 'user_id' => $user->id
             ]);
+            $user->update(['status' => 1]);
         }
 
         $credentials = [
@@ -186,5 +187,9 @@ class AuthController extends Controller
             'password' => $password,
             'chatId' => $tg_phone->chat_id
         ]], 200);
+    }
+
+    public function banned() {
+        return view('shared.chat.chat-list');
     }
 }

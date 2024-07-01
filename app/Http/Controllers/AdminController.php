@@ -177,9 +177,13 @@ class AdminController extends Controller
         $user = User::find($validated['user_id']);
         $user->status = -1;
         $user->save();
+        if ($user->status == 0) {
+            TgService::notify($user->tgPhone->chat_id, 'Вы не прошли модерацию');
+        } else {
+            TgService::notify($user->tgPhone->chat_id, 'Вы были забанены');
+        }
 
-        TgService::notify($user->tgPhone->chat_id, 'Вы не прошли модерацию');
-        return view('shared.admin.bloggers-list');
+        return redirect()->back()->with('success', 'Ползьватель заблокирован');
     }
 
     public function moderation(Request $request)

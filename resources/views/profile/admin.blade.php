@@ -372,4 +372,31 @@
     </div>
 </body>
 <script src="{{ asset('admin/js/script.js') }}"></script>
+
+<script>
+    function acceptApplication(work_id, el) {
+        el.innerHTML = '<div class="lds-dual-ring"></div>';
+        $.post({
+            url: '/apist/works/accept-application',
+            data: {
+                work_id: work_id
+            },
+            success: function(data, textStatus, jqXHR) {
+                el.innerHTML = 'Заявка принята';
+                el.disabled = true;
+                notify('info', {
+                    title: 'Успешно!',
+                    message: 'Вы приняли заявку!'
+                })
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                el.innerHTML = 'Принять заявку';
+                notify('error', {
+                    title: 'Ошибка!',
+                    message: 'Не удалось принять заявку!'
+                });
+            }
+        });
+    }
+</script>
 </html>

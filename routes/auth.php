@@ -10,3 +10,5 @@ Route::get('/login', [AuthController::class, 'login'])->name('login');
 Route::post('/login', [AuthController::class, 'authenticate']);
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+
+Route::post('/banned', [AuthController::class, 'banned'])->name('banned');
