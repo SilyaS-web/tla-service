@@ -100,7 +100,7 @@
                             <div class="tarrif-header__item tarrif-header__adv">
                                 Отзыв - <b><span class="counter">{{ auth()->user()->seller->remaining_tariff }}</span> шт.</b>
                                 <div class="tarrif-header__date">
-                                    Действует до 30 Июня
+                                    Действует до {{ date('d-m-Y') }}
                                 </div>
                                 <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
                             </div>
