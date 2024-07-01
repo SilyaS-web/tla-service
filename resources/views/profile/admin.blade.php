@@ -83,7 +83,7 @@
                         <div class="admin-blogers__body">
                             <div class="admin-blogers__header">
                                 <div class="admin-blogers__title title">
-                                    Модерация блогеров
+                                    Модерация блогеров • {{ $unverified_users->count() }}
                                 </div>
                                 <div class="admin-blogers__search form-group">
                                     <input type="name" id="moderation-search" class="input" placeholder="Введите название">
@@ -97,7 +97,7 @@
                         <div class="admin-blogers__body">
                             <div class="admin-blogers__header">
                                 <div class="admin-blogers__title title">
-                                    Список блогеров
+                                    Список блогеров • {{ $bloggers->count() }}
                                 </div>
                                 <div class="admin-blogers__search form-group">
                                     <input type="name" id="blogers-search" class="input" placeholder="Введите название">
@@ -111,7 +111,7 @@
                         <div class="admin-blogers__body">
                             <div class="admin-blogers__header">
                                 <div class="admin-blogers__title title">
-                                    Список селлеров
+                                    Список селлеров • {{ $sellers->count() }}
                                 </div>
                                 <div class="admin-blogers__search form-group">
                                     <input type="name" id="sellers-search" class="input" placeholder="Введите название">
@@ -125,7 +125,7 @@
                         <div class="admin-blogers__body">
                             <div class="admin-blogers__header">
                                 <div class="admin-blogers__title title">
-                                    Список проектов
+                                    Список проектов • {{ $all_projects->count() }}
                                 </div>
                                 <div class="admin-blogers__search form-group">
                                     <input type="name" id="sellers-search" class="input" placeholder="Введите название">
