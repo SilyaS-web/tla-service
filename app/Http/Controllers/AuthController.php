@@ -76,7 +76,7 @@ class AuthController extends Controller
             'phone' => $phone,
             'password' => $validated['password'],
         ];
-        
+
         Auth::attempt($credentials);
         request()->session()->regenerate();
 
@@ -129,7 +129,12 @@ class AuthController extends Controller
             'password' => 'required|min:8'
         ]);
 
-        if (auth()->attempt($validated)) {
+        $phone = PhoneService::format($validated['phone']);
+        $credentials = [
+            'phone' => $phone,
+            'password' => $validated['password'],
+        ];
+        if (auth()->attempt($credentials)) {
             request()->session()->regenerate();
 
             return redirect()->route('profile')->with('success');
