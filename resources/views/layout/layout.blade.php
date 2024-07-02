@@ -229,7 +229,7 @@
             <div class="footer__container _container">
                 <div class="footer__body">
                     <a href="{{ route('policy') }}" class="footer__policy">
-                        Политика конфиденциальности  {{ auth()->user()->status }}
+                        Политика конфиденциальности
                     </a>
                     <a href="#" class="footer__policy">
                         Публичная оферта

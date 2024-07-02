@@ -1,7 +1,7 @@
 //----To next dev guy-----
 //If you watching this it means I've save myself and leave
 //All I wanna say is Sorry :3
-let currentChatId = false;
+
 class Quest {
     constructor(node) {
         this.node = node;
@@ -984,7 +984,6 @@ class Chat {
 
         this.getNewMessages(chat.data('id'));
         this.currentChatId = chat.data('id');
-        currentChatId = chat.data('id');
         $(document).find('.item-chat.current').removeClass('current');
         chat.addClass('current');
 
@@ -1075,14 +1074,14 @@ class Chat {
 
     getChats = () => {
         var self = this;
-        $.post(self.getMsgUri, {}, function(res){
-            $(document).find('.chat__chat-items').remove();
-            $(document).find('#chat .chat__left').append(res.view);
-
-            if(this.currentChatId){
-                $(self.node).find('.item-chat').addClass('current');
-            }
-            else{
+        $.post({
+            url: self.getMsgUri,
+            success: (res) => {
+                $(document).find('.chat__chat-items').remove();
+                $(document).find('#chat .chat__left').append(res.view);
+                if(self.currentChatId){
+                    $(self.node).find('.item-chat').addClass('current');
+                }
             }
         })
     }
