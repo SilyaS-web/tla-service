@@ -206,7 +206,7 @@
                                     </div>
                                 </div>
                                 <div class="card__row" style="text-align: center;">
-                                    <a href="{{ route('blogger-page', $blogger->id) . '?tab=profile-projects' }}" class="" style="width: 100%; color:rgba(254,94,0); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -10px;">Подробнее</a>
+                                    <a href="{{ route('blogger-page', $blogger->id) . '?tab=profile-projects' }}" class="" style="width: 100%; color: rgba(0, 0, 0, .4); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -10px;">Подробнее</a>
                                 </div>
                                 <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap; justify-content: center">
                                     <a href="apist/works/{{ $work_application->id }}/start" class="btn btn-primary" data-project-id="">
@@ -234,9 +234,12 @@
                                     <div class="card__img">
                                         <img src="{{ $blogger->user->getImageURL() }}" alt="">
                                         @if ($blogger->is_achievement)
-                                        <div class="card__achive">
-                                            <img src="{{ asset('img/achive-icon.svg') }}" alt="">
-                                        </div>
+                                            <div class="card__achive tooltip">
+                                                <img src="{{ asset('img/achive-icon.svg') }}" alt="">
+                                                <div class="tooltip__text">
+                                                    <p>Проверенный блогер</p>
+                                                </div>
+                                            </div>
                                         @endif
                                     </div>
                                     <div class="card__name">
@@ -406,7 +409,7 @@
                                 <div class="projects-statistics__title-tooltip tooltip">
                                     ?
                                     <div class="tooltip__text">
-                                        В случае отсутствия отображения статистики, необходимо ввести API-ключ в разделе 'Личные данные'.
+                                        <p>В случае отсутствия отображения статистики, необходимо ввести API-ключ в разделе 'Личные данные'.</p>
                                     </div>
                                 </div>
                             </div>
