@@ -180,7 +180,7 @@ class Seller extends Model
     public function getWBFeedbackStats()
     {
         if (empty($this->wb_api_key)) {
-            return ['total' => 0, 'avg' => 0, 'low' => [], 'mid' => [], 'hig' => [], 'pr_low' => [], 'pr_mid' => []];
+            return ['total' => 0, 'avg' => 0, 'low' => [], 'mid' => [], 'hig' => [], 'pr_low' => [], 'pr_mid' => [], 'percent' => 0];
         }
 
         $total = 0;
@@ -192,11 +192,11 @@ class Seller extends Model
         $pr_mid = [];
         $total_valuation = 0;
         $products_feedbacks = [];
-
+        $percent = 0;
         $feedbacks = $this->curlWBFeedbacks();
 
         if (empty($feedbacks)) {
-            return ['total' => 0, 'avg' => 0, 'low' => [], 'mid' => [], 'hig' => [], 'pr_low' => 0, 'pr_mid' => []];
+            return ['total' => 0, 'avg' => 0, 'low' => [], 'mid' => [], 'hig' => [], 'pr_low' => 0, 'pr_mid' => [], 'percent' => 0];
         }
 
         foreach ($feedbacks as $feedback) {
@@ -226,6 +226,18 @@ class Seller extends Model
         }
 
         $avg = $total > 0 ? $total_valuation / $total : 0;
+        
+        if ($avg <= 4.5) {
+            $percent = 11.1 * $avg;
+        } else if ($avg <= 4.7) {
+            $percent = 15.9 * $avg;
+        } else if ($avg <= 4.85) {
+            $percent = 18 * $avg;
+        } else if ($avg <= 4.92) {
+            $percent = 19 * $avg;
+        } else {
+            $percent = 20 * $avg;
+        }
 
         return [
             'total' => $total,
@@ -235,6 +247,7 @@ class Seller extends Model
             'hig' => $hig,
             'pr_low' => $pr_low,
             'pr_mid' => $pr_mid,
+            'percent' => $percent,
         ];
     }
 

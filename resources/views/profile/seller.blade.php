@@ -401,7 +401,7 @@
                                                         5
                                                     </div>
                                                 </div>
-                                                <img id="meter_needle" src="libs/meter/svg-meter-gauge-needle.svg" alt="" data-percents="{{ round($wb_stats["avg"], 2) * 20 }}">
+                                                <img id="meter_needle" src="libs/meter/svg-meter-gauge-needle.svg" alt="" data-percents="{{ round($wb_stats["percent"], 2) }}">
                                             </div>
                                             <div class="dashboard-sm__desc">
                                                 {{-- У вас отличные показатели, <br> --}}
