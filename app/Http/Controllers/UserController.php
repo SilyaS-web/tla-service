@@ -113,7 +113,7 @@ class UserController extends Controller
             $query->whereIn('link_id', $deep_link_ids);
         })->whereBetween('created_at', [$start_date, $end_date])->get();
 
-        $bloggers_finish = Work::selectRaw('DATE_FORMAT(created_at, "%Y-%m-%e") as date')->where('seller_id', $user_id)->where('status', Work::COMPLETED)->whereBetween('created_at', [$start_date, $end_date])->get();
+        $bloggers_finish = Work::selectRaw('DATE_FORMAT(confirmed_by_seller_at, "%Y-%m-%e") as date')->where('seller_id', $user_id)->where('status', Work::COMPLETED)->whereBetween('created_at', [$start_date, $end_date])->get();
         $total_stats = [];
         $total_clicks = 0;
         foreach ($deep_link_stats as $deep_link_stat) {
