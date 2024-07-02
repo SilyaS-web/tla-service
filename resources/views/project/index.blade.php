@@ -605,6 +605,7 @@
     })
 
     var mediaQuery = window.matchMedia('(max-width: 911px)');
+    var month = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
 
     $(document).find('.profile-projects__row.projects-statistics').each((i, stat) => {
         var prices_ctx, orders_ctx;
@@ -619,83 +620,63 @@
         console.log(data);
 
         datasets = [{
-                label: 'Выручка'
-                , data: data.prices_history.map((item, index) => {
+                label: 'Выручка',
+                data: data.prices_history.map((item, index) => {
                     if (item["earnings"] !== undefined) {
-                        return Math.round(item.earnings)
+                        return {x: (item.dt.split('-')[2] + ' ' + month[Number(item.dt.split('-')[1]) - 1]), y: Math.round(item.earnings)};
+
                     } else {
-                        return Math.round(item.price * data.orders_history[index].orders)
+                        return {x: (item.dt.split('-')[2] + ' ' + month[Number(item.dt.split('-')[1]) - 1]), y: Math.round(item.price * data.orders_history[index].orders)};
                     }
-                })
-                , showLine: true
-                , type: 'line',
-                // bloggers: data.prices_history.map(() => {
-                //     return Math.floor(Math.random() * 15)
-                // })
+                }),
+                showLine: true,
+                type: 'line',
                 backgroundColor: data.prices_history.map(() => {
                     return 'rgb(255, 99, 132, 0.5)'
-                })
-                , bloggers: data.prices_history.map(item => item.bloggers)
-                , order: 0
-            , }
-            , {
-                label: 'Заказы'
-                , data: data.orders_history.map(item => {
-                    return Math.round(item.orders)
-                })
-                , showLine: true
-                , type: 'bar',
-                // , bloggers: data.orders_history.map(() => {
-                //     return Math.floor(Math.random() * 15)
-                // })
+                }),
+                order: 0,
+            },
+            {
+                label: 'Заказы',
+                data: data.orders_history.map(item => {
+                    return {x: (item.dt.split('-')[2] + ' ' + month[Number(item.dt.split('-')[1]) - 1]), y: Math.round(item.orders)};
+
+                }),
+                showLine: true,
+                type: 'bar',
                 backgroundColor: data.orders_history.map(() => {
                     return 'rgb(54, 162, 235, 0.5)'
-                })
-                , bloggers: data.orders_history.map(item => item.bloggers)
-                , order: 1
-                , tension: 0.1
-            }
-            , {
-                label: 'Блоггеров завершило работу'
-                , data: data.orders_history.map(item => item.bloggers),
-                // data: data.orders_history.map(() => {
-                //     return 1
-                // }),
-                showLine: true
-                , type: 'bar'
-                , backgroundColor: data.orders_history.map(() => {
+                }),
+                order: 1,
+                tension: 0.1
+            },
+            {
+                label: 'Блоггеров завершило работу',
+                data: data.bloggers_history.map(item => {
+                    return {x: (item.dt.split('-')[2] + ' ' + month[Number(item.dt.split('-')[1]) - 1]), y: item.bloggers};
+                }),
+                showLine: true,
+                type: 'bar',
+                backgroundColor: data.bloggers_history.map(() => {
                     return 'rgb(254,94,0, 0.4)'
-                })
-                , order: 2
-            }
-        , ]
-
-        var month = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+                }),
+                order: 2
+            },
+        ];
 
         var prodsStatistics = new Chart(orders_ctx, {
-            type: 'scatter'
-            , data: {
+            type: 'scatter',
+            data: {
                 labels: data.prices_history.map(item => {
                     return `${item.dt.split('-')[2]} ${month[Number(item.dt.split('-')[1]) - 1]}`
-                })
-                , datasets: datasets
-            }
-            , options: {
+                }),
+                datasets: datasets
+            },
+            options: {
                 plugins: {
                     tooltip: {
                         mode: 'index',
                         intersect: false,
-                        callbacks: {
-                            title: (item, data) => {
-                                var cItem = item[0]
-                                    , cLabel = prodsStatistics.data.labels[cItem.dataIndex];
-
-                                if (cItem.dataset.bloggers[cItem.dataIndex] > 0) {
-                                    return cLabel + ', Блогер(ов) завершило работу: ' + cItem.dataset.bloggers[cItem.dataIndex]
-                                }
-                            },
-
-                        }
                     },
                 },
                 hover: {
@@ -706,39 +687,10 @@
                     y: {
                         beginAtZero: true,
                         type: 'logarithmic',
-                        // ticks: {
-                        //     callback: (tick, index, array)=> {
-                        //         var newTick = '';
-
-                        //         if(Math.trunc(tick) === tick){
-                        //             newTick = tick
-                        //         }
-
-                        //         return tick === 0 ? 0 : newTick;
-                        //     }
-                        // },
                     },
-                }
-            , }
-        });
-
-        var dataset = prodsStatistics.data.datasets[1];
-        var colors = {};
-
-        // Loop through data values
-        dataset.bloggers.forEach(function(value, index) {
-            if (value > 0) {
-                colors[index] = '#FE5E00'
+                },
             }
         });
-
-        var dataset = prodsStatistics.data.datasets[1];
-
-        for (var i = 0; i < dataset.data.length; i++) {
-            if (colors[i]) {
-                dataset.backgroundColor[i] = 'rgba(254,94,0, 0.5)';
-            }
-        }
 
         prodsStatistics.update();
 
@@ -750,11 +702,6 @@
                     prodsStatistics.resize()
                 }
             })
-
-        // window.addEventListener('resize', function () {
-        //     prodsStatistics.resize()
-        //     console.log(prodsStatistics);
-        // })
     })
 
 </script>
