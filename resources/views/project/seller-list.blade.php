@@ -1,5 +1,5 @@
 <div class="profile-projects__items list-projects__items" style="max-width:1030px">
-    @forelse ($projects as $project)
+    @forelse ($projects->where('status', '<>', -2)->where('is_blogger_access', true)->all() as $project)
     @php($lost_seats = $project->projectWorks()->sum('quantity') - $project->works()->whereIn('status', ['progress', 'completed'])->count())
         <div class="list-projects__item project-item">
             <div class="owl-carousel project-item__carousel">

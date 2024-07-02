@@ -84,6 +84,7 @@ class WorkController extends Controller
 
         if (!$work->status && $work->created_by != $user->id) {
             $work->status = Work::PENDING;
+            $work->last_message_at = date('Y-m-d H:i');
             $work->save();
 
             Notification::create([

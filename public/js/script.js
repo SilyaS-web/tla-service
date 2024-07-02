@@ -1077,10 +1077,11 @@ class Chat {
         $.post({
             url: self.getMsgUri,
             success: (res) => {
+                console.log(self.currentChatId);
                 $(document).find('.chat__chat-items').remove();
                 $(document).find('#chat .chat__left').append(res.view);
                 if(self.currentChatId){
-                    $(self.node).find('.item-chat').addClass('current');
+                    $(self.node).find(`.item-chat[data-id="${self.currentChatId}"]`).addClass('current');
                 }
             }
         })
