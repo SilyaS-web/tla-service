@@ -56,6 +56,9 @@
                         </div>
                     </div>
                 </div>
+                <div class="card__row" style="text-align: center; justify-content:center">
+                    <a href="{{ route('seller-page', $seller->id) }}" class="" style="color:rgba(0,0,0,.4); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -20px;">Подробнее</a>
+                </div>
                 <div class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
                     <button class="btn btn-primary" onclick="banUser({{$seller->user->id}}, this)">
                         Заблокировать

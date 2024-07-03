@@ -92,6 +92,7 @@ Route::middleware(['auth', 'banned'])->group(function () {
         Route::post('/works/{work_id}/confirm', [WorkController::class, 'confirm']);
         Route::post('/works/{work}/stats', [WorkController::class, 'stats']);
         Route::get('/works/{work}/deny', [WorkController::class, 'deny']);
+        Route::get('/works/{work}/chat', [WorkController::class, 'viewChat'])->name('work-chat');
 
         Route::post('/messages/create', [MessageController::class, 'store']);
         Route::post('/messages/count', [MessageController::class, 'count']);

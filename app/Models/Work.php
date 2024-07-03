@@ -129,4 +129,21 @@ class Work extends Model
 
         return $total_clicks;
     }
+
+    public function getStatus()
+    {
+        switch ($this->status) {
+            case self::COMPLETED:
+                return "Завершен";
+
+            case self::IN_PROGRESS:
+                return "Выполняется";
+
+            case self::PENDING:
+                return "Ожидает принятия";
+
+            default:
+                return "Заявка отправлена";
+        }
+    }
 }

@@ -94,44 +94,81 @@
                     </div>
                 </div>
             </div>
-            <? if(count($projects) > 0): ?>
-            <div class="user-view__projects">
-                <div class="profile-projects tab-content active" id="my-projects">
-                    <div class="profile-projects__body">
-                        <div class="profile-projects__title title">
-                            Список выполненных проектов
-                        </div>
-                        <div class="list-projects__items">
-                            @forelse ($projects as $project)
-                            <div class="list-projects__item project-item">
-                                <div class="owl-carousel project-item__carousel">
-                                    <div class="project-item__img" style="background-image:url({{ $project->getImageURL(true) }})">
-                                </div>
+            @if(count($projects) > 0)
+                <div class="user-view__projects">
+                    <div class="profile-projects tab-content active" id="my-projects">
+                        <div class="profile-projects__body">
+                            <div class="profile-projects__title title">
+                                Список выполненных проектов
                             </div>
-                            <div class="project-item__content">
-                                <div class="project-item__title">
-                                    {{ $project->product_price }}₽
-                                </div>
-                                <div class="project-item__subtitle" title="{{ $project->product_name }}">
-                                    {{ $project->product_name }}
-                                </div>
-                                <div class="project-item__format-tags card__row card__tags">
-                                    <div class="card__tags-item">
-                                        <span>Рекламный пост</span>
+                            <div class="list-projects__items">
+                                @forelse ($projects as $project)
+                                    <div class="list-projects__item project-item">
+                                        <div class="owl-carousel project-item__carousel">
+                                            <div class="project-item__img" style="background-image:url({{ $project->getImageURL(true) }})"></div>
+                                        </div>
+                                        <div class="project-item__content">
+                                            <div class="project-item__title">
+                                                {{ $project->product_price }}₽
+                                            </div>
+                                            <div class="project-item__subtitle" title="{{ $project->product_name }}">
+                                                {{ $project->product_name }}
+                                            </div>
+                                            <div class="project-item__format-tags card__row card__tags">
+                                                <div class="card__tags-item">
+                                                    <span>Рекламный пост</span>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
+                                @empty
+                                Пока что здесь пусть
+                                @endforelse
                             </div>
                         </div>
-                        @empty
-                        Пока что здесь пусть
-                        @endforelse
-
                     </div>
                 </div>
-            </div>
+            @endif
+            @if(auth()->user()->role == 'admin')
+                <div class="user-view__projects">
+                    <div class="profile-projects tab-content active" id="my-projects">
+                        <div class="profile-projects__body">
+                            <div class="profile-projects__title title">
+                                Работы
+                            </div>
+                            <div class="list-projects__items">
+                                @forelse ($user->blogger->works as $work)
+                                    <div class="list-projects__item project-item">
+                                        <div class="owl-carousel project-item__carousel">
+                                            <div class="project-item__img" style="background-image:url({{ $work->project->getImageURL(true) }})"></div>
+                                        </div>
+                                        <div class="project-item__content">
+                                            <div class="project-item__title">
+                                                {{ $work->project->product_price }}₽
+                                            </div>
+                                            <div class="project-item__subtitle" title="{{ $work->project->product_name }}">
+                                                {{ $work->project->product_name }}
+                                            </div>
+                                            <div class="project-item__format-tags card__row card__tags">
+                                                <div class="card__tags-item">
+                                                    <span>{{ $work->projectWork->getProjectWorkName() }}</span>
+                                                </div>
+                                                <div class="card__tags-item">
+                                                    <span>{{ $work->getStatus() }}</span>
+                                                </div>
+                                            </div>
+                                            <a target="_blank" href="{{ route('work-chat', ['work' => $work->id]) }}" class="btn btn-primary">Чат</a>
+                                        </div>
+                                    </div>
+                                @empty
+                                Пока что здесь пусть
+                                @endforelse
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endif
         </div>
-        <? endif ?>
-    </div>
     </div>
 </section>
 
