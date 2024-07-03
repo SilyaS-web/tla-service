@@ -263,6 +263,7 @@ class Project extends Model
         }
 
         if (strripos($this->product_link, 'ozon') !== false && $ozon_client_id && $ozon_api_key) {
+            $ozon_stats =
             $stats = array_merge($this->getOzonStats(intval($ozon_client_id), $ozon_api_key), ['bloggers_history' => array_values($bloggers_history)]);
         } else {
             $stats = array_merge($this->getWBStats(), ['bloggers_history' => array_values($bloggers_history)]);
@@ -324,7 +325,7 @@ class Project extends Model
                 'orders_history' => [],
             ];
 
-            return json_encode($result);
+            return $result;
         }
 
         $date_from = date('Y-m-d', strtotime("-1 month"));
@@ -384,7 +385,14 @@ class Project extends Model
 
         $result = json_decode($response);
         if (!isset($result->result)) {
-            return "";
+            $result = [
+                'orders' => 0,
+                'earnings' => 0,
+                'prices_history' => [],
+                'orders_history' => [],
+            ];
+
+            return $result;
         }
 
         $result = $result->result;
