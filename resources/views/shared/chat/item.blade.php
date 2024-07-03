@@ -1,6 +1,6 @@
 <div class="chat__chat-item item-chat" style="position:relative" data-id="{{$work->id}}"> {{--current--}}
-    <div class="item-chat__img">
-        <img src="{{ $work->getPartnerUser(auth()->user()->role)->getImageURL() }}" alt="">
+    <div class="item-chat__img" style="background-image: url({{ $work->getPartnerUser(auth()->user()->role)->getImageURL() }})">
+        {{-- <img class="" src="{{ $work->getPartnerUser(auth()->user()->role)->getImageURL() }}" alt=""> --}}
     </div>
     <div class="item-chat__text">
         <div class="item-chat__title">{{ $work->getPartnerUser(auth()->user()->role)->name }}</div>
