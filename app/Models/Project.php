@@ -247,12 +247,31 @@ class Project extends Model
 
     public function getStatistics(string $ozon_client_id = null, string $ozon_api_key = null)
     {
-        if (strripos($this->product_link, 'ozon') !== false && $ozon_client_id && $ozon_api_key) {
-            return $this->getOzonStats(intval($ozon_client_id), $ozon_api_key);
-        } else {
-            return $this->getWBStats();
+        $start_date = now()->subDays(30);
+        $end_date = now();
+        $bloggers_finish = Work::selectRaw('DATE_FORMAT(confirmed_by_seller_at, "%Y-%m-%d") as date')->where('project_id', $this->id)->where('status', Work::COMPLETED)->whereBetween('created_at', [$start_date, $end_date])->get();
+        $bloggers_history = [];
+        foreach ($bloggers_finish as $blogger_finish) {
+            if (isset($bloggers_history[$blogger_finish->date])) {
+                $bloggers_history[$blogger_finish->date]['bloggers'] += 1;
+            } else {
+                $bloggers_history[$blogger_finish->date] = [
+                    'dt' => $blogger_finish->date,
+                    'bloggers' => 1
+                ];
+            }
         }
+
+        if (strripos($this->product_link, 'ozon') !== false && $ozon_client_id && $ozon_api_key) {
+            $stats = array_merge($this->getOzonStats(intval($ozon_client_id), $ozon_api_key), ['bloggers_history' => array_values($bloggers_history)]);
+        } else {
+            $stats = array_merge($this->getWBStats(), ['bloggers_history' => array_values($bloggers_history)]);
+        }
+
+        return json_encode($stats);
     }
+
+
     public function getWBStats()
     {
         $ch = curl_init();
@@ -291,7 +310,7 @@ class Project extends Model
         }
 
         $result = $response;
-        return $result;
+        return json_decode($result, true);
     }
 
     public function getOzonStats(int $ozon_client_id, string $ozon_api_key)
@@ -395,7 +414,7 @@ class Project extends Model
             'orders_history' => array_values($date_array),
         ];
 
-        return json_encode($result_array);
+        return $result_array;
     }
 
     public function getOzonGeneralInfo(int $client_id, string $api_key)

@@ -315,4 +315,12 @@ class WorkController extends Controller
         $work->delete();
         return redirect()->route('profile')->with('success', 'Заявка откланена')->with('switch-tab', 'profile-projects');
     }
+
+    public function viewChat(Work $work) {
+        if (Auth::user()->role !== 'admin') {
+            return redirect()->route('profile');
+        }
+        $user_id = $work->seller_id;
+        return view('shared.admin.chat', compact('work', 'user_id'));
+    }
 }

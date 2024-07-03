@@ -773,7 +773,7 @@
                             </div>
                             <script>
                                 $('#projects-sort').on('change', (e)=>{
-                                    var sort = $('#projects-sort').val(), counter = 0;
+                                    var sort = String($('#projects-sort').val()), counter = 0;
 
                                     if(sort.length === 0){
                                         $('.profile-projects__item').show()
@@ -781,7 +781,7 @@
                                     }
 
                                     $('.profile-projects__item').each((i, v)=>{
-                                        if( $(v).data('brand').toLowerCase() != sort.toLowerCase() ){
+                                        if( String($(v).data('brand')).toLowerCase() != sort.toLowerCase() ){
                                             $(v).hide();
                                             counter++;
                                         }

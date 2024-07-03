@@ -1083,7 +1083,6 @@ class Chat {
         $.post({
             url: self.getMsgUri,
             success: (res) => {
-                console.log(self.currentChatId);
                 $(document).find('.chat__chat-items').remove();
                 $(document).find('#chat .chat__left').append(res.view);
                 if(self.currentChatId){
@@ -1715,7 +1714,7 @@ class PopupBloggerChooseProjectsFormat extends Popup{
             notify('info', {title: 'Внимание!', message: 'Необходимо выбрать проект'});
             return
         }
-        console.log(123123123);
+
         var popupBloggerSendOffer = new PopupBloggerSendOffer('#blogger-send-offer');
 
         popupBloggerSendOffer.openPopup();

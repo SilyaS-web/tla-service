@@ -47,6 +47,11 @@ class Seller extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
+    public function works()
+    {
+        return $this->hasMany(Work::class, 'seller_id', 'user_id');
+    }
+
     // public function projects()
     // {
     //     return $this->hasManyThrough(
@@ -226,7 +231,7 @@ class Seller extends Model
         }
 
         $avg = $total > 0 ? $total_valuation / $total : 0;
-        
+
         if ($avg <= 4.5) {
             $percent = 11.1 * $avg;
         } else if ($avg <= 4.7) {
