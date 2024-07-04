@@ -234,8 +234,8 @@
                     <a href="#" class="footer__policy">
                         Публичная оферта
                     </a>
-                    <a href="#" class="footer__policy">
-                        hello@tla-agency.ru
+                    <a href="mailto:adswap.ru@ya.ru" class="footer__policy">
+                        adswap.ru@ya.ru
                     </a>
                 </div>
             </div>
