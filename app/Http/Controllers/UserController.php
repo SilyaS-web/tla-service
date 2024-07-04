@@ -289,7 +289,7 @@ class UserController extends Controller
             'wb_link' => 'string|nullable',
             'wb_api_key' => 'string|nullable',
             'ozon_link' => 'string|nullable',
-            'ozon_client_id' => 'string|nullable',
+            'ozon_client_id' => 'numeric|nullable',
             'ozon_api_key' => 'string|nullable',
             'inn' => 'string|nullable',
             'organization_type' => 'string|nullable',
