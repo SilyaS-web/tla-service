@@ -83,6 +83,7 @@ class PaymentController extends Controller
                     return response()->json(['status' => Payment::CANCELED]);
             }
         } catch (TinkoffAPIException $e) {
+            Log::channel('single')->info(json_encode($e));
             return response()->json(['status' => Payment::FAILED]);
         }
     }
