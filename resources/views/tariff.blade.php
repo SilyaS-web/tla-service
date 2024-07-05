@@ -48,7 +48,7 @@
                                 </span>
                             </div>
                             <div class="planItem__row" style="display: flex; flex-wrap:wrap; gap:10px;">
-                                <form method="POST" action="{{ route('tariff') }}">
+                                <form method="POST" action="{{ url('/payment/1/init') }}">
                                     <input hidden name="tariff" value="start" />
                                     <button class="btn btn-primary" style="" type="submit">Оплатить</button>
                                 </form>
