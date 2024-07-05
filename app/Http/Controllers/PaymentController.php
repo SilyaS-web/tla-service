@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Payment;
 use App\Models\Tariff;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use JustCommunication\TinkoffAcquiringAPIClient\API\InitRequest;
 use JustCommunication\TinkoffAcquiringAPIClient\Exception\TinkoffAPIException;
 use JustCommunication\TinkoffAcquiringAPIClient\TinkoffAcquiringAPIClient;
@@ -20,7 +21,7 @@ class PaymentController extends Controller
         if ($state == Payment::COMPLETED) {
             return redirect()->route('tariff')->with('success', 'Тариф успешно оплачен');
         }
-        
+
         return redirect()->route('tariff')->with('success', 'При получении платежа произошла ошибка');
     }
 
@@ -61,6 +62,7 @@ class PaymentController extends Controller
             ]);
             return redirect($response->getPaymentURL());
         } catch (TinkoffAPIException $e) {
+            Log::channel('single')->info(json_encode($e));
             return redirect(url('/payment/' . $payment->id . '/fail'));
         }
     }
