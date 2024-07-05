@@ -491,4 +491,53 @@
         </div>
     </div>
 </section>
+
+<script src="https://securepay.tinkoff.ru/html/payForm/js/tinkoff_v2.js"></script>
+<form class="payform-tinkoff" name="payform-tinkoff" id="payform-tinkoff">
+    <input class="payform-tinkoff-row" type="hidden" name="terminalkey" value="1720008275365DEMO">
+    <input class="payform-tinkoff-row" type="hidden" name="frame" value="false">
+    <input class="payform-tinkoff-row" type="hidden" name="language" value="ru">
+    <input class="payform-tinkoff-row" type="hidden" name="receipt" value="">
+    <input class="payform-tinkoff-row" type="text" placeholder="Сумма заказа" name="amount" required>
+    <input class="payform-tinkoff-row" type="hidden" placeholder="Номер заказа" value="1" name="order">
+    <input class="payform-tinkoff-row" type="text" placeholder="Описание заказа" name="description">
+    <input class="payform-tinkoff-row" type="text" placeholder="ФИО плательщика" name="name">
+    <input class="payform-tinkoff-row" type="email" placeholder="E-mail" name="email">
+    <input class="payform-tinkoff-row" type="tel" placeholder="Контактный телефон" name="phone">
+    <input class="payform-tinkoff-row payform-tinkoff-btn" type="submit" value="Оплатить">
+</form>
+
+
+<script type="text/javascript">
+    const TPF = document.getElementById("payform-tinkoff");
+
+    TPF.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const {description, amount, email, phone, receipt} = TPF;
+
+        if (receipt) {
+            if (!email.value && !phone.value)
+                return alert("Поле E-mail или Phone не должно быть пустым");
+
+            TPF.receipt.value = JSON.stringify({
+                "EmailCompany": "hello@adswap.ru",
+                "Taxation": "patent",
+                "FfdVersion": "1.2",
+                "Items": [
+                    {
+                        "Name": description.value || "Оплата",
+                        "Price": amount.value + '00',
+                        "Quantity": 1.00,
+                        "Amount": amount.value + '00',
+                        "PaymentMethod": "full_prepayment",
+                        "PaymentObject": "service",
+                        "Tax": "none",
+                        "MeasurementUnit": "pc"
+                    }
+                ]
+            });
+        }
+        pay(TPF);
+    })
+</script>
 @endsection
