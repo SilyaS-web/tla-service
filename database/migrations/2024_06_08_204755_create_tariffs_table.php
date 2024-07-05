@@ -18,10 +18,10 @@ class CreateTariffsTable extends Migration
             $table->id();
             $table->string('title');
             $table->string('description');
-            $table->float('price');
-            $table->string('options');
-            $table->boolean('is_active');
-            $table->timestamp('period');
+            $table->integer('price');
+            $table->string('options')->nullable();
+            $table->boolean('is_active')->default(true);
+            $table->integer('period')->default(31);
             $table->timestamps();
         });
 
