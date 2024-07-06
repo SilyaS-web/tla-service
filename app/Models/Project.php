@@ -264,9 +264,9 @@ class Project extends Model
 
         if (strripos($this->product_link, 'ozon') !== false && $ozon_client_id && $ozon_api_key) {
             $ozon_stats =
-            $stats = array_merge($this->getOzonStats(intval($ozon_client_id), $ozon_api_key), ['bloggers_history' => array_values($bloggers_history)]);
+            $stats = array_merge($this->getOzonStats(intval($ozon_client_id), $ozon_api_key) ?? [], ['bloggers_history' => array_values($bloggers_history)]);
         } else {
-            $stats = array_merge($this->getWBStats(), ['bloggers_history' => array_values($bloggers_history)]);
+            $stats = array_merge($this->getWBStats() ?? [], ['bloggers_history' => array_values($bloggers_history)]);
         }
 
         return json_encode($stats);

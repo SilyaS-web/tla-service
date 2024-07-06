@@ -97,13 +97,15 @@
                         {{-- Ваш тариф — {{ auth()->user()->seller->tariff }} --}}
                         Ваш тариф — Тестовый
                         <div class="tarrif-header__items">
-                            <div class="tarrif-header__item tarrif-header__adv">
-                                Отзыв - <b><span class="counter">{{ auth()->user()->seller->remaining_tariff }}</span> шт.</b>
-                                <div class="tarrif-header__date">
-                                    Действует до {{ date("d.m.Y", strtotime(auth()->user()->created_at . "+7 days",)) }}
+                           @foreach (Auth()->user()->getActiveTariffsWithLost() as $seller_tariff)
+                                <div class="tarrif-header__item tarrif-header__adv">
+                                    {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->lost }}</span> шт.</b>
+                                    <div class="tarrif-header__date">
+                                        Действует до {{ $seller_tariff->finish_date }}
+                                    </div>
+                                    <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
                                 </div>
-                                <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
-                            </div>
+                            @endforeach
                         </div>
                     </div>
                     @endif
@@ -163,13 +165,15 @@
                         <div href="#" class="header__col header__tarrif tarrif-header header__profile-item--js">
                             Ваш тариф — Тестовый
                             <div class="tarrif-header__items">
-                                <div class="tarrif-header__item tarrif-header__adv">
-                                    Отзыв - <b><span class="counter">{{ auth()->user()->seller->remaining_tariff }}</span> шт.</b>
-                                    <div class="tarrif-header__date">
-                                        Действует до {{ date("d.m.Y", strtotime(auth()->user()->created_at . "+7 days",)) }}
+                                @foreach (Auth()->user()->getActiveTariffsWithLost() as $seller_tariff)
+                                    <div class="tarrif-header__item tarrif-header__adv">
+                                        {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->lost }}</span> шт.</b>
+                                        <div class="tarrif-header__date">
+                                            Действует до {{ $seller_tariff->finish_date }}
+                                        </div>
+                                        <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
                                     </div>
-                                    <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
-                                </div>
+                                @endforeach
                             </div>
                         </div>
                         @endif

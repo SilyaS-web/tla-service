@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "67b84db1383c23f795302bd112facff1",
+    "content-hash": "bf599208fae2dfd81d015f06259232db",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1052,6 +1052,51 @@
                 "source": "https://github.com/hflabs/dadata-php/tree/24.4.0"
             },
             "time": "2024-04-11T06:57:31+00:00"
+        },
+        {
+            "name": "justcommunication-ru/tinkoff-acquiring-api-client",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/JustCommunication-ru/tinkoff-acquiring-api-client.git",
+                "reference": "1983eff2c5232859e572946bfba731d9c9496c9e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/JustCommunication-ru/tinkoff-acquiring-api-client/zipball/1983eff2c5232859e572946bfba731d9c9496c9e",
+                "reference": "1983eff2c5232859e572946bfba731d9c9496c9e",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "guzzlehttp/guzzle": "^6.2 || ^7.0",
+                "psr/log": "*"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "JustCommunication\\TinkoffAcquiringAPIClient\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Tinkoff Acquiring API PHP Client",
+            "keywords": [
+                "acquiring",
+                "api",
+                "sdk",
+                "tinkoff"
+            ],
+            "support": {
+                "issues": "https://github.com/JustCommunication-ru/tinkoff-acquiring-api-client/issues",
+                "source": "https://github.com/JustCommunication-ru/tinkoff-acquiring-api-client/tree/v1.0.2"
+            },
+            "time": "2024-04-09T14:41:46+00:00"
         },
         {
             "name": "laravel/framework",

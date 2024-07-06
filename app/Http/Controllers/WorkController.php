@@ -13,6 +13,7 @@ use App\Models\ProjectWork;
 use App\Models\Work;
 use App\Models\User;
 use App\Services\TgService;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
@@ -35,18 +36,23 @@ class WorkController extends Controller
         $validated = $validator->validated();
         $user = Auth::user();
 
+        $project_work = ProjectWork::find($validated['project_work_id']);
         if ($user->role == 'seller') {
             $seller = $user->seller;
             if ($seller) {
-                if ($seller->remaining_tariff < 1) {
-                    return response()->json(['extend tariff', $seller->remaining_tariff], 400);
+                $tariff = $user->getActiveTariffs($project_work->type);
+                if (!$tariff) {
+                    return response()->json(['extend tariff'], 400);
+                }
+                $lost = $tariff->quantity - $seller->works()->whereHas('projectWork', function (Builder $query) use ($project_work) {
+                    $query->where('type', $project_work->type);
+                })->count();
+                if ($lost > 0) {
+                    return response()->json(['extend tariff'], 400);
                 }
             } else {
                 return response()->json(['seller not found'], 400);
             }
-
-            $seller->remaining_tariff -= 1;
-            $seller->save();
         }
         if ($user->role == 'blogger') {
             $blogger_user = $user;
@@ -54,7 +60,6 @@ class WorkController extends Controller
             $blogger_user = Blogger::find($validated['blogger_id']);
         }
 
-        $project_work = ProjectWork::find($validated['project_work_id']);
         $work = Work::create([
             'project_id' => $project_work->project->id,
             'blogger_id' => $user->role == 'seller' ? $blogger_user->user->id : $user->id,
