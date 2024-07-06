@@ -13,17 +13,6 @@ class Seller extends Model
     public const TRIAL = 'trial';
     public const START = 'start';
 
-    const TARIFFS = [
-        self::TRIAL => [
-            'quantity' => 1,
-            'name' => 'Пробный'
-        ],
-        self::START => [
-            'quantity' => 500,
-            'name' => 'Начальный'
-        ],
-    ];
-
     protected $fillable = [
         'user_id',
         'organization_name',
@@ -33,8 +22,6 @@ class Seller extends Model
         'description',
         'inn',
         'finish_date',
-        'remaining_tariff',
-        'tariff',
         'wb_link',
         'wb_api_key',
         'ozon_link',

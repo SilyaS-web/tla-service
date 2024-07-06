@@ -70,9 +70,7 @@ Route::middleware(['auth', 'banned'])->group(function () {
     Route::get('/project/{project_id}', [ProjectController::class, 'selectBloggers'])->name('select-bloggers');
     Route::post('/projects/{project}/update', [ProjectController::class, 'update'])->name('update-project');
 
-    Route::get('/tariff', function () {
-        return view('tariff');
-    })->name('tariff');
+    Route::get('/tariff', [UserController::class, 'tariffs'])->name('tariff');
 
     Route::post('/tariff', [SellerController::class, 'updateTariff']);
 

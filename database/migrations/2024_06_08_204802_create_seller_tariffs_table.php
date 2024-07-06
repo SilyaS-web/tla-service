@@ -15,6 +15,8 @@ class CreateSellerTariffsTable extends Migration
     {
         Schema::create('seller_tariffs', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->unsignedBigInteger('tariff_id');
             $table->foreign('tariff_id')->references('id')->on('tariffs')->cascadeOnDelete();
             $table->timestamp('finish_date');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
+use App\Models\SellerTariff;
 use App\Models\Tariff;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -19,6 +20,14 @@ class PaymentController extends Controller
     {
         $state = $this->checkState($payment);
         if ($state == TPayment::STATUS_CONFIRMED) {
+            $tariff = Tariff::find($payment->tariff_id);
+            SellerTariff::create([
+                'user_id' => Auth::user()->id,
+                'tariff_id' => $tariff->id,
+                'finish_date' => \Carbon\Carbon::now()->addDays($tariff->period),
+                'activation_date' => \Carbon\Carbon::now(),
+            ]);
+
             return redirect()->route('tariff')->with('success', 'Тариф успешно оплачен');
         }
 
