@@ -944,8 +944,7 @@ class Chat {
             }
         });
 
-        var mediaQuery = window.matchMedia('(max-width: 970px)')
-
+        var mediaQuery = window.matchMedia('(max-width: 700px)')
         if (mediaQuery.matches) {
             $(this.node).on('click', '.item-chat', ()=>{
                 $('.chat__left').hide()
@@ -2141,6 +2140,19 @@ $(window).on('load', function(){
             },
             1180: {
                 items:2
+            }
+        }
+    });
+    $('.profile-projects__item').find('.profile-projects--carousel').owlCarousel({
+        margin: 5,
+        nav: false,
+        dots: true,
+        responsive: {
+            0:{
+                items: 1
+            },
+            1180: {
+                items:1
             }
         }
     });

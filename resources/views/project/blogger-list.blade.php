@@ -11,7 +11,7 @@
     <div class="project-item__carousel">
         <div class="project-item__carousel--carousel owl-carousel">
             @foreach ($project_work->project->getImageURL() as $image)
-            <div class="project-item__img" style="background-image:url({{ $image }})"></div>
+                <div class="project-item__img" style="background-image:url({{ $image }})"></div>
             @endforeach
         </div>
         <div class="project-item__status active">

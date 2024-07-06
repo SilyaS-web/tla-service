@@ -1,8 +1,13 @@
 <div class="profile-projects__items">
     @forelse ($projects as $project)
         <div class="profile-projects__row profile-projects__item" data-id="{{$project->id}}" data-brand = "{{ $project->marketplace_brand }}">
-            <div class="profile-projects__col profile-projects__img" style="background-image: url({{ $project->getImageUrl(true) }})">
+            <div class="profile-projects__col profile-projects__img profile-projects--carousel owl-carousel">
+                @foreach ($project->getImageURL() as $image)
+                    <div class="project-item__img" style="background-image:url({{ $image }})"></div>
+                @endforeach
             </div>
+            {{-- <div class="profile-projects__col profile-projects__img" style="background-image: url({{ $project->getImageUrl(true) }})">
+            </div> --}}
             <div class="profile-projects__col profile-projects__content" style="padding:5px 0px;">
                 <div class="profile-projects__row" style="align-items: start">
                     <div class="profile-projects__item-title" title="{{ $project->product_name }}">
@@ -12,9 +17,9 @@
                         {{ $project->getStatusName() }}
                     </div>
                 </div>
-                <div class="profile-projects__row">
-                    <p>Артикул товара: <b>{{ $project->product_nm }}</b></p>
-                    <p>Цена товара: <b>{{ number_format($project->product_price, 0, '', ' ')  }}₽</b></p>
+                <div class="profile-projects__row" style="flex-wrap:wrap; gap:5px;">
+                    <p style="text-wrap: nowrap">Артикул товара: <b>{{ $project->product_nm }}</b></p>
+                    <p style="text-wrap: nowrap">Цена товара: <b>{{ number_format($project->product_price, 0, '', ' ')  }}₽</b></p>
                 </div>
                 <div class="profile-projects__row">
                     <div class="profile-projects__formats">
@@ -208,7 +213,7 @@
                                 <div class="card__row" style="text-align: center;">
                                     <a href="{{ route('blogger-page', $blogger->id) . '?tab=profile-projects' }}" class="" style="width: 100%; color: rgba(0, 0, 0, .4); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -10px;">Подробнее</a>
                                 </div>
-                                <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap; justify-content: center">
+                                <div class="card__row bloger-item--btns" style="gap:12px; width:100%; flex-wrap: wrap; justify-content: center">
                                     <a href="apist/works/{{ $work_application->id }}/start" class="btn btn-primary" data-project-id="">
                                         Принять
                                     </a>
