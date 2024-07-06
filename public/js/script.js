@@ -915,7 +915,7 @@ class Chat {
 
         this.getMsgCountInterval = setInterval(this.getNewMessagesCount, 5000);
 
-        $(this.node).on('click', '.chat__btns .btn-send-msg', (e) => { this.sendMessage(e) });
+        $(this.node).on('click', '.chat__btns .btn-send-msg', (e) => { this.sendMessage() });
         $(this.node).on('click', '#accept-btn', (e) => {
             e.preventDefault()
             $.ajax({
@@ -936,6 +936,12 @@ class Chat {
             $('.chat__left').show();
             $('.chat__right').hide();
             this.currentChatId = false;
+        });
+
+        $(this.node).on('keyup', (e) => {
+            if (e.keyCode === 13) {
+                this.sendMessage()
+            }
         });
 
         var mediaQuery = window.matchMedia('(max-width: 700px)')
@@ -1087,7 +1093,7 @@ class Chat {
     }
 
     sendMessage = () => {
-        var msg = $(document).find('.messages-create__textarea').val();
+        var msg = $(document).find('.messages-create__textarea').val().trim();
         var self = this;
         var file = $(this.node).find('.textarea-upload #chat-upload').prop('files');
 
@@ -1097,26 +1103,28 @@ class Chat {
         formData.append('img', file[0])
         formData.append('work_id', self.currentChatId)
 
-        $.ajax({
-            url: self.sendMsgUri,
-            data: formData,
-            method: 'POST',
-            processData: false,
-            contentType: false,
-            success: (res)=>{
-                $(self.node).find('.item-chat.current').click();
+        if(msg.length > 0){
+            $.ajax({
+                url: self.sendMsgUri,
+                data: formData,
+                method: 'POST',
+                processData: false,
+                contentType: false,
+                success: (res)=>{
+                    $(self.node).find('.item-chat.current').click();
 
-                $(self.node).find('.messages-create__textarea').val('')
-                $(self.node).find('.textarea-upload__text').text('Прикрепите файл');
-                $(self.node).find('.textarea-upload #chat-upload').val('');
+                    $(self.node).find('.messages-create__textarea').val('')
+                    $(self.node).find('.textarea-upload__text').text('Прикрепите файл');
+                    $(self.node).find('.textarea-upload #chat-upload').val('');
 
-                setTimeout(()=>{
-                    $(self.node).find(".messages-chat").animate({
-                        scrollTop: $(self.node).find(".messages-chat").find('.messages-chat__item').length * 150
-                    }, 100)
-                }, 150)
-            }
-        })
+                    setTimeout(()=>{
+                        $(self.node).find(".messages-chat").animate({
+                            scrollTop: $(self.node).find(".messages-chat").find('.messages-chat__item').length * 150
+                        }, 100)
+                    }, 150)
+                }
+            })
+        }
     }
 }
 
