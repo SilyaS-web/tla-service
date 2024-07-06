@@ -944,7 +944,7 @@ class Chat {
             }
         });
 
-        var mediaQuery = window.matchMedia('(max-width: 700px)')
+        var mediaQuery = window.matchMedia('(max-width: 970px)')
 
         if (mediaQuery.matches) {
             $(this.node).on('click', '.item-chat', ()=>{
@@ -954,7 +954,7 @@ class Chat {
         }
         else{
             $(window).on('resize', function(){
-                var mediaQuery = window.matchMedia('(max-width: 700px)')
+                var mediaQuery = window.matchMedia('(max-width: 970px)')
 
                 if (mediaQuery.matches) {
                     $(this.node).on('click', '.item-chat', ()=>{
