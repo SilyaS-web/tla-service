@@ -18,7 +18,7 @@ class PaymentController extends Controller
     public function successPayment(Payment $payment)
     {
         $state = $this->checkState($payment);
-        if ($state == Payment::COMPLETED) {
+        if ($state == TPayment::STATUS_CONFIRMED) {
             return redirect()->route('tariff')->with('success', 'Тариф успешно оплачен');
         }
 
@@ -75,13 +75,9 @@ class PaymentController extends Controller
 
         try {
             $response = $client->sendGetStateRequest($request);
-            switch ($response->getStatus()) {
-                case TPayment::STATUS_CONFIRMED:
-                    return response()->json(['status' => Payment::COMPLETED]);
-
-                case TPayment::STATUS_CANCELED:
-                    return response()->json(['status' => Payment::CANCELED]);
-            }
+            $status = $response->getStatus();
+            $payment->update(['status' => $status]);
+            return $status;
         } catch (TinkoffAPIException $e) {
             Log::channel('single')->info(json_encode($e));
             return response()->json(['status' => Payment::FAILED]);
