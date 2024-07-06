@@ -11,6 +11,7 @@ use App\Http\Controllers\BloggerController;
 use App\Http\Controllers\DeepLinkController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\WorkController;
 /*
 |--------------------------------------------------------------------------
@@ -52,6 +53,12 @@ Route::middleware(['auth', 'banned'])->group(function () {
         return view('project.edit');
     })->name('');
 
+    Route::get('/payment/{tariff}/init', [PaymentController::class, 'init']);
+    Route::get('/payment/{payment}/check', [PaymentController::class, 'checkState']);
+    Route::get('/payment/{payment}/success', [PaymentController::class, 'successPayment']);
+    Route::get('/payment/{payment}/fail', [PaymentController::class, 'failPayment']);
+    Route::match(['get', 'post'], '/payment/{payment}/notifications', [PaymentController::class, 'notificationsPayment']);
+
     Route::get('/blogger/{blogger}', [BloggerController::class, 'show'])->name('blogger-page');
     Route::get('/seller/{seller}', [SellerController::class, 'show'])->name('seller-page');
 
@@ -63,9 +70,7 @@ Route::middleware(['auth', 'banned'])->group(function () {
     Route::get('/project/{project_id}', [ProjectController::class, 'selectBloggers'])->name('select-bloggers');
     Route::post('/projects/{project}/update', [ProjectController::class, 'update'])->name('update-project');
 
-    Route::get('/tariff', function () {
-        return view('tariff');
-    })->name('tariff');
+    Route::get('/tariff', [UserController::class, 'tariffs'])->name('tariff');
 
     Route::post('/tariff', [SellerController::class, 'updateTariff']);
 

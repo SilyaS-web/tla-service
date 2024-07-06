@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -89,5 +91,32 @@ class User extends Authenticatable
 
     public function getPassword() {
         return $this->password;
+    }
+
+    public function tariffs()
+    {
+        return $this->hasMany(SellerTariff::class, 'user_id', 'id');
+    }
+
+    public function getActiveTariffs($type = null) {
+        $tariffs = $this->tariffs()->where('finish_date', '>', Carbon::now());
+        if ($type) {
+            $tariffs->whereHas('tariff', function (Builder $query) use ($type) {
+                $query->where('type', $type);
+            });
+
+            return $tariffs->first();
+        }
+        return $tariffs->get();
+    }
+
+    public function getActiveTariffsWithLost() {
+        $seller_tariffs = $this->tariffs()->where('finish_date', '>', Carbon::now())->get();
+        foreach ($seller_tariffs as &$seller_tariff) {
+            $seller_tariff->lost = $seller_tariff->tariff->quantity - $this->seller->works()->whereHas('projectWork', function (Builder $query) use ($seller_tariff) {
+                $query->where('type', $seller_tariff->tariff->type);
+            })->count();
+        }
+        return $seller_tariffs;
     }
 }

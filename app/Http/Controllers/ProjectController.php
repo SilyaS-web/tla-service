@@ -90,7 +90,13 @@ class ProjectController extends Controller
         }
 
         $validated = $validator->validated();
-        if ((!isset($validated['feedback-quantity']) || $validated['feedback-quantity'] < 1) && (!isset($validated['inst-quantity']) || $validated['inst-quantity'] < 1)) {
+        if (
+            (!isset($validated['feedback-quantity']) || $validated['feedback-quantity'] < 1) &&
+            (!isset($validated['inst-quantity']) || $validated['inst-quantity'] < 1) &&
+            (!isset($validated['youtube-quantity']) || $validated['youtube-quantity'] < 1) &&
+            (!isset($validated['vk-quantity']) || $validated['vk-quantity'] < 1) &&
+            (!isset($validated['telegram-quantity']) || $validated['telegram-quantity'] < 1)
+        ) {
             return redirect()->route('profile')->with('success', 'Количество видов рекламы не было выбрано')->with('switch-tab', 'create-project')->withInput();
         }
 

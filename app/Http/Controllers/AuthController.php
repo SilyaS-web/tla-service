@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Seller;
+use App\Models\SellerTariff;
+use App\Models\Tariff;
 use App\Models\TgPhone;
 use App\Services\TgService;
 use Illuminate\Http\Request;
@@ -69,6 +71,13 @@ class AuthController extends Controller
         if ($validated['role'] == 'seller') {
             Seller::create([
                 'user_id' => $user->id
+            ]);
+            $tariff = Tariff::find(1);
+            SellerTariff::create([
+                'user_id' => $user->id,
+                'tariff_id' => $tariff->id,
+                'finish_date' => \Carbon\Carbon::now()->addDays($tariff->period),
+                'activation_date' => \Carbon\Carbon::now(),
             ]);
             $user->update(['status' => 1]);
         }

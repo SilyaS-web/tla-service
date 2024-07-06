@@ -9,6 +9,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^6.0.1",
         "hflabs/dadata": "^24.4",
+        "justcommunication-ru/tinkoff-acquiring-api-client": "^1.0",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",

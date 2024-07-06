@@ -15,6 +15,7 @@ use Illuminate\Validation\Rule;
 use App\Models\Project;
 use App\Models\ProjectWork;
 use App\Models\Seller;
+use App\Models\TariffGroup;
 use App\Models\TgPhone;
 use App\Models\Theme;
 use Illuminate\Database\Eloquent\Builder;
@@ -289,7 +290,7 @@ class UserController extends Controller
             'wb_link' => 'string|nullable',
             'wb_api_key' => 'string|nullable',
             'ozon_link' => 'string|nullable',
-            'ozon_client_id' => 'string|nullable',
+            'ozon_client_id' => 'numeric|nullable',
             'ozon_api_key' => 'string|nullable',
             'inn' => 'string|nullable',
             'organization_type' => 'string|nullable',
@@ -331,5 +332,10 @@ class UserController extends Controller
 
         $notifications = $user->notifications()->where('viewed_at', null)->get();
         return response()->json(['view' => view('shared.notifications', compact('notifications'))->render(), 'count' => $notifications->count()]);
+    }
+
+    public function tariffs() {
+        $tariff_groups = TariffGroup::where('id', '<>', 1)->get();
+        return view('tariff', compact('tariff_groups'));
     }
 }

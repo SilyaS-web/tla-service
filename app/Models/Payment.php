@@ -5,16 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SellerTariff extends Model
+class Payment extends Model
 {
     use HasFactory;
 
+    const COMPLETED = 'completed';
+    const CANCELED = 'canceled';
+    const FAILED = 'failed';
+
     protected $fillable = [
-        'tariff_id',
-        'finish_date',
-        'activation_date',
         'user_id',
+        'payment_id',
+        'tariff_id',
+        'price',
+        'status',
     ];
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 
     public function tariff()
     {

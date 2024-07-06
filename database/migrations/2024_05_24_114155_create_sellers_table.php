@@ -20,7 +20,6 @@ class CreateSellersTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->string('organization_type')->nullable();
             $table->integer('is_achievement')->nullable();
-            $table->integer('remaining_tariff')->default(1);
             $table->integer('is_agent')->default(0);
             $table->string('inn', 50)->nullable();
             $table->string('description', 500)->nullable();
