@@ -3176,6 +3176,7 @@ input[type='range']::-webkit-slider-runnable-track{
     gap: 15px;
 }
 .chat__left {
+    min-width: 325px;
 }
 .chat__chat-items {
     display: flex;
