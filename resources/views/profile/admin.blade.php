@@ -142,7 +142,7 @@
                         <div class="admin-blogers__body">
                             <div class="admin-blogers__header">
                                 <div class="admin-blogers__title title">
-                                    История заказов • 12
+                                    История заказов • {{ $payments->count() }}
                                 </div>
                                 <div class="admin-blogers__search form-group">
                                     <input type="name" id="sellers-search" class="input" placeholder="Поиск">
@@ -151,162 +151,37 @@
                             </div>
                             <div class="payment-history__body">
                                 <div class="payment-history__items">
-                                    <div class="payment-history__row">
-                                        <div href="" class="payment-history__row-title">
-                                            <span>Заказ № 1605</span>
-                                            от 03 мая 2024 17:47
+                                    @forelse ($payments as $payment)
+                                        <div class="payment-history__row">
+                                            <div href="" class="payment-history__row-title">
+                                                <span>Заказ № {{ $payment->id }}</span>
+                                                от {{ date_format($payment->created_at,'d-m-Y H:i') }}
+                                            </div>
+                                            <div class="payment-history__row-status">
+                                                <span>Статус</span>
+                                                <strong>{{ $payment->status }}</strong>
+                                            </div>
+                                            <div class="payment-history__row-summary">
+                                                <span>Сумма</span>
+                                                <strong>{{ $payment->price / 100 }} <b class="rub">₽</b></strong>
+                                            </div>
+                                            <div class="payment-history__row-user">
+                                                <span>Пользователь</span>
+                                                @php($payment_user = $payment->user)
+                                                <strong><a href="{{ route('seller-page', ['seller' => $payment_user->id]) }}">{{ $payment_user->name }} ID {{ $payment_user->id }}</a></strong>
+                                            </div>
+                                            <div class="payment-history__row-tariff">
+                                                <span>Тариф</span>
+                                                <strong>{{ $payment->tariff->tariffGroup->title }} — {{ $payment->tariff->title }}</strong>
+                                            </div>
+                                            <div class="payment-history__row-bank_id">
+                                                <span>ID оплаты</span>
+                                                <strong>{{ $payment->payment_id }}</strong>
+                                            </div>
                                         </div>
-                                        <div class="payment-history__row-status">
-                                            <span>Статус</span>
-                                            <strong>Оплачен</strong>
-                                        </div>
-                                        <div class="payment-history__row-summary">
-                                            <span>Сумма</span>
-                                            <strong>699 <b class="rub">₽</b></strong>
-                                        </div>
-                                        <div class="payment-history__row-user">
-                                            <span>Пользователь</span>
-                                            <strong>Селлер 1 ID 1332</strong>
-                                        </div>
-                                        <div class="payment-history__row-tariff">
-                                            <span>Тариф</span>
-                                            <strong>Селлер</strong>
-                                        </div>
-                                        <div class="payment-history__row-bank_id">
-                                            <span>ID оплаты</span>
-                                            <strong>122333322</strong>
-                                        </div>
-                                    </div>
-                                    <div class="payment-history__row">
-                                        <div href="" class="payment-history__row-title">
-                                            <span>Заказ № 1605</span>
-                                            от 03 мая 2024 17:47
-                                        </div>
-                                        <div class="payment-history__row-status">
-                                            <span>Статус</span>
-                                            <strong>Оплачен</strong>
-                                        </div>
-                                        <div class="payment-history__row-summary">
-                                            <span>Сумма</span>
-                                            <strong>699 <b class="rub">₽</b></strong>
-                                        </div>
-                                        <div class="payment-history__row-user">
-                                            <span>Пользователь</span>
-                                            <strong>Селлер 1 ID 1332</strong>
-                                        </div>
-                                        <div class="payment-history__row-tariff">
-                                            <span>Тариф</span>
-                                            <strong>Селлер</strong>
-                                        </div>
-                                        <div class="payment-history__row-bank_id">
-                                            <span>ID оплаты</span>
-                                            <strong>122333322</strong>
-                                        </div>
-                                    </div>
-                                    <div class="payment-history__row">
-                                        <div href="" class="payment-history__row-title">
-                                            <span>Заказ № 1605</span>
-                                            от 03 мая 2024 17:47
-                                        </div>
-                                        <div class="payment-history__row-status">
-                                            <span>Статус</span>
-                                            <strong>Оплачен</strong>
-                                        </div>
-                                        <div class="payment-history__row-summary">
-                                            <span>Сумма</span>
-                                            <strong>699 <b class="rub">₽</b></strong>
-                                        </div>
-                                        <div class="payment-history__row-user">
-                                            <span>Пользователь</span>
-                                            <strong>Селлер 1 ID 1332</strong>
-                                        </div>
-                                        <div class="payment-history__row-tariff">
-                                            <span>Тариф</span>
-                                            <strong>Селлер</strong>
-                                        </div>
-                                        <div class="payment-history__row-bank_id">
-                                            <span>ID оплаты</span>
-                                            <strong>122333322</strong>
-                                        </div>
-                                    </div>
-                                    <div class="payment-history__row">
-                                        <div href="" class="payment-history__row-title">
-                                            <span>Заказ № 1605</span>
-                                            от 03 мая 2024 17:47
-                                        </div>
-                                        <div class="payment-history__row-status">
-                                            <span>Статус</span>
-                                            <strong>Оплачен</strong>
-                                        </div>
-                                        <div class="payment-history__row-summary">
-                                            <span>Сумма</span>
-                                            <strong>699 <b class="rub">₽</b></strong>
-                                        </div>
-                                        <div class="payment-history__row-user">
-                                            <span>Пользователь</span>
-                                            <strong>Селлер 1 ID 1332</strong>
-                                        </div>
-                                        <div class="payment-history__row-tariff">
-                                            <span>Тариф</span>
-                                            <strong>Селлер</strong>
-                                        </div>
-                                        <div class="payment-history__row-bank_id">
-                                            <span>ID оплаты</span>
-                                            <strong>122333322</strong>
-                                        </div>
-                                    </div>
-                                    <div class="payment-history__row">
-                                        <div href="" class="payment-history__row-title">
-                                            <span>Заказ № 1605</span>
-                                            от 03 мая 2024 17:47
-                                        </div>
-                                        <div class="payment-history__row-status">
-                                            <span>Статус</span>
-                                            <strong>Оплачен</strong>
-                                        </div>
-                                        <div class="payment-history__row-summary">
-                                            <span>Сумма</span>
-                                            <strong>699 <b class="rub">₽</b></strong>
-                                        </div>
-                                        <div class="payment-history__row-user">
-                                            <span>Пользователь</span>
-                                            <strong>Селлер 1 ID 1332</strong>
-                                        </div>
-                                        <div class="payment-history__row-tariff">
-                                            <span>Тариф</span>
-                                            <strong>Селлер</strong>
-                                        </div>
-                                        <div class="payment-history__row-bank_id">
-                                            <span>ID оплаты</span>
-                                            <strong>122333322</strong>
-                                        </div>
-                                    </div>
-                                    <div class="payment-history__row">
-                                        <div href="" class="payment-history__row-title">
-                                            <span>Заказ № 1605</span>
-                                            от 03 мая 2024 17:47
-                                        </div>
-                                        <div class="payment-history__row-status">
-                                            <span>Статус</span>
-                                            <strong>Оплачен</strong>
-                                        </div>
-                                        <div class="payment-history__row-summary">
-                                            <span>Сумма</span>
-                                            <strong>699 <b class="rub">₽</b></strong>
-                                        </div>
-                                        <div class="payment-history__row-user">
-                                            <span>Пользователь</span>
-                                            <strong>Селлер 1 ID 1332</strong>
-                                        </div>
-                                        <div class="payment-history__row-tariff">
-                                            <span>Тариф</span>
-                                            <strong>Селлер</strong>
-                                        </div>
-                                        <div class="payment-history__row-bank_id">
-                                            <span>ID оплаты</span>
-                                            <strong>122333322</strong>
-                                        </div>
-                                    </div>
+                                    @empty
+                                        Нет оплат
+                                    @endforelse
                                 </div>
                             </div>
                         </div>

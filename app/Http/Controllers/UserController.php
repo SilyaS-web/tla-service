@@ -8,6 +8,7 @@ use App\Models\Country;
 use App\Models\DeepLink;
 use App\Models\DeepLinkStat;
 use App\Models\Message;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -200,7 +201,8 @@ class UserController extends Controller
         $platforms = BloggerPlatform::PLATFORM_TYPES;
         $countries = Country::get();
         $all_projects = Project::get();
-        return compact('unverified_users', 'bloggers', 'sellers', 'platforms', 'countries', 'all_projects');
+        $payments = Payment::get();
+        return compact('unverified_users', 'bloggers', 'sellers', 'platforms', 'countries', 'all_projects', 'payments');
     }
 
     public function edit(Request $request)
