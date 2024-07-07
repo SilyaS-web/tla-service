@@ -130,6 +130,7 @@ class WorkController extends Controller
             'work_id' => $work->id,
             'from_user_id' => $user->id,
         ]);
+        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $partner_user->name . ' принял вашу заявку по проекту ' . $work->project->product_name);
     }
 
     public function accept($work_id)

@@ -168,7 +168,7 @@
                                             <div class="payment-history__row-user">
                                                 <span>Пользователь</span>
                                                 @php($payment_user = $payment->user)
-                                                <strong><a href="{{ route('seller-page', ['seller' => $payment_user->id]) }}">{{ $payment_user->name }} ID {{ $payment_user->id }}</a></strong>
+                                                <strong><a href="{{ route('seller-page', ['seller' => $payment_user->seller->id]) }}">{{ $payment_user->name }} ID {{ $payment_user->id }}</a></strong>
                                             </div>
                                             <div class="payment-history__row-tariff">
                                                 <span>Тариф</span>
