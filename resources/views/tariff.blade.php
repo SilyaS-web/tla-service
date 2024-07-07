@@ -11,7 +11,7 @@
             <div class="tab-content__plans plans">
                 <div class="plans__body">
                     @foreach ($tariff_groups as $tariff_group)
-                    @php($lost = $tariff_group->getLost());
+                    @php($lost = $tariff_group->getLost())
                         <div class="tariff__title title">
                         {{ $tariff_group->title }}
                             <div class="plans__current-item" style="margin-top: 15px">
@@ -29,7 +29,7 @@
                                         </div>
                                         <div class="card__desc">{{ $tariff->description }}</div>
                                     </div>
-                                    <div class="price" title="">{{ $tariff->price / 100 }}₽/<span>{{ $tariff->price / 100 }}₽</span>
+                                    <div class="price" title="">{{ $tariff->price / 100 }}₽/<span>{{ $tariff->price / 1000 }}₽</span>
                                         <span class="price__desc">
                                             ?
                                             <div class="price__text">
