@@ -490,7 +490,7 @@ label{
 }
 .nav__link {
 }
-.admin-view__blogers {
+.admin-view__content {
     margin-left: 65px;
 }
 .admin-blogers {
@@ -815,7 +815,7 @@ label{
 .card__stats-val{
     position: relative;
 }
-}
+
 .stats-tooltip{
     position: absolute;
     top:calc(100% + 10px);
@@ -940,10 +940,66 @@ label{
     border-radius: 10px;
 }
 
+.payment-history__body {
+}
+.payment-history__items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.payment-history__row {
+    padding:15px;
+    border-radius: 10px;
+    border:1px solid rgba(0,0,0,.1);
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+.payment-history__row-main {
+}
+.payment-history__row-title {
+    flex: 0 0 250px
+}
+.payment-history__row span {
+    display: block;
+    color: #727887;
+    font-size: 14px;
+    margin: 2px 0 5px;
+}
+.payment-history__row strong {
+    font-size: 18px;
+}
+.payment-history__row-title span{
+    font-size: 24px;
+    font-weight: 700;
+    display: block;
+    color:#000;
+}
+.payment-history__row-status {
+    flex: 0 0 150px;
+}
+.payment-history__row-summary {
+    flex: 0 0 130px;
+}
+.rub {
+}
+.payment-history__row-user {
+    flex: 0 0 190px;
+}
+.payment-history__row-tariff {
+    flex: 0 0 130px;
+}
+.payment-history__row-bank_id {
+    flex-grow: 10;
+}
+
 @media(max-width:1350px){
 
 }
 @media(max-width:1280px){
+    .payment-history__row{
+        flex-wrap: wrap;
+    }
 
 }
 @media(max-width:1200px){
