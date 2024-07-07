@@ -94,12 +94,12 @@
                     </div>
                     @if ( auth()->user()->role == 'seller')
                     <div href="#" class="header__col header__tarrif tarrif-header header__profile-item--js">
-                        {{-- Ваш тариф — {{ auth()->user()->seller->tariff }} --}}
-                        Ваш тариф — Тестовый
+                        @php($seller_tariffs = Auth()->user()->getActiveTariffs())
+                        Ваш тариф — {{ $seller_tariffs->count() > 1 ? 'Смешанный' : ($seller_tariffs->first()->tariff->title ?? 'Отсутствует') }}
                         <div class="tarrif-header__items">
-                           @foreach (Auth()->user()->getActiveTariffsWithLost() as $seller_tariff)
+                           @foreach ($seller_tariffs as $seller_tariff)
                                 <div class="tarrif-header__item tarrif-header__adv">
-                                    {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->lost }}</span> шт.</b>
+                                    {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->quantity }}</span> шт.</b>
                                     <div class="tarrif-header__date">
                                         Действует до {{ $seller_tariff->finish_date }}
                                     </div>
@@ -162,20 +162,21 @@
 
                     <div class=" header__profile-items header__profile-items--desktop header__row">
                         @if ( auth()->user()->role == 'seller')
-                        <div href="#" class="header__col header__tarrif tarrif-header header__profile-item--js">
-                            Ваш тариф — Тестовый
-                            <div class="tarrif-header__items">
-                                @foreach (Auth()->user()->getActiveTariffsWithLost() as $seller_tariff)
-                                    <div class="tarrif-header__item tarrif-header__adv">
-                                        {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->lost }}</span> шт.</b>
-                                        <div class="tarrif-header__date">
-                                            Действует до {{ $seller_tariff->finish_date }}
+                            <div href="#" class="header__col header__tarrif tarrif-header header__profile-item--js">
+                                @php($seller_tariffs = Auth()->user()->getActiveTariffs())
+                                Ваш тариф — {{ $seller_tariffs->count() > 1 ? 'Смешанный' : ($seller_tariffs->first()->tariff->title ?? 'Отсутствует') }}
+                                <div class="tarrif-header__items">
+                                    @foreach ($seller_tariffs as $seller_tariff)
+                                        <div class="tarrif-header__item tarrif-header__adv">
+                                            {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->quantity }}</span> шт.</b>
+                                            <div class="tarrif-header__date">
+                                                Действует до {{ $seller_tariff->finish_date }}
+                                            </div>
+                                            <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
                                         </div>
-                                        <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
-                                    </div>
-                                @endforeach
+                                    @endforeach
+                                </div>
                             </div>
-                        </div>
                         @endif
                         <a href="#" class="header__col header__notif header__profile-item--js" title="Уведомления">
                             <div class="header__profile-notif" id="header-notif-count" style="display: none">

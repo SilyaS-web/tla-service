@@ -76,6 +76,8 @@ class AuthController extends Controller
             SellerTariff::create([
                 'user_id' => $user->id,
                 'tariff_id' => $tariff->id,
+                'type' => $tariff->type,
+                'quantity' => $tariff->quantity,
                 'finish_date' => \Carbon\Carbon::now()->addDays($tariff->period),
                 'activation_date' => \Carbon\Carbon::now(),
             ]);

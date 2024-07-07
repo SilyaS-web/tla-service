@@ -11,6 +11,8 @@ class SellerTariff extends Model
 
     protected $fillable = [
         'tariff_id',
+        'quantity',
+        'type',
         'finish_date',
         'activation_date',
         'user_id',
@@ -19,5 +21,10 @@ class SellerTariff extends Model
     public function tariff()
     {
         return $this->hasOne(Tariff::class, 'id', 'tariff_id');
+    }
+
+    public function User()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
 }

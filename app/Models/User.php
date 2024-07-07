@@ -93,30 +93,17 @@ class User extends Authenticatable
         return $this->password;
     }
 
-    public function tariffs()
+    public function sellerTariffs()
     {
         return $this->hasMany(SellerTariff::class, 'user_id', 'id');
     }
 
     public function getActiveTariffs($type = null) {
-        $tariffs = $this->tariffs()->where('finish_date', '>', Carbon::now());
+        $tariffs = $this->sellerTariffs()->where('finish_date', '>', Carbon::now())->where('quantity', '>', 0);
         if ($type) {
-            $tariffs->whereHas('tariff', function (Builder $query) use ($type) {
-                $query->where('type', $type);
-            });
-
+            $tariffs->where('type', $type);
             return $tariffs->first();
         }
         return $tariffs->get();
-    }
-
-    public function getActiveTariffsWithLost() {
-        $seller_tariffs = $this->tariffs()->where('finish_date', '>', Carbon::now())->get();
-        foreach ($seller_tariffs as &$seller_tariff) {
-            $seller_tariff->lost = $seller_tariff->tariff->quantity - $this->seller->works()->whereHas('projectWork', function (Builder $query) use ($seller_tariff) {
-                $query->where('type', $seller_tariff->tariff->type);
-            })->count();
-        }
-        return $seller_tariffs;
     }
 }

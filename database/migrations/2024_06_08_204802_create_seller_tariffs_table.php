@@ -19,6 +19,8 @@ class CreateSellerTariffsTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
             $table->unsignedBigInteger('tariff_id');
             $table->foreign('tariff_id')->references('id')->on('tariffs')->cascadeOnDelete();
+            $table->unsignedBigInteger('quantity');
+            $table->string('type');
             $table->timestamp('finish_date');
             $table->timestamp('activation_date');
             $table->timestamps();

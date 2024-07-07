@@ -40,20 +40,17 @@ class WorkController extends Controller
         if ($user->role == 'seller') {
             $seller = $user->seller;
             if ($seller) {
-                $tariff = $user->getActiveTariffs($project_work->type);
-                if (!$tariff) {
+                $seller_tariff = $user->getActiveTariffs($project_work->type);
+                if (!$seller_tariff || $seller_tariff->quantity < 1) {
                     return response()->json(['extend tariff'], 400);
                 }
-                $lost = $tariff->quantity - $seller->works()->whereHas('projectWork', function (Builder $query) use ($project_work) {
-                    $query->where('type', $project_work->type);
-                })->count();
-                if ($lost > 0) {
-                    return response()->json(['extend tariff'], 400);
-                }
+
+                $seller_tariff->update(['quantity' => $seller_tariff->quantity - 1]);
             } else {
                 return response()->json(['seller not found'], 400);
             }
         }
+
         if ($user->role == 'blogger') {
             $blogger_user = $user;
         } else {
@@ -86,6 +83,16 @@ class WorkController extends Controller
     {
         $work = Work::find($work_id);
         $user = Auth::user();
+
+        if ($user->role == 'seller') {
+            $seller_tariff = $user->getActiveTariffs($work->projectWork->type);
+            if (!$seller_tariff || $seller_tariff->quantity < 1) {
+                return redirect()->back()->with('success', 'Не удалось принять заявку, необходимо расширить тариф');
+            }
+
+            $seller_tariff->update(['quantity' => $seller_tariff->quantity - 1]);
+
+        }
 
         if (!$work->status && $work->created_by != $user->id) {
             $work->status = Work::PENDING;
@@ -121,6 +128,7 @@ class WorkController extends Controller
 
         $user = Auth::user();
         $work = Work::find($validated['work_id']);
+
         $work->update(['status' => Work::PENDING]);
         $partner_user = $work->getPartnerUser($user->role);
         Notification::create([

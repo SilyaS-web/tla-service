@@ -23,16 +23,11 @@ class TariffGroup extends Model
 
     public function getLost() {
         $user = Auth::user();
-        $active_tariff = $this->tariffs()->whereHas('sellerTariffs', function (Builder $query) use ($user) {
-            $query->where('user_id', $user->id)->where('finish_date', '>', Carbon::now());
-        })->first();
-
-        if (!$active_tariff) {
-            return 0;
-        }
-        $type = $active_tariff->type;
-        return $active_tariff->quantity - $user->seller->works()->whereHas('projectWork', function (Builder $query) use ($type) {
-            $query->where('type', $type);
-        })->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
+        $group_id = $this->id;
+        
+        $active_seller_tariffs_quantity = SellerTariff::where('user_id', $user->id)->whereHas('tariff', function (Builder $query) use ($group_id) {
+            $query->where('group_id', $group_id);
+        })->where('finish_date', '>', Carbon::now())->sum('quantity');
+        return $active_seller_tariffs_quantity;
     }
 }

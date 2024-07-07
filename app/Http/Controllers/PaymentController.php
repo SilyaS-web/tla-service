@@ -24,6 +24,8 @@ class PaymentController extends Controller
             SellerTariff::create([
                 'user_id' => Auth::user()->id,
                 'tariff_id' => $tariff->id,
+                'type' => $tariff->type,
+                'quantity' => $tariff->quantity,
                 'finish_date' => \Carbon\Carbon::now()->addDays($tariff->period),
                 'activation_date' => \Carbon\Carbon::now(),
             ]);
@@ -71,7 +73,7 @@ class PaymentController extends Controller
             ]);
             return redirect($response->getPaymentURL());
         } catch (TinkoffAPIException $e) {
-            Log::channel('single')->info(json_encode($e));
+            Log::channel('single')->info($e);
             return redirect(url('/payment/' . $payment->id . '/fail'));
         }
     }
@@ -88,7 +90,7 @@ class PaymentController extends Controller
             $payment->update(['status' => $status]);
             return $status;
         } catch (TinkoffAPIException $e) {
-            Log::channel('single')->info(json_encode($e));
+            Log::channel('single')->info($e);
             return response()->json(['status' => Payment::FAILED]);
         }
     }
