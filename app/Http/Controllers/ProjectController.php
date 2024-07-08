@@ -441,7 +441,7 @@ class ProjectController extends Controller
             'product_code' => $project->product_nm,
             'price' =>  $project->product_price,
             'images' => $project->getImageURL(),
-            'optioins' => $project->marketplace_options,
+            'optioins' => $project->marketplace_options != 'null' ? $project->marketplace_options : NULL,
             'link' => $project->product_link,
         ], 200);
     }
