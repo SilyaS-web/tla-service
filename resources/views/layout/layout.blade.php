@@ -166,7 +166,7 @@
                                 @php($seller_tariffs = Auth()->user()->getActiveTariffs())
                                 Ваш тариф — {{ $seller_tariffs->count() > 1 ? 'Смешанный' : ($seller_tariffs->first()->tariff->title ?? 'Отсутствует') }}
                                 <div class="tarrif-header__items">
-                                    @foreach ($seller_tariffs as $seller_tariff)
+                                    @forelse ($seller_tariffs as $seller_tariff)
                                         <div class="tarrif-header__item tarrif-header__adv">
                                             {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->quantity }}</span> шт.</b>
                                             <div class="tarrif-header__date">
@@ -174,7 +174,9 @@
                                             </div>
                                             <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
                                         </div>
-                                    @endforeach
+                                    @empty
+                                        <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
+                                    @endforelse
                                 </div>
                             </div>
                         @endif
