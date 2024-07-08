@@ -53,7 +53,7 @@ class MessageController extends Controller
             $data_id = $work->id;
             $is_completed = false;
             $lost = $work->projectWork->quantity - $work->seller->works()->where('project_work_id', $work->projectWork->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
-            if (($work->status == Work::PENDING || $work->status == null) && (!$lost < 1)){
+            if (($work->status == Work::PENDING || $work->status == null) && $lost < 1){
                 if ($user->role == 'blogger') {
                     $btn_class = 'tariff-btn';
                     $btn_text = 'Закончились места на проект';
