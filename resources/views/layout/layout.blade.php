@@ -101,7 +101,7 @@
                                 <div class="tarrif-header__item tarrif-header__adv">
                                     {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->quantity }}</span> шт.</b>
                                     <div class="tarrif-header__date">
-                                        Действует до {{ $seller_tariff->finish_date }}
+                                        Действует до {{ date('d.m.Y', strtotime($seller_tariff->finish_date)) }}
                                     </div>
                                     <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
                                 </div>
@@ -170,7 +170,7 @@
                                         <div class="tarrif-header__item tarrif-header__adv">
                                             {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->quantity }}</span> шт.</b>
                                             <div class="tarrif-header__date">
-                                                Действует до {{ $seller_tariff->finish_date }}
+                                                Действует до {{ date('d.m.Y', strtotime($seller_tariff->finish_date)) }}
                                             </div>
                                             <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
                                         </div>
