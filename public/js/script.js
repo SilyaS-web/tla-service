@@ -1782,9 +1782,15 @@ class PopupBlogerProjectMoreInfo extends Popup{
 
         wrap.empty();
 
+        var notPassArr = ['Rich-контент JSON', 'ТН ВЭД коды ЕАЭС', 'Планирую доставлять товар в нескольких упаковках']
+
         for(var k in chars){
+            console.log(chars[k].name);
+            if(notPassArr.includes(chars[k].name))
+                continue;
+
             var template = this.characteristicsTemplate;
-            console.log(chars);
+
             template = template.replaceAll('%%TITLE%%', chars[k].name);
             template = template.replaceAll('%%DESC%%', chars[k].value);
 
