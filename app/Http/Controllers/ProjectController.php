@@ -377,8 +377,21 @@ class ProjectController extends Controller
 
     public function activate(Project $project)
     {
+        $user = Auth::user();
+        foreach($project->projectWorks as $project_work) {
+            $seller_tariff = $user->getActiveTariffs($project_work->type);
+            if (!$seller_tariff || $seller_tariff->quantity < $project_work->quantity) {
+                return redirect()->back()->with('success', 'Вашего тарифа недостаточно для того, чтобы опубликовать');
+            }
+        }
+
+        foreach($project->projectWorks as $project_work) {
+            $seller_tariff = $user->getActiveTariffs($project_work->type);
+            $seller_tariff->update(['quantity' => $seller_tariff->quantity - $project_work->quantity]);
+        }
+
         $project->update(['is_blogger_access' => true]);
-        return redirect()->route('profile')->with('switch-tab', 'profile-projects')->with('success', 'Проект успешно выложен');
+        return redirect()->route('profile')->with('switch-tab', 'profile-projects')->with('success', 'Проект успешно опубликован');
     }
 
     public function ban(Project $project)
@@ -520,7 +533,7 @@ class ProjectController extends Controller
     {
         $card = $this->getOzonGeneralInfo($product_nm, $client_id, $api_key);
         if (!$card) false;
-
+        dd($card);
         $product_attributes_without_names = $this->getOzonProductAttributestInfo($card->id, $client_id, $api_key);
         $attributes = $this->getOzonAttributestInfo($card->description_category_id, $card->type_id, $client_id, $api_key);
         $product_attributes = [];

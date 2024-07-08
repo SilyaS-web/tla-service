@@ -106,4 +106,14 @@ class User extends Authenticatable
         }
         return $tariffs->get();
     }
+
+    public function getActiveTariffsWithLost() {
+        $seller_tariffs = $this->tariffs()->where('finish_date', '>', Carbon::now())->get();
+        foreach ($seller_tariffs as &$seller_tariff) {
+            $seller_tariff->lost = $seller_tariff->quantity - $this->seller->works()->whereHas('projectWork', function (Builder $query) use ($seller_tariff) {
+                $query->where('type', $seller_tariff->type);
+            })->count();
+        }
+        return $seller_tariffs;
+    }
 }
