@@ -1659,8 +1659,8 @@ class PopupSellerChooseProjectsFormat extends Popup{
         var bloggers = $('#profile-blogers-list .bloger-item.card');
 
         bloggers.each((i, v)=>{
-            var coverage = $(v).find('.card__stats-val.coverage').text(),
-                cpm = coverage > 0 ? ((Number(price.trim().split(' ').join('')) / Number(coverage.trim().split(' ').join(''))) * 1000).toFixed(2) : 0;
+            var coverage = Number($(v).find('.card__stats-val.coverage').text().split(' ').join('')),
+                cpm = coverage > 0 ? ((Number(price.trim().split(' ').join('')) / coverage) * 1000).toFixed(2) : 0;
 
             $(v).find('.card__stats-val.cpm span').text(`${cpm}₽`)
             $(v).find('.card__stats-val.card__stats-val--empty').removeClass('card__stats-val--empty')
