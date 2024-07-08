@@ -25,6 +25,11 @@
                             Проект завершен
                         </div>
                     </div>
+                    <div class="chat__overflow chat__overflow--tariff" style="z-index: 1; display:none">
+                        <div class="chat__overflow-text">
+
+                        </div>
+                    </div>
                     <div class="chat__back">
                         <img src="{{asset('img/arrow-alt.svg')}}" alt="">
                         <span> Вернуться </span>

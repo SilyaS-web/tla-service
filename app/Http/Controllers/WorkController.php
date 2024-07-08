@@ -84,16 +84,6 @@ class WorkController extends Controller
         $work = Work::find($work_id);
         $user = Auth::user();
 
-        if ($user->role == 'seller') {
-            $seller_tariff = $user->getActiveTariffs($work->projectWork->type);
-            if (!$seller_tariff || $seller_tariff->quantity < 1) {
-                return redirect()->back()->with('success', 'Не удалось принять заявку, необходимо расширить тариф');
-            }
-
-            $seller_tariff->update(['quantity' => $seller_tariff->quantity - 1]);
-
-        }
-
         if (!$work->status && $work->created_by != $user->id) {
             $work->status = Work::PENDING;
             $work->last_message_at = date('Y-m-d H:i');

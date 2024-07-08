@@ -52,7 +52,16 @@ class MessageController extends Controller
             $btn_text = 'Принять в работу';
             $data_id = $work->id;
             $is_completed = false;
-            if ($work->status == Work::PENDING) {
+            $seller_tariff = $user->getActiveTariffs($work->project_work->type);
+            if (($work->status == Work::PENDING || $work->status == null) && (!$seller_tariff || $seller_tariff->quantity < 1)){
+                if ($user->role == 'blogger') {
+                    $btn_class = 'tariff-btn';
+                    $btn_text = 'Закончились места на проект';
+                } else {
+                    $btn_class = 'tariff-btn';
+                    $btn_text = 'Вашего тарифа недостаточно';
+                }
+            } else if ($work->status == Work::PENDING) {
                 if ($work->isAcceptedByUser($user)) {
                     $btn_text = 'Ожидаем ответа от ' . $work->getPartnerUser($user->role)->name;
                     $btn_class = 'btn-chat-action disabled';
