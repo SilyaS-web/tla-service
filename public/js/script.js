@@ -1059,10 +1059,14 @@ class Chat {
                         }, 100)
                     }, 50)
                 }
+
                 if (res['btn-class'] == 'tariff-btn') {
                     $(self.node).find('.chat__overflow').hide();
+                    $(self.node).find('.chat__overflow--completed').hide();
                     $(self.node).find('.chat__overflow--tariff .chat__overflow-text').text(res['btn-text']);
                     $(self.node).find('.chat__overflow--tariff').show();
+                } else {
+                    $(self.node).find('.chat__overflow--tariff').hide();
                 }
 
                 if(res.is_completed){
