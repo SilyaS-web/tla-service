@@ -37,20 +37,7 @@ class WorkController extends Controller
         $user = Auth::user();
 
         $project_work = ProjectWork::find($validated['project_work_id']);
-        if ($user->role == 'seller') {
-            $seller = $user->seller;
-            if ($seller) {
-                $seller_tariff = $user->getActiveTariffs($project_work->type);
-                if (!$seller_tariff || $seller_tariff->quantity < 1) {
-                    return response()->json(['extend tariff'], 400);
-                }
-
-                $seller_tariff->update(['quantity' => $seller_tariff->quantity - 1]);
-            } else {
-                return response()->json(['seller not found'], 400);
-            }
-        }
-
+    
         if ($user->role == 'blogger') {
             $blogger_user = $user;
         } else {
