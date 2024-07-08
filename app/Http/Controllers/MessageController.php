@@ -52,7 +52,7 @@ class MessageController extends Controller
             $btn_text = 'Принять в работу';
             $data_id = $work->id;
             $is_completed = false;
-            $seller_tariff = $user->getActiveTariffs($work->project_work->type);
+            $seller_tariff = $user->getActiveTariffs($work->projectWork->type);
             if (($work->status == Work::PENDING || $work->status == null) && (!$seller_tariff || $seller_tariff->quantity < 1)){
                 if ($user->role == 'blogger') {
                     $btn_class = 'tariff-btn';
