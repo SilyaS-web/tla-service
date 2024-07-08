@@ -1086,11 +1086,21 @@ class Chat {
         $.post({
             url: self.getMsgUri,
             success: (res) => {
+                var scrollTop = $(document).find('#chat .chat__chat-items').prop('scrollTop');
+
+                $(document).find('#chat .chat__left').css('height', `${$(document).find('#chat .chat__left').height()}px`)
                 $(document).find('.chat__chat-items').remove();
                 $(document).find('#chat .chat__left').append(res.view);
+
+                $(self.node).find(".chat__chat-items").animate({
+                    scrollTop: scrollTop
+                }, 0)
+
                 if(self.currentChatId){
                     $(self.node).find(`.item-chat[data-id="${self.currentChatId}"]`).addClass('current');
                 }
+
+                $(document).find('#chat .chat__left').css('height', 'unset')
             }
         })
     }
@@ -1645,9 +1655,10 @@ class PopupSellerChooseProjectsFormat extends Popup{
         var bloggers = $('#profile-blogers-list .bloger-item.card');
 
         bloggers.each((i, v)=>{
-            var coverage = $(v).find('.card__stats-val.coverage').text();
-            console.log(price, coverage);
-            $(v).find('.card__stats-val.cpm span').text(`${((Number(price.trim().split(' ').join('')) / Number(coverage.trim().split(' ').join(''))) * 1000).toFixed(2)}₽`)
+            var coverage = $(v).find('.card__stats-val.coverage').text(),
+                cpm = coverage > 0 ? ((Number(price.trim().split(' ').join('')) / Number(coverage.trim().split(' ').join(''))) * 1000).toFixed(2) : 0;
+
+            $(v).find('.card__stats-val.cpm span').text(`${cpm}₽`)
             $(v).find('.card__stats-val.card__stats-val--empty').removeClass('card__stats-val--empty')
         })
 

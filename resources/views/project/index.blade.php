@@ -211,7 +211,7 @@
                                     </div>
                                 </div>
                                 <div class="card__row" style="text-align: center;">
-                                    <a href="{{ route('blogger-page', $blogger->id) . '?tab=profile-projects' }}" class="" style="width: 100%; color: rgba(0, 0, 0, .4); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -10px;">Подробнее</a>
+                                    <a href="{{ route('blogger-page', $blogger->id) . '?tab=profile-projects' }}" class="" style="width: 100%; color: #FE5E00; font-size:16px; font-weight:500; text-decoration:underline; margin-top: -10px;">Подробнее</a>
                                 </div>
                                 <div class="card__row bloger-item--btns" style="gap:12px; width:100%; flex-wrap: wrap; justify-content: center">
                                     <a href="apist/works/{{ $work_application->id }}/start" class="btn btn-primary" data-project-id="">
