@@ -944,7 +944,7 @@ class Chat {
             }
         });
 
-        var mediaQuery = window.matchMedia('(max-width: 700px)')
+        var mediaQuery = window.matchMedia('(max-width: 970px)')
         if (mediaQuery.matches) {
             $(this.node).on('click', '.item-chat', ()=>{
                 $('.chat__left').hide()
