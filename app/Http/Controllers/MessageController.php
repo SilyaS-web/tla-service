@@ -52,7 +52,7 @@ class MessageController extends Controller
             $btn_text = 'Принять в работу';
             $data_id = $work->id;
             $is_completed = false;
-            $lost = $work->projectWork->quantity - $work->seller->works()->where('project_work_id', $work->projectWork->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
+            $lost = $work->projectWork->quantity - Work::where('project_work_id', $work->projectWork->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
             if (($work->status == Work::PENDING || $work->status == null) && $lost < 1){
                 if ($user->role == 'blogger') {
                     $btn_class = 'tariff-btn';
