@@ -1856,9 +1856,9 @@ class PopupBlogerProjectMoreInfo extends Popup{
                 $(self.node).find('.project-item__left .line__val').css('width', `${(res.lost_quantity * 100) / res.total_quantity }%`)
                 $(self.node).find('.btn-go-to-shop').attr('href', res.link)
 
-                var contentText =  `Категория: ${res.category}`,
+                var contentText =  res.category ? `Категория: ${res.category}` : '',
                     isContentEmpty = !res.category && (options == null);
-                console.log(isContentEmpty, res.category, options);
+                console.log(isContentEmpty, res.category, (options == null));
                 if (isContentEmpty) {
                     contentText = 'К сожалению, информация о товаре недоступна, однако вы можете ознакомиться с подробностями, нажав на кнопку подробнее.'
                 }
