@@ -1785,7 +1785,6 @@ class PopupBlogerProjectMoreInfo extends Popup{
         var notPassArr = ['Rich-контент JSON', 'ТН ВЭД коды ЕАЭС', 'Планирую доставлять товар в нескольких упаковках']
 
         for(var k in chars){
-            console.log(chars[k].name);
             if(notPassArr.includes(chars[k].name))
                 continue;
 
@@ -1860,7 +1859,9 @@ class PopupBlogerProjectMoreInfo extends Popup{
                 var contentText =  `Категория: ${res.category}`,
                     isContentEmpty = !res.category && !res.options;
 
-                if (!isContentEmpty) {
+                console.log(isContentEmpty, res.options, );
+
+                if (isContentEmpty) {
                     contentText = 'К сожалению, информация о товаре недоступна, однако вы можете ознакомиться с подробностями, нажав на кнопку подробнее.'
                 }
 
