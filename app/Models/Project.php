@@ -151,7 +151,19 @@ class Project extends Model
                 return "Активно";
 
             case self::COMPLETED:
-                return "завершено";
+                return "Завершено";
+        }
+        
+        $is_null = true;
+        foreach ($this->projectWorks as $project_work) {
+            $lost = $project_work->quantity - Work::where('project_work_id', $project_work->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
+            if ($lost > 0) {
+                $is_null = false;
+            }
+        }
+        if ($is_null) {
+            $this->update(['status' => self::COMPLETED]);
+            return "Завершено";
         }
 
         return "Активно";

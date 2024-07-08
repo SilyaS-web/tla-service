@@ -71,7 +71,7 @@ class UserController extends Controller
 
         $active_project_works = ProjectWork::whereIn('id', $works->pluck('project_work_id'))->get();
 
-        $all_projects = Project::where('status', '<>', Project::BANNED)->where('is_blogger_access', 1)->where('created_at', '<', Carbon::now()->subMinutes(5))->get();
+        $all_projects = Project::where('status', Project::ACTIVE)->where('is_blogger_access', 1)->where('created_at', '<', Carbon::now()->subMinutes(5))->get();
 
         $application_works = Work::where([['blogger_id', $user_id]])->where('status', null)->where('created_by', '<>', $user_id)->where('accepted_by_blogger_at', null)->get();
         $role = $user->role;
