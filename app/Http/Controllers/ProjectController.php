@@ -532,8 +532,8 @@ class ProjectController extends Controller
     public function getOzonInfo(int $product_nm, int $client_id, string $api_key)
     {
         $card = $this->getOzonGeneralInfo($product_nm, $client_id, $api_key);
-        if (!$card) false;
-        dd($card);
+        if (!$card) return false;
+
         $product_attributes_without_names = $this->getOzonProductAttributestInfo($card->id, $client_id, $api_key);
         $attributes = $this->getOzonAttributestInfo($card->description_category_id, $card->type_id, $client_id, $api_key);
         $product_attributes = [];
