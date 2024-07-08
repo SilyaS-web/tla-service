@@ -1857,8 +1857,8 @@ class PopupBlogerProjectMoreInfo extends Popup{
                 $(self.node).find('.btn-go-to-shop').attr('href', res.link)
 
                 var contentText =  `Категория: ${res.category}`,
-                    isContentEmpty = !res.category && !res.options;
-                console.log(isContentEmpty, res.category, res.options);
+                    isContentEmpty = !res.category && !options;
+                console.log(isContentEmpty, res.category, options);
                 if (isContentEmpty) {
                     contentText = 'К сожалению, информация о товаре недоступна, однако вы можете ознакомиться с подробностями, нажав на кнопку подробнее.'
                 }
