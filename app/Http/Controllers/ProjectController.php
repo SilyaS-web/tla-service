@@ -104,7 +104,7 @@ class ProjectController extends Controller
         $validated['seller_id'] = $user->id;
         if (strripos($validated['product_link'], 'ozon') !== false && !empty($user->seller->ozon_client_id) && !empty($user->seller->ozon_api_key)) {
             $info = $this->getOzonInfo($validated['product_nm'], $user->seller->ozon_client_id, $user->seller->ozon_api_key);
-            if (!$info) {
+            if ($info) {
                 $validated['marketplace_category'] = $info['category'] ?? null;
                 $validated['marketplace_brand'] = $info['brand'] ?? null;
                 $validated['marketplace_product_name'] = $info['name'] ?? null;
@@ -532,7 +532,7 @@ class ProjectController extends Controller
     public function getOzonInfo(int $product_nm, int $client_id, string $api_key)
     {
         $card = $this->getOzonGeneralInfo($product_nm, $client_id, $api_key);
-        if (!$card) return false;
+        if (!isset($card->id)) return false;
 
         $product_attributes_without_names = $this->getOzonProductAttributestInfo($card->id, $client_id, $api_key);
         $attributes = $this->getOzonAttributestInfo($card->description_category_id, $card->type_id, $client_id, $api_key);
