@@ -153,7 +153,7 @@ class Project extends Model
             case self::COMPLETED:
                 return "Завершено";
         }
-        
+
         $is_null = true;
         foreach ($this->projectWorks as $project_work) {
             $lost = $project_work->quantity - Work::where('project_work_id', $project_work->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
@@ -167,6 +167,26 @@ class Project extends Model
         }
 
         return "Активно";
+    }
+
+    public function isCompleted() {
+        $is_null = true;
+        if ($this->status == self::COMPLETED) {
+            return true;
+        }
+        
+        foreach ($this->projectWorks as $project_work) {
+            $lost = $project_work->quantity - Work::where('project_work_id', $project_work->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
+            if ($lost > 0) {
+                $is_null = false;
+            }
+        }
+
+        if ($is_null) {
+            $this->update(['status' => self::COMPLETED]);
+        }
+
+        return $is_null;
     }
 
     public function getStatusClass()

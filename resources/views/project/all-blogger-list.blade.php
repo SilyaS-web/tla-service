@@ -1,4 +1,7 @@
 @forelse ($all_projects as $project)
+@if ($project->isCompleted())
+    @continue
+@endif
 @php($lost_seats = $project->projectWorks()->sum('quantity') - $project->works()->whereIn('status', ['progress', 'completed'])->count())
     <div class="list-projects__item project-item" data-id="{{ $project->id }}">
         <div class="project-item__carousel">
