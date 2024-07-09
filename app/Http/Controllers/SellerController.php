@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class SellerController extends Controller
 {
@@ -25,6 +26,7 @@ class SellerController extends Controller
 
 
     public function checkTariffs() {
+        Log::channel('single')->info('checkTariffs');
         $sellers = Seller::get();
         foreach ($sellers as $seller) {
             $user = $seller->user;
@@ -40,6 +42,7 @@ class SellerController extends Controller
     }
 
     public function checkProjectWorks() {
+        Log::channel('single')->info('checkProjectWorks');
         $project_works = ProjectWork::where('finish_date', '>', Carbon::now())->withCount(['works' => function (Builder $query) {
             $query->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
         }])->get();
