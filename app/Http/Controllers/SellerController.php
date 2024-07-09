@@ -25,11 +25,13 @@ class SellerController extends Controller
     }
 
 
-    public function checkTariffs() {
+    public function checkTariffs()
+    {
         Log::channel('single')->info('checkTariffs');
         $sellers = Seller::get();
         foreach ($sellers as $seller) {
             $user = $seller->user;
+            TgService::notify($user->tgPhone->chat_id, 'Проверяем ваши тарифы');
             foreach ($seller->sellerTariffs as $seller_tariff) {
                 if ($seller_tariff->finish_date <= Carbon::now()->subDays(7) && $seller_tariff->finish_date > Carbon::now()->subDays(6)) {
                     TgService::notify($user->tgPhone->chat_id, 'Скоро заканчивается срок действия вашего тарифного плана ' . $seller_tariff->tariff->tariffGroup->title . '! Не забудьте продлить его, чтобы продолжить работу.');
@@ -41,7 +43,8 @@ class SellerController extends Controller
         }
     }
 
-    public function checkProjectWorks() {
+    public function checkProjectWorks()
+    {
         Log::channel('single')->info('checkProjectWorks');
         $project_works = ProjectWork::where('finish_date', '>', Carbon::now())->withCount(['works' => function (Builder $query) {
             $query->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
