@@ -46,6 +46,8 @@ Route::prefix('apist')->group(function () {
     Route::post('/password/reset', [AuthController::class, 'resetPassword']);
     Route::post('/tg/confirmed', [AuthController::class, 'isTgConfirmed']);
     Route::post('/tg', [AuthController::class, 'setTGPhone']);
+    Route::get('/check-tariffs', [SellerController::class, 'checkTariffs']);
+    Route::get('/check-projects', [SellerController::class, 'checkProjectWorks']);
 });
 
 Route::middleware(['auth', 'banned'])->group(function () {
@@ -118,8 +120,5 @@ Route::middleware(['auth', 'banned'])->group(function () {
         Route::get('/notifications/{project_id}/view', [NotificationController::class, 'view']);
 
         Route::get('/coverage-data', [DeepLinkController::class, 'stats']);
-
-        Route::get('/check-tariffs', [SellerController::class, 'checkTariffs']);
-        Route::get('/check-projects', [SellerController::class, 'checkProjectWorks']);
     });
 });
