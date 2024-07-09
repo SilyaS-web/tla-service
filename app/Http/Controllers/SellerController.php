@@ -33,7 +33,7 @@ class SellerController extends Controller
             $user = $seller->user;
             TgService::notify($user->tgPhone->chat_id, 'Проверяем ваши тарифы');
             foreach ($seller->sellerTariffs as $seller_tariff) {
-                if ($seller_tariff->finish_date <= Carbon::now()->subDays(7) && $seller_tariff->finish_date > Carbon::now()->subDays(6)) {
+                if ($seller_tariff->finish_date >= Carbon::now()->addDays(7) && $seller_tariff->finish_date < Carbon::now()->addDays(8)) {
                     TgService::notify($user->tgPhone->chat_id, 'Скоро заканчивается срок действия вашего тарифного плана ' . $seller_tariff->tariff->tariffGroup->title . '! Не забудьте продлить его, чтобы продолжить работу.');
                 } else if ($seller_tariff->finish_date < Carbon::now()) {
                     TgService::notify($user->tgPhone->chat_id, 'Срок действия вашего тарифного плана ' . $seller_tariff->tariff->tariffGroup->title . ' истёк!');
