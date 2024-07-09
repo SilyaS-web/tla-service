@@ -41,23 +41,24 @@ class SellerController extends Controller
                 }
             }
         }
+
+        $this->checkProjectWorks();
     }
 
     public function checkProjectWorks()
     {
         Log::channel('single')->info('checkProjectWorks');
-        $project_works = ProjectWork::where('finish_date', '>', Carbon::now())->withCount(['works' => function (Builder $query) {
-            $query->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
-        }])->get();
+        $project_works = ProjectWork::where('finish_date', '>', Carbon::now())->get();
 
         foreach ($project_works as $project_work) {
             $seller = $project_work->project->seller;
             $active_tariff = $seller->getActiveTariffs($project_work->type);
+            $works_count = Work::where('project_work_id', $project_work->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
             if ($active_tariff) {
                 if ($active_tariff->quantity >= $project_work->quantity) {
                     $active_tariff->update(['quantity' => $active_tariff->quantity - $project_work->quantity]);
                 } else {
-                    $project_work_lost = $project_work->quantity - $project_work->works_count;
+                    $project_work_lost = $project_work->quantity - $works_count;
                     $project_work->quantity = $project_work_lost - $active_tariff->quantity;
                     $active_tariff->update(['quantity' => 0]);
                 }
@@ -69,7 +70,7 @@ class SellerController extends Controller
                     $active_tariff->delete();
                 }
             } else {
-                $project_work->update(['quantity' => $project_work->works_count]);
+                $project_work->update(['quantity' => $works_count]);
             }
         }
     }
