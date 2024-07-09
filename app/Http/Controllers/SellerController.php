@@ -27,7 +27,6 @@ class SellerController extends Controller
 
     public function checkTariffs()
     {
-        return 'true';
         Log::channel('single')->info('checkTariffs');
         $sellers = Seller::get();
         foreach ($sellers as $seller) {
