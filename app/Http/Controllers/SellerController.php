@@ -27,6 +27,7 @@ class SellerController extends Controller
 
     public function checkTariffs()
     {
+        return 'true';
         Log::channel('single')->info('checkTariffs');
         $sellers = Seller::get();
         foreach ($sellers as $seller) {
@@ -35,7 +36,7 @@ class SellerController extends Controller
             foreach ($seller->sellerTariffs as $seller_tariff) {
                 if ($seller_tariff->finish_date <= Carbon::now()->subDays(7) && $seller_tariff->finish_date > Carbon::now()->subDays(6)) {
                     TgService::notify($user->tgPhone->chat_id, 'Скоро заканчивается срок действия вашего тарифного плана ' . $seller_tariff->tariff->tariffGroup->title . '! Не забудьте продлить его, чтобы продолжить работу.');
-                } else if ($seller_tariff->finish_date > Carbon::now()) {
+                } else if ($seller_tariff->finish_date < Carbon::now()) {
                     TgService::notify($user->tgPhone->chat_id, 'Срок действия вашего тарифного плана ' . $seller_tariff->tariff->tariffGroup->title . ' истёк!');
                     $seller_tariff->delete();
                 }
