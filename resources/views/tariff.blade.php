@@ -38,11 +38,7 @@
                                         </span>
                                     </div>
                                     <div class="planItem__row" style="display: flex; flex-wrap:wrap; gap:10px;">
-                                        @if ($lost < 1)
-                                        <a href="{{ url('/payment/' . $tariff->id . '/init') }}" class="btn btn-primary">Оплатить</a>
-                                        @else
-                                        {{-- <button class="btn btn-primary" disabled>Тариф уже оплачен</button> --}}
-                                        @endif
+                                        <a href="{{ url('/payment/' . $tariff->id . '/init') }}" class="btn btn-primary">{{ $lost < 1 ? 'Оплатить' : 'Продлить' }}</a>
                                     </div>
                                 </div>
                             @endforeach

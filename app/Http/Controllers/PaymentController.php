@@ -18,17 +18,23 @@ class PaymentController extends Controller
 {
     public function successPayment(Payment $payment)
     {
+        $user = Auth::user();
         $state = $this->checkState($payment);
         if ($state == TPayment::STATUS_CONFIRMED) {
             $tariff = Tariff::find($payment->tariff_id);
-            SellerTariff::create([
-                'user_id' => Auth::user()->id,
-                'tariff_id' => $tariff->id,
-                'type' => $tariff->type,
-                'quantity' => $tariff->quantity,
-                'finish_date' => \Carbon\Carbon::now()->addDays($tariff->period),
-                'activation_date' => \Carbon\Carbon::now(),
-            ]);
+            $seller_tariff = $user->getActiveTariffs($tariff->type);
+            if ($seller_tariff) {
+                $seller_tariff->update(['quantity' => $seller_tariff->quantity + $tariff->quantity, 'finish_date' => \Carbon\Carbon::now()->addDays($tariff->period)]);
+            } else {
+                SellerTariff::create([
+                    'user_id' => Auth::user()->id,
+                    'tariff_id' => $tariff->id,
+                    'type' => $tariff->type,
+                    'quantity' => $tariff->quantity,
+                    'finish_date' => \Carbon\Carbon::now()->addDays($tariff->period),
+                    'activation_date' => \Carbon\Carbon::now(),
+                ]);
+            }
 
             return redirect()->route('tariff')->with('success', 'Тариф успешно оплачен');
         }
