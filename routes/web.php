@@ -118,5 +118,6 @@ Route::middleware(['auth', 'banned'])->group(function () {
         Route::get('/notifications/{project_id}/view', [NotificationController::class, 'view']);
 
         Route::get('/coverage-data', [DeepLinkController::class, 'stats']);
+        Route::get('/check-tariffs', [SellerController::class, 'checkTariffs']);
     });
 });

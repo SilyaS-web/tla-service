@@ -24,6 +24,7 @@ class CreateSellerTariffsTable extends Migration
             $table->timestamp('finish_date');
             $table->timestamp('activation_date');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

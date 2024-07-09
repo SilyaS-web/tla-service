@@ -387,6 +387,7 @@ class ProjectController extends Controller
 
         foreach($project->projectWorks as $project_work) {
             $seller_tariff = $user->getActiveTariffs($project_work->type);
+            $project_work->update(['finish_date' => $seller_tariff->finish_date]);
             $seller_tariff->update(['quantity' => $seller_tariff->quantity - $project_work->quantity]);
         }
 
@@ -462,9 +463,9 @@ class ProjectController extends Controller
         $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
-        // if ($http_code != 200) {
-        //     return false;
-        // }
+        if ($http_code != 200) {
+            return false;
+        }
 
         $card = json_decode($response);
         return $card;

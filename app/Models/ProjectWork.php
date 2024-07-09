@@ -13,10 +13,11 @@ class ProjectWork extends Model
         'type',
         'quantity',
         'project_id',
+        'finish_date'
     ];
 
     public function project() {
-        return $this->belongsTo(Project::class, 'project_id', 'id');
+        return $this->hasOne(Project::class, 'id', 'project_id');
     }
 
     public function getProjectWorkName()
@@ -28,5 +29,10 @@ class ProjectWork extends Model
         }
 
         return $name;
+    }
+
+    public function works()
+    {
+        return $this->hasMany(Work::class, 'project_work_id', 'id');
     }
 }

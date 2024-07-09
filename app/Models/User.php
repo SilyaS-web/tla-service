@@ -99,7 +99,7 @@ class User extends Authenticatable
     }
 
     public function getActiveTariffs($type = null) {
-        $tariffs = $this->sellerTariffs()->where('finish_date', '>', Carbon::now())->where('quantity', '>', 0);
+        $tariffs = $this->sellerTariffs()->where('finish_date', '>', Carbon::now());
         if ($type) {
             $tariffs->where('type', $type);
             return $tariffs->first();

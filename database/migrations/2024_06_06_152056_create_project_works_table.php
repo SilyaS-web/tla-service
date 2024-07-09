@@ -18,6 +18,7 @@ class CreateProjectWorksTable extends Migration
             $table->string('type');
             $table->string('quantity');
             $table->unsignedBigInteger('project_id');
+            $table->timestamp('finish_date');
             $table->foreign('project_id')->references('id')->on('projects')->cascadeOnDelete();
             $table->timestamps();
         });

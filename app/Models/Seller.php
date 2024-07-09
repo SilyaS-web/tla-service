@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
@@ -39,17 +40,24 @@ class Seller extends Model
         return $this->hasMany(Work::class, 'seller_id', 'user_id');
     }
 
-    // public function projects()
-    // {
-    //     return $this->hasManyThrough(
-    //         Deployment::class,
-    //         Environment::class,
-    //         'project_id', // Foreign key on the environments table...
-    //         'environment_id', // Foreign key on the deployments table...
-    //         'id', // Local key on the projects table...
-    //         'id' // Local key on the environments table...
-    //     );
-    // }
+    public function sellerTariffs()
+    {
+        return $this->hasMany(SellerTariff::class, 'user_id', 'user_id');
+    }
+
+    public function getActiveTariffs($type = null) {
+        $tariffs = $this->sellerTariffs()->where('finish_date', '>', Carbon::now());
+        if ($type) {
+            $tariffs->where('type', $type);
+            return $tariffs->first();
+        }
+        return $tariffs->get();
+    }
+
+    public function projects()
+    {
+        return $this->hasMany(Project::class, 'seller_id', 'user_id');
+    }
 
     public function getNMfromWB()
     {
