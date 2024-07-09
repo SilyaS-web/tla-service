@@ -48,7 +48,7 @@ class SellerController extends Controller
     public function checkProjectWorks()
     {
         Log::channel('single')->info('checkProjectWorks');
-        $project_works = ProjectWork::where('finish_date', '>', Carbon::now())->get();
+        $project_works = ProjectWork::where('finish_date', '<', Carbon::now())->get();
 
         foreach ($project_works as $project_work) {
             $seller = $project_work->project->seller;
