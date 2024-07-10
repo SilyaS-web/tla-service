@@ -37,7 +37,7 @@ class WorkController extends Controller
         $user = Auth::user();
 
         $project_work = ProjectWork::find($validated['project_work_id']);
-    
+
         if ($user->role == 'blogger') {
             $blogger_user = $user;
         } else {
@@ -133,7 +133,7 @@ class WorkController extends Controller
         if ($work->isBothAcceptd() && $work->status = Work::PENDING) {
             $work->status = Work::IN_PROGRESS;
             $work->save();
-            $message_text = 'Работа начата';
+            $message_text = 'Статус работы изменён на: <span style="color: var(--primary)">выполняется<span>';
             if ($work->projectWork->type != Project::FEEDBACK) {
                 $deeplink = $this->createDeepLinkByWork($work);
                 $link = request()->getSchemeAndHttpHost() . '/lnk/' . $deeplink->link;

@@ -55,7 +55,7 @@ class MessageController extends Controller
             $lost = $work->projectWork->quantity - Work::where('project_work_id', $work->projectWork->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
             if (($work->status == Work::PENDING || $work->status == null) && $lost < 1){
                 $btn_class = 'tariff-btn';
-                $btn_text = 'Закончились места на проект';
+                $btn_text = 'Все доступные места на интеграцию уже заняты';
             } else if ($work->status == Work::PENDING) {
                 if ($work->isAcceptedByUser($user)) {
                     $btn_text = 'Ожидаем ответа от ' . $work->getPartnerUser($user->role)->name;

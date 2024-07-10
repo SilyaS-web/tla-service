@@ -76,14 +76,16 @@
                                             {{ $p->engagement_rate ?? 0 }}
                                         </div>
                                     </div>
-                                    <div class="item-platforms__stat">
-                                        <div class="item-platforms__stat-title">
-                                            CPM
+                                    @if ($p->cost_per_mille)
+                                        <div class="item-platforms__stat">
+                                            <div class="item-platforms__stat-title">
+                                                CPM
+                                            </div>
+                                            <div class="item-platforms__stat-value">
+                                                {{ $p->cost_per_mille ?? 0}}
+                                            </div>
                                         </div>
-                                        <div class="item-platforms__stat-value">
-                                            {{ $p->cost_per_mille ?? 0}}
-                                        </div>
-                                    </div>
+                                    @endif
                                 </div>
                             </div>
                             @endforeach

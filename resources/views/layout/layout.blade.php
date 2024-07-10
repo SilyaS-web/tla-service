@@ -93,21 +93,26 @@
                         </a>
                     </div>
                     @if ( auth()->user()->role == 'seller')
-                    <div href="#" class="header__col header__tarrif tarrif-header header__profile-item--js">
-                        @php($seller_tariffs = Auth()->user()->getActiveTariffs())
-                        Ваш тариф — {{ $seller_tariffs->count() > 1 ? 'Смешанный' : ($seller_tariffs->first()->tariff->title ?? 'Отсутствует') }}
-                        <div class="tarrif-header__items">
-                           @foreach ($seller_tariffs as $seller_tariff)
-                                <div class="tarrif-header__item tarrif-header__adv">
-                                    {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->quantity }}</span> шт.</b>
-                                    <div class="tarrif-header__date">
-                                        Действует до {{ date('d.m.Y', strtotime($seller_tariff->finish_date)) }}
+                        <div href="#" class="header__col header__tarrif tarrif-header header__profile-item--js">
+                            @php($seller_tariffs = Auth()->user()->getActiveTariffs())
+                            Мои тарифы
+                            <div class="tarrif-header__items">
+                                @forelse ($seller_tariffs as $seller_tariff)
+                                    <div class="tarrif-header__item tarrif-header__adv">
+                                        {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->quantity }}</span> шт.</b>
+                                        <div class="tarrif-header__date">
+                                            Действует до {{ date('d.m.Y', strtotime($seller_tariff->finish_date)) }}
+                                        </div>
+                                        <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
                                     </div>
-                                    <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
-                                </div>
-                            @endforeach
+                                @empty
+                                    <div class="tarrif-header__item tarrif-header__adv">
+                                        Нет оплаченых тарифов
+                                        <a href="{{ route('tariff') }}" class="tarrif-header__buy">Выбрать тариф</a>
+                                    </div>
+                                @endforelse
+                            </div>
                         </div>
-                    </div>
                     @endif
                 </div>
                 <div class="burger-menu__nav nav-burger">
@@ -164,7 +169,7 @@
                         @if ( auth()->user()->role == 'seller')
                             <div href="#" class="header__col header__tarrif tarrif-header header__profile-item--js">
                                 @php($seller_tariffs = Auth()->user()->getActiveTariffs())
-                                Ваш тариф — {{ $seller_tariffs->count() > 1 ? 'Смешанный' : ($seller_tariffs->first()->tariff->title ?? 'Отсутствует') }}
+                                 Мои тарифы
                                 <div class="tarrif-header__items">
                                     @forelse ($seller_tariffs as $seller_tariff)
                                         <div class="tarrif-header__item tarrif-header__adv">
@@ -175,7 +180,10 @@
                                             <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
                                         </div>
                                     @empty
-                                        <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
+                                        <div class="tarrif-header__item tarrif-header__adv">
+                                            Нет оплаченых тарифов
+                                            <a href="{{ route('tariff') }}" class="tarrif-header__buy">Выбрать тариф</a>
+                                        </div>
                                     @endforelse
                                 </div>
                             </div>
