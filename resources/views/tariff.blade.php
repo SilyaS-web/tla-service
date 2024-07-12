@@ -38,7 +38,16 @@
                                         </span>
                                     </div>
                                     <div class="planItem__row" style="display: flex; flex-wrap:wrap; gap:10px;">
-                                        <a href="{{ url('/payment/' . $tariff->id . '/init') }}" class="btn btn-primary">{{ $lost < 1 ? 'Оплатить' : 'Продлить' }}</a>
+                                        @php($active_seller_tariff = auth()->user()->getActiveTariffByGroup($tariff_group->id))
+                                        @if ($active_seller_tariff)
+                                            @if($active_seller_tariff->canExtend())
+                                                <a href="{{ url('/payment/' . $tariff->id . '/init') }}" class="btn btn-primary">Продлить</a>
+                                            @else
+                                                <button class="btn btn-primary">Продлить</button>
+                                            @endif
+                                        @else
+                                            <a href="{{ url('/payment/' . $tariff->id . '/init') }}" class="btn btn-primary">Оплатить</a>
+                                        @endif
                                     </div>
                                 </div>
                             @endforeach
