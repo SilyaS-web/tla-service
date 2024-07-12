@@ -43,7 +43,7 @@
                                             @if($active_seller_tariff->canExtend())
                                                 <a href="{{ url('/payment/' . $tariff->id . '/init') }}" class="btn btn-primary">Продлить</a>
                                             @else
-                                                <button class="btn btn-primary">Продлить</button>
+                                                <button class="btn btn-primary" onclick="notify('error', {title: 'Не удалось продлить тариф', message: 'Продление тарифа возможно за 7 дней до окончания действия тарифа или после его полного израсходования.'})">Продлить</button>
                                             @endif
                                         @else
                                             <a href="{{ url('/payment/' . $tariff->id . '/init') }}" class="btn btn-primary">Оплатить</a>
