@@ -389,7 +389,8 @@
                                                 <span>CPM</span>
                                             </div>
                                             <div class="card__stats-val ">
-                                                <span>{{ number_format(round(($project->product_price / ($finish_stats['total_views'] == 0 ? 1 : $finish_stats['total_views'])) * 1000, 2), 0, '', ' ') }} ₽</span>
+                                                @php($total_cpm = floor($finish_stats['total_views'] / ($finish_stats['total_views'] == 0 ? 1 : $finish_stats['total_views'])) * 1000)
+                                                <span>{{ number_format($total_cpm, 2, ',', ' ')  }} ₽</span>
                                             </div>
                                         </div>
                                         <div class="card__col card__stats-item" style="flex: 1: width: auto">
@@ -546,7 +547,8 @@
                                                                 </div>
                                                             </span>
                                                         @else
-                                                            {{ number_format(round($work->getTotlaClicks() / ($work->finishStats->views == 0 ? 1 : $work->finishStats->views), 2), 0, '', ' ')   }}
+                                                            @php($cpm = floor($work->getTotlaClicks() / ($work->finishStats->views == 0 ? 1 : $work->finishStats->views)) * 100)
+                                                            {{ number_format($cpm, 2, ',', ' ')  }}
                                                         @endif
                                                     </div>
                                                     <div class="table-stats__col" style="width: 14%;">

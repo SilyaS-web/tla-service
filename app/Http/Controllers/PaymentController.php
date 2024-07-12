@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Models\Payment;
 use App\Models\Project;
+use App\Models\Seller;
 use App\Models\SellerTariff;
 use App\Models\Tariff;
+use App\Models\TgPhone;
+use App\Models\User;
+use App\Services\PhoneService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 use JustCommunication\TinkoffAcquiringAPIClient\API\InitRequest;
 use JustCommunication\TinkoffAcquiringAPIClient\Exception\TinkoffAPIException;
 use JustCommunication\TinkoffAcquiringAPIClient\TinkoffAcquiringAPIClient;
@@ -20,6 +25,7 @@ class PaymentController extends Controller
 {
     public function successPayment(Payment $payment)
     {
+        $from_landing = request()->input('from_landing', 0);
         $user = Auth::user();
         $state = $this->checkState($payment);
         if ($state == TPayment::STATUS_CONFIRMED) {
@@ -44,8 +50,15 @@ class PaymentController extends Controller
                     'activation_date' => Carbon::now(),
                 ]);
             }
+            if ($from_landing) {
+                return redirect('adswap.ru')->with('success', 'Тариф успешно оплачен');
+            }
 
             return redirect()->route('tariff')->with('success', 'Тариф успешно оплачен');
+        }
+
+        if ($from_landing) {
+            return redirect('adswap.ru')->with('success', 'При получении платежа произошла ошибка');
         }
 
         return redirect()->route('tariff')->with('success', 'При получении платежа произошла ошибка');
@@ -61,7 +74,7 @@ class PaymentController extends Controller
         echo 'OK';
     }
 
-    public function init(Tariff $tariff)
+    public function init(Tariff $tariff, $from_landing = false)
     {
         $user = Auth::user();
         $payment = Payment::create([
@@ -70,16 +83,19 @@ class PaymentController extends Controller
             'price' => $tariff->price
 
         ]);
-
         $client = new TinkoffAcquiringAPIClient(config('tbank.terminal_key'), config('tbank.secret'));
         $initRequest = new InitRequest($tariff->price, $payment->id . 'test');
+
+        $notification_url = url('/payment/' . $payment->id . '/notifications');
+        $success_url = url('/payment/' . $payment->id . '/success?') .  ($from_landing ? 'from_landing=1' : '');
+        $fail_url = url('/payment/' . $payment->id . '/fail?') .  ($from_landing ? 'from_landing=1' : '');
 
         // необязательные параметры
         $initRequest
             ->setDescription($tariff->title)
-            ->setNotificationURL(url('/payment/' . $payment->id . '/notifications'))
-            ->setSuccessURL(url('/payment/' . $payment->id . '/success'))
-            ->setFailURL(url('/payment/' . $payment->id . '/fail'));
+            ->setNotificationURL($notification_url)
+            ->setSuccessURL($success_url)
+            ->setFailURL($fail_url);
 
         try {
             $response = $client->sendInitRequest($initRequest);
@@ -89,7 +105,7 @@ class PaymentController extends Controller
             return redirect($response->getPaymentURL());
         } catch (TinkoffAPIException $e) {
             Log::channel('single')->info($e);
-            return redirect(url('/payment/' . $payment->id . '/fail'));
+            return redirect($fail_url);
         }
     }
 
@@ -108,5 +124,67 @@ class PaymentController extends Controller
             Log::channel('single')->info($e);
             return response()->json(['status' => Payment::FAILED]);
         }
+    }
+
+    public function regFromPayment()
+    {
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required|min:3',
+            'phone' => 'required',
+            'tariff_id' => 'required|numeric',
+            'password' => 'required|min:8',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back(400)->withErrors($validator->errors())->withInput();
+        }
+
+        $validated = $validator->validated();
+        $validated['status'] = 1;
+
+        $phone = PhoneService::format($validated['phone']);
+        if (User::where([['phone', '=',  $phone]])->first()) {
+            return redirect()->back(400)->with('error', 'Аккаунт с таким номером телефона уже существует')->withInput();
+        }
+
+        $tg_phone = TgPhone::where([['phone', '=',  $phone]])->first();
+        if (!$tg_phone) {
+            return redirect()->back(400)->with('error', 'Необходимо подтвердить телеграм')->withInput();
+        }
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'phone' => $phone,
+            'tg_phone_id' => $tg_phone->id,
+            'role' => $validated['role'],
+            'status' => 'seller',
+            'password' => bcrypt($validated['password']),
+        ]);
+
+        if ($validated['role'] == 'seller') {
+            Seller::create([
+                'user_id' => $user->id
+            ]);
+            $tariff = Tariff::find(1);
+            SellerTariff::create([
+                'user_id' => $user->id,
+                'tariff_id' => $tariff->id,
+                'type' => $tariff->type,
+                'quantity' => $tariff->quantity,
+                'finish_date' => Carbon::now()->addDays($tariff->period),
+                'activation_date' => Carbon::now(),
+            ]);
+            $user->update(['status' => 1]);
+        }
+
+        $credentials = [
+            'phone' => $phone,
+            'password' => $validated['password'],
+        ];
+
+        Auth::attempt($credentials);
+        request()->session()->regenerate();
+
+        $this->init($validated['tariff_id']);
     }
 }

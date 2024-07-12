@@ -62,14 +62,6 @@ class MessageController extends Controller
                     $btn_class = 'btn-chat-action disabled';
                 }
             } else if ($work->status == Work::IN_PROGRESS) {
-                if ($work->isConfirmedByUser($user)) {
-                    $btn_class = 'btn-chat-action disabled';
-                    $btn_text =  'Ожидаем ответа от ' . $work->getPartnerUser($user->role)->name;
-                } else {
-                    $btn_class = 'confirm-completion-btn';
-                    $btn_text = 'Завершить проект';
-                }
-            } else if ($work->status == Work::COMPLETED) {
                 if ($work->projectWork->type !== Project::FEEDBACK && !$work->FinishStats) {
                     if ($user->role == 'blogger') {
                         $btn_class = 'send-stats-blogger-btn';
@@ -78,11 +70,17 @@ class MessageController extends Controller
                         $btn_class = 'btn-chat-action disabled';
                         $btn_text = 'Ожидаем статистику от блогера';
                     }
-                } else {
+                } else if ($work->isConfirmedByUser($user)) {
                     $btn_class = 'btn-chat-action disabled';
-                    $btn_text =  'Проект завершён';
-                    $is_completed = true;
+                    $btn_text =  'Ожидаем ответа от ' . $work->getPartnerUser($user->role)->name;
+                } else {
+                    $btn_class = 'confirm-completion-btn';
+                    $btn_text = 'Завершить проект';
                 }
+            } else if ($work->status == Work::COMPLETED) {
+                $btn_class = 'btn-chat-action disabled';
+                $btn_text =  'Проект завершён';
+                $is_completed = true;
             }
 
             $is_new = false;
