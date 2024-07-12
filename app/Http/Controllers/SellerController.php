@@ -51,22 +51,7 @@ class SellerController extends Controller
             $seller = $project_work->project->seller;
             $active_tariff = $seller->getActiveTariffs($project_work->type);
             $works_count = Work::where('project_work_id', $project_work->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
-            if ($active_tariff) {
-                if ($active_tariff->quantity >= $project_work->quantity) {
-                    $active_tariff->update(['quantity' => $active_tariff->quantity - $project_work->quantity]);
-                } else {
-                    $project_work_lost = $project_work->quantity - $works_count;
-                    $project_work->quantity = $project_work_lost - $active_tariff->quantity;
-                    $active_tariff->update(['quantity' => 0]);
-                }
-
-                $project_work->finish_date = $active_tariff->finish_date;
-                $project_work->save();
-
-                if ($active_tariff->quantity < 1) {
-                    $active_tariff->delete();
-                }
-            } else {
+            if (!$active_tariff) {
                 $project_work->update(['quantity' => $works_count]);
             }
         }
