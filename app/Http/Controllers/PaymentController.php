@@ -32,10 +32,8 @@ class PaymentController extends Controller
 
             $seller_tariff = $user->getActiveTariffByGroup($tariff->group_id);
             if ($seller_tariff) {
-                $finish_date = new Carbon($tariff->finish_date);
-                $now = Carbon::now();
-                $diff_days = $finish_date->diff($now)->days;
-                $seller_tariff->update(['quantity' => $seller_tariff->quantity + $tariff->quantity, 'finish_date' => Carbon::now()->addDays($tariff->period + $diff_days)]);
+                $finish_date = new Carbon($seller_tariff->finish_date);
+                $seller_tariff->update(['quantity' => $seller_tariff->quantity + $tariff->quantity, 'finish_date' => $finish_date->addDays($tariff->period)]);
             } else {
                 SellerTariff::create([
                     'user_id' => Auth::user()->id,
@@ -74,7 +72,7 @@ class PaymentController extends Controller
         ]);
 
         $client = new TinkoffAcquiringAPIClient(config('tbank.terminal_key'), config('tbank.secret'));
-        $initRequest = new InitRequest($tariff->price, $payment->id);
+        $initRequest = new InitRequest($tariff->price, $payment->id . 'test');
 
         // необязательные параметры
         $initRequest
