@@ -22,7 +22,7 @@ class PaymentController extends Controller
         $state = $this->checkState($payment);
         if ($state == TPayment::STATUS_CONFIRMED) {
             $tariff = Tariff::find($payment->tariff_id);
-            $seller_tariff = $user->getActiveTariffs($tariff->type);
+            $seller_tariff = $user->getActiveTariffByGroup($tariff->group_id);
             if ($seller_tariff) {
                 $seller_tariff->update(['quantity' => $seller_tariff->quantity + $tariff->quantity, 'finish_date' => \Carbon\Carbon::now()->addDays($tariff->period)]);
             } else {

@@ -107,6 +107,18 @@ class User extends Authenticatable
         return $tariffs->get();
     }
 
+    public function getActiveTariffByGroup($group_id) {
+        $tariff = $this->sellerTariffs()->where('finish_date', '>', Carbon::now())->whereHas('tariff', function (Builder $query) use ($group_id) {
+            $query->where('group_id', $group_id);
+        })->first();
+
+        if ($tariff) {
+            return $tariff;
+        }
+
+        return null;
+    }
+
     public function getActiveTariffsWithLost() {
         $seller_tariffs = $this->tariffs()->where('finish_date', '>', Carbon::now())->get();
         foreach ($seller_tariffs as &$seller_tariff) {
