@@ -133,7 +133,7 @@ class WorkController extends Controller
         if ($work->isBothAcceptd() && $work->status = Work::PENDING) {
             $work->status = Work::IN_PROGRESS;
             $work->save();
-            $message_text = 'Статус работы изменён на: <span style="color: var(--primary)">выполняется<span>';
+            $message_text = 'Статус работы изменён на: <span style="color: var(--primary)">выполняется</span>';
             if ($work->projectWork->type != Project::FEEDBACK) {
                 $deeplink = $this->createDeepLinkByWork($work);
                 $link = request()->getSchemeAndHttpHost() . '/lnk/' . $deeplink->link;
