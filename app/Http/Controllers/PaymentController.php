@@ -6,6 +6,7 @@ use App\Models\Payment;
 use App\Models\Project;
 use App\Models\SellerTariff;
 use App\Models\Tariff;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use JustCommunication\TinkoffAcquiringAPIClient\API\InitRequest;
@@ -23,7 +24,7 @@ class PaymentController extends Controller
         $state = $this->checkState($payment);
         if ($state == TPayment::STATUS_CONFIRMED) {
             $tariff = Tariff::find($payment->tariff_id);
-            
+
             $seller_start_tariff = $user->getActiveTariffByGroup(1);
             if ($tariff->type == Project::FEEDBACK && $user->getActiveTariffByGroup(1)) {
                 $seller_start_tariff->delete();
@@ -31,15 +32,18 @@ class PaymentController extends Controller
 
             $seller_tariff = $user->getActiveTariffByGroup($tariff->group_id);
             if ($seller_tariff) {
-                $seller_tariff->update(['quantity' => $seller_tariff->quantity + $tariff->quantity, 'finish_date' => \Carbon\Carbon::now()->addDays($tariff->period)]);
+                $finish_date = new Carbon($tariff->finish_date);
+                $now = Carbon::now();
+                $diff_days = $finish_date->diff($now)->days;
+                $seller_tariff->update(['quantity' => $seller_tariff->quantity + $tariff->quantity, 'finish_date' => Carbon::now()->addDays($tariff->period + $diff_days)]);
             } else {
                 SellerTariff::create([
                     'user_id' => Auth::user()->id,
                     'tariff_id' => $tariff->id,
                     'type' => $tariff->type,
                     'quantity' => $tariff->quantity,
-                    'finish_date' => \Carbon\Carbon::now()->addDays($tariff->period),
-                    'activation_date' => \Carbon\Carbon::now(),
+                    'finish_date' => Carbon::now()->addDays($tariff->period),
+                    'activation_date' => Carbon::now(),
                 ]);
             }
 
