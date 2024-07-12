@@ -31,7 +31,7 @@ class SellerTariff extends Model
     }
 
     public function canExtend() {
-        if ($this->quantity == 0 || $this->finish_date > Carbon::now()->subDays(7)) {
+        if ($this->quantity == 0 || $this->finish_date < Carbon::now()->addDays(7)) {
             return true;
         }
 
