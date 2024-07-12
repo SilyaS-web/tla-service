@@ -29,11 +29,11 @@
                                         </div>
                                         <div class="card__desc">{{ $tariff->description }}</div>
                                     </div>
-                                    <div class="price" title="">{{ $tariff->price / 100 }}₽/<span>{{ $tariff->price / 100 * $tariff->quantity }}₽</span>
+                                    <div class="price" title="">{{ $tariff->price / 100 }}₽/<span>{{ $tariff->price / (100 * $tariff->quantity) }}₽</span>
                                         <span class="price__desc">
                                             ?
                                             <div class="price__text">
-                                                <p>Цена за один отзыв</p>
+                                                <p>Цена за {{ $tariff->type == 'feedback' ? 'один отзыв' : 'одну интеграцию' }}</p>
                                             </div>
                                         </span>
                                     </div>
