@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Payment;
+use App\Models\Project;
 use App\Models\SellerTariff;
 use App\Models\Tariff;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,12 @@ class PaymentController extends Controller
         $state = $this->checkState($payment);
         if ($state == TPayment::STATUS_CONFIRMED) {
             $tariff = Tariff::find($payment->tariff_id);
+            
+            $seller_start_tariff = $user->getActiveTariffByGroup(1);
+            if ($tariff->type == Project::FEEDBACK && $user->getActiveTariffByGroup(1)) {
+                $seller_start_tariff->delete();
+            }
+
             $seller_tariff = $user->getActiveTariffByGroup($tariff->group_id);
             if ($seller_tariff) {
                 $seller_tariff->update(['quantity' => $seller_tariff->quantity + $tariff->quantity, 'finish_date' => \Carbon\Carbon::now()->addDays($tariff->period)]);
