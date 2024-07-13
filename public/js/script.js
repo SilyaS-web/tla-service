@@ -1858,9 +1858,9 @@ class PopupBlogerProjectMoreInfo extends Popup{
 
                 var contentText =  res.category ? `Категория: ${res.category}` : '',
                     isContentEmpty = !res.category && (options == null);
-                console.log(isContentEmpty, res.category, (options == null));
+
                 if (isContentEmpty) {
-                    contentText = 'К сожалению, информация о товаре недоступна, однако вы можете ознакомиться с подробностями, нажав на кнопку подробнее.'
+                    contentText = 'К сожалению, информация о товаре в данный момент недоступна. Вы можете узнать подробности, нажав на кнопку «Подробнее».'
                 }
 
                 $(self.node).find('.characteristics__category').text(contentText)
@@ -1945,6 +1945,8 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
+    $(document).on('click', '.owl-dots', (e) => e.stopPropagation())
+
     var popupBlogerProjectMoreInfo = new PopupBlogerProjectMoreInfo('#project-item-info');
     var choosePopup = new PopupSellerChooseProjectsFormat('#choose-projects-adv-format');
     var popupBloggerSendStatistics = new PopupBloggerSendStatistics('#send-statistics-blogger');

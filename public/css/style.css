@@ -777,8 +777,8 @@ input[type='range']::-webkit-slider-runnable-track{
 .owl-dots>*{
     background-color: var(--primary)!important;
     opacity: .6;
-    width: 6px;
-    height: 6px;
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
 }
 .owl-dots>*.active{
