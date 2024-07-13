@@ -89,7 +89,7 @@ class PaymentController extends Controller
             'price' => $tariff->price
 
         ]);
-        
+
         $client = new TinkoffAcquiringAPIClient(config('tbank.terminal_key'), config('tbank.secret'));
         $initRequest = new InitRequest($tariff->price, $payment->id . 'test');
 
