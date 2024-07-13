@@ -26,7 +26,7 @@ class PaymentController extends Controller
     public function successPayment(Payment $payment)
     {
         $from_landing = request()->input('from_landing', 0);
-        $user = Auth::user();
+        $user = User::find($payment->user_id);
         $state = $this->checkState($payment);
         if ($state == TPayment::STATUS_CONFIRMED) {
             $tariff = Tariff::find($payment->tariff_id);
@@ -74,15 +74,22 @@ class PaymentController extends Controller
         echo 'OK';
     }
 
-    public function init(Tariff $tariff, $from_landing = false)
+    public function init(Tariff $tariff, $from_landing = false, $user_id = null)
     {
-        $user = Auth::user();
+        $user = null;
+        if (!$user_id) {
+            $user = Auth::user();
+        } else {
+            $user = User::find($user_id);
+        }
+
         $payment = Payment::create([
             'user_id' => $user->id,
             'tariff_id' => $tariff->id,
             'price' => $tariff->price
 
         ]);
+        
         $client = new TinkoffAcquiringAPIClient(config('tbank.terminal_key'), config('tbank.secret'));
         $initRequest = new InitRequest($tariff->price, $payment->id . 'test');
 
@@ -185,6 +192,6 @@ class PaymentController extends Controller
         Auth::attempt($credentials);
         request()->session()->regenerate();
 
-        $this->init($validated['tariff_id']);
+        $this->init($validated['tariff_id'], true, $user->id);
     }
 }

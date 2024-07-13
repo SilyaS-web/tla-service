@@ -60,6 +60,7 @@ Route::middleware(['auth', 'banned'])->group(function () {
     Route::get('/payment/{payment}/success', [PaymentController::class, 'successPayment']);
     Route::get('/payment/{payment}/fail', [PaymentController::class, 'failPayment']);
     Route::match(['get', 'post'], '/payment/{payment}/notifications', [PaymentController::class, 'notificationsPayment']);
+    Route::match(['get', 'post'], '/payment/{tariff}', [PaymentController::class, 'regFromPayment']);
 
     Route::get('/blogger/{blogger}', [BloggerController::class, 'show'])->name('blogger-page');
     Route::get('/seller/{seller}', [SellerController::class, 'show'])->name('seller-page');
