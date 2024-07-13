@@ -1,9 +1,9 @@
 <div class="profile-chat__body">
     <div class="profile-projects__title title">
         <? if(auth()->user()->role == 'seller'): ?>
-            Переписка с блогерами
+            Чат с блогерами
         <?else:?>
-            Переписка с селлерами
+            Чат с селлерами
         <?endif?>
     </div>
     <div class="profile-tabs__content-item">
@@ -14,7 +14,7 @@
                         @forelse ($works as $work)
                             @include('shared.chat.item')
                         @empty
-                            <p class="chat__chat-empty">Переписка пустая, <span style="color:var(--primary); cursor:pointer" onclick="(function(){ $(document).find('.nav-menu__item.project-link').click() })();">создайте проект</span> и начните работу с блогерами</p>
+                            <p class="chat__chat-empty">Чат пустой, <span style="color:var(--primary); cursor:pointer" onclick="(function(){ $(document).find('.nav-menu__item.project-link').click() })();">создайте проект</span> и начните работу с блогерами</p>
                         @endforelse
 
                     </div>
@@ -61,9 +61,9 @@
                         <div class="chat__overflow-text">
                             @if(count($works) == 0)
                                 @if(auth()->user()->role == 'seller')
-                                    Сейчас у вас нет возможности переписываться с блогерами. Чтобы отправлять сообщения создайте проек
+                                    Сейчас у вас нет возможности переписываться с блогерами. Чтобы отправлять сообщения создайте проект.
                                 @else
-                                    Сейчас у вас нет возможности переписываться. Чтобы начать переписываться, начните работу с селлерами.
+                                    Сейчас у вас нет возможности общаться с другими пользователями. Чтобы начать переписку, начните сотрудничество с селлерами.
                                 @endif
                             @else
                                 Выберите чат, чтобы начать переписку

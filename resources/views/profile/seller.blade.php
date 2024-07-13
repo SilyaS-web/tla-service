@@ -519,7 +519,7 @@
                                                                     <div class="feedback-item__stat-quest warning">
                                                                         !
                                                                     </div>
-                                                                    У вас {{ count($wb_stats["pr_mid"]) }} товар(ов) со среднем количеством отзывов, требуется улучшение
+                                                                    У вас {{ count($wb_stats["pr_mid"]) }} товар(ов) со средним количеством отзывов, требуется улучшение
                                                                     <div class="feedback-item__stat-arrow">
                                                                         <img src="{{ asset('img/arrow-alt.svg') }}" alt="">
                                                                     </div>
