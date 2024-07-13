@@ -49,7 +49,7 @@ class MessageController extends Controller
         if (!empty($validated['work_id'])) {
             $work = $works->first();
             $btn_class = 'accept-btn';
-            $btn_text = 'Принять в работу';
+            $btn_text = 'Начать работу';
             $data_id = $work->id;
             $is_completed = false;
             $lost = $work->projectWork->quantity - Work::where('project_work_id', $work->projectWork->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();

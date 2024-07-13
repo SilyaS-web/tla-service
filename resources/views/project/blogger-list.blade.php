@@ -77,6 +77,7 @@
                     title: 'Успешно!',
                     message: 'Вы приняли заявку!'
                 })
+                $(document).find('.chat-link').click();
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 el.innerHTML = 'Принять заявку';
