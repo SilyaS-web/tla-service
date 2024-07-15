@@ -319,7 +319,7 @@
                                                 <span>CPM</span>
                                             </div>
                                             <div class="card__stats-val">
-                                                <span>{{ number_format(round(($blogger->getCoverage() / ($project->product_price == 0 ? 1 : $project->product_price)) * 1000, 2), 2, ',', ' ') }} ₽/span>
+                                                <span>{{ number_format(round(($blogger->getCoverage() / ($project->product_price == 0 ? 1 : $project->product_price)) * 1000, 2), 2, ',', ' ') }} ₽</span>
                                             </div>
                                         </div>
                                     </div>
