@@ -195,7 +195,7 @@
                                                 <span>CPM</span>
                                             </div>
                                             <div class="card__stats-val">
-                                                <span>{{ number_format(round(($blogger->getCoverage() / ($project->product_price == 0 ? 1 : $project->product_price)) * 1000, 2), 2, ',', ' ') }} ₽</span>
+                                                <span>{{ number_format(round(($project->product_price / ($blogger->getCoverage() == 0 ? 1 : $blogger->getCoverage())) * 1000, 2), 2, ',', ' ') }} ₽</span>
                                             </div>
                                         </div>
                                     </div>
@@ -319,7 +319,7 @@
                                                 <span>CPM</span>
                                             </div>
                                             <div class="card__stats-val">
-                                                <span>{{ number_format(round(($blogger->getCoverage() / ($project->product_price == 0 ? 1 : $project->product_price)) * 1000, 2), 2, ',', ' ') }} ₽</span>
+                                                <span>{{ number_format(round(($project->product_price / ($blogger->getCoverage() == 0 ? 1 : $blogger->getCoverage())) * 1000, 2), 2, ',', ' ') }} ₽</span>
                                             </div>
                                         </div>
                                     </div>
@@ -389,7 +389,7 @@
                                                 <span>CPM</span>
                                             </div>
                                             <div class="card__stats-val ">
-                                                @php($total_cpm = floor($finish_stats['total_views'] / ($project->product_price == 0 ? 1 : $project->product_price)) * 1000)
+                                                @php($total_cpm = floor($project->product_price / ($finish_stats['total_views'] == 0 ? 1 : $finish_stats['total_views'])) * 1000)
                                                 <span>{{ number_format($total_cpm, 2, ',', ' ')  }} ₽</span>
                                             </div>
                                         </div>
@@ -535,7 +535,7 @@
                                                                 </div>
                                                             </span>
                                                         @else
-                                                            {{ number_format(round($work->finishStats->views / ($project->product_price == 0 ? 1 : $project->product_price) * 1000, 2), 0, '', ' ') }} ₽
+                                                            {{ number_format(round($project->product_price / ($work->finishStats->views == 0 ? 1 : $work->finishStats->views) * 1000, 2), 0, '', ' ') }} ₽
                                                         @endif
                                                     </div>
                                                     <div class="table-stats__col" style="width: 9%;">
@@ -547,8 +547,8 @@
                                                                 </div>
                                                             </span>
                                                         @else
-                                                            @php($cpm = floor($work->getTotlaClicks() / ($work->finishStats->views == 0 ? 1 : $work->finishStats->views)) * 100)
-                                                            {{ number_format($cpm, 2, ',', ' ')  }}
+                                                            @php($cpr = floor($work->getTotlaClicks() / ($work->finishStats->views == 0 ? 1 : $work->finishStats->views)) * 100)
+                                                            {{ number_format($cpr, 2, ',', ' ')  }}
                                                         @endif
                                                     </div>
                                                     <div class="table-stats__col" style="width: 14%;">
