@@ -359,6 +359,149 @@ class ProjectsFilter {
     }
 }
 
+class SellerAllProjectsFilter {
+    constructor(node) {
+        this.node = node;
+
+        $(this.node).find('.btn-filter-send').on('click', this.sendData);
+        $(this.node).find('.filter__reset').on('click', this.resetFilters);
+
+        $(this.node).find('#filter-category').on('input', (e) => {
+            var search = $(e.target).val();
+
+            this.searchTimeout = setTimeout(()=>{
+                this.getCategories(search)
+            }, 300)
+        });
+
+        $(this.node).find('#filter-category').on('focus', (e)=>{
+            $(this.node).on('click', (e) => {
+                if($(e.target).closest('.filter-tooltip__row').length > 0){
+                    var el = $(e.target).closest('.filter-tooltip__row'),
+                        text = el.text(),
+                        id = el.data('id');
+
+                    $(this.node).find('#filter-category').val(text.trim());
+                    this.dataProps.category.set(text.trim())
+
+                    clearTimeout(this.searchTimeout);
+                    this.searchTimeout = false;
+
+                    $(this.node).find('.filter-tooltip').hide();
+                }
+                else if(!$(e.target).closest('.filter-category').length > 0){
+                    clearTimeout(this.searchTimeout);
+                    this.searchTimeout = false;
+                    $(this.node).find('.filter-tooltip').hide();
+                }
+            })
+        })
+
+        return this;
+    }
+    node = '';
+    sendUri = '/apist/seller/projects';
+    getCategoryUri = 'apist/projects/categories';
+
+    searchTimeout = false;
+
+    searchCategoryItemTemplate = `<div class="filter-tooltip__row" data-id="%%ID%%">
+                                    %%NAME%%
+                                </div>`
+
+    dataProps = {
+        projectName: {
+            set: (value)=>{
+                $(this.node).find('#filter-name').val(value);
+            },
+            get: ()=>{
+                return $(this.node).find('#filter-name').val();
+            }
+        },
+        format: {
+            set: (value)=>{
+                $(this.node).find('#filter-format').val(value);
+            },
+            get: ()=>{
+                return $(this.node).find('#filter-format').val();
+            }
+        },
+        country: {
+            set: (value)=>{
+                $(this.node).find('#filter-country').val(value);
+            },
+            get: ()=>{
+                return $(this.node).find('#filter-country').val();
+            }
+        },
+        category: {
+            set: (value)=>{
+                $(this.node).find('#filter-category-id').val(value);
+                if(value == ''){
+                    $(this.node).find('#filter-category').val('');
+                }
+            },
+            get: ()=>{
+                return $(this.node).find('#filter-category-id').val();
+            }
+        }
+    }
+
+    getCategories = (search) => {
+        var self = this;
+
+        $.get(self.getCategoryUri, {
+            category: search
+        }, function(res){
+            self.insertCategorySearchResults(res.categories);
+        })
+    }
+
+    insertCategorySearchResults = (categories) => {
+        if(categories.length > 0){
+            var wrap = $(this.node).find('.filter-tooltip'),
+                categoryItemsWrap = wrap.find('.filter-tooltip__items');
+
+            categoryItemsWrap.empty();
+
+            for(var k in categories){
+                var template = this.searchCategoryItemTemplate;
+
+                template = template.replaceAll('%%ID%%', categories[k].id);
+                template = template.replaceAll('%%NAME%%', categories[k].theme);
+
+                categoryItemsWrap.append(template);
+            }
+
+            wrap.show();
+        }
+        else{
+            $(this.node).find('.filter-tooltip').hide();
+        }
+    }
+
+    resetFilters = () => {
+        for(var key in this.dataProps){
+            this.dataProps[key].set('');
+        }
+    }
+
+    sendData = ()=>{
+        var self = this;
+
+        var questData = {
+            project_type: this.dataProps.format.get(),
+            project_name: this.dataProps.projectName.get(),
+            category: this.dataProps.category.get(),
+        }
+
+        $.post(self.sendUri, questData, function(res){
+            $(self.node).closest('.profile-projects').find('.list-projects__items').empty();
+            $(self.node).closest('.profile-projects').find('.list-projects__items').append(res);
+        })
+    }
+}
+
 class BloggerAllProjectsFilter {
     constructor(node) {
         this.node = node;
@@ -2231,6 +2374,7 @@ $(window).on('load', function(){
     //projects filters
     var projectsFilters = new ProjectsFilter('.profile#seller #profile-projects .projects-list__filter', 'projects-page');
     var projectsFiltersChoose = new ProjectsFilter('.profile#seller #profile-projects-choose .projects-list__filter', 'select-project-page');
+    var sellerAllProjectsFilters = new SellerAllProjectsFilter('.profile#seller #all-projects .projects-list__filter');
     var blogersProjectsFilters = new BloggerProjectsFilter('.profile#blogger #my-projects .projects-list__filter');
     var blogersAllProjectsFilters = new BloggerAllProjectsFilter('.profile#blogger #profile-projects .projects-list__filter');
     var bloggerProjectsOffersFilter = new BloggerProjectsOffersFilter('.profile#blogger #avail-projects .projects-list__filter');

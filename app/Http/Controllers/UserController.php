@@ -150,9 +150,10 @@ class UserController extends Controller
         $total_stats = json_encode(array_values($total_stats));
 
         $avg_price = $projects->avg('product_price');
+        $all_projects = Project::where('status', Project::ACTIVE)->where('is_blogger_access', 1)->get();
 
         $brands = $user->projects()->distinct()->where('marketplace_brand', '<>', null)->pluck('marketplace_brand')->all();
-        return compact('projects', 'bloggers', 'works', 'role', 'user_id', 'chat_role', 'blogger_platforms', 'platforms', 'themes', 'total_stats', 'total_clicks', 'subscribers', 'avg_price', 'brands');
+        return compact('projects', 'all_projects', 'bloggers', 'works', 'role', 'user_id', 'chat_role', 'blogger_platforms', 'platforms', 'themes', 'total_stats', 'total_clicks', 'subscribers', 'avg_price', 'brands');
     }
 
     public function getAdminProfileData()

@@ -13,6 +13,9 @@
                         <a href="#" class="nav-menu__item nav-menu__link tab projects-list-link" data-content="profile-projects">
                             Мои проекты
                         </a>
+                        <a href="#" class="nav-menu__item nav-menu__link tab projects-list-link" data-content="all-projects">
+                            Все проекты
+                        </a>
                         <a href="#" class="nav-menu__item nav-menu__link tab active dashboard-link" data-content="dashboard">
                             Дашборд
                         </a>
@@ -830,6 +833,63 @@
                                                 </select>
                                             </div> --}}
 
+                                        <div class="filter__btns">
+                                            <button class="btn btn-primary btn-filter-send">Применить</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="profile-projects tab-content" id="all-projects">
+                        <div class="profile-projects__body">
+                            <div class="projects-list__header">
+                                <div class="list-projects__title title">
+                                    Все проекты
+                                </div>
+                                <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
+                                    <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
+                                </div>
+                            </div>
+                            <div class="profile-projects__items list-projects__items">
+                                @include('project.all-seller-list', ['all_projects' => $all_projects, 'type' => 'all'])
+                            </div>
+                        </div>
+                        <div class="profile-projects__filters">
+                            <div class="projects-list__filter filter">
+                                <div class="filter__body">
+                                    <div class="filter__top">
+                                        <p class = "filter__title">
+                                            Фильтр
+                                        </p>
+                                        <a href="#" class="filter__reset">
+                                            Сбросить
+                                        </a>
+                                    </div>
+                                    <div class="filter__items">
+                                        <div class="form-group filter__item">
+                                            <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию">
+                                        </div>
+                                        <div class="form-group filter__item">
+                                            <label for="filter-category">Категория</label>
+                                            <input type="text" class="input" name="filter-category" id="filter-category" placeholder="Введите категорию">
+                                            <input type="text" id = "filter-category-id" hidden>
+                                            <div class="filter-tooltip" style="display: none">
+                                                <div class="filter-tooltip__items">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group filter__item">
+                                            <label for="">Формат рекламы</label>
+                                            <select name="filter-format" id="filter-format" class = "input">
+                                                <option value="" class="">Выберите формат</option>
+                                                <option value="feedback" class="">Отзыв на товар</option>
+                                                <option value="inst" class="">Интеграция Inst</option>
+                                                <option value="youtube" class="">Интеграция Youtube</option>
+                                                <option value="vk" class="">Интеграция VK</option>
+                                                <option value="telegram" class="">Интеграция Telegram</option>
+                                            </select>
+                                        </div>
                                         <div class="filter__btns">
                                             <button class="btn btn-primary btn-filter-send">Применить</button>
                                         </div>

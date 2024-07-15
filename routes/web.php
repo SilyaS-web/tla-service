@@ -91,6 +91,7 @@ Route::middleware(['auth', 'banned'])->group(function () {
         Route::get('/bloggers/{blogger}', [BloggerController::class, 'info']);
         Route::post('/bloggers/create', [BloggerController::class, 'store'])->name('create-blogger');
         Route::post('/blogger/projects', [ProjectController::class, 'bloggerProjects']);
+        Route::post('/seller/projects', [ProjectController::class, 'bloggerProjects']);
 
         Route::post('/works', [WorkController::class, 'store'])->name('create-work');
         Route::post('/works/accept-application', [WorkController::class, 'acceptApplication']);
