@@ -2517,6 +2517,9 @@ input[type='range']::-webkit-slider-runnable-track{
 .nav-menu__item.projects-list-link::before {
     background-image: url('../img/list-icon.svg');
 }
+.nav-menu__item.all-projects-list-link::before {
+    background-image: url('../img/all-list.svg');
+}
 .nav-menu__item.projects-work-link::before {
     background-image: url('../img/in-work-icon.svg');
 }

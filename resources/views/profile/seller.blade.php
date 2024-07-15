@@ -13,7 +13,7 @@
                         <a href="#" class="nav-menu__item nav-menu__link tab projects-list-link" data-content="profile-projects">
                             Мои проекты
                         </a>
-                        <a href="#" class="nav-menu__item nav-menu__link tab projects-list-link" data-content="all-projects">
+                        <a href="#" class="nav-menu__item nav-menu__link tab all-projects-list-link" data-content="all-projects">
                             Все проекты
                         </a>
                         <a href="#" class="nav-menu__item nav-menu__link tab active dashboard-link" data-content="dashboard">
