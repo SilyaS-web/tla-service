@@ -535,7 +535,7 @@
                                                                 </div>
                                                             </span>
                                                         @else
-                                                            {{ number_format(round($work->finishStats->views / ($project->product_price == 0 ? 1 : $project->product_price), 2), 0, '', ' ') }} ₽
+                                                            {{ number_format(round($work->finishStats->views / ($project->product_price == 0 ? 1 : $project->product_price) * 1000, 2), 0, '', ' ') }} ₽
                                                         @endif
                                                     </div>
                                                     <div class="table-stats__col" style="width: 9%;">
