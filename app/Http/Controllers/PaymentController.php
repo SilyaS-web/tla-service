@@ -140,7 +140,7 @@ class PaymentController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back(400)->withErrors($validator->errors())->withInput();
+            return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
         $validated = $validator->validated();
@@ -149,9 +149,9 @@ class PaymentController extends Controller
         $user = User::where([['phone', '=',  $phone]])->first();
 
         if (!$user) {
-            return redirect()->back(400)->with('error', 'Аккаунт с таким номером телефона не найден')->withInput();
+            return redirect()->back()->with('error', 'Аккаунт с таким номером телефона не найден')->withInput();
         }
-        
+
         $this->init($validated['tariff_id'], true, $user->id);
     }
 }
