@@ -135,25 +135,18 @@ class PaymentController extends Controller
 
     public function regFromPayment(Tariff $tariff)
     {
-        print_r(request()->get('phone'));
-        die();
-        $validator = Validator::make(request()->all(), [
-            'phone' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            return redirect('http://adswap.ru')->withErrors($validator->errors())->withInput();
+        if (!request()->has('phone')) {
+            return redirect('http://adswap.ru')->with('error', 'Укажите номер телефона')->withInput();
         }
 
-        $validated = $validator->validated();
 
-        $phone = PhoneService::format($validated['phone']);
+        $phone = PhoneService::format(request()->get('phone'));
         $user = User::where([['phone', '=',  $phone]])->first();
 
         if (!$user) {
             return redirect('http://adswap.ru')->with('error', 'Аккаунт с таким номером телефона не найден')->withInput();
         }
 
-        $this->init($validated['tariff_id'], true, $user->id);
+        $this->init($tariff->id, true, $user->id);
     }
 }
