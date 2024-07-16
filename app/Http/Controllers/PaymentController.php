@@ -104,14 +104,15 @@ class PaymentController extends Controller
             ->setSuccessURL($success_url)
             ->setFailURL($fail_url);
 
-        print_r($user->id);
-        die();
-        
+
+
         try {
             $response = $client->sendInitRequest($initRequest);
             $payment->update([
                 'payment_id' => $response->getPaymentId()
             ]);
+            print_r($user->id);
+            die();
             return redirect($response->getPaymentURL());
         } catch (TinkoffAPIException $e) {
             Log::channel('single')->info($e);
