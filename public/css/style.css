@@ -2515,7 +2515,7 @@ input[type='range']::-webkit-slider-runnable-track{
     background-image: url('../img/new-project-icon.svg');
 }
 .nav-menu__item.projects-list-link::before {
-    background-image: url('../img/my-projects-icon.svg.svg');
+    background-image: url('../img/my-projects-icon.svg');
 }
 .nav-menu__item.all-projects-list-link::before {
     background-image: url('../img/list-icon.svg');
