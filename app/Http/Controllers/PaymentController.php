@@ -104,6 +104,9 @@ class PaymentController extends Controller
             ->setSuccessURL($success_url)
             ->setFailURL($fail_url);
 
+        print_r($user->id);
+        die();
+        
         try {
             $response = $client->sendInitRequest($initRequest);
             $payment->update([
@@ -145,8 +148,7 @@ class PaymentController extends Controller
         if (!$user) {
             return redirect('http://adswap.ru')->with('error', 'Аккаунт с таким номером телефона не найден')->withInput();
         }
-        print_r($user->id);
-        die();
+
         $this->init($tariff, true, $user->id);
     }
 }
