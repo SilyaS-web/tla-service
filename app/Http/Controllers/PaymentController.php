@@ -154,7 +154,8 @@ class PaymentController extends Controller
         }
 
         $redirect = $this->init($tariff, true, $user->id);
-
+        echo $redirect;
+        die();
         if($redirect instanceof \Illuminate\Http\RedirectResponse){
             return redirect($redirect);
          }
