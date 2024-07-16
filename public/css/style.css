@@ -2530,8 +2530,8 @@ input[type='range']::-webkit-slider-runnable-track{
     background-image: url('../img/dashboard-icon.svg');
 }
 .nav-menu__item.blogers-list-link::before {
-    margin: 0 2.5px;
-    width: 15px;
+    margin: 0 3.5px 0 11.5px;
+    width: 13px;
     background-image: url('../img/blogers-list-icon.svg');
 }
 .nav-menu__item.chat-link::before {
