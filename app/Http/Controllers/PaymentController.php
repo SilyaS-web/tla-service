@@ -145,14 +145,14 @@ class PaymentController extends Controller
     public function regFromPayment(Tariff $tariff)
     {
         if (!request()->has('phone')) {
-            return redirect('http://adswap.ru')->with('error', 'Укажите номер телефона')->withInput();
+            return redirect()->route('login')->with('success', 'Аккаунт с таким номером телефона не найден')->withInput();
         }
 
         $phone = PhoneService::format(request()->get('phone'));
         $user = User::where([['phone', '=',  $phone]])->first();
 
         if (!$user) {
-            return redirect('http://adswap.ru')->with('error', 'Аккаунт с таким номером телефона не найден')->withInput();
+            return redirect()->route('login')->with('success', 'Аккаунт с таким номером телефона не найден')->withInput();
         }
 
         $redirect_url = $this->init($tariff, true, $user->id);
