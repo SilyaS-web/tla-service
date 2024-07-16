@@ -2530,7 +2530,7 @@ input[type='range']::-webkit-slider-runnable-track{
     background-image: url('../img/dashboard-icon.svg');
 }
 .nav-menu__item.blogers-list-link::before {
-    margin: 0 auto;
+    margin: 0 2.5px;
     width: 15px;
     background-image: url('../img/blogers-list-icon.svg');
 }
