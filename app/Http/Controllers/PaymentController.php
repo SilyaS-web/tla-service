@@ -109,12 +109,16 @@ class PaymentController extends Controller
             $payment->update([
                 'payment_id' => $response->getPaymentId()
             ]);
-            print_r($response->getPaymentId());
-            die();
-            
+            if ($from_landing) {
+                return $response->getPaymentId();
+            }
+
             return redirect($response->getPaymentId());
         } catch (TinkoffAPIException $e) {
             Log::channel('single')->info($e);
+            if ($from_landing) {
+                return $fail_url;
+            }
             return redirect($fail_url);
         }
     }
@@ -152,7 +156,7 @@ class PaymentController extends Controller
         $redirect = $this->init($tariff, true, $user->id);
 
         if($redirect instanceof \Illuminate\Http\RedirectResponse){
-            return $redirect;
+            return redirect($redirect);
          }
     }
 }
