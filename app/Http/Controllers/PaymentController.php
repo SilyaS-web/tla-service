@@ -25,6 +25,7 @@ class PaymentController extends Controller
 {
     public function successPayment(Payment $payment)
     {
+        echo "success";
         $from_landing = request()->input('from_landing', 0);
         $user = User::find($payment->user_id);
         $state = $this->checkState($payment);
@@ -66,6 +67,7 @@ class PaymentController extends Controller
 
     public function failPayment(Payment $payment)
     {
+        echo "success";
         return redirect()->route('tariff')->with('success', 'При получении платежа произошла ошибка');
     }
 
@@ -103,8 +105,6 @@ class PaymentController extends Controller
             ->setNotificationURL($notification_url)
             ->setSuccessURL($success_url)
             ->setFailURL($fail_url);
-
-
 
         try {
             $response = $client->sendInitRequest($initRequest);
