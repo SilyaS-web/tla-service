@@ -25,7 +25,6 @@ class PaymentController extends Controller
 {
     public function successPayment(Payment $payment)
     {
-        echo "success";
         $from_landing = request()->input('from_landing', 0);
         $user = User::find($payment->user_id);
         $state = $this->checkState($payment);
@@ -67,7 +66,6 @@ class PaymentController extends Controller
 
     public function failPayment(Payment $payment)
     {
-        echo "success";
         return redirect()->route('tariff')->with('success', 'При получении платежа произошла ошибка');
     }
 
@@ -111,9 +109,8 @@ class PaymentController extends Controller
             $payment->update([
                 'payment_id' => $response->getPaymentId()
             ]);
-            header("Location: " . $response->getPaymentURL());
-            exit();
-            // return redirect();
+
+            return redirect($response->getPaymentId());
         } catch (TinkoffAPIException $e) {
             Log::channel('single')->info($e);
             return redirect($fail_url);
