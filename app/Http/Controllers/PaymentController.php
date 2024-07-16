@@ -147,6 +147,6 @@ class PaymentController extends Controller
             return redirect('http://adswap.ru')->with('error', 'Аккаунт с таким номером телефона не найден')->withInput();
         }
 
-        $this->init($tariff->id, true, $user->id);
+        $this->init($tariff, true, $user->id);
     }
 }
