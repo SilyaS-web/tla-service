@@ -111,8 +111,9 @@ class PaymentController extends Controller
             $payment->update([
                 'payment_id' => $response->getPaymentId()
             ]);
-
-            return redirect($response->getPaymentURL());
+            header("Location: " . $response->getPaymentURL());
+            exit();
+            // return redirect();
         } catch (TinkoffAPIException $e) {
             Log::channel('single')->info($e);
             return redirect($fail_url);
@@ -149,6 +150,10 @@ class PaymentController extends Controller
             return redirect('http://adswap.ru')->with('error', 'Аккаунт с таким номером телефона не найден')->withInput();
         }
 
-        $this->init($tariff, true, $user->id);
+        $redirect = $this->init($tariff, true, $user->id);
+
+        if($redirect instanceof \Illuminate\Http\RedirectResponse){
+            return $redirect;
+         }
     }
 }
