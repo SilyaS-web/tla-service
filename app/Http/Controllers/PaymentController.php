@@ -51,14 +51,14 @@ class PaymentController extends Controller
                 ]);
             }
             if ($from_landing) {
-                return redirect('adswap.ru')->with('success', 'Тариф успешно оплачен');
+                return redirect('http://adswap.ru')->with('success', 'Тариф успешно оплачен');
             }
 
             return redirect()->route('tariff')->with('success', 'Тариф успешно оплачен');
         }
 
         if ($from_landing) {
-            return redirect('adswap.ru')->with('success', 'При получении платежа произошла ошибка');
+            return redirect('http://adswap.ru')->with('success', 'При получении платежа произошла ошибка');
         }
 
         return redirect()->route('tariff')->with('success', 'При получении платежа произошла ошибка');
@@ -140,7 +140,7 @@ class PaymentController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect('adswap.ru')->withErrors($validator->errors())->withInput();
+            return redirect('http://adswap.ru')->withErrors($validator->errors())->withInput();
         }
 
         $validated = $validator->validated();
@@ -149,7 +149,7 @@ class PaymentController extends Controller
         $user = User::where([['phone', '=',  $phone]])->first();
 
         if (!$user) {
-            return redirect('adswap.ru')->with('error', 'Аккаунт с таким номером телефона не найден')->withInput();
+            return redirect('http://adswap.ru')->with('error', 'Аккаунт с таким номером телефона не найден')->withInput();
         }
 
         $this->init($validated['tariff_id'], true, $user->id);
