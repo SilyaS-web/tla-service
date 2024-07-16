@@ -135,6 +135,8 @@ class PaymentController extends Controller
 
     public function regFromPayment(Tariff $tariff)
     {
+        print_r(request()->get('phone'));
+        die();
         $validator = Validator::make(request()->all(), [
             'phone' => 'required',
         ]);
