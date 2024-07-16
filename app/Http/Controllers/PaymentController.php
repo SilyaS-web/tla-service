@@ -133,13 +133,10 @@ class PaymentController extends Controller
         }
     }
 
-    public function regFromPayment()
+    public function regFromPayment(Tariff $tariff)
     {
         $validator = Validator::make(request()->all(), [
-            'name' => 'required|min:3',
             'phone' => 'required',
-            'tariff_id' => 'required|numeric',
-            'password' => 'required|min:8',
         ]);
 
         if ($validator->fails()) {
@@ -147,51 +144,14 @@ class PaymentController extends Controller
         }
 
         $validated = $validator->validated();
-        $validated['status'] = 1;
 
         $phone = PhoneService::format($validated['phone']);
-        if (User::where([['phone', '=',  $phone]])->first()) {
-            return redirect()->back(400)->with('error', 'Аккаунт с таким номером телефона уже существует')->withInput();
+        $user = User::where([['phone', '=',  $phone]])->first();
+
+        if (!$user) {
+            return redirect()->back(400)->with('error', 'Аккаунт с таким номером телефона не найден')->withInput();
         }
-
-        $tg_phone = TgPhone::where([['phone', '=',  $phone]])->first();
-        if (!$tg_phone) {
-            return redirect()->back(400)->with('error', 'Необходимо подтвердить телеграм')->withInput();
-        }
-
-        $user = User::create([
-            'name' => $validated['name'],
-            'phone' => $phone,
-            'tg_phone_id' => $tg_phone->id,
-            'role' => $validated['role'],
-            'status' => 'seller',
-            'password' => bcrypt($validated['password']),
-        ]);
-
-        if ($validated['role'] == 'seller') {
-            Seller::create([
-                'user_id' => $user->id
-            ]);
-            $tariff = Tariff::find(1);
-            SellerTariff::create([
-                'user_id' => $user->id,
-                'tariff_id' => $tariff->id,
-                'type' => $tariff->type,
-                'quantity' => $tariff->quantity,
-                'finish_date' => Carbon::now()->addDays($tariff->period),
-                'activation_date' => Carbon::now(),
-            ]);
-            $user->update(['status' => 1]);
-        }
-
-        $credentials = [
-            'phone' => $phone,
-            'password' => $validated['password'],
-        ];
-
-        Auth::attempt($credentials);
-        request()->session()->regenerate();
-
+        
         $this->init($validated['tariff_id'], true, $user->id);
     }
 }
