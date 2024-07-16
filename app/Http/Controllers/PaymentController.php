@@ -139,14 +139,14 @@ class PaymentController extends Controller
             return redirect('http://adswap.ru')->with('error', 'Укажите номер телефона')->withInput();
         }
 
-
         $phone = PhoneService::format(request()->get('phone'));
         $user = User::where([['phone', '=',  $phone]])->first();
 
         if (!$user) {
             return redirect('http://adswap.ru')->with('error', 'Аккаунт с таким номером телефона не найден')->withInput();
         }
-
+        print_r($user->id);
+        die();
         $this->init($tariff, true, $user->id);
     }
 }
