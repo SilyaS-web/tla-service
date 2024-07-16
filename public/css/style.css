@@ -2515,10 +2515,10 @@ input[type='range']::-webkit-slider-runnable-track{
     background-image: url('../img/new-project-icon.svg');
 }
 .nav-menu__item.projects-list-link::before {
-    background-image: url('../img/list-icon.svg');
+    background-image: url('../img/my-projects-icon.svg.svg');
 }
 .nav-menu__item.all-projects-list-link::before {
-    background-image: url('../img/all-icon.svg');
+    background-image: url('../img/list-icon.svg');
 }
 .nav-menu__item.projects-work-link::before {
     background-image: url('../img/in-work-icon.svg');
