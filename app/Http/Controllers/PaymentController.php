@@ -109,7 +109,9 @@ class PaymentController extends Controller
             $payment->update([
                 'payment_id' => $response->getPaymentId()
             ]);
-
+            print_r($response->getPaymentId());
+            die();
+            
             return redirect($response->getPaymentId());
         } catch (TinkoffAPIException $e) {
             Log::channel('single')->info($e);
