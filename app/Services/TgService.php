@@ -93,7 +93,6 @@ class TgService
                 'Content-Type: application/json'
             ),
         ));
-        Log::info("text " . $text);
 
         $response = curl_exec($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
