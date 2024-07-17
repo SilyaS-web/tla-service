@@ -91,7 +91,7 @@ class PaymentController extends Controller
         ]);
 
         $client = new TinkoffAcquiringAPIClient(config('tbank.terminal_key'), config('tbank.secret'));
-        $initRequest = new InitRequest($tariff->price, $payment->id . 'test');
+        $initRequest = new InitRequest($tariff->price, $payment->id . 'test2');
 
         $notification_url = url('/payment/' . $payment->id . '/notifications');
         $success_url = url('/payment/' . $payment->id . '/success?') .  ($from_landing ? 'from_landing=1' : '');
