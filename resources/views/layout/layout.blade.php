@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ asset('img/adswap_1_2.svg') }}" type="image/x-icon">
 
     <script src="{{ asset('libs/jquery/jquery-3.7.1.min.js') }}" crossorigin="anonymous"></script>
     <script src="{{ asset('libs/jquery/jquery.maskedinput.min.js') }}"></script>
@@ -274,15 +275,19 @@
                         </div>
                         <div class="form-group">
                             <label for="phone">Ваш номер</label>
-                            <input id="phone" name="phone" type="phone" class="input">
+                            <input id="phone" name="phone" type="phone" class="input" placeholder = "+7(900)800-00-00">
                         </div>
                         <script>
                             $(function() {
                                 $.mask.definitions['h'] = "[0|1|3|4|5|6|7|9]"
                                 $("#contact-form #phone").mask('+7 (h99) 999-99-99');
+                                console.log($("#auth #phone"));
                             });
-
                         </script>
+                        <div class="form-group">
+                            <label for="comment">Комментарий</label>
+                            <textarea name="comment" id="comment" cols="30" rows="10" class="textarea" placeholder="Введите сообщение"></textarea>
+                        </div>
                         <p class="form-addit">
                             Оставляя свои данные, вы даёте на это согласие <br>
                             и принимаете условия <a href="policy">Политики конфиденциальности.</a>
@@ -576,6 +581,137 @@
                 </div>
             </div>
         </div>
+        <div class="popup popup-tariffs" id="tariff-popup" style="">
+            <div class="popup__container _container">
+                <div class="popup__body">
+                    <div class="popup__header">
+                        <div class="popup__title title">
+                            Тарифы
+                        </div>
+                        <div class="popup__subtitle">
+                            Получайте отзывы на карточки и повышайте их рейтинг. Размещайте рекламу в обмен на товары  и анализируйте результаты интеграций у блогеров — все в одном сервисе.
+                        </div>
+                    </div>
+                    <div class="tariff__items">
+                        <div class="tariff__col tariff-card">
+                            <div class="tariff-card__header">
+                                <div class="tariff-card__title">
+                                    Индивидуальные условия
+                                </div>
+                                <div class="tariff-card__subtitle">
+                                    Действует по договоренности
+                                </div>
+                            </div>
+                            <div class="tariff-card__text">
+                                Индивидуальный тариф позволяет клиентам свободно выбирать количество интеграций и отзывов в своем плане.
+                            </div>
+                            <div class="tariff-card__btns">
+                                <button class="btn btn-primary btn-tariffs-callus">Подробности</button>
+                            </div>
+                            <div class="tariff-card__star">
+                                <img src="{{ asset('img/star-icon.svg') }}" alt="">
+                            </div>
+                        </div>
+                        <div class="tariff__col tariff-card">
+                            <div class="tariff-card__header">
+                                <div class="tariff-card__title">
+                                    Селлер
+                                </div>
+                                <div class="tariff-card__subtitle">
+                                    Действует 30 дней
+                                </div>
+                            </div>
+                            <div class="tariff-card__prices">
+                                <div class="tariff-card__total">
+                                    4900 руб
+                                </div>
+                                <div class="tariff-card__single">
+                                    / 490 шт
+                                </div>
+                            </div>
+                            <div class="tariff-card__select form-group">
+                                <select name="" id="" class = "select">
+                                    <option value="2">Отзывы на WB, OZON - 10</option>
+                                    <option value="3">Отзывы на WB, OZON - 30</option>
+                                    <option value="4">Отзывы на WB, OZON - 50</option>
+                                </select>
+                            </div>
+                            <div class="tariff-card__btns">
+                                <button class="btn btn-primary btn-tariffs-payment">Оплатить</button>
+                            </div>
+                            <div class="tariff-card__count">
+                                01
+                            </div>
+                        </div>
+                        <div class="tariff__col tariff-card">
+                            <div class="tariff-card__header">
+                                <div class="tariff-card__title">
+                                    Селлер
+                                </div>
+                                <div class="tariff-card__subtitle">
+                                    Действует 30 дней
+                                </div>
+                            </div>
+                            <div class="tariff-card__prices">
+                                <div class="tariff-card__total">
+                                    4900 руб
+                                </div>
+                                <div class="tariff-card__single">
+                                    / 490 шт
+                                </div>
+                            </div>
+                            <div class="tariff-card__select form-group">
+                                <select name="" id="" class = "select">
+                                    <option value="2">Отзывы на WB, OZON - 10</option>
+                                    <option value="3">Отзывы на WB, OZON - 30</option>
+                                    <option value="4">Отзывы на WB, OZON - 50</option>
+                                </select>
+                            </div>
+                            <div class="tariff-card__btns">
+                                <button class="btn btn-primary">Оплатить</button>
+                            </div>
+                            <div class="tariff-card__count">
+                                02
+                            </div>
+                        </div>
+                        <div class="tariff__col tariff-card">
+                            <div class="tariff-card__header">
+                                <div class="tariff-card__title">
+                                    Селлер
+                                </div>
+                                <div class="tariff-card__subtitle">
+                                    Действует 30 дней
+                                </div>
+                            </div>
+                            <div class="tariff-card__prices">
+                                <div class="tariff-card__total">
+                                    4900 руб
+                                </div>
+                                <div class="tariff-card__single">
+                                    / 490 шт
+                                </div>
+                            </div>
+                            <div class="tariff-card__select form-group">
+                                <select name="" id="" class = "select">
+                                    <option value="2">Отзывы на WB, OZON - 10</option>
+                                    <option value="3">Отзывы на WB, OZON - 30</option>
+                                    <option value="4">Отзывы на WB, OZON - 50</option>
+                                </select>
+                            </div>
+                            <div class="tariff-card__btns">
+                                <button class="btn btn-primary">Оплатить</button>
+                            </div>
+                            <div class="tariff-card__count">
+                                03
+                            </div>
+                        </div>
+                    </div>
+                    <div class="close-popup">
+                        <img src="{{ asset('img/close-icon.svg') }}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
         @include('shared.success-message')
     </div>
 </body>
@@ -599,6 +735,12 @@
             $(document).find('.nav-menu__link[data-content="{{ $tab }}"]').click();
             window.history.replaceState("", 'Дашборд', '{{ url()->current() }}');
         })
+    </script>
+@endif
+@if(session()->has('show_tariffs') || (bool)request()->get('show_tariffs'))
+    <script>
+        var tariffsPopup = new Popup('#tariff-popup')
+        tariffsPopup.openPopup();
     </script>
 @endif
 </html>
