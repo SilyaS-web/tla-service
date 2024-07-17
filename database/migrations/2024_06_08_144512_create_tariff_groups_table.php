@@ -22,7 +22,7 @@ class CreateTariffGroupsTable extends Migration
 
         DB::table('tariff_groups')->insert([
             [
-                'title' => 'Стартовый', // 1
+                'title' => 'Стартовый (Отзывы)', // 1
                 "created_at" =>  \Carbon\Carbon::now(),
                 "updated_at" => \Carbon\Carbon::now(),
             ],

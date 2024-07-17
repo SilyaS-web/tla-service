@@ -32,7 +32,7 @@ class CreateTariffsTable extends Migration
 
         DB::table('tariffs')->insert([
             [
-                'title' => 'Стартовый (Отзывы)',
+                'title' => 'Стартовый',
                 'description' => null,
                 'price' => 0,
                 'type' => Project::FEEDBACK,
