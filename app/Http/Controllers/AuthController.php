@@ -92,7 +92,7 @@ class AuthController extends Controller
         Auth::attempt($credentials);
         request()->session()->regenerate();
 
-        return redirect()->route('profile')->with('success', 'Аккаунт успешно создан');
+        return redirect()->route('profile')->with('success', 'Аккаунт успешно создан')->with('show_tariffs', $user->role == 'seller' ? true : false);
     }
 
 
