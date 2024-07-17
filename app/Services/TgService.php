@@ -74,6 +74,11 @@ class TgService
     public static function notifyAdmin($phone, $name, $commnet)
     {
         $curl = curl_init();
+        $fields = [
+            "phone" => $phone,
+            "name" => $name,
+            "commnet" => $commnet,
+        ];
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => '195.24.67.70/notify-admin',
@@ -84,11 +89,7 @@ class TgService
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => '{
-                "phone": "' . $phone . '",
-                "name": "' . $name . '",
-                "commnet": "' . $commnet . '"
-            }',
+            CURLOPT_POSTFIELDS => json_encode($fields),
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json'
             ),

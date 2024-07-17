@@ -354,10 +354,8 @@ class UserController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $user = Auth::user();
         $validated = $validator->validated();
-
-        TgService::notifyAdmin($validated['phone'], $validated['name'], $validated['comment']);
+        $result = TgService::notifyAdmin($validated['phone'], $validated['name'], $validated['comment']);
         return response()->json('success');
     }
 }
