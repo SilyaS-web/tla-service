@@ -111,14 +111,14 @@ class ProjectController extends Controller
                 $validated['marketplace_description'] = $info['description'] ?? null;
                 $validated['marketplace_options'] = json_encode($info['options'] ?? null);
             }
-        } else {
+        } else if (strripos($validated['product_link'], 'wb') !== false || strripos($validated['product_link'], 'wildberries') !== false) {
             $card = $this->curlWBStats($validated['product_nm']);
-            if ($card) {
+            if (isset($card->imt_name)) {
                 $validated['marketplace_category'] = $card->subj_name ?? null;
                 $validated['marketplace_brand'] = $card->selling->brand_name ?? null;
                 $validated['marketplace_product_name'] = $card->imt_name ?? null;
                 $validated['marketplace_description'] = $card->description ?? null;
-                $validated['marketplace_options'] = json_encode($card->options);
+                $validated['marketplace_options'] = isset($card->options) ? json_encode($card->options) : null;
             }
         }
 
