@@ -53,14 +53,14 @@ class PaymentController extends Controller
                 ]);
             }
             if ($from_landing) {
-                return redirect('http://adswap.ru?success-payment=true')->with('success', 'Тариф успешно оплачен');
+                return redirect('https://adswap.ru/#successful-payment');
             }
 
             return redirect()->route('tariff')->with('success', 'Тариф успешно оплачен');
         }
 
         if ($from_landing) {
-            return redirect('http://adswap.ru?success-payment=false')->with('success', 'При получении платежа произошла ошибка');
+            return redirect('https://adswap.ru');
         }
 
         return redirect()->route('tariff')->with('success', 'При получении платежа произошла ошибка');
@@ -70,7 +70,7 @@ class PaymentController extends Controller
     {
         $from_landing = request()->input('from_landing', null);
         if ($from_landing) {
-            return redirect('http://adswap.ru?success-payment=false')->with('success', 'При получении платежа произошла ошибка');
+            return redirect('https://adswap.ru');
         }
 
         return redirect()->route('tariff')->with('success', 'При получении платежа произошла ошибка');
