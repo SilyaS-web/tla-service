@@ -356,6 +356,6 @@ class UserController extends Controller
 
         $validated = $validator->validated();
         $result = TgService::notifyAdmin($validated['phone'], $validated['name'], $validated['comment']);
-        return response()->json('success');
+        return response()->json($result);
     }
 }

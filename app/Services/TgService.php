@@ -99,6 +99,6 @@ class TgService
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         curl_close($curl);
-        return $httpcode == 200 ? true : false;
+        return $httpcode == 200 ? json_encode($fields) : false;
     }
 }
