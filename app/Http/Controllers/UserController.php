@@ -22,6 +22,7 @@ use App\Models\Theme;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\User;
 use App\Models\Work;
+use App\Services\TgService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -340,5 +341,23 @@ class UserController extends Controller
     public function tariffs() {
         $tariff_groups = TariffGroup::where('id', '<>', 1)->get();
         return view('tariff', compact('tariff_groups'));
+    }
+
+    public function sendFeedback() {
+        $validator = Validator::make(request()->all(), [
+            'phone' => 'string|required',
+            'name' => 'string|required',
+            'text' => 'string|required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $user = Auth::user();
+        $validated = $validator->validated();
+
+        TgService::notifyAdmin("Форма обратной свзяи \n\n" . $validated['name'] . "\n " . $validated['phone'] . "\n Сообщение: " . $validated['text']);
+        return response()->json('success');
     }
 }

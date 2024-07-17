@@ -8,6 +8,7 @@ use App\Models\BloggerTheme;
 use App\Models\Project;
 use App\Models\User;
 use App\Models\Work;
+use App\Services\TgService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
@@ -166,6 +167,7 @@ class BloggerController extends Controller
             ]);
         }
 
+        TgService::notifyAdmin($user->name . ' отсавил заявку на модерацию');
         return redirect()->route('profile');
     }
 

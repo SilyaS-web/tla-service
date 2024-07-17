@@ -10,6 +10,7 @@ use App\Models\Tariff;
 use App\Models\TgPhone;
 use App\Models\User;
 use App\Services\PhoneService;
+use App\Services\TgService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
@@ -30,6 +31,7 @@ class PaymentController extends Controller
         $state = $this->checkState($payment);
         if ($state == TPayment::STATUS_CONFIRMED) {
             $tariff = Tariff::find($payment->tariff_id);
+            TgService::notifyAdmin($user->name . ' оплатил тариф: ' . $tariff->title);
 
             $seller_start_tariff = $user->getActiveTariffByGroup(1);
             if ($tariff->type == Project::FEEDBACK && $user->getActiveTariffByGroup(1)) {
