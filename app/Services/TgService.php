@@ -71,13 +71,13 @@ class TgService
         return $httpcode == 200 ? true : false;
     }
 
-    public static function notifyAdmin($phone, $name, $commnet)
+    public static function notifyAdmin($phone, $name, $comment)
     {
         $curl = curl_init();
         $fields = [
             "phone" => $phone,
             "name" => $name,
-            "commnet" => $commnet,
+            "comment" => $comment,
         ];
 
         curl_setopt_array($curl, array(
