@@ -347,7 +347,7 @@ class UserController extends Controller
         $validator = Validator::make(request()->all(), [
             'phone' => 'string|required',
             'name' => 'string|required',
-            'text' => 'string|required',
+            'comment' => 'string|required',
         ]);
 
         if ($validator->fails()) {
@@ -357,7 +357,7 @@ class UserController extends Controller
         $user = Auth::user();
         $validated = $validator->validated();
 
-        TgService::notifyAdmin("Форма обратной свзяи \n\n" . $validated['name'] . "\n " . $validated['phone'] . "\n Сообщение: " . $validated['text']);
+        TgService::notifyAdmin("Форма обратной свзяи \n\n" . $validated['name'] . "\n " . $validated['phone'] . "\n Сообщение: " . $validated['comment']);
         return response()->json('success');
     }
 }

@@ -49,6 +49,7 @@ Route::prefix('apist')->group(function () {
     Route::get('/check-tariffs', [SellerController::class, 'checkTariffs']);
     Route::get('/check-projects', [SellerController::class, 'checkProjectWorks']);
     Route::match(['get', 'post'], '/payment/{tariff}', [PaymentController::class, 'regFromPayment']);
+    Route::post('/send-feedback', [UserController::class, 'sendFeedback']);
 });
 
 Route::middleware(['auth', 'banned'])->group(function () {
