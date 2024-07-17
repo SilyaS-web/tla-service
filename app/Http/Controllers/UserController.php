@@ -357,7 +357,7 @@ class UserController extends Controller
         $user = Auth::user();
         $validated = $validator->validated();
 
-        TgService::notifyAdmin("Форма обратной свзяи \n\n" . $validated['name'] . "\n " . $validated['phone'] . "\n Сообщение: " . $validated['comment']);
+        TgService::notifyAdmin($validated['phone'], $validated['name'], $validated['comment']);
         return response()->json('success');
     }
 }

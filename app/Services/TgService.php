@@ -71,7 +71,7 @@ class TgService
         return $httpcode == 200 ? true : false;
     }
 
-    public static function notifyAdmin($text)
+    public static function notifyAdmin($phone, $name, $commnet)
     {
         $curl = curl_init();
 
@@ -85,7 +85,9 @@ class TgService
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
             CURLOPT_POSTFIELDS => '{
-                "text": "' . $text . '"
+                "phone": "' . $phone . '",
+                "name": "' . $name . '",
+                "commnet": "' . $commnet . '"
             }',
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json'
