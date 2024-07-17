@@ -1095,6 +1095,61 @@
         </div>
     </div>
 </section>
+<div class="popup" id="project-item-info" style="">
+    <div class="popup__container _container">
+        <div class="popup__body">
+            <div class="popup__inner popup-project">
+                <div class="popup-project__left">
+                    <div class="popup-project__carousel owl-carousel">
+                        <div class="popup-project__img" style="background-image:url(http://tla/storage/projects/MLFUVyW0CcBdOeEfk7lBJwVoPravrIr19oDOEuhY.webp)"></div>
+                        <div class="popup-project__img" style="background-image:url(http://tla/storage/projects/MLFUVyW0CcBdOeEfk7lBJwVoPravrIr19oDOEuhY.webp)"></div>
+                    </div>
+                </div>
+                <div class="popup-project__right">
+                    <div class="popup-project__info">
+                        <div class="popup-project__title">
+                        </div>
+                        <div class="popup-project__row" style="line-height:1">
+                            <div class="popup-project__mark">
+                            </div>
+                            <div class="popup-project__articul">
+                                <p></p>
+                            </div>
+                        </div>
+                        <div class="popup-project__row popup-project__cost">
+                        </div>
+                        <div class="popup-project__addit characteristics">
+                            <p class="popup-project__addit-title">Дополнительная информация</p>
+                            <div class="characteristics__category">
+                            </div>
+                            <div class="characteristics-items">
+                            </div>
+                        </div>
+                        <div class="project-item__left" style="margin-bottom: 18px;">
+                            <div class="line">
+                                <div class="line__val" style="width:100%"></div>
+                            </div>
+                            Осталось мест на интеграцию <span style="font-weight: 700;"></span>
+                        </div>
+                        {{-- <div class="project-item__format-tags card__row card__tags">
+                            <div class="card__tags-item">
+                                Отзыв на товар
+                            </div>
+                        </div> --}}
+                        <div class="project-item__btns">
+                            <button class="btn btn-primary btn-blogger-send-offer" style="" data-project-work="">Откликнуться</button>
+                            <a href="" class="btn btn-secondary btn-go-to-shop" style="" target="_blank">Подробнее</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="close-popup">
+                <img src="{{ asset('img/close-icon.svg') }}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 

@@ -8,7 +8,121 @@
                 <div class="tariff__title title">Тарифы</div>
                 <div class="tariff__subtitle subtitle">Получайте отзывы на карточки и повышайте их рейтинг. Размещайте рекламу в обмен на товары  и анализируйте результаты интеграций у блогеров — все в одном сервисе.</div>
             </div>
-            <div class="tab-content__plans plans">
+            <div class="tariff__items">
+                <div class="tariff__col tariff-card">
+                    <div class="tariff-card__header">
+                        <div class="tariff-card__title">
+                            Индивидуальные условия
+                        </div>
+                        <div class="tariff-card__subtitle">
+                            Действует по договоренности
+                        </div>
+                    </div>
+                    <div class="tariff-card__text">
+                        Индивидуальный тариф позволяет клиентам свободно выбирать количество интеграций и отзывов в своем плане.
+                    </div>
+                    <div class="tariff-card__btns">
+                        <button class="btn btn-primary btn-tariffs-callus">Подробности</button>
+                    </div>
+                    <div class="tariff-card__star">
+                        <img src="{{ asset('img/star-icon.svg') }}" alt="">
+                    </div>
+                </div>
+                <div class="tariff__col tariff-card">
+                    <div class="tariff-card__header">
+                        <div class="tariff-card__title">
+                            Селлер
+                        </div>
+                        <div class="tariff-card__subtitle">
+                            Действует 30 дней
+                        </div>
+                    </div>
+                    <div class="tariff-card__prices">
+                        <div class="tariff-card__total">
+                            4900 руб
+                        </div>
+                        <div class="tariff-card__single">
+                            / 490 шт
+                        </div>
+                    </div>
+                    <div class="tariff-card__select form-group">
+                        <select name="" id="" class = "select">
+                            <option value="2">Отзывы на WB, OZON - 10</option>
+                            <option value="3">Отзывы на WB, OZON - 30</option>
+                            <option value="4">Отзывы на WB, OZON - 50</option>
+                        </select>
+                    </div>
+                    <div class="tariff-card__btns">
+                        <button class="btn btn-primary btn-tariffs-payment">Оплатить</button>
+                    </div>
+                    <div class="tariff-card__count">
+                        01
+                    </div>
+                </div>
+                <div class="tariff__col tariff-card">
+                    <div class="tariff-card__header">
+                        <div class="tariff-card__title">
+                            Селлер
+                        </div>
+                        <div class="tariff-card__subtitle">
+                            Действует 30 дней
+                        </div>
+                    </div>
+                    <div class="tariff-card__prices">
+                        <div class="tariff-card__total">
+                            4900 руб
+                        </div>
+                        <div class="tariff-card__single">
+                            / 490 шт
+                        </div>
+                    </div>
+                    <div class="tariff-card__select form-group">
+                        <select name="" id="" class = "select">
+                            <option value="2">Отзывы на WB, OZON - 10</option>
+                            <option value="3">Отзывы на WB, OZON - 30</option>
+                            <option value="4">Отзывы на WB, OZON - 50</option>
+                        </select>
+                    </div>
+                    <div class="tariff-card__btns">
+                        <button class="btn btn-primary">Оплатить</button>
+                    </div>
+                    <div class="tariff-card__count">
+                        02
+                    </div>
+                </div>
+                <div class="tariff__col tariff-card">
+                    <div class="tariff-card__header">
+                        <div class="tariff-card__title">
+                            Селлер
+                        </div>
+                        <div class="tariff-card__subtitle">
+                            Действует 30 дней
+                        </div>
+                    </div>
+                    <div class="tariff-card__prices">
+                        <div class="tariff-card__total">
+                            4900 руб
+                        </div>
+                        <div class="tariff-card__single">
+                            / 490 шт
+                        </div>
+                    </div>
+                    <div class="tariff-card__select form-group">
+                        <select name="" id="" class = "select">
+                            <option value="2">Отзывы на WB, OZON - 10</option>
+                            <option value="3">Отзывы на WB, OZON - 30</option>
+                            <option value="4">Отзывы на WB, OZON - 50</option>
+                        </select>
+                    </div>
+                    <div class="tariff-card__btns">
+                        <button class="btn btn-primary">Оплатить</button>
+                    </div>
+                    <div class="tariff-card__count">
+                        03
+                    </div>
+                </div>
+            </div>
+            {{-- <div class="tab-content__plans plans">
                 <div class="plans__body">
                     @foreach ($tariff_groups as $tariff_group)
                     @php($lost = $tariff_group->getLost())
@@ -58,7 +172,7 @@
                         <p style="font-weight:500; font-size:18px; color:rgba(0,0,0,0.4)">Все тарифы действуют в течение 30 календарных дней после оплаты. Если вы не использовали свои отзывы и интеграции в течение оплаченного периода, они станут недоступными. Если вы общаетесь с блогерами в рамках открытых рекламных диалогов, то даже после окончания тарифа вы не потеряете доступ к сервису.</p>
                     </div>
                 </div>
-            </div>
+            </div> --}}
         </div>
     </div>
 </section>

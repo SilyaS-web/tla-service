@@ -1322,7 +1322,7 @@ class PopupCallUs extends Popup{
     }
     instance = null;
 
-    sendUri = '/apist/feedback';
+    sendUri = '/apist/send-feedback';
     dataProps = {
         name: {
             set: (value)=>{
@@ -1339,14 +1339,23 @@ class PopupCallUs extends Popup{
             get: ()=>{
                 return $(this.node).find('#phone').val();
             }
-        }
+        },
+        comment: {
+            set: (value)=>{
+                $(this.node).find('#comment').val(value)
+            },
+            get: ()=>{
+                return $(this.node).find('#comment').val();
+            }
+        },
     }
     sendData = () => {
         var self = this;
 
         $.post(self.sendUri, {
-            message: self.dataProps.name.get(),
-            mark: self.dataProps.phone.get(),
+            name: self.dataProps.name.get(),
+            phone: self.dataProps.phone.get(),
+            comment: self.dataProps.comment.get(),
         }, function(res){
             notify('info', {title: 'Успешно!', message: 'Данные успешно отправлены'});
             self.closePopup();
@@ -1986,6 +1995,7 @@ class PopupBlogerProjectMoreInfo extends Popup{
             processData: false,
             contentType: false,
             success: (res)=>{
+                console.log(res);
                 var options = res.optioins,
                     images = res.images;
 
@@ -2100,6 +2110,18 @@ $(window).on('load', function(){
     var choosePopupBlogger = new PopupBloggerChooseProjectsFormat('#choose-projects-adv-format-blogger');
     var confirmPublic = new PopupConfirmPublication('#confirm-publication');
 
+    $(document).on('click', '.btn-tariffs-callus', function(e){
+        popupCallUs.openPopup()
+    })
+
+    $(document).on('click', '.btn-tariffs-payment', function(e){
+        var btn = $(e.target),
+            card = btn.closest('.tariff-card'),
+            tariffID = card.find('select').val();
+
+        window.location.href = '/payment/' + tariffID + '/init'
+    })
+
     $(document).on('click', '.btn-public', function(e){
         e.preventDefault()
         var btn = $(e.target).closest('.btn-public');
@@ -2126,6 +2148,15 @@ $(window).on('load', function(){
             console.log(e.target);
             popupBlogerProjectMoreInfo.projectId = $(e.target).closest('.project-item').data('id');
             popupBlogerProjectMoreInfo.getProjectInfo()
+            popupBlogerProjectMoreInfo.openPopup();
+        }
+    })
+    $(document).on('click', '#seller .project-item', function(e){
+        if($(e.target).closest('.project-item__btns').length == 0){
+            console.log(e.target);
+            popupBlogerProjectMoreInfo.projectId = $(e.target).closest('.project-item').data('id');
+            popupBlogerProjectMoreInfo.getProjectInfo()
+            console.log(popupBlogerProjectMoreInfo.openPopup);
             popupBlogerProjectMoreInfo.openPopup();
         }
     })
