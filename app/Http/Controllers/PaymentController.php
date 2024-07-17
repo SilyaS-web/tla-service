@@ -26,12 +26,12 @@ class PaymentController extends Controller
 {
     public function successPayment(Payment $payment)
     {
-        $from_landing = request()->input('from_landing', 0);
+        $from_landing = request()->input('from_landing', null);
         $user = User::find($payment->user_id);
         $state = $this->checkState($payment);
         if ($state == TPayment::STATUS_CONFIRMED) {
             $tariff = Tariff::find($payment->tariff_id);
-            TgService::notifyAdmin($user->name . ' оплатил тариф: ' . $tariff->title);
+            TgService::notifyAdmin($user->phone, $user->name, 'оплатил тариф: ' . $tariff->title);
 
             $seller_start_tariff = $user->getActiveTariffByGroup(1);
             if ($tariff->type == Project::FEEDBACK && $user->getActiveTariffByGroup(1)) {
@@ -53,14 +53,14 @@ class PaymentController extends Controller
                 ]);
             }
             if ($from_landing) {
-                return redirect('http://adswap.ru')->with('success', 'Тариф успешно оплачен');
+                return redirect('http://adswap.ru?success-payment=true')->with('success', 'Тариф успешно оплачен');
             }
 
             return redirect()->route('tariff')->with('success', 'Тариф успешно оплачен');
         }
 
         if ($from_landing) {
-            return redirect('http://adswap.ru')->with('success', 'При получении платежа произошла ошибка');
+            return redirect('http://adswap.ru?success-payment=false')->with('success', 'При получении платежа произошла ошибка');
         }
 
         return redirect()->route('tariff')->with('success', 'При получении платежа произошла ошибка');
@@ -68,6 +68,11 @@ class PaymentController extends Controller
 
     public function failPayment(Payment $payment)
     {
+        $from_landing = request()->input('from_landing', null);
+        if ($from_landing) {
+            return redirect('http://adswap.ru?success-payment=false')->with('success', 'При получении платежа произошла ошибка');
+        }
+
         return redirect()->route('tariff')->with('success', 'При получении платежа произошла ошибка');
     }
 
