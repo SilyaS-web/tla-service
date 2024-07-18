@@ -88,7 +88,7 @@
                         </select>
                     </div>
                     <div class="tariff-card__btns">
-                        <button class="btn btn-primary">Оплатить</button>
+                        <button class="btn btn-primary btn-tariffs-payment">Оплатить</button>
                     </div>
                     <div class="tariff-card__count">
                         02
@@ -121,7 +121,7 @@
                         </select>
                     </div>
                     <div class="tariff-card__btns">
-                        <button class="btn btn-primary">Оплатить</button>
+                        <button class="btn btn-primary btn-tariffs-payment">Оплатить</button>
                     </div>
                     <div class="tariff-card__count">
                         03
