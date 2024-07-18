@@ -48,10 +48,10 @@
                     <div class="tariff-card__select form-group">
                         <select name="" id="" class = "select">
                             <option value="2">Отзывы на WB, OZON - 10</option>
-                            <option value="3">Интеграции Inst - 10</option>
-                            <option value="4">Интеграции VK - 10</option>
-                            <option value="5">Интеграции Telegram - 10</option>
-                            <option value="6">Интеграции YouTube - 10</option>
+                            <option value="5">Интеграции Inst - 10</option>
+                            <option value="11">Интеграции VK - 10</option>
+                            <option value="14">Интеграции Telegram - 10</option>
+                            <option value="8">Интеграции YouTube - 10</option>
                         </select>
                     </div>
                     <div class="tariff-card__btns">
@@ -80,11 +80,11 @@
                     </div>
                     <div class="tariff-card__select form-group">
                         <select name="" id="" class = "select">
-                            <option value="7">Отзывы на WB, OZON - 30</option>
-                            <option value="8">Интеграции Inst - 30</option>
-                            <option value="9">Интеграции VK - 30</option>
-                            <option value="10">Интеграции Telegram - 30</option>
-                            <option value="11">Интеграции YouTube - 30</option>
+                            <option value="3">Отзывы на WB, OZON - 30</option>
+                            <option value="6">Интеграции Inst - 30</option>
+                            <option value="12">Интеграции VK - 30</option>
+                            <option value="15">Интеграции Telegram - 30</option>
+                            <option value="9">Интеграции YouTube - 30</option>
                         </select>
                     </div>
                     <div class="tariff-card__btns">
@@ -113,11 +113,11 @@
                     </div>
                     <div class="tariff-card__select form-group">
                         <select name="" id="" class = "select">
-                            <option value="12">Отзывы на WB, OZON - 50</option>
-                            <option value="13">Интеграции Inst - 50</option>
-                            <option value="14">Интеграции VK - 50</option>
-                            <option value="15">Интеграции Telegram - 50</option>
-                            <option value="16">Интеграции YouTube - 50</option>
+                            <option value="4">Отзывы на WB, OZON - 50</option>
+                            <option value="7">Интеграции Inst - 50</option>
+                            <option value="13">Интеграции VK - 50</option>
+                            <option value="16">Интеграции Telegram - 50</option>
+                            <option value="10">Интеграции YouTube - 50</option>
                         </select>
                     </div>
                     <div class="tariff-card__btns">
@@ -128,57 +128,6 @@
                     </div>
                 </div>
             </div>
-            {{-- <div class="tab-content__plans plans">
-                <div class="plans__body">
-                    @foreach ($tariff_groups as $tariff_group)
-                    @php($lost = $tariff_group->getLost())
-                        <div class="tariff__title title">
-                        {{ $tariff_group->title }}
-                            <div class="plans__current-item" style="margin-top: 15px">
-                                <p class="plans__current-title">
-                                    Осталось: <b style="color:#FE5E00"> {{ $lost }}</b>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="planItem__container" style="margin-bottom:50px">
-                            @foreach ($tariff_group->tariffs as $tariff)
-                                <div class="planItem {{ !$tariff->is_best ?: 'planItem--business'}} {{ $tariff->isActive() ? 'planItem--current' : '' }}">
-                                    <div class="card" style="margin-bottom:auto;">
-                                        <div class="card__header">
-                                            <h2>{{ $tariff->title }}</h2>
-                                        </div>
-                                        <div class="card__desc">{{ $tariff->description }}</div>
-                                    </div>
-                                    <div class="price" title="">{{ $tariff->price / 100 }}₽/<span>{{ $tariff->price / (100 * $tariff->quantity) }}₽</span>
-                                        <span class="price__desc">
-                                            ?
-                                            <div class="price__text">
-                                                <p>Цена за {{ $tariff->type == 'feedback' ? 'один отзыв' : 'одну интеграцию' }}</p>
-                                            </div>
-                                        </span>
-                                    </div>
-                                    <div class="planItem__row" style="display: flex; flex-wrap:wrap; gap:10px;">
-                                        @php($active_seller_tariff = auth()->user()->getActiveTariffByGroup($tariff_group->id))
-                                        @if ($active_seller_tariff)
-                                            @if($active_seller_tariff->canExtend())
-                                                <a href="{{ url('/payment/' . $tariff->id . '/init') }}" class="btn btn-primary">Продлить</a>
-                                            @else
-                                                <button class="btn btn-primary" onclick="notify('error', {title: 'Не удалось продлить тариф', message: 'Продление тарифа возможно за 7 дней до окончания действия тарифа или после его полного израсходования.'})">Продлить</button>
-                                            @endif
-                                        @else
-                                            <a href="{{ url('/payment/' . $tariff->id . '/init') }}" class="btn btn-primary">Оплатить</a>
-                                        @endif
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
-                    @endforeach
-
-                    <div class="tariff__row">
-                        <p style="font-weight:500; font-size:18px; color:rgba(0,0,0,0.4)">Все тарифы действуют в течение 30 календарных дней после оплаты. Если вы не использовали свои отзывы и интеграции в течение оплаченного периода, они станут недоступными. Если вы общаетесь с блогерами в рамках открытых рекламных диалогов, то даже после окончания тарифа вы не потеряете доступ к сервису.</p>
-                    </div>
-                </div>
-            </div> --}}
         </div>
     </div>
 </section>
