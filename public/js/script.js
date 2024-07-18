@@ -2110,6 +2110,37 @@ $(window).on('load', function(){
     var choosePopupBlogger = new PopupBloggerChooseProjectsFormat('#choose-projects-adv-format-blogger');
     var confirmPublic = new PopupConfirmPublication('#confirm-publication');
 
+
+    $('.tariff-card__select select').on('change', function(e){
+        var tariffsPrices = [
+            [],
+            [],
+            [490, 4900],
+            [790, 7900],
+            [790, 7900],
+            [790, 7900],
+            [990, 9900],
+
+            [450, 13500],
+            [690, 20700],
+            [690, 20700],
+            [690, 20700],
+            [890, 26700],
+
+            [400, 20000],
+            [590, 29500],
+            [590, 29500],
+            [590, 29500],
+            [790, 39500],
+        ];
+
+        var prices = tariffsPrices[$(e.target).val()];
+
+        $(e.target).closest('.tariff-card').find('.tariff-card__total').text(prices[1] + ' руб')
+        $(e.target).closest('.tariff-card').find('.tariff-card__single').text('/ ' + prices[0] + ' шт')
+    })
+
+
     $(document).on('click', '.btn-tariffs-callus', function(e){
         popupCallUs.openPopup()
     })
