@@ -632,8 +632,10 @@
                             <div class="tariff-card__select form-group">
                                 <select name="" id="" class = "select">
                                     <option value="2">Отзывы на WB, OZON - 10</option>
-                                    <option value="3">Отзывы на WB, OZON - 30</option>
-                                    <option value="4">Отзывы на WB, OZON - 50</option>
+                                    <option value="5">Интеграции Inst - 10</option>
+                                    <option value="11">Интеграции VK - 10</option>
+                                    <option value="14">Интеграции Telegram - 10</option>
+                                    <option value="8">Интеграции YouTube - 10</option>
                                 </select>
                             </div>
                             <div class="tariff-card__btns">
@@ -646,7 +648,7 @@
                         <div class="tariff__col tariff-card">
                             <div class="tariff-card__header">
                                 <div class="tariff-card__title">
-                                    Селлер
+                                    Бизнес
                                 </div>
                                 <div class="tariff-card__subtitle">
                                     Действует 30 дней
@@ -654,7 +656,7 @@
                             </div>
                             <div class="tariff-card__prices">
                                 <div class="tariff-card__total">
-                                    4900 руб
+                                    13500 руб
                                 </div>
                                 <div class="tariff-card__single">
                                     / 490 шт
@@ -662,13 +664,15 @@
                             </div>
                             <div class="tariff-card__select form-group">
                                 <select name="" id="" class = "select">
-                                    <option value="2">Отзывы на WB, OZON - 10</option>
                                     <option value="3">Отзывы на WB, OZON - 30</option>
-                                    <option value="4">Отзывы на WB, OZON - 50</option>
+                                    <option value="6">Интеграции Inst - 30</option>
+                                    <option value="12">Интеграции VK - 30</option>
+                                    <option value="15">Интеграции Telegram - 30</option>
+                                    <option value="9">Интеграции YouTube - 30</option>
                                 </select>
                             </div>
                             <div class="tariff-card__btns">
-                                <button class="btn btn-primary">Оплатить</button>
+                                <button class="btn btn-primary btn-tariffs-payment">Оплатить</button>
                             </div>
                             <div class="tariff-card__count">
                                 02
@@ -677,7 +681,7 @@
                         <div class="tariff__col tariff-card">
                             <div class="tariff-card__header">
                                 <div class="tariff-card__title">
-                                    Селлер
+                                    Компания
                                 </div>
                                 <div class="tariff-card__subtitle">
                                     Действует 30 дней
@@ -685,7 +689,7 @@
                             </div>
                             <div class="tariff-card__prices">
                                 <div class="tariff-card__total">
-                                    4900 руб
+                                    20000 руб
                                 </div>
                                 <div class="tariff-card__single">
                                     / 490 шт
@@ -693,13 +697,15 @@
                             </div>
                             <div class="tariff-card__select form-group">
                                 <select name="" id="" class = "select">
-                                    <option value="2">Отзывы на WB, OZON - 10</option>
-                                    <option value="3">Отзывы на WB, OZON - 30</option>
                                     <option value="4">Отзывы на WB, OZON - 50</option>
+                                    <option value="7">Интеграции Inst - 50</option>
+                                    <option value="13">Интеграции VK - 50</option>
+                                    <option value="16">Интеграции Telegram - 50</option>
+                                    <option value="10">Интеграции YouTube - 50</option>
                                 </select>
                             </div>
                             <div class="tariff-card__btns">
-                                <button class="btn btn-primary">Оплатить</button>
+                                <button class="btn btn-primary btn-tariffs-payment">Оплатить</button>
                             </div>
                             <div class="tariff-card__count">
                                 03
