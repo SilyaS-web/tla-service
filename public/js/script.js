@@ -2144,6 +2144,7 @@ $(window).on('load', function(){
 
 
     $(document).on('click', '.btn-tariffs-callus', function(e){
+        popupCallUs
         popupCallUs.openPopup()
     })
 

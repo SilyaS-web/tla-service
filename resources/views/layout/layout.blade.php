@@ -747,6 +747,8 @@
     <script>
         var tariffsPopup = new Popup('#tariff-popup')
         tariffsPopup.openPopup();
+
+        $('.btn-tariffs-callus').on('click', () => { tariffsPopup.closePopup() })
     </script>
 @endif
 </html>
