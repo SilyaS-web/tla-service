@@ -20,9 +20,11 @@
                     </div>
                     <div class="tariff-card__text">
                         Индивидуальный тариф позволяет клиентам свободно выбирать количество интеграций и отзывов в своем плане.
+                        <br>
+                        <b>Рассматривается только от 100 заявок.</b>
                     </div>
                     <div class="tariff-card__btns">
-                        <button class="btn btn-primary btn-tariffs-callus">Подробности</button>
+                        <button class="btn btn-primary btn-tariffs-callus">Оставить заявку</button>
                     </div>
                     <div class="tariff-card__star">
                         <img src="{{ asset('img/star-icon.svg') }}" alt="">

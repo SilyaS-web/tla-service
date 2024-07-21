@@ -3261,6 +3261,7 @@ input[type='range']::-webkit-slider-runnable-track{
     display: flex;
     flex-direction: column;
     position: relative;
+    padding: 0 0 5px 5px;
 }
 .chat__back{
     border:1px solid var(--primary);
