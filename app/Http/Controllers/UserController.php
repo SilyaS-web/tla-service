@@ -355,8 +355,8 @@ class UserController extends Controller
         }
 
         $validated = $validator->validated();
-        $message_text = "Имя: " . $validated['name'] ."\nТелефон: " . $validated['phone'] ."\n Имя: " . $validated['name'] ."\n";
-        $result = TgService::sendForm($validated['phone'], $validated['name'], $validated['comment']);
+        $message_text = "Форма обратной связи\n\nИмя: " . $validated['name'] ."\nТелефон: " . $validated['phone'] ."\nСообщение: " . $validated['comment'];
+        $result = TgService::sendForm($message_text);
         return response()->json($result);
     }
 }

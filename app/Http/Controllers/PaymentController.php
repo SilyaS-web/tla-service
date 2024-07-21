@@ -31,7 +31,8 @@ class PaymentController extends Controller
         $state = $this->checkState($payment);
         if ($state == TPayment::STATUS_CONFIRMED) {
             $tariff = Tariff::find($payment->tariff_id);
-            TgService::notifyAdmin($user->phone, $user->name, 'оплатил тариф: ' . $tariff->title);
+            $message_text = "Новая оплата\n\nИмя: " . $user->name . "\nТелефон: " . $user->phone . "\nТариф: " . $tariff->title . " — ". $tariff->tariffGroup->title;
+            TgService::sendPayment($message_text);
 
             $seller_start_tariff = $user->getActiveTariffByGroup(1);
             if ($tariff->type == Project::FEEDBACK && $user->getActiveTariffByGroup(1)) {

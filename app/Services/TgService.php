@@ -71,38 +71,7 @@ class TgService
         return $httpcode == 200 ? true : false;
     }
 
-    public static function notifyAdmin($phone, $name, $comment)
-    {
-        $curl = curl_init();
-        $fields = [
-            "phone" => $phone,
-            "name" => $name,
-            "comment" => $comment,
-        ];
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => '195.24.67.70/notify-admin',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode($fields),
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json'
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-        curl_close($curl);
-        return $httpcode == 200 ? json_encode($fields) : false;
-    }
-
-    function sendForm($message_text) {
+    public static function sendForm($message_text) {
         $chat_id = -4100606972;
         $api_key = '7105243036:AAH1MvLxX-5pZiAoemd6LJg9idpoulpZRjQ';
 
@@ -127,8 +96,71 @@ class TgService
         ));
 
         $response = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
 
-        echo $response;
+        return $httpcode == 200 ? "success" : false;
+    }
+
+    public static function sendPayment($message_text) {
+        $chat_id = -4225446459;
+        $api_key = '7309448724:AAHhuen7LBkUBuQJM0N2s7KZlXkW_UdlRzw';
+
+        $data = [
+            'chat_id' => $chat_id,
+            'text' => $message_text
+        ];
+        $curl = curl_init();
+        $url = 'https://api.telegram.org/bot' . $api_key . '/sendMessage';
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($data),
+            CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+        ));
+
+        $response = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        return $httpcode == 200 ? "success" : false;
+    }
+
+    public static function sendModeration($message_text) {
+        $chat_id = -4203687682;
+        $api_key = '7307095293:AAGyU3CiAReZAbOXS6pyOPatNTSE3eI3UbQ';
+
+        $data = [
+            'chat_id' => $chat_id,
+            'text' => $message_text
+        ];
+        $curl = curl_init();
+        $url = 'https://api.telegram.org/bot' . $api_key . '/sendMessage';
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($data),
+            CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+        ));
+
+        $response = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        return $httpcode == 200 ? "success" : false;
     }
 }
