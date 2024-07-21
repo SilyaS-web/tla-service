@@ -244,10 +244,10 @@
         <footer class="footer">
             <div class="footer__container _container">
                 <div class="footer__body">
-                    <a href="{{ route('policy') }}" class="footer__policy">
+                    <a href="https://adswap.ru/privacy" target="_blank" class="footer__policy">
                         Политика конфиденциальности
                     </a>
-                    <a href="#" class="footer__policy">
+                    <a href="https://adswap.ru/agreement" target="_blank" class="footer__policy">
                         Публичная оферта
                     </a>
                     <a href="mailto:adswap.ru@ya.ru" class="footer__policy">
