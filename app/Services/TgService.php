@@ -103,7 +103,7 @@ class TgService
     }
 
     public static function sendPayment($message_text) {
-        $chat_id = -4225446459;
+        $chat_id = -1002234196530;
         $api_key = '7309448724:AAHhuen7LBkUBuQJM0N2s7KZlXkW_UdlRzw';
 
         $data = [
@@ -134,7 +134,7 @@ class TgService
     }
 
     public static function sendModeration($message_text) {
-        $chat_id = -4203687682;
+        $chat_id = -1002155045570;
         $api_key = '7307095293:AAGyU3CiAReZAbOXS6pyOPatNTSE3eI3UbQ';
 
         $data = [
