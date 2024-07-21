@@ -458,7 +458,7 @@
 
                                                 </div>
                                                 <div class="table-stats__col" style="width: 13%;">
-                                                    Nickname
+                                                    Имя
                                                 </div>
                                                 <div class="table-stats__col" style="width: 11%;">
                                                     Подписчики
@@ -476,7 +476,7 @@
                                                     CPM
                                                 </div>
                                                 <div class="table-stats__col" style="width: 9%;">
-                                                    CTR
+                                                    CTR %
                                                 </div>
                                                 <div class="table-stats__col" style="width: 14%;">
                                                     Дата завершения
