@@ -389,7 +389,7 @@
                                                 <span>CPM</span>
                                             </div>
                                             <div class="card__stats-val ">
-                                                @php($total_cpm = round($project->product_price / ($finish_stats['total_views'] == 0 ? 1 : $finish_stats['total_views']), 2 * 1000))
+                                                @php($total_cpm = round($project->product_price / ($finish_stats['total_views'] == 0 ? 1 : $finish_stats['total_views']* 1000), 2))
                                                 <span>{{ number_format($total_cpm, 2, ',', ' ')  }} ₽</span>
                                             </div>
                                         </div>
