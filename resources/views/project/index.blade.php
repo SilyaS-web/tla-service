@@ -547,7 +547,7 @@
                                                                 </div>
                                                             </span>
                                                         @else
-                                                            @php($cpr = floor($work->getTotlaClicks() / ($work->finishStats->views == 0 ? 1 : $work->finishStats->views)) * 100)
+                                                            @php($cpr = round($work->getTotlaClicks() / ($work->finishStats->views == 0 ? 1 : $work->finishStats->views) * 100, 2))
                                                             {{ number_format($cpr, 2, ',', ' ')  }}
                                                         @endif
                                                     </div>
