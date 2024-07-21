@@ -1988,6 +1988,7 @@ class PopupBlogerProjectMoreInfo extends Popup{
     getProjectInfo = () => {
         var self = this;
         this.getProjectInfoUri = `apist/projects/${this.projectId}/product-info`;
+
         $.ajax({
             url: `${self.getProjectInfoUri}`,
             data: {},
@@ -2182,6 +2183,7 @@ $(window).on('load', function(){
             console.log(e.target);
             popupBlogerProjectMoreInfo.projectId = $(e.target).closest('.project-item').data('id');
             popupBlogerProjectMoreInfo.getProjectInfo()
+            $(popupBlogerProjectMoreInfo.node).find('.btn-blogger-send-offer').css('display', 'block')
             popupBlogerProjectMoreInfo.openPopup();
         }
     })
@@ -2189,8 +2191,9 @@ $(window).on('load', function(){
         if($(e.target).closest('.project-item__btns').length == 0){
             console.log(e.target);
             popupBlogerProjectMoreInfo.projectId = $(e.target).closest('.project-item').data('id');
+
             popupBlogerProjectMoreInfo.getProjectInfo()
-            console.log(popupBlogerProjectMoreInfo.openPopup);
+            $(popupBlogerProjectMoreInfo.node).find('.btn-blogger-send-offer').css('display', 'none')
             popupBlogerProjectMoreInfo.openPopup();
         }
     })
