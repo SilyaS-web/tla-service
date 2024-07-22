@@ -99,7 +99,9 @@ class UserController extends Controller
             $query->where('status', 1);
         }])->get();
 
-        $bloggers = Blogger::get();
+        $bloggers = Blogger::whereHas('user', function (Builder $query) {
+            $query->where('status', 1);
+        })->get();
         $blogger_platforms = BloggerPlatform::get();
 
         $works = Work::where([['seller_id', $user_id]])->get();

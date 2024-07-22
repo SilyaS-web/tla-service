@@ -32,6 +32,7 @@ class User extends Authenticatable
         'email',
         'phone',
         'image',
+        'status',
         'role',
         'tg_phone_id',
         'password',
