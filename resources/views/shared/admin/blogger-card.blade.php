@@ -41,10 +41,10 @@
 
                         <div class="card__col card__stats-item">
                             <div class="card__stats-title">
-                                <span>{{ number_format($blogger->getSubscribers(), 0, '', ' ') }}</span>
+                                <span>Подписчики</span>
                             </div>
                             <div class="card__stats-val">
-                                <span>{{ $blogger->subscriber_quantity }}</span>
+                                <span>{{ number_format($blogger->getSubscribers(), 0, '', ' ') }}</span>
                             </div>
                         </div>
                         <div class="card__col card__stats-item">
