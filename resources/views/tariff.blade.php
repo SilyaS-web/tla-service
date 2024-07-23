@@ -8,7 +8,7 @@
                 <div class="tariff__title title">Тарифы</div>
                 <div class="tariff__subtitle subtitle">Получайте отзывы на карточки и повышайте их рейтинг. Размещайте рекламу в обмен на товары  и анализируйте результаты интеграций у блогеров — все в одном сервисе.</div>
             </div>
-            <div class="tariff__items">
+            <div class="tariff__items" style="margin-bottom:40px;">
                 <div class="tariff__col tariff-card">
                     <div class="tariff-card__header">
                         <div class="tariff-card__title">
@@ -129,6 +129,9 @@
                         03
                     </div>
                 </div>
+            </div>
+            <div class="tariff__row">
+                <p style="font-weight:500; font-size:18px; color:rgba(0,0,0,0.4)">Все тарифы действуют в течение 30 календарных дней после оплаты. Если вы не использовали свои отзывы и интеграции в течение оплаченного периода, они станут недоступными. Если вы общаетесь с блогерами в рамках открытых рекламных диалогов, то даже после окончания тарифа вы не потеряете доступ к сервису.</p>
             </div>
         </div>
     </div>

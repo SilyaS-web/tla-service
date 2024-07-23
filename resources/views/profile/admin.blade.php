@@ -88,10 +88,10 @@
                                 <div class="admin-blogers__title title">
                                     Модерация блогеров • {{ $unverified_users->count() }}
                                 </div>
-                                <div class="admin-blogers__search form-group">
+                                {{-- <div class="admin-blogers__search form-group">
                                     <input type="name" id="moderation-search" class="input" placeholder="Введите название">
                                     <button class="btn btn-primary moderation-search-btn">Найти</button>
-                                </div>
+                                </div> --}}
                             </div>
                             @include('shared.admin.unverified-users-list')
                         </div>
@@ -102,10 +102,10 @@
                                 <div class="admin-blogers__title title">
                                     Список блогеров • {{ $bloggers->count() }}
                                 </div>
-                                <div class="admin-blogers__search form-group">
+                                {{-- <div class="admin-blogers__search form-group">
                                     <input type="name" id="blogers-search" class="input" placeholder="Введите название">
                                     <button class="btn btn-primary blogers-search-btn">Найти</button>
-                                </div>
+                                </div> --}}
                             </div>
                             @include('shared.admin.bloggers-list')
                         </div>
@@ -116,10 +116,10 @@
                                 <div class="admin-blogers__title title">
                                     Список селлеров • {{ $sellers->count() }}
                                 </div>
-                                <div class="admin-blogers__search form-group">
+                                {{-- <div class="admin-blogers__search form-group">
                                     <input type="name" id="sellers-search" class="input" placeholder="Введите название">
                                     <button class="btn btn-primary sellers-search-btn">Найти</button>
-                                </div>
+                                </div> --}}
                             </div>
                             @include('shared.admin.sellers-list')
                         </div>
@@ -130,10 +130,10 @@
                                 <div class="admin-blogers__title title">
                                     Список проектов • {{ $all_projects->count() }}
                                 </div>
-                                <div class="admin-blogers__search form-group">
+                                {{-- <div class="admin-blogers__search form-group">
                                     <input type="name" id="sellers-search" class="input" placeholder="Введите название">
                                     <button class="btn btn-primary sellers-search-btn">Найти</button>
-                                </div>
+                                </div> --}}
                             </div>
                             @include('project.admin-list')
                         </div>
@@ -144,10 +144,10 @@
                                 <div class="admin-blogers__title title">
                                     История заказов • {{ $payments->count() }}
                                 </div>
-                                <div class="admin-blogers__search form-group">
+                                {{-- <div class="admin-blogers__search form-group">
                                     <input type="name" id="sellers-search" class="input" placeholder="Поиск">
                                     <button class="btn btn-primary sellers-search-btn">Найти</button>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="payment-history__body">
                                 <div class="payment-history__items">
