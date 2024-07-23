@@ -129,9 +129,6 @@
                     <a href="https://adswap.ru/instructions" class="nav-burger__link nav__link">Инструкции</a>
                     <a href="https://adswap.ru/files" class="nav-burger__link nav__link">Файлы</a>
                     <a href="https://adswap.ru/news" class="nav-burger__link nav__link">Новости</a>
-                    <a href="https://adswap.ru/instructions" class="nav-burger__link nav__link">Инструкции</a>
-                    <a href="https://adswap.ru/files" class="nav-burger__link nav__link">Файлы</a>
-                    <a href="https://adswap.ru/news" class="nav-burger__link nav__link">Новости</a>
                 </div>
                 <a href="#" class="burger-menu__close">
                     <img src="{{ asset('img/close-icon.svg') }}" alt="">
