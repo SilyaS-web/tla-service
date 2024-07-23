@@ -4012,6 +4012,7 @@ input[type='range']::-webkit-slider-runnable-track{
     position: absolute;
     width: 100%;
     bottom: 0;
+    font-size:14px;
 }
 .footer__container {
     margin: 0 auto;
