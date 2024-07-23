@@ -124,7 +124,9 @@
                             Главная
                         @endif
                     </a>
-                    <a href="#" class="nav-burger__link nav__link">Инструкции</a>
+                    <a href="https://adswap.ru/instructions" class="nav-burger__link nav__link">Инструкции</a>
+                    <a href="https://adswap.ru/files" class="nav-burger__link nav__link">Файлы</a>
+                    <a href="https://adswap.ru/news" class="nav-burger__link nav__link">Новости</a>
                 </div>
                 <a href="#" class="burger-menu__close">
                     <img src="{{ asset('img/close-icon.svg') }}" alt="">
@@ -159,8 +161,14 @@
                                 Главная
                                 @endif
                             </a>
-                            <a href="" class="nav__link disabled">
+                            <a href="https://adswap.ru/instructions" class="nav__link">
                                 Инструкции
+                            </a>
+                            <a href="https://adswap.ru/files" class="nav__link">
+                                Файлы
+                            </a>
+                            <a href="https://adswap.ru/news" class="nav__link">
+                                Новости
                             </a>
                         </div>
                     </nav>
@@ -248,7 +256,7 @@
                         Политика конфиденциальности
                     </a>
                     <a href="https://adswap.ru/agreement" target="_blank" class="footer__policy">
-                        Публичная оферта
+                        Пользовательское соглашение
                     </a>
                     <a href="mailto:adswap.ru@ya.ru" class="footer__policy">
                         adswap.ru@ya.ru
