@@ -27,6 +27,8 @@
     <script src="{{ asset('libs/chart/chart.js') }}"></script>
     <script src="{{ asset('libs/funnel/funnel-chart.js') }}"></script>
 
+    <script async src="https://script.click-chat.ru/chat.js?wid=f12436e7-a36d-437d-8783-ec27bf222c55"></script>
+
     <title>@yield('title')</title>
 </head>
 <body>
@@ -124,7 +126,9 @@
                             Главная
                         @endif
                     </a>
-                    <a href="#" class="nav-burger__link nav__link">Инструкции</a>
+                    <a href="https://adswap.ru/instructions" class="nav-burger__link nav__link">Инструкции</a>
+                    <a href="https://adswap.ru/files" class="nav-burger__link nav__link">Файлы</a>
+                    <a href="https://adswap.ru/news" class="nav-burger__link nav__link">Новости</a>
                 </div>
                 <a href="#" class="burger-menu__close">
                     <img src="{{ asset('img/close-icon.svg') }}" alt="">
@@ -159,9 +163,9 @@
                                 Главная
                                 @endif
                             </a>
-                            <a href="" class="nav__link disabled">
-                                Инструкции
-                            </a>
+                            <a href="https://adswap.ru/instructions" class="nav__link">Инструкции</a>
+                            <a href="https://adswap.ru/files" class="nav__link">Файлы</a>
+                            <a href="https://adswap.ru/news" class="nav__link">Новости</a>
                         </div>
                     </nav>
 
@@ -290,7 +294,7 @@
                         </div>
                         <p class="form-addit">
                             Оставляя свои данные, вы даёте на это согласие <br>
-                            и принимаете условия <a href="policy">Политики конфиденциальности.</a>
+                            и принимаете условия <a href="https://adswap.ru/privacy">Политики конфиденциальности.</a>
                         </p>
                         <button class="btn btn-primary send-data">
                             Отправить
@@ -328,7 +332,7 @@
                         </script>
                         <p class="form-addit">
                             Оставляя свои данные, вы даёте на это согласие <br>
-                            и принимаете условия <a href="policy">Политики конфиденциальности.</a>
+                            и принимаете условия <a href="https://adswap.ru/privacy">Политики конфиденциальности.</a>
                         </p>
                         <button class="btn btn-primary send-data">
                             Отправить

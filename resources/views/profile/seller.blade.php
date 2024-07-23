@@ -554,7 +554,7 @@
                                     </script>
                                     <div class="dashboard__row">
                                         <div class="dashboard__col dashboard__item dashboard__item--cover">
-                                            <div class="dashboard__item-cover">
+                                            <div class="dashboard__item-cover" style="{{($total_clicks < 10) ? 'text-align:center' : ''}} ">
                                                 <div class="dashboard__item-title">
                                                     Переходы по интеграциям
                                                 </div>
@@ -575,12 +575,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="dashboard__col dashboard__item funnel-statistics">
+                                        <div class="dashboard__col dashboard__item funnel-statistics" style="{{($total_clicks < 10) ? 'text-align:center' : ''}} ">
                                             <div class="dashboard__col">
-                                                <div class="dashboard__item-title">
+                                                <div class="dashboard__item-title" >
                                                     Поĸазатели эффеĸтивности за 30 дней
                                                 </div>
-                                                <div class="dashboard__row">
+                                                <div class="dashboard__row" style="{{($total_clicks < 10) ? 'justify-content:center' : ''}} ">
                                                 @if($total_clicks > 10)
                                                     <canvas id="funnel-graph"></canvas>
                                                 @else

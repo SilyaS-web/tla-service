@@ -309,7 +309,8 @@ input[type='range']::-webkit-slider-runnable-track{
 .header__body {
     display: flex;
     align-items: center;
-    padding:10px;
+    padding: 7px 25px 13px 25px;
+    flex-wrap: nowrap;
 }
 .burger{
     width: 25px;
@@ -394,7 +395,7 @@ input[type='range']::-webkit-slider-runnable-track{
 
 }
 .header__logo-w {
-    margin-right: 15vw;
+    width: 415px;
 }
 .logo__logo{
     width: 120px;
@@ -404,17 +405,19 @@ input[type='range']::-webkit-slider-runnable-track{
 .nav {
 }
 .header__nav {
-    margin-right: auto;
+    margin: 0 auto;
+    width: 500px;
+    padding-top: 7px;
 }
 .nav__items {
 }
 .nav__link {
-    font-size: 15px;
+    font-size: 16px;
     color:#000;
     font-weight: 600;
 }
 .nav__link:not(:last-child){
-    margin-right: 25px;
+    margin-right: 26px;
 }
 .nav__link:hover{
     text-decoration: none;
