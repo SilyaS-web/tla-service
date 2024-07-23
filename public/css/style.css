@@ -4292,6 +4292,10 @@ input[type='range']::-webkit-slider-runnable-track{
     .profile-projects__body{
         max-width:900px
     }
+
+    .header__logo-w{
+        width:380px;
+    }
 }
 @media(max-width:1300px){
     .view-project__img{
