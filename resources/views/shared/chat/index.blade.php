@@ -1,10 +1,10 @@
 <div class="profile-chat__body">
     <div class="profile-projects__title title">
-        <? if(auth()->user()->role == 'seller'): ?>
+        @if(auth()->user()->role == 'seller')
             Чат с блогерами
-        <?else:?>
+        @else
             Чат с селлерами
-        <?endif?>
+        @endif
     </div>
     <div class="profile-tabs__content-item">
         <div class="tab-content__chat chat">
