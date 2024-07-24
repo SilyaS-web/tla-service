@@ -40,13 +40,16 @@ class AuthController extends Controller
         if ($validator->fails()) {
             return redirect()->route('register')->withErrors($validator->errors())->withInput();
         }
-        $validated = $validator->validated();
 
-        if ($validated['role'] == 'seller') {
-            $validated['status'] = 1;
-        } else {
-            $validated['status'] = 0;
+        $validated = $validator->validated();
+        $is_agent = 0;
+
+        if ($validated['role'] == 'agent') {
+            $validated['role'] = 'seller';
+            $is_agent = 1;
         }
+
+        $validated['status'] = $validated['role'] == 'seller' ? 1 :0;
 
         $phone = PhoneService::format($validated['phone']);
         if (User::where([['phone', '=',  $phone]])->first()) {
@@ -70,7 +73,8 @@ class AuthController extends Controller
 
         if ($validated['role'] == 'seller') {
             Seller::create([
-                'user_id' => $user->id
+                'user_id' => $user->id,
+                'is_agent' => $is_agent
             ]);
             $tariff = Tariff::find(1);
             SellerTariff::create([
