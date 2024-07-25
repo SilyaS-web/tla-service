@@ -2140,7 +2140,7 @@ $(window).on('load', function(){
         var prices = tariffsPrices[$(e.target).val()];
 
         $(e.target).closest('.tariff-card').find('.tariff-card__total').text(prices[1] + ' руб')
-        $(e.target).closest('.tariff-card').find('.tariff-card__single').text('/ ' + prices[0] + ' шт')
+        $(e.target).closest('.tariff-card').find('.tariff-card__single').text('' + prices[0] + ' за шт.')
     })
 
 
