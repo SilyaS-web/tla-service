@@ -44,16 +44,16 @@
                             4900 руб
                         </div>
                         <div class="tariff-card__single">
-                            / 490 шт
+                            490 за шт
                         </div>
                     </div>
                     <div class="tariff-card__select form-group">
                         <select name="" id="" class = "select">
-                            <option value="2">Отзывы на WB, OZON - 10</option>
-                            <option value="5">Интеграции Inst - 10</option>
-                            <option value="11">Интеграции VK - 10</option>
-                            <option value="14">Интеграции Telegram - 10</option>
-                            <option value="8">Интеграции YouTube - 10</option>
+                            <option value="2">Отзывы на WB, OZON - 10 шт</option>
+                            <option value="5">Интеграции Inst - 10 шт</option>
+                            <option value="11">Интеграции VK - 10 шт</option>
+                            <option value="14">Интеграции Telegram - 10 шт</option>
+                            <option value="8">Интеграции YouTube - 10 шт</option>
                         </select>
                     </div>
                     <div class="tariff-card__btns">
@@ -77,16 +77,16 @@
                             13500 руб
                         </div>
                         <div class="tariff-card__single">
-                            / 490 шт
+                            450 за шт
                         </div>
                     </div>
                     <div class="tariff-card__select form-group">
                         <select name="" id="" class = "select">
-                            <option value="3">Отзывы на WB, OZON - 30</option>
-                            <option value="6">Интеграции Inst - 30</option>
-                            <option value="12">Интеграции VK - 30</option>
-                            <option value="15">Интеграции Telegram - 30</option>
-                            <option value="9">Интеграции YouTube - 30</option>
+                            <option value="3">Отзывы на WB, OZON - 30 шт</option>
+                            <option value="6">Интеграции Inst - 30 шт</option>
+                            <option value="12">Интеграции VK - 30 шт</option>
+                            <option value="15">Интеграции Telegram - 30 шт</option>
+                            <option value="9">Интеграции YouTube - 30 шт</option>
                         </select>
                     </div>
                     <div class="tariff-card__btns">
@@ -110,16 +110,16 @@
                             20000 руб
                         </div>
                         <div class="tariff-card__single">
-                            / 490 шт
+                            400 за шт
                         </div>
                     </div>
                     <div class="tariff-card__select form-group">
                         <select name="" id="" class = "select">
-                            <option value="4">Отзывы на WB, OZON - 50</option>
-                            <option value="7">Интеграции Inst - 50</option>
-                            <option value="13">Интеграции VK - 50</option>
-                            <option value="16">Интеграции Telegram - 50</option>
-                            <option value="10">Интеграции YouTube - 50</option>
+                            <option value="4">Отзывы на WB, OZON - 50 шт</option>
+                            <option value="7">Интеграции Inst - 50 шт</option>
+                            <option value="13">Интеграции VK - 50 шт</option>
+                            <option value="16">Интеграции Telegram - 50 шт</option>
+                            <option value="10">Интеграции YouTube - 50 шт</option>
                         </select>
                     </div>
                     <div class="tariff-card__btns">
