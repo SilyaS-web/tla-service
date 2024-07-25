@@ -53,7 +53,7 @@
                         </div>
                         <div class="form-group filter__item">
                             <label for="city">Ваш город</label>
-                            <input type="city" class="input" id="city" name="city" value="{{ $user->blogger->city }}">
+                            <input type="city" class="input" id="city" name="city" value="{{ $user->blogger->city ?? '' }}">
                             @error('city')
                             <span class="error">{{ $message }}</span>
                             @enderror
@@ -62,7 +62,7 @@
                             <label for="country_id">Страна</label>
                             <select name="country_id" id="country_id" name="country_id" class="input input--country select">
                                 @foreach ($countries as $country)
-                                <option value="{{ $country->id }}" {{ $country->id == $user->blogger->country_id ? "selected"  : '' }}>{{ $country->name }}</option>
+                                <option value="{{ $country->id }}" {{ $country->id == ($user->blogger->country_id ?? '') ? "selected"  : '' }}>{{ $country->name }}</option>
                                 @endforeach
                             </select>
                             @error('country_id')
