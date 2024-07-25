@@ -20,7 +20,7 @@
                             </div>
                             <div class="info-profile__id">
                                 <p style="font-size: 12px">
-                                    {{ $user->blogger->country->name }}, {{ $user->blogger->city }}<br>
+                                    {{ $user->blogger->country->name ?? 'Имя не указано'}}, {{ $user->blogger->city ?? 'Город не выбран' }}<br>
                                     На площадке с {{ date_format($user->created_at, 'd.m.Y') }}
                                 </p>
                             </div>
@@ -31,14 +31,14 @@
                             Дополнительная информация
                         </div>
                         <div class="info-profile__tags-items">
-                            @if($user->blogger->is_achievement)
+                            @if(isset($user->blogger) && $user->blogger->is_achievement)
                             <div class="info-profile__tags-item">
                                 Проверенный блогер
                             </div>
                             @endif
                         </div>
                         <div class="info-profile__platrfoms blogger-platforms">
-                            @foreach ($user->blogger->platforms as $p )
+                            @foreach (($user->blogger->platforms ?? []) as $p )
                             <?
                                 $types = [
                                     'Telegram' => 'tg',
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                     <div class="info-profile__row info-profile__desc">
-                        <p>{{ $user->blogger->description }}</p>
+                        <p>{{ $user->blogger->description ?? 'Нет описания' }}</p>
                     </div>
                 </div>
             </div>
@@ -139,7 +139,7 @@
                                 Работы
                             </div>
                             <div class="list-projects__items">
-                                @forelse ($user->blogger->works as $work)
+                                @forelse (($user->blogger->works ?? []) as $work)
                                     <div class="list-projects__item project-item">
                                         <div class="owl-carousel project-item__carousel">
                                             <div class="project-item__img" style="background-image:url({{ $work->project->getImageURL(true) }})"></div>
