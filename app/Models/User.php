@@ -17,9 +17,10 @@ class User extends Authenticatable
     public const SELLER = 'seller';
     public const BLOGGER = 'blogger';
     public const ADMIN = 'admin';
+    public const AGENT = 'agent';
 
     public const TYPES = [
-        self::SELLER, self::BLOGGER, self::ADMIN
+        self::SELLER, self::BLOGGER, self::ADMIN, self::AGENT
     ];
 
     /**
