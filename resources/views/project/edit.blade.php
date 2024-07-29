@@ -1,5 +1,7 @@
 @extends('layout.layout')
 
+@section('title', $title ?? 'Редактирование проекта')
+
 @section('content')
 <section class="create-project" id="edit-project">
     <div class="create-project__container _container">

@@ -1,5 +1,7 @@
 @extends('layout.layout')
 
+@section('title', $title ?? 'Личный кабинет')
+
 @section('content')
 <section class="profile" id="blogger">
     <div class="profile__container _container">

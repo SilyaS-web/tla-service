@@ -1,6 +1,6 @@
 @extends('layout.layout')
 
-@section('title', 'Редактирование профиля')
+@section('title', $title ?? 'Редактирование профиля')
 
 @section('content')
 <section class="edit-profile">

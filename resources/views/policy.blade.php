@@ -1,5 +1,7 @@
 @extends('layout.layout')
 
+@section('title', $title ?? 'Политика конфиденциальности')
+
 @section('content')
 <section>
     <div class=" _container">

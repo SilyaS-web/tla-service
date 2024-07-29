@@ -1,5 +1,7 @@
 @extends('layout.layout')
 
+@section('title', $title ?? 'Редактирование профиля')
+
 @section('content')
 <section class="edit-profile">
     <div class="edit-profile__container _container">

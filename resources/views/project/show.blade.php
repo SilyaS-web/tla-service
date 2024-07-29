@@ -1,7 +1,8 @@
 @extends('layout.layout')
 
-@section('content')
+@section('title', $title ?? 'Просмотре проекта')
 
+@section('content')
 <section class="project-view">
     <div class="project-view__container _container">
         <div class="project-view__body">

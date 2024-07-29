@@ -1,5 +1,7 @@
 @extends('layout.layout')
 
+@section('title', $title ?? $user->name)
+
 @section('content')
 <section class="user-view">
     <div class="user-view__container _container">

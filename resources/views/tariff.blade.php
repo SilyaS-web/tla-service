@@ -1,5 +1,7 @@
 @extends('layout.layout')
 
+@section('title', $title ?? 'Тарифы')
+
 @section('content')
 <section class="tariff">
     <div class="tariff__container  _container">

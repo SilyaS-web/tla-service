@@ -1,5 +1,7 @@
 @extends("layout.layout")
 
+@section('title', $title ?? 'Личный кабинет')
+
 @section("content")
 <section class="profile" id="seller">
     <div class="profile__container _container">
