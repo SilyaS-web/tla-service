@@ -171,7 +171,6 @@ class PaymentController extends Controller
 
     public function debugPayment(Tariff $tariff)
     {
-        $redirect_url = $this->init($tariff, false, null, 1000);
-        return redirect($redirect_url);
+        $this->init($tariff, false, null, 1000);
     }
 }
