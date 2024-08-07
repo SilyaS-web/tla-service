@@ -82,7 +82,7 @@ class PaymentController extends Controller
         echo 'OK';
     }
 
-    public function init(Tariff $tariff, $from_landing = false, $user_id = null)
+    public function init(Tariff $tariff, $from_landing = false, $user_id = null, $degug_price = null)
     {
         $user = null;
         if (!$user_id) {
@@ -95,11 +95,13 @@ class PaymentController extends Controller
             'user_id' => $user->id,
             'tariff_id' => $tariff->id,
             'price' => $tariff->price
-
         ]);
 
+        $price = $degug_price ?? $tariff->price;
+        $description = $degug_price != null ? 'Тестовый платёж' : $tariff->title;
+
         $client = new TinkoffAcquiringAPIClient(config('tbank.terminal_key'), config('tbank.secret'));
-        $initRequest = new InitRequest($tariff->price, $payment->id . '_' . $tariff->id);
+        $initRequest = new InitRequest($price, $payment->id . '_' . $tariff->id);
 
         $notification_url = url('/payment/' . $payment->id . '/notifications');
         $success_url = url('/payment/' . $payment->id . '/success?') .  ($from_landing ? 'from_landing=1' : '');
@@ -107,7 +109,7 @@ class PaymentController extends Controller
 
         // необязательные параметры
         $initRequest
-            ->setDescription($tariff->title)
+            ->setDescription($description)
             ->setNotificationURL($notification_url)
             ->setSuccessURL($success_url)
             ->setFailURL($fail_url);
@@ -164,6 +166,12 @@ class PaymentController extends Controller
         }
 
         $redirect_url = $this->init($tariff, true, $user->id);
+        return redirect($redirect_url);
+    }
+
+    public function debugPayment(Tariff $tariff)
+    {
+        $redirect_url = $this->init($tariff, false, null, 1000);
         return redirect($redirect_url);
     }
 }
