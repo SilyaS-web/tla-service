@@ -57,7 +57,7 @@ Route::middleware(['auth', 'banned'])->group(function () {
         return view('project.edit');
     })->name('');
 
-    Route::get('/payment/debug', [PaymentController::class, 'debugPayment']);
+    Route::get('/payment/debug/{tariff}', [PaymentController::class, 'debugPayment']);
     Route::get('/payment/{tariff}/init', [PaymentController::class, 'init']);
     Route::get('/payment/{payment}/check', [PaymentController::class, 'checkState']);
     Route::get('/payment/{payment}/success', [PaymentController::class, 'successPayment']);
