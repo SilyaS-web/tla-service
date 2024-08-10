@@ -89,6 +89,8 @@ Route::middleware(['auth', 'banned'])->group(function () {
         Route::get('/projects/{project}/unban', [ProjectController::class, 'unban']);
         Route::get('/projects/{project}/edit', [ProjectController::class, 'edit']);
         Route::get('/projects/{project}/delete', [ProjectController::class, 'delete']);
+        Route::get('/projects/{project}/stop', [ProjectController::class, 'stop']);
+        Route::get('/projects/{project}/start', [ProjectController::class, 'start']);
 
         Route::post('/bloggers', [BloggerController::class, 'index']);
         Route::get('/bloggers/{blogger}', [BloggerController::class, 'info']);

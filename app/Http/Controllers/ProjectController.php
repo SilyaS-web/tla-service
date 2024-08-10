@@ -429,6 +429,12 @@ class ProjectController extends Controller
         return redirect()->route('profile')->with('switch-tab', 'projects-list')->with('success', 'Проект остановлен');
     }
 
+    public function start(Project $project)
+    {
+        $project->update(['status' => Project::ACTIVE]);
+        return redirect()->route('profile')->with('switch-tab', 'projects-list')->with('success', 'Проект возобновлён');
+    }
+
     public function categories()
     {
         $validator = Validator::make(request()->all(), [
