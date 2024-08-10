@@ -2110,7 +2110,7 @@ $(window).on('load', function(){
     var popupConfirmCompletionBlogger = new PopupConfirmCompletionBlogger('#confirm-completion-blogger');
     var choosePopupBlogger = new PopupBloggerChooseProjectsFormat('#choose-projects-adv-format-blogger');
     var confirmPublic = new PopupConfirmPublication('#confirm-publication');
-
+    var confirmDelete = new PopupConfirmPublication('#confirm-deleting');
 
     $('.tariff-card__select select').on('change', function(e){
         var tariffsPrices = [
@@ -2163,6 +2163,13 @@ $(window).on('load', function(){
 
         confirmPublic.sendDataUrl = btn.data('href');
         confirmPublic.openPopup()
+    })
+    $(document).on('click', '.profile-projects__delete', function(e){
+        e.preventDefault()
+        var btn = $(e.target).closest('.profile-projects__delete');
+
+        confirmDelete.sendDataUrl = btn.data('href');
+        confirmDelete.openPopup()
     })
 
     $(document).on('click', '.btn-blogger-send-offer', function(e){
