@@ -410,11 +410,12 @@ class ProjectController extends Controller
     public function delete(Project $project)
     {
         $user = Auth::user();
-
-        foreach($project->projectWorks as $project_work) {
-            $seller_tariff = $user->getActiveTariffs($project_work->type);
-            if ($seller_tariff) {
-                $seller_tariff->update(['quantity' => $seller_tariff->quantity + $project_work->quantity]);
+        if (!$project->is_blogger_access) {
+            foreach($project->projectWorks as $project_work) {
+                $seller_tariff = $user->getActiveTariffs($project_work->type);
+                if ($seller_tariff) {
+                    $seller_tariff->update(['quantity' => $seller_tariff->quantity + $project_work->quantity]);
+                }
             }
         }
 
