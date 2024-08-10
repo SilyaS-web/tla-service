@@ -407,6 +407,27 @@ class ProjectController extends Controller
         return redirect()->route('profile')->with('switch-tab', 'projects-list');
     }
 
+    public function delete(Project $project)
+    {
+        $user = Auth::user();
+
+        foreach($project->projectWorks as $project_work) {
+            $seller_tariff = $user->getActiveTariffs($project_work->type);
+            if ($seller_tariff) {
+                $seller_tariff->update(['quantity' => $seller_tariff->quantity + $project_work->quantity]);
+            }
+        }
+
+        $project->delete();
+        return redirect()->route('profile')->with('switch-tab', 'projects-list')->with('success', 'Проект удалён');;
+    }
+
+    public function stop(Project $project)
+    {
+        $project->update(['status' => Project::STOPPED]);
+        return redirect()->route('profile')->with('switch-tab', 'projects-list')->with('success', 'Проект остановлен');
+    }
+
     public function categories()
     {
         $validator = Validator::make(request()->all(), [

@@ -33,7 +33,9 @@ class Project extends Model
         self::TELEGRAM,
     ];
 
+    public const STOPPED = -3;
     public const BANNED = -2;
+    public const PENDING = -1;
     public const ACTIVE = 0;
     public const COMPLETED = 1;
 
@@ -174,7 +176,7 @@ class Project extends Model
         if ($this->status == self::COMPLETED) {
             return true;
         }
-        
+
         foreach ($this->projectWorks as $project_work) {
             $lost = $project_work->quantity - Work::where('project_work_id', $project_work->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
             if ($lost > 0) {
