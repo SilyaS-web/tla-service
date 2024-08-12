@@ -16,7 +16,7 @@
     <title>Панель управления</title>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="wrapper" id = "admin-app">
         <div class="burger-menu">
             <div class="admin-menu__body">
                 <div class="admin-menu__title">
@@ -32,30 +32,9 @@
                 <a href="#" class="admin-menu__leave">Выйти</a>
             </div>
         </div>
-
-        <header class="header">
-            <div class="header__container _container">
-                <div class="header__body">
-                    <div class="header__row">
-                        <div class="header__title">
-                            Панель управления
-                        </div>
-                        <div class="header__menu-btn">
-                            <img src="{{asset('admin/img/menu-icon.svg')}}" alt="">
-                        </div>
-                    </div>
-                    <div class="header__col">
-                        <div class="header__leave">
-                            <form action="{{ route('logout') }}" method="POST" class="">
-                                @csrf
-                                <button type="header__leave">Выход</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </header>
-
+        
+        <admin-header></admin-header>
+        
         <section class="admin-view">
             <div class="admin-view__container _container active-menu">
                 <div class="admin-view__body">
@@ -433,6 +412,7 @@
     </div>
 </body>
 <script src="{{ asset('admin/js/script.js') }}"></script>
+<script src = "./js/app.js"></script>
 
 <script>
     function banUser(user_id, el) {

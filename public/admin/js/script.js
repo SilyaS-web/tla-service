@@ -544,6 +544,7 @@ class PopupAcceptBloger extends Popup{
             vk_link: self.dataProps.vk_link.get(),
         }, function(res){
             notify('info', {title: 'Успешно!', message: ''});
+            self.emptyForm();
             self.closePopup();
         })
     }
