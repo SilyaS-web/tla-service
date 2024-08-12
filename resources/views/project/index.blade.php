@@ -600,7 +600,7 @@
                     @endif
 
                     {{-- если не скрыт --}}
-                    @if($project->status != $project::STOPPED)
+                    {{-- @if($project->status != $project::STOPPED)
                         <a href="apist/projects/{{$project->id}}/stop" class="profile-projects__opts-item profile-projects__hide">
                             <img src="img/hide-icon.svg" alt="">
                             <div class="profile-projects__opts-name">Скрыть</div>
@@ -610,7 +610,7 @@
                             <img src="img/show-icon.svg" alt="">
                             <div class="profile-projects__opts-name">Показывать</div>
                         </a>
-                    @endif
+                    @endif --}}
 
                     <a href="#" data-href="apist/projects/{{$project->id}}/delete" class="profile-projects__opts-item profile-projects__delete">
                         <img src="img/delete-icon.svg" alt="">
