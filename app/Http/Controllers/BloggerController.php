@@ -167,7 +167,7 @@ class BloggerController extends Controller
             ]);
         }
 
-        TgService::sendModeration($user->name . ' отсавил заявку на модерацию');
+        TgService::sendModeration($user->name . ' оставил заявку на модерацию');
         return redirect()->route('profile');
     }
 
