@@ -36,9 +36,12 @@
         <header class="header">
             <div class="header__container _container">
                 <div class="header__body">
-                    <div class="header__col">
+                    <div class="header__row">
                         <div class="header__title">
                             Панель управления
+                        </div>
+                        <div class="header__menu-btn">
+                            <img src="{{asset('admin/img/menu-icon.svg')}}" alt="">
                         </div>
                     </div>
                     <div class="header__col">
@@ -54,27 +57,34 @@
         </header>
 
         <section class="admin-view">
-            <div class="admin-view__container _container">
+            <div class="admin-view__container _container active-menu">
                 <div class="admin-view__body">
                     <aside class="admin-menu">
                         <div class="admin-menu__container">
                             <div class="admin-menu__body">
                                 <nav class="nav admin-menu__nav">
                                     <div class="nav__items">
+
                                         <a href="" class="nav__link tab active" data-content="moderation" title="Модерация блогеров">
                                             <img src="{{ asset('admin/img/blogers-list-icon.svg') }}" alt="" class="nav__link-img">
+                                            Модерация блогеров
                                         </a>
                                         <a href="" class="nav__link tab" data-content="blogers-list" title="Список блогеров">
                                             <img src="{{ asset('admin/img/blog-icon.svg') }}" alt="" class="nav__link-img">
+                                            Список блогеров
                                         </a>
                                         <a href="" class="nav__link tab" data-content="sellers-list" title="Список селлеров">
                                             <img src="{{ asset('admin/img/money-icon.svg') }}" alt="" class="nav__link-img">
+                                            Список селлеров
                                         </a>
                                         <a href="" class="nav__link tab" data-content="projects-list" title="Модерация проектов">
                                             <img src="{{ asset('admin/img/list-icon.svg') }}" alt="" class="nav__link-img">
+                                            Модерация проектов
                                         </a>
                                         <a href="" class="nav__link tab" data-content="payment-history" title="История заказов">
                                             <img src="{{ asset('admin/img/history-icon.svg') }}" alt="" class="nav__link-img">
+                                            История заказов
+
                                         </a>
                                     </div>
                                 </nav>
@@ -149,7 +159,7 @@
                                     <button class="btn btn-primary sellers-search-btn">Найти</button>
                                 </div> --}}
                             </div>
-                            <div class="payment-history__body">
+                            <div class="payment-history__body admin-view__content-wrap">
                                 <div class="payment-history__items">
                                     @forelse ($payments as $payment)
                                         <div class="payment-history__row">

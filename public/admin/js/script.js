@@ -336,6 +336,40 @@ class PopupAcceptBloger extends Popup{
         })
     }
 
+    emptyForm = () => {
+        this.blogger_id = null;
+        this.dataProps.gender_ratio.set('');
+        this.dataProps.sex.set('');
+        this.dataProps.is_achievement.set('');
+        this.dataProps.country.set('');
+        this.dataProps.city.set('');
+        this.dataProps.desc.set();
+
+        this.dataProps.tg_subs.set('');
+        this.dataProps.tg_cover.set('');
+        this.dataProps.tg_er.set('');
+        this.dataProps.tg_cpm.set('');
+        this.dataProps.tg_link.set('');
+
+        this.dataProps.inst_subs.set('');
+        this.dataProps.inst_cover.set('');
+        this.dataProps.inst_er.set('');
+        this.dataProps.inst_cpm.set('');
+        this.dataProps.inst_link.set('');
+
+        this.dataProps.yt_subs.set('');
+        this.dataProps.yt_cover.set('');
+        this.dataProps.yt_er.set('');
+        this.dataProps.yt_cpm.set('');
+        this.dataProps.yt_link.set('');
+
+        this.dataProps.vk_subs.set('');
+        this.dataProps.vk_cover.set('');
+        this.dataProps.vk_er.set('');
+        this.dataProps.vk_cpm.set('');
+        this.dataProps.vk_link.set('');
+    }
+
     sendData = () => {
         var self = this;
 
@@ -373,6 +407,7 @@ class PopupAcceptBloger extends Popup{
             vk_link: self.dataProps.vk_link.get(),
         }, function(res){
             notify('info', {title: 'Успешно!', message: ''});
+            self.emptyForm();
             self.closePopup();
         })
     }
@@ -440,6 +475,10 @@ $(window).on('load', function(){
         acceptBlogerForm.blogger_id = e.target.dataset.id
         acceptBlogerForm.getData()
         acceptBlogerForm.openPopup()
+    })
+
+    $(document).on('click', '.header__menu-btn', function(){
+        $('.admin-view__container').toggleClass('active-menu')
     })
 
     var adminTabs = new Tabs('.admin-view');
