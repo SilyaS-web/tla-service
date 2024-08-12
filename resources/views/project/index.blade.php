@@ -587,19 +587,37 @@
                     </div>
                 </div>
             </div>
-            @if($project->works->count() < 1 && !$project->is_blogger_access)
             <div class="profile-projects__control-btns">
                 <div class="profile-projects__dots" title="Опции">
                     <img src="img/dots-icon.svg" alt="">
                 </div>
                 <div class="profile-projects__opts">
-                    <a href="apist/projects/{{$project->id}}/edit" class="profile-projects__opts-item profile-projects__edit">
-                        <img src="img/pencil-icon.svg" alt="">
-                        <div class="profile-projects__opts-name">Редактировать</div>
+                    @if($project->works->count() < 1 && !$project->is_blogger_access)
+                        <a href="apist/projects/{{$project->id}}/edit" class="profile-projects__opts-item profile-projects__edit">
+                            <img src="img/pencil-icon.svg" alt="">
+                            <div class="profile-projects__opts-name">Редактировать</div>
+                        </a>
+                    @endif
+
+                    {{-- если не скрыт --}}
+                    @if($project->status != $project::STOPPED)
+                        <a href="apist/projects/{{$project->id}}/stop" class="profile-projects__opts-item profile-projects__hide">
+                            <img src="img/hide-icon.svg" alt="">
+                            <div class="profile-projects__opts-name">Скрыть</div>
+                        </a>
+                    @else
+                        <a href="apist/projects/{{$project->id}}/start" class="profile-projects__opts-item profile-projects__show">
+                            <img src="img/show-icon.svg" alt="">
+                            <div class="profile-projects__opts-name">Показывать</div>
+                        </a>
+                    @endif
+
+                    <a href="#" data-href="apist/projects/{{$project->id}}/delete" class="profile-projects__opts-item profile-projects__delete">
+                        <img src="img/delete-icon.svg" alt="">
+                        <div class="profile-projects__opts-name">Удалить</div>
                     </a>
                 </div>
             </div>
-            @endif
         </div>
     @empty
     Нет проектов
@@ -623,8 +641,6 @@
         var data = $(stat).data('stats')
             , lineData = []
             , barData = [];
-
-        console.log(data);
 
         datasets = [{
                 label: 'Выручка',

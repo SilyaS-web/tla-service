@@ -560,6 +560,33 @@
                 </div>
             </div>
         </div>
+        <div class="popup" id="confirm-deleting" style="">
+            <div class="popup__container _container">
+                <div class="popup__body">
+                    <div class="popup__header">
+                        <div class="popup__title title">
+                            Подтвердите действие
+                        </div>
+                        <div class="popup__subtitle subtitle">
+                            После подтверждения действия проект восстановить нельзя
+                        </div>
+                    </div>
+                    <div class="popup__form">
+                        <div class="popup__form-btns">
+                            <button class="btn btn-primary send-data">
+                                Подтвердить
+                            </button>
+                            <button class="btn btn-secondary close-popup-btn">
+                                Отмена
+                            </button>
+                        </div>
+                    </div>
+                    <div class="close-popup">
+                        <img src="{{ asset('img/close-icon.svg') }}" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="popup" id="choose-projects-adv-format-blogger" style="">
             <div class="popup__container _container">
                 <div class="popup__body">

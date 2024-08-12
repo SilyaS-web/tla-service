@@ -32,9 +32,9 @@
                 <a href="#" class="admin-menu__leave">Выйти</a>
             </div>
         </div>
-
+        
         <admin-header></admin-header>
-
+        
         <section class="admin-view">
             <div class="admin-view__container _container active-menu">
                 <div class="admin-view__body">
@@ -43,6 +43,7 @@
                             <div class="admin-menu__body">
                                 <nav class="nav admin-menu__nav">
                                     <div class="nav__items">
+
                                         <a href="" class="nav__link tab active" data-content="moderation" title="Модерация блогеров">
                                             <img src="{{ asset('admin/img/blogers-list-icon.svg') }}" alt="" class="nav__link-img">
                                             Модерация блогеров

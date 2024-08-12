@@ -2,16 +2,16 @@
         <div class="card__row card__content">
             <div class="card__col">
                 <div class="card__row card__header">
-                    <div class="card__img">
-                         <img src="{{ $blogger->user->getImageURL() }}" alt="">
-                        @if($blogger->is_achievement)
-                            <div class="card__achive">
+                    <div class="card__img" style="background-image: url('{{ $blogger->user->getImageURL() }}')">
+                         {{-- <img src="{{ $blogger->user->getImageURL() }}" alt=""> --}}
+                    </div>
+                    @if($blogger->is_achievement)
+                            <div class="card__achive" title="Проверенный блогер">
                                 <img src="{{ asset('img/achive-icon.svg') }}" alt="">
                             </div>
                         @endif
-                    </div>
                     <div class="card__name">
-                        <p class="card__name-name">
+                        <p class="card__name-name" title="{{ $blogger->user->name }}">
                             {{ $blogger->user->name }}
                         </p>
                     </div>
@@ -43,7 +43,7 @@
                             <div class="card__stats-title">
                                 <span>Подписчики</span>
                             </div>
-                            <div class="card__stats-val">
+                            <div class="card__stats-val" {{ number_format($blogger->getSubscribers(), 0, '', ' ') }}>
                                 <span>{{ number_format($blogger->getSubscribers(), 0, '', ' ') }}</span>
                             </div>
                         </div>
@@ -51,7 +51,7 @@
                             <div class="card__stats-title">
                                 <span>Охваты</span>
                             </div>
-                            <div class="card__stats-val">
+                            <div class="card__stats-val" title="{{ number_format(round($blogger->getCoverage()), 0, '', ' ') }}">
                                 <span>{{ number_format(round($blogger->getCoverage()), 0, '', ' ') }}</span>
                             </div>
                         </div>
@@ -62,7 +62,7 @@
                             <div class="card__stats-title">
                                 <span>ER %</span>
                             </div>
-                            <div class="card__stats-val">
+                            <div class="card__stats-val" title="{{ number_format($blogger->getER(), 0, '', ' ') }}">
                                 <span>{{ number_format($blogger->getER(), 0, '', ' ') }}</span>
                             </div>
                         </div>
@@ -70,7 +70,7 @@
                             <div class="card__stats-title">
                                 <span>CPM</span>
                             </div>
-                            <div class="card__stats-val">
+                            <div class="card__stats-val" title="{{ $blogger->getCPM() }}₽">
                                 <span>{{ $blogger->getCPM() }}₽</span>
                             </div>
                         </div>
