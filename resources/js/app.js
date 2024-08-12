@@ -1,17 +1,14 @@
 require('./bootstrap');
 
 import { createApp } from 'vue'
-// Vue.component('admin', require('./components/admin/AdminComponent.vue').default);
 
-import Admin from './components/admin/main/AdminComponent.vue'
-import Header from './components/admin/main/HeaderComponent.vue'
-import Footer from './components/admin/main/FooterComponent.vue'
+import Header from './components/admin/ui/AppHeader.vue'
+import Aside from './components/admin/ui/AppAside.vue'
 
 const app = createApp();
 
-app.component('AdminHeader', Header)
-app.component('AdminBody', Admin)
-app.component('AdminFooter', Footer)
+app.component('admin-header', Header)
+app.component('admin-aside', Aside)
 
 
 app.mount('#admin-app')
