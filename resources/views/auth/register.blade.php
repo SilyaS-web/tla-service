@@ -55,9 +55,9 @@
                 <div class="form-group">
                     <label for="role">Выберите роль</label>
                     <select name="role" id="role" name="role" class="input input--role select">
-                        <option value="seller">Селлер</option>
-                        <option value="blogger">Блогер</option>
-                        <option value="agent">Представитель бренда (Агенство)</option>
+                        <option value="seller" {{ old('role') == "seller" ? "selected" : "" }}>Селлер</option>
+                        <option value="blogger" {{ old('role') == "blogger" ? "selected" : "" }}>Блогер</option>
+                        <option value="agent" {{ old('role') == "agent" ? "selected" : "" }}>Представитель бренда (Агенство)</option>
                     </select>
                     @error('role')
                     <span class="error">{{ $message }}</span>
