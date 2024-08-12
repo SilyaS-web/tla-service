@@ -3,8 +3,8 @@
     <div class="card__row card__content">
         <div class="card__col">
             <div class="card__row card__header">
-                <div class="card__img">
-                    <img src="{{ $unverified_user->getImageURL() }}" alt="">
+                <div class="card__img" style="background-image: url('{{ $unverified_user->getImageURL() }}')">
+                    {{-- <img src="{{ $unverified_user->getImageURL() }}" alt=""> --}}
                 </div>
                 <div class="card__name">
                     <p class="card__name-name">
@@ -16,6 +16,14 @@
                 </div>
             </div>
         </div>
+        <div class="card__row card__tags">
+            @php($themes = $unverified_user->blogger->themes)
+           @foreach ($themes->take(3) as $theme)
+               <div class="card__tags-item">
+                   <span>{{ $theme->theme->theme }}</span>
+               </div>
+           @endforeach
+       </div>
         <div class="card__col card__stats">
             <div class="card__col card__stats-stats">
                 <div class="card__row card__stats-row">
@@ -24,7 +32,7 @@
                         <div class="card__stats-title">
                             <span>Телефон</span>
                         </div>
-                        <div class="card__stats-val">
+                        <div class="card__stats-val" title = "{{ $unverified_user->phone }}">
                             <span>{{ $unverified_user->phone }}</span>
                         </div>
                     </div>
@@ -32,7 +40,7 @@
                         <div class="card__stats-title">
                             <span>Почта</span>
                         </div>
-                        <div class="card__stats-val">
+                        <div class="card__stats-val" title="{{ $unverified_user->email }}">
                             <span>{{ $unverified_user->email }}</span>
                         </div>
                     </div>
