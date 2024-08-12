@@ -378,14 +378,14 @@ class ProjectController extends Controller
     public function activate(Project $project)
     {
         $user = Auth::user();
-        foreach($project->projectWorks as $project_work) {
+        foreach ($project->projectWorks as $project_work) {
             $seller_tariff = $user->getActiveTariffs($project_work->type);
             if (!$seller_tariff || $seller_tariff->quantity < $project_work->quantity) {
                 return redirect()->back()->with('success', 'Вашего тарифа недостаточно для того, чтобы опубликовать');
             }
         }
 
-        foreach($project->projectWorks as $project_work) {
+        foreach ($project->projectWorks as $project_work) {
             $seller_tariff = $user->getActiveTariffs($project_work->type);
             $project_work->update(['finish_date' => $seller_tariff->finish_date]);
             $seller_tariff->update(['quantity' => $seller_tariff->quantity - $project_work->quantity]);
@@ -410,12 +410,11 @@ class ProjectController extends Controller
     public function delete(Project $project)
     {
         $user = Auth::user();
-        if (!$project->is_blogger_access) {
-            foreach($project->projectWorks as $project_work) {
-                $seller_tariff = $user->getActiveTariffs($project_work->type);
-                if ($seller_tariff) {
-                    $seller_tariff->update(['quantity' => $seller_tariff->quantity + $project_work->quantity]);
-                }
+        foreach ($project->projectWorks as $project_work) {
+            $seller_tariff = $user->getActiveTariffs($project_work->type);
+            if ($seller_tariff) {
+                $lost = $project_work->quantity - $project->works()->where('project_work_id', $project_work->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
+                $seller_tariff->update(['quantity' => $seller_tariff->quantity + $lost]);
             }
         }
 
@@ -729,7 +728,8 @@ class ProjectController extends Controller
         return $description;
     }
 
-    public function getApplicationsCount() {
+    public function getApplicationsCount()
+    {
         $user = Auth::user();
         $projects = $user->projects;
         $application_count_by_projects = [];
