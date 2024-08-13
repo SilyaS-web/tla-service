@@ -99,7 +99,7 @@ class BloggerController extends Controller
             'sex' => 'required|string',
             'city' => 'required|string',
             'country' => 'required|numeric',
-            'image' => 'image|nullable',
+            'image' => 'image|nullable|required',
             'tg-link' => 'string|nullable',
             'inst-link' => 'string|nullable',
             'yt-link' => 'string|nullable',
