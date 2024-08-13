@@ -113,6 +113,16 @@ class BloggerController extends Controller
 
         $user = Auth::user();
         $validated = $validator->validated();
+
+        if (
+            (!isset($validated['tg-link']) || empty($validated['tg-link'])) &&
+            (!isset($validated['inst-link']) || empty($validated['inst-link'])) &&
+            (!isset($validated['yt-link']) || empty($validated['yt-link'])) &&
+            (!isset($validated['vk-link']) || empty($validated['vk-link']))
+        ) {
+            return redirect()->back()->with('success', 'Необходима хотя бы одна ссылка на соц. сеть')->withInput();
+        }
+
         $blogger = Blogger::create([
             'user_id' => $user->id,
             'city' => $validated['city'],
