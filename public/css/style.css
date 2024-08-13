@@ -3432,11 +3432,16 @@ input[type='range']::-webkit-slider-runnable-track{
     display: flex;
     gap: 10px;
     flex-direction: column;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .messages-chat__item-msg img{
     width: 100px;
     border-radius: 5px;
     cursor: pointer;
+}
+.messages-chat__item-msg>a{
+    word-break: break-all;
 }
 .messages-create {
     border-radius: 0 0 10px 10px;

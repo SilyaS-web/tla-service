@@ -1259,7 +1259,7 @@ class Chat {
 
         var formData = new FormData();
 
-        formData.append('message', msg)
+        formData.append('message', this.urlify(msg))
         formData.append('img', file[0])
         formData.append('work_id', self.currentChatId)
 
@@ -1285,6 +1285,18 @@ class Chat {
                 }
             })
         }
+    }
+
+    urlify = (text) => {
+        var urlRegex = /(https?:\/\/[^\s]+)/g;
+        return text.replace(urlRegex, function(url) {
+          return '<a target="_blank" href="' + url + '">' + url + '</a>';
+        })
+
+        // var urlRegex = /(http?:\/\/[^\s]+)/g;
+        // return text.replace(urlRegex, function(url) {
+        //   return '<a target="_blank" href="' + url + '">' + url + '</a>';
+        // })
     }
 }
 
