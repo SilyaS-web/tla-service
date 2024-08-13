@@ -1295,7 +1295,7 @@ input[type='range']::-webkit-slider-runnable-track{
     gap: 8px;
 }
 .roles-cards__card{
-    width:85px;
+    width:150px;
     padding:5px;
     cursor: pointer;
     display: flex;
@@ -1307,9 +1307,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .roles-cards__card img{
     margin-bottom: 10px;
-    width:45px;
-    height:45px;
-    opacity: .15;
+    height:100px;
     margin-bottom: 10px;
     transition: opacity .2s linear;
 }
@@ -1321,14 +1319,12 @@ input[type='range']::-webkit-slider-runnable-track{
     border:1px solid rgba(0,0,0,.1)
 }
 .roles-cards__card:hover img{
-    opacity: .35;
     /* filter: brightness(0) saturate(100%) invert(48%) sepia(99%) saturate(3278%) hue-rotate(358deg) brightness(100%) contrast(109%); */
 }
 .roles-cards__card.active{
     border:1px solid rgba(0,0,0,.1)
 }
 .roles-cards__card.active img{
-    opacity: .35;
     /* filter: brightness(0) saturate(100%) invert(48%) sepia(99%) saturate(3278%) hue-rotate(358deg) brightness(100%) contrast(109%); */
 }
 .form-stat{

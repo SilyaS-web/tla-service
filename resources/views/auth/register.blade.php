@@ -57,15 +57,15 @@
                     <div class="roles-cards">
                         <div class="roles-cards__items">
                             <div class="roles-cards__card" data-role="seller">
-                                <img src="{{asset('img/seller-role-icon.svg')}}" alt="">
+                                <img src="{{asset('img/seller-role.png')}}" alt="">
                                 <p>Селлер</p>
                             </div>
                             <div class="roles-cards__card" data-role="blogger">
-                                <img src="{{asset('img/blogger-role-icon.svg')}}" alt="">
+                                <img src="{{asset('img/blogger-role.png')}}" alt="">
                                 <p>Блогер</p>
                             </div>
                             <div class="roles-cards__card" data-role="agent">
-                                <img src="{{asset('img/agent-role-icon.svg')}}" alt="">
+                                <img src="{{asset('img/agent-role.png')}}" alt="">
                                 <p title="Представитель бренда(Агенство)">Агенство</p>
                             </div>
                         </div>
