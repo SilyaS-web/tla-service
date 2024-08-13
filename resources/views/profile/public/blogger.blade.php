@@ -41,7 +41,7 @@
                         </div>
                         <div class="info-profile__platrfoms blogger-platforms">
                             @foreach (($user->blogger->platforms ?? []) as $p )
-                                @if(!$p->link)
+                                @if(!$p->subscriber_quantity)
                                     @continue
                                 @endif
                             <?
