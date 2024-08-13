@@ -10,7 +10,6 @@ class Blogger extends Model
 {
     use HasFactory, SoftDeletes;
 
-
     protected $fillable = [
         'user_id',
         'name',
@@ -56,19 +55,22 @@ class Blogger extends Model
 
     public function getCoverage()
     {
-        $coverage = round($this->platforms()->avg('coverage'));
+        $platform = $this->platforms()->orderBy('subscriber_quantity', 'desc')->first();
+        $coverage = round($platform->coverage, 2);
         return $coverage;
     }
 
     public function getER()
     {
-        $engagement_rate = round($this->platforms()->avg('engagement_rate'), 2);
+        $platform = $this->platforms()->orderBy('subscriber_quantity', 'desc')->first();
+        $engagement_rate = round($platform->engagement_rate, 2);
         return $engagement_rate;
     }
 
     public function getCPM()
     {
-        $cost_per_mille = round($this->platforms()->avg('cost_per_mille'), 2);
+        $platform = $this->platforms()->orderBy('subscriber_quantity', 'desc')->first();
+        $cost_per_mille = round($platform->cost_per_mille, 2);
         return $cost_per_mille;
     }
 }
