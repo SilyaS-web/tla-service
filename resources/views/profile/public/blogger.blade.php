@@ -41,6 +41,9 @@
                         </div>
                         <div class="info-profile__platrfoms blogger-platforms">
                             @foreach (($user->blogger->platforms ?? []) as $p )
+                                @if(!$p->link)
+                                    @continue
+                                @endif
                             <?
                                 $types = [
                                     'Telegram' => 'tg',
