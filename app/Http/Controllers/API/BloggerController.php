@@ -33,6 +33,15 @@ class BloggerController extends Controller
         }
 
         $bloggers = $bloggers->with('user')->with('platforms')->with('themes')->with('country')->get();
+        foreach ($bloggers as &$blogger) {
+            foreach ($blogger->platforms as &$platform) {
+                $platform->icon_url = $platform->getIconURL();
+            }
+
+            foreach ($blogger->themes as &$theme) {
+                $theme->theme;
+            }
+        }
 
         return response()->json($bloggers)->setStatusCode(200);
     }
