@@ -9,6 +9,7 @@ use App\Services\TgService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Database\Eloquent\Builder;
 
 class BloggerController extends Controller
 {
@@ -24,15 +25,15 @@ class BloggerController extends Controller
         }
 
         $validated = $validator->validated();
-        $filter = [];
-
+        $bloggers = Blogger::where([]);
         if (isset($validated['status'])) {
-            $filter = [
-                'status' => $validated['status'],
-            ];
+            $bloggers->whereHas('user', function (Builder $query) use ($validated) {
+                $query->where('status', $validated['status']);
+            });
         }
 
-        $bloggers = Blogger::where($filter)->get();
+        $bloggers = $bloggers->with('user')->with('platforms')->get();
+
         return response()->json($bloggers)->setStatusCode(200);
     }
 
