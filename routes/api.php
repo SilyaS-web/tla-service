@@ -1,12 +1,6 @@
 <?php
 
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BloggerController;
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\WorkController;
-use Illuminate\Http\Request;
+use App\Http\Controllers\API\BloggerController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
+Route::get('/bloggers', [BloggerController::class, 'index']);
+Route::get('/bloggers/{blogger}/accept', [BloggerController::class, 'accept']);
+Route::get('/bloggers/{blogger}/deny', [BloggerController::class, 'deny']);

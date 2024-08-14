@@ -171,7 +171,7 @@
 
     export default{
         setup() {
-            let bloggers = [
+            let unverifiedBloggers = [
                     {
                         id: 1,
                         name: 'Илья Софронов',
@@ -190,11 +190,17 @@
                     },
                 ];
             return {
-                bloggers: bloggers
+                bloggers: unverifiedBloggers
             }
         },
-        methods: {
 
+        methods: {
+            getUnverifiedBloggersList(){
+                axios.get('/bloggers?status=0')
+                .then(data => {
+                    bloggers = data;
+                })
+            }
         }
     }
 </script>

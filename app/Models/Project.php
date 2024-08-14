@@ -40,7 +40,9 @@ class Project extends Model
     public const COMPLETED = 1;
 
     public const STATUSES = [
+        self::STOPPED,
         self::BANNED,
+        self::PENDING,
         self::ACTIVE,
         self::COMPLETED,
     ];
@@ -66,9 +68,7 @@ class Project extends Model
         'is_blogger_access'
     ];
 
-    public function executor()
-    {
-    }
+    public function executor() {}
 
     public function projectFiles()
     {
@@ -154,6 +154,10 @@ class Project extends Model
 
             case self::COMPLETED:
                 return "Завершено";
+
+            case self::STOPPED:
+                return "Приостановлен";
+
         }
 
         $is_null = true;
@@ -171,7 +175,8 @@ class Project extends Model
         return "Активно";
     }
 
-    public function isCompleted() {
+    public function isCompleted()
+    {
         $is_null = true;
         if ($this->status == self::COMPLETED) {
             return true;

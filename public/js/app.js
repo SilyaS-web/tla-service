@@ -20662,7 +20662,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
-    var bloggers = [{
+    var unverifiedBloggers = [{
       id: 1,
       name: 'Илья Софронов',
       phone: '+7(902)122-32-90',
@@ -20678,10 +20678,16 @@ __webpack_require__.r(__webpack_exports__);
       created_at: '12.08.32'
     }];
     return {
-      bloggers: bloggers
+      bloggers: unverifiedBloggers
     };
   },
-  methods: {}
+  methods: {
+    getUnverifiedBloggersList: function getUnverifiedBloggersList() {
+      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/bloggers?status=0').then(function (data) {
+        bloggers = data;
+      });
+    }
+  }
 });
 
 /***/ }),

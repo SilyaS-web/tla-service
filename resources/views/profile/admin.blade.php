@@ -17,9 +17,7 @@
 </head>
 <body>
     <div class="wrapper" id = "admin-app">
-
         <admin-index></admin-index>
-
     </div>
     <div class="popup" id="accept-form">
         <div class="popup__container _container">
