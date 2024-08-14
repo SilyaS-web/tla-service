@@ -20,27 +20,14 @@
         </div>
     </div>
 </template>
-<script setup>
+<script>
     import BloggerItem from '../BloggerItemComponent.vue'
-    import { ref } from 'vue'
 
-    var bloggers = ref([
-        {
-            id: 1,
-            name: 'Илья Софронов',
-            phone: '+7(902)122-32-90',
-            email: 'ilya.sofron@mail.ru',
-            img: 'http://tla/img/profile-icon.svg',
-            created_at: '12.08.24',
-        },
-        {
-            id: 2,
-            name: 'Алексей Андреев',
-            phone: '+7(800)555-35-35',
-            email: 'leha.gagog@mail.ru',
-            img: 'http://tla/img/profile-icon.svg',
-            created_at: '12.08.32',
-        },
-    ])
-
+    export default{
+        props: ['bloggers'],
+        components: {BloggerItem},
+        // setup(props) {
+        //     bloggers = props.bloggers
+        // }
+    }
 </script>

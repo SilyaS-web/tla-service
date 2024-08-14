@@ -2,15 +2,17 @@ require('./bootstrap');
 
 import { createApp } from 'vue'
 
-import Header from './components/admin/ui/AppHeader.vue'
-import Aside from './components/admin/ui/AppAside.vue'
-import ModerationPage from './components/admin/pages/BloggersModeration.vue'
+import AdminIndex from './components/admin/pages/index.vue'
+import AdminHeader from './components/admin/ui/AppHeader.vue'
+import AdminAside from './components/admin/ui/AppAside.vue'
+import AdminModerationPage from './components/admin/pages/BloggersModeration.vue'
 
 const app = createApp();
 
-app.component('admin-header', Header)
-app.component('admin-aside', Aside)
-app.component('admin-bloggers-moderation-page', ModerationPage)
+app.component('admin-index', AdminIndex)
+app.component('admin-header', AdminHeader)
+app.component('admin-aside', AdminAside)
+app.component('admin-bloggers-moderation-page', AdminModerationPage)
 
 
 app.mount('#admin-app')
