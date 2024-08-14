@@ -32,7 +32,7 @@ class BloggerController extends Controller
             });
         }
 
-        $bloggers = $bloggers->with('user')->with('platforms')-with('themes')->with('country')->get();
+        $bloggers = $bloggers->with('user')->with('platforms')->with('themes')->with('country')->get();
 
         return response()->json($bloggers)->setStatusCode(200);
     }
