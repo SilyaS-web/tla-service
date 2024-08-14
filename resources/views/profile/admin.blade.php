@@ -66,24 +66,25 @@
                                         </a>
                                     </div>
                                 </nav>
-
                             </div>
                         </div>
                     </aside>
-                    <div class="admin-view__content admin-blogers tab-content active" id="moderation">
+                    <admin-bloggers-moderation-page></admin-bloggers-moderation-page>
+                    {{-- <div class="admin-view__content admin-blogers tab-content active" id="moderation">
                         <div class="admin-blogers__body">
                             <div class="admin-blogers__header">
                                 <div class="admin-blogers__title title">
                                     Модерация блогеров • {{ $unverified_users->count() }}
                                 </div>
-                                {{-- <div class="admin-blogers__search form-group">
+                                <div class="admin-blogers__search form-group">
                                     <input type="name" id="moderation-search" class="input" placeholder="Введите название">
                                     <button class="btn btn-primary moderation-search-btn">Найти</button>
-                                </div> --}}
+                                </div>
                             </div>
+
                             @include('shared.admin.unverified-users-list')
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="admin-view__content blogers-list tab-content" id="blogers-list">
                         <div class="admin-blogers__body">
                             <div class="admin-blogers__header">
@@ -412,28 +413,4 @@
 </body>
 <script src="{{ asset('admin/js/script.js') }}"></script>
 <script src = "./js/app.js"></script>
-
-<script>
-    function banUser(user_id, el) {
-        el.innerHTML = '<div class="lds-dual-ring"></div>';
-        $.get({
-            url: '/apist/admin/deny/' + user_id,
-            success: function(data, textStatus, jqXHR) {
-                el.innerHTML = 'Пользователь заблокирован';
-                el.disabled = true;
-                notify('info', {
-                    title: 'Успешно!',
-                    message: 'Пользователь заблокирован!'
-                })
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-                el.innerHTML = 'Заблокировать';
-                notify('error', {
-                    title: 'Ошибка!',
-                    message: 'Не удалось заблокировать пользователя!'
-                });
-            }
-        });
-    }
-</script>
 </html>
