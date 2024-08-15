@@ -2228,17 +2228,19 @@ $(window).on('load', function(){
     $(document).on('click', '.item-chat__project-link--seller', function(e){
         var pId = $(e.target).closest('.item-chat__project-link--seller').data('project-id');
 
-        $(document).find('.projects-list-link').click();
+        if($(`.profile-projects__item[data-id="${pId}"]`).length > 0){
+            $(document).find('.projects-list-link').click();
 
-        $(`.profile-projects__item[data-id="${pId}"]`).addClass('hovered')
+            $(`.profile-projects__item[data-id="${pId}"]`).addClass('hovered')
 
-        $([document.documentElement, document.body]).animate({
-            scrollTop: $(`.profile-projects__item[data-id="${pId}"]`).offset().top
-            });
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $(`.profile-projects__item[data-id="${pId}"]`).offset().top
+                });
 
-        setTimeout(()=>{
-            $(`.profile-projects__item[data-id="${pId}"]`).removeClass('hovered')
-        }, 3000)
+            setTimeout(()=>{
+                $(`.profile-projects__item[data-id="${pId}"]`).removeClass('hovered')
+            }, 3000)
+        }
     })
 
     $(document).on('click', '.item-chat__project-link--blogger', function(e){
@@ -2266,10 +2268,11 @@ $(window).on('load', function(){
 
     $(document).on('click', '.notif-header__goto', function(e){
         e.preventDefault();
-
-        $(document).find('.chat-link').click();
-        $(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`).click();
-        $(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`).addClass('current');
+        if($(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`).length > 0){
+            $(document).find('.chat-link').click();
+            $(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`).click();
+            $(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`).addClass('current');
+        }
     })
     $(document).on('click', '.notif-header__hide', function(e){
         e.preventDefault();
