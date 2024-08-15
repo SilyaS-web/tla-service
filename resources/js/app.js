@@ -6,6 +6,7 @@ import AdminIndex from './components/admin/pages/index.vue'
 import AdminHeader from './components/admin/ui/AppHeader.vue'
 import AdminAside from './components/admin/ui/AppAside.vue'
 import AdminModerationPage from './components/admin/pages/BloggersModeration.vue'
+import AdminBloggersPage from './components/admin/pages/AppBloggers.vue'
 
 const app = createApp();
 
@@ -13,6 +14,7 @@ app.component('admin-index', AdminIndex)
 app.component('admin-header', AdminHeader)
 app.component('admin-aside', AdminAside)
 app.component('admin-bloggers-moderation-page', AdminModerationPage)
+app.component('admin-bloggers-page', AdminBloggersPage)
 
 
 app.mount('#admin-app')

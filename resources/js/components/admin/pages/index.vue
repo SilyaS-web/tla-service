@@ -51,7 +51,8 @@
                             </div>
                         </div>
                     </aside>
-                    <admin-bloggers-moderation-page :bloggers="bloggers"></admin-bloggers-moderation-page>
+                    <admin-bloggers-moderation-page :bloggers="unverifiedBloggers"></admin-bloggers-moderation-page>
+                    <admin-bloggers-page :bloggers="bloggers"></admin-bloggers-page>
                     <!-- <div class="admin-view__content admin-blogers tab-content active" id="moderation">
                         <div class="admin-blogers__body">
                             <div class="admin-blogers__header">
@@ -67,20 +68,6 @@
                             @include('shared.admin.unverified-users-list')
                         </div>
                     </div> -->
-                    <div class="admin-view__content blogers-list tab-content" id="blogers-list">
-                        <div class="admin-blogers__body">
-                            <div class="admin-blogers__header">
-                                <div class="admin-blogers__title title">
-                                    Список блогеров • 3
-                                </div>
-                                <!-- <div class="admin-blogers__search form-group">
-                                    <input type="name" id="blogers-search" class="input" placeholder="Введите название">
-                                    <button class="btn btn-primary blogers-search-btn">Найти</button>
-                                </div> -->
-                            </div>
-                            <!-- @include('shared.admin.bloggers-list') -->
-                        </div>
-                    </div>
                     <div class="admin-view__content blogers-list tab-content" id="sellers-list">
                         <div class="admin-blogers__body">
                             <div class="admin-blogers__header">
@@ -171,35 +158,51 @@
 
     export default{
         setup() {
-            let unverifiedBloggers = [
-                    {
-                        id: 1,
-                        name: 'Илья Софронов',
-                        phone: '+7(902)122-32-90',
-                        email: 'ilya.sofron@mail.ru',
-                        img: 'http://tla/img/profile-icon.svg',
-                        created_at: '12.08.24',
-                    },
-                    {
-                        id: 2,
-                        name: 'Алексей Андреев',
-                        phone: '+7(800)555-35-35',
-                        email: 'leha.gagog@mail.ru',
-                        img: 'http://tla/img/profile-icon.svg',
-                        created_at: '12.08.32',
-                    },
-                ];
+            let unverifiedBloggers = [],
+                bloggers = [];
+
             return {
-                bloggers: unverifiedBloggers
+                unverifiedBloggers: ref(unverifiedBloggers),
+                bloggers: ref(bloggers),
             }
         },
 
+        async mounted(){
+            await this.getBloggers().then(list => {
+                this.bloggers = (list || []).map(_b => this.findBiggerPlatform(_b));
+            })
+            await this.getBloggers(0).then(list => {
+                this.unverifiedBloggers = (list || []).map(_b => this.findBiggerPlatform(_b));;
+            })
+        },
+
         methods: {
-            getUnverifiedBloggersList(){
-                axios.get('/bloggers?status=0')
-                .then(data => {
-                    bloggers = data;
+            getBloggers(status = false){
+                return new Promise((resolve, reject) => {
+                    axios({
+                        method: 'get',
+                        url: '/api/bloggers' + (status !== false ? `?status=${status}` : ''),
+                    })
+                    .then(data => resolve(data.data))
+                    .catch(error => {
+                        console.log(error)
+                        resolve([])
+                    })
                 })
+            },
+            findBiggerPlatform(blogger){
+                var summaryPlatform = { subscriber_quantity: 0 };
+
+                if(blogger.platforms){
+                    blogger.platforms.forEach(_p => {
+                        if(summaryPlatform.subscriber_quantity < _p.subscriber_quantity)
+                            summaryPlatform = _p
+                    });
+                }
+
+                blogger.summaryPlatform = summaryPlatform;
+
+                return blogger;
             }
         }
     }

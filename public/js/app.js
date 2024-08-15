@@ -20603,8 +20603,14 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     }
+    function countER(subs, cover) {
+      var val = subs > 0 && cover > 0 ? cover / subs * 100 : 0;
+      if (val - 1 < 0) val = Math.round(val).toFixed(2);else val = Math.ceil(val);
+      return val;
+    }
     var __returned__ = {
       banUser: banUser,
+      countER: countER,
       get axios() {
         return (axios__WEBPACK_IMPORTED_MODULE_0___default());
       }
@@ -20615,6 +20621,31 @@ __webpack_require__.r(__webpack_exports__);
     });
     return __returned__;
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/pages/AppBloggers.vue?vue&type=script&lang=js":
+/*!*****************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/pages/AppBloggers.vue?vue&type=script&lang=js ***!
+  \*****************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _BloggerItemComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../BloggerItemComponent.vue */ "./resources/js/components/admin/BloggerItemComponent.vue");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  props: ['bloggers'],
+  components: {
+    BloggerItem: _BloggerItemComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  }
+  // setup(props) {
+  //     bloggers = props.bloggers
+  // }
 });
 
 /***/ }),
@@ -20658,34 +20689,74 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   setup: function setup() {
-    var unverifiedBloggers = [{
-      id: 1,
-      name: 'Илья Софронов',
-      phone: '+7(902)122-32-90',
-      email: 'ilya.sofron@mail.ru',
-      img: 'http://tla/img/profile-icon.svg',
-      created_at: '12.08.24'
-    }, {
-      id: 2,
-      name: 'Алексей Андреев',
-      phone: '+7(800)555-35-35',
-      email: 'leha.gagog@mail.ru',
-      img: 'http://tla/img/profile-icon.svg',
-      created_at: '12.08.32'
-    }];
+    var unverifiedBloggers = [],
+      bloggers = [];
     return {
-      bloggers: unverifiedBloggers
+      unverifiedBloggers: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(unverifiedBloggers),
+      bloggers: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(bloggers)
     };
   },
+  mounted: function mounted() {
+    var _this = this;
+    return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+      return _regeneratorRuntime().wrap(function _callee$(_context) {
+        while (1) switch (_context.prev = _context.next) {
+          case 0:
+            _context.next = 2;
+            return _this.getBloggers().then(function (list) {
+              _this.bloggers = (list || []).map(function (_b) {
+                return _this.findBiggerPlatform(_b);
+              });
+            });
+          case 2:
+            _context.next = 4;
+            return _this.getBloggers(0).then(function (list) {
+              _this.unverifiedBloggers = (list || []).map(function (_b) {
+                return _this.findBiggerPlatform(_b);
+              });
+              ;
+            });
+          case 4:
+          case "end":
+            return _context.stop();
+        }
+      }, _callee);
+    }))();
+  },
   methods: {
-    getUnverifiedBloggersList: function getUnverifiedBloggersList() {
-      axios__WEBPACK_IMPORTED_MODULE_1___default().get('/bloggers?status=0').then(function (data) {
-        bloggers = data;
+    getBloggers: function getBloggers() {
+      var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+      return new Promise(function (resolve, reject) {
+        axios__WEBPACK_IMPORTED_MODULE_1___default()({
+          method: 'get',
+          url: '/api/bloggers' + (status !== false ? "?status=".concat(status) : '')
+        }).then(function (data) {
+          return resolve(data.data);
+        })["catch"](function (error) {
+          console.log(error);
+          resolve([]);
+        });
       });
+    },
+    findBiggerPlatform: function findBiggerPlatform(blogger) {
+      var summaryPlatform = {
+        subscriber_quantity: 0
+      };
+      if (blogger.platforms) {
+        blogger.platforms.forEach(function (_p) {
+          if (summaryPlatform.subscriber_quantity < _p.subscriber_quantity) summaryPlatform = _p;
+        });
+      }
+      blogger.summaryPlatform = summaryPlatform;
+      return blogger;
     }
   }
 });
@@ -20706,7 +20777,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
 var _hoisted_1 = {
-  "class": "list-blogers__blogger seller-blogger card",
+  "class": "list-blogers__item bloger-item card",
   "data-id": "{{ blogger.id }}"
 };
 var _hoisted_2 = {
@@ -20718,64 +20789,212 @@ var _hoisted_3 = {
 var _hoisted_4 = {
   "class": "card__row card__header"
 };
-var _hoisted_5 = {
-  "class": "card__img"
-};
-var _hoisted_6 = ["src"];
-var _hoisted_7 = {
+var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "card__achive",
+  title: "Проверенный блогер"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("добавить проверку"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  src: "img/achive-icon.svg",
+  alt: ""
+})], -1 /* HOISTED */);
+var _hoisted_6 = {
   "class": "card__name"
 };
+var _hoisted_7 = {
+  "class": "card__name-name",
+  title: ""
+};
 var _hoisted_8 = {
-  "class": "card__name-name"
+  "class": "card__platforms"
 };
-var _hoisted_9 = {
-  "class": "card__name-tag"
-};
+var _hoisted_9 = ["src"];
 var _hoisted_10 = {
-  "class": "card__col card__stats"
+  "class": "card__row card__tags"
 };
 var _hoisted_11 = {
-  "class": "card__col card__stats-stats"
+  "class": "card__tags-item"
 };
 var _hoisted_12 = {
-  "class": "card__row card__stats-row"
+  "class": "card__row card__desc"
 };
 var _hoisted_13 = {
-  "class": "card__col card__stats-blogger"
+  "class": "card__col card__stats"
 };
-var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "card__stats-title"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Телефон")], -1 /* HOISTED */);
+var _hoisted_14 = {
+  "class": "card__col card__stats-stats"
+};
 var _hoisted_15 = {
-  "class": "card__stats-val"
+  "class": "card__row card__stats-row"
 };
 var _hoisted_16 = {
-  "class": "card__col card__stats-blogger"
+  "class": "card__col card__stats-item"
 };
 var _hoisted_17 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "card__stats-title"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Почта")], -1 /* HOISTED */);
-var _hoisted_18 = {
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Подписчики")], -1 /* HOISTED */);
+var _hoisted_18 = ["title"];
+var _hoisted_19 = {
+  "class": "card__col card__stats-item"
+};
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "card__stats-title"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Охваты")], -1 /* HOISTED */);
+var _hoisted_21 = ["title"];
+var _hoisted_22 = {
+  "class": "card__row card__stats-row"
+};
+var _hoisted_23 = {
+  "class": "card__col card__stats-item"
+};
+var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "card__stats-title"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "ER %")], -1 /* HOISTED */);
+var _hoisted_25 = {
   "class": "card__stats-val"
 };
-var _hoisted_19 = {
+var _hoisted_26 = {
+  "class": "card__col card__stats-item"
+};
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "card__stats-title"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "CPM")], -1 /* HOISTED */);
+var _hoisted_28 = {
+  "class": "card__stats-val"
+};
+var _hoisted_29 = {
+  "class": "card__col card__column--gender"
+};
+var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "card__stats-title"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Пол аудитории")], -1 /* HOISTED */);
+var _hoisted_31 = {
+  "class": "card__row",
+  style: {
+    "align-items": "center",
+    "gap": "5px"
+  }
+};
+var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "card__diagram-icon"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  src: "admin/img/blogers-list/male-icon.svg",
+  alt: ""
+})], -1 /* HOISTED */);
+var _hoisted_33 = {
+  "class": "card__diagram-line"
+};
+var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "card__diagram-icon"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  src: "admin/img/blogers-list/female-icon.svg",
+  alt: ""
+})], -1 /* HOISTED */);
+var _hoisted_35 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "card__row",
+  style: {
+    "text-align": "center",
+    "justify-content": "center"
+  }
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  href: "#",
+  "class": "",
+  style: {
+    "color": "rgba(0,0,0,.4)",
+    "font-size": "16px",
+    "font-weight": "500",
+    "text-decoration": "underline",
+    "margin-top": "-20px"
+  }
+}, "Подробнее")], -1 /* HOISTED */);
+var _hoisted_36 = {
+  key: 0,
   "class": "admin-bloger__btns"
 };
-var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+var _hoisted_37 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
   href: "#",
   "class": "btn btn-primary btn-accept",
   "data-id": "{{ blogger.id }}"
 }, "Принять", -1 /* HOISTED */);
-var _hoisted_21 = ["id"];
+var _hoisted_38 = ["id"];
+var _hoisted_39 = {
+  key: 1,
+  "class": "card__row",
+  style: {
+    "display": "flex",
+    "gap": "12px",
+    "flex-wrap": "wrap"
+  }
+};
+var _hoisted_40 = ["id"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-    src: $props.blogger.img,
-    alt: ""
-  }, null, 8 /* PROPS */, _hoisted_6)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.blogger.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.blogger.created_at), 1 /* TEXT */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.blogger.phone), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.blogger.email), 1 /* TEXT */)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "card__img",
+    style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)('background-image:url(' + (!$props.blogger.user.image ? '/img/profile-icon.svg' : "/storage/profile/".concat($props.blogger.user.image)) + ')')
+  }, null, 4 /* STYLE */), _hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.blogger.user.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.blogger.platforms, function (platform) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('card__platform ' + (platform.name ? platform.name.toLowerCase() : ''))
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+      src: platform.icon_url,
+      alt: ""
+    }, null, 8 /* PROPS */, _hoisted_9)], 2 /* CLASS */);
+  }), 256 /* UNKEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.blogger.themes, function (theme) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(theme.theme.theme), 1 /* TEXT */)]);
+  }), 256 /* UNKEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.blogger.description), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_15, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "card__stats-val",
+    title: $props.blogger.summaryPlatform.subscriber_quantity
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.blogger.summaryPlatform.subscriber_quantity), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_18)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "card__stats-val",
+    title: $props.blogger.summaryPlatform.coverage
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.blogger.summaryPlatform.coverage), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_21)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.countER($props.blogger.summaryPlatform.subscriber_quantity, $props.blogger.summaryPlatform.coverage)), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [_hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.blogger.summaryPlatform.cost_per_mille || '-') + "₽", 1 /* TEXT */)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [_hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)('width:' + $props.blogger.gender_ratio + '%')
+  }, null, 4 /* STYLE */)]), _hoisted_34])]), _hoisted_35, $props.blogger.user.status === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_36, [_hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-secondary",
     onClick: $setup.banUser,
     id: $props.blogger.id
-  }, " Отклонить ", 8 /* PROPS */, _hoisted_21)])])])]);
+  }, " Отклонить ", 8 /* PROPS */, _hoisted_38)])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "btn btn-primary",
+    onClick: $setup.banUser,
+    id: $props.blogger.id
+  }, " Заблокировать ", 8 /* PROPS */, _hoisted_40)]))])])]);
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/pages/AppBloggers.vue?vue&type=template&id=87778a48":
+/*!*********************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/pages/AppBloggers.vue?vue&type=template&id=87778a48 ***!
+  \*********************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "admin-view__content blogers-list tab-content",
+  id: "blogers-list"
+};
+var _hoisted_2 = {
+  "class": "admin-blogers__body"
+};
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "admin-blogers__header"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "admin-blogers__title title"
+}, " Список блогеров • 3 "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-blogers__search form-group\">\n                    <input type=\"name\" id=\"blogers-search\" class=\"input\" placeholder=\"Введите название\">\n                    <button class=\"btn btn-primary blogers-search-btn\">Найти</button>\n                </div> ")], -1 /* HOISTED */);
+var _hoisted_4 = {
+  "class": "blogers-list__list list-blogers admin-view__content-wrap"
+};
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_BloggerItem = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("BloggerItem");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.bloggers, function (blogger) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_BloggerItem, {
+      bloggers: $props.bloggers,
+      blogger: blogger
+    }, null, 8 /* PROPS */, ["bloggers", "blogger"]);
+  }), 256 /* UNKEYED_FRAGMENT */))])])]);
 }
 
 /***/ }),
@@ -20845,8 +21064,8 @@ var _hoisted_4 = {
   "class": "admin-view__body"
 };
 var _hoisted_5 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<aside class=\"admin-menu\"><div class=\"admin-menu__container\"><div class=\"admin-menu__body\"><nav class=\"nav admin-menu__nav\"><div class=\"nav__items\"><a href=\"\" class=\"nav__link tab active\" data-content=\"moderation\" title=\"Модерация блогеров\"><img src=\"{{ asset(&#39;admin/img/blogers-list-icon.svg&#39;) }}\" alt=\"\" class=\"nav__link-img\"> Модерация блогеров </a><a href=\"\" class=\"nav__link tab\" data-content=\"blogers-list\" title=\"Список блогеров\"><img src=\"{{ asset(&#39;admin/img/blog-icon.svg&#39;) }}\" alt=\"\" class=\"nav__link-img\"> Список блогеров </a><a href=\"\" class=\"nav__link tab\" data-content=\"sellers-list\" title=\"Список селлеров\"><img src=\"{{ asset(&#39;admin/img/money-icon.svg&#39;) }}\" alt=\"\" class=\"nav__link-img\"> Список селлеров </a><a href=\"\" class=\"nav__link tab\" data-content=\"projects-list\" title=\"Модерация проектов\"><img src=\"{{ asset(&#39;admin/img/list-icon.svg&#39;) }}\" alt=\"\" class=\"nav__link-img\"> Модерация проектов </a><a href=\"\" class=\"nav__link tab\" data-content=\"payment-history\" title=\"История заказов\"><img src=\"{{ asset(&#39;admin/img/history-icon.svg&#39;) }}\" alt=\"\" class=\"nav__link-img\"> История заказов </a></div></nav></div></div></aside>", 1);
-var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"admin-view__content blogers-list tab-content\" id=\"blogers-list\"><div class=\"admin-blogers__body\"><div class=\"admin-blogers__header\"><div class=\"admin-blogers__title title\"> Список блогеров • 3 </div><!-- &lt;div class=&quot;admin-blogers__search form-group&quot;&gt;\n                                    &lt;input type=&quot;name&quot; id=&quot;blogers-search&quot; class=&quot;input&quot; placeholder=&quot;Введите название&quot;&gt;\n                                    &lt;button class=&quot;btn btn-primary blogers-search-btn&quot;&gt;Найти&lt;/button&gt;\n                                &lt;/div&gt; --></div><!-- @include(&#39;shared.admin.bloggers-list&#39;) --></div></div><div class=\"admin-view__content blogers-list tab-content\" id=\"sellers-list\"><div class=\"admin-blogers__body\"><div class=\"admin-blogers__header\"><div class=\"admin-blogers__title title\"> Список селлеров • 1 </div><!-- &lt;div class=&quot;admin-blogers__search form-group&quot;&gt;\n                                    &lt;input type=&quot;name&quot; id=&quot;sellers-search&quot; class=&quot;input&quot; placeholder=&quot;Введите название&quot;&gt;\n                                    &lt;button class=&quot;btn btn-primary sellers-search-btn&quot;&gt;Найти&lt;/button&gt;\n                                &lt;/div&gt;  --></div><!-- @include(&#39;shared.admin.sellers-list&#39;) --></div></div><div class=\"admin-view__content projects-list tab-content\" id=\"projects-list\"><div class=\"admin-blogers__body\"><div class=\"admin-blogers__header\"><div class=\"admin-blogers__title title\"> Список проектов • 1 </div><!-- &lt;div class=&quot;admin-blogers__search form-group&quot;&gt;\n                                    &lt;input type=&quot;name&quot; id=&quot;sellers-search&quot; class=&quot;input&quot; placeholder=&quot;Введите название&quot;&gt;\n                                    &lt;button class=&quot;btn btn-primary sellers-search-btn&quot;&gt;Найти&lt;/button&gt;\n                                &lt;/div&gt; --></div><!-- @include(&#39;project.admin-list&#39;) --></div></div><div class=\"admin-view__content payment-history tab-content\" id=\"payment-history\"><div class=\"admin-blogers__body\"><div class=\"admin-blogers__header\"><div class=\"admin-blogers__title title\"> История заказов • 1 </div><!-- &lt;div class=&quot;admin-blogers__search form-group&quot;&gt;\n                                    &lt;input type=&quot;name&quot; id=&quot;sellers-search&quot; class=&quot;input&quot; placeholder=&quot;Поиск&quot;&gt;\n                                    &lt;button class=&quot;btn btn-primary sellers-search-btn&quot;&gt;Найти&lt;/button&gt;\n                                &lt;/div&gt; --></div><div class=\"payment-history__body admin-view__content-wrap\"><div class=\"payment-history__items\"><div class=\"payment-history__row\"><div href=\"\" class=\"payment-history__row-title\"><span>Заказ № 12</span> от 21.12.02 </div><div class=\"payment-history__row-status\"><span>Статус</span><strong>REJECTED</strong></div><div class=\"payment-history__row-summary\"><span>Сумма</span><strong>1234 <b class=\"rub\">₽</b></strong></div><div class=\"payment-history__row-user\"><span>Пользователь</span><strong><a href=\"\">ID </a></strong></div><div class=\"payment-history__row-tariff\"><span>Тариф</span><strong>123 — 123</strong></div><div class=\"payment-history__row-bank_id\"><span>ID оплаты</span><strong>1111</strong></div></div></div></div></div></div>", 4);
-var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_6 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"admin-view__content blogers-list tab-content\" id=\"sellers-list\"><div class=\"admin-blogers__body\"><div class=\"admin-blogers__header\"><div class=\"admin-blogers__title title\"> Список селлеров • 1 </div><!-- &lt;div class=&quot;admin-blogers__search form-group&quot;&gt;\n                                    &lt;input type=&quot;name&quot; id=&quot;sellers-search&quot; class=&quot;input&quot; placeholder=&quot;Введите название&quot;&gt;\n                                    &lt;button class=&quot;btn btn-primary sellers-search-btn&quot;&gt;Найти&lt;/button&gt;\n                                &lt;/div&gt;  --></div><!-- @include(&#39;shared.admin.sellers-list&#39;) --></div></div><div class=\"admin-view__content projects-list tab-content\" id=\"projects-list\"><div class=\"admin-blogers__body\"><div class=\"admin-blogers__header\"><div class=\"admin-blogers__title title\"> Список проектов • 1 </div><!-- &lt;div class=&quot;admin-blogers__search form-group&quot;&gt;\n                                    &lt;input type=&quot;name&quot; id=&quot;sellers-search&quot; class=&quot;input&quot; placeholder=&quot;Введите название&quot;&gt;\n                                    &lt;button class=&quot;btn btn-primary sellers-search-btn&quot;&gt;Найти&lt;/button&gt;\n                                &lt;/div&gt; --></div><!-- @include(&#39;project.admin-list&#39;) --></div></div><div class=\"admin-view__content payment-history tab-content\" id=\"payment-history\"><div class=\"admin-blogers__body\"><div class=\"admin-blogers__header\"><div class=\"admin-blogers__title title\"> История заказов • 1 </div><!-- &lt;div class=&quot;admin-blogers__search form-group&quot;&gt;\n                                    &lt;input type=&quot;name&quot; id=&quot;sellers-search&quot; class=&quot;input&quot; placeholder=&quot;Поиск&quot;&gt;\n                                    &lt;button class=&quot;btn btn-primary sellers-search-btn&quot;&gt;Найти&lt;/button&gt;\n                                &lt;/div&gt; --></div><div class=\"payment-history__body admin-view__content-wrap\"><div class=\"payment-history__items\"><div class=\"payment-history__row\"><div href=\"\" class=\"payment-history__row-title\"><span>Заказ № 12</span> от 21.12.02 </div><div class=\"payment-history__row-status\"><span>Статус</span><strong>REJECTED</strong></div><div class=\"payment-history__row-summary\"><span>Сумма</span><strong>1234 <b class=\"rub\">₽</b></strong></div><div class=\"payment-history__row-user\"><span>Пользователь</span><strong><a href=\"\">ID </a></strong></div><div class=\"payment-history__row-tariff\"><span>Тариф</span><strong>123 — 123</strong></div><div class=\"payment-history__row-bank_id\"><span>ID оплаты</span><strong>1111</strong></div></div></div></div></div></div>", 3);
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "notification",
   style: {
     "display": "none"
@@ -20861,9 +21080,12 @@ var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_admin_header = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("admin-header");
   var _component_admin_bloggers_moderation_page = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("admin-bloggers-moderation-page");
+  var _component_admin_bloggers_page = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("admin-bloggers-page");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_admin_header), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_admin_bloggers_moderation_page, {
+    bloggers: $setup.unverifiedBloggers
+  }, null, 8 /* PROPS */, ["bloggers"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_admin_bloggers_page, {
     bloggers: $setup.bloggers
-  }, null, 8 /* PROPS */, ["bloggers"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-view__content admin-blogers tab-content active\" id=\"moderation\">\n                        <div class=\"admin-blogers__body\">\n                            <div class=\"admin-blogers__header\">\n                                <div class=\"admin-blogers__title title\">\n                                    Модерация блогеров • {{ $unverified_users->count() }}\n                                </div>\n                                <div class=\"admin-blogers__search form-group\">\n                                    <input type=\"name\" id=\"moderation-search\" class=\"input\" placeholder=\"Введите название\">\n                                    <button class=\"btn btn-primary moderation-search-btn\">Найти</button>\n                                </div>\n                            </div>\n\n                            @include('shared.admin.unverified-users-list')\n                        </div>\n                    </div> "), _hoisted_6])])]), _hoisted_10], 64 /* STABLE_FRAGMENT */);
+  }, null, 8 /* PROPS */, ["bloggers"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-view__content admin-blogers tab-content active\" id=\"moderation\">\n                        <div class=\"admin-blogers__body\">\n                            <div class=\"admin-blogers__header\">\n                                <div class=\"admin-blogers__title title\">\n                                    Модерация блогеров • {{ $unverified_users->count() }}\n                                </div>\n                                <div class=\"admin-blogers__search form-group\">\n                                    <input type=\"name\" id=\"moderation-search\" class=\"input\" placeholder=\"Введите название\">\n                                    <button class=\"btn btn-primary moderation-search-btn\">Найти</button>\n                                </div>\n                            </div>\n\n                            @include('shared.admin.unverified-users-list')\n                        </div>\n                    </div> "), _hoisted_6])])]), _hoisted_9], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -38408,6 +38630,34 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/pages/AppBloggers.vue":
+/*!*************************************************************!*\
+  !*** ./resources/js/components/admin/pages/AppBloggers.vue ***!
+  \*************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _AppBloggers_vue_vue_type_template_id_87778a48__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AppBloggers.vue?vue&type=template&id=87778a48 */ "./resources/js/components/admin/pages/AppBloggers.vue?vue&type=template&id=87778a48");
+/* harmony import */ var _AppBloggers_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AppBloggers.vue?vue&type=script&lang=js */ "./resources/js/components/admin/pages/AppBloggers.vue?vue&type=script&lang=js");
+/* harmony import */ var E_Server_domains_tla_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,E_Server_domains_tla_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_AppBloggers_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_AppBloggers_vue_vue_type_template_id_87778a48__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/admin/pages/AppBloggers.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/pages/BloggersModeration.vue":
 /*!********************************************************************!*\
   !*** ./resources/js/components/admin/pages/BloggersModeration.vue ***!
@@ -38532,6 +38782,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/pages/AppBloggers.vue?vue&type=script&lang=js":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/admin/pages/AppBloggers.vue?vue&type=script&lang=js ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AppBloggers_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AppBloggers_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AppBloggers.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/pages/AppBloggers.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/components/admin/pages/BloggersModeration.vue?vue&type=script&lang=js":
 /*!********************************************************************************************!*\
   !*** ./resources/js/components/admin/pages/BloggersModeration.vue?vue&type=script&lang=js ***!
@@ -38576,6 +38842,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BloggerItemComponent_vue_vue_type_template_id_51c59543__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BloggerItemComponent_vue_vue_type_template_id_51c59543__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./BloggerItemComponent.vue?vue&type=template&id=51c59543 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/BloggerItemComponent.vue?vue&type=template&id=51c59543");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/pages/AppBloggers.vue?vue&type=template&id=87778a48":
+/*!*******************************************************************************************!*\
+  !*** ./resources/js/components/admin/pages/AppBloggers.vue?vue&type=template&id=87778a48 ***!
+  \*******************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AppBloggers_vue_vue_type_template_id_87778a48__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AppBloggers_vue_vue_type_template_id_87778a48__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AppBloggers.vue?vue&type=template&id=87778a48 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/pages/AppBloggers.vue?vue&type=template&id=87778a48");
 
 
 /***/ }),
@@ -39017,7 +39299,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_admin_ui_AppHeader_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/admin/ui/AppHeader.vue */ "./resources/js/components/admin/ui/AppHeader.vue");
 /* harmony import */ var _components_admin_ui_AppAside_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/admin/ui/AppAside.vue */ "./resources/js/components/admin/ui/AppAside.vue");
 /* harmony import */ var _components_admin_pages_BloggersModeration_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/admin/pages/BloggersModeration.vue */ "./resources/js/components/admin/pages/BloggersModeration.vue");
+/* harmony import */ var _components_admin_pages_AppBloggers_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/admin/pages/AppBloggers.vue */ "./resources/js/components/admin/pages/AppBloggers.vue");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
+
 
 
 
@@ -39028,6 +39312,7 @@ app.component('admin-index', _components_admin_pages_index_vue__WEBPACK_IMPORTED
 app.component('admin-header', _components_admin_ui_AppHeader_vue__WEBPACK_IMPORTED_MODULE_2__["default"]);
 app.component('admin-aside', _components_admin_ui_AppAside_vue__WEBPACK_IMPORTED_MODULE_3__["default"]);
 app.component('admin-bloggers-moderation-page', _components_admin_pages_BloggersModeration_vue__WEBPACK_IMPORTED_MODULE_4__["default"]);
+app.component('admin-bloggers-page', _components_admin_pages_AppBloggers_vue__WEBPACK_IMPORTED_MODULE_5__["default"]);
 app.mount('#admin-app');
 })();
 
