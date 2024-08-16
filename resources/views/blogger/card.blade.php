@@ -24,6 +24,9 @@
                 </div>
                 <div class="card__platforms">
                     @foreach ($blogger->platforms as $platform)
+                        @if(!$platform->subscriber_quantity)
+                            @continue
+                        @endif
                     <div class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></div>
                     @endforeach
                 </div>

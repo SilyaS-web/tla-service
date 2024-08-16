@@ -115,7 +115,9 @@
     }
 
     function goToChat(project_work_id) {
-        $('#blogger .chat-link').click();
-        $(`.item-chat[data-id="${project_work_id}"]`).click();
+        if($(`.item-chat[data-id="${project_work_id}"]`)){
+            $('#blogger .chat-link').click();
+            $(`.item-chat[data-id="${project_work_id}"]`).click();
+        }
     }
 </script>

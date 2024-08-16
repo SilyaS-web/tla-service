@@ -465,8 +465,8 @@
                             <label for="platform">Площадки</label>
                             <select id="platform" name="platform" class="input">
                                 <option value="">Не выбрано</option>
-                                <option value="Youtube">Youtube</option>
-                                <option value="Instagram">Instagram</option>
+                                <option value="Youtube">YTube</option>
+                                <option value="Instagram">Ins</option>
                                 <option value="Telegram">Telegram</option>
                                 <option value="VK">Vkontakte</option>
                             </select>
@@ -660,10 +660,10 @@
                             <div class="tariff-card__select form-group">
                                 <select name="" id="" class = "select">
                                     <option value="2">Отзывы на WB, OZON - 10</option>
-                                    <option value="5">Интеграции Inst - 10</option>
+                                    <option value="5">Интеграции Ins - 10</option>
                                     <option value="11">Интеграции VK - 10</option>
                                     <option value="14">Интеграции Telegram - 10</option>
-                                    <option value="8">Интеграции YouTube - 10</option>
+                                    <option value="8">Интеграции YTube - 10</option>
                                 </select>
                             </div>
                             <div class="tariff-card__btns">
@@ -693,10 +693,10 @@
                             <div class="tariff-card__select form-group">
                                 <select name="" id="" class = "select">
                                     <option value="3">Отзывы на WB, OZON - 30</option>
-                                    <option value="6">Интеграции Inst - 30</option>
+                                    <option value="6">Интеграции Ins - 30</option>
                                     <option value="12">Интеграции VK - 30</option>
                                     <option value="15">Интеграции Telegram - 30</option>
-                                    <option value="9">Интеграции YouTube - 30</option>
+                                    <option value="9">Интеграции YTube - 30</option>
                                 </select>
                             </div>
                             <div class="tariff-card__btns">
@@ -726,10 +726,10 @@
                             <div class="tariff-card__select form-group">
                                 <select name="" id="" class = "select">
                                     <option value="4">Отзывы на WB, OZON - 50</option>
-                                    <option value="7">Интеграции Inst - 50</option>
+                                    <option value="7">Интеграции Ins - 50</option>
                                     <option value="13">Интеграции VK - 50</option>
                                     <option value="16">Интеграции Telegram - 50</option>
-                                    <option value="10">Интеграции YouTube - 50</option>
+                                    <option value="10">Интеграции YTube - 50</option>
                                 </select>
                             </div>
                             <div class="tariff-card__btns">
