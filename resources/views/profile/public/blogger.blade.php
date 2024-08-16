@@ -45,7 +45,7 @@
                                     'Instagram' => 'inst',
                                     'VK' => 'vk',
                                     'Youtube' => 'yt'
-                            ];)
+                            ])
                             @foreach (($user->blogger->platforms ?? []) as $blogger_platform )
                                 @if(!$blogger_platform->subscriber_quantity)
                                     @continue
