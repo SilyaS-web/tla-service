@@ -32,9 +32,28 @@
                 <a href="#" class="admin-menu__leave">Выйти</a>
             </div>
         </div>
-        
-        <admin-header></admin-header>
-        
+
+        <header class="header">
+            <div class="header__container _container">
+                <div class="header__body">
+                    <div class="header__row">
+                        <div class="header__title">
+                            Панель управления
+                        </div>
+                        <div class="header__menu-btn">
+                            <img src="{{asset('admin/img/menu-icon.svg')}}" alt="">
+                        </div>
+                    </div>
+                    <div class="header__leave">
+                        <form action="{{ route('logout') }}" method="POST" class="">
+                            @csrf
+                            <button type="header__leave">Выход</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </header>
+
         <section class="admin-view">
             <div class="admin-view__container _container active-menu">
                 <div class="admin-view__body">

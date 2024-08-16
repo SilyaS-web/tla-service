@@ -62,8 +62,8 @@ class PopupAcceptBloger extends Popup{
                 changeTgEr = setTimeout(() => {
                     var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
 
-                    if(val - 1 < 0) val = Math.round(val).toFixed(2);
-                    else val = Math.ceil(val);
+                    val = (Math.round(val * 100) / 100).toFixed(2);
+
                     $(self.node).find('#tg_er').val(val);
                 }, 100);
             }
@@ -78,8 +78,7 @@ class PopupAcceptBloger extends Popup{
                 changeTgEr = setTimeout(() => {
                     var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
 
-                    if(val - 1 < 0) val = Math.round(val).toFixed(2);
-                    else val = Math.ceil(val);
+                    val =(Math.round(val * 100) / 100).toFixed(2);
 
                     $(self.node).find('#tg_er').val(val);
                 }, 100);
@@ -96,8 +95,8 @@ class PopupAcceptBloger extends Popup{
                 changeInstEr = setTimeout(() => {
                     var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
 
-                    if(val - 1 < 0) val = Math.round(val).toFixed(2);
-                    else val = Math.ceil(val);
+                    val = (Math.round(val * 100) / 100).toFixed(2);
+
                     $(self.node).find('#inst_er').val(val);
                 }, 100);
             }
@@ -112,8 +111,7 @@ class PopupAcceptBloger extends Popup{
                 changeInstEr = setTimeout(() => {
                     var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
 
-                    if(val - 1 < 0) val = Math.round(val).toFixed(2);
-                    else val = Math.ceil(val);
+                    val = (Math.round(val * 100) / 100).toFixed(2);
 
                     $(self.node).find('#inst_er').val(val);
                 }, 100);
@@ -130,8 +128,8 @@ class PopupAcceptBloger extends Popup{
                 changeVkEr = setTimeout(() => {
                     var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
 
-                    if(val - 1 < 0) val = Math.round(val).toFixed(2);
-                    else val = Math.ceil(val);
+                    val = (Math.round(val * 100) / 100).toFixed(2);
+
                     $(self.node).find('#vk_er').val(val);
                 }, 100);
             }
@@ -146,8 +144,7 @@ class PopupAcceptBloger extends Popup{
                 changeVkEr = setTimeout(() => {
                     var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
 
-                    if(val - 1 < 0) val = Math.round(val).toFixed(2);
-                    else val = Math.ceil(val);
+                    val = (Math.round(val * 100) / 100).toFixed(2);
 
                     $(self.node).find('#vk_er').val(val);
                 }, 100);
@@ -164,8 +161,8 @@ class PopupAcceptBloger extends Popup{
                 changeYtEr = setTimeout(() => {
                     var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
 
-                    if(val - 1 < 0) val = Math.round(val).toFixed(2);
-                    else val = Math.ceil(val);
+                    val = (Math.round(val * 100) / 100).toFixed(2);
+
                     $(self.node).find('#yt_er').val(val);
                 }, 100);
             }
@@ -180,8 +177,7 @@ class PopupAcceptBloger extends Popup{
                 changeYtEr = setTimeout(() => {
                     var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
 
-                    if(val - 1 < 0) val = Math.round(val).toFixed(2);
-                    else val = Math.ceil(val);
+                    val =(Math.round(val * 100) / 100).toFixed(2);
 
                     $(self.node).find('#yt_er').val(val);
                 }, 100);
