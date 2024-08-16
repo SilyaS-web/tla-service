@@ -20557,10 +20557,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/BloggerItemComponent.vue?vue&type=script&setup=true&lang=js":
-/*!*******************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/BloggerItemComponent.vue?vue&type=script&setup=true&lang=js ***!
-  \*******************************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/BloggerItemComponent.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/BloggerItemComponent.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************************************************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -20572,54 +20572,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  __name: 'BloggerItemComponent',
   props: ['blogger', 'bloggers'],
-  setup: function setup(__props, _ref) {
-    var __expose = _ref.expose;
-    __expose();
-
-    // watch(bloggers, (bloggers, prevBloggers) => {
-    //     this.$emit('updateBloggers', {
-    //         bloggers: bloggers,
-    //     })
-    // })
-
-    function banUser(e) {
+  methods: {
+    banUser: function banUser(e) {
+      var _this = this;
       var el = e.currentTarget;
       var id = $(el).attr('id');
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
         method: 'get',
-        url: '/apist/admin/deny/' + id
+        url: '/api/bloggers/' + id + '/deny/'
       }).then(function (response) {
-        notify('error', {
-          title: 'Успешно!',
-          message: 'Блогер успешно заблокирован!'
-        });
-        $(el).closest('.card').remove();
-      })["catch"](function (error) {
-        notify('error', {
-          title: 'Ошибка!',
-          message: 'Не удалось заблокировать пользователя!'
-        });
+        switch (response.data) {
+          case 'success':
+            notify('info', {
+              title: 'Успешно!',
+              message: 'Блогер успешно заблокирован!'
+            });
+            $(el).closest('.card').remove();
+            _this.$emit('ban', id);
+            break;
+          default:
+            notify('erroe', {
+              title: 'Ошибка!',
+              message: 'Не удалось заблокировать блогера, попробуйте позже!'
+            });
+        }
       });
-    }
-    function countER(subs, cover) {
+    },
+    countER: function countER(subs, cover) {
       var val = subs > 0 && cover > 0 ? cover / subs * 100 : 0;
       if (val - 1 < 0) val = Math.round(val).toFixed(2);else val = Math.ceil(val);
       return val;
     }
-    var __returned__ = {
-      banUser: banUser,
-      countER: countER,
-      get axios() {
-        return (axios__WEBPACK_IMPORTED_MODULE_0___default());
-      }
-    };
-    Object.defineProperty(__returned__, '__isScriptSetup', {
-      enumerable: false,
-      value: true
-    });
-    return __returned__;
   }
 });
 
@@ -20642,6 +20626,11 @@ __webpack_require__.r(__webpack_exports__);
   props: ['bloggers'],
   components: {
     BloggerItem: _BloggerItemComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  methods: {
+    userBanned: function userBanned() {
+      this.$emit('changedBloggersList');
+    }
   }
   // setup(props) {
   //     bloggers = props.bloggers
@@ -20662,15 +20651,19 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _BloggerItemComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../BloggerItemComponent.vue */ "./resources/js/components/admin/BloggerItemComponent.vue");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['bloggers'],
   components: {
     BloggerItem: _BloggerItemComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  methods: {
+    userBanned: function userBanned() {
+      this.$emit('changedBloggersList');
+    }
   }
-  // setup(props) {
-  //     bloggers = props.bloggers
-  // }
 });
 
 /***/ }),
@@ -20711,7 +20704,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         while (1) switch (_context.prev = _context.next) {
           case 0:
             _context.next = 2;
-            return _this.getBloggers().then(function (list) {
+            return _this.getBloggers(1).then(function (list) {
               _this.bloggers = (list || []).map(function (_b) {
                 return _this.findBiggerPlatform(_b);
               });
@@ -20757,6 +20750,19 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       }
       blogger.summaryPlatform = summaryPlatform;
       return blogger;
+    },
+    changedBloggersList: function changedBloggersList() {
+      var _this2 = this;
+      Promise.all([this.getBloggers(1).then(function (list) {
+        _this2.bloggers = (list || []).map(function (_b) {
+          return _this2.findBiggerPlatform(_b);
+        });
+      }), this.getBloggers(0).then(function (list) {
+        _this2.unverifiedBloggers = (list || []).map(function (_b) {
+          return _this2.findBiggerPlatform(_b);
+        });
+        ;
+      })]);
     }
   }
 });
@@ -20944,15 +20950,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.blogger.summaryPlatform.subscriber_quantity), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_18)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [_hoisted_20, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "card__stats-val",
     title: $props.blogger.summaryPlatform.coverage
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.blogger.summaryPlatform.coverage), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_21)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($setup.countER($props.blogger.summaryPlatform.subscriber_quantity, $props.blogger.summaryPlatform.coverage)), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [_hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.blogger.summaryPlatform.cost_per_mille || '-') + "₽", 1 /* TEXT */)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [_hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.blogger.summaryPlatform.coverage), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_21)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.countER($props.blogger.summaryPlatform.subscriber_quantity, $props.blogger.summaryPlatform.coverage)), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [_hoisted_27, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.blogger.summaryPlatform.cost_per_mille || '-') + "₽", 1 /* TEXT */)])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [_hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, [_hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_33, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
     style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)('width:' + $props.blogger.gender_ratio + '%')
   }, null, 4 /* STYLE */)]), _hoisted_34])]), _hoisted_35, $props.blogger.user.status === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_36, [_hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-secondary",
-    onClick: $setup.banUser,
+    onClick: _cache[0] || (_cache[0] = function () {
+      return $options.banUser && $options.banUser.apply($options, arguments);
+    }),
     id: $props.blogger.id
   }, " Отклонить ", 8 /* PROPS */, _hoisted_38)])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_39, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-primary",
-    onClick: $setup.banUser,
+    onClick: _cache[1] || (_cache[1] = function () {
+      return $options.banUser && $options.banUser.apply($options, arguments);
+    }),
     id: $props.blogger.id
   }, " Заблокировать ", 8 /* PROPS */, _hoisted_40)]))])])]);
 }
@@ -20979,21 +20989,23 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "admin-blogers__body"
 };
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_3 = {
   "class": "admin-blogers__header"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "admin-blogers__title title"
-}, " Список блогеров • 3 "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-blogers__search form-group\">\n                    <input type=\"name\" id=\"blogers-search\" class=\"input\" placeholder=\"Введите название\">\n                    <button class=\"btn btn-primary blogers-search-btn\">Найти</button>\n                </div> ")], -1 /* HOISTED */);
+};
 var _hoisted_4 = {
+  "class": "admin-blogers__title title"
+};
+var _hoisted_5 = {
   "class": "blogers-list__list list-blogers admin-view__content-wrap"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_BloggerItem = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("BloggerItem");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.bloggers, function (blogger) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, " Список блогеров • " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.bloggers.length), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-blogers__search form-group\">\n                    <input type=\"name\" id=\"blogers-search\" class=\"input\" placeholder=\"Введите название\">\n                    <button class=\"btn btn-primary blogers-search-btn\">Найти</button>\n                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.bloggers, function (blogger) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_BloggerItem, {
       bloggers: $props.bloggers,
-      blogger: blogger
-    }, null, 8 /* PROPS */, ["bloggers", "blogger"]);
+      blogger: blogger,
+      onBan: $options.userBanned
+    }, null, 8 /* PROPS */, ["bloggers", "blogger", "onBan"]);
   }), 256 /* UNKEYED_FRAGMENT */))])])]);
 }
 
@@ -21033,8 +21045,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, " Модерация блогеров • " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.bloggers.length), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-blogers__search form-group\">\n                    <input type=\"name\" id=\"moderation-search\" class=\"input\" placeholder=\"Введите название\">\n                    <button class=\"btn btn-primary moderation-search-btn\">Найти</button>\n                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.bloggers, function (blogger) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_BloggerItem, {
       bloggers: $props.bloggers,
-      blogger: blogger
-    }, null, 8 /* PROPS */, ["bloggers", "blogger"]);
+      blogger: blogger,
+      onBan: $options.userBanned
+    }, null, 8 /* PROPS */, ["bloggers", "blogger", "onBan"]);
   }), 256 /* UNKEYED_FRAGMENT */))])])]);
 }
 
@@ -21082,10 +21095,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_admin_bloggers_moderation_page = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("admin-bloggers-moderation-page");
   var _component_admin_bloggers_page = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("admin-bloggers-page");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [_hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_admin_header), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_admin_bloggers_moderation_page, {
-    bloggers: $setup.unverifiedBloggers
-  }, null, 8 /* PROPS */, ["bloggers"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_admin_bloggers_page, {
-    bloggers: $setup.bloggers
-  }, null, 8 /* PROPS */, ["bloggers"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-view__content admin-blogers tab-content active\" id=\"moderation\">\n                        <div class=\"admin-blogers__body\">\n                            <div class=\"admin-blogers__header\">\n                                <div class=\"admin-blogers__title title\">\n                                    Модерация блогеров • {{ $unverified_users->count() }}\n                                </div>\n                                <div class=\"admin-blogers__search form-group\">\n                                    <input type=\"name\" id=\"moderation-search\" class=\"input\" placeholder=\"Введите название\">\n                                    <button class=\"btn btn-primary moderation-search-btn\">Найти</button>\n                                </div>\n                            </div>\n\n                            @include('shared.admin.unverified-users-list')\n                        </div>\n                    </div> "), _hoisted_6])])]), _hoisted_9], 64 /* STABLE_FRAGMENT */);
+    bloggers: $setup.unverifiedBloggers,
+    onChangedBloggersList: $options.changedBloggersList
+  }, null, 8 /* PROPS */, ["bloggers", "onChangedBloggersList"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_admin_bloggers_page, {
+    bloggers: $setup.bloggers,
+    onChangedBloggersList: $options.changedBloggersList
+  }, null, 8 /* PROPS */, ["bloggers", "onChangedBloggersList"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-view__content admin-blogers tab-content active\" id=\"moderation\">\n                        <div class=\"admin-blogers__body\">\n                            <div class=\"admin-blogers__header\">\n                                <div class=\"admin-blogers__title title\">\n                                    Модерация блогеров • {{ $unverified_users->count() }}\n                                </div>\n                                <div class=\"admin-blogers__search form-group\">\n                                    <input type=\"name\" id=\"moderation-search\" class=\"input\" placeholder=\"Введите название\">\n                                    <button class=\"btn btn-primary moderation-search-btn\">Найти</button>\n                                </div>\n                            </div>\n\n                            @include('shared.admin.unverified-users-list')\n                        </div>\n                    </div> "), _hoisted_6])])]), _hoisted_9], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -38614,14 +38629,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _BloggerItemComponent_vue_vue_type_template_id_51c59543__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BloggerItemComponent.vue?vue&type=template&id=51c59543 */ "./resources/js/components/admin/BloggerItemComponent.vue?vue&type=template&id=51c59543");
-/* harmony import */ var _BloggerItemComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BloggerItemComponent.vue?vue&type=script&setup=true&lang=js */ "./resources/js/components/admin/BloggerItemComponent.vue?vue&type=script&setup=true&lang=js");
+/* harmony import */ var _BloggerItemComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BloggerItemComponent.vue?vue&type=script&lang=js */ "./resources/js/components/admin/BloggerItemComponent.vue?vue&type=script&lang=js");
 /* harmony import */ var E_Server_domains_tla_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,E_Server_domains_tla_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_BloggerItemComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_BloggerItemComponent_vue_vue_type_template_id_51c59543__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/admin/BloggerItemComponent.vue"]])
+const __exports__ = /*#__PURE__*/(0,E_Server_domains_tla_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_BloggerItemComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_BloggerItemComponent_vue_vue_type_template_id_51c59543__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/admin/BloggerItemComponent.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -38766,18 +38781,18 @@ if (false) {}
 
 /***/ }),
 
-/***/ "./resources/js/components/admin/BloggerItemComponent.vue?vue&type=script&setup=true&lang=js":
-/*!***************************************************************************************************!*\
-  !*** ./resources/js/components/admin/BloggerItemComponent.vue?vue&type=script&setup=true&lang=js ***!
-  \***************************************************************************************************/
+/***/ "./resources/js/components/admin/BloggerItemComponent.vue?vue&type=script&lang=js":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/admin/BloggerItemComponent.vue?vue&type=script&lang=js ***!
+  \****************************************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BloggerItemComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BloggerItemComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
 /* harmony export */ });
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BloggerItemComponent_vue_vue_type_script_setup_true_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./BloggerItemComponent.vue?vue&type=script&setup=true&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/BloggerItemComponent.vue?vue&type=script&setup=true&lang=js");
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_BloggerItemComponent_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./BloggerItemComponent.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/BloggerItemComponent.vue?vue&type=script&lang=js");
  
 
 /***/ }),

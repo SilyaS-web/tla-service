@@ -3,7 +3,7 @@
         <div class="admin-blogers__body">
             <div class="admin-blogers__header">
                 <div class="admin-blogers__title title">
-                    Список блогеров • 3
+                    Список блогеров • {{ bloggers.length }}
                 </div>
                 <!-- <div class="admin-blogers__search form-group">
                     <input type="name" id="blogers-search" class="input" placeholder="Введите название">
@@ -15,6 +15,7 @@
                     v-for="blogger in bloggers"
                     :bloggers="bloggers"
                     :blogger="blogger"
+                    v-on:ban="userBanned"
                 ></BloggerItem>
             </div>
         </div>
@@ -26,6 +27,11 @@
     export default{
         props: ['bloggers'],
         components: {BloggerItem},
+        methods:{
+            userBanned(){
+                this.$emit('changedBloggersList');
+            }
+        }
         // setup(props) {
         //     bloggers = props.bloggers
         // }

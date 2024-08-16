@@ -51,8 +51,8 @@
                             </div>
                         </div>
                     </aside>
-                    <admin-bloggers-moderation-page :bloggers="unverifiedBloggers"></admin-bloggers-moderation-page>
-                    <admin-bloggers-page :bloggers="bloggers"></admin-bloggers-page>
+                    <admin-bloggers-moderation-page :bloggers="unverifiedBloggers" v-on:changedBloggersList="changedBloggersList"></admin-bloggers-moderation-page>
+                    <admin-bloggers-page :bloggers="bloggers" v-on:changedBloggersList="changedBloggersList"></admin-bloggers-page>
                     <!-- <div class="admin-view__content admin-blogers tab-content active" id="moderation">
                         <div class="admin-blogers__body">
                             <div class="admin-blogers__header">
@@ -168,7 +168,7 @@
         },
 
         async mounted(){
-            await this.getBloggers().then(list => {
+            await this.getBloggers(1).then(list => {
                 this.bloggers = (list || []).map(_b => this.findBiggerPlatform(_b));
             })
             await this.getBloggers(0).then(list => {
@@ -203,6 +203,16 @@
                 blogger.summaryPlatform = summaryPlatform;
 
                 return blogger;
+            },
+            changedBloggersList(){
+                Promise.all([
+                    this.getBloggers(1).then(list => {
+                        this.bloggers = (list || []).map(_b => this.findBiggerPlatform(_b));
+                    }),
+                    this.getBloggers(0).then(list => {
+                        this.unverifiedBloggers = (list || []).map(_b => this.findBiggerPlatform(_b));;
+                    })
+                ])
             }
         }
     }

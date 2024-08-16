@@ -104,49 +104,48 @@
             </div>
         </div>
     </div>
-
 </template>
-<script setup>
+<script>
     import axios from 'axios'
 
-    defineProps(['blogger', 'bloggers'])
+    export default{
+        props: ['blogger', 'bloggers'],
+        methods:{
+            banUser(e) {
+                var el = e.currentTarget;
+                var id = $(el).attr('id');
 
-    // watch(bloggers, (bloggers, prevBloggers) => {
-    //     this.$emit('updateBloggers', {
-    //         bloggers: bloggers,
-    //     })
-    // })
+                axios({
+                    method: 'get',
+                    url: '/api/bloggers/' + id + '/deny/',
+                })
+                .then((response) => {
+                    switch (response.data){
+                        case 'success':
+                            notify('info', {
+                                title: 'Успешно!',
+                                message: 'Блогер успешно заблокирован!'
+                            });
 
-    function banUser(e) {
-        var el = e.currentTarget;
-        var id = $(el).attr('id');
+                            $(el).closest('.card').remove();
+                            this.$emit('ban', id);
+                            break
+                        default:
+                            notify('erroe', {
+                                title: 'Ошибка!',
+                                message: 'Не удалось заблокировать блогера, попробуйте позже!'
+                            });
+                    }
+                })
+            },
+            countER(subs, cover){
+                var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
 
-        axios({
-            method: 'get',
-            url: '/apist/admin/deny/' + id,
-        })
-        .then((response) => {
-            notify('error', {
-                title: 'Успешно!',
-                message: 'Блогер успешно заблокирован!'
-            });
+                if(val - 1 < 0) val = Math.round(val).toFixed(2);
+                else val = Math.ceil(val);
 
-            $(el).closest('.card').remove();
-        })
-        .catch((error) => {
-            notify('error', {
-                title: 'Ошибка!',
-                message: 'Не удалось заблокировать пользователя!'
-            });
-        })
-    }
-
-    function countER(subs, cover){
-        var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
-
-        if(val - 1 < 0) val = Math.round(val).toFixed(2);
-        else val = Math.ceil(val);
-
-       return val;
+                return val;
+            }
+        }
     }
 </script>

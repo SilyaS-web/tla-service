@@ -15,6 +15,7 @@
                     v-for="blogger in bloggers"
                     :bloggers="bloggers"
                     :blogger="blogger"
+                    v-on:ban="userBanned"
                 ></BloggerItem>
             </div>
         </div>
@@ -22,12 +23,15 @@
 </template>
 <script>
     import BloggerItem from '../BloggerItemComponent.vue'
+    import { ref } from 'vue'
 
     export default{
         props: ['bloggers'],
         components: {BloggerItem},
-        // setup(props) {
-        //     bloggers = props.bloggers
-        // }
+        methods:{
+            userBanned(){
+                this.$emit('changedBloggersList');
+            }
+        }
     }
 </script>
