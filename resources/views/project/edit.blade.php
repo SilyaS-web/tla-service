@@ -114,17 +114,17 @@
                             </div>
                             <div class="marketing-format__item input-checkbox-w">
                                 <label for="product-inst">
-                                    Интеграция Inst
+                                    Интеграция Ins
                                     <div class="format-tooltip format-tooltip--mobile" data-hint="inst">
                                         ?
                                         <div class="format-hint format-hint--text" id="inst">
                                             <div class="format-hint__title">
-                                                Интеграция Inst
+                                                Интеграция Ins
                                             </div>
                                             <div class="format-hint__body">
                                                 Увеличивайте продажи с помощью reels. Повышайте охваты,
                                                 узнаваемость и доверие ĸ вашему бренду и товару, используя
-                                                интеграции в Inst с лидерами мнений.
+                                                интеграции в Ins с лидерами мнений.
                                             </div>
                                         </div>
                                     </div>
@@ -144,12 +144,12 @@
                                     ?
                                     <div class="format-hint format-hint--text" id="inst">
                                         <div class="format-hint__title">
-                                            Интеграция Inst
+                                            Интеграция Ins
                                         </div>
                                         <div class="format-hint__body">
                                             Увеличивайте продажи с помощью reels. Повышайте охваты,
                                             узнаваемость и доверие ĸ вашему бренду и товару, используя
-                                            интеграции в Inst с лидерами мнений.
+                                            интеграции в Ins с лидерами мнений.
                                         </div>
                                     </div>
                                 </div>
@@ -157,17 +157,17 @@
                             </div>
                             <div class="marketing-format__item input-checkbox-w">
                                 <label for="product-youtube">
-                                    Интеграция YouTube
+                                    Интеграция YTube
                                     <div class="format-tooltip format-tooltip--mobile" data-hint="youtube">
                                         ?
                                         <div class="format-hint format-hint--text" id="youtube">
                                             <div class="format-hint__title">
-                                                Интеграция YouTube
+                                                Интеграция YTube
                                             </div>
                                             <div class="format-hint__body">
                                                 Увеличивайте продажи с помощью нативных обзоров на товар и
                                                 shorts. Повышайте охваты, ĸачайте seo, узнаваемость и доверие ĸ
-                                                вашему бренду и товару, используя интеграции в YouTube с лидерами
+                                                вашему бренду и товару, используя интеграции в YTube с лидерами
                                                 мнений.
                                             </div>
                                         </div>
@@ -188,12 +188,12 @@
                                     ?
                                     <div class="format-hint format-hint--text" id="youtube">
                                         <div class="format-hint__title">
-                                            Интеграция YouTube
+                                            Интеграция YTube
                                         </div>
                                         <div class="format-hint__body">
                                             Увеличивайте продажи с помощью нативных обзоров на товар и
                                             shorts. Повышайте охваты, ĸачайте seo, узнаваемость и доверие ĸ
-                                            вашему бренду и товару, используя интеграции в YouTube с лидерами
+                                            вашему бренду и товару, используя интеграции в YTube с лидерами
                                             мнений.
                                         </div>
                                     </div>
@@ -244,7 +244,6 @@
 
                             </div>
                             <div class="marketing-format__item input-checkbox-w">
-                                {{-- <input type="checkbox" class="checkbox" id="product-youtube"> --}}
                                 <label for="product-tg">
                                     Интеграция Telegram
                                     <div class="format-tooltip format-tooltip--mobile" data-hint="tg">

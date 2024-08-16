@@ -49,7 +49,140 @@ class PopupAcceptBloger extends Popup{
         super(node);
 
         $(this.node).find('.btn.send-data').on('click', this.sendData)
+        $(this.node).find('.close-popup').on('click', this.closePopup)
         $(this.node).find('.form-stat__title').on('click', (e) => this.statCardClick(e))
+
+        var changeTgEr = null, self = this;
+
+        $(this.node).find('#tg_subs').on('focusout', function(e){
+            var cover = $(self.node).find('#tg_cover').val(),
+                subs = $(e.target).val();
+
+            if(subs && cover){
+                changeTgEr = setTimeout(() => {
+                    var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
+
+                    val = (Math.round(val * 100) / 100).toFixed(2);
+
+                    $(self.node).find('#tg_er').val(val);
+                }, 100);
+            }
+        })
+        $(this.node).find('#tg_cover').on('focusout', function(e){
+            var subs = $(self.node).find('#tg_subs').val(),
+                cover = $(e.target).val();
+
+            changeTgEr && clearTimeout(changeTgEr);
+
+            if(subs && cover){
+                changeTgEr = setTimeout(() => {
+                    var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
+
+                    val =(Math.round(val * 100) / 100).toFixed(2);
+
+                    $(self.node).find('#tg_er').val(val);
+                }, 100);
+            }
+        })
+
+        var changeInstEr = null;
+
+        $(this.node).find('#inst_subs').on('focusout', function(e){
+            var cover = $(self.node).find('#inst_cover').val(),
+                subs = $(e.target).val();
+
+            if(subs && cover){
+                changeInstEr = setTimeout(() => {
+                    var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
+
+                    val = (Math.round(val * 100) / 100).toFixed(2);
+
+                    $(self.node).find('#inst_er').val(val);
+                }, 100);
+            }
+        })
+        $(this.node).find('#inst_cover').on('focusout', function(e){
+            var subs = $(self.node).find('#inst_subs').val(),
+                cover = $(e.target).val();
+
+            changeInstEr && clearTimeout(changeInstEr);
+
+            if(subs && cover){
+                changeInstEr = setTimeout(() => {
+                    var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
+
+                    val = (Math.round(val * 100) / 100).toFixed(2);
+
+                    $(self.node).find('#inst_er').val(val);
+                }, 100);
+            }
+        })
+
+        var changeVkEr = null;
+
+        $(this.node).find('#vk_subs').on('focusout', function(e){
+            var cover = $(self.node).find('#vk_cover').val(),
+                subs = $(e.target).val();
+
+            if(subs && cover){
+                changeVkEr = setTimeout(() => {
+                    var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
+
+                    val = (Math.round(val * 100) / 100).toFixed(2);
+
+                    $(self.node).find('#vk_er').val(val);
+                }, 100);
+            }
+        })
+        $(this.node).find('#vk_cover').on('focusout', function(e){
+            var subs = $(self.node).find('#vk_subs').val(),
+                cover = $(e.target).val();
+
+            changeVkEr && clearTimeout(changeVkEr);
+
+            if(subs && cover){
+                changeVkEr = setTimeout(() => {
+                    var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
+
+                    val = (Math.round(val * 100) / 100).toFixed(2);
+
+                    $(self.node).find('#vk_er').val(val);
+                }, 100);
+            }
+        })
+
+        var changeYtEr = null;
+
+        $(this.node).find('#yt_subs').on('focusout', function(e){
+            var cover = $(self.node).find('#yt_cover').val(),
+                subs = $(e.target).val();
+
+            if(subs && cover){
+                changeYtEr = setTimeout(() => {
+                    var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
+
+                    val = (Math.round(val * 100) / 100).toFixed(2);
+
+                    $(self.node).find('#yt_er').val(val);
+                }, 100);
+            }
+        })
+        $(this.node).find('#yt_cover').on('focusout', function(e){
+            var subs = $(self.node).find('#yt_subs').val(),
+                cover = $(e.target).val();
+
+            changeYtEr && clearTimeout(changeYtEr);
+
+            if(subs && cover){
+                changeYtEr = setTimeout(() => {
+                    var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
+
+                    val =(Math.round(val * 100) / 100).toFixed(2);
+
+                    $(self.node).find('#yt_er').val(val);
+                }, 100);
+            }
+        })
 
         return this;
     }
@@ -411,6 +544,11 @@ class PopupAcceptBloger extends Popup{
             self.closePopup();
         })
     }
+
+    closePopup = () => {
+        $(this.node).removeClass('opened');
+        this.emptyForm();
+    }
 }
 
 class PopupAchivmentsManagement extends Popup{
@@ -463,6 +601,8 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
+
+
     //popups
     var acceptBlogerForm;
     $(document).on('click', '.btn-accept', function(e){

@@ -115,8 +115,7 @@
                         <div class="card__row card__content">
                             <div class="card__col">
                                 <div class="card__row card__header">
-                                    <div class="card__img">
-                                        <img src="{{ $blogger->user->getImageURL() }}" alt="">
+                                    <div class="card__img" style="background-image:url('{{ $blogger->user->getImageURL() }}')">
                                         @if ($blogger->is_achievement)
                                         <div class="card__achive">
                                             <img src="{{ asset('img/achive-icon.svg') }}" alt="">
@@ -236,8 +235,13 @@
                         <div class="card__row card__content">
                             <div class="card__col">
                                 <div class="card__row card__header">
-                                    <div class="card__img">
-                                        <img src="{{ $blogger->user->getImageURL() }}" alt="">
+                                    <div class="card__img" style="background-image:url('{{ $blogger->user->getImageURL() }}')">
+                                        <div class="card__achive tooltip">
+                                            <img src="{{ asset('img/achive-icon.svg') }}" alt="">
+                                            <div class="tooltip__text">
+                                                <p>Проверенный блогер</p>
+                                            </div>
+                                        </div>
                                         @if ($blogger->is_achievement)
                                             <div class="card__achive tooltip">
                                                 <img src="{{ asset('img/achive-icon.svg') }}" alt="">

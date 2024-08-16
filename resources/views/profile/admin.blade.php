@@ -16,7 +16,7 @@
     <title>Панель управления</title>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="wrapper" id = "admin-app">
         <div class="burger-menu">
             <div class="admin-menu__body">
                 <div class="admin-menu__title">
@@ -44,13 +44,11 @@
                             <img src="{{asset('admin/img/menu-icon.svg')}}" alt="">
                         </div>
                     </div>
-                    <div class="header__col">
-                        <div class="header__leave">
-                            <form action="{{ route('logout') }}" method="POST" class="">
-                                @csrf
-                                <button type="header__leave">Выход</button>
-                            </form>
-                        </div>
+                    <div class="header__leave">
+                        <form action="{{ route('logout') }}" method="POST" class="">
+                            @csrf
+                            <button type="header__leave">Выход</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -296,7 +294,7 @@
                         </div>
                         <div class="popup__form-row popup__form-stat form-stat">
                             <div class="form-stat__title">
-                                Instagram
+                                Ins
                             </div>
                             <div class="form-stat__content">
                                 <div class="form-stat__row">
@@ -329,7 +327,7 @@
                         </div>
                         <div class="popup__form-row popup__form-stat form-stat">
                             <div class="form-stat__title">
-                                Youtube
+                                YTube
                             </div>
                             <div class="form-stat__content">
                                 <div class="form-stat__row">
@@ -433,6 +431,7 @@
     </div>
 </body>
 <script src="{{ asset('admin/js/script.js') }}"></script>
+<script src = "./js/app.js"></script>
 
 <script>
     function banUser(user_id, el) {

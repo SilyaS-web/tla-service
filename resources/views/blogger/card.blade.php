@@ -2,8 +2,7 @@
     <div class="card__row card__content" style="flex: 1 1 auto">
         <div class="card__col">
             <div class="card__row card__header">
-                <div class="card__img">
-                    <img src="{{ $blogger->user->getImageURL() }}" alt="">
+                <div class="card__img" style="background-image:url('{{ $blogger->user->getImageURL() }}')">
                     @if($blogger->is_achievement)
                         <div class="card__achive tooltip">
                             <img src="{{ asset('img/achive-icon.svg') }}" alt="">
