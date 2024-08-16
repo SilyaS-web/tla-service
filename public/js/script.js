@@ -1259,7 +1259,7 @@ class Chat {
 
         var formData = new FormData();
 
-        formData.append('message', msg)
+        formData.append('message', this.urlify(msg))
         formData.append('img', file[0])
         formData.append('work_id', self.currentChatId)
 
@@ -1285,6 +1285,18 @@ class Chat {
                 }
             })
         }
+    }
+
+    urlify = (text) => {
+        var urlRegex = /(https?:\/\/[^\s]+)/g;
+        return text.replace(urlRegex, function(url) {
+          return '<a target="_blank" href="' + url + '">' + url + '</a>';
+        })
+
+        // var urlRegex = /(http?:\/\/[^\s]+)/g;
+        // return text.replace(urlRegex, function(url) {
+        //   return '<a target="_blank" href="' + url + '">' + url + '</a>';
+        // })
     }
 }
 
@@ -2099,6 +2111,14 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
+    $(document).on('click', '.roles-cards__card', function(e) {
+        var role = $(e.currentTarget).data('role');
+
+        $(e.currentTarget).closest('.roles-cards').find('input[name="role"]').val($(e.currentTarget).hasClass('active') ? false : role);
+        $(e.currentTarget).toggleClass('active');
+        $(document).find('.roles-cards__card').not($(e.currentTarget)).removeClass('active')
+    })
+
     $(document).on('click', '.owl-dots', (e) => e.stopPropagation())
 
     var popupBlogerProjectMoreInfo = new PopupBlogerProjectMoreInfo('#project-item-info');

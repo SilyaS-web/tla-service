@@ -1286,12 +1286,54 @@ input[type='range']::-webkit-slider-runnable-track{
 .auth__header .title{
     margin-bottom: 12px;
 }
+.roles-cards{
+    margin-bottom: 20px;
+}
+.roles-cards__items{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.roles-cards__card{
+    width:150px;
+    padding:5px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border:1px solid rgba(0,0,0,0);
+    border-radius: 5px;
+    transition: border .2s linear;
+}
+.roles-cards__card img{
+    margin-bottom: 10px;
+    height:100px;
+    margin-bottom: 10px;
+    transition: opacity .2s linear;
+}
+.roles-cards__card p{
+    font-size: 14px;
+    font-weight: 600;
+}
+.roles-cards__card:hover{
+    border:1px solid rgba(0,0,0,.1)
+}
+.roles-cards__card:hover img{
+    /* filter: brightness(0) saturate(100%) invert(48%) sepia(99%) saturate(3278%) hue-rotate(358deg) brightness(100%) contrast(109%); */
+}
+.roles-cards__card.active{
+    border:1px solid rgba(0,0,0,.1)
+}
+.roles-cards__card.active img{
+    /* filter: brightness(0) saturate(100%) invert(48%) sepia(99%) saturate(3278%) hue-rotate(358deg) brightness(100%) contrast(109%); */
+}
 .form-stat{
     padding: 15px;
     border: 1px solid rgba(0, 0, 0, .05);
     border-radius: 10px;
     margin-bottom: 15px;
 }
+
 .form-stat__title{
     font-size: 16px;
     font-weight: 500;
@@ -1784,13 +1826,13 @@ input[type='range']::-webkit-slider-runnable-track{
     align-items: flex-start;
 }
 .card__img {
-    max-width: 100px;
     position: relative;
     margin-right: 12px;
-}
-.card__img img{
+    width:80px; height: 80px;
     border-radius: 10px;
-    max-width: 80px;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
 }
 .card__achive {
     border-radius: 50%;
@@ -3390,11 +3432,16 @@ input[type='range']::-webkit-slider-runnable-track{
     display: flex;
     gap: 10px;
     flex-direction: column;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .messages-chat__item-msg img{
     width: 100px;
     border-radius: 5px;
     cursor: pointer;
+}
+.messages-chat__item-msg>a{
+    word-break: break-all;
 }
 .messages-create {
     border-radius: 0 0 10px 10px;
@@ -4068,7 +4115,7 @@ input[type='range']::-webkit-slider-runnable-track{
     font-size: 14px;
     color:rgba(0,0,0, .4)
 }
-.footer__contacts-phone {
+.footer__contacts-item {
     margin-bottom: 3px;
 }
 .footer__bottom {
@@ -4355,7 +4402,8 @@ input[type='range']::-webkit-slider-runnable-track{
         display: flex;
     }
     .burger{
-        display: block;
+        display: flex;
+        align-items: center;
     }
     .header__logo-w{
         margin-right: auto;
@@ -4746,6 +4794,9 @@ input[type='range']::-webkit-slider-runnable-track{
     .item-chat__img{
         max-width: 50px; height: 50px;
         width:100%;
+    }
+    .logo__logo{
+        width:95px
     }
 }
 @media(max-width:768px){

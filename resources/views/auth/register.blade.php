@@ -54,14 +54,34 @@
                 </div>
                 <div class="form-group">
                     <label for="role">Выберите роль</label>
-                    <select name="role" id="role" name="role" class="input input--role select">
-                        <option value="seller" {{ old('role') == "seller" ? "selected" : "" }}>Селлер</option>
-                        <option value="blogger" {{ old('role') == "blogger" ? "selected" : "" }}>Блогер</option>
-                        <option value="agent" {{ old('role') == "agent" ? "selected" : "" }}>Представитель бренда (Агенство)</option>
-                    </select>
+                    <div class="roles-cards">
+                        <div class="roles-cards__items">
+                            <div class="roles-cards__card" data-role="seller">
+                                <img src="{{asset('img/seller-role.png')}}" alt="">
+                                <p>Селлер</p>
+                            </div>
+                            <div class="roles-cards__card" data-role="blogger">
+                                <img src="{{asset('img/blogger-role.png')}}" alt="">
+                                <p>Блогер</p>
+                            </div>
+                            <div class="roles-cards__card" data-role="agent">
+                                <img src="{{asset('img/agent-role.png')}}" alt="">
+                                <p title="Представитель бренда(Агенство)">Агенство</p>
+                            </div>
+                        </div>
+                        <input type="hidden" name="role">
+                    </div>
                     @error('role')
                     <span class="error">{{ $message }}</span>
                     @enderror
+                    {{-- <select name="role" id="role" name="role" class="input input--role select">
+                        <option value="seller">Селлер</option>
+                        <option value="blogger">Блогер</option>
+                        <option value="agent">Представитель бренда (Агенство)</option>
+                    </select>
+                    @error('role')
+                    <span class="error">{{ $message }}</span>
+                    @enderror --}}
                 </div>
                 <div class="form-group tg-confirmation">
                     <div class="tg-confirmation__row" id="tg-confirmation">

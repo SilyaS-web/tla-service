@@ -136,11 +136,8 @@
 
                 <div class="burger-contacts">
                     <div class="footer__contacts-contacts">
-                        <div class="footer__contacts-phone">
-                            hello@tla-agency.ru
-                        </div>
-                        <div class="footer__contacts-phone">
-                            +7(999)194-44-47
+                        <div class="footer__contacts-item">
+                            adswap.ru@ya.ru
                         </div>
                     </div>
                 </div>
