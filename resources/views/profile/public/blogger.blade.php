@@ -40,59 +40,57 @@
                             @endif
                         </div>
                         <div class="info-profile__platrfoms blogger-platforms">
-                            @foreach (($user->blogger->platforms ?? []) as $p )
-                                @if(!$p->subscriber_quantity)
-                                    @continue
-                                @endif
-                            <?
-                                $types = [
+                            @php($types = [
                                     'Telegram' => 'tg',
                                     'Instagram' => 'inst',
                                     'VK' => 'vk',
                                     'Youtube' => 'yt'
-                                ]
-                            ?>
-                            <div class="blogger-platforms__item item-platforms">
-                                <div class="item-platforms__title item-platforms__title--{{ $types[$p->name] }}">
-                                    {{ $p->name }}
-                                </div>
-                                <div class="item-platforms__stats">
-                                    <div class="item-platforms__stat">
-                                        <div class="item-platforms__stat-title">
-                                            Подписчики
-                                        </div>
-                                        <div class="item-platforms__stat-value">
-                                            {{ $p->subscriber_quantity ?? 0 }}
-                                        </div>
+                            ];)
+                            @foreach (($user->blogger->platforms ?? []) as $blogger_platform )
+                                @if(!$blogger_platform->subscriber_quantity)
+                                    @continue
+                                @endif
+                                <div class="blogger-platforms__item item-platforms">
+                                    <div class="item-platforms__title item-platforms__title--{{ $types[$blogger_platform->name] }}">
+                                        {{ $blogger_platform->name }}
                                     </div>
-                                    <div class="item-platforms__stat">
-                                        <div class="item-platforms__stat-title">
-                                            Охваты
-                                        </div>
-                                        <div class="item-platforms__stat-value">
-                                            {{ $p->coverage ?? 0 }}
-                                        </div>
-                                    </div>
-                                    <div class="item-platforms__stat">
-                                        <div class="item-platforms__stat-title">
-                                            ER %
-                                        </div>
-                                        <div class="item-platforms__stat-value">
-                                            {{ $p->engagement_rate ?? 0 }}
-                                        </div>
-                                    </div>
-                                    @if ($p->cost_per_mille)
+                                    <div class="item-platforms__stats">
                                         <div class="item-platforms__stat">
                                             <div class="item-platforms__stat-title">
-                                                CPM
+                                                Подписчики
                                             </div>
                                             <div class="item-platforms__stat-value">
-                                                {{ $p->cost_per_mille ?? 0}}
+                                                {{ $blogger_platform->subscriber_quantity ?? 0 }}
                                             </div>
                                         </div>
-                                    @endif
+                                        <div class="item-platforms__stat">
+                                            <div class="item-platforms__stat-title">
+                                                Охваты
+                                            </div>
+                                            <div class="item-platforms__stat-value">
+                                                {{ $blogger_platform->coverage ?? 0 }}
+                                            </div>
+                                        </div>
+                                        <div class="item-platforms__stat">
+                                            <div class="item-platforms__stat-title">
+                                                ER %
+                                            </div>
+                                            <div class="item-platforms__stat-value">
+                                                {{ $blogger_platform->engagement_rate ?? 0 }}
+                                            </div>
+                                        </div>
+                                        @if ($blogger_platform->cost_per_mille)
+                                            <div class="item-platforms__stat">
+                                                <div class="item-platforms__stat-title">
+                                                    CPM
+                                                </div>
+                                                <div class="item-platforms__stat-value">
+                                                    {{ $blogger_platform->cost_per_mille ?? 0}}
+                                                </div>
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
-                            </div>
                             @endforeach
                         </div>
                     </div>
