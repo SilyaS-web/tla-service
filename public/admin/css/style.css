@@ -683,6 +683,10 @@ label{
     overflow: hidden;
     border-radius: 5px;
 }
+.card__img img{
+    border-radius: 5px;
+    max-width: 50px;
+}
 .card__achive {
     border-radius: 50%;
     background-color: var(--primary);
@@ -818,6 +822,11 @@ label{
     color: var(--primary);
     line-height: 1;
     text-wrap: nowrap;
+}
+.card__stats-val span{
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .card__stats-val span{
     max-width: 100%;
