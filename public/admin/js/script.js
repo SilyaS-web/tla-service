@@ -424,7 +424,7 @@ class PopupAcceptBloger extends Popup{
     }
 
     setUsersData = (blogger)=>{
-        this.dataProps.gender_ratio.set(blogger.gender_ratio || 0);
+        this.dataProps.gender_ratio.set(blogger.gender_ratio || 50);
         this.dataProps.is_achievement.set(blogger.is_achievement);
         this.dataProps.desc.set(blogger.description || '');
         this.dataProps.sex.set(blogger.sex || '');
@@ -471,7 +471,7 @@ class PopupAcceptBloger extends Popup{
 
     emptyForm = () => {
         this.blogger_id = null;
-        this.dataProps.gender_ratio.set('');
+        this.dataProps.gender_ratio.set(50);
         this.dataProps.sex.set('');
         this.dataProps.is_achievement.set('');
         this.dataProps.country.set('');

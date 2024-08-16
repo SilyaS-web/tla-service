@@ -222,11 +222,11 @@
                     <div class="form-row filter__item" style="display: flex; gap:10px;">
                         <div class="form-group">
                             <label for="gender_ratio">Мужчины, %</label>
-                            <input id="gender_ratio" name="gender_ratio" type="number" class="input" max="100">
+                            <input id="gender_ratio" name="gender_ratio" type="number" class="input" max="100" value = "50">
                         </div>
                         <div class="form-group">
                             <label for="gender_ratio_f">Женщины, %</label>
-                            <input id="gender_ratio_f" name="gender_ratio_f" type="number" class="input" max="100">
+                            <input id="gender_ratio_f" name="gender_ratio_f" type="number" class="input" max="100" value = "50">
                         </div>
                     </div>
                     <script>
