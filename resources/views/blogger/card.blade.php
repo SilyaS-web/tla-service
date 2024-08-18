@@ -115,9 +115,15 @@
                 <a href="{{ route('blogger-page', $blogger->id) . '?tab=profile-blogers-list' }}" class="" style="color:rgba(254,94,0,1); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -20px;">Подробнее</a>
             </div>
             <div class="card__row card__row" style="flex-direction: column; gap: 5px">
-                <button class="btn btn-primary btn-add-to-project" onclick="sendProjectToBlogger({{ $blogger->id }}, this)" data-project-id="">
-                    Отправить заявку
-                </button>
+                @if(1 == 2)
+                    <button class="btn btn-primary btn-add-to-project" onclick="sendProjectToBlogger({{ $blogger->id }}, this)" data-project-id="">
+                        Отправить заявку
+                    </button>
+                @else
+                    <button class="btn btn-primary btn-add-to-project" onclick="sendProjectToBlogger({{ $blogger->id }}, this)" data-project-id="">
+                        Отправить заявку
+                    </button>
+                @endif
             </div>
         </div>
     </div>

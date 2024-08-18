@@ -18,11 +18,11 @@
         </div>
         <div class="card__row card__tags">
             @php($themes = $unverified_user->blogger->themes)
-           @foreach ($themes->take(3) as $theme)
-               <div class="card__tags-item">
+            @foreach ($themes->take(3) as $theme)
+                <div class="card__tags-item">
                    <span>{{ $theme->theme->theme }}</span>
-               </div>
-           @endforeach
+                </div>
+            @endforeach
        </div>
         <div class="card__col card__stats">
             <div class="card__col card__stats-stats">
@@ -45,6 +45,9 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="card__row" style="text-align: center; justify-content:center">
+                <a href="{{ route('edit-blogger', $unverified_user->id) }}" class="" style="color:rgba(0,0,0,.4); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -20px;">Редактировать</a>
             </div>
             <div class="admin-bloger__btns">
                 <a href="#" class="btn btn-primary btn-accept" data-id={{ $unverified_user->blogger->id }}>Принять</a>

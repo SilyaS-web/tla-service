@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Blogger;
 use App\Models\BloggerPlatform;
+use App\Models\Country;
 use App\Models\Seller;
+use App\Models\Theme;
 use App\Models\User;
 use App\Services\TgService;
 use Illuminate\Http\Request;
@@ -12,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -210,7 +213,6 @@ class AdminController extends Controller
 
         if ($validator->fails()) {
             return response()->json('success', 200);
-
         }
         $validated = $validator->validated();
 
@@ -272,5 +274,94 @@ class AdminController extends Controller
         $user->save();
 
         return response()->json('success', 200);
+    }
+
+    public function editBlogger(User $user)
+    {
+        $countries = Country::get();
+        $themes = Theme::get();
+
+        return view('admin.edit-blogger', compact('user', 'countries'));
+    }
+
+    public function updateBlogger(User $user)
+    {
+        $validator = Validator::make(request()->all(), [
+            'image' => 'image|nullable',
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'country_id' => 'required|exists:countries,id',
+            'city' => 'string|nullable',
+            'description' => 'string|nullable',
+            'gender_ratio' => 'required|numeric',
+            'sex' => 'required|string',
+            'Telegram_link' => 'string|nullable',
+            'Telegram_subs' => 'numeric|nullable',
+            'Telegram_cover' => 'numeric|nullable',
+            'Telegram_er' => 'numeric|nullable',
+            'Telegram_cpm' => 'numeric|nullable',
+            'Instagram_link' => 'string|nullable',
+            'Instagram_subs' => 'numeric|nullable',
+            'Instagram_cover' => 'numeric|nullable',
+            'Instagram_er' => 'numeric|nullable',
+            'Instagram_cpm' => 'numeric|nullable',
+            'Youtube_link' => 'string|nullable',
+            'Youtube_subs' => 'numeric|nullable',
+            'Youtube_cover' => 'numeric|nullable',
+            'Youtube_er' => 'numeric|nullable',
+            'Youtube_cpm' => 'numeric|nullable',
+            'VK_link' => 'string|nullable',
+            'VK_subs' => 'numeric|nullable',
+            'VK_cover' => 'numeric|nullable',
+            'VK_er' => 'numeric|nullable',
+            'VK_cpm' => 'numeric|nullable',
+            'is_achievement' => 'string|nullable',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $validated = $validator->validated();
+
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+
+        if (request()->file('image')) {
+            if (Storage::exists($user->getImageURL())) {
+                Storage::delete($user->getImageURL());
+            }
+
+            $product_image = request()->file('image');
+            $image_path = $product_image->store('profile', 'public');
+            $user->image = $image_path;
+        }
+
+        $user->save();
+        $blogger = $user->blogger;
+
+        $blogger->update([
+            'city' => $validated['city'] ?? null,
+            'description' => $validated['description'] ?? null,
+            'sex' => $validated['sex'],
+            'country_id' => $validated['country_id'],
+            'gender_ratio' => $validated['gender_ratio'],
+            'is_achievement' => $validated['is_achievement'] ? 1 : 0,
+        ]);
+        foreach ($blogger->platforms as $platform) {
+            if (!isset($validated[$platform->name . '_link']) || empty($validated[$platform->name . '_link'])) {
+                $platform->delete();
+            } else {
+                $platform->update([
+                    'link' => $validated[$platform->name . '_link'],
+                    'subscriber_quantity' => $validated[$platform->name . '_subs'],
+                    'coverage' => $validated[$platform->name . '_cover'],
+                    'engagement_rate' => $validated[$platform->name . '_er'],
+                    'cost_per_mille' => $validated[$platform->name . '_cpm'],
+                ]);
+            }
+        }
+
+        return redirect()->back()->with('success', 'Данные успешно обновлены');
     }
 }
