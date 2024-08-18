@@ -1197,6 +1197,9 @@ input[type='range']::-webkit-slider-runnable-track{
     background-color: var(--pale);
     border-radius: 10px;
     transition: all .2s linear;
+    flex: 1 1 auto;
+    max-width: 280px;
+    height: 100%;
 }
 .item-platforms__title{
     font-size: 16px;
@@ -1232,16 +1235,27 @@ input[type='range']::-webkit-slider-runnable-track{
     display: flex;
     flex-wrap: wrap;
     gap: 18px;
+    flex: 1 1 auto;
+    flex-direction: column;
 }
-.item-platforms:hover{
 
+.item-platforms:hover{
     box-shadow: 0px 0px 10px 6px rgba(254,94,0,.1);
+}
+.item-platforms__stats-row{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.item-platforms__stats-row > *{
+}
+.item-platforms__stat.er{
+    width: 75px;
 }
 .item-platforms__stat{
     display: flex;
     flex-direction: column;
     gap: 8px;
-    width:calc(50% - 9px);
 }
 .item-platforms__stat:hover{
 }

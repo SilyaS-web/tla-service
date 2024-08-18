@@ -48,7 +48,7 @@
                         </div>
                         <div class="card__col card__stats-item">
                             <div class="card__stats-title">
-                                <span>Охваты</span>
+                                <span>Просмотры</span>
                             </div>
                             <div class="card__stats-val" title="{{ number_format(round($blogger->getCoverage()), 0, '', ' ') }}">
                                 <span>{{ number_format(round($blogger->getCoverage()), 0, '', ' ') }}</span>
