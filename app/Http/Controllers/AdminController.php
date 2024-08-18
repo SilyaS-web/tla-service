@@ -349,13 +349,17 @@ class AdminController extends Controller
             'is_achievement' => $validated['is_achievement'] ? 1 : 0,
         ]);
         foreach ($blogger->platforms as $platform) {
-            $platform->update([
-                'link' => $validated[$platform->name . '_link'],
-                'subscriber_quantity' => $validated[$platform->name . '_subs'],
-                'coverage' => $validated[$platform->name . '_cover'],
-                'engagement_rate' => $validated[$platform->name . '_er'],
-                'cost_per_mille' => $validated[$platform->name . '_cpm'],
-            ]);
+            if (!isset($validated[$platform->name . '_link']) || empty($validated[$platform->name . '_link'])) {
+                $platform->delete();
+            } else {
+                $platform->update([
+                    'link' => $validated[$platform->name . '_link'],
+                    'subscriber_quantity' => $validated[$platform->name . '_subs'],
+                    'coverage' => $validated[$platform->name . '_cover'],
+                    'engagement_rate' => $validated[$platform->name . '_er'],
+                    'cost_per_mille' => $validated[$platform->name . '_cpm'],
+                ]);
+            }
         }
 
         return redirect()->back()->with('success', 'Данные успешно обновлены');
