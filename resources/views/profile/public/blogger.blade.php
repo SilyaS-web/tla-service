@@ -51,9 +51,9 @@
                                     @continue
                                 @endif
                                 <div class="blogger-platforms__item item-platforms">
-                                    <div class="item-platforms__title item-platforms__title--{{ $types[$blogger_platform->name] }}">
+                                    <a target="_blank" href="{{ $blogger_platform->link }}" class="item-platforms__title item-platforms__title--{{ $types[$blogger_platform->name] }}">
                                         {{ $blogger_platform->name }}
-                                    </div>
+                                    </a>
                                     <div class="item-platforms__stats">
                                         <div class="item-platforms__stat">
                                             <div class="item-platforms__stat-title">
