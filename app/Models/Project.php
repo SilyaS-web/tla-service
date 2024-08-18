@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Project extends Model
 {
@@ -173,6 +174,16 @@ class Project extends Model
         }
 
         return "Активно";
+    }
+
+    public function isSended() {
+        $user = Auth::user();
+        $work = Work::where('blogger_id', $user->id)->first();
+        if ($work) {
+            return true;
+        }
+
+        return false;
     }
 
     public function isCompleted()
