@@ -14,7 +14,6 @@ class PlatformsReelsShortsViewsEr extends Migration
     public function up()
     {
         Schema::table('blogger_platforms', function (Blueprint $table) {
-            $table->softDeletes();
             $table->integer('additional_coverage')->nullable();
             $table->double('additional_engagement_rate')->nullable();
         });
