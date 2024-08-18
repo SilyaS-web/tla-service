@@ -20,39 +20,17 @@
         <section class="admin-view">
             <div class="admin-view__container _container active-menu">
                 <div class="admin-view__body">
-                    <aside class="admin-menu">
-                        <div class="admin-menu__container">
-                            <div class="admin-menu__body">
-                                <nav class="nav admin-menu__nav">
-                                    <div class="nav__items">
-                                        <a href="" class="nav__link tab active" data-content="moderation" title="Модерация блогеров">
-                                            <img src="{{ asset('admin/img/blogers-list-icon.svg') }}" alt="" class="nav__link-img">
-                                            Модерация блогеров
-                                        </a>
-                                        <a href="" class="nav__link tab" data-content="blogers-list" title="Список блогеров">
-                                            <img src="{{ asset('admin/img/blog-icon.svg') }}" alt="" class="nav__link-img">
-                                            Список блогеров
-                                        </a>
-                                        <a href="" class="nav__link tab" data-content="sellers-list" title="Список селлеров">
-                                            <img src="{{ asset('admin/img/money-icon.svg') }}" alt="" class="nav__link-img">
-                                            Список селлеров
-                                        </a>
-                                        <a href="" class="nav__link tab" data-content="projects-list" title="Модерация проектов">
-                                            <img src="{{ asset('admin/img/list-icon.svg') }}" alt="" class="nav__link-img">
-                                            Модерация проектов
-                                        </a>
-                                        <a href="" class="nav__link tab" data-content="payment-history" title="История заказов">
-                                            <img src="{{ asset('admin/img/history-icon.svg') }}" alt="" class="nav__link-img">
-                                            История заказов
+                    <!-- Левое меню -->
+                    <admin-aside v-on:switchTab="switchTab"></admin-aside>
 
-                                        </a>
-                                    </div>
-                                </nav>
-                            </div>
-                        </div>
-                    </aside>
+                    <!-- Модерация -->
                     <admin-bloggers-moderation-page :bloggers="unverifiedBloggers" v-on:changedBloggersList="changedBloggersList"></admin-bloggers-moderation-page>
+
+                    <!-- Список блогеров -->
                     <admin-bloggers-page :bloggers="bloggers" v-on:changedBloggersList="changedBloggersList"></admin-bloggers-page>
+
+                    <!-- Список селлеров -->
+                    <admin-sellers-page :sellers="sellers" v-on:changedSellersList="changedSellersList"></admin-sellers-page>
                     <!-- <div class="admin-view__content admin-blogers tab-content active" id="moderation">
                         <div class="admin-blogers__body">
                             <div class="admin-blogers__header">
@@ -68,20 +46,20 @@
                             @include('shared.admin.unverified-users-list')
                         </div>
                     </div> -->
-                    <div class="admin-view__content blogers-list tab-content" id="sellers-list">
+                    <!-- <div class="admin-view__content blogers-list tab-content" id="sellers-list">
                         <div class="admin-blogers__body">
                             <div class="admin-blogers__header">
                                 <div class="admin-blogers__title title">
                                     Список селлеров • 1
                                 </div>
-                                <!-- <div class="admin-blogers__search form-group">
+                                <div class="admin-blogers__search form-group">
                                     <input type="name" id="sellers-search" class="input" placeholder="Введите название">
                                     <button class="btn btn-primary sellers-search-btn">Найти</button>
-                                </div>  -->
+                                </div>
                             </div>
-                            <!-- @include('shared.admin.sellers-list') -->
+                            @include('shared.admin.sellers-list')
                         </div>
-                    </div>
+                    </div> -->
                     <div class="admin-view__content projects-list tab-content" id="projects-list">
                         <div class="admin-blogers__body">
                             <div class="admin-blogers__header">
@@ -141,6 +119,9 @@
                     </div>
                 </div>
             </div>
+            <div class="loader" v-if="isLoading">
+                <img src="/img/loading.gif" alt="">
+            </div>
         </section>
 
         <div class="notification" style="display: none;">
@@ -159,20 +140,70 @@
     export default{
         setup() {
             let unverifiedBloggers = [],
-                bloggers = [];
+                bloggers = [],
+                sellers = [
+                    {
+                        id: 1,
+                        user: {
+                            name: 'Илья Софронов',
+                            email: 'ilya.sofron@mail.ru',
+                            phone: '+7(902)122-32-90',
+                            image: null,
+                        },
+                        inn: '11223344556',
+                        agent: true,
+                        organization_type: 'ИП',
+                    },
+                    {
+                        id: 2,
+                        user: {
+                            name: 'Алексей Андреев',
+                            email: 'andrey.gaga@mail.ru',
+                            phone: '+7(903)133-33-90',
+                            image: null,
+                        },
+                        inn: '6554433221',
+                        agent: false,
+                        organization_type: 'ООО',
+                    },
+                    {
+                        id: 3,
+                        user: {
+                            name: 'Владислав Савинов',
+                            email: 'savin@ebanaya.su',
+                            phone: '+7(912)155-44-90',
+                            image: null,
+                        },
+                        inn: '',
+                        agent: false,
+                        organization_type: '-',
+                    },
+
+                ],
+                isLoading = false;
 
             return {
                 unverifiedBloggers: ref(unverifiedBloggers),
                 bloggers: ref(bloggers),
+                sellers: ref(sellers),
+                isLoading: ref(isLoading),
             }
         },
 
         async mounted(){
-            await this.getBloggers(1).then(list => {
-                this.bloggers = (list || []).map(_b => this.findBiggerPlatform(_b));
-            })
-            await this.getBloggers(0).then(list => {
-                this.unverifiedBloggers = (list || []).map(_b => this.findBiggerPlatform(_b));;
+            this.isLoading = true;
+
+            Promise.all([
+                this.getBloggers(1).then(list => {
+                    this.bloggers = (list || []).map(_b => this.findBiggerPlatform(_b));
+                }),
+                this.getBloggers(0).then(list => {
+                    this.unverifiedBloggers = (list || []).map(_b => this.findBiggerPlatform(_b));;
+                })
+            ]).then(() => {
+                setTimeout(()=>{
+                    this.isLoading = false;
+                }, 500)
             })
         },
 
@@ -213,6 +244,78 @@
                         this.unverifiedBloggers = (list || []).map(_b => this.findBiggerPlatform(_b));;
                     })
                 ])
+            },
+            changedSellersList(id){
+                this.sellers = this.sellers.filter(_s => _s.id != id);
+            },
+            switchTab(tab){
+                this.isLoading = true;
+
+                switch(tab){
+                    case 'moderation':
+                        this.getBloggers(0).then(list => {
+                            this.bloggers = (list || []).map(_b => this.findBiggerPlatform(_b));
+                            setTimeout(()=>{
+                                this.isLoading = false;
+                            }, 500)
+                        })
+                        break;
+
+                    case 'blogers-list':
+                        this.getBloggers(1).then(list => {
+                            this.bloggers = (list || []).map(_b => this.findBiggerPlatform(_b));
+                            setTimeout(()=>{
+                                this.isLoading = false;
+                            }, 500)
+                        })
+                        break;
+
+                    case 'sellers-list':
+                        this.sellers = [
+                            {
+                                id: 1,
+                                user: {
+                                    name: 'Илья Софронов',
+                                    email: 'ilya.sofron@mail.ru',
+                                    phone: '+7(902)122-32-90',
+                                    image: null,
+                                },
+                                inn: '11223344556',
+                                agent: true,
+                                organization_type: 'ИП',
+                            },
+                            {
+                                id: 2,
+                                user: {
+                                    name: 'Алексей Андреев',
+                                    email: 'andrey.gaga@mail.ru',
+                                    phone: '+7(903)133-33-90',
+                                    image: null,
+                                },
+                                inn: '6554433221',
+                                agent: false,
+                                organization_type: 'ООО',
+                            },
+                            {
+                                id: 3,
+                                user: {
+                                    name: 'Владислав Савинов',
+                                    email: 'savin@ebanaya.su',
+                                    phone: '+7(912)155-44-90',
+                                    image: null,
+                                },
+                                inn: '',
+                                agent: false,
+                                organization_type: '-',
+                            },
+                        ];
+
+                        setTimeout(()=>{
+                            this.isLoading = false;
+                        }, 500)
+                        break;
+
+                }
             }
         }
     }

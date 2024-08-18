@@ -1,29 +1,3 @@
-class Tabs {
-    constructor(node) {
-        this.node = node;
-
-        $(this.node).find('.tab').on('click', (e)=>{
-            e.preventDefault();
-            this.tabClick(e)
-        });
-
-        return this;
-    }
-    node = '';
-    dataProps = {
-
-    }
-    tabClick = (e)=>{
-        var curTab = $(e.target).closest('.tab');
-
-        $('.tab').removeClass('active');
-        $('.tab-content').removeClass('active');
-
-        curTab.addClass('active');
-        $(`#${curTab.data('content')}`).addClass('active')
-    }
-}
-
 class Popup{
     constructor(node) {
         this.node = node;
@@ -624,8 +598,6 @@ $(window).on('load', function(){
     $(document).on('click', '.header__menu-btn', function(){
         $('.admin-view__container').toggleClass('active-menu')
     })
-
-    var adminTabs = new Tabs('.admin-view');
 
     $(document).on('click', '.btn-achivments-form', function(e){
         var achivmentsForm = new PopupAchivmentsManagement('#achivments-form');
