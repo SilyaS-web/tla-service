@@ -1745,7 +1745,7 @@ class PopupBloggerSendOffer extends Popup{
                 for(var k in self.dataProps){
                     self.dataProps[k].set('')
                 }
-                $(document).find(`.btn-blogger-send-offer[data-project-work="${self.projectWorkId}"]`).text('Начать работу')
+                $(document).find(`.btn-blogger-send-offer[data-project-work="${self.projectWorkId}"]`).text('Заявка отправлена')
                 $(document).find(`.btn-blogger-send-offer[data-project-work="${self.projectWorkId}"]`).removeClass('btn-blogger-send-offer')
             }
         })
