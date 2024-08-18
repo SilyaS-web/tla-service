@@ -2030,6 +2030,8 @@ class PopupBlogerProjectMoreInfo extends Popup{
                 }
 
                 $(self.node).find('.characteristics__category').text(contentText)
+
+                $(self.node).find('.btn-blogger-send-offer-popup').data('project-work', self.projectId)
             }
         })
     }
@@ -2203,6 +2205,19 @@ $(window).on('load', function(){
 
         choosePopupBlogger.projectNode = $(e.target).closest('.project-item')
         choosePopupBlogger.projectID = $(btn).data('project-work')
+    })
+    $(document).on('click', '.btn-blogger-send-offer-popup', function(e){
+        var btn = $(e.target).closest('.btn-blogger-send-offer-popup'),
+            product_id = $(btn).data('project-work');
+
+        choosePopupBlogger.openPopup();
+        console.log($(`#profile-projects .project-item[data-id="${product_id}"]`))
+        var formats = $(`.profile-projects__body .project-item[data-id="${product_id}"]`).find('.project-item__format-tags .card__tags-item');
+
+        choosePopupBlogger.addFormats(formats);
+
+        choosePopupBlogger.projectNode = $(e.target).closest('.project-item')
+        choosePopupBlogger.projectID = product_id
     })
 
     $(document).on('click', '#blogger .project-item', function(e){
