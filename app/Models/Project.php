@@ -178,7 +178,7 @@ class Project extends Model
 
     public function isSended() {
         $user = Auth::user();
-        $work = Work::where('blogger_id', $user->id)->first();
+        $work = Work::where('blogger_id', $user->id)->where('project_id', $this->id)->first();
         if ($work) {
             return true;
         }
