@@ -51,7 +51,20 @@
                                     @continue
                                 @endif
                                 <div class="blogger-platforms__item item-platforms">
-                                    <a target="_blank" href="{{ $blogger_platform->link }}" class="item-platforms__title item-platforms__title--{{ $types[$blogger_platform->name] }}">
+                                    <?
+                                        $link = $blogger_platform->link ?? '';
+                                        $is = trim($blogger_platform->link)[0] == '@';
+
+                                        if($is){
+                                            if($blogger_platform->name == 'Telegram'){
+                                                $link = 'https://t.me/' . substr($link, 1);
+                                            }
+                                            else if($blogger_platform->name == 'Instagram'){
+                                                $link = 'https://www.instagram.com/' .  substr($link, 1);
+                                            }
+                                        }
+                                    ?>
+                                    <a target="_blank" href="{{ $link }}" class="item-platforms__title item-platforms__title--{{ $types[$blogger_platform->name] }}">
                                         {{ $blogger_platform->name }}
                                     </a>
                                     <div class="item-platforms__stats">
