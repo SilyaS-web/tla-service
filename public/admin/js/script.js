@@ -587,6 +587,37 @@ class PopupAchivmentsManagement extends Popup{
     }
 }
 
+class PopupConfirmDeletion extends Popup{
+    constructor(node){
+        super(node);
+
+        this.node = node;
+
+        $(this.node).find('.close-popup-btn').on('click', this.closePopup)
+        $(this.node).find('.send-data').on('click', ()=>{
+            var self = this;
+
+            $.ajax({
+                url: '/apist/users/' + self.id,
+                type: 'DELETE',
+                success: function(result) {
+                    self.card.remove();
+                    self.closePopup()
+                }
+            });
+        })
+
+        if(!this.instance) this.instance = this;
+
+        return this.instance;
+    }
+    instance = null;
+
+    node = '';
+    id = '';
+    card = '';
+}
+
 function notify(type, content){
     $('.notification').show()
     $('.notification').addClass(type)
@@ -602,16 +633,15 @@ function notify(type, content){
 
 $(window).on('load', function(){
     $(document).on('click', '.card__delete', function(e){
-        var btn = $(e.currentTarget),
-            card = $(btn).closest('.card');
+        var btn = $(e.currentTarget);
 
-        $.post('/apist/admin/bloggers', {
-            name: search
-        },
-        function(res){
-            $('#blogers-list').find('.list-blogers').remove();
-            $('#blogers-list').find('.admin-blogers__body').append(res);
-        })
+        e.preventDefault();
+
+        confirmationPopup = new PopupConfirmDeletion('#confirm-deletion');
+
+        confirmationPopup.id = btn.data('id')
+        confirmationPopup.card = btn.closest('.card')
+        confirmationPopup.openPopup()
     })
 
     //popups
