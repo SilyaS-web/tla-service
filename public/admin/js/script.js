@@ -601,7 +601,18 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
+    $(document).on('click', '.card__delete', function(e){
+        var btn = $(e.currentTarget),
+            card = $(btn).closest('.card');
 
+        $.post('/apist/admin/bloggers', {
+            name: search
+        },
+        function(res){
+            $('#blogers-list').find('.list-blogers').remove();
+            $('#blogers-list').find('.admin-blogers__body').append(res);
+        })
+    })
 
     //popups
     var acceptBlogerForm;

@@ -57,5 +57,8 @@
             </div>
         </div>
     </div>
+    <div class="card__delete">
+        <img src="{{ '/img/trash-icon.svg' }}" alt="">
+    </div>
 </div>
 @endif

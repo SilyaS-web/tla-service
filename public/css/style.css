@@ -1828,6 +1828,7 @@ input[type='range']::-webkit-slider-runnable-track{
     width: calc(100% / 3 - 5px);
     max-width: 510px;
     min-width: 400px;
+    position: relative;
 }
 .card__content {
     gap: 12px;
@@ -1969,6 +1970,9 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .card__stats-row{
     gap: 8px;
+}
+.card__delete img{
+    width:100%;
 }
 .btn-bloggers.tablet{
     display: none;
