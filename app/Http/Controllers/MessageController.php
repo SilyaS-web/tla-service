@@ -155,6 +155,7 @@ class MessageController extends Controller
         $work->update(['last_message_at' => date('Y-m-d H:i')]);
         Notification::create([
             'user_id' => $work->getPartnerUser($user->role)->id,
+            'work_id' => $work->id,
             'type' => 'Новое сообщение',
             'text' => 'Вам поступило новое сообщение от ' . $user->name,
         ]);

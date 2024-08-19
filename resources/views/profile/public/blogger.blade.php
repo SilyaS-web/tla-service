@@ -45,51 +45,199 @@
                                     'Instagram' => 'inst',
                                     'VK' => 'vk',
                                     'Youtube' => 'yt'
-                            ];)
+                            ])
                             @foreach (($user->blogger->platforms ?? []) as $blogger_platform )
                                 @if(!$blogger_platform->subscriber_quantity)
                                     @continue
                                 @endif
                                 <div class="blogger-platforms__item item-platforms">
-                                    <div class="item-platforms__title item-platforms__title--{{ $types[$blogger_platform->name] }}">
+                                    <?
+                                        $link = $blogger_platform->link ?? '';
+                                        $is = trim($blogger_platform->link)[0] == '@';
+
+                                        if($is){
+                                            if($blogger_platform->name == 'Telegram'){
+                                                $link = 'https://t.me/' . substr($link, 1);
+                                            }
+                                            else if($blogger_platform->name == 'Instagram'){
+                                                $link = 'https://www.instagram.com/' .  substr($link, 1);
+                                            }
+                                        }
+                                    ?>
+                                    <a target="_blank" href="{{ $link }}" class="item-platforms__title item-platforms__title--{{ $types[$blogger_platform->name] }}">
                                         {{ $blogger_platform->name }}
-                                    </div>
-                                    <div class="item-platforms__stats">
-                                        <div class="item-platforms__stat">
-                                            <div class="item-platforms__stat-title">
-                                                Подписчики
-                                            </div>
-                                            <div class="item-platforms__stat-value">
-                                                {{ $blogger_platform->subscriber_quantity ?? 0 }}
-                                            </div>
-                                        </div>
-                                        <div class="item-platforms__stat">
-                                            <div class="item-platforms__stat-title">
-                                                Охваты
-                                            </div>
-                                            <div class="item-platforms__stat-value">
-                                                {{ $blogger_platform->coverage ?? 0 }}
-                                            </div>
-                                        </div>
-                                        <div class="item-platforms__stat">
-                                            <div class="item-platforms__stat-title">
-                                                ER %
-                                            </div>
-                                            <div class="item-platforms__stat-value">
-                                                {{ $blogger_platform->engagement_rate ?? 0 }}
-                                            </div>
-                                        </div>
-                                        @if ($blogger_platform->cost_per_mille)
-                                            <div class="item-platforms__stat">
-                                                <div class="item-platforms__stat-title">
-                                                    CPM
+                                    </a>
+
+                                    @switch($blogger_platform->name)
+                                        @case('Youtube')
+                                            <div class="item-platforms__stats">
+                                                <div class = "item-platforms__stats-row">
+                                                    <div class="item-platforms__stat">
+                                                        <div class="item-platforms__stat-title">
+                                                            Подписчики
+                                                        </div>
+                                                        <div class="item-platforms__stat-value">
+                                                            {{ $blogger_platform->subscriber_quantity ?? 0 }}
+                                                        </div>
+                                                    </div>
                                                 </div>
-                                                <div class="item-platforms__stat-value">
-                                                    {{ $blogger_platform->cost_per_mille ?? 0}}
+                                                <div class = "item-platforms__stats-row">
+                                                    <div class="item-platforms__stat">
+                                                        <div class="item-platforms__stat-title">
+                                                            Просмотры выпусков
+                                                        </div>
+                                                        <div class="item-platforms__stat-value">
+                                                            {{ $blogger_platform->coverage ?? 0 }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-platforms__stat er">
+                                                        <div class="item-platforms__stat-title">
+                                                            ER %
+                                                        </div>
+                                                        <div class="item-platforms__stat-value">
+                                                            {{ $blogger_platform->engagement_rate ?? 0 }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class = "item-platforms__stats-row">
+                                                    <div class="item-platforms__stat">
+                                                        <div class="item-platforms__stat-title">
+                                                            Просмотры shorts
+                                                        </div>
+                                                        <div class="item-platforms__stat-value">
+                                                            {{ $blogger_platform->additional_coverage ?? 0 }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-platforms__stat er">
+                                                        <div class="item-platforms__stat-title">
+                                                            ER %
+                                                        </div>
+                                                        <div class="item-platforms__stat-value">
+                                                            {{ $blogger_platform->additional_engagement_rate ?? 0 }}
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        @endif
-                                    </div>
+                                        @break
+
+                                        @case('Instagram')
+                                            <div class="item-platforms__stats">
+                                                <div class = "item-platforms__stats-row">
+                                                    <div class="item-platforms__stat">
+                                                        <div class="item-platforms__stat-title">
+                                                            Подписчики
+                                                        </div>
+                                                        <div class="item-platforms__stat-value">
+                                                            {{ $blogger_platform->subscriber_quantity ?? 0 }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class = "item-platforms__stats-row">
+                                                    <div class="item-platforms__stat">
+                                                        <div class="item-platforms__stat-title">
+                                                            Просмотры reels
+                                                        </div>
+                                                        <div class="item-platforms__stat-value">
+                                                            {{ $blogger_platform->coverage ?? 0 }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-platforms__stat er">
+                                                        <div class="item-platforms__stat-title">
+                                                            ER %
+                                                        </div>
+                                                        <div class="item-platforms__stat-value">
+                                                            {{ $blogger_platform->engagement_rate ?? 0 }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @break
+
+                                        @case('VK')
+                                            <div class="item-platforms__stats">
+                                                <div class = "item-platforms__stats-row">
+                                                    <div class="item-platforms__stat">
+                                                        <div class="item-platforms__stat-title">
+                                                            Подписчики
+                                                        </div>
+                                                        <div class="item-platforms__stat-value">
+                                                            {{ $blogger_platform->subscriber_quantity ?? 0 }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class = "item-platforms__stats-row">
+                                                    <div class="item-platforms__stat">
+                                                        <div class="item-platforms__stat-title">
+                                                            Просмотры постов
+                                                        </div>
+                                                        <div class="item-platforms__stat-value">
+                                                            {{ $blogger_platform->coverage ?? 0 }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-platforms__stat er">
+                                                        <div class="item-platforms__stat-title">
+                                                            ER %
+                                                        </div>
+                                                        <div class="item-platforms__stat-value">
+                                                            {{ $blogger_platform->engagement_rate ?? 0 }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class = "item-platforms__stats-row">
+                                                    <div class="item-platforms__stat">
+                                                        <div class="item-platforms__stat-title">
+                                                            Просмотры клипов
+                                                        </div>
+                                                        <div class="item-platforms__stat-value">
+                                                            {{ $blogger_platform->additional_coverage ?? 0 }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-platforms__stat er">
+                                                        <div class="item-platforms__stat-title">
+                                                            ER %
+                                                        </div>
+                                                        <div class="item-platforms__stat-value">
+                                                            {{ $blogger_platform->additional_engagement_rate ?? 0 }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @break
+
+                                        @case('Telegram')
+                                            <div class="item-platforms__stats">
+                                                <div class = "item-platforms__stats-row">
+                                                    <div class="item-platforms__stat">
+                                                        <div class="item-platforms__stat-title">
+                                                            Подписчики
+                                                        </div>
+                                                        <div class="item-platforms__stat-value">
+                                                            {{ $blogger_platform->subscriber_quantity ?? 0 }}
+                                                        </div>
+                                                    </div>
+                                                    <div class="item-platforms__stat">
+                                                        <div class="item-platforms__stat-title">
+                                                            Просмотры
+                                                        </div>
+                                                        <div class="item-platforms__stat-value">
+                                                            {{ $blogger_platform->coverage ?? 0 }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class = "item-platforms__stats-row">
+                                                    <div class="item-platforms__stat er">
+                                                        <div class="item-platforms__stat-title">
+                                                            ER %
+                                                        </div>
+                                                        <div class="item-platforms__stat-value">
+                                                            {{ $blogger_platform->engagement_rate ?? 0 }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @break
+
+                                    @endswitch
                                 </div>
                             @endforeach
                         </div>

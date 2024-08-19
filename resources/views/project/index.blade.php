@@ -132,7 +132,7 @@
                                     </div>
                                     <div class="card__platforms">
                                         @foreach ($blogger->platforms as $platform)
-                                        <div class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></div>
+                                            <a target="_blank" href="{{ $platform->link }}" class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></a>
                                         @endforeach
                                     </div>
                                 </div>
@@ -172,7 +172,7 @@
                                         </div>
                                         <div class="card__col card__stats-item">
                                             <div class="card__stats-title">
-                                                <span>Охваты</span>
+                                                <span>Просмотры</span>
                                             </div>
                                             <div class="card__stats-val">
                                                 <span>{{ number_format($blogger->getCoverage(), 0, '', ' ') }}</span>
@@ -261,7 +261,7 @@
                                     </div>
                                     <div class="card__platforms">
                                         @foreach ($blogger->platforms as $platform)
-                                        <div class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></div>
+                                            <a target="_blank" href="{{ $platform->link }}" class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></a>
                                         @endforeach
                                     </div>
                                 </div>
@@ -301,7 +301,7 @@
                                         </div>
                                         <div class="card__col card__stats-item">
                                             <div class="card__stats-title">
-                                                <span>Охваты</span>
+                                                <span>Просмотры</span>
                                             </div>
                                             <div class="card__stats-val">
                                                 <span>{{ number_format($blogger->getCoverage(), 0, '', ' ') }}</span>

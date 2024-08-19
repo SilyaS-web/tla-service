@@ -290,7 +290,7 @@
                             </div>
                         </div> --}}
                         <div class="project-item__btns">
-                            <button class="btn btn-primary btn-blogger-send-offer" style="" data-project-work="">Откликнуться</button>
+                            <button class="btn btn-primary btn-blogger-send-offer-popup" style="" data-project-work="">Откликнуться</button>
                             <a href="" class="btn btn-secondary btn-go-to-shop" style="" target="_blank">Подробнее</a>
                         </div>
                     </div>

@@ -473,6 +473,7 @@ class ProjectController extends Controller
             'images' => $project->getImageURL(),
             'optioins' => $project->marketplace_options != 'null' ? $project->marketplace_options : NULL,
             'link' => $project->product_link,
+            'application_sent' => $project->isSended(),
         ], 200);
     }
 

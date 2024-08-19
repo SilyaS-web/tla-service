@@ -1,4 +1,9 @@
 @forelse ($project_works as $work)
+
+@if(!isset($work->project))
+    @continue
+@endif
+
 @if($type == 'applications')
     @php($project_work = $work->projectWork)
 @else

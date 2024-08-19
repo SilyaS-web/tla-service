@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BloggerPlatform extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     public const YOUTUBE = 'Youtube';
     public const INSTAGRAM = 'Instagram';
@@ -33,8 +34,10 @@ class BloggerPlatform extends Model
         'name',
         'subscriber_quantity',
         'coverage',
+        'additional_coverage',
         'link',
         'engagement_rate',
+        'additional_engagement_rate',
         'cost_per_mille',
     ];
 
