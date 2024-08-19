@@ -88,7 +88,15 @@
                     </div>
                 </div>
                 <div class="card__row" style="text-align: center; justify-content:center">
-                    <a href="#" class="" style="color:rgba(0,0,0,.4); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -20px;">Подробнее</a>
+                    <a
+                        v-bind:href="'/blogger/' + blogger.id"
+                        target="_blank"
+                        class=""
+                        style="color:rgba(0,0,0,.4);
+                        font-size:16px;
+                        font-weight:500;
+                        text-decoration:underline;
+                        margin-top: -20px;">Подробнее</a>
                 </div>
                 <div v-if="blogger.user.status === 0" class="admin-bloger__btns">
                     <a href="#" class="btn btn-primary btn-accept" data-id="{{ blogger.id }}">Принять</a>
