@@ -1,6 +1,6 @@
 @forelse ($project_works as $work)
 
-@if(!isset($project_work->project))
+@if(!isset($work->project))
     @continue
 @endif
 
