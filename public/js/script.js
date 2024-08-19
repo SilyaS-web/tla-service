@@ -1747,6 +1747,9 @@ class PopupBloggerSendOffer extends Popup{
                 }
                 $(document).find(`.btn-blogger-send-offer[data-project-work="${self.projectWorkId}"]`).text('Заявка отправлена')
                 $(document).find(`.btn-blogger-send-offer[data-project-work="${self.projectWorkId}"]`).removeClass('btn-blogger-send-offer')
+
+                $(document).find(`.btn-blogger-send-offer-popup`).text('Заявка отправлена')
+                $(document).find(`.btn-blogger-send-offer-popup`).addClass('disabled')
             }
         })
     }
@@ -2032,6 +2035,9 @@ class PopupBlogerProjectMoreInfo extends Popup{
                 $(self.node).find('.characteristics__category').text(contentText)
 
                 $(self.node).find('.btn-blogger-send-offer-popup').data('project-work', self.projectId)
+
+                $(document).find(`.btn-blogger-send-offer-popup`).text(res.application_sent ? 'Заявка отправлена' : 'Откликнуться')
+                $(document).find(`.btn-blogger-send-offer-popup`).toggleClass('disabled', res.application_sent)
             }
         })
     }
