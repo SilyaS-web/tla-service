@@ -6,7 +6,7 @@
         <div class="item-chat__title">{{ $work->getPartnerUser(auth()->user()->role)->name }}</div>
         <div class="item-chat__last-msg">
             <p>Проект:</p>
-            <span>{{ $work->project->product_name }}</span>
+            <span>{{ isset($work->project) ? $work->project->product_name : 'Проект удалён' }}</span>
             <p>ID: {{$work->id}}</p>
         </div>
         <a href="#" class="item-chat__project-link {{ auth()->user()->role == 'seller' ? "item-chat__project-link--seller" : 'item-chat__project-link--blogger' }}" data-project-id = "{{$work->project->id}}">Перейти к проекту</a>
