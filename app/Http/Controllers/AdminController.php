@@ -74,22 +74,7 @@ class AdminController extends Controller
         ]);
 
         foreach (BloggerPlatform::PLATFORM_TYPES as $platform_type) {
-            $platform = $blogger->platforms()->where('name', $platform_type)->first();
-            if ($platform) {
-                if (!isset($validated[$platform_type . '_link']) || empty($validated[$platform->name . '_link'])) {
-                    $platform->delete();
-                } else {
-                    $platform->update([
-                        'link' => $validated[$platform_type . '_link'] ?? null,
-                        'subscriber_quantity' => $validated[$platform_type . '_subs'] ?? null,
-                        'coverage' => $validated[$platform_type . '_cover'] ?? null,
-                        'additional_coverage' => $validated[$platform_type . '_additional_coverage'] ?? null,
-                        'engagement_rate' => $validated[$platform_type . '_er'] ?? null,
-                        'additional_engagement_rate' => $validated[$platform_type . '_additional_engagement_rate'] ?? null,
-                        'cost_per_mille' => $validated[$platform_type . '_cpm'] ?? null,
-                    ]);
-                }
-            } else {
+            if (isset($validated[$platform_type . '_link']) && !empty($validated[$platform_type . '_link'])) {
                 BloggerPlatform::create([
                     'blogger_id' => $blogger->id,
                     'name' => $platform_type,
