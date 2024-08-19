@@ -80,26 +80,26 @@ class AdminController extends Controller
                     $platform->delete();
                 } else {
                     $platform->update([
-                        'link' => $validated[$platform_type . '_link'],
-                        'subscriber_quantity' => $validated[$platform_type . '_subs'],
-                        'coverage' => $validated[$platform_type . '_cover'],
-                        'additional_coverage' => $validated[$platform_type . '_additional_coverage'],
-                        'engagement_rate' => $validated[$platform_type . '_er'],
-                        'additional_engagement_rate' => $validated[$platform_type . '_additional_engagement_rate'],
-                        'cost_per_mille' => $validated[$platform_type . '_cpm'],
+                        'link' => $validated[$platform_type . '_link'] ?? null,
+                        'subscriber_quantity' => $validated[$platform_type . '_subs'] ?? null,
+                        'coverage' => $validated[$platform_type . '_cover'] ?? null,
+                        'additional_coverage' => $validated[$platform_type . '_additional_coverage'] ?? null,
+                        'engagement_rate' => $validated[$platform_type . '_er'] ?? null,
+                        'additional_engagement_rate' => $validated[$platform_type . '_additional_engagement_rate'] ?? null,
+                        'cost_per_mille' => $validated[$platform_type . '_cpm'] ?? null,
                     ]);
                 }
             } else {
                 BloggerPlatform::create([
                     'blogger_id' => $blogger->id,
                     'name' => $platform_type,
-                    'link' => $validated[$platform_type . '_link'],
-                    'subscriber_quantity' => $validated[$platform_type . '_subs'],
-                    'coverage' => $validated[$platform_type . '_cover'],
-                    'additional_coverage' => $validated[$platform_type . '_additional_coverage'],
-                    'engagement_rate' => $validated[$platform_type . '_er'],
-                    'additional_engagement_rate' => $validated[$platform_type . '_additional_engagement_rate'],
-                    'cost_per_mille' => $validated[$platform_type . '_cpm'],
+                    'link' => $validated[$platform_type . '_link'] ?? null,
+                    'subscriber_quantity' => $validated[$platform_type . '_subs'] ?? null,
+                    'coverage' => $validated[$platform_type . '_cover'] ?? null,
+                    'additional_coverage' => $validated[$platform_type . '_additional_coverage'] ?? null,
+                    'engagement_rate' => $validated[$platform_type . '_er'] ?? null,
+                    'additional_engagement_rate' => $validated[$platform_type . '_additional_engagement_rate'] ?? null,
+                    'cost_per_mille' => $validated[$platform_type . '_cpm'] ?? null,
                 ]);
             }
         }
