@@ -17,7 +17,8 @@ class BloggerController extends Controller
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'status' => 'numeric|nullable',
+            'statuses' => 'array|nullable',
+            'statuses.*' => 'numeric',
         ]);
 
         if ($validator->fails()) {
@@ -26,9 +27,9 @@ class BloggerController extends Controller
 
         $validated = $validator->validated();
         $bloggers = Blogger::where([]);
-        if (isset($validated['status'])) {
+        if (isset($validated['statuses']) && !empty($validated['statuses'])) {
             $bloggers->whereHas('user', function (Builder $query) use ($validated) {
-                $query->where('status', $validated['status']);
+                $query->whereIn('status', $validated['statuses']);
             });
         }
 
