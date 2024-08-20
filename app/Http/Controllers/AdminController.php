@@ -75,17 +75,33 @@ class AdminController extends Controller
 
         foreach (BloggerPlatform::getLowerPlatforms() as $platform_type) {
             if (isset($validated[$platform_type . '_link']) && !empty($validated[$platform_type . '_link'])) {
-                BloggerPlatform::create([
-                    'blogger_id' => $blogger->id,
-                    'name' => $platform_type,
-                    'link' => $validated[$platform_type . '_link'] ?? null,
-                    'subscriber_quantity' => $validated[$platform_type . '_subs'] ?? null,
-                    'coverage' => $validated[$platform_type . '_cover'] ?? null,
-                    'additional_coverage' => $validated[$platform_type . '_additional_coverage'] ?? null,
-                    'engagement_rate' => $validated[$platform_type . '_er'] ?? null,
-                    'additional_engagement_rate' => $validated[$platform_type . '_additional_engagement_rate'] ?? null,
-                    'cost_per_mille' => $validated[$platform_type . '_cpm'] ?? null,
-                ]);
+                $platform = $blogger->platforms()->where('name', $platform_type . '_link')->first();
+                if ($platform) {
+                    $platform->update([
+                        'blogger_id' => $blogger->id,
+                        'name' => $platform_type,
+                        'link' => $validated[$platform_type . '_link'] ?? null,
+                        'subscriber_quantity' => $validated[$platform_type . '_subs'] ?? null,
+                        'coverage' => $validated[$platform_type . '_cover'] ?? null,
+                        'additional_coverage' => $validated[$platform_type . '_additional_coverage'] ?? null,
+                        'engagement_rate' => $validated[$platform_type . '_er'] ?? null,
+                        'additional_engagement_rate' => $validated[$platform_type . '_additional_engagement_rate'] ?? null,
+                        'cost_per_mille' => $validated[$platform_type . '_cpm'] ?? null,
+                    ]);
+                } else {
+                    BloggerPlatform::create([
+                        'blogger_id' => $blogger->id,
+                        'name' => $platform_type,
+                        'link' => $validated[$platform_type . '_link'] ?? null,
+                        'subscriber_quantity' => $validated[$platform_type . '_subs'] ?? null,
+                        'coverage' => $validated[$platform_type . '_cover'] ?? null,
+                        'additional_coverage' => $validated[$platform_type . '_additional_coverage'] ?? null,
+                        'engagement_rate' => $validated[$platform_type . '_er'] ?? null,
+                        'additional_engagement_rate' => $validated[$platform_type . '_additional_engagement_rate'] ?? null,
+                        'cost_per_mille' => $validated[$platform_type . '_cpm'] ?? null,
+                    ]);
+                }
+
             }
         }
 
