@@ -42,8 +42,14 @@ class BloggerController extends Controller
                 $theme->theme;
             }
         }
+        $data = [
+            'data' => [
+                'bloggers' => $bloggers,
+                'platform_fields' => BloggerPlatform::getFields(),
+            ]
+         ];
 
-        return response()->json($bloggers)->setStatusCode(200);
+        return response()->json($data)->setStatusCode(200);
     }
 
     public function accept(Blogger $blogger, Request $request)

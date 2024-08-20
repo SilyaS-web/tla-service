@@ -32,4 +32,23 @@ class BloggerPlatform extends Model
     {
         return $this->belongsTo(Blogger::class, 'id', 'blogger_id');
     }
+
+    public static function getFields() {
+        return [
+            'Telegram' => [
+                'coverage' => 'Просмотры',
+            ],
+            'VK' => [
+                'coverage' => 'Просмотры постов',
+                'additional_coverage' => 'Просмотры клипов',
+            ],
+            'Youtube' => [
+                'coverage' => 'Просмотры выпуска',
+                'additional_coverage' => 'Просмотры shorts',
+            ],
+            'Instagram' => [
+                'coverage' => 'Просмотры reels',
+            ],
+        ];
+    }
 }
