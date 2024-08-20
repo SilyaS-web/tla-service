@@ -27,8 +27,11 @@ class BloggerController extends Controller
         $bloggers = Blogger::where([]);
         if (isset($validated['statuses'])) {
             $bloggers->whereHas('user', function (Builder $query) use ($validated) {
+                foreach ($validated['statuses'] as &$status) {
+                    $status = (int) $status;
+                }
+
                 $query->whereIn('status', $validated['statuses']);
-                dd($query);
             });
 
         }
