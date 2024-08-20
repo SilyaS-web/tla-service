@@ -193,20 +193,6 @@ class BloggerController extends Controller
         return response()->json('success', 200);
     }
 
-    public function deny(Blogger $blogger)
-    {
-        $user = $blogger->user;
-        $user->status = -1;
-        $user->save();
-        if ($user->status == 0) {
-            TgService::notify($user->tgPhone->chat_id, 'Вы не прошли модерацию');
-        } else {
-            TgService::notify($user->tgPhone->chat_id, 'Вы были забанены');
-        }
-
-        return response()->json('success', 200);
-    }
-
     /**
      * Update the specified resource in storage.
      *
