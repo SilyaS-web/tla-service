@@ -73,7 +73,7 @@ class AdminController extends Controller
             'is_achievement' => $validated['is_achievement'] ?? 0,
         ]);
 
-        foreach (BloggerPlatform::PLATFORM_TYPES as $platform_type) {
+        foreach (BloggerPlatform::getLowerPlatforms() as $platform_type) {
             if (isset($validated[$platform_type . '_link']) && !empty($validated[$platform_type . '_link'])) {
                 BloggerPlatform::create([
                     'blogger_id' => $blogger->id,
