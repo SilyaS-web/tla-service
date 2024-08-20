@@ -70,7 +70,7 @@ class AdminController extends Controller
             'sex' => $validated['sex'],
             'country_id' => $validated['country_id'],
             'gender_ratio' => $validated['gender_ratio'],
-            'is_achievement' => $validated['is_achievement'] ?? 0,
+            'is_achievement' => isset($validated['is_achievement']),
         ]);
 
         foreach (BloggerPlatform::getLowerPlatforms() as $platform_type) {
@@ -303,7 +303,7 @@ class AdminController extends Controller
             'sex' => $validated['sex'] ?? 'male',
             'country_id' => $validated['country_id'],
             'gender_ratio' => $validated['gender_ratio'] ?? 0,
-            'is_achievement' => $validated['is_achievement'] ?? 0,
+            'is_achievement' => isset($validated['is_achievement']),
         ]);
         foreach (BloggerPlatform::getLowerPlatforms() as $platform_type) {
             $platform = $blogger->platforms()->where('name', $platform_type)->first();
