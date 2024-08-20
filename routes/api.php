@@ -27,3 +27,4 @@ Route::get('/sellers', [SellerController::class, 'index']);
 
 Route::get('/projects', [ProjectController::class, 'index']);
 Route::get('/projects/{project}/ban', [ProjectController::class, 'ban']);
+Route::get('/projects/{project}/unban', [ProjectController::class, 'unban']);
