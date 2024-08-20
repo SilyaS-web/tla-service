@@ -112,39 +112,70 @@
                                     <option value="female" class="" {{ $user->blogger->sex == 'female' ? 'selected' : ''}}>Женский</option>
                                 </select>
                             </div>
-                            <label for="">Статистика по блогеру</label>
-                            @foreach ($user->blogger->platforms as $platform)
-                                <div class="form-stat">
+                            <label for="" style="margin-bottom:10px; display:block">Статистика по блогеру</label>
+                            @php(
+                                $platforms_main_cover_titles = [
+                                    'Telegram' => 'Просмотры',
+                                    'VK' => 'Просмотры постов',
+                                    'Youtube' => 'Просмотры выпуска',
+                                    'Instagram' => 'Просмотры reels',
+                                ]
+                            )
+                            @php(
+                                $platforms_additional_cover_titles = [
+                                    'VK' => 'Просмотры клипов',
+                                    'Youtube' => 'Просмотры shorts',
+                                ]
+                            )
+                            @foreach($platforms as $platform)
+                                @php( $blogger_platform = $user->blogger->platforms()->where('name', $platform)->first() )
+                                <div class="popup__form-row popup__form-stat form-stat">
                                     <div class="form-stat__title">
-                                        {{ $platform->name }}
+                                        {{ $platform }}
                                     </div>
                                     <div class="form-stat__content">
                                         <div class="form-stat__row">
                                             <div class="form-group" style="width:100%; max-width:100%">
-                                                <label for="{{ $platform->name }}_link">Ссылка</label>
-                                                <input id="{{ $platform->name }}_link" type="text" class="input" name="{{ $platform->name }}_link" style="width:100%; max-width:100%" value="{{ $platform->link }}">
+                                                <label for="{{ strtolower($platform) }}_link">Ссылка</label>
+                                                <input id="{{ strtolower($platform) }}_link" type="text" class="input" name="{{ strtolower($platform) }}_link" style="width:100%; max-width:100%" value="{{ $blogger_platform->link ?? '' }}">
                                             </div>
                                         </div>
                                         <div class="form-stat__row">
                                             <div class="form-group">
-                                                <label for="{{ $platform->name }}_subs">Подписчики</label>
-                                                <input id="{{ $platform->name }}_subs" type="text" class="input" name="{{ $platform->name }}_subs" value="{{ $platform->subscriber_quantity }}">
+                                                <label for="{{ strtolower($platform) }}_subs">Подписчики</label>
+                                                <input id="{{ strtolower($platform) }}_subs" type="text" class="input" name="{{ strtolower($platform) }}_subs" value = "{{ $blogger_platform->subscriber_quantity  ?? '' }}">
                                             </div>
                                             <div class="form-group">
-                                                <label for="{{ $platform->name }}_cover">Охваты</label>
-                                                <input id="{{ $platform->name }}_cover" type="text" class="input" name="{{ $platform->name }}_cover" value="{{ $platform->coverage }}">
+                                                <label for="{{ strtolower($platform) }}_cpm">CPM</label>
+                                                <input id="{{ strtolower($platform) }}_cpm" type="text" class="input" name="{{ strtolower($platform) }}_cpm" value = "{{ $blogger_platform->cost_per_mille  ?? '' }}">
                                             </div>
                                         </div>
-                                        <div class="form-stat__row">
-                                            <div class="form-group">
-                                                <label for="{{ $platform->name }}_er">ER %</label>
-                                                <input id="{{ $platform->name }}_er" type="text" class="input" name="{{ $platform->name }}_er" value="{{ $platform->engagement_rate }}">
+
+                                        @if(isset($platforms_main_cover_titles[$platform]))
+                                            <div class="form-stat__row">
+                                                <div class="form-group">
+                                                    <label for="{{ strtolower($platform) }}_cover">{{ $platforms_main_cover_titles[$platform] }}</label>
+                                                    <input id="{{ strtolower($platform) }}_cover" type="text" class="input" name="{{ strtolower($platform) }}_cover" value = "{{ $blogger_platform->coverage   ?? ''}}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="{{ strtolower($platform) }}_er">ER %</label>
+                                                    <input id="{{ strtolower($platform) }}_er" type="text" class="input" name="{{ strtolower($platform) }}_er" value = "{{ $blogger_platform->engagement_rate  ?? '' }}">
+                                                </div>
                                             </div>
-                                            <div class="form-group">
-                                                <label for="{{ $platform->name }}_cpm">CPM</label>
-                                                <input id="{{ $platform->name }}_cpm" type="text" class="input" name="{{ $platform->name }}_cpm" value="{{ $platform->cost_per_mille }}">
+                                        @endif
+
+                                        @if(isset($platforms_additional_cover_titles[$platform]))
+                                            <div class="form-stat__row">
+                                                <div class="form-group">
+                                                    <label for="{{ strtolower($platform) }}_additional_cover">{{ $platforms_additional_cover_titles[$platform] }}</label>
+                                                    <input id="{{ strtolower($platform) }}_additional_cover" type="text" class="input" name="{{ strtolower($platform) }}_additional_coverage" value = "{{ $blogger_platform->additional_coverage  ?? '' }}">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="{{ strtolower($platform) }}_additional_er">ER %</label>
+                                                    <input id="{{ strtolower($platform) }}_additional_er" type="text" class="input" name="{{ strtolower($platform) }}_additional_engagement_rate" value = "{{ $blogger_platform->additional_engagement_rate  ?? '' }}">
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     </div>
                                 </div>
                             @endforeach
