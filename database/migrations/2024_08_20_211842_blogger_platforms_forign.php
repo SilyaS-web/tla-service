@@ -17,6 +17,7 @@ class BloggerPlatformsForign extends Migration
         Schema::table('blogger_platforms', function (Blueprint $table) {
             $table->unsignedBigInteger('platform_id');
             $table->foreign('platform_id')->references('id')->on('platforms')->cascadeOnDelete();
+            $table->dropColumns(['name']);
         });
 
 
@@ -31,6 +32,7 @@ class BloggerPlatformsForign extends Migration
     {
         Schema::table('blogger_platforms', function (Blueprint $table) {
             $table->dropColumns(['platform_id']);
+            $table->string('name')->nullable();
         });
     }
 }
