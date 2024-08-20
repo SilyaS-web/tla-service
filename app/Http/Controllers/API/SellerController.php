@@ -13,9 +13,7 @@ class SellerController extends Controller
 
     public function index(Request $request)
     {
-        $sellers = Seller::get();
-
-        $sellers = $sellers->with('user')->get();
+        $sellers = Seller::with('user')->get();
 
         return response()->json($sellers)->setStatusCode(200);
     }
