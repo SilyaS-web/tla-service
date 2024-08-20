@@ -16,7 +16,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/users/{user}/deny', [UserController::class, 'deny']);
+Route::get('/users/{user}/ban', [UserController::class, 'ban']);
+Route::get('/users/{user}/unban', [UserController::class, 'unban']);
 
 Route::get('/bloggers', [BloggerController::class, 'index']);
 Route::get('/bloggers/{blogger}/accept', [BloggerController::class, 'accept']);

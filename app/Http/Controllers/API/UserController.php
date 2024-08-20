@@ -13,7 +13,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class UserController extends Controller
 {
-    public function deny(User $user)
+    public function ban(User $user)
     {
         $user->status = -1;
         $user->save();
@@ -22,6 +22,15 @@ class UserController extends Controller
         } else {
             TgService::notify($user->tgPhone->chat_id, 'Вы были забанены');
         }
+
+        return response()->json('success', 200);
+    }
+
+    public function unban(User $user)
+    {
+        $user->status = 1;
+        $user->save();
+        TgService::notify($user->tgPhone->chat_id, 'Ваш аккаунт разблокировали');
 
         return response()->json('success', 200);
     }
