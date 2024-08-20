@@ -41,10 +41,10 @@
                         </div>
                         <div class="info-profile__platrfoms blogger-platforms">
                             @php($types = [
-                                    'Telegram' => 'tg',
-                                    'Instagram' => 'inst',
-                                    'VK' => 'vk',
-                                    'Youtube' => 'yt'
+                                    'telegram' => 'tg',
+                                    'instagram' => 'inst',
+                                    'vk' => 'vk',
+                                    'youtube' => 'yt'
                             ])
                             @foreach (($user->blogger->platforms ?? []) as $blogger_platform )
                                 @if(!$blogger_platform->subscriber_quantity)
@@ -64,12 +64,12 @@
                                             }
                                         }
                                     ?>
-                                    <a target="_blank" href="{{ $link }}" class="item-platforms__title item-platforms__title--{{ $types[$blogger_platform->name] }}">
-                                        {{ $blogger_platform->name }}
+                                    <a target="_blank" href="{{ $link }}" class="item-platforms__title item-platforms__title--{{ $types[strtolower($blogger_platform->name)] }}">
+                                        {{ strtoupper($blogger_platform->name) == 'VK' ? strtoupper($blogger_platform->name) : ucfirst($blogger_platform->name); }}
                                     </a>
 
-                                    @switch($blogger_platform->name)
-                                        @case('Youtube')
+                                    @switch(strtolower($blogger_platform->name))
+                                        @case('youtube')
                                             <div class="item-platforms__stats">
                                                 <div class = "item-platforms__stats-row">
                                                     <div class="item-platforms__stat">
@@ -120,7 +120,7 @@
                                             </div>
                                         @break
 
-                                        @case('Instagram')
+                                        @case('instagram')
                                             <div class="item-platforms__stats">
                                                 <div class = "item-platforms__stats-row">
                                                     <div class="item-platforms__stat">
@@ -153,7 +153,7 @@
                                             </div>
                                         @break
 
-                                        @case('VK')
+                                        @case('vk')
                                             <div class="item-platforms__stats">
                                                 <div class = "item-platforms__stats-row">
                                                     <div class="item-platforms__stat">
@@ -204,7 +204,7 @@
                                             </div>
                                         @break
 
-                                        @case('Telegram')
+                                        @case('telegram')
                                             <div class="item-platforms__stats">
                                                 <div class = "item-platforms__stats-row">
                                                     <div class="item-platforms__stat">
