@@ -16,7 +16,7 @@ class ProjectController extends Controller
         $projects = Project::with('projectFiles')->get();
         foreach ($projects as &$project) {
             $project->status_name = $project->getStatusName();
-            $project->project_works = $project->getProjectWorkNamesWithQuantity();
+            $project->project_works_with_quantity = $project->getProjectWorkNamesWithQuantity();
         }
 
         $data = [
