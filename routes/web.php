@@ -130,5 +130,6 @@ Route::middleware(['auth', 'banned'])->group(function () {
         Route::get('/notifications/{project_id}/view', [NotificationController::class, 'view']);
 
         Route::get('/coverage-data', [DeepLinkController::class, 'stats']);
+        Route::delete('/users/{user}', [UserController::class, 'deleteUser']);
     });
 });

@@ -95,6 +95,9 @@
                     <button class="btn btn-primary" onclick="banUser({{$blogger->user->id}}, this)">
                         Заблокировать
                     </button>
+                    <button class="btn btn-delete card__delete " style="" data-id="{{$blogger->user->id}}" >
+                        Удалить
+                    </button>
                 </div>
             </div>
         </div>
