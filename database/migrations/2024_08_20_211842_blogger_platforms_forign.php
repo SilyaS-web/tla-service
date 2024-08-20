@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 class BloggerPlatformsForign extends Migration
@@ -16,6 +17,14 @@ class BloggerPlatformsForign extends Migration
         Schema::table('blogger_platforms', function (Blueprint $table) {
             $table->unsignedBigInteger('platform_id')->nullable();
             $table->foreign('platform_id')->references('id')->on('platforms')->cascadeOnDelete();
+        });
+
+        DB::table('blogger_platforms')->where('name', 'Telegram')->update(['platform_id' => 1]);
+        DB::table('blogger_platforms')->where('name', 'Youtube')->update(['platform_id' => 2]);
+        DB::table('blogger_platforms')->where('name', 'Instagram')->update(['platform_id' => 3]);
+        DB::table('blogger_platforms')->where('name', 'VK')->update(['platform_id' => 4]);
+
+        Schema::table('blogger_platforms', function (Blueprint $table) {
             $table->dropColumn('name');
         });
     }

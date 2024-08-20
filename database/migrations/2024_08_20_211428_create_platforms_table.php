@@ -35,13 +35,13 @@ class CreatePlatformsTable extends Migration
                 "updated_at" => \Carbon\Carbon::now(),
             ],
             [
-                'title' => 'Instagram', // 1
+                'title' => 'Instagram', // 3
                 'image' => 'img/inst-icon.svg',
                 "created_at" =>  \Carbon\Carbon::now(),
                 "updated_at" => \Carbon\Carbon::now(),
             ],
             [
-                'title' => 'VK', // 1
+                'title' => 'VK', // 4
                 'image' => 'img/vk-icon.svg',
                 "created_at" =>  \Carbon\Carbon::now(),
                 "updated_at" => \Carbon\Carbon::now(),
