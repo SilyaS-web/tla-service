@@ -23,7 +23,7 @@ class UserController extends Controller
             TgService::notify($user->tgPhone->chat_id, 'Вы были забанены');
         }
 
-        return response()->json('success', 200);
+        return response()->json()->setStatusCode(200);
     }
 
     public function unban(User $user)
@@ -32,6 +32,6 @@ class UserController extends Controller
         $user->save();
         TgService::notify($user->tgPhone->chat_id, 'Ваш аккаунт разблокировали');
 
-        return response()->json('success', 200);
+        return response()->json()->setStatusCode(200);
     }
 }
