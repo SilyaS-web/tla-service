@@ -282,24 +282,24 @@ class AdminController extends Controller
 
         $blogger->update([
             'city' => $validated['city'] ?? null,
-            'description' => $validated['description'] ?? null,
-            'sex' => $validated['sex'],
+            'description' => $validated['description'] ?? '',
+            'sex' => $validated['sex'] ?? 'male',
             'country_id' => $validated['country_id'],
-            'gender_ratio' => $validated['gender_ratio'],
-            'is_achievement' => $validated['is_achievement'] ? 1 : 0,
+            'gender_ratio' => $validated['gender_ratio'] ?? 0,
+            'is_achievement' => $validated['is_achievement'] ?? 0,
         ]);
         foreach ($blogger->platforms as $platform) {
             if (!isset($validated[$platform->name . '_link']) || empty($validated[$platform->name . '_link'])) {
                 $platform->delete();
             } else {
                 $platform->update([
-                    'link' => $validated[$platform->name . '_link'],
-                    'subscriber_quantity' => $validated[$platform->name . '_subs'],
-                    'coverage' => $validated[$platform->name . '_cover'],
-                    'additional_coverage' => $validated[$platform->name . '_additional_coverage'],
-                    'engagement_rate' => $validated[$platform->name . '_er'],
-                    'additional_engagement_rate' => $validated[$platform->name . '_additional_engagement_rate'],
-                    'cost_per_mille' => $validated[$platform->name . '_cpm'],
+                    'link' => $validated[$platform->name . '_link'] ?? null,
+                    'subscriber_quantity' => $validated[$platform->name . '_subs'] ?? null,
+                    'coverage' => $validated[$platform->name . '_cover'] ?? null,
+                    'additional_coverage' => $validated[$platform->name . '_additional_coverage'] ?? null,
+                    'engagement_rate' => $validated[$platform->name . '_er'] ?? null,
+                    'additional_engagement_rate' => $validated[$platform->name . '_additional_engagement_rate'] ?? null,
+                    'cost_per_mille' => $validated[$platform->name . '_cpm'] ?? null,
                 ]);
             }
         }
