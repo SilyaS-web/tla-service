@@ -260,10 +260,17 @@
                         </div>
                         <label for="">Статистика по блогеру</label>
                         @php(
-                            $platforms_cover_titles = [
+                            $platforms_main_cover_titles = [
+                                'Telegram' => 'Просмотры',
+                                'VK' => 'Просмотры постов',
+                                'Youtube' => 'Просмотры выпуска',
+                                'Instagram' => 'Просмотры reels',
+                            ]
+                        )
+                        @php(
+                            $platforms_additional_cover_titles = [
                                 'VK' => 'Просмотры клипов',
                                 'Youtube' => 'Просмотры shorts',
-                                'Instagram' => 'Просмотры reels',
                             ]
                         )
                         @foreach($platforms as $platform)
@@ -274,40 +281,43 @@
                                 <div class="form-stat__content">
                                     <div class="form-stat__row">
                                         <div class="form-group" style="width:100%; max-width:100%">
-                                            <label for="tg_link">Ссылка</label>
-                                            <input id="tg_link" type="text" class="input" name="" style="width:100%; max-width:100%">
+                                            <label for="{{ $platform }}_link">Ссылка</label>
+                                            <input id="{{ $platform }}_link" type="text" class="input" name="" style="width:100%; max-width:100%">
                                         </div>
                                     </div>
                                     <div class="form-stat__row">
                                         <div class="form-group">
-                                            <label for="tg_subs">Подписчики</label>
-                                            <input id="tg_subs" type="text" class="input" name="">
+                                            <label for="{{ $platform }}_subs">Подписчики</label>
+                                            <input id="{{ $platform }}_subs" type="text" class="input" name="">
                                         </div>
                                         <div class="form-group">
-                                            <label for="tg_cpm">CPM</label>
-                                            <input id="tg_cpm" type="text" class="input" name="">
-                                        </div>
-                                    </div>
-                                    <div class="form-stat__row">
-                                        <div class="form-group">
-                                            <label for="tg_cover">{{ $platforms_cover_titles[$platform] }}</label>
-                                            <input id="tg_cover" type="text" class="input" name="">
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="tg_er">ER %</label>
-                                            <input id="tg_er" type="text" class="input" name="">
+                                            <label for="{{ $platform }}_cpm">CPM</label>
+                                            <input id="{{ $platform }}_cpm" type="text" class="input" name="">
                                         </div>
                                     </div>
 
-                                    @if(isset($platforms_cover_titles[$platform]))
+                                    @if(isset($platforms_main_cover_titles[$platform]))
                                         <div class="form-stat__row">
                                             <div class="form-group">
-                                                <label for="tg_cover">{{ $platforms_cover_titles[$platform] }}</label>
-                                                <input id="tg_cover" type="text" class="input" name="">
+                                                <label for="{{ $platform }}_cover">{{ $platforms_main_cover_titles[$platform] }}</label>
+                                                <input id="{{ $platform }}_cover" type="text" class="input" name="">
                                             </div>
                                             <div class="form-group">
-                                                <label for="tg_er">ER %</label>
-                                                <input id="tg_er" type="text" class="input" name="">
+                                                <label for="{{ $platform }}_er">ER %</label>
+                                                <input id="{{ $platform }}_er" type="text" class="input" name="">
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                    @if(isset($platforms_additional_cover_titles[$platform]))
+                                        <div class="form-stat__row">
+                                            <div class="form-group">
+                                                <label for="{{ $platform }}_additional_coverage">{{ $platforms_additional_cover_titles[$platform] }}</label>
+                                                <input id="{{ $platform }}_additional_coverage" type="text" class="input" name="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="{{ $platform }}_additional_engagement_rate">ER %</label>
+                                                <input id="{{ $platform }}_additional_engagement_rate" type="text" class="input" name="">
                                             </div>
                                         </div>
                                     @endif
