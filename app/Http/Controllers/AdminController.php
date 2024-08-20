@@ -74,8 +74,8 @@ class AdminController extends Controller
         ]);
 
         foreach (BloggerPlatform::getLowerPlatforms() as $platform_type) {
+            $platform = $blogger->platforms()->where('name', $platform_type)->first();
             if (isset($validated[$platform_type . '_link']) && !empty($validated[$platform_type . '_link'])) {
-                $platform = $blogger->platforms()->where('name', $platform_type . '_link')->first();
                 if ($platform) {
                     $platform->update([
                         'blogger_id' => $blogger->id,
@@ -101,7 +101,8 @@ class AdminController extends Controller
                         'cost_per_mille' => $validated[$platform_type . '_cpm'] ?? null,
                     ]);
                 }
-
+            } elseif (!isset($validated[$platform_type . '_link']) || empty($validated[$platform_type . '_link']) && $platform) {
+                $platform->delete();
             }
         }
 
