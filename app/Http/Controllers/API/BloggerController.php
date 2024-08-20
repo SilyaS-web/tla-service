@@ -26,10 +26,11 @@ class BloggerController extends Controller
         $validated = $validator->validated();
         $bloggers = Blogger::where([]);
         if (isset($validated['statuses'])) {
-            return response()->json($validated['statuses'])->setStatusCode(200);
             $bloggers->whereHas('user', function (Builder $query) use ($validated) {
                 $query->whereIn('status', $validated['statuses']);
+                dd($query);
             });
+
         }
 
         $bloggers = $bloggers->with('user')->with('platforms')->with('themes')->with('country')->get();
