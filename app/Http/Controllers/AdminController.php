@@ -101,7 +101,7 @@ class AdminController extends Controller
                         'cost_per_mille' => $validated[$platform_type . '_cpm'] ?? null,
                     ]);
                 }
-            } elseif (!isset($validated[$platform_type . '_link']) || empty($validated[$platform_type . '_link']) && $platform) {
+            } elseif ((!isset($validated[$platform_type . '_link']) || empty($validated[$platform_type . '_link'])) && $platform) {
                 $platform->delete();
             }
         }
