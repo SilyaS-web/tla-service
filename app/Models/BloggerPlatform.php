@@ -39,6 +39,7 @@ class BloggerPlatform extends Model
         'engagement_rate',
         'additional_engagement_rate',
         'cost_per_mille',
+        'icon_url',
     ];
 
     public function blogger()
