@@ -66,7 +66,7 @@ class Project extends Model
         'marketplace_description',
         'marketplace_options',
         'marketplace_rate',
-        'is_blogger_access'
+        'is_blogger_access',
     ];
 
     public function executor() {}

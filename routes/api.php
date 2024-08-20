@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\BloggerController;
+use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\SellerController;
 use App\Http\Controllers\API\UserController;
 use Illuminate\Support\Facades\Route;
@@ -23,3 +24,6 @@ Route::get('/bloggers', [BloggerController::class, 'index']);
 Route::get('/bloggers/{blogger}/accept', [BloggerController::class, 'accept']);
 
 Route::get('/sellers', [SellerController::class, 'index']);
+
+Route::get('/projects', [ProjectController::class, 'index']);
+Route::get('/projects/{project}/ban', [ProjectController::class, 'ban']);
