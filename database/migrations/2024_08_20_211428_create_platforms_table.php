@@ -21,7 +21,7 @@ class CreatePlatforsTable extends Migration
             $table->timestamps();
         });
 
-        DB::table('users')->insert([
+        DB::table('platforms')->insert([
             [
                 'title' => 'Telegram', // 1
                 'image' => 'img/telegram-icon.svg',
