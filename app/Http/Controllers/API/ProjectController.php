@@ -29,7 +29,14 @@ class ProjectController extends Controller
     public function ban(Project $project)
     {
         $project->update(['status' => Project::BANNED]);
-        return redirect()->route('profile')->with('switch-tab', 'projects-list');
+        return response()->json()->setStatusCode(200);
+
+    }
+
+    public function unban(Project $project)
+    {
+        $project->update(['status' => Project::PENDING]);
+        return response()->json()->setStatusCode(200);
     }
 
     /**
