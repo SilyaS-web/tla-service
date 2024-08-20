@@ -70,138 +70,71 @@
                             <input id="city" name="city" type="text" class="input">
                         </div>
                         <label for="">Статистика по блогеру</label>
+                        @php(
+                            $platforms_main_cover_titles = [
+                                'Telegram' => 'Просмотры',
+                                'VK' => 'Просмотры постов',
+                                'Youtube' => 'Просмотры выпуска',
+                                'Instagram' => 'Просмотры reels',
+                            ]
+                        )
+                        @php(
+                            $platforms_additional_cover_titles = [
+                                'VK' => 'Просмотры клипов',
+                                'Youtube' => 'Просмотры shorts',
+                            ]
+                        )
+                        @foreach($platforms as $platform)
                         <div class="popup__form-row popup__form-stat form-stat">
                             <div class="form-stat__title">
-                                Telegram
+                                {{ $platform }}
                             </div>
                             <div class="form-stat__content">
                                 <div class="form-stat__row">
                                     <div class="form-group" style="width:100%; max-width:100%">
-                                        <label for="tg_link">Ссылка</label>
-                                        <input id="tg_link" type="text" class="input" name="" style="width:100%; max-width:100%">
+                                        <label for="{{ strtolower($platform) }}_link">Ссылка</label>
+                                        <input id="{{ strtolower($platform) }}_link" type="text" class="input" name="" style="width:100%; max-width:100%">
                                     </div>
                                 </div>
                                 <div class="form-stat__row">
                                     <div class="form-group">
-                                        <label for="tg_subs">Подписчики</label>
-                                        <input id="tg_subs" type="text" class="input" name="">
+                                        <label for="{{ strtolower($platform) }}_subs">Подписчики</label>
+                                        <input id="{{ strtolower($platform) }}_subs" type="text" class="input" name="">
                                     </div>
                                     <div class="form-group">
-                                        <label for="tg_cover">Охваты</label>
-                                        <input id="tg_cover" type="text" class="input" name="">
+                                        <label for="{{ strtolower($platform) }}_cpm">CPM</label>
+                                        <input id="{{ strtolower($platform) }}_cpm" type="text" class="input" name="">
                                     </div>
                                 </div>
-                                <div class="form-stat__row">
-                                    <div class="form-group">
-                                        <label for="tg_er">ER %</label>
-                                        <input id="tg_er" type="text" class="input" name="">
+
+                                @if(isset($platforms_main_cover_titles[$platform]))
+                                    <div class="form-stat__row">
+                                        <div class="form-group">
+                                            <label for="{{ strtolower($platform) }}_cover">{{ $platforms_main_cover_titles[$platform] }}</label>
+                                            <input id="{{ strtolower($platform) }}_cover" type="text" class="input" name="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="{{ strtolower($platform) }}_er">ER %</label>
+                                            <input id="{{ strtolower($platform) }}_er" type="text" class="input" name="">
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="tg_cpm">CPM</label>
-                                        <input id="tg_cpm" type="text" class="input" name="">
+                                @endif
+
+                                @if(isset($platforms_additional_cover_titles[$platform]))
+                                    <div class="form-stat__row">
+                                        <div class="form-group">
+                                            <label for="{{ strtolower($platform) }}_additional_cover">{{ $platforms_additional_cover_titles[$platform] }}</label>
+                                            <input id="{{ strtolower($platform) }}_additional_cover" type="text" class="input" name="">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="{{ strtolower($platform) }}_additional_er">ER %</label>
+                                            <input id="{{ strtolower($platform) }}_additional_er" type="text" class="input" name="">
+                                        </div>
                                     </div>
-                                </div>
+                                @endif
                             </div>
                         </div>
-                        <div class="popup__form-row popup__form-stat form-stat">
-                            <div class="form-stat__title">
-                                Ins
-                            </div>
-                            <div class="form-stat__content">
-                                <div class="form-stat__row">
-                                    <div class="form-group" style="width:100%; max-width:100%">
-                                        <label for="inst_link">Ссылка</label>
-                                        <input id="inst_link" type="text" class="input" name="" style="width:100%; max-width:100%">
-                                    </div>
-                                </div>
-                                <div class="form-stat__row">
-                                    <div class="form-group">
-                                        <label for="inst_subs">Подписчики</label>
-                                        <input id="inst_subs" type="text" class="input" name="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inst_cover">Охваты</label>
-                                        <input id="inst_cover" type="text" class="input" name="">
-                                    </div>
-                                </div>
-                                <div class="form-stat__row">
-                                    <div class="form-group">
-                                        <label for="inst_er">ER %</label>
-                                        <input id="inst_er" type="text" class="input" name="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="inst_cpm">CPM</label>
-                                        <input id="inst_cpm" type="text" class="input" name="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="popup__form-row popup__form-stat form-stat">
-                            <div class="form-stat__title">
-                                YTube
-                            </div>
-                            <div class="form-stat__content">
-                                <div class="form-stat__row">
-                                    <div class="form-group" style="width:100%; max-width:100%">
-                                        <label for="yt_link">Ссылка</label>
-                                        <input id="yt_link" type="text" class="input" name="" style="width:100%; max-width:100%">
-                                    </div>
-                                </div>
-                                <div class="form-stat__row">
-                                    <div class="form-group">
-                                        <label for="yt_subs">Подписчики</label>
-                                        <input id="yt_subs" type="text" class="input" name="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="yt_cover">Охваты</label>
-                                        <input id="yt_cover" type="text" class="input" name="">
-                                    </div>
-                                </div>
-                                <div class="form-stat__row">
-                                    <div class="form-group">
-                                        <label for="yt_er">ER %</label>
-                                        <input id="yt_er" type="text" class="input" name="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="yt_cpm">CPM</label>
-                                        <input id="yt_cpm" type="text" class="input" name="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="popup__form-row popup__form-stat form-stat">
-                            <div class="form-stat__title">
-                                Вконтакте
-                            </div>
-                            <div class="form-stat__content">
-                                <div class="form-stat__row">
-                                    <div class="form-group" style="width:100%; max-width:100%">
-                                        <label for="vk_link">Ссылка</label>
-                                        <input id="vk_link" type="text" class="input" name="" style="width:100%; max-width:100%">
-                                    </div>
-                                </div>
-                                <div class="form-stat__row">
-                                    <div class="form-group">
-                                        <label for="vk_subs">Подписчики</label>
-                                        <input id="vk_subs" type="text" class="input" name="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="vk_cover">Охваты</label>
-                                        <input id="vk_cover" type="text" class="input" name="">
-                                    </div>
-                                </div>
-                                <div class="form-stat__row">
-                                    <div class="form-group">
-                                        <label for="vk_er">ER %</label>
-                                        <input id="vk_er" type="text" class="input" name="">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="vk_cpm">CPM</label>
-                                        <input id="vk_cpm" type="text" class="input" name="">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    @endforeach
                         <div class="form-group">
                             <div class="input-checkbox-w">
                                 <input name="is_achievement" type="checkbox" class="checkbox whois" id="is_achievement">

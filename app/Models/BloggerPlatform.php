@@ -49,7 +49,8 @@ class BloggerPlatform extends Model
 
     public function getIconURL()
     {
-        return asset(self::PLATFORM_ICON_URLS[$this->name]);
+        $key = strtoupper($this->name) == self::VK ? strtoupper($this->name) : ucfirst($this->name);
+        return asset(self::PLATFORM_ICON_URLS[$key]);
     }
 
     public static function getLowerPlatforms() {

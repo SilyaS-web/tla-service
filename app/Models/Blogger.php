@@ -56,21 +56,21 @@ class Blogger extends Model
     public function getCoverage()
     {
         $platform = $this->platforms()->orderBy('subscriber_quantity', 'desc')->first();
-        $coverage = round($platform->coverage, 2);
+        $coverage = round($platform->coverage ?? 0, 2);
         return $coverage;
     }
 
     public function getER()
     {
         $platform = $this->platforms()->orderBy('subscriber_quantity', 'desc')->first();
-        $engagement_rate = round($platform->engagement_rate, 2);
+        $engagement_rate = round($platform->engagement_rate ?? 0, 2);
         return $engagement_rate;
     }
 
     public function getCPM()
     {
         $platform = $this->platforms()->orderBy('subscriber_quantity', 'desc')->first();
-        $cost_per_mille = round($platform->cost_per_mille, 2);
+        $cost_per_mille = round($platform->cost_per_mille ?? 0, 2);
         return $cost_per_mille;
     }
 }
