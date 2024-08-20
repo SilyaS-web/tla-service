@@ -25,7 +25,7 @@ class BloggerPlatform extends Model
 
     public function platform()
     {
-        return $this->belongsTo(Platform::class, 'id', 'platform_id');
+        return $this->hasOne(Platform::class, 'id', 'platform_id');
     }
 
     public function blogger()
