@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Seller;
-use App\Models\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Builder;
 
 class SellerController extends Controller
 {

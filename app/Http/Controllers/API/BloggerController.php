@@ -4,8 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Models\Blogger;
 use App\Models\BloggerPlatform;
-use App\Models\User;
-use App\Services\TgService;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;

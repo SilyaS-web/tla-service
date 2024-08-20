@@ -6,7 +6,6 @@ use App\Models\Seller;
 use App\Http\Controllers\Controller;
 use App\Models\Project;
 use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Builder;
 
 class ProjectController extends Controller
 {
