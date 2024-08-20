@@ -63,6 +63,16 @@ class AdminController extends Controller
         }
 
         $validated = $validator->validated();
+
+        if (
+            (!isset($validated['telegram_link']) || empty($validated['telegram_link'])) &&
+            (!isset($validated['instagram_link']) || empty($validated['instagram_link'])) &&
+            (!isset($validated['youtube_link']) || empty($validated['youtube_link'])) &&
+            (!isset($validated['vk_link']) || empty($validated['vk_link']))
+        ) {
+            return redirect()->back()->with('success', 'Необходима хотя бы одна ссылка на соц. сеть')->withInput();
+        }
+
         $blogger = Blogger::find($validated['blogger_id']);
 
         $blogger->update([
@@ -280,6 +290,15 @@ class AdminController extends Controller
         }
 
         $validated = $validator->validated();
+
+        if (
+            (!isset($validated['telegram_link']) || empty($validated['telegram_link'])) &&
+            (!isset($validated['instagram_link']) || empty($validated['instagram_link'])) &&
+            (!isset($validated['youtube_link']) || empty($validated['youtube_link'])) &&
+            (!isset($validated['vk_link']) || empty($validated['vk_link']))
+        ) {
+            return redirect()->back()->with('success', 'Необходима хотя бы одна ссылка на соц. сеть')->withInput();
+        }
 
         $user->name = $validated['name'];
         $user->email = $validated['email'];
