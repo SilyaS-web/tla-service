@@ -107,6 +107,16 @@ a.btn:hover{
     color: var(--primary);
     border:1px solid var(--primary)
 }
+.btn-delete{
+    border-color:#DC3545;
+    color:#DC3545;
+}
+.btn-delete.card__delete{
+    position: static;
+    width:unset; height:unset;
+    top:unset;left:unset;
+    opacity: 1;
+}
 .form{
     max-width:580px;
     background-color: #fff;
@@ -457,7 +467,9 @@ label{
 .input-range {
     width: 100%;
 }
-
+.popup__form .btn{
+    margin-top: 15px;
+}
 
 .tab-content {
     display: none;
