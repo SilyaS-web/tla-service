@@ -115,8 +115,7 @@
                         <div class="card__row card__content">
                             <div class="card__col">
                                 <div class="card__row card__header">
-                                    <div class="card__img">
-                                        <img src="{{ $blogger->user->getImageURL() }}" alt="">
+                                    <div class="card__img" style="background-image:url('{{ $blogger->user->getImageURL() }}')">
                                         @if ($blogger->is_achievement)
                                         <div class="card__achive">
                                             <img src="{{ asset('img/achive-icon.svg') }}" alt="">
@@ -133,7 +132,7 @@
                                     </div>
                                     <div class="card__platforms">
                                         @foreach ($blogger->platforms as $platform)
-                                        <div class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></div>
+                                            <a target="_blank" href="{{ $platform->link }}" class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></a>
                                         @endforeach
                                     </div>
                                 </div>
@@ -173,7 +172,7 @@
                                         </div>
                                         <div class="card__col card__stats-item">
                                             <div class="card__stats-title">
-                                                <span>Охваты</span>
+                                                <span>Просмотры</span>
                                             </div>
                                             <div class="card__stats-val">
                                                 <span>{{ number_format($blogger->getCoverage(), 0, '', ' ') }}</span>
@@ -236,8 +235,13 @@
                         <div class="card__row card__content">
                             <div class="card__col">
                                 <div class="card__row card__header">
-                                    <div class="card__img">
-                                        <img src="{{ $blogger->user->getImageURL() }}" alt="">
+                                    <div class="card__img" style="background-image:url('{{ $blogger->user->getImageURL() }}')">
+                                        <div class="card__achive tooltip">
+                                            <img src="{{ asset('img/achive-icon.svg') }}" alt="">
+                                            <div class="tooltip__text">
+                                                <p>Проверенный блогер</p>
+                                            </div>
+                                        </div>
                                         @if ($blogger->is_achievement)
                                             <div class="card__achive tooltip">
                                                 <img src="{{ asset('img/achive-icon.svg') }}" alt="">
@@ -257,7 +261,7 @@
                                     </div>
                                     <div class="card__platforms">
                                         @foreach ($blogger->platforms as $platform)
-                                        <div class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></div>
+                                            <a target="_blank" href="{{ $platform->link }}" class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></a>
                                         @endforeach
                                     </div>
                                 </div>
@@ -297,7 +301,7 @@
                                         </div>
                                         <div class="card__col card__stats-item">
                                             <div class="card__stats-title">
-                                                <span>Охваты</span>
+                                                <span>Просмотры</span>
                                             </div>
                                             <div class="card__stats-val">
                                                 <span>{{ number_format($blogger->getCoverage(), 0, '', ' ') }}</span>

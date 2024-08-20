@@ -22,7 +22,7 @@
                 </div>
                 @endif
                 @else
-                {{ $message->message }}
+                {!! $message->message !!}
                 @endif
                 @foreach ($message->images as $image)
                 <img src="{{ $image->getURL() }}" alt="" class="chat-img-popup" data-popup="#chat-img">

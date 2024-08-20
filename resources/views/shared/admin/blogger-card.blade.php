@@ -3,7 +3,6 @@
             <div class="card__col">
                 <div class="card__row card__header">
                     <div class="card__img" style="background-image: url('{{ $blogger->user->getImageURL() }}')">
-                         {{-- <img src="{{ $blogger->user->getImageURL() }}" alt=""> --}}
                     </div>
                     @if($blogger->is_achievement)
                             <div class="card__achive" title="Проверенный блогер">
@@ -17,7 +16,7 @@
                     </div>
                    <div class="card__platforms">
                         @foreach ($blogger->platforms as $platform)
-                            <div class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></div>
+                            <a target="_blank" href="{{ $platform->link }}" class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></a>
                         @endforeach
                     </div>
                 </div>
@@ -49,7 +48,7 @@
                         </div>
                         <div class="card__col card__stats-item">
                             <div class="card__stats-title">
-                                <span>Охваты</span>
+                                <span>Просмотры</span>
                             </div>
                             <div class="card__stats-val" title="{{ number_format(round($blogger->getCoverage()), 0, '', ' ') }}">
                                 <span>{{ number_format(round($blogger->getCoverage()), 0, '', ' ') }}</span>
@@ -87,15 +86,18 @@
                     </div>
                 </div>
                 <div class="card__row" style="text-align: center; justify-content:center">
+                    <a href="{{ route('edit-blogger', $blogger->user->id) }}" class="" style="color:rgba(0,0,0,.4); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -20px;">Редактировать</a>
+                </div>
+                <div class="card__row" style="text-align: center; justify-content:center">
                     <a href="{{ route('blogger-page', $blogger->id) }}" class="" style="color:rgba(0,0,0,.4); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -20px;">Подробнее</a>
                 </div>
                 <div class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
                     <button class="btn btn-primary" onclick="banUser({{$blogger->user->id}}, this)">
                         Заблокировать
                     </button>
-                    <!-- <button class = "btn btn-secondary btn-achivments-form" data-project-id="">
-                                                    Достижения
-                                                </button> -->
+                    <button class="btn btn-delete card__delete " style="" data-id="{{$blogger->user->id}}" >
+                        Удалить
+                    </button>
                 </div>
             </div>
         </div>

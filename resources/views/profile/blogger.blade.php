@@ -72,8 +72,8 @@
                                             <select name="filter-format" id="filter-format" class = "input">
                                                 <option value="" class="">Выберите формат</option>
                                                 <option value="feedback" class="">Отзыв на товар</option>
-                                                <option value="inst" class="">Интеграция Inst</option>
-                                                <option value="youtube" class="">Интеграция Youtube</option>
+                                                <option value="inst" class="">Интеграция Ins</option>
+                                                <option value="youtube" class="">Интеграция YTube</option>
                                                 <option value="vk" class="">Интеграция VK</option>
                                                 <option value="telegram" class="">Интеграция Telegram</option>
                                             </select>
@@ -149,8 +149,8 @@
                                             <select name="filter-format" id="filter-format" class = "input">
                                                 <option value="" class="">Выберите формат</option>
                                                 <option value="feedback" class="">Отзыв на товар</option>
-                                                <option value="inst" class="">Интеграция Inst</option>
-                                                <option value="youtube" class="">Интеграция Youtube</option>
+                                                <option value="inst" class="">Интеграция Ins</option>
+                                                <option value="youtube" class="">Интеграция YTube</option>
                                                 <option value="vk" class="">Интеграция VK</option>
                                                 <option value="telegram" class="">Интеграция Telegram</option>
                                             </select>
@@ -216,8 +216,8 @@
                                             <select name="filter-format" id="filter-format" class = "input">
                                                <option value="" class="">Выберите формат</option>
                                                 <option value="feedback" class="">Отзыв на товар</option>
-                                                <option value="inst" class="">Интеграция Inst</option>
-                                                <option value="youtube" class="">Интеграция Youtube</option>
+                                                <option value="inst" class="">Интеграция Ins</option>
+                                                <option value="youtube" class="">Интеграция YTube</option>
                                                 <option value="vk" class="">Интеграция VK</option>
                                                 <option value="telegram" class="">Интеграция Telegram</option>
                                             </select>
@@ -290,7 +290,7 @@
                             </div>
                         </div> --}}
                         <div class="project-item__btns">
-                            <button class="btn btn-primary btn-blogger-send-offer" style="" data-project-work="">Откликнуться</button>
+                            <button class="btn btn-primary btn-blogger-send-offer-popup" style="" data-project-work="">Откликнуться</button>
                             <a href="" class="btn btn-secondary btn-go-to-shop" style="" target="_blank">Подробнее</a>
                         </div>
                     </div>

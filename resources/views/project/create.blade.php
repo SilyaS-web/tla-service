@@ -106,7 +106,7 @@
                                     ?
                                     <div class="format-hint format-hint--text" id="feedback">
                                         <div class="format-hint__title">
-                                            Рекламная интеграция (Inst) - Бартер
+                                            Рекламная интеграция (Ins) - Бартер
                                         </div>
                                         <div class="format-hint__body">
                                             Приятно, граждане, наблюдать, как акционеры крупнейших компаний формируют глобальную экономическую сеть и при этом — объявлены нарушающими общечеловеческие нормы этики и морали
@@ -117,12 +117,12 @@
                             </div>
                             <div class="input-checkbox-w disabled">
                                 <input type="checkbox" class="checkbox" id="product-youtube">
-                                <label for="product-youtube">Рекламная интеграция (YouTube) - Бартер</label>
+                                <label for="product-youtube">Рекламная интеграция (YTube) - Бартер</label>
                                 <div class="format-tooltip" data-hint="youtube">
                                     ?
                                     <div class="format-hint format-hint--text" id="youtube">
                                         <div class="format-hint__title">
-                                            Рекламная интеграция (YouTube) - Бартер
+                                            Рекламная интеграция (YTube) - Бартер
                                         </div>
                                         <div class="format-hint__body">
                                             ...

@@ -154,17 +154,17 @@
                                             </div>
                                             <div class="marketing-format__item input-checkbox-w">
                                                 <label for="product-inst">
-                                                    Интеграция Inst
+                                                    Интеграция Ins
                                                     <div class="format-tooltip format-tooltip--mobile" data-hint="inst">
                                                         ?
                                                         <div class="format-hint format-hint--text" id="inst">
                                                             <div class="format-hint__title">
-                                                                Интеграция Inst
+                                                                Интеграция Ins
                                                             </div>
                                                             <div class="format-hint__body">
                                                                 Увеличивайте продажи с помощью reels. Повышайте охваты,
                                                                 узнаваемость и доверие ĸ вашему бренду и товару, используя
-                                                                интеграции в Inst с лидерами мнений.
+                                                                интеграции в Ins с лидерами мнений.
                                                             </div>
                                                         </div>
                                                     </div>
@@ -184,12 +184,12 @@
                                                     ?
                                                     <div class="format-hint format-hint--text" id="inst">
                                                         <div class="format-hint__title">
-                                                            Интеграция Inst
+                                                            Интеграция Ins
                                                         </div>
                                                         <div class="format-hint__body">
                                                             Увеличивайте продажи с помощью reels. Повышайте охваты,
                                                             узнаваемость и доверие ĸ вашему бренду и товару, используя
-                                                            интеграции в Inst с лидерами мнений.
+                                                            интеграции в Ins с лидерами мнений.
                                                         </div>
                                                     </div>
                                                 </div>
@@ -197,17 +197,17 @@
                                             </div>
                                             <div class="marketing-format__item input-checkbox-w">
                                                 <label for="product-youtube">
-                                                    Интеграция YouTube
+                                                    Интеграция YTube
                                                     <div class="format-tooltip format-tooltip--mobile" data-hint="youtube">
                                                         ?
                                                         <div class="format-hint format-hint--text" id="youtube">
                                                             <div class="format-hint__title">
-                                                                Интеграция YouTube
+                                                                Интеграция YTube
                                                             </div>
                                                             <div class="format-hint__body">
                                                                 Увеличивайте продажи с помощью нативных обзоров на товар и
                                                                 shorts. Повышайте охваты, ĸачайте seo, узнаваемость и доверие ĸ
-                                                                вашему бренду и товару, используя интеграции в YouTube с лидерами
+                                                                вашему бренду и товару, используя интеграции в YTube с лидерами
                                                                 мнений.
                                                             </div>
                                                         </div>
@@ -228,12 +228,12 @@
                                                     ?
                                                     <div class="format-hint format-hint--text" id="youtube">
                                                         <div class="format-hint__title">
-                                                            Интеграция YouTube
+                                                            Интеграция YTube
                                                         </div>
                                                         <div class="format-hint__body">
                                                             Увеличивайте продажи с помощью нативных обзоров на товар и
                                                             shorts. Повышайте охваты, ĸачайте seo, узнаваемость и доверие ĸ
-                                                            вашему бренду и товару, используя интеграции в YouTube с лидерами
+                                                            вашему бренду и товару, используя интеграции в YTube с лидерами
                                                             мнений.
                                                         </div>
                                                     </div>
@@ -284,7 +284,6 @@
 
                                             </div>
                                             <div class="marketing-format__item input-checkbox-w">
-                                                {{-- <input type="checkbox" class="checkbox" id="product-youtube"> --}}
                                                 <label for="product-tg">
                                                     Интеграция Telegram
                                                     <div class="format-tooltip format-tooltip--mobile" data-hint="tg">
@@ -631,7 +630,7 @@
                                             <img src="img/statistics-ph.png" alt="" class="">
                                             <div class="dashboard__placeholder">
                                                 <div class="dashboard__placeholder-text">
-                                                    Раздел статистики Instagram находится в разработке
+                                                    Раздел статистики Вконтакте находится в разработке
                                                 </div>
                                                 <div class="dashboard__placeholder-overflow">
 
@@ -642,7 +641,7 @@
                                             <img src="img/1_GZq1SvhxjrbQbqkag4XH3w.jpg" alt="" class="">
                                             <div class="dashboard__placeholder">
                                                 <div class="dashboard__placeholder-text">
-                                                    Раздел статистики Youtube находится в разработке
+                                                    Раздел статистики Telegram находится в разработке
                                                 </div>
                                                 <div class="dashboard__placeholder-overflow">
 
@@ -820,8 +819,8 @@
                                             <select name="project_type" id="filter-format" class="input">
                                                 <option value="" class="">Выберите формат</option>
                                                 <option value="feedback" class="">Отзыв на товар</option>
-                                                <option value="inst" class="">Интеграция Inst</option>
-                                                <option value="youtube" class="">Интеграция Youtube</option>
+                                                <option value="inst" class="">Интеграция Ins</option>
+                                                <option value="youtube" class="">Интеграция YTube</option>
                                                 <option value="vk" class="">Интеграция VK</option>
                                                 <option value="telegram" class="">Интеграция Telegram</option>
                                             </select>
@@ -886,8 +885,8 @@
                                             <select name="filter-format" id="filter-format" class = "input">
                                                 <option value="" class="">Выберите формат</option>
                                                 <option value="feedback" class="">Отзыв на товар</option>
-                                                <option value="inst" class="">Интеграция Inst</option>
-                                                <option value="youtube" class="">Интеграция Youtube</option>
+                                                <option value="inst" class="">Интеграция Ins</option>
+                                                <option value="youtube" class="">Интеграция YTube</option>
                                                 <option value="vk" class="">Интеграция VK</option>
                                                 <option value="telegram" class="">Интеграция Telegram</option>
                                             </select>
@@ -1069,8 +1068,8 @@
                                             <select name="project_type" id="filter-format" class="input">
                                                 <option value="" class="">Выберите формат</option>
                                                 <option value="feedback" class="">Отзыв на товар</option>
-                                                <option value="inst" class="">Интеграция Inst</option>
-                                                <option value="youtube" class="">Интеграция Youtube</option>
+                                                <option value="inst" class="">Интеграция Ins</option>
+                                                <option value="youtube" class="">Интеграция YTube</option>
                                                 <option value="vk" class="">Интеграция VK</option>
                                                 <option value="telegram" class="">Интеграция Telegram</option>
                                             </select>

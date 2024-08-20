@@ -38,7 +38,11 @@
                 @endforeach
             </div>
             <div class="project-item__btns">
-                <button class="btn btn-primary btn-blogger-send-offer" style="width:100%" data-project-work="{{ $project->id }}">Откликнуться</button>
+                @if (!$project->isSended())
+                    <button class="btn btn-primary btn-blogger-send-offer" style="width:100%" data-project-work="{{ $project->id }}">Откликнуться</button>
+                @else
+                    <button class="btn btn-primary btn-blogger-send-offer" style="width:100%" disabled>Заявка отправлена</button>
+                @endif
             </div>
         </div>
     </div>

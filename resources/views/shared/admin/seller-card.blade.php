@@ -1,4 +1,4 @@
-    <div class="list-blogers__item seller-item card" data-id="1">
+    <div class="list-blogers__item seller-item card" data-id="{{ $seller->user->id }}">
         <div class="card__row card__content">
             <div class="card__col">
                 <div class="card__row card__header">
@@ -62,6 +62,9 @@
                 <div class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
                     <button class="btn btn-primary" onclick="banUser({{$seller->user->id}}, this)">
                         Заблокировать
+                    </button>
+                    <button class="btn btn-delete card__delete " style="" data-id="{{$seller->user->id}}" >
+                        Удалить
                     </button>
                     <!-- <button class = "btn btn-secondary btn-achivments-form" data-project-id="">
                                                     Достижения
