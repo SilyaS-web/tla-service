@@ -162,52 +162,7 @@ class UserController extends Controller
 
     public function getAdminProfileData()
     {
-        $validator = Validator::make(request()->all(), [
-            'user_name' => 'string',
-            'blogger_name' => 'string',
-            'seller_name' => 'string',
-        ]);
-
-        if ($validator->fails()) {
-            return [];
-        }
-        $validated = $validator->validated();
-
-        $filter = [
-            ['role', 'blogger'],
-            ['status', 0],
-        ];
-
-        if (!empty($validated['user_name'])) {
-            $filter[] = ['user_name', 'like', '%' . $validated['user_name'] . '%'];
-        }
-
-        $unverified_users = User::where($filter)->whereHas('blogger')->get();
-
-        $bloggers = [];
-        if (!empty($validated['blogger_name'])) {
-            $bloggers = Blogger::whereHas('user', function (Builder $query) use ($validated) {
-                $query->where('name', 'like', '%' . $validated['blogger_name'] . '%')->where('status', 1);
-            })->get();
-        } else {
-            $bloggers = Blogger::whereHas('user', function (Builder $query) use ($validated) {
-                $query->where('status', 1);
-            })->get();
-        }
-
-        $sellers = [];
-        if (!empty($validated['seller_name'])) {
-            $sellers = Seller::whereHas('user', function (Builder $query) use ($validated) {
-                $query->where('name', 'like', '%' . $validated['seller_name'] . '%');
-            })->get();
-        } else {
-            $sellers = Seller::get();
-        }
-        $platforms = BloggerPlatform::PLATFORM_TYPES;
-        $countries = Country::get();
-        $all_projects = Project::get();
-        $payments = Payment::get();
-        return compact('unverified_users', 'bloggers', 'sellers', 'platforms', 'countries', 'all_projects', 'payments');
+        return [];
     }
 
     public function edit(Request $request)
