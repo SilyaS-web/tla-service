@@ -16,9 +16,9 @@
                     <div class="card__platforms">
                         <div
                             v-for="platform in blogger.platforms"
-                            v-bind:class="'card__platform ' +  (platform.name ? platform.name.toLowerCase() : '')"
+                            v-bind:class="'card__platform ' +  (platform.platform.title ? platform.platform.title.toLowerCase() : '')"
                             >
-                            <img v-bind:src="platform.icon_url" alt="">
+                            <img v-bind:src="platform.platform.image || ''" alt="">
                         </div>
                     </div>
                 </div>
@@ -99,14 +99,19 @@
                         margin-top: -20px;">Подробнее</a>
                 </div>
                 <div v-if="blogger.user.status === 0" class="admin-bloger__btns">
-                    <a href="#" class="btn btn-primary btn-accept" data-id="{{ blogger.id }}">Принять</a>
-                    <button class="btn btn-secondary" v-on:click="banUser" v-bind:id="blogger.id">
+                    <a href="#" class="btn btn-primary btn-accept" data-id="{{ blogger.user.id }}">Принять</a>
+                    <button class="btn btn-secondary" v-on:click="banUser" v-bind:id="blogger.user.id">
                         Отклонить
                     </button>
                 </div>
-                <div v-else class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn btn-primary" v-on:click="banUser" v-bind:id="blogger.id">
+                <div v-else-if="blogger.user.status === 1" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" v-on:click="banUser" v-bind:id="blogger.user.id">
                         Заблокировать
+                    </button>
+                </div>
+                <div v-else-if="blogger.user.status === -1" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" v-on:click="unbanUser" v-bind:id="blogger.user.id">
+                        Разблокировать
                     </button>
                 </div>
             </div>
@@ -125,25 +130,32 @@
 
                 axios({
                     method: 'get',
-                    url: '/api/bloggers/' + id + '/deny/',
+                    url: '/api/users/' + id + '/ban/',
                 })
                 .then((response) => {
-                    switch (response.data){
-                        case 'success':
-                            notify('info', {
-                                title: 'Успешно!',
-                                message: 'Блогер успешно заблокирован!'
-                            });
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Блогер заблокирован!'
+                    });
 
-                            $(el).closest('.card').remove();
-                            this.$emit('ban', id);
-                            break
-                        default:
-                            notify('erroe', {
-                                title: 'Ошибка!',
-                                message: 'Не удалось заблокировать блогера, попробуйте позже!'
-                            });
-                    }
+                    this.$emit('ban', id);
+                })
+            },
+            unbanUser(e) {
+                var el = e.currentTarget;
+                var id = $(el).attr('id');
+
+                axios({
+                    method: 'get',
+                    url: '/api/users/' + id + '/unban/',
+                })
+                .then((response) => {
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Блогер успешно разблокирован!'
+                    });
+
+                    this.$emit('ban', id);
                 })
             },
             countER(subs, cover){

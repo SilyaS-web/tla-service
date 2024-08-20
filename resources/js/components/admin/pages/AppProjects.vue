@@ -15,6 +15,7 @@
                     v-for="project in projects"
                     :projects="projects"
                     :project="project"
+                    v-on:statusManagement="statusManagement"
                 ></ProjectsItem>
             </div>
         </div>
@@ -27,6 +28,9 @@
         props: ['projects'],
         components: {ProjectsItem},
         methods:{
+            statusManagement(){
+                this.$emit('statusManagement');
+            }
         }
     }
 </script>

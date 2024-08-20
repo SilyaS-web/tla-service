@@ -60,9 +60,9 @@
                         <div class="form-group">
                             <label for="country">Страна блогера</label>
                             <select name="country" id="country" class="input">
-                                @foreach ($countries as $country)
-                                <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                @endforeach
+                                {{-- @foreach ($countries as $country)
+                                    <option value="{{ $country->id }}">{{ $country->name }}</option>
+                                @endforeach --}}
                             </select>
                         </div>
                         <div class="form-group">
@@ -70,7 +70,7 @@
                             <input id="city" name="city" type="text" class="input">
                         </div>
                         <label for="">Статистика по блогеру</label>
-                        @php(
+                        {{-- @php(
                             $platforms_main_cover_titles = [
                                 'Telegram' => 'Просмотры',
                                 'VK' => 'Просмотры постов',
@@ -134,7 +134,7 @@
                                 @endif
                             </div>
                         </div>
-                    @endforeach
+                    @endforeach --}}
                         <div class="form-group">
                             <div class="input-checkbox-w">
                                 <input name="is_achievement" type="checkbox" class="checkbox whois" id="is_achievement">

@@ -10,7 +10,7 @@
                             {{ seller.user.name }}
                         </p>
                         <p class="card__name-tag">
-                            {{ seller.agent ? 'Посредник' : 'Селлер'}}
+                            {{ seller.is_agent ? 'Посредник' : 'Селлер'}}
                         </p>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                                 <span>Телефон</span>
                             </div>
                             <div class="card__stats-val">
-                                <span>{{ seller.user.name }}</span>
+                                <span>{{ seller.user.phone }}</span>
                             </div>
                         </div>
                         <div class="card__col card__stats-item">
@@ -57,10 +57,16 @@
                     </div>
                 </div>
                 <div class="card__row" style="text-align: center; justify-content:center">
-                    <a v-bind:href="'/seller/' + seller.id" class="" style="color:rgba(0,0,0,.4); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -20px;">Подробнее</a>
+                    <a v-bind:href="'/seller/' + seller.user.id" class="" style="color:rgba(0,0,0,.4); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -20px;">Подробнее</a>
                 </div>
-                <div class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn btn-primary" v-on:click="banUser" v-bind:id="seller.id">
+
+                <div v-if="seller.user.status == -1" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" v-on:click="unbanUser" v-bind:id="seller.user.id">
+                        Разблокировать
+                    </button>
+                </div>
+                <div v-else class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" v-on:click="banUser" v-bind:id="seller.user.id">
                         Заблокировать
                     </button>
                 </div>
@@ -75,35 +81,37 @@
     export default{
         props: ['seller', 'sellers'],
         methods:{
+            unbanUser(e) {
+                var el = e.currentTarget;
+                var id = $(el).attr('id');
+
+                axios({
+                    method: 'get',
+                    url: '/api/users/' + id + '/unban/',
+                })
+                .then((response) => {
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Селлер успешно разблокирован!'
+                    });
+                    this.$emit('ban', id);
+                })
+            },
             banUser(e) {
                 var el = e.currentTarget;
                 var id = $(el).attr('id');
 
-                $(el).closest('.card').remove();
-                this.$emit('ban', id);
-
-                // axios({
-                //     method: 'get',
-                //     url: '/api/sellers/' + id + '/deny/',
-                // })
-                // .then((response) => {
-                //     switch (response.data){
-                //         case 'success':
-                //             notify('info', {
-                //                 title: 'Успешно!',
-                //                 message: 'Селлер успешно заблокирован!'
-                //             });
-
-                //             $(el).closest('.card').remove();
-                //             this.$emit('ban', id);
-                //             break
-                //         default:
-                //             notify('erroe', {
-                //                 title: 'Ошибка!',
-                //                 message: 'Не удалось заблокировать селлера, попробуйте позже!'
-                //             });
-                //     }
-                // })
+                axios({
+                    method: 'get',
+                    url: '/api/users/' + id + '/ban/',
+                })
+                .then((response) => {
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Селлер заблокирован!'
+                    });
+                    this.$emit('ban', id);
+                })
             },
         }
     }
