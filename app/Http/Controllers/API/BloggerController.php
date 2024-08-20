@@ -43,10 +43,8 @@ class BloggerController extends Controller
             }
         }
         $data = [
-            'data' => [
-                'bloggers' => $bloggers,
-                'platform_fields' => BloggerPlatform::getFields(),
-            ]
+            'bloggers' => $bloggers,
+            'platform_fields' => BloggerPlatform::getFields(),
          ];
 
         return response()->json($data)->setStatusCode(200);

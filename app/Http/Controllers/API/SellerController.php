@@ -15,10 +15,8 @@ class SellerController extends Controller
     {
         $sellers = Seller::with('user')->get();
         $data = [
-            'data' => [
-                'sellers' => $sellers,
-            ]
-         ];
+            'sellers' => $sellers,
+        ];
         return response()->json($data)->setStatusCode(200);
     }
 
