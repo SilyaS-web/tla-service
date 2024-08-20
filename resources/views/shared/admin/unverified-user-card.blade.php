@@ -57,5 +57,8 @@
             </div>
         </div>
     </div>
+    <div class="card__delete" data-id="{{ $unverified_user->id }}">
+        <img src="{{ '/img/trash-icon.svg' }}" alt="">
+    </div>
 </div>
 @endif

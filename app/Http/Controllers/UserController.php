@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blogger;
 use App\Models\BloggerPlatform;
 use App\Models\Country;
+use App\Models\DbLog;
 use App\Models\DeepLink;
 use App\Models\DeepLinkStat;
 use App\Models\Message;
@@ -360,5 +361,13 @@ class UserController extends Controller
         $message_text = "Форма обратной связи\n\nИмя: " . $validated['name'] ."\nТелефон: " . $validated['phone'] ."\nСообщение: " . $validated['comment'];
         $result = TgService::sendForm($message_text);
         return response()->json($result);
+    }
+
+    public function deleteUser(User $user) {
+        $log_message = 'Удалён пользователь ' . $user->name . ', роль ' . $user->role . ', телефон' . $user->phone . ', email' . $user->email;
+        DbLog::create(['text' => $log_message]);
+
+        $user->forceDelete();
+        return response()->json();
     }
 }
