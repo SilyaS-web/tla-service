@@ -286,7 +286,7 @@ class AdminController extends Controller
             'sex' => $validated['sex'],
             'country_id' => $validated['country_id'],
             'gender_ratio' => $validated['gender_ratio'],
-            'is_achievement' => $validated['is_achievement'] ? 1 : 0,
+            'is_achievement' => $validated['is_achievement'] ?? 0,
         ]);
         foreach ($blogger->platforms as $platform) {
             if (!isset($validated[$platform->name . '_link']) || empty($validated[$platform->name . '_link'])) {
