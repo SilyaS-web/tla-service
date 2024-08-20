@@ -22,7 +22,7 @@
                     </div>
                 </div>
                 <div class="card__row card__tags">
-                     @php($themes = $blogger->themes)
+                    @php($themes = $blogger->themes)
                     @foreach ($themes->take(3) as $theme)
                         <div class="card__tags-item">
                             <span>{{ $theme->theme->theme }}</span>
