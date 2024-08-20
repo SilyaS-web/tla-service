@@ -28,6 +28,6 @@ class CreatePlatforsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('platfors');
+        Schema::dropIfExists('platforms');
     }
 }
