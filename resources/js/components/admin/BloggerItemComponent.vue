@@ -100,18 +100,24 @@
                 </div>
                 <div v-if="blogger.user.status === 0" class="admin-bloger__btns">
                     <a href="#" class="btn btn-primary btn-accept" data-id="{{ blogger.user.id }}">Принять</a>
-                    <button class="btn btn-secondary" v-on:click="banUser" v-bind:id="blogger.user.id">
+                    <button class="btn btn-secondary" v-on:click="ban" v-bind:data-id="blogger.user.id">
                         Отклонить
                     </button>
                 </div>
                 <div v-else-if="blogger.user.status === 1" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn btn-primary" v-on:click="banUser" v-bind:id="blogger.user.id">
+                    <button class="btn btn-primary" v-on:click="ban" v-bind:data-id="blogger.user.id">
                         Заблокировать
+                    </button>
+                    <button class="btn btn-delete" v-on:click="deletionConfirmation" v-bind:data-id="blogger.user.id">
+                        Удалить
                     </button>
                 </div>
                 <div v-else-if="blogger.user.status === -1" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn btn-primary" v-on:click="unbanUser" v-bind:id="blogger.user.id">
+                    <button class="btn btn-primary" v-on:click="unban" v-bind:data-id="blogger.user.id">
                         Разблокировать
+                    </button>
+                    <button class="btn btn-delete" v-on:click="deletionConfirmation" v-bind:data-id="blogger.user.id">
+                        Удалить
                     </button>
                 </div>
             </div>
@@ -119,45 +125,25 @@
     </div>
 </template>
 <script>
-    import axios from 'axios'
-
     export default{
         props: ['blogger', 'bloggers'],
+        components: { },
         methods:{
-            banUser(e) {
-                var el = e.currentTarget;
-                var id = $(el).attr('id');
-
-                axios({
-                    method: 'get',
-                    url: '/api/users/' + id + '/ban/',
-                })
-                .then((response) => {
-                    notify('info', {
-                        title: 'Успешно!',
-                        message: 'Блогер заблокирован!'
-                    });
-
-                    this.$emit('ban', id);
-                })
+            deletionConfirmation(event) {
+                let id = $(event.currentTarget).data('id');
+                this.$emit('deletionConfirmation', id)
             },
-            unbanUser(e) {
-                var el = e.currentTarget;
-                var id = $(el).attr('id');
 
-                axios({
-                    method: 'get',
-                    url: '/api/users/' + id + '/unban/',
-                })
-                .then((response) => {
-                    notify('info', {
-                        title: 'Успешно!',
-                        message: 'Блогер успешно разблокирован!'
-                    });
-
-                    this.$emit('ban', id);
-                })
+            ban(event) {
+                let id = $(event.currentTarget).data('id');
+                this.$emit('ban', id)
             },
+
+            unban(event) {
+                let id = $(event.currentTarget).data('id');
+                this.$emit('unban', id)
+            },
+
             countER(subs, cover){
                 var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
 

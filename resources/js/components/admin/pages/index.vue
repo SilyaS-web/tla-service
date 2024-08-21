@@ -24,10 +24,10 @@
                     <admin-aside v-on:switchTab="switchTab"></admin-aside>
 
                     <!-- Модерация -->
-                    <admin-bloggers-moderation-page :bloggers="unverifiedBloggers" v-on:changedBloggersList="changedBloggersList"></admin-bloggers-moderation-page>
+                    <admin-bloggers-moderation-page :bloggers="unverifiedBloggers" v-on:updateBloggers="updateBloggers"></admin-bloggers-moderation-page>
 
                     <!-- Список блогеров -->
-                    <admin-bloggers-page :bloggers="bloggers" v-on:changedBloggersList="changedBloggersList"></admin-bloggers-page>
+                    <admin-bloggers-page :bloggers="bloggers" v-on:updateBloggers="updateBloggers"></admin-bloggers-page>
 
                     <!-- Список селлеров -->
                     <admin-sellers-page :sellers="sellers" v-on:changedSellersList="changedSellersList"></admin-sellers-page>
@@ -159,7 +159,7 @@
 
                 return blogger;
             },
-            changedBloggersList(){
+            updateBloggers(){
                 Promise.all([
                     this.getBloggers([1, -1]).then(list => {
                         this.bloggers = (list || []).map(_b => this.findBiggestPlatform(_b));

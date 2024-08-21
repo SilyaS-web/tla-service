@@ -15,25 +15,86 @@
                     v-for="blogger in bloggers"
                     :bloggers="bloggers"
                     :blogger="blogger"
-                    v-on:ban="userBanned"
+                    v-on:ban="ban"
+                    v-on:unban="unban"
+                    v-on:deletionConfirmation="deletionConfirmation"
                 ></BloggerItem>
             </div>
         </div>
     </div>
+    <confirm-popup ref="confirmPopup"></confirm-popup>
 </template>
 <script>
-    import BloggerItem from '../BloggerItemComponent.vue'
+    import BloggerItem from '../BloggerItemComponent.vue';
+    import ConfirmPopup from '../ui/ConfirmationPopup.vue';
 
     export default{
         props: ['bloggers'],
-        components: {BloggerItem},
+        components: {BloggerItem, ConfirmPopup},
         methods:{
-            userBanned(){
-                this.$emit('changedBloggersList');
-            }
+            async deletionConfirmation(id) {
+                const isConfirmed = await this.$refs.confirmPopup.show({
+                    title: 'Подтвердите действие',
+                    subtitle: 'После подтверждения пользователя нельзя будет восстановить',
+                    okButton: 'Подтвердить',
+                    cancelButton: 'Отмена',
+                });
+
+                if (isConfirmed) {
+                    this.delete(id)
+                }
+            },
+
+            ban(id) {
+                if(id){
+                    axios({
+                        method: 'get',
+                        url: '/api/users/' + id + '/ban/',
+                    })
+                    .then((response) => {
+                        notify('info', {
+                            title: 'Успешно!',
+                            message: 'Блогер заблокирован!'
+                        });
+
+                        this.$emit('updateBloggers', id);
+                    })
+                }
+            },
+            unban(id) {
+                if(id){
+                    axios({
+                        method: 'get',
+                        url: '/api/users/' + id + '/unban/',
+                    })
+                    .then((response) => {
+                        notify('info', {
+                            title: 'Успешно!',
+                            message: 'Блогер успешно разблокирован!'
+                        });
+
+                        this.$emit('updateBloggers', id);
+                    })
+                }
+            },
+            delete(id) {
+                console.log(id);
+
+                // if(id){
+                //     axios({
+                //         method: 'get',
+                //         url: '/api/users/' + id + '/delete/',
+                //     })
+                //     .then((response) => {
+                //         notify('info', {
+                //             title: 'Успешно!',
+                //             message: 'Блогер удален!'
+                //         });
+
+                //         this.$emit('updateBloggers', id);
+                //     })
+                // }
+            },
         }
-        // setup(props) {
-        //     bloggers = props.bloggers
-        // }
     }
 </script>

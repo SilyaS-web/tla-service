@@ -15,22 +15,88 @@
                     v-for="seller in sellers"
                     :sellers="sellers"
                     :seller="seller"
-                    v-on:ban="userBanned"
+                    v-on:ban="ban"
+                    v-on:unban="unban"
+                    v-on:deletionConfirmation="deletionConfirmation"
                 ></SellerItem>
             </div>
         </div>
     </div>
+    <confirm-popup ref="confirmPopup"></confirm-popup>
 </template>
 <script>
     import SellerItem from '../SellerItemComponent.vue'
+    import ConfirmPopup from '../ui/ConfirmationPopup.vue';
 
     export default{
         props: ['sellers'],
-        components: {SellerItem},
+        components: {SellerItem, ConfirmPopup},
         methods:{
-            userBanned(id){
-                this.$emit('changedSellersList', id);
-            }
+            async deletionConfirmation(id) {
+                const isConfirmed = await this.$refs.confirmPopup.show({
+                    title: 'Подтвердите действие',
+                    subtitle: 'После подтверждения пользователя нельзя будет восстановить',
+                    okButton: 'Подтвердить',
+                    cancelButton: 'Отмена',
+                });
+
+                if (isConfirmed) {
+                    this.delete(id)
+                }
+            },
+
+            unban(e) {
+                var el = e.currentTarget;
+                var id = $(el).attr('id');
+
+                axios({
+                    method: 'get',
+                    url: '/api/users/' + id + '/unban/',
+                })
+                .then((response) => {
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Селлер успешно разблокирован!'
+                    });
+                    this.$emit('updateSeller', id);
+                })
+            },
+
+            ban(e) {
+                var el = e.currentTarget;
+                var id = $(el).attr('id');
+
+                axios({
+                    method: 'get',
+                    url: '/api/users/' + id + '/ban/',
+                })
+                .then((response) => {
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Селлер заблокирован!'
+                    });
+                    this.$emit('updateSeller', id);
+                })
+            },
+
+            delete(id) {
+                console.log(id);
+
+                // if(id){
+                //     axios({
+                //         method: 'get',
+                //         url: '/api/users/' + id + '/delete/',
+                //     })
+                //     .then((response) => {
+                //         notify('info', {
+                //             title: 'Успешно!',
+                //             message: 'Блогер удален!'
+                //         });
+
+                //         this.$emit('updateSeller', id);
+                //     })
+                // }
+            },
         }
     }
 </script>

@@ -61,13 +61,19 @@
                 </div>
 
                 <div v-if="seller.user.status == -1" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn btn-primary" v-on:click="unbanUser" v-bind:id="seller.user.id">
+                    <button class="btn btn-primary" v-on:click="unban" v-bind:id="seller.user.id">
                         Разблокировать
+                    </button>
+                    <button class="btn btn-delete" v-on:click="deletionConfirmation" v-bind:data-id="seller.user.id">
+                        Удалить
                     </button>
                 </div>
                 <div v-else class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn btn-primary" v-on:click="banUser" v-bind:id="seller.user.id">
+                    <button class="btn btn-primary" v-on:click="ban" v-bind:id="seller.user.id">
                         Заблокировать
+                    </button>
+                    <button class="btn btn-delete" v-on:click="deletionConfirmation" v-bind:data-id="seller.user.id">
+                        Удалить
                     </button>
                 </div>
             </div>
@@ -81,37 +87,19 @@
     export default{
         props: ['seller', 'sellers'],
         methods:{
-            unbanUser(e) {
-                var el = e.currentTarget;
-                var id = $(el).attr('id');
-
-                axios({
-                    method: 'get',
-                    url: '/api/users/' + id + '/unban/',
-                })
-                .then((response) => {
-                    notify('info', {
-                        title: 'Успешно!',
-                        message: 'Селлер успешно разблокирован!'
-                    });
-                    this.$emit('ban', id);
-                })
+            deletionConfirmation(event) {
+                let id = $(event.currentTarget).data('id');
+                this.$emit('deletionConfirmation', id)
             },
-            banUser(e) {
-                var el = e.currentTarget;
-                var id = $(el).attr('id');
 
-                axios({
-                    method: 'get',
-                    url: '/api/users/' + id + '/ban/',
-                })
-                .then((response) => {
-                    notify('info', {
-                        title: 'Успешно!',
-                        message: 'Селлер заблокирован!'
-                    });
-                    this.$emit('ban', id);
-                })
+            ban(event) {
+                let id = $(event.currentTarget).data('id');
+                this.$emit('ban', id)
+            },
+
+            unban(event) {
+                let id = $(event.currentTarget).data('id');
+                this.$emit('unban', id)
             },
         }
     }

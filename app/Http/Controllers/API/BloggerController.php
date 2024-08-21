@@ -29,7 +29,6 @@ class BloggerController extends Controller
             $bloggers->whereHas('user', function (Builder $query) use ($validated) {
                 $query->whereIn('status', array_values($validated['statuses']));
             });
-
         }
 
         $bloggers = $bloggers->with('user')->with('platforms')->with('themes')->with('country')->get();

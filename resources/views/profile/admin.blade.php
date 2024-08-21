@@ -19,7 +19,7 @@
     <div class="wrapper" id = "admin-app">
         <admin-index></admin-index>
     </div>
-    <div class="popup" id="accept-form">
+    {{-- <div class="popup" id="accept-form">
         <div class="popup__container _container">
             <div class="popup__body">
                 <div class="popup__title title">
@@ -60,9 +60,9 @@
                         <div class="form-group">
                             <label for="country">Страна блогера</label>
                             <select name="country" id="country" class="input">
-                                {{-- @foreach ($countries as $country)
+                                @foreach ($countries as $country)
                                     <option value="{{ $country->id }}">{{ $country->name }}</option>
-                                @endforeach --}}
+                                @endforeach
                             </select>
                         </div>
                         <div class="form-group">
@@ -70,7 +70,7 @@
                             <input id="city" name="city" type="text" class="input">
                         </div>
                         <label for="">Статистика по блогеру</label>
-                        {{-- @php(
+                        @php(
                             $platforms_main_cover_titles = [
                                 'Telegram' => 'Просмотры',
                                 'VK' => 'Просмотры постов',
@@ -134,7 +134,7 @@
                                 @endif
                             </div>
                         </div>
-                    @endforeach --}}
+                    @endforeach
                         <div class="form-group">
                             <div class="input-checkbox-w">
                                 <input name="is_achievement" type="checkbox" class="checkbox whois" id="is_achievement">
@@ -151,8 +151,8 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="popup" id="achivments-form">
+    </div> --}}
+    {{-- <div class="popup" id="achivments-form">
         <div class="popup__container _container">
             <div class="popup__body">
                 <div class="popup__title title">
@@ -172,34 +172,7 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="popup" id="confirm-deletion" style="">
-        <div class="popup__container _container">
-            <div class="popup__body">
-                <div class="popup__header">
-                    <div class="popup__title title">
-                        Подтвердите действие
-                    </div>
-                    <div class="popup__subtitle subtitle">
-                        После подтверждения пользователя нельзя будет восстановить
-                    </div>
-                </div>
-                <div class="popup__form">
-                    <div class="popup__form-btns">
-                        <button class="btn btn-primary send-data">
-                            Подтвердить
-                        </button>
-                        <button class="btn btn-secondary close-popup-btn">
-                            Отмена
-                        </button>
-                    </div>
-                </div>
-                <div class="close-popup">
-                    <img src="{{ asset('img/close-icon.svg') }}" alt="">
-                </div>
-            </div>
-        </div>
-    </div>
+    </div> --}}
 </body>
 <script src="{{ asset('admin/js/script.js') }}"></script>
 <script src = "./js/app.js"></script>

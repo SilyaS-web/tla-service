@@ -20568,41 +20568,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['blogger', 'bloggers'],
+  components: {},
   methods: {
-    banUser: function banUser(e) {
-      var _this = this;
-      var el = e.currentTarget;
-      var id = $(el).attr('id');
-      axios__WEBPACK_IMPORTED_MODULE_0___default()({
-        method: 'get',
-        url: '/api/users/' + id + '/ban/'
-      }).then(function (response) {
-        notify('info', {
-          title: 'Успешно!',
-          message: 'Блогер заблокирован!'
-        });
-        _this.$emit('ban', id);
-      });
+    deletionConfirmation: function deletionConfirmation(event) {
+      var id = $(event.currentTarget).data('id');
+      this.$emit('deletionConfirmation', id);
     },
-    unbanUser: function unbanUser(e) {
-      var _this2 = this;
-      var el = e.currentTarget;
-      var id = $(el).attr('id');
-      axios__WEBPACK_IMPORTED_MODULE_0___default()({
-        method: 'get',
-        url: '/api/users/' + id + '/unban/'
-      }).then(function (response) {
-        notify('info', {
-          title: 'Успешно!',
-          message: 'Блогер успешно разблокирован!'
-        });
-        _this2.$emit('ban', id);
-      });
+    ban: function ban(event) {
+      var id = $(event.currentTarget).data('id');
+      this.$emit('ban', id);
+    },
+    unban: function unban(event) {
+      var id = $(event.currentTarget).data('id');
+      this.$emit('unban', id);
     },
     countER: function countER(subs, cover) {
       var val = subs > 0 && cover > 0 ? cover / subs * 100 : 0;
@@ -20704,35 +20684,17 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['seller', 'sellers'],
   methods: {
-    unbanUser: function unbanUser(e) {
-      var _this = this;
-      var el = e.currentTarget;
-      var id = $(el).attr('id');
-      axios__WEBPACK_IMPORTED_MODULE_0___default()({
-        method: 'get',
-        url: '/api/users/' + id + '/unban/'
-      }).then(function (response) {
-        notify('info', {
-          title: 'Успешно!',
-          message: 'Селлер успешно разблокирован!'
-        });
-        _this.$emit('ban', id);
-      });
+    deletionConfirmation: function deletionConfirmation(event) {
+      var id = $(event.currentTarget).data('id');
+      this.$emit('deletionConfirmation', id);
     },
-    banUser: function banUser(e) {
-      var _this2 = this;
-      var el = e.currentTarget;
-      var id = $(el).attr('id');
-      axios__WEBPACK_IMPORTED_MODULE_0___default()({
-        method: 'get',
-        url: '/api/users/' + id + '/ban/'
-      }).then(function (response) {
-        notify('info', {
-          title: 'Успешно!',
-          message: 'Селлер заблокирован!'
-        });
-        _this2.$emit('ban', id);
-      });
+    ban: function ban(event) {
+      var id = $(event.currentTarget).data('id');
+      this.$emit('ban', id);
+    },
+    unban: function unban(event) {
+      var id = $(event.currentTarget).data('id');
+      this.$emit('unban', id);
     }
   }
 });
@@ -20751,20 +20713,95 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _BloggerItemComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../BloggerItemComponent.vue */ "./resources/js/components/admin/BloggerItemComponent.vue");
+/* harmony import */ var _ui_ConfirmationPopup_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ui/ConfirmationPopup.vue */ "./resources/js/components/admin/ui/ConfirmationPopup.vue");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['bloggers'],
   components: {
-    BloggerItem: _BloggerItemComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    BloggerItem: _BloggerItemComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    ConfirmPopup: _ui_ConfirmationPopup_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   methods: {
-    userBanned: function userBanned() {
-      this.$emit('changedBloggersList');
+    deletionConfirmation: function deletionConfirmation(id) {
+      var _this = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var isConfirmed;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _this.$refs.confirmPopup.show({
+                title: 'Подтвердите действие',
+                subtitle: 'После подтверждения пользователя нельзя будет восстановить',
+                okButton: 'Подтвердить',
+                cancelButton: 'Отмена'
+              });
+            case 2:
+              isConfirmed = _context.sent;
+              if (isConfirmed) {
+                _this["delete"](id);
+              }
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee);
+      }))();
+    },
+    ban: function ban(id) {
+      var _this2 = this;
+      if (id) {
+        axios({
+          method: 'get',
+          url: '/api/users/' + id + '/ban/'
+        }).then(function (response) {
+          notify('info', {
+            title: 'Успешно!',
+            message: 'Блогер заблокирован!'
+          });
+          _this2.$emit('updateBloggers', id);
+        });
+      }
+    },
+    unban: function unban(id) {
+      var _this3 = this;
+      if (id) {
+        axios({
+          method: 'get',
+          url: '/api/users/' + id + '/unban/'
+        }).then(function (response) {
+          notify('info', {
+            title: 'Успешно!',
+            message: 'Блогер успешно разблокирован!'
+          });
+          _this3.$emit('updateBloggers', id);
+        });
+      }
+    },
+    "delete": function _delete(id) {
+      console.log(id);
+
+      // if(id){
+      //     axios({
+      //         method: 'get',
+      //         url: '/api/users/' + id + '/delete/',
+      //     })
+      //     .then((response) => {
+      //         notify('info', {
+      //             title: 'Успешно!',
+      //             message: 'Блогер удален!'
+      //         });
+
+      //         this.$emit('updateBloggers', id);
+      //     })
+      // }
     }
   }
-  // setup(props) {
-  //     bloggers = props.bloggers
-  // }
 });
 
 /***/ }),
@@ -20831,15 +20868,93 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var _SellerItemComponent_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../SellerItemComponent.vue */ "./resources/js/components/admin/SellerItemComponent.vue");
+/* harmony import */ var _ui_ConfirmationPopup_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../ui/ConfirmationPopup.vue */ "./resources/js/components/admin/ui/ConfirmationPopup.vue");
+function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
+function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
+function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
+function _asyncToGenerator(n) { return function () { var t = this, e = arguments; return new Promise(function (r, o) { var a = n.apply(t, e); function _next(n) { asyncGeneratorStep(a, r, o, _next, _throw, "next", n); } function _throw(n) { asyncGeneratorStep(a, r, o, _next, _throw, "throw", n); } _next(void 0); }); }; }
+
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['sellers'],
   components: {
-    SellerItem: _SellerItemComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+    SellerItem: _SellerItemComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    ConfirmPopup: _ui_ConfirmationPopup_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
   methods: {
-    userBanned: function userBanned(id) {
-      this.$emit('changedSellersList', id);
+    deletionConfirmation: function deletionConfirmation(id) {
+      var _this = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
+        var isConfirmed;
+        return _regeneratorRuntime().wrap(function _callee$(_context) {
+          while (1) switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _this.$refs.confirmPopup.show({
+                title: 'Подтвердите действие',
+                subtitle: 'После подтверждения пользователя нельзя будет восстановить',
+                okButton: 'Подтвердить',
+                cancelButton: 'Отмена'
+              });
+            case 2:
+              isConfirmed = _context.sent;
+              if (isConfirmed) {
+                _this["delete"](id);
+              }
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }, _callee);
+      }))();
+    },
+    unban: function unban(e) {
+      var _this2 = this;
+      var el = e.currentTarget;
+      var id = $(el).attr('id');
+      axios({
+        method: 'get',
+        url: '/api/users/' + id + '/unban/'
+      }).then(function (response) {
+        notify('info', {
+          title: 'Успешно!',
+          message: 'Селлер успешно разблокирован!'
+        });
+        _this2.$emit('updateSeller', id);
+      });
+    },
+    ban: function ban(e) {
+      var _this3 = this;
+      var el = e.currentTarget;
+      var id = $(el).attr('id');
+      axios({
+        method: 'get',
+        url: '/api/users/' + id + '/ban/'
+      }).then(function (response) {
+        notify('info', {
+          title: 'Успешно!',
+          message: 'Селлер заблокирован!'
+        });
+        _this3.$emit('updateSeller', id);
+      });
+    },
+    "delete": function _delete(id) {
+      console.log(id);
+
+      // if(id){
+      //     axios({
+      //         method: 'get',
+      //         url: '/api/users/' + id + '/delete/',
+      //     })
+      //     .then((response) => {
+      //         notify('info', {
+      //             title: 'Успешно!',
+      //             message: 'Блогер удален!'
+      //         });
+
+      //         this.$emit('updateSeller', id);
+      //     })
+      // }
     }
   }
 });
@@ -20867,8 +20982,8 @@ __webpack_require__.r(__webpack_exports__);
     BloggerItem: _BloggerItemComponent_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
   },
   methods: {
-    userBanned: function userBanned() {
-      this.$emit('changedBloggersList');
+    update: function update() {
+      this.$emit('updateBloggers');
     }
   }
 });
@@ -21008,7 +21123,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       blogger.summaryPlatform = summaryPlatform;
       return blogger;
     },
-    changedBloggersList: function changedBloggersList() {
+    updateBloggers: function updateBloggers() {
       var _this2 = this;
       Promise.all([this.getBloggers([1, -1]).then(function (list) {
         _this2.bloggers = (list || []).map(function (_b) {
@@ -21127,6 +21242,69 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/ui/ConfirmationPopup.vue?vue&type=script&lang=js":
+/*!********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/ui/ConfirmationPopup.vue?vue&type=script&lang=js ***!
+  \********************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _services_AppPopup_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../services/AppPopup.vue */ "./resources/js/components/services/AppPopup.vue");
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'ConfirmPopup',
+  components: {
+    PopupModal: _services_AppPopup_vue__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      // Parameters that change depending on the type of dialogue
+      title: 'Подтвердите действие',
+      subtitle: 'После действие нельзя будет отменить',
+      // Main text content
+      okButton: 'Подтвердить',
+      // Text for confirm button; leave it empty because we don't know what we're using it for
+      cancelButton: 'Отмена',
+      // text for cancel button
+
+      // Private variables
+      resolvePromise: undefined,
+      rejectPromise: undefined
+    };
+  },
+  methods: {
+    show: function show() {
+      var _this = this;
+      var opts = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+      this.title = opts.title;
+      this.subtitle = opts.subtitle;
+      this.okButton = opts.okButton;
+      if (opts.cancelButton) {
+        this.cancelButton = opts.cancelButton;
+      }
+      this.$refs.popup.open();
+      return new Promise(function (resolve, reject) {
+        _this.resolvePromise = resolve;
+        _this.rejectPromise = reject;
+      });
+    },
+    _confirm: function _confirm() {
+      this.$refs.popup.close();
+      this.resolvePromise(true);
+    },
+    _cancel: function _cancel() {
+      this.$refs.popup.close();
+      this.resolvePromise(false);
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/services/AppLoader.vue?vue&type=script&lang=js":
 /*!************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/services/AppLoader.vue?vue&type=script&lang=js ***!
@@ -21149,6 +21327,36 @@ var Loader = {
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Loader);
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/services/AppPopup.vue?vue&type=script&lang=js":
+/*!***********************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/services/AppPopup.vue?vue&type=script&lang=js ***!
+  \***********************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  name: 'PopupModal',
+  data: function data() {
+    return {
+      isVisible: false
+    };
+  },
+  methods: {
+    open: function open() {
+      this.isVisible = true;
+    },
+    close: function close() {
+      this.isVisible = false;
+    }
+  }
+});
 
 /***/ }),
 
@@ -21319,7 +21527,7 @@ var _hoisted_38 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   "class": "btn btn-primary btn-accept",
   "data-id": "{{ blogger.user.id }}"
 }, "Принять", -1 /* HOISTED */);
-var _hoisted_39 = ["id"];
+var _hoisted_39 = ["data-id"];
 var _hoisted_40 = {
   key: 1,
   "class": "card__row",
@@ -21329,8 +21537,9 @@ var _hoisted_40 = {
     "flex-wrap": "wrap"
   }
 };
-var _hoisted_41 = ["id"];
-var _hoisted_42 = {
+var _hoisted_41 = ["data-id"];
+var _hoisted_42 = ["data-id"];
+var _hoisted_43 = {
   key: 2,
   "class": "card__row",
   style: {
@@ -21339,7 +21548,8 @@ var _hoisted_42 = {
     "flex-wrap": "wrap"
   }
 };
-var _hoisted_43 = ["id"];
+var _hoisted_44 = ["data-id"];
+var _hoisted_45 = ["data-id"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "card__img",
@@ -21375,22 +21585,34 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, "Подробнее", 8 /* PROPS */, _hoisted_36)]), $props.blogger.user.status === 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_37, [_hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-secondary",
     onClick: _cache[0] || (_cache[0] = function () {
-      return $options.banUser && $options.banUser.apply($options, arguments);
+      return $options.ban && $options.ban.apply($options, arguments);
     }),
-    id: $props.blogger.user.id
+    "data-id": $props.blogger.user.id
   }, " Отклонить ", 8 /* PROPS */, _hoisted_39)])) : $props.blogger.user.status === 1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_40, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-primary",
     onClick: _cache[1] || (_cache[1] = function () {
-      return $options.banUser && $options.banUser.apply($options, arguments);
+      return $options.ban && $options.ban.apply($options, arguments);
     }),
-    id: $props.blogger.user.id
-  }, " Заблокировать ", 8 /* PROPS */, _hoisted_41)])) : $props.blogger.user.status === -1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    "class": "btn btn-primary",
+    "data-id": $props.blogger.user.id
+  }, " Заблокировать ", 8 /* PROPS */, _hoisted_41), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "btn btn-delete",
     onClick: _cache[2] || (_cache[2] = function () {
-      return $options.unbanUser && $options.unbanUser.apply($options, arguments);
+      return $options.deletionConfirmation && $options.deletionConfirmation.apply($options, arguments);
     }),
-    id: $props.blogger.user.id
-  }, " Разблокировать ", 8 /* PROPS */, _hoisted_43)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]);
+    "data-id": $props.blogger.user.id
+  }, " Удалить ", 8 /* PROPS */, _hoisted_42)])) : $props.blogger.user.status === -1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "btn btn-primary",
+    onClick: _cache[3] || (_cache[3] = function () {
+      return $options.unban && $options.unban.apply($options, arguments);
+    }),
+    "data-id": $props.blogger.user.id
+  }, " Разблокировать ", 8 /* PROPS */, _hoisted_44), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "btn btn-delete",
+    onClick: _cache[4] || (_cache[4] = function () {
+      return $options.deletionConfirmation && $options.deletionConfirmation.apply($options, arguments);
+    }),
+    "data-id": $props.blogger.user.id
+  }, " Удалить ", 8 /* PROPS */, _hoisted_45)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])]);
 }
 
 /***/ }),
@@ -21630,7 +21852,8 @@ var _hoisted_26 = {
   }
 };
 var _hoisted_27 = ["id"];
-var _hoisted_28 = {
+var _hoisted_28 = ["data-id"];
+var _hoisted_29 = {
   key: 1,
   "class": "card__row",
   style: {
@@ -21639,7 +21862,8 @@ var _hoisted_28 = {
     "flex-wrap": "wrap"
   }
 };
-var _hoisted_29 = ["id"];
+var _hoisted_30 = ["id"];
+var _hoisted_31 = ["data-id"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "card__img",
@@ -21657,16 +21881,28 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, "Подробнее", 8 /* PROPS */, _hoisted_25)]), $props.seller.user.status == -1 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-primary",
     onClick: _cache[0] || (_cache[0] = function () {
-      return $options.unbanUser && $options.unbanUser.apply($options, arguments);
+      return $options.unban && $options.unban.apply($options, arguments);
     }),
     id: $props.seller.user.id
-  }, " Разблокировать ", 8 /* PROPS */, _hoisted_27)])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_28, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    "class": "btn btn-primary",
+  }, " Разблокировать ", 8 /* PROPS */, _hoisted_27), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "btn btn-delete",
     onClick: _cache[1] || (_cache[1] = function () {
-      return $options.banUser && $options.banUser.apply($options, arguments);
+      return $options.deletionConfirmation && $options.deletionConfirmation.apply($options, arguments);
+    }),
+    "data-id": $props.seller.user.id
+  }, " Удалить ", 8 /* PROPS */, _hoisted_28)])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "btn btn-primary",
+    onClick: _cache[2] || (_cache[2] = function () {
+      return $options.ban && $options.ban.apply($options, arguments);
     }),
     id: $props.seller.user.id
-  }, " Заблокировать ", 8 /* PROPS */, _hoisted_29)]))])])]);
+  }, " Заблокировать ", 8 /* PROPS */, _hoisted_30), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    "class": "btn btn-delete",
+    onClick: _cache[3] || (_cache[3] = function () {
+      return $options.deletionConfirmation && $options.deletionConfirmation.apply($options, arguments);
+    }),
+    "data-id": $props.seller.user.id
+  }, " Удалить ", 8 /* PROPS */, _hoisted_31)]))])])]);
 }
 
 /***/ }),
@@ -21702,13 +21938,18 @@ var _hoisted_5 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_BloggerItem = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("BloggerItem");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, " Список блогеров • " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.bloggers.length), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-blogers__search form-group\">\r\n                    <input type=\"name\" id=\"blogers-search\" class=\"input\" placeholder=\"Введите название\">\r\n                    <button class=\"btn btn-primary blogers-search-btn\">Найти</button>\r\n                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.bloggers, function (blogger) {
+  var _component_confirm_popup = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("confirm-popup");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, " Список блогеров • " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.bloggers.length), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-blogers__search form-group\">\n                    <input type=\"name\" id=\"blogers-search\" class=\"input\" placeholder=\"Введите название\">\n                    <button class=\"btn btn-primary blogers-search-btn\">Найти</button>\n                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.bloggers, function (blogger) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_BloggerItem, {
       bloggers: $props.bloggers,
       blogger: blogger,
-      onBan: $options.userBanned
-    }, null, 8 /* PROPS */, ["bloggers", "blogger", "onBan"]);
-  }), 256 /* UNKEYED_FRAGMENT */))])])]);
+      onBan: $options.ban,
+      onUnban: $options.unban,
+      onDeletionConfirmation: $options.deletionConfirmation
+    }, null, 8 /* PROPS */, ["bloggers", "blogger", "onBan", "onUnban", "onDeletionConfirmation"]);
+  }), 256 /* UNKEYED_FRAGMENT */))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_confirm_popup, {
+    ref: "confirmPopup"
+  }, null, 512 /* NEED_PATCH */)], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -21830,13 +22071,18 @@ var _hoisted_5 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_SellerItem = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SellerItem");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, " Список селлеров • " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.sellers.length), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-blogers__search form-group\">\r\n                    <input type=\"name\" id=\"sellers-search\" class=\"input\" placeholder=\"Введите название\">\r\n                    <button class=\"btn btn-primary sellers-search-btn\">Найти</button>\r\n                </div>  ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.sellers, function (seller) {
+  var _component_confirm_popup = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("confirm-popup");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, " Список селлеров • " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.sellers.length), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-blogers__search form-group\">\n                    <input type=\"name\" id=\"sellers-search\" class=\"input\" placeholder=\"Введите название\">\n                    <button class=\"btn btn-primary sellers-search-btn\">Найти</button>\n                </div>  ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.sellers, function (seller) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_SellerItem, {
       sellers: $props.sellers,
       seller: seller,
-      onBan: $options.userBanned
-    }, null, 8 /* PROPS */, ["sellers", "seller", "onBan"]);
-  }), 256 /* UNKEYED_FRAGMENT */))])])]);
+      onBan: $options.ban,
+      onUnban: $options.unban,
+      onDeletionConfirmation: $options.deletionConfirmation
+    }, null, 8 /* PROPS */, ["sellers", "seller", "onBan", "onUnban", "onDeletionConfirmation"]);
+  }), 256 /* UNKEYED_FRAGMENT */))])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_confirm_popup, {
+    ref: "confirmPopup"
+  }, null, 512 /* NEED_PATCH */)], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -21872,12 +22118,12 @@ var _hoisted_5 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_BloggerItem = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("BloggerItem");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, " Модерация блогеров • " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.bloggers.length), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-blogers__search form-group\">\r\n                    <input type=\"name\" id=\"moderation-search\" class=\"input\" placeholder=\"Введите название\">\r\n                    <button class=\"btn btn-primary moderation-search-btn\">Найти</button>\r\n                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.bloggers, function (blogger) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, " Модерация блогеров • " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.bloggers.length), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-blogers__search form-group\">\n                    <input type=\"name\" id=\"moderation-search\" class=\"input\" placeholder=\"Введите название\">\n                    <button class=\"btn btn-primary moderation-search-btn\">Найти</button>\n                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.bloggers, function (blogger) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_BloggerItem, {
       bloggers: $props.bloggers,
       blogger: blogger,
-      onBan: $options.userBanned
-    }, null, 8 /* PROPS */, ["bloggers", "blogger", "onBan"]);
+      onUpdate: $options.update
+    }, null, 8 /* PROPS */, ["bloggers", "blogger", "onUpdate"]);
   }), 256 /* UNKEYED_FRAGMENT */))])])]);
 }
 
@@ -21930,11 +22176,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onSwitchTab: $options.switchTab
   }, null, 8 /* PROPS */, ["onSwitchTab"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Модерация "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_admin_bloggers_moderation_page, {
     bloggers: $setup.unverifiedBloggers,
-    onChangedBloggersList: $options.changedBloggersList
-  }, null, 8 /* PROPS */, ["bloggers", "onChangedBloggersList"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Список блогеров "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_admin_bloggers_page, {
+    onUpdateBloggers: $options.updateBloggers
+  }, null, 8 /* PROPS */, ["bloggers", "onUpdateBloggers"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Список блогеров "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_admin_bloggers_page, {
     bloggers: $setup.bloggers,
-    onChangedBloggersList: $options.changedBloggersList
-  }, null, 8 /* PROPS */, ["bloggers", "onChangedBloggersList"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Список селлеров "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_admin_sellers_page, {
+    onUpdateBloggers: $options.updateBloggers
+  }, null, 8 /* PROPS */, ["bloggers", "onUpdateBloggers"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Список селлеров "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_admin_sellers_page, {
     sellers: $setup.sellers,
     onChangedSellersList: $options.changedSellersList
   }, null, 8 /* PROPS */, ["sellers", "onChangedSellersList"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Список проектов "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_admin_projects_page, {
@@ -22066,6 +22312,105 @@ var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVN
 var _hoisted_3 = [_hoisted_2];
 function render(_ctx, _cache) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("header", _hoisted_1, [].concat(_hoisted_3));
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/ui/ConfirmationPopup.vue?vue&type=template&id=e8ad9432":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/ui/ConfirmationPopup.vue?vue&type=template&id=e8ad9432 ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  "class": "popup__header"
+};
+var _hoisted_2 = {
+  "class": "popup__title title"
+};
+var _hoisted_3 = {
+  "class": "popup__subtitle subtitle"
+};
+var _hoisted_4 = {
+  "class": "popup__form"
+};
+var _hoisted_5 = {
+  "class": "popup__form-btns"
+};
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_popup_modal = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("popup-modal");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_popup_modal, {
+    ref: "popup"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.title), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.subtitle), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        onClick: _cache[0] || (_cache[0] = function () {
+          return $options._confirm && $options._confirm.apply($options, arguments);
+        }),
+        "class": "btn btn-primary"
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.okButton), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+        onClick: _cache[1] || (_cache[1] = function () {
+          return $options._cancel && $options._cancel.apply($options, arguments);
+        }),
+        "class": "btn btn-secondary"
+      }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(_ctx.cancelButton), 1 /* TEXT */)])])];
+    }),
+    _: 1 /* STABLE */
+  }, 512 /* NEED_PATCH */);
+}
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/services/AppPopup.vue?vue&type=template&id=03a9b101":
+/*!***************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/services/AppPopup.vue?vue&type=template&id=03a9b101 ***!
+  \***************************************************************************************************************************************************************************************************************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* binding */ render)
+/* harmony export */ });
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
+
+var _hoisted_1 = {
+  key: 0,
+  "class": "popup",
+  style: {}
+};
+var _hoisted_2 = {
+  "class": "popup__container _container"
+};
+var _hoisted_3 = {
+  "class": "popup__body"
+};
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  src: "/img/close-icon.svg",
+  alt: ""
+}, null, -1 /* HOISTED */);
+var _hoisted_5 = [_hoisted_4];
+function render(_ctx, _cache, $props, $setup, $data, $options) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
+    name: "fade"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [_ctx.isVisible ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+        "class": "close-popup",
+        onClick: _cache[0] || (_cache[0] = function () {
+          return $options.close && $options.close.apply($options, arguments);
+        })
+      }, [].concat(_hoisted_5))])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
+    }),
+    _: 3 /* FORWARDED */
+  });
 }
 
 /***/ }),
@@ -39868,6 +40213,34 @@ if (false) {}
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/ui/ConfirmationPopup.vue":
+/*!****************************************************************!*\
+  !*** ./resources/js/components/admin/ui/ConfirmationPopup.vue ***!
+  \****************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _ConfirmationPopup_vue_vue_type_template_id_e8ad9432__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ConfirmationPopup.vue?vue&type=template&id=e8ad9432 */ "./resources/js/components/admin/ui/ConfirmationPopup.vue?vue&type=template&id=e8ad9432");
+/* harmony import */ var _ConfirmationPopup_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ConfirmationPopup.vue?vue&type=script&lang=js */ "./resources/js/components/admin/ui/ConfirmationPopup.vue?vue&type=script&lang=js");
+/* harmony import */ var E_Server_domains_tla_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,E_Server_domains_tla_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_ConfirmationPopup_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_ConfirmationPopup_vue_vue_type_template_id_e8ad9432__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/admin/ui/ConfirmationPopup.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
 /***/ "./resources/js/components/services/AppLoader.vue":
 /*!********************************************************!*\
   !*** ./resources/js/components/services/AppLoader.vue ***!
@@ -39886,6 +40259,34 @@ __webpack_require__.r(__webpack_exports__);
 
 ;
 const __exports__ = /*#__PURE__*/(0,E_Server_domains_tla_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_1__["default"])(_AppLoader_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"], [['__file',"resources/js/components/services/AppLoader.vue"]])
+/* hot reload */
+if (false) {}
+
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (__exports__);
+
+/***/ }),
+
+/***/ "./resources/js/components/services/AppPopup.vue":
+/*!*******************************************************!*\
+  !*** ./resources/js/components/services/AppPopup.vue ***!
+  \*******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var _AppPopup_vue_vue_type_template_id_03a9b101__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./AppPopup.vue?vue&type=template&id=03a9b101 */ "./resources/js/components/services/AppPopup.vue?vue&type=template&id=03a9b101");
+/* harmony import */ var _AppPopup_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./AppPopup.vue?vue&type=script&lang=js */ "./resources/js/components/services/AppPopup.vue?vue&type=script&lang=js");
+/* harmony import */ var E_Server_domains_tla_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+
+
+
+
+;
+const __exports__ = /*#__PURE__*/(0,E_Server_domains_tla_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_AppPopup_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_AppPopup_vue_vue_type_template_id_03a9b101__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/components/services/AppPopup.vue"]])
 /* hot reload */
 if (false) {}
 
@@ -40096,6 +40497,22 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/components/admin/ui/ConfirmationPopup.vue?vue&type=script&lang=js":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/components/admin/ui/ConfirmationPopup.vue?vue&type=script&lang=js ***!
+  \****************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ConfirmationPopup_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ConfirmationPopup_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ConfirmationPopup.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/ui/ConfirmationPopup.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
 /***/ "./resources/js/components/services/AppLoader.vue?vue&type=script&lang=js":
 /*!********************************************************************************!*\
   !*** ./resources/js/components/services/AppLoader.vue?vue&type=script&lang=js ***!
@@ -40108,6 +40525,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AppLoader_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AppLoader_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AppLoader.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/services/AppLoader.vue?vue&type=script&lang=js");
+ 
+
+/***/ }),
+
+/***/ "./resources/js/components/services/AppPopup.vue?vue&type=script&lang=js":
+/*!*******************************************************************************!*\
+  !*** ./resources/js/components/services/AppPopup.vue?vue&type=script&lang=js ***!
+  \*******************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AppPopup_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__["default"])
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AppPopup_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AppPopup.vue?vue&type=script&lang=js */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/services/AppPopup.vue?vue&type=script&lang=js");
  
 
 /***/ }),
@@ -40316,6 +40749,38 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AppHeader_vue_vue_type_template_id_25f5ee04__WEBPACK_IMPORTED_MODULE_0__.render)
 /* harmony export */ });
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AppHeader_vue_vue_type_template_id_25f5ee04__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AppHeader.vue?vue&type=template&id=25f5ee04 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/ui/AppHeader.vue?vue&type=template&id=25f5ee04");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/ui/ConfirmationPopup.vue?vue&type=template&id=e8ad9432":
+/*!**********************************************************************************************!*\
+  !*** ./resources/js/components/admin/ui/ConfirmationPopup.vue?vue&type=template&id=e8ad9432 ***!
+  \**********************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ConfirmationPopup_vue_vue_type_template_id_e8ad9432__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_ConfirmationPopup_vue_vue_type_template_id_e8ad9432__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./ConfirmationPopup.vue?vue&type=template&id=e8ad9432 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/admin/ui/ConfirmationPopup.vue?vue&type=template&id=e8ad9432");
+
+
+/***/ }),
+
+/***/ "./resources/js/components/services/AppPopup.vue?vue&type=template&id=03a9b101":
+/*!*************************************************************************************!*\
+  !*** ./resources/js/components/services/AppPopup.vue?vue&type=template&id=03a9b101 ***!
+  \*************************************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   render: () => (/* reexport safe */ _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AppPopup_vue_vue_type_template_id_03a9b101__WEBPACK_IMPORTED_MODULE_0__.render)
+/* harmony export */ });
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_clonedRuleSet_5_use_0_node_modules_vue_loader_dist_templateLoader_js_ruleSet_1_rules_2_node_modules_vue_loader_dist_index_js_ruleSet_0_use_0_AppPopup_vue_vue_type_template_id_03a9b101__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!../../../../node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!../../../../node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./AppPopup.vue?vue&type=template&id=03a9b101 */ "./node_modules/babel-loader/lib/index.js??clonedRuleSet-5.use[0]!./node_modules/vue-loader/dist/templateLoader.js??ruleSet[1].rules[2]!./node_modules/vue-loader/dist/index.js??ruleSet[0].use[0]!./resources/js/components/services/AppPopup.vue?vue&type=template&id=03a9b101");
 
 
 /***/ }),

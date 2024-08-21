@@ -15,7 +15,7 @@
                     v-for="blogger in bloggers"
                     :bloggers="bloggers"
                     :blogger="blogger"
-                    v-on:ban="userBanned"
+                    v-on:update="update"
                 ></BloggerItem>
             </div>
         </div>
@@ -29,8 +29,8 @@
         props: ['bloggers'],
         components: {BloggerItem},
         methods:{
-            userBanned(){
-                this.$emit('changedBloggersList');
+            update(){
+                this.$emit('updateBloggers');
             }
         }
     }
