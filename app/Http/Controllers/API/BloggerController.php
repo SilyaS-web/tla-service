@@ -57,7 +57,7 @@ class BloggerController extends Controller
             'desc' => 'string|nullable',
             'sex' => 'required|string',
             'country_id' => 'required|exists:countries,id',
-            // 'city' => 'required|string',
+            'city' => 'string|nullable',
             'is_achievement' => 'string|nullable',
             'gender_ratio' => 'required|numeric',
             'telegram_link' => 'string|nullable',
