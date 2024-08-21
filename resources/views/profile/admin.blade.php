@@ -16,7 +16,7 @@
     <title>Панель управления</title>
 </head>
 <body>
-    <div class="wrapper">
+    <div class="wrapper" id = "admin-app">
         <div class="burger-menu">
             <div class="admin-menu__body">
                 <div class="admin-menu__title">
@@ -206,6 +206,7 @@
                 </div>
             </div>
         </div>
+
     </div>
     <div class="popup" id="accept-form">
         <div class="popup__container _container">
@@ -273,56 +274,56 @@
                             ]
                         )
                         @foreach($platforms as $platform)
-                        <div class="popup__form-row popup__form-stat form-stat">
-                            <div class="form-stat__title">
-                                {{ $platform }}
-                            </div>
-                            <div class="form-stat__content">
-                                <div class="form-stat__row">
-                                    <div class="form-group" style="width:100%; max-width:100%">
-                                        <label for="{{ strtolower($platform) }}_link">Ссылка</label>
-                                        <input id="{{ strtolower($platform) }}_link" type="text" class="input" name="" style="width:100%; max-width:100%">
-                                    </div>
+                            <div class="popup__form-row popup__form-stat form-stat">
+                                <div class="form-stat__title">
+                                    {{ $platform }}
                                 </div>
-                                <div class="form-stat__row">
-                                    <div class="form-group">
-                                        <label for="{{ strtolower($platform) }}_subs">Подписчики</label>
-                                        <input id="{{ strtolower($platform) }}_subs" type="text" class="input" name="">
+                                <div class="form-stat__content">
+                                    <div class="form-stat__row">
+                                        <div class="form-group" style="width:100%; max-width:100%">
+                                            <label for="{{ $platform }}_link">Ссылка</label>
+                                            <input id="{{ $platform }}_link" type="text" class="input" name="" style="width:100%; max-width:100%">
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="{{ strtolower($platform) }}_cpm">CPM</label>
-                                        <input id="{{ strtolower($platform) }}_cpm" type="text" class="input" name="">
-                                    </div>
-                                </div>
-
-                                @if(isset($platforms_main_cover_titles[$platform]))
                                     <div class="form-stat__row">
                                         <div class="form-group">
-                                            <label for="{{ strtolower($platform) }}_cover">{{ $platforms_main_cover_titles[$platform] }}</label>
-                                            <input id="{{ strtolower($platform) }}_cover" type="text" class="input" name="">
+                                            <label for="{{ $platform }}_subs">Подписчики</label>
+                                            <input id="{{ $platform }}_subs" type="text" class="input" name="">
                                         </div>
                                         <div class="form-group">
-                                            <label for="{{ strtolower($platform) }}_er">ER %</label>
-                                            <input id="{{ strtolower($platform) }}_er" type="text" class="input" name="">
+                                            <label for="{{ $platform }}_cpm">CPM</label>
+                                            <input id="{{ $platform }}_cpm" type="text" class="input" name="">
                                         </div>
                                     </div>
-                                @endif
 
-                                @if(isset($platforms_additional_cover_titles[$platform]))
-                                    <div class="form-stat__row">
-                                        <div class="form-group">
-                                            <label for="{{ strtolower($platform) }}_additional_cover">{{ $platforms_additional_cover_titles[$platform] }}</label>
-                                            <input id="{{ strtolower($platform) }}_additional_cover" type="text" class="input" name="">
+                                    @if(isset($platforms_main_cover_titles[$platform]))
+                                        <div class="form-stat__row">
+                                            <div class="form-group">
+                                                <label for="{{ $platform }}_cover">{{ $platforms_main_cover_titles[$platform] }}</label>
+                                                <input id="{{ $platform }}_cover" type="text" class="input" name="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="{{ $platform }}_er">ER %</label>
+                                                <input id="{{ $platform }}_er" type="text" class="input" name="">
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label for="{{ strtolower($platform) }}_additional_er">ER %</label>
-                                            <input id="{{ strtolower($platform) }}_additional_er" type="text" class="input" name="">
+                                    @endif
+
+                                    @if(isset($platforms_additional_cover_titles[$platform]))
+                                        <div class="form-stat__row">
+                                            <div class="form-group">
+                                                <label for="{{ $platform }}_additional_coverage">{{ $platforms_additional_cover_titles[$platform] }}</label>
+                                                <input id="{{ $platform }}_additional_coverage" type="text" class="input" name="">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="{{ $platform }}_additional_engagement_rate">ER %</label>
+                                                <input id="{{ $platform }}_additional_engagement_rate" type="text" class="input" name="">
+                                            </div>
                                         </div>
-                                    </div>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
                         <div class="form-group">
                             <div class="input-checkbox-w">
                                 <input name="is_achievement" type="checkbox" class="checkbox whois" id="is_achievement">
@@ -390,4 +391,29 @@
     </div>
 </body>
 <script src="{{ asset('admin/js/script.js') }}"></script>
+<script src = "./js/app.js"></script>
+
+<script>
+    function banUser(user_id, el) {
+        el.innerHTML = '<div class="lds-dual-ring"></div>';
+        $.get({
+            url: '/apist/admin/deny/' + user_id,
+            success: function(data, textStatus, jqXHR) {
+                el.innerHTML = 'Пользователь заблокирован';
+                el.disabled = true;
+                notify('info', {
+                    title: 'Успешно!',
+                    message: 'Пользователь заблокирован!'
+                })
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                el.innerHTML = 'Заблокировать';
+                notify('error', {
+                    title: 'Ошибка!',
+                    message: 'Не удалось заблокировать пользователя!'
+                });
+            }
+        });
+    }
+</script>
 </html>
