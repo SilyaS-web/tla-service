@@ -45,57 +45,53 @@
                 }
             },
 
-            unban(e) {
-                var el = e.currentTarget;
-                var id = $(el).attr('id');
-
-                axios({
-                    method: 'get',
-                    url: '/api/users/' + id + '/unban/',
-                })
-                .then((response) => {
-                    notify('info', {
-                        title: 'Успешно!',
-                        message: 'Селлер успешно разблокирован!'
-                    });
-                    this.$emit('updateSeller', id);
-                })
+            unban(id) {
+                if(id){
+                    axios({
+                        method: 'get',
+                        url: '/api/users/' + id + '/unban/',
+                    })
+                    .then((response) => {
+                        notify('info', {
+                            title: 'Успешно!',
+                            message: 'Селлер успешно разблокирован!'
+                        });
+                        this.$emit('updateSellers', id);
+                    })
+                }
             },
 
-            ban(e) {
-                var el = e.currentTarget;
-                var id = $(el).attr('id');
-
-                axios({
-                    method: 'get',
-                    url: '/api/users/' + id + '/ban/',
-                })
-                .then((response) => {
-                    notify('info', {
-                        title: 'Успешно!',
-                        message: 'Селлер заблокирован!'
-                    });
-                    this.$emit('updateSeller', id);
-                })
+            ban(id) {
+                if(id){
+                    axios({
+                        method: 'get',
+                        url: '/api/users/' + id + '/ban/',
+                    })
+                    .then((response) => {
+                        notify('info', {
+                            title: 'Успешно!',
+                            message: 'Селлер заблокирован!'
+                        });
+                        this.$emit('updateSellers', id);
+                    })
+                }
             },
 
             delete(id) {
-                console.log(id);
+                if(id){
+                    axios({
+                        method: 'delete',
+                        url: '/api/users/' + id,
+                    })
+                    .then((response) => {
+                        notify('info', {
+                            title: 'Успешно!',
+                            message: 'Селлер удален.'
+                        });
 
-                // if(id){
-                //     axios({
-                //         method: 'get',
-                //         url: '/api/users/' + id + '/delete/',
-                //     })
-                //     .then((response) => {
-                //         notify('info', {
-                //             title: 'Успешно!',
-                //             message: 'Блогер удален!'
-                //         });
-
-                //         this.$emit('updateSeller', id);
-                //     })
-                // }
+                        this.$emit('updateSellers', id);
+                    })
+                }
             },
         }
     }

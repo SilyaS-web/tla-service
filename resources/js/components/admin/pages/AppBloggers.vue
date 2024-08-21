@@ -64,8 +64,8 @@
             unban(id) {
                 if(id){
                     axios({
-                        method: 'get',
-                        url: '/api/users/' + id + '/unban/',
+                        method: 'delete',
+                        url: '/api/users/' + id,
                     })
                     .then((response) => {
                         notify('info', {
@@ -80,20 +80,20 @@
             delete(id) {
                 console.log(id);
 
-                // if(id){
-                //     axios({
-                //         method: 'get',
-                //         url: '/api/users/' + id + '/delete/',
-                //     })
-                //     .then((response) => {
-                //         notify('info', {
-                //             title: 'Успешно!',
-                //             message: 'Блогер удален!'
-                //         });
+                if(id){
+                    axios({
+                        method: 'delete',
+                        url: '/api/users/' + id,
+                    })
+                    .then((response) => {
+                        notify('info', {
+                            title: 'Успешно!',
+                            message: 'Блогер удален!'
+                        });
 
-                //         this.$emit('updateBloggers', id);
-                //     })
-                // }
+                        this.$emit('updateBloggers', id);
+                    })
+                }
             },
         }
     }

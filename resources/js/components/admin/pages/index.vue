@@ -30,7 +30,7 @@
                     <admin-bloggers-page :bloggers="bloggers" v-on:updateBloggers="updateBloggers"></admin-bloggers-page>
 
                     <!-- Список селлеров -->
-                    <admin-sellers-page :sellers="sellers" v-on:changedSellersList="changedSellersList"></admin-sellers-page>
+                    <admin-sellers-page :sellers="sellers" v-on:updateSellers="updateSellers"></admin-sellers-page>
 
                     <!-- Список проектов -->
                     <admin-projects-page :projects="projects" v-on:statusManagement="statusManagement"></admin-projects-page>
@@ -169,7 +169,7 @@
                     })
                 ])
             },
-            changedSellersList(){
+            updateSellers(){
                 this.loaderOn('#sellers-list')
                 this.getSellers().then((list) => {
                     this.sellers = list || [];

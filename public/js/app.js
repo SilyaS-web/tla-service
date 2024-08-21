@@ -20772,8 +20772,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       var _this3 = this;
       if (id) {
         axios({
-          method: 'get',
-          url: '/api/users/' + id + '/unban/'
+          method: 'delete',
+          url: '/api/users/' + id
         }).then(function (response) {
           notify('info', {
             title: 'Успешно!',
@@ -20784,22 +20784,20 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       }
     },
     "delete": function _delete(id) {
+      var _this4 = this;
       console.log(id);
-
-      // if(id){
-      //     axios({
-      //         method: 'get',
-      //         url: '/api/users/' + id + '/delete/',
-      //     })
-      //     .then((response) => {
-      //         notify('info', {
-      //             title: 'Успешно!',
-      //             message: 'Блогер удален!'
-      //         });
-
-      //         this.$emit('updateBloggers', id);
-      //     })
-      // }
+      if (id) {
+        axios({
+          method: 'delete',
+          url: '/api/users/' + id
+        }).then(function (response) {
+          notify('info', {
+            title: 'Успешно!',
+            message: 'Блогер удален!'
+          });
+          _this4.$emit('updateBloggers', id);
+        });
+      }
     }
   }
 });
@@ -20908,53 +20906,50 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         }, _callee);
       }))();
     },
-    unban: function unban(e) {
+    unban: function unban(id) {
       var _this2 = this;
-      var el = e.currentTarget;
-      var id = $(el).attr('id');
-      axios({
-        method: 'get',
-        url: '/api/users/' + id + '/unban/'
-      }).then(function (response) {
-        notify('info', {
-          title: 'Успешно!',
-          message: 'Селлер успешно разблокирован!'
+      if (id) {
+        axios({
+          method: 'get',
+          url: '/api/users/' + id + '/unban/'
+        }).then(function (response) {
+          notify('info', {
+            title: 'Успешно!',
+            message: 'Селлер успешно разблокирован!'
+          });
+          _this2.$emit('updateSellers', id);
         });
-        _this2.$emit('updateSeller', id);
-      });
+      }
     },
-    ban: function ban(e) {
+    ban: function ban(id) {
       var _this3 = this;
-      var el = e.currentTarget;
-      var id = $(el).attr('id');
-      axios({
-        method: 'get',
-        url: '/api/users/' + id + '/ban/'
-      }).then(function (response) {
-        notify('info', {
-          title: 'Успешно!',
-          message: 'Селлер заблокирован!'
+      if (id) {
+        axios({
+          method: 'get',
+          url: '/api/users/' + id + '/ban/'
+        }).then(function (response) {
+          notify('info', {
+            title: 'Успешно!',
+            message: 'Селлер заблокирован!'
+          });
+          _this3.$emit('updateSellers', id);
         });
-        _this3.$emit('updateSeller', id);
-      });
+      }
     },
     "delete": function _delete(id) {
-      console.log(id);
-
-      // if(id){
-      //     axios({
-      //         method: 'get',
-      //         url: '/api/users/' + id + '/delete/',
-      //     })
-      //     .then((response) => {
-      //         notify('info', {
-      //             title: 'Успешно!',
-      //             message: 'Блогер удален!'
-      //         });
-
-      //         this.$emit('updateSeller', id);
-      //     })
-      // }
+      var _this4 = this;
+      if (id) {
+        axios({
+          method: 'delete',
+          url: '/api/users/' + id
+        }).then(function (response) {
+          notify('info', {
+            title: 'Успешно!',
+            message: 'Селлер удален.'
+          });
+          _this4.$emit('updateSellers', id);
+        });
+      }
     }
   }
 });
@@ -21136,7 +21131,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         ;
       })]);
     },
-    changedSellersList: function changedSellersList() {
+    updateSellers: function updateSellers() {
       var _this3 = this;
       this.loaderOn('#sellers-list');
       this.getSellers().then(function (list) {
@@ -22182,8 +22177,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onUpdateBloggers: $options.updateBloggers
   }, null, 8 /* PROPS */, ["bloggers", "onUpdateBloggers"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Список селлеров "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_admin_sellers_page, {
     sellers: $setup.sellers,
-    onChangedSellersList: $options.changedSellersList
-  }, null, 8 /* PROPS */, ["sellers", "onChangedSellersList"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Список проектов "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_admin_projects_page, {
+    onUpdateSellers: $options.updateSellers
+  }, null, 8 /* PROPS */, ["sellers", "onUpdateSellers"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Список проектов "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_admin_projects_page, {
     projects: $setup.projects,
     onStatusManagement: $options.statusManagement
   }, null, 8 /* PROPS */, ["projects", "onStatusManagement"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" Список заказов "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_admin_orders_page, {
