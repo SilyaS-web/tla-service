@@ -42,15 +42,6 @@ class AuthController extends Controller
         }
 
         $validated = $validator->validated();
-        $is_agent = 0;
-
-        if ($validated['role'] == 'agent') {
-            $validated['role'] = 'seller';
-            $is_agent = 1;
-        }
-
-        $validated['status'] = $validated['role'] == 'seller' ? 1 :0;
-
         $phone = PhoneService::format($validated['phone']);
         if (User::where([['phone', '=',  $phone]])->first()) {
             return redirect()->route('register')->with('success', 'Аккаунт с таким номером телефона уже существует')->withInput();
@@ -60,6 +51,15 @@ class AuthController extends Controller
         if (!$tg_phone) {
             return redirect()->route('register')->with('success', 'Необходимо подтвердить телеграм')->withInput();
         }
+
+        $is_agent = 0;
+
+        if ($validated['role'] == 'agent') {
+            $validated['role'] = 'seller';
+            $is_agent = 1;
+        }
+
+        $validated['status'] = $validated['role'] == 'seller' ? 1 :0;
 
         $user = User::create([
             'name' => $validated['name'],
