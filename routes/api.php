@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::delete('/users/{user}', [UserController::class, 'delete']);
 Route::get('/users/{user}/ban', [UserController::class, 'ban']);
 Route::get('/users/{user}/unban', [UserController::class, 'unban']);
 

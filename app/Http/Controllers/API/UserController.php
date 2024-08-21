@@ -7,6 +7,7 @@ use App\Models\BloggerPlatform;
 use App\Models\User;
 use App\Services\TgService;
 use App\Http\Controllers\Controller;
+use App\Models\DbLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
@@ -32,6 +33,14 @@ class UserController extends Controller
         $user->save();
         TgService::notify($user->tgPhone->chat_id, 'Ваш аккаунт разблокировали');
 
+        return response()->json()->setStatusCode(200);
+    }
+
+    public function delete(User $user) {
+        $log_message = 'Удалён пользователь ' . $user->name . ', роль ' . $user->role . ', телефон' . $user->phone . ', email' . $user->email;
+        DbLog::create(['text' => $log_message]);
+
+        $user->forceDelete();
         return response()->json()->setStatusCode(200);
     }
 }
