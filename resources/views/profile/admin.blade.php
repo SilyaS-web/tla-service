@@ -16,7 +16,7 @@
     <title>Панель управления</title>
 </head>
 <body>
-    <div class="wrapper" id = "admin-app">
+    <div class="wrapper">
         <div class="burger-menu">
             <div class="admin-menu__body">
                 <div class="admin-menu__title">
