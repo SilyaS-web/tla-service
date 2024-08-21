@@ -7,7 +7,7 @@
                             Панель управления
                         </div>
                         <div class="header__menu-btn">
-                            <img src="{{asset('admin/img/menu-icon.svg')}}" alt="">
+                            <img src="/admin/img/menu-icon.svg" alt="">
                         </div>
                     </div>
                     <div class="header__col">
