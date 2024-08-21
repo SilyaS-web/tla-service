@@ -391,7 +391,6 @@
     </div>
 </body>
 <script src="{{ asset('admin/js/script.js') }}"></script>
-<script src = "./js/app.js"></script>
 
 <script>
     function banUser(user_id, el) {
