@@ -25,7 +25,7 @@ class AdminController extends Controller
             'desc' => 'string|nullable',
             'sex' => 'required|string',
             'country_id' => 'required|exists:countries,id',
-            // 'city' => 'required|string',
+            'city' => 'required|string',
             'is_achievement' => 'string|nullable',
             'gender_ratio' => 'required|numeric',
             'telegram_link' => 'string|nullable',
