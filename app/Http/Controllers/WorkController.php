@@ -133,7 +133,7 @@ class WorkController extends Controller
             'message' => $user->name . ' готов приступить к работе',
         ]);
 
-        if ($work->isBothAcceptd() && $work->status = Work::PENDING) {
+        if ($work->isBothAccepted() && $work->status = Work::PENDING) {
             $work->status = Work::IN_PROGRESS;
             $work->save();
             $message_text = 'Статус работы изменён на: <span style="color: var(--primary)">выполняется</span>';
