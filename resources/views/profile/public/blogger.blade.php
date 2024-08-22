@@ -51,7 +51,7 @@
                                     @continue
                                 @endif
                                 <div class="blogger-platforms__item item-platforms">
-                                    <?
+                                    @php(
                                         $link = $blogger_platform->link ?? '';
                                         $is = trim($blogger_platform->link)[0] == '@';
 
@@ -63,7 +63,7 @@
                                                 $link = 'https://www.instagram.com/' .  substr($link, 1);
                                             }
                                         }
-                                    ?>
+                                    )
                                     <a target="_blank" href="{{ $link }}" class="item-platforms__title item-platforms__title--{{ $types[strtolower($blogger_platform->name)] }}">
                                         {{ strtoupper($blogger_platform->name) == 'VK' ? strtoupper($blogger_platform->name) : ucfirst($blogger_platform->name); }}
                                     </a>
