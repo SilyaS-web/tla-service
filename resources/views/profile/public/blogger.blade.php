@@ -51,7 +51,7 @@
                                     @continue
                                 @endif
                                 <div class="blogger-platforms__item item-platforms">
-                                    <?
+                                    <?php
                                         $link = $blogger_platform->link ?? '';
                                         $is = trim($blogger_platform->link)[0] == '@';
 

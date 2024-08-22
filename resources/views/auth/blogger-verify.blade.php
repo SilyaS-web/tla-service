@@ -21,7 +21,7 @@
                     <label for="country">Ваша страна (Страны СНГ)</label>
                     <select name="country" id="country" name="country" class="input input--country select">
                         @foreach ($countries as $country)
-                        <option value="{{ $country->id }}">{{ $country->name }}</option>
+                        <option value="{{ $country->id }}" {{ old('country') == $country->id ? 'selected' : '' }}>{{ $country->name }}</option>
                         @endforeach
                     </select>
                     @error('country')
@@ -31,8 +31,8 @@
                 <div class="form-group">
                     <label for="sex">Ваш пол</label>
                     <select name="sex" id="sex" name="sex" class="input input--sex select">
-                        <option value="male">Мужской</option>
-                        <option value="female">Женский</option>
+                        <option value="male" {{ old('sex') == 'male' ? 'selected' : '' }}>Мужской</option>
+                        <option value="female" {{ old('sex') == 'female' ? 'selected' : '' }}>Женский</option>
                     </select>
                     @error('sex')
                     <span class="error">{{ $message }}</span>
@@ -40,7 +40,7 @@
                 </div>
                 <div class="form-group">
                     <label for="desc">Описание канала</label>
-                    <textarea name="desc" id="desc" cols="30" rows="10" class="textarea" placeholder="Введите текст"></textarea>
+                    <textarea name="desc" id="desc" cols="30" rows="10" class="textarea" placeholder="Введите текст">{{ old('desc') }}</textarea>
                     @error('description')
                     <span class="error">{{ $message }}</span>
                     @enderror
@@ -49,10 +49,19 @@
                     <label for="">Выберите тематику</label>
                     <div class="form-formats">
                         @foreach ($themes as $theme)
-                        <div class="form__row form-format">
-                            <input type="checkbox" id="theme-{{ $theme->id }}" name="themes[]" class="form-format__check" value="{{ $theme->id }}">
-                            <label for="theme-{{ $theme->id }}">{{ $theme->theme }}</label>
-                        </div>
+                            @php(
+                                $selected = '';
+                                foreach(old('themes') as $old_theme) {
+                                    if ($theme->id == $old_theme) {
+                                        $selected = 'selected';
+                                        break;
+                                    }
+                                }
+                            )
+                            <div class="form__row form-format">
+                                <input type="checkbox" id="theme-{{ $theme->id }}" name="themes[]" class="form-format__check" {{ $selected }} value="{{ $theme->id }}">
+                                <label for="theme-{{ $theme->id }}">{{ $theme->theme }}</label>
+                            </div>
                         @endforeach
                     </div>
                     @error('themes')
@@ -83,7 +92,7 @@
                         <div class="form-stat__row">
                             <div class="form-group" style="width:100%; max-width:100%">
                                 <label for="tg_link">Ссылка</label>
-                                <input id="tg_link" type="text" class="input" name="tg-link" style="width:100%; max-width:100%">
+                                <input id="tg_link" type="text" class="input" name="tg-link" style="width:100%; max-width:100%" value="{{ old('tg-link') }}">
                             </div>
                         </div>
                         @error('tg-link')
@@ -99,7 +108,7 @@
                         <div class="form-stat__row">
                             <div class="form-group" style="width:100%; max-width:100%">
                                 <label for="inst_link">Ссылка</label>
-                                <input id="inst_link" type="text" class="input" name="inst-link" style="width:100%; max-width:100%">
+                                <input id="inst_link" type="text" class="input" name="inst-link" style="width:100%; max-width:100%" value="{{ old('inst-link') }}">
                             </div>
                         </div>
                         @error('inst-link')
@@ -115,7 +124,7 @@
                         <div class="form-stat__row">
                             <div class="form-group" style="width:100%; max-width:100%">
                                 <label for="yt_link">Ссылка</label>
-                                <input id="yt_link" type="text" class="input" name="yt-link" style="width:100%; max-width:100%">
+                                <input id="yt_link" type="text" class="input" name="yt-link" style="width:100%; max-width:100%" value="{{ old('yt-link') }}">
                             </div>
                         </div>
                         @error('yt-link')
@@ -131,7 +140,7 @@
                         <div class="form-stat__row">
                             <div class="form-group" style="width:100%; max-width:100%">
                                 <label for="vk_link">Ссылка</label>
-                                <input id="vk_link" type="text" class="input" name="vk-link" style="width:100%; max-width:100%">
+                                <input id="vk_link" type="text" class="input" name="vk-link" style="width:100%; max-width:100%" value="{{ old('vk-link') }}">
                             </div>
                         </div>
                         @error('vk-link')
@@ -146,6 +155,8 @@
                             <span class = "input-file__file-name"></span>
                         </div>
                         <input type="file" name="image" class="" id="profile-img">
+                        <span>Загрузите изображение профиля</span>
+                        <input type="file" name="image" class="" id="profile-img" value="{{ old('image') }}">
                     </label>
                     @error('image')
                     <span class="error">{{ $message }}</span>
