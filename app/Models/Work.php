@@ -93,7 +93,7 @@ class Work extends Model
         $this->save();
     }
 
-    public function isBothAcceptd()
+    public function isBothAccepted()
     {
         return !empty($this->accepted_by_seller_at) && !empty($this->accepted_by_blogger_at);
     }
