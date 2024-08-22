@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class BloggerPlatformsForign extends Migration
+class AdminFieldUser extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,9 @@ class BloggerPlatformsForign extends Migration
      */
     public function up()
     {
-        
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('is_admin')->nullable();
+        });
     }
 
     /**
@@ -23,6 +25,8 @@ class BloggerPlatformsForign extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('is_admin');
+        });
     }
 }

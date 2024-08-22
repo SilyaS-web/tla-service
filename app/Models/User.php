@@ -38,6 +38,7 @@ class User extends Authenticatable
         'tg_phone_id',
         'password',
         'telegram_verified_at',
+        'is_admin'
     ];
 
     /**
