@@ -45,7 +45,7 @@
                     <span class="error">{{ $message }}</span>
                     @enderror
                 </div>
-                <div class="form-group" style="flex-direction: column;">
+                <div class="form-group" style="flex-direction: column; margin-bottom:25px">
                     <label for="">Выберите тематику</label>
                     <div class="form-formats">
                         @foreach ($themes as $theme)
@@ -80,7 +80,11 @@
                         })
                     </script>
                 </div>
-                <div class="popup__form-row popup__form-stat form-stat">
+                <div class="form-group">
+                    <label for="" class="form-group__title">Социальные сети</label>
+                    <label for="" class="form-group__subtitle">Ниже предоставьте ссылки на соц. сети вашего канала</label>
+                </div>
+                <div class="popup__form-row popup__form-stat form-stat active">
                     <div class="form-stat__title">
                         Telegram
                     </div>
@@ -96,7 +100,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="popup__form-row popup__form-stat form-stat">
+                <div class="popup__form-row popup__form-stat form-stat ">
                     <div class="form-stat__title">
                         Ins
                     </div>
@@ -112,7 +116,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="popup__form-row popup__form-stat form-stat">
+                <div class="popup__form-row popup__form-stat form-stat ">
                     <div class="form-stat__title">
                         YTube
                     </div>
@@ -128,7 +132,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="popup__form-row popup__form-stat form-stat">
+                <div class="popup__form-row popup__form-stat form-stat " style="margin-bottom:25px">
                     <div class="form-stat__title">
                         Вконтакте
                     </div>
@@ -146,6 +150,11 @@
                 </div>
                 <div class="form-group form-group--file">
                     <label class="tab-content__profile-img-upload input-file" for="profile-img">
+                        <div class="input-file__col">
+                            <span class = "input-file__notify">Загрузите изображение профиля</span>
+                            <span class = "input-file__file-name"></span>
+                        </div>
+                        <input type="file" name="image" class="" id="profile-img">
                         <span>Загрузите изображение профиля</span>
                         <input type="file" name="image" class="" id="profile-img" value="{{ old('image') }}">
                     </label>
@@ -155,8 +164,11 @@
                     <script>
                         $(window).on('load', function(){
                            $('#profile-img').on('change', function(e){
+                                var file = e.target.files[0];
+
                                $(e.target).closest('.tab-content__profile-img-upload').addClass('uploaded');
-                               $(e.target).closest('.tab-content__profile-img-upload').find('span').text('Изображение загружено');
+                               $(e.target).closest('.tab-content__profile-img-upload').find('span.input-file__notify').text('Аватарка профиля загружена');
+                               $(e.target).closest('.tab-content__profile-img-upload').find('span.input-file__file-name').text(file.name);
                            })
                        })
                    </script>
