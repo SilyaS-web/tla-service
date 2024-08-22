@@ -70,7 +70,7 @@ class AdminController extends Controller
             (!isset($validated['youtube_link']) || empty($validated['youtube_link'])) &&
             (!isset($validated['vk_link']) || empty($validated['vk_link']))
         ) {
-            return redirect()->back()->with('success', 'Необходима хотя бы одна ссылка на соц. сеть')->withInput();
+            return response()->json('Выберите хотя бы одну соц сеть', 200);
         }
 
         $blogger = Blogger::find($validated['blogger_id']);
