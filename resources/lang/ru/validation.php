@@ -116,6 +116,17 @@ return [
     |
     */
 
-    'attributes' => [],
-
+    'attributes' => [
+        'name' => 'имя',
+        'phone' => 'номер телефона',
+        'password' => 'пароль',
+        'password_confirmation' => 'повторите пароль',
+        'role' => 'роль',
+        'product_name' => 'название товара',
+        'product_nm' => 'Артикул товара',
+        'product_price' => 'Цена товара',
+        'product_link' => 'Ссылка на товар',
+        'images' => 'изображение',
+        'project_type' => 'формат рекламы',
+    ],
 ];
