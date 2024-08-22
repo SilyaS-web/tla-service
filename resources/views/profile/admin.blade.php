@@ -79,11 +79,13 @@
                                             <img src="{{ asset('admin/img/list-icon.svg') }}" alt="" class="nav__link-img">
                                             Модерация проектов
                                         </a>
-                                        <a href="" class="nav__link tab" data-content="payment-history" title="История заказов">
-                                            <img src="{{ asset('admin/img/history-icon.svg') }}" alt="" class="nav__link-img">
-                                            История заказов
+                                        @if(auth()->user()->is_admin)
+                                            <a href="" class="nav__link tab" data-content="payment-history" title="История заказов">
+                                                <img src="{{ asset('admin/img/history-icon.svg') }}" alt="" class="nav__link-img">
+                                                История заказов
 
-                                        </a>
+                                            </a>
+                                        @endif
                                     </div>
                                 </nav>
 
