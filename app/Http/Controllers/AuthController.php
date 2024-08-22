@@ -167,7 +167,7 @@ class AuthController extends Controller
         };
 
         return redirect()->route('login')->withErrors([
-            'phone' => 'Пароль неверный'
+            'password' => 'Пароль неверный'
         ]);
     }
 
