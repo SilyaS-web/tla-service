@@ -173,8 +173,15 @@ a.btn:hover{
 .form-group label{
     display: block;
     font-size: 16px;
-    font-weight: 500;
+    font-weight: 600;
     margin-bottom: 15px;
+}
+.form-group .form-group__title{
+    margin-bottom: 10px;
+}
+.form-group .form-group__subtitle{
+    font-size: 14px;
+    font-weight: 500;
 }
 .form-formats{
     display: flex;
@@ -236,8 +243,8 @@ input[type='range']::-webkit-slider-runnable-track{
     background-color: var(--pale);
 }
 .error{
-    font-size: 12px;
-    font-weight: 300;
+    font-size: 16px;
+    font-weight: 600;
     color:red;
 }
 .form-addit{
@@ -259,8 +266,8 @@ input[type='range']::-webkit-slider-runnable-track{
     content:"";
     display: block;
     width: 100%;
-    max-width: 18px;
-    height: 18px;
+    max-width: 30px;
+    height: 30px;
     background-image: url("../img/download-icon.svg");
     background-position: center;
     background-size: contain;
@@ -268,11 +275,27 @@ input[type='range']::-webkit-slider-runnable-track{
     margin-right: 8px;
 }
 .input-file.uploaded::before{
+    max-width: 30px; height:30px;
     background-image: url("../img/approved-aproved-confirm-2-svgrepo-com.svg");
     filter: brightness(0) saturate(100%) invert(58%) sepia(65%) saturate(7106%) hue-rotate(6deg) brightness(105%) contrast(101%);
 }
 .input-file input{
     display: none;
+}
+.input-file__col{
+    display: flex;
+    flex-direction: column;
+}
+.input-file__file-name{
+    max-width:200px;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 14px;
+    color:var(--primary)
+}
+.input-file__notify{
+    margin-bottom: 3px;
 }
 .notification{
     padding:30px 20px;
@@ -1336,13 +1359,13 @@ input[type='range']::-webkit-slider-runnable-track{
     font-weight: 600;
 }
 .roles-cards__card:hover{
-    border:1px solid rgba(0,0,0,.1)
+    border:1px solid rgba(254,94,0,1)
 }
 .roles-cards__card:hover img{
     /* filter: brightness(0) saturate(100%) invert(48%) sepia(99%) saturate(3278%) hue-rotate(358deg) brightness(100%) contrast(109%); */
 }
 .roles-cards__card.active{
-    border:1px solid rgba(0,0,0,.1)
+    border:1px solid rgba(254,94,0,1)
 }
 .roles-cards__card.active img{
     /* filter: brightness(0) saturate(100%) invert(48%) sepia(99%) saturate(3278%) hue-rotate(358deg) brightness(100%) contrast(109%); */

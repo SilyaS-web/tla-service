@@ -23,6 +23,12 @@ class Notification extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
+    public function work()
+    {
+        return $this->hasOne(Work::class, 'id', 'work_id');
+    }
+
     public function fromUser()
     {
         return $this->hasOne(User::class, 'id', 'from_user_id');
