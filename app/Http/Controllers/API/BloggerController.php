@@ -92,7 +92,7 @@ class BloggerController extends Controller
         $blogger->update([
             'description' => $validated['description'] ?? null,
             'is_achievement' => isset($validated['is_achievement']),
-            'country_id' => $validated['country_id'],
+            'country_id' => $validated['country']['id'],
             'city' => isset($validated['city']),
             'gender_ratio' => $validated['gender_ratio'],
             'sex' => $validated['sex'],
