@@ -128,7 +128,7 @@ class BloggerController extends Controller
                         'cost_per_mille' => $blogger_platform['cost_per_mille'] ?? null,
                     ]);
                 }
-            } elseif ((!isset($platform['link']) || empty($platform['link'])) && $platform) {
+            } elseif ((!isset($blogger_platform['link']) || empty($blogger_platform['link'])) && $platform) {
                 $platform->delete();
             }
         }
