@@ -100,10 +100,32 @@ class BloggerController extends Controller
             'sex' => $validated['sex'],
         ]);
 
-        foreach ($validated['platforms'] as $platform) {
-            $platform = $blogger->platforms()->where('platform_id', $platform->id)->first();
+        foreach ($validated['platforms'] as $blogger_platform) {
+            $platform = $blogger->platforms()->where('platform_id', $blogger_platform->id)->first();
             if (isset($platform['link']) && !empty($platform['link'])) {
-                    $platform->updateOrInsert($platform);
+                if ($platform) {
+                    $platform->update([
+                        'link' => $blogger_platform['link'] ?? null,
+                        'subscriber_quantity' => $blogger_platform['subscriber_quantity'] ?? null,
+                        'coverage' => $blogger_platform['coverage'] ?? null,
+                        'additional_coverage' => $blogger_platform['additional_coverage'] ?? null,
+                        'engagement_rate' => $blogger_platform['engagement_rate'] ?? null,
+                        'additional_engagement_rate' => $blogger_platform['additional_engagement_rate'] ?? null,
+                        'cost_per_mille' => $blogger_platform['cost_per_mille'] ?? null,
+                    ]);
+                } else {
+                    BloggerPlatform::create([
+                        'blogger_id' => $blogger->id,
+                        'platform_id' => $platform->id,
+                        'link' => $blogger_platform['link'] ?? null,
+                        'subscriber_quantity' => $blogger_platform['subscriber_quantity'] ?? null,
+                        'coverage' => $blogger_platform['coverage'] ?? null,
+                        'additional_coverage' => $blogger_platform['additional_coverage'] ?? null,
+                        'engagement_rate' => $blogger_platform['engagement_rate'] ?? null,
+                        'additional_engagement_rate' => $blogger_platform['additional_engagement_rate'] ?? null,
+                        'cost_per_mille' => $blogger_platform['cost_per_mille'] ?? null,
+                    ]);
+                }
             } elseif ((!isset($platform['link']) || empty($platform['link'])) && $platform) {
                 $platform->delete();
             }
