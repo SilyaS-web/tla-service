@@ -11,7 +11,6 @@ class BloggerTheme extends Model
     protected $fillable = [
         'blogger_id',
         'theme_id',
-        'theme_name'
     ];
 
     public function theme()
