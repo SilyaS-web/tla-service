@@ -155,8 +155,6 @@
                             <span class = "input-file__notify">Загрузите изображение профиля</span>
                             <span class = "input-file__file-name"></span>
                         </div>
-                        <input type="file" name="image" class="" id="profile-img">
-                        <span>Загрузите изображение профиля</span>
                         <input type="file" name="image" class="" id="profile-img" value="{{ old('image') }}">
                     </label>
                     @error('image')
