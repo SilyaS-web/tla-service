@@ -72,6 +72,17 @@
                             </div>
                         </div>
                         <a href="#" class="header__col header__notif header__profile-item--js" title="Уведомления">
+                            <div class="header__profile-notif" id="header-notif-count" style="display: none">
+                                0
+                            </div>
+                            <img src="{{ asset('img/notif-icon.svg') }}" alt="" class="">
+                            <div class="header__notif-items notif-header">
+                                <div class="notif-header__items" id="header-notif-container">
+                                    @include('shared.notifications')
+                                </div>
+                            </div>
+                        </a>
+                        {{-- <a href="#" class="header__col header__notif header__profile-item--js" title="Уведомления">
                             <div class="header__profile-notif">
                                 0
                             </div>
@@ -93,7 +104,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </a>
+                        </a> --}}
                     </div>
                     @if ( auth()->user()->role == 'seller')
                         <div href="#" class="header__col header__tarrif tarrif-header header__profile-item--js">
