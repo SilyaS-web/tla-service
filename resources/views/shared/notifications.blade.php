@@ -18,7 +18,9 @@
         </div>
     </div>
     <div class="notif-header__btns">
-        <a href="#" class="notif-header__goto" data-work-id="{{ $notification->work_id }}">Перейти</a>
+        @if($notification->work && $notification->work->status !== null)
+            <a href="#" class="notif-header__goto" data-work-id="{{ $notification->work_id }}">Перейти</a>
+        @endif
         <a href="#" class="notif-header__hide" data-id="{{ $notification->id }}">Скрыть</a>
     </div>
 </div>

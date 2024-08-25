@@ -2588,12 +2588,12 @@ setInterval(() => {
         url: '/apist/notifications',
     })
     .done(function( data ) {
-        $('#header-notif-container').html(data.view);
-        $('#header-notif-count').html(data.count);
+        $('.header-notif-container').html(data.view);
+        $('.header-notif-count').html(data.count);
         if (data.count == 0) {
-            $('#header-notif-count').hide();
+            $('.header-notif-count').hide();
         } else {
-            $('#header-notif-count').show();
+            $('.header-notif-count').show();
         }
     });
 }, 5000)

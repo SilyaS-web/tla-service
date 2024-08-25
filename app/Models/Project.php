@@ -176,8 +176,11 @@ class Project extends Model
         return "Активно";
     }
 
-    public function isSended() {
-        $user = Auth::user();
+    public function isSended($user = null) {
+        if (!$user) {
+            $user = Auth::user();
+        }
+        
         $work = Work::where('blogger_id', $user->id)->where('project_id', $this->id)->first();
         if ($work) {
             return true;
