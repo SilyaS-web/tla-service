@@ -74,7 +74,7 @@
 
             Promise.all([
                 this.getBloggers([0]).then(list => {
-                    this.unverifiedBloggers = (list || []).map(_b => this.findBiggestPlatform(_b));;
+                    this.unverifiedBloggers = (list || []).map(_b => this.findBiggestPlatform(_b));
                 })
             ]).then(() => {
                 setTimeout(()=>{

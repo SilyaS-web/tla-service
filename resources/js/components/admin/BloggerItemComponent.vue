@@ -105,6 +105,9 @@
                     <button class="btn btn-secondary" v-on:click="ban">
                         Отклонить
                     </button>
+                    <div class="btn-delete btn-delete--icon">
+                        <img src="/img/trash-icon.svg" alt="" v-on:click="deletionConfirmation">
+                    </div>
                 </div>
                 <div v-else-if="blogger.user.status === 1" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
                     <button class="btn btn-primary" v-on:click="ban">

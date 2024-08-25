@@ -118,6 +118,23 @@ a.btn:hover{
     top:unset;left:unset;
     opacity: 1;
 }
+.btn-delete--icon{
+    border:0px;
+    width: 22px;
+    height: 100%;
+    right: 10px;
+    top: 10px;
+    opacity: .5;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+.btn-delete--icon:hover{
+    opacity: 1;
+}
+.btn-delete--icon:hover img{
+    filter: invert(32%) sepia(92%) saturate(1116%) hue-rotate(323deg) brightness(85%) contrast(105%);
+}
 .form{
     max-width:580px;
     background-color: #fff;

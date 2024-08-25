@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\Blogger;
 use App\Models\BloggerPlatform;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BloggerResource;
 use App\Services\TgService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -43,7 +44,7 @@ class BloggerController extends Controller
             }
         }
         $data = [
-            'bloggers' => $bloggers,
+            'bloggers' => BloggerResource::collection($bloggers),
             'platform_fields' => BloggerPlatform::getFields(),
         ];
 
