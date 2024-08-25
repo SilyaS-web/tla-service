@@ -39,6 +39,9 @@ class WorkController extends Controller
         $project_work = ProjectWork::find($validated['project_work_id']);
 
         if ($user->role == 'blogger') {
+            if ($project_work->project->isSended()) {
+                return response()->json('заявка отправлена')->setStatusCode(400);
+            }
             $blogger_user = $user;
         } else {
             $blogger_user = Blogger::find($validated['blogger_id']);
@@ -130,7 +133,7 @@ class WorkController extends Controller
             'message' => $user->name . ' готов приступить к работе',
         ]);
 
-        if ($work->isBothAcceptd() && $work->status = Work::PENDING) {
+        if ($work->isBothAccepted() && $work->status = Work::PENDING) {
             $work->status = Work::IN_PROGRESS;
             $work->save();
             $message_text = 'Статус работы изменён на: <span style="color: var(--primary)">выполняется</span>';

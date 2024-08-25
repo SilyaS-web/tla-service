@@ -116,6 +116,26 @@ return [
     |
     */
 
-    'attributes' => [],
-
+    'attributes' => [
+        'name' => 'имя',
+        'phone' => 'номер телефона',
+        'password' => 'пароль',
+        'password_confirmation' => 'повторите пароль',
+        'role' => 'роль',
+        'country' => 'страна',
+        'city' => 'город',
+        'sex' => 'пол',
+        'themes' => 'темы',
+        'tg-link' => 'Telegram',
+        'inst-link' => 'Ins',
+        'yt-link' => 'YTube',
+        'vk-link' => 'Вконтакте',
+        'desc' => 'описание',
+        'product_name' => 'название товара',
+        'product_nm' => 'Артикул товара',
+        'product_price' => 'Цена товара',
+        'product_link' => 'Ссылка на товар',
+        'images' => 'изображение',
+        'project_type' => 'формат рекламы',
+    ],
 ];
