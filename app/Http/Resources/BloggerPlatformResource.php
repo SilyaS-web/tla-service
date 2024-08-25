@@ -23,6 +23,7 @@ class BloggerPlatformResource extends JsonResource
             'additional_engagement_rate' => $this->additional_engagement_rate,
             'cost_per_mille' => $this->cost_per_mille,
             'image' => $this->platform->image,
+            'title' => $this->platform->title,
         ];
     }
 }
