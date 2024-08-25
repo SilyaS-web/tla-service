@@ -102,8 +102,8 @@ class BloggerController extends Controller
             if (!empty($blogger_platform)) {
                 continue;
             }
-            
-            $platform = $blogger->platforms()->where('platform_id', $blogger_platform->id)->first();
+
+            $platform = $blogger->platforms()->where('platform_id', $blogger_platform['platform_id'])->first();
             if (isset($platform['link']) && !empty($platform['link'])) {
                 if ($platform) {
                     $platform->update([
