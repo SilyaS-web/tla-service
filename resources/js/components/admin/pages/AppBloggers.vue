@@ -15,6 +15,7 @@
                     v-for="blogger in bloggers"
                     :bloggers="bloggers"
                     :blogger="blogger"
+                    v-on:agree="agree"
                     v-on:ban="ban"
                     v-on:unban="unban"
                     v-on:deletionConfirmation="deletionConfirmation"
@@ -23,14 +24,19 @@
         </div>
     </div>
     <confirm-popup ref="confirmPopup"></confirm-popup>
+    <!-- <accept-popup ref="acceptPopup"></accept-popup> -->
 </template>
 <script>
     import BloggerItem from '../BloggerItemComponent.vue';
     import ConfirmPopup from '../ui/ConfirmationPopup.vue';
+    // import AcceptPopup from '../ui/BloggerAcceptionPopup.vue';
 
     export default{
         props: ['bloggers'],
         components: {BloggerItem, ConfirmPopup},
+        // mounted(){
+        //     this.acceptionForm(2)
+        // },
         methods:{
             async deletionConfirmation(id) {
                 const isConfirmed = await this.$refs.confirmPopup.show({
@@ -43,6 +49,22 @@
                 if (isConfirmed) {
                     this.delete(id)
                 }
+            },
+
+            acceptForm(id) {
+                console.log(id)
+                // const isConfirmed = await this.$refs.acceptPopup.show({
+                //     id: id
+                // });
+
+                // if (isConfirmed) {
+                //     this.accept(id)
+                // }
+            },
+
+            agree(id){
+                console.log(id);
+                this.$emit('updateBloggers', id);
             },
 
             ban(id) {
@@ -78,8 +100,6 @@
                 }
             },
             delete(id) {
-                console.log(id);
-
                 if(id){
                     axios({
                         method: 'delete',

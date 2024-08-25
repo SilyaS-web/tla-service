@@ -50,6 +50,31 @@ class BloggerController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
+    public function show(Blogger $blogger)
+    {
+        $blogger->with('user')
+            ->with('platforms')
+            ->with('themes')
+            ->with('country')
+            ->get();
+
+
+        foreach ($blogger->platforms as &$blogger_platform) {
+            $blogger_platform->platform;
+        }
+
+        foreach ($blogger->themes as &$theme) {
+            $theme->theme;
+        }
+
+        $data = [
+            'blogger' => $blogger,
+            'platform_fields' => BloggerPlatform::getFields(),
+        ];
+
+        return  response()->json($data)->setStatusCode(200);
+    }
+
     public function accept(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -155,25 +180,6 @@ class BloggerController extends Controller
         TgService::notify($blogger->user->tgPhone->chat_id, 'Вы успешно прошли модерацию');
 
         return response()->json('success', 200);
-    }
-
-    public function show(Blogger $blogger)
-    {
-        $blogger = $blogger->with('user')->with('platforms')->with('themes')->with('country')->get();
-
-        foreach ($blogger->platforms as &$blogger_platform) {
-            $blogger_platform->platform;
-        }
-
-        foreach ($blogger->themes as &$theme) {
-            $theme->theme;
-        }
-
-        $data = [
-            'blogger' => $blogger,
-        ];
-
-        return response()->json($data)->setStatusCode(200);
     }
 
     /**
