@@ -9,6 +9,6 @@ Route::post('/reg', [AuthController::class, 'store']);
 Route::get('/auth', [AuthController::class, 'login'])->name('login');
 Route::post('/auth', [AuthController::class, 'authenticate']);
 
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::get('/banned', [AuthController::class, 'banned'])->name('banned');
