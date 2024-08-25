@@ -72,7 +72,7 @@
                             </div>
                         </div>
                         <a href="#" class="header__col header__notif header__profile-item--js" title="Уведомления">
-                            <div class="header__profile-notif" id="header-notif-count" style="display: none">
+                            <div class="header__profile-notif header-notif-count" style="display: none">
                                 0
                             </div>
                             <img src="{{ asset('img/notif-icon.svg') }}" alt="" class="">
@@ -202,7 +202,7 @@
                             </div>
                         @endif
                         <a href="#" class="header__col header__notif header__profile-item--js" title="Уведомления">
-                            <div class="header__profile-notif" id="header-notif-count" style="display: none">
+                            <div class="header__profile-notif header-notif-count" style="display: none">
 
                             </div>
                             <img src="{{ asset('img/notif-icon.svg') }}" alt="" class="">
