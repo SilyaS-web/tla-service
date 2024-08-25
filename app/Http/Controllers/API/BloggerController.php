@@ -99,6 +99,10 @@ class BloggerController extends Controller
         ]);
 
         foreach ($validated['platforms'] as $blogger_platform) {
+            if (!empty($blogger_platform)) {
+                continue;
+            }
+            
             $platform = $blogger->platforms()->where('platform_id', $blogger_platform->id)->first();
             if (isset($platform['link']) && !empty($platform['link'])) {
                 if ($platform) {
