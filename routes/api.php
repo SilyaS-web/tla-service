@@ -24,8 +24,7 @@ Route::get('/users/{user}/unban', [UserController::class, 'unban']);
 
 Route::get('/bloggers', [BloggerController::class, 'index']);
 Route::get('/bloggers/{blogger}', [BloggerController::class, 'show']);
-Route::get('/bloggers/{blogger}/accept', [BloggerController::class, 'accept']);
-Route::get('/bloggers/{blogger}', [BloggerController::class, 'show']);
+Route::post('/bloggers/{blogger}/accept', [BloggerController::class, 'accept']);
 
 Route::get('/sellers', [SellerController::class, 'index']);
 
