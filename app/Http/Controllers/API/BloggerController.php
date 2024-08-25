@@ -55,8 +55,9 @@ class BloggerController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'description' => 'string|nullable',
-            'is_achievement' => 'string|nullable',
-            'country_id' => 'required|exists:countries,id',
+            'is_achievement' => 'boolean|nullable',
+            'country' => 'array',
+            'country.id' => 'required|exists:countries,id',
             'city' => 'string|nullable',
             'gender_ratio' => 'required|numeric',
             'sex' => 'required|string',
