@@ -476,10 +476,9 @@
                             <label for="platform">Площадки</label>
                             <select id="platform" name="platform" class="input">
                                 <option value="">Не выбрано</option>
-                                <option value="Youtube">YTube</option>
-                                <option value="Instagram">Ins</option>
-                                <option value="Telegram">Telegram</option>
-                                <option value="VK">Vkontakte</option>
+                                @foreach ($platforms as $platform)
+                                    <option value="{{ $platform->id }}">{{ $platform->title }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="input-file input-file--stat tab-content__profile-img-upload" style="padding-left:0; margin-bottom:20px;">

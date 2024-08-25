@@ -6,7 +6,7 @@ use App\Models\Blogger;
 use App\Models\BloggerPlatform;
 use App\Models\BloggerTheme;
 use App\Models\Project;
-use App\Models\User;
+use App\Models\Platform;
 use App\Models\Work;
 use App\Services\TgService;
 use Illuminate\Http\Request;
@@ -22,7 +22,7 @@ class BloggerController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'string|nullable',
-            'platform' => [Rule::in(BloggerPlatform::getLowerPlatforms()), 'nullable'],
+            'platform' => 'nullable',
             'subscriber_quantity_min' => 'numeric',
             'subscriber_quantity_max' => 'numeric',
             'city' => 'string|nullable',
@@ -67,9 +67,9 @@ class BloggerController extends Controller
             });
         }
 
-        if (isset($validated['platform'])  && !empty($validated['platform'])) {
+        if (isset($validated['platform_id'])  && !empty($validated['platform_id'])) {
             $bloggers->whereHas('platforms', function (Builder $query) use ($validated) {
-                $query->where('name', $validated['platform']);
+                $query->where('platform_id', $validated['platform_id']);
             });
         }
 
@@ -134,7 +134,7 @@ class BloggerController extends Controller
         if (isset($validated['tg-link'])) {
             BloggerPlatform::create([
                 'blogger_id' => $blogger->id,
-                'name' => BloggerPlatform::TELEGRAM,
+                'platform_id' => Platform::where('title', 'Telegram')->first()->id,
                 'link' => $validated['tg-link'],
             ]);
         }
@@ -142,7 +142,7 @@ class BloggerController extends Controller
         if (isset($validated['inst-link'])) {
             BloggerPlatform::create([
                 'blogger_id' => $blogger->id,
-                'name' => BloggerPlatform::INSTAGRAM,
+                'platform_id' => Platform::where('title', 'Instagram')->first()->id,
                 'link' => $validated['inst-link'],
             ]);
         }
@@ -150,7 +150,7 @@ class BloggerController extends Controller
         if (isset($validated['yt-link'])) {
             BloggerPlatform::create([
                 'blogger_id' => $blogger->id,
-                'name' => BloggerPlatform::YOUTUBE,
+                'platform_id' => Platform::where('title', 'Youtube')->first()->id,
                 'link' => $validated['yt-link'],
             ]);
         }
@@ -158,7 +158,7 @@ class BloggerController extends Controller
         if (isset($validated['vk-link'])) {
             BloggerPlatform::create([
                 'blogger_id' => $blogger->id,
-                'name' => BloggerPlatform::VK,
+                'platform_id' => Platform::where('title', 'VK')->first()->id,
                 'link' => $validated['vk-link'],
             ]);
         }
