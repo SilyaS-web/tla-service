@@ -51,44 +51,24 @@ class BloggerController extends Controller
         return  response()->json($data)->setStatusCode(200);
     }
 
-    public function accept(Request $request)
+    public function accept(Blogger $blogger, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'blogger_id' => 'required|numeric',
-            'desc' => 'string|nullable',
-            'sex' => 'required|string',
+            'description' => 'string|nullable',
+            'is_achievement' => 'string|nullable',
             'country_id' => 'required|exists:countries,id',
             'city' => 'string|nullable',
-            'is_achievement' => 'string|nullable',
             'gender_ratio' => 'required|numeric',
-            'telegram_link' => 'string|nullable',
-            'telegram_subs' => 'numeric|nullable',
-            'telegram_cover' => 'numeric|nullable',
-            'telegram_additional_coverage' => 'numeric|nullable',
-            'telegram_er' => 'numeric|nullable',
-            'telegram_additional_engagement_rate' => 'numeric|nullable',
-            'telegram_cpm' => 'numeric|nullable',
-            'instagram_link' => 'string|nullable',
-            'instagram_subs' => 'numeric|nullable',
-            'instagram_cover' => 'numeric|nullable',
-            'instagram_additional_coverage' => 'numeric|nullable',
-            'instagram_er' => 'numeric|nullable',
-            'instagram_additional_engagement_rate' => 'numeric|nullable',
-            'instagram_cpm' => 'numeric|nullable',
-            'youtube_link' => 'string|nullable',
-            'youtube_subs' => 'numeric|nullable',
-            'youtube_cover' => 'numeric|nullable',
-            'youtube_additional_coverage' => 'numeric|nullable',
-            'youtube_er' => 'numeric|nullable',
-            'youtube_additional_engagement_rate' => 'numeric|nullable',
-            'youtube_cpm' => 'numeric|nullable',
-            'vk_link' => 'string|nullable',
-            'vk_subs' => 'numeric|nullable',
-            'vk_cover' => 'numeric|nullable',
-            'vk_additional_coverage' => 'numeric|nullable',
-            'vk_er' => 'numeric|nullable',
-            'vk_additional_engagement_rate' => 'numeric|nullable',
-            'vk_cpm' => 'numeric|nullable',
+            'sex' => 'required|string',
+            'platforms' => 'array',
+            'platforms.*.link' => 'string|nullable',
+            'platforms.*.subscriber_quantity' => 'numeric|nullable',
+            'platforms.*.coverage' => 'numeric|nullable',
+            'platforms.*.engagement_rate' => 'numeric|nullable',
+            'platforms.*.cost_per_mille' => 'numeric|nullable',
+            'platforms.*.additional_coverage' => 'numeric|nullable',
+            'platforms.*.additional_engagement_rate' => 'numeric|nullable',
+            'platforms.*.platform_id' => 'numeric|exist:platforms,id',
         ]);
 
         if ($validator->fails()) {
@@ -96,55 +76,34 @@ class BloggerController extends Controller
         }
 
         $validated = $validator->validated();
+        $is_platform = false;
 
-        if (
-            (!isset($validated['telegram_link']) || empty($validated['telegram_link'])) &&
-            (!isset($validated['instagram_link']) || empty($validated['instagram_link'])) &&
-            (!isset($validated['youtube_link']) || empty($validated['youtube_link'])) &&
-            (!isset($validated['vk_link']) || empty($validated['vk_link']))
-        ) {
+        foreach ($validated['platforms'] as $platform) {
+            if (isset($validated['telegram_link']) && !empty($validated['telegram_link'])) {
+                $is_platform = true;
+                break;
+            }
+        }
+        if ($is_platform) {
             return response()->json(['message' => 'Укажите хотя бы одну соц сеть'], 400);
         }
 
         $blogger = Blogger::find($validated['blogger_id']);
 
         $blogger->update([
-            'description' => $validated['desc'] ?? null,
-            'sex' => $validated['sex'],
-            'country_id' => $validated['country_id'],
-            'gender_ratio' => $validated['gender_ratio'],
+            'description' => $validated['description'] ?? null,
             'is_achievement' => isset($validated['is_achievement']),
+            'country_id' => $validated['country_id'],
+            'city' => isset($validated['city']),
+            'gender_ratio' => $validated['gender_ratio'],
+            'sex' => $validated['sex'],
         ]);
 
-        foreach (BloggerPlatform::getLowerPlatforms() as $platform_type) {
-            $platform = $blogger->platforms()->where('name', $platform_type)->first();
-            if (isset($validated[$platform_type . '_link']) && !empty($validated[$platform_type . '_link'])) {
-                if ($platform) {
-                    $platform->update([
-                        'blogger_id' => $blogger->id,
-                        'name' => $platform_type,
-                        'link' => $validated[$platform_type . '_link'] ?? null,
-                        'subscriber_quantity' => $validated[$platform_type . '_subs'] ?? null,
-                        'coverage' => $validated[$platform_type . '_cover'] ?? null,
-                        'additional_coverage' => $validated[$platform_type . '_additional_coverage'] ?? null,
-                        'engagement_rate' => $validated[$platform_type . '_er'] ?? null,
-                        'additional_engagement_rate' => $validated[$platform_type . '_additional_engagement_rate'] ?? null,
-                        'cost_per_mille' => $validated[$platform_type . '_cpm'] ?? null,
-                    ]);
-                } else {
-                    BloggerPlatform::create([
-                        'blogger_id' => $blogger->id,
-                        'name' => $platform_type,
-                        'link' => $validated[$platform_type . '_link'] ?? null,
-                        'subscriber_quantity' => $validated[$platform_type . '_subs'] ?? null,
-                        'coverage' => $validated[$platform_type . '_cover'] ?? null,
-                        'additional_coverage' => $validated[$platform_type . '_additional_coverage'] ?? null,
-                        'engagement_rate' => $validated[$platform_type . '_er'] ?? null,
-                        'additional_engagement_rate' => $validated[$platform_type . '_additional_engagement_rate'] ?? null,
-                        'cost_per_mille' => $validated[$platform_type . '_cpm'] ?? null,
-                    ]);
-                }
-            } elseif ((!isset($validated[$platform_type . '_link']) || empty($validated[$platform_type . '_link'])) && $platform) {
+        foreach ($validated['platforms'] as $platform) {
+            $platform = $blogger->platforms()->where('platform_id', $platform->id)->first();
+            if (isset($platform['link']) && !empty($platform['link'])) {
+                    $platform->updateOrInsert($platform);
+            } elseif ((!isset($platform['link']) || empty($platform['link'])) && $platform) {
                 $platform->delete();
             }
         }
