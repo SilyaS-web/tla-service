@@ -89,8 +89,6 @@ class BloggerController extends Controller
             return response()->json(['message' => 'Укажите хотя бы одну соц сеть'], 400);
         }
 
-        $blogger = Blogger::find($validated['blogger_id']);
-
         $blogger->update([
             'description' => $validated['description'] ?? null,
             'is_achievement' => isset($validated['is_achievement']),
