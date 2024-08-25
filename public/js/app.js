@@ -20576,12 +20576,10 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit('deletionConfirmation', this.blogger.id);
     },
     ban: function ban() {
-      var id = this.blogger.id;
-      this.$emit('ban', id);
+      this.$emit('ban', this.blogger.id);
     },
     agree: function agree() {
-      var id = this.blogger.id;
-      this.$emit('agree', 3);
+      this.$emit('agree', this.blogger.id);
     },
     unban: function unban() {
       this.$emit('unban', this.blogger.id);
@@ -21143,79 +21141,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       projects = [],
       orders = [];
     return {
-      unverifiedBloggers: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)([{
-        "id": 2,
-        "user_id": 17,
-        "description": null,
-        "is_achievement": null,
-        "name": null,
-        "country_id": 1,
-        "city": "Старый Оскол",
-        "gender_ratio": null,
-        "sex": "female",
-        "created_at": "2024-08-11T14:43:53.000000Z",
-        "updated_at": "2024-08-11T14:43:53.000000Z",
-        "deleted_at": null,
-        "user": {
-          "id": 17,
-          "name": "Ксения",
-          "email": "konekienko@gmail.com",
-          "phone": "+79127822321",
-          "image": null,
-          "role": "blogger",
-          "status": 0,
-          "telegram_verified_at": null,
-          "tg_phone_id": 17,
-          "created_at": "2024-08-11T14:41:35.000000Z",
-          "updated_at": "2024-08-20T20:59:33.000000Z",
-          "deleted_at": null
-        },
-        "platforms": [],
-        "themes": [{
-          "id": 2,
-          "blogger_id": 2,
-          "theme_id": 2,
-          "created_at": "2024-08-11T14:43:53.000000Z",
-          "updated_at": "2024-08-11T14:43:53.000000Z",
-          "theme": {
-            "id": 2,
-            "theme": "Авторский блог",
-            "created_at": null,
-            "updated_at": null
-          }
-        }, {
-          "id": 3,
-          "blogger_id": 2,
-          "theme_id": 9,
-          "created_at": "2024-08-11T14:43:53.000000Z",
-          "updated_at": "2024-08-11T14:43:53.000000Z",
-          "theme": {
-            "id": 9,
-            "theme": "Животные",
-            "created_at": null,
-            "updated_at": null
-          }
-        }, {
-          "id": 4,
-          "blogger_id": 2,
-          "theme_id": 16,
-          "created_at": "2024-08-11T14:43:53.000000Z",
-          "updated_at": "2024-08-11T14:43:53.000000Z",
-          "theme": {
-            "id": 16,
-            "theme": "Красота и косметика",
-            "created_at": null,
-            "updated_at": null
-          }
-        }],
-        "country": {
-          "id": 1,
-          "name": "Российская Федерация",
-          "created_at": null,
-          "updated_at": null
-        },
-        'summaryPlatform': {}
-      }]),
+      unverifiedBloggers: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(unverifiedBloggers),
       bloggers: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(bloggers),
       sellers: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(sellers),
       projects: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(projects),
@@ -21223,27 +21149,29 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     };
   },
   mounted: function mounted() {
+    var _this = this;
     return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee() {
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
+            _this.loaderOn('.wrapper');
+            Promise.all([_this.getBloggers([0]).then(function (list) {
+              _this.unverifiedBloggers = (list || []).map(function (_b) {
+                return _this.findBiggestPlatform(_b);
+              });
+              ;
+            })]).then(function () {
+              setTimeout(function () {
+                _this.loaderOff();
+              }, 500);
+            });
+          case 2:
           case "end":
             return _context.stop();
         }
       }, _callee);
     }))();
-  } // this.loaderOn('.wrapper');
-
-  // Promise.all([
-  //     this.getBloggers([0]).then(list => {
-  //         this.unverifiedBloggers = (list || []).map(_b => this.findBiggestPlatform(_b));;
-  //     })
-  // ]).then(() => {
-  //     setTimeout(()=>{
-  //         this.loaderOff();
-  //     }, 500)
-  // })
-  ,
+  },
   methods: {
     getBloggers: function getBloggers() {
       var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
@@ -21314,86 +21242,86 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       return blogger;
     },
     updateBloggers: function updateBloggers() {
-      var _this = this;
+      var _this2 = this;
       Promise.all([this.getBloggers([1, -1]).then(function (list) {
-        _this.bloggers = (list || []).map(function (_b) {
-          return _this.findBiggestPlatform(_b);
+        _this2.bloggers = (list || []).map(function (_b) {
+          return _this2.findBiggestPlatform(_b);
         });
       }), this.getBloggers([0]).then(function (list) {
-        _this.unverifiedBloggers = (list || []).map(function (_b) {
-          return _this.findBiggestPlatform(_b);
+        _this2.unverifiedBloggers = (list || []).map(function (_b) {
+          return _this2.findBiggestPlatform(_b);
         });
         ;
       })]);
     },
     updateSellers: function updateSellers() {
-      var _this2 = this;
+      var _this3 = this;
       this.loaderOn('#sellers-list');
       this.getSellers().then(function (list) {
-        _this2.sellers = list || [];
-        setTimeout(function () {
-          _this2.loaderOff();
-        }, 500);
-      });
-    },
-    statusManagement: function statusManagement() {
-      var _this3 = this;
-      this.loaderOn('#projects-list');
-      this.getProjects().then(function (list) {
-        _this3.projects = list || [];
+        _this3.sellers = list || [];
         setTimeout(function () {
           _this3.loaderOff();
         }, 500);
       });
     },
-    switchTab: function switchTab(tab) {
+    statusManagement: function statusManagement() {
       var _this4 = this;
+      this.loaderOn('#projects-list');
+      this.getProjects().then(function (list) {
+        _this4.projects = list || [];
+        setTimeout(function () {
+          _this4.loaderOff();
+        }, 500);
+      });
+    },
+    switchTab: function switchTab(tab) {
+      var _this5 = this;
       switch (tab) {
         case 'moderation':
           this.loaderOn('#moderation');
           this.getBloggers([0]).then(function (list) {
-            _this4.bloggers = (list || []).map(function (_b) {
-              return _this4.findBiggestPlatform(_b);
+            _this5.bloggers = (list || []).map(function (_b) {
+              return _this5.findBiggestPlatform(_b);
             });
             setTimeout(function () {
-              _this4.loaderOff();
+              _this5.loaderOff();
             }, 500);
           });
           break;
         case 'blogers-list':
           this.loaderOn('#blogers-list');
           this.getBloggers([1, -1]).then(function (list) {
-            _this4.bloggers = (list || []).map(function (_b) {
-              return _this4.findBiggestPlatform(_b);
+            _this5.bloggers = (list || []).map(function (_b) {
+              return _this5.findBiggestPlatform(_b);
             });
             setTimeout(function () {
-              _this4.loaderOff();
+              _this5.loaderOff();
             }, 500);
           });
           break;
         case 'sellers-list':
           this.loaderOn('#sellers-list');
           this.getSellers().then(function (list) {
-            _this4.sellers = list || [];
+            _this5.sellers = list || [];
             setTimeout(function () {
-              _this4.loaderOff();
+              _this5.loaderOff();
             }, 500);
           });
           break;
         case 'projects-list':
           this.loaderOn('#projects-list');
           this.getProjects().then(function (list) {
-            _this4.projects = list || [];
+            _this5.projects = list || [];
             setTimeout(function () {
-              _this4.loaderOff();
+              _this5.loaderOff();
             }, 500);
           });
         case 'payment-history':
           this.loaderOn('#payment-history');
           this.getOrders().then(function (list) {
-            _this4.orders = list || [];
+            _this5.orders = list || [];
             setTimeout(function () {
-              _this4.loaderOff();
+              _this5.loaderOff();
             }, 500);
           });
       }
@@ -22300,7 +22228,7 @@ var _hoisted_5 = {
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_BloggerItem = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("BloggerItem");
   var _component_confirm_popup = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("confirm-popup");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, " Список блогеров • " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.bloggers.length), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-blogers__search form-group\">\n                    <input type=\"name\" id=\"blogers-search\" class=\"input\" placeholder=\"Введите название\">\n                    <button class=\"btn btn-primary blogers-search-btn\">Найти</button>\n                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.bloggers, function (blogger) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, " Список блогеров • " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.bloggers.length), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-blogers__search form-group\">\r\n                    <input type=\"name\" id=\"blogers-search\" class=\"input\" placeholder=\"Введите название\">\r\n                    <button class=\"btn btn-primary blogers-search-btn\">Найти</button>\r\n                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.bloggers, function (blogger) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_BloggerItem, {
       bloggers: $props.bloggers,
       blogger: blogger,
@@ -22482,7 +22410,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_BloggerItem = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("BloggerItem");
   var _component_confirm_popup = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("confirm-popup");
   var _component_accept_popup = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("accept-popup");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, " Модерация блогеров • " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.bloggers.length), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-blogers__search form-group\">\n                    <input type=\"name\" id=\"moderation-search\" class=\"input\" placeholder=\"Введите название\">\n                    <button class=\"btn btn-primary moderation-search-btn\">Найти</button>\n                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.bloggers, function (blogger) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, " Модерация блогеров • " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.bloggers.length), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-blogers__search form-group\">\r\n                    <input type=\"name\" id=\"moderation-search\" class=\"input\" placeholder=\"Введите название\">\r\n                    <button class=\"btn btn-primary moderation-search-btn\">Найти</button>\r\n                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.bloggers, function (blogger) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_BloggerItem, {
       bloggers: $props.bloggers,
       blogger: blogger,

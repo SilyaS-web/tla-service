@@ -136,14 +136,11 @@
             },
 
             ban() {
-                let id = this.blogger.id;
-
-                this.$emit('ban', id)
+                this.$emit('ban', this.blogger.id)
             },
 
             agree() {
-                let id = this.blogger.id;
-                this.$emit('agree', 3)
+                this.$emit('agree', this.blogger.id)
             },
 
             unban() {
