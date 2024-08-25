@@ -98,25 +98,27 @@
                         text-decoration:underline;
                         margin-top: -20px;">Подробнее</a>
                 </div>
-                <div v-if="blogger.user.status === 0" class="admin-bloger__btns">
-                    <a href="#" class="btn btn-primary btn-accept" data-id="{{ blogger.user.id }}">Принять</a>
-                    <button class="btn btn-secondary" v-on:click="ban" v-bind:data-id="blogger.user.id">
+                <div v-if="blogger.user.status === 0" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" v-on:click="agree">
+                        Принять
+                    </button>
+                    <button class="btn btn-secondary" v-on:click="ban">
                         Отклонить
                     </button>
                 </div>
                 <div v-else-if="blogger.user.status === 1" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn btn-primary" v-on:click="ban" v-bind:data-id="blogger.user.id">
+                    <button class="btn btn-primary" v-on:click="ban">
                         Заблокировать
                     </button>
-                    <button class="btn btn-delete" v-on:click="deletionConfirmation" v-bind:data-id="blogger.user.id">
+                    <button class="btn btn-delete" v-on:click="deletionConfirmation">
                         Удалить
                     </button>
                 </div>
                 <div v-else-if="blogger.user.status === -1" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn btn-primary" v-on:click="unban" v-bind:data-id="blogger.user.id">
+                    <button class="btn btn-primary" v-on:click="unban">
                         Разблокировать
                     </button>
-                    <button class="btn btn-delete" v-on:click="deletionConfirmation" v-bind:data-id="blogger.user.id">
+                    <button class="btn btn-delete" v-on:click="deletionConfirmation">
                         Удалить
                     </button>
                 </div>
@@ -129,19 +131,23 @@
         props: ['blogger', 'bloggers'],
         components: { },
         methods:{
-            deletionConfirmation(event) {
-                let id = $(event.currentTarget).data('id');
-                this.$emit('deletionConfirmation', id)
+            deletionConfirmation() {
+                this.$emit('deletionConfirmation', this.blogger.id)
             },
 
-            ban(event) {
-                let id = $(event.currentTarget).data('id');
+            ban() {
+                let id = this.blogger.id;
+
                 this.$emit('ban', id)
             },
 
-            unban(event) {
-                let id = $(event.currentTarget).data('id');
-                this.$emit('unban', id)
+            agree() {
+                let id = this.blogger.id;
+                this.$emit('agree', 3)
+            },
+
+            unban() {
+                this.$emit('unban', this.blogger.id)
             },
 
             countER(subs, cover){
