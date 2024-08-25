@@ -77,7 +77,7 @@
                             </div>
                             <img src="{{ asset('img/notif-icon.svg') }}" alt="" class="">
                             <div class="header__notif-items notif-header">
-                                <div class="notif-header__items" id="header-notif-container">
+                                <div class="notif-header__items header-notif-container">
                                     @include('shared.notifications')
                                 </div>
                             </div>
@@ -207,7 +207,7 @@
                             </div>
                             <img src="{{ asset('img/notif-icon.svg') }}" alt="" class="">
                             <div class="header__notif-items notif-header">
-                                <div class="notif-header__items" id="header-notif-container">
+                                <div class="notif-header__items header-notif-container" >
                                     @include('shared.notifications')
                                 </div>
                             </div>
