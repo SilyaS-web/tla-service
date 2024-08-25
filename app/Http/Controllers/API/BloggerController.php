@@ -33,16 +33,6 @@ class BloggerController extends Controller
             });
         }
 
-        $bloggers = $bloggers->with('user')->with('platforms')->with('themes')->with('country')->get();
-        foreach ($bloggers as &$blogger) {
-            foreach ($blogger->platforms as &$blogger_platform) {
-                $blogger_platform->platform;
-            }
-
-            foreach ($blogger->themes as &$theme) {
-                $theme->theme;
-            }
-        }
         $data = [
             'bloggers' => BloggerResource::collection($bloggers),
             'platform_fields' => BloggerPlatform::getFields(),
@@ -53,23 +43,8 @@ class BloggerController extends Controller
 
     public function show(Blogger $blogger)
     {
-        $blogger->with('user')
-            ->with('platforms')
-            ->with('themes')
-            ->with('country')
-            ->get();
-
-
-        foreach ($blogger->platforms as &$blogger_platform) {
-            $blogger_platform->platform;
-        }
-
-        foreach ($blogger->themes as &$theme) {
-            $theme->theme;
-        }
-
         $data = [
-            'blogger' => $blogger,
+            'blogger' => new BloggerResource($blogger),
             'platform_fields' => BloggerPlatform::getFields(),
         ];
 
