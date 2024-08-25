@@ -99,7 +99,7 @@ class BloggerController extends Controller
         ]);
 
         foreach ($validated['platforms'] as $blogger_platform) {
-            if (!empty($blogger_platform)) {
+            if (empty($blogger_platform) || empty($blogger_platform['platform_id'])) {
                 continue;
             }
 
