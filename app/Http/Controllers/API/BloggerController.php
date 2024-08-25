@@ -99,6 +99,10 @@ class BloggerController extends Controller
         ]);
 
         foreach ($validated['platforms'] as $blogger_platform) {
+            if (!empty($blogger_platform)) {
+                continue;
+            }
+            
             $platform = $blogger->platforms()->where('platform_id', $blogger_platform->id)->first();
             if (isset($platform['link']) && !empty($platform['link'])) {
                 if ($platform) {
@@ -114,7 +118,7 @@ class BloggerController extends Controller
                 } else {
                     BloggerPlatform::create([
                         'blogger_id' => $blogger->id,
-                        'platform_id' => $platform->id,
+                        'platform_id' => $platform['platform_id'],
                         'link' => $blogger_platform['link'] ?? null,
                         'subscriber_quantity' => $blogger_platform['subscriber_quantity'] ?? null,
                         'coverage' => $blogger_platform['coverage'] ?? null,
