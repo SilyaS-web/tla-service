@@ -16,9 +16,9 @@
                     <div class="card__platforms">
                         <div
                             v-for="platform in blogger.platforms"
-                            v-bind:class="'card__platform ' +  (platform.platform.title ? platform.platform.title.toLowerCase() : '')"
+                            v-bind:class="'card__platform ' +  (platform.title ? platform.title.toLowerCase() : '')"
                             >
-                            <img v-bind:src="platform.platform.image || ''" alt="">
+                            <img v-bind:src="platform.image || ''" alt="">
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     <div
                         v-for="theme in blogger.themes"
                         class="card__tags-item">
-                        <span>{{ theme.theme.theme }}</span>
+                        <span>{{ theme.name }}</span>
                     </div>
                 </div>
                 <div class="card__row card__desc">

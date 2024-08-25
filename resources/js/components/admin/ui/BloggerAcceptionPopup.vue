@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-group">
                     <label for="country">Страна блогера</label>
-                    <select name="country" id="country" class="input" v-model="blogger.country_id">
+                    <select name="country" id="country" class="input" v-model="blogger.country.id">
                         <option
                             v-for="country in countries"
                             v-bind:id="country.id"
@@ -83,10 +83,11 @@
     </popup-modal>
 </template>
 <script>
-    import PopupModal from '../../services/AppPopup.vue';
+    import { forIn } from 'lodash';
+import PopupModal from '../../services/AppPopup.vue';
     import Platforms from './BloggerPlatformFields.vue';
     import axios from 'axios';
-    import {ref} from 'vue';
+    import {ref, toRaw} from 'vue';
 
     export default {
         name: 'AcceptBloggerPopup',
@@ -183,10 +184,40 @@
                 };
             },
 
+            accept(blogger){
+                return new Promise((resolve, reject) => {
+                    axios({
+                        method: 'post',
+                        url: '/api/bloggers/' + blogger.id + '/accept',
+                        data: toRaw(blogger)
+                    })
+                    .then(result => resolve(result.data))
+                    .catch(error => {
+                        console.log(error)
+                        resolve([])
+                    })
+                })
+            },
+
             _confirm() {
-                console.log(this.blogger);
-                this.$refs.popup.close()
-                this.resolvePromise()
+                this.blogger.platforms = this.platformFields.map(_p => {
+                    if(!_p.blogger_platform.platform_id) {
+                        _p.blogger_platform.platform_id = _p.id
+                    };
+
+                    var newBloggerPlatforms = {};
+
+                    for(let key in _p.blogger_platform){
+                        newBloggerPlatforms[key] = _p.blogger_platform[key]
+                    }
+
+                    return toRaw(newBloggerPlatforms)
+                })
+
+                this.accept(this.blogger).then(()=>{
+                    this.$refs.popup.close()
+                    this.resolvePromise(true)
+                })
             },
 
             _cancel() {

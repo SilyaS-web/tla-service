@@ -188,7 +188,7 @@
                     case 'moderation':
                         this.loaderOn('#moderation')
                         this.getBloggers([0]).then(list => {
-                            this.bloggers = (list || []).map(_b => this.findBiggestPlatform(_b));
+                            this.unverifiedBloggers = (list || []).map(_b => this.findBiggestPlatform(_b));
                             setTimeout(()=>{
                                 this.loaderOff()
                             }, 500)

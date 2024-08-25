@@ -35,9 +35,6 @@
     export default{
         props: ['bloggers'],
         components: {BloggerItem, ConfirmPopup, AcceptPopup},
-        // mounted(){
-        //     this.acceptionForm(2)
-        // },
         methods:{
             async deletionConfirmation(id) {
                 const isConfirmed = await this.$refs.confirmPopup.show({
@@ -58,7 +55,12 @@
                 });
 
                 if (isConfirmed) {
-                    this.accept(id)
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Блогер одобрен!'
+                    });
+
+                    this.$emit('updateBloggers', id);
                 }
             },
 
