@@ -104,7 +104,7 @@ class BloggerController extends Controller
             }
 
             $platform = $blogger->platforms()->where('platform_id', $blogger_platform['platform_id'])->first();
-            if (isset($platform['link']) && !empty($platform['link'])) {
+            if (isset($blogger_platform['link']) && !empty($blogger_platform['link'])) {
                 if ($platform) {
                     $platform->update([
                         'link' => $blogger_platform['link'] ?? null,
@@ -118,7 +118,7 @@ class BloggerController extends Controller
                 } else {
                     BloggerPlatform::create([
                         'blogger_id' => $blogger->id,
-                        'platform_id' => $platform['platform_id'],
+                        'platform_id' => $blogger_platform['platform_id'],
                         'link' => $blogger_platform['link'] ?? null,
                         'subscriber_quantity' => $blogger_platform['subscriber_quantity'] ?? null,
                         'coverage' => $blogger_platform['coverage'] ?? null,
