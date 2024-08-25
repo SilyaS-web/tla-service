@@ -68,7 +68,7 @@ class BloggerController extends Controller
             'platforms.*.cost_per_mille' => 'numeric|nullable',
             'platforms.*.additional_coverage' => 'numeric|nullable',
             'platforms.*.additional_engagement_rate' => 'numeric|nullable',
-            'platforms.*.platform_id' => 'numeric|exist:platforms,id',
+            'platforms.*.platform_id' => 'numeric|exists:platforms,id',
         ]);
 
         if ($validator->fails()) {
