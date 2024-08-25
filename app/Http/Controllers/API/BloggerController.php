@@ -34,7 +34,7 @@ class BloggerController extends Controller
         }
 
         $data = [
-            'bloggers' => BloggerResource::collection($bloggers),
+            'bloggers' => BloggerResource::collection($bloggers->get()),
             'platform_fields' => BloggerPlatform::getFields(),
         ];
 
