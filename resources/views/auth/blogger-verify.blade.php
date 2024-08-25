@@ -49,15 +49,15 @@
                     <label for="">Выберите тематику</label>
                     <div class="form-formats">
                         @foreach ($themes as $theme)
-                            @php(
-                                $selected = '';
-                                foreach(old('themes') as $old_theme) {
-                                    if ($theme->id == $old_theme) {
-                                        $selected = 'selected';
-                                        break;
-                                    }
-                                }
-                            )
+                            @php($selected = '')
+                            @if (old('themes'))
+                                @foreach(old('themes') as $old_theme)
+                                        @if ($theme->id == $old_theme)
+                                            @php($selected = 'checked')
+                                            @break
+                                        @endif
+                                @endforeach
+                            @endif
                             <div class="form__row form-format">
                                 <input type="checkbox" id="theme-{{ $theme->id }}" name="themes[]" class="form-format__check" {{ $selected }} value="{{ $theme->id }}">
                                 <label for="theme-{{ $theme->id }}">{{ $theme->theme }}</label>
