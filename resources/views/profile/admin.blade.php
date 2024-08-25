@@ -79,11 +79,13 @@
                                             <img src="{{ asset('admin/img/list-icon.svg') }}" alt="" class="nav__link-img">
                                             Модерация проектов
                                         </a>
-                                        <a href="" class="nav__link tab" data-content="payment-history" title="История заказов">
-                                            <img src="{{ asset('admin/img/history-icon.svg') }}" alt="" class="nav__link-img">
-                                            История заказов
+                                        @if(auth()->user()->is_admin)
+                                            <a href="" class="nav__link tab" data-content="payment-history" title="История заказов">
+                                                <img src="{{ asset('admin/img/history-icon.svg') }}" alt="" class="nav__link-img">
+                                                История заказов
 
-                                        </a>
+                                            </a>
+                                        @endif
                                     </div>
                                 </nav>
 
@@ -146,54 +148,56 @@
                             @include('project.admin-list')
                         </div>
                     </div>
-                    <div class="admin-view__content payment-history tab-content" id="payment-history">
-                        <div class="admin-blogers__body">
-                            <div class="admin-blogers__header">
-                                <div class="admin-blogers__title title">
-                                    История заказов • {{ $payments->count() }}
+                    @if(auth()->user()->is_admin)
+                        <div class="admin-view__content payment-history tab-content" id="payment-history">
+                            <div class="admin-blogers__body">
+                                <div class="admin-blogers__header">
+                                    <div class="admin-blogers__title title">
+                                        История заказов • {{ $payments->count() }}
+                                    </div>
+                                    {{-- <div class="admin-blogers__search form-group">
+                                        <input type="name" id="sellers-search" class="input" placeholder="Поиск">
+                                        <button class="btn btn-primary sellers-search-btn">Найти</button>
+                                    </div> --}}
                                 </div>
-                                {{-- <div class="admin-blogers__search form-group">
-                                    <input type="name" id="sellers-search" class="input" placeholder="Поиск">
-                                    <button class="btn btn-primary sellers-search-btn">Найти</button>
-                                </div> --}}
-                            </div>
-                            <div class="payment-history__body admin-view__content-wrap">
-                                <div class="payment-history__items">
-                                    @forelse ($payments as $payment)
-                                        <div class="payment-history__row">
-                                            <div href="" class="payment-history__row-title">
-                                                <span>Заказ № {{ $payment->id }}</span>
-                                                от {{ date_format($payment->created_at,'d-m-Y H:i') }}
+                                <div class="payment-history__body admin-view__content-wrap">
+                                    <div class="payment-history__items">
+                                        @forelse ($payments as $payment)
+                                            <div class="payment-history__row">
+                                                <div href="" class="payment-history__row-title">
+                                                    <span>Заказ № {{ $payment->id }}</span>
+                                                    от {{ date_format($payment->created_at,'d-m-Y H:i') }}
+                                                </div>
+                                                <div class="payment-history__row-status">
+                                                    <span>Статус</span>
+                                                    <strong>{{ $payment->status }}</strong>
+                                                </div>
+                                                <div class="payment-history__row-summary">
+                                                    <span>Сумма</span>
+                                                    <strong>{{ $payment->price / 100 }} <b class="rub">₽</b></strong>
+                                                </div>
+                                                <div class="payment-history__row-user">
+                                                    <span>Пользователь</span>
+                                                    @php($payment_user = $payment->user)
+                                                    <strong><a href="{{ route('seller-page', ['seller' => $payment_user->seller->id]) }}">{{ $payment_user->name }} ID {{ $payment_user->id }}</a></strong>
+                                                </div>
+                                                <div class="payment-history__row-tariff">
+                                                    <span>Тариф</span>
+                                                    <strong>{{ $payment->tariff->tariffGroup->title }} — {{ $payment->tariff->title }}</strong>
+                                                </div>
+                                                <div class="payment-history__row-bank_id">
+                                                    <span>ID оплаты</span>
+                                                    <strong>{{ $payment->payment_id }}</strong>
+                                                </div>
                                             </div>
-                                            <div class="payment-history__row-status">
-                                                <span>Статус</span>
-                                                <strong>{{ $payment->status }}</strong>
-                                            </div>
-                                            <div class="payment-history__row-summary">
-                                                <span>Сумма</span>
-                                                <strong>{{ $payment->price / 100 }} <b class="rub">₽</b></strong>
-                                            </div>
-                                            <div class="payment-history__row-user">
-                                                <span>Пользователь</span>
-                                                @php($payment_user = $payment->user)
-                                                <strong><a href="{{ route('seller-page', ['seller' => $payment_user->seller->id]) }}">{{ $payment_user->name }} ID {{ $payment_user->id }}</a></strong>
-                                            </div>
-                                            <div class="payment-history__row-tariff">
-                                                <span>Тариф</span>
-                                                <strong>{{ $payment->tariff->tariffGroup->title }} — {{ $payment->tariff->title }}</strong>
-                                            </div>
-                                            <div class="payment-history__row-bank_id">
-                                                <span>ID оплаты</span>
-                                                <strong>{{ $payment->payment_id }}</strong>
-                                            </div>
-                                        </div>
-                                    @empty
-                                        Нет оплат
-                                    @endforelse
+                                        @empty
+                                            Нет оплат
+                                        @endforelse
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             </div>
         </section>

@@ -153,6 +153,13 @@ class AuthController extends Controller
             'phone' => $phone,
             'password' => $validated['password'],
         ];
+
+        if (!User::where('phone',  $phone)->first()) {
+            return redirect()->route('login')->withErrors([
+                'phone' => 'Пользователь с указанным номером не найден',
+            ]);
+        }
+
         if (auth()->attempt($credentials)) {
             request()->session()->regenerate();
 
@@ -160,7 +167,7 @@ class AuthController extends Controller
         };
 
         return redirect()->route('login')->withErrors([
-            'phone' => 'Пользователь с указанным номером и паролем не найден'
+            'password' => 'Пароль неверный'
         ]);
     }
 
