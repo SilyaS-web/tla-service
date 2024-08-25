@@ -31,10 +31,10 @@
                         </div>
                         <div class="info-profile__tags-items">
                             <div class="info-profile__tags-item">
-                                YouTube
+                                YTube
                             </div>
                             <div class="info-profile__tags-item">
-                                Instgram
+                                Ins
                             </div>
                             <div class="info-profile__tags-item">
                                 Telegram

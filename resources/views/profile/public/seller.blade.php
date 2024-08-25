@@ -47,8 +47,7 @@
                             @forelse ($projects as $project)
                             <div class="list-projects__item project-item">
                                 <div class="owl-carousel project-item__carousel">
-                                    <div class="project-item__img">
-                                        <img src="{{ $project->getImageURL(true) }}" alt="">
+                                    <div class="project-item__img" style="background-image:url({{ $project->getImageURL(true) }})">
                                         <div class="project-item__status active">
                                             {{ $project->active == 0 ? 'Активно' : 'Выполнено' }}
                                         </div>
@@ -72,7 +71,7 @@
                                 </div>
                             </div>
                             @empty
-                            Пока что здесь пусть
+                                Пока что здесь пусто
                             @endforelse
 
                         </div>
@@ -111,7 +110,7 @@
                                         </div>
                                     </div>
                                 @empty
-                                Пока что здесь пусть
+                                Пока что здесь пусто
                                 @endforelse
                             </div>
                         </div>

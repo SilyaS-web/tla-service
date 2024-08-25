@@ -71,6 +71,9 @@ Route::middleware(['auth', 'banned'])->group(function () {
     Route::get('/profile/edit', [UserController::class, 'edit'])->name('edit-profile');
     Route::post('/profile/update', [UserController::class, 'update'])->name('edit-profile-post');
 
+    Route::get('admin/blogger/{user}/edit', [AdminController::class, 'editBlogger'])->name('edit-blogger');
+    Route::post('admin/blogger/{user}/update', [AdminController::class, 'updateBlogger'])->name('update-blogger');
+
     Route::resource('projects', ProjectController::class);
     Route::get('/project/{project_id}', [ProjectController::class, 'selectBloggers'])->name('select-bloggers');
     Route::post('/projects/{project}/update', [ProjectController::class, 'update'])->name('update-project');
@@ -127,5 +130,6 @@ Route::middleware(['auth', 'banned'])->group(function () {
         Route::get('/notifications/{project_id}/view', [NotificationController::class, 'view']);
 
         Route::get('/coverage-data', [DeepLinkController::class, 'stats']);
+        Route::delete('/users/{user}', [UserController::class, 'deleteUser']);
     });
 });

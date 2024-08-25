@@ -10,13 +10,15 @@
         "production": "mix --production"
     },
     "devDependencies": {
-        "axios": "^0.21",
+        "axios": "^0.21.4",
         "laravel-mix": "^6.0.6",
         "lodash": "^4.17.19",
-        "postcss": "^8.1.14"
+        "postcss": "^8.1.14",
+        "vue-loader": "^16.2.0"
     },
     "dependencies": {
         "chart.js": "^4.4.3",
-        "chartjs-chart-funnel": "^4.2.0"
+        "chartjs-chart-funnel": "^4.2.0",
+        "vue": "^3.4.37"
     }
 }

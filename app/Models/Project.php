@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class Project extends Model
 {
@@ -65,7 +66,7 @@ class Project extends Model
         'marketplace_description',
         'marketplace_options',
         'marketplace_rate',
-        'is_blogger_access'
+        'is_blogger_access',
     ];
 
     public function executor() {}
@@ -175,6 +176,16 @@ class Project extends Model
         return "Активно";
     }
 
+    public function isSended() {
+        $user = Auth::user();
+        $work = Work::where('blogger_id', $user->id)->where('project_id', $this->id)->first();
+        if ($work) {
+            return true;
+        }
+
+        return false;
+    }
+
     public function isCompleted()
     {
         $is_null = true;
@@ -234,6 +245,7 @@ class Project extends Model
         foreach ($project_works as $project_work) {
             if (isset(self::TYPE_NAMES[$project_work->type])) {
                 $formats[] = [
+                    'id' => $project_work->id,
                     'name' => self::TYPE_NAMES[$project_work->type],
                     'total_quantity' => $project_work->quantity,
                     'lost_quantity' => $project_work->quantity - $this->works()->where('project_work_id', $project_work->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count(),

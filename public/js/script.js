@@ -1259,7 +1259,7 @@ class Chat {
 
         var formData = new FormData();
 
-        formData.append('message', msg)
+        formData.append('message', this.urlify(msg))
         formData.append('img', file[0])
         formData.append('work_id', self.currentChatId)
 
@@ -1285,6 +1285,18 @@ class Chat {
                 }
             })
         }
+    }
+
+    urlify = (text) => {
+        var urlRegex = /(https?:\/\/[^\s]+)/g;
+        return text.replace(urlRegex, function(url) {
+          return '<a target="_blank" href="' + url + '">' + url + '</a>';
+        })
+
+        // var urlRegex = /(http?:\/\/[^\s]+)/g;
+        // return text.replace(urlRegex, function(url) {
+        //   return '<a target="_blank" href="' + url + '">' + url + '</a>';
+        // })
     }
 }
 
@@ -1733,8 +1745,11 @@ class PopupBloggerSendOffer extends Popup{
                 for(var k in self.dataProps){
                     self.dataProps[k].set('')
                 }
-                $(document).find(`.btn-blogger-send-offer[data-project-work="${self.projectWorkId}"]`).text('Начать работу')
+                $(document).find(`.btn-blogger-send-offer[data-project-work="${self.projectWorkId}"]`).text('Заявка отправлена')
                 $(document).find(`.btn-blogger-send-offer[data-project-work="${self.projectWorkId}"]`).removeClass('btn-blogger-send-offer')
+
+                $(document).find(`.btn-blogger-send-offer-popup`).text('Заявка отправлена')
+                $(document).find(`.btn-blogger-send-offer-popup`).addClass('disabled')
             }
         })
     }
@@ -2018,6 +2033,11 @@ class PopupBlogerProjectMoreInfo extends Popup{
                 }
 
                 $(self.node).find('.characteristics__category').text(contentText)
+
+                $(self.node).find('.btn-blogger-send-offer-popup').data('project-work', self.projectId)
+
+                $(document).find(`.btn-blogger-send-offer-popup`).text(res.application_sent ? 'Заявка отправлена' : 'Откликнуться')
+                $(document).find(`.btn-blogger-send-offer-popup`).toggleClass('disabled', res.application_sent)
             }
         })
     }
@@ -2099,6 +2119,14 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
+    $(document).on('click', '.roles-cards__card', function(e) {
+        var role = $(e.currentTarget).data('role');
+
+        $(e.currentTarget).closest('.roles-cards').find('input[name="role"]').val($(e.currentTarget).hasClass('active') ? false : role);
+        $(e.currentTarget).toggleClass('active');
+        $(document).find('.roles-cards__card').not($(e.currentTarget)).removeClass('active')
+    })
+
     $(document).on('click', '.owl-dots', (e) => e.stopPropagation())
 
     var popupBlogerProjectMoreInfo = new PopupBlogerProjectMoreInfo('#project-item-info');
@@ -2184,6 +2212,19 @@ $(window).on('load', function(){
         choosePopupBlogger.projectNode = $(e.target).closest('.project-item')
         choosePopupBlogger.projectID = $(btn).data('project-work')
     })
+    $(document).on('click', '.btn-blogger-send-offer-popup', function(e){
+        var btn = $(e.target).closest('.btn-blogger-send-offer-popup'),
+            product_id = $(btn).data('project-work');
+
+        choosePopupBlogger.openPopup();
+        console.log($(`#profile-projects .project-item[data-id="${product_id}"]`))
+        var formats = $(`.profile-projects__body .project-item[data-id="${product_id}"]`).find('.project-item__format-tags .card__tags-item');
+
+        choosePopupBlogger.addFormats(formats);
+
+        choosePopupBlogger.projectNode = $(e.target).closest('.project-item')
+        choosePopupBlogger.projectID = product_id
+    })
 
     $(document).on('click', '#blogger .project-item', function(e){
         if($(e.target).closest('.project-item__btns').length == 0){
@@ -2228,17 +2269,19 @@ $(window).on('load', function(){
     $(document).on('click', '.item-chat__project-link--seller', function(e){
         var pId = $(e.target).closest('.item-chat__project-link--seller').data('project-id');
 
-        $(document).find('.projects-list-link').click();
+        if($(`.profile-projects__item[data-id="${pId}"]`).length > 0){
+            $(document).find('.projects-list-link').click();
 
-        $(`.profile-projects__item[data-id="${pId}"]`).addClass('hovered')
+            $(`.profile-projects__item[data-id="${pId}"]`).addClass('hovered')
 
-        $([document.documentElement, document.body]).animate({
-            scrollTop: $(`.profile-projects__item[data-id="${pId}"]`).offset().top
-            });
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $(`.profile-projects__item[data-id="${pId}"]`).offset().top
+                });
 
-        setTimeout(()=>{
-            $(`.profile-projects__item[data-id="${pId}"]`).removeClass('hovered')
-        }, 3000)
+            setTimeout(()=>{
+                $(`.profile-projects__item[data-id="${pId}"]`).removeClass('hovered')
+            }, 3000)
+        }
     })
 
     $(document).on('click', '.item-chat__project-link--blogger', function(e){
@@ -2266,10 +2309,11 @@ $(window).on('load', function(){
 
     $(document).on('click', '.notif-header__goto', function(e){
         e.preventDefault();
-
-        $(document).find('.chat-link').click();
-        $(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`).click();
-        $(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`).addClass('current');
+        if($(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`).length > 0){
+            $(document).find('.chat-link').click();
+            $(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`).click();
+            $(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`).addClass('current');
+        }
     })
     $(document).on('click', '.notif-header__hide', function(e){
         e.preventDefault();

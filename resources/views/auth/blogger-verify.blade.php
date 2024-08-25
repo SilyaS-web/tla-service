@@ -89,7 +89,7 @@
                 </div>
                 <div class="popup__form-row popup__form-stat form-stat">
                     <div class="form-stat__title">
-                        Instagram
+                        Ins
                     </div>
                     <div class="form-stat__content">
                         <div class="form-stat__row">
@@ -105,7 +105,7 @@
                 </div>
                 <div class="popup__form-row popup__form-stat form-stat">
                     <div class="form-stat__title">
-                        Youtube
+                        YTube
                     </div>
                     <div class="form-stat__content">
                         <div class="form-stat__row">

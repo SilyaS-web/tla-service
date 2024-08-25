@@ -4,56 +4,51 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BloggerPlatform extends Model
 {
-    use HasFactory;
-
-    public const YOUTUBE = 'Youtube';
-    public const INSTAGRAM = 'Instagram';
-    public const VK = 'VK';
-    public const TELEGRAM = 'Telegram';
-
-    const PLATFORM_TYPES = [
-        self::YOUTUBE,
-        self::INSTAGRAM,
-        self::VK,
-        self::TELEGRAM,
-    ];
-
-    const PLATFORM_ICON_URLS = [
-        self::YOUTUBE => 'img/youtube-colored-icon.svg',
-        self::INSTAGRAM => 'img/inst-icon.svg',
-        self::VK => 'img/vk-icon.svg',
-        self::TELEGRAM => 'img/telegram-icon.svg',
-    ];
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'blogger_id',
-        'name',
+        'platform_id',
         'subscriber_quantity',
         'coverage',
+        'additional_coverage',
         'link',
         'engagement_rate',
+        'additional_engagement_rate',
         'cost_per_mille',
+        'icon_url',
     ];
+
+    public function platform()
+    {
+        return $this->hasOne(Platform::class, 'id', 'platform_id');
+    }
 
     public function blogger()
     {
         return $this->belongsTo(Blogger::class, 'id', 'blogger_id');
     }
 
-    public function getIconURL()
-    {
-        return asset(self::PLATFORM_ICON_URLS[$this->name]);
-    }
-
-    public static function getLowerPlatforms() {
-        $platform_names = [];
-        foreach (self::PLATFORM_TYPES as $platform_type) {
-            $platform_names[] = strtolower($platform_type);
-        }
-
-        return $platform_names;
+    public static function getFields() {
+        return [
+            'Telegram' => [
+                'coverage' => 'Просмотры',
+            ],
+            'VK' => [
+                'coverage' => 'Просмотры постов',
+                'additional_coverage' => 'Просмотры клипов',
+            ],
+            'Youtube' => [
+                'coverage' => 'Просмотры выпуска',
+                'additional_coverage' => 'Просмотры shorts',
+            ],
+            'Instagram' => [
+                'coverage' => 'Просмотры reels',
+            ],
+        ];
     }
 }

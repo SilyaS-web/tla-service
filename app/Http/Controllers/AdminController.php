@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Blogger;
 use App\Models\BloggerPlatform;
+use App\Models\Country;
 use App\Models\Seller;
+use App\Models\Theme;
 use App\Models\User;
 use App\Services\TgService;
 use Illuminate\Http\Request;
@@ -12,6 +14,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -25,25 +28,33 @@ class AdminController extends Controller
             // 'city' => 'required|string',
             'is_achievement' => 'string|nullable',
             'gender_ratio' => 'required|numeric',
-            'tg_link' => 'string|nullable',
-            'tg_subs' => 'numeric|nullable',
-            'tg_cover' => 'numeric|nullable',
-            'tg_er' => 'numeric|nullable',
-            'tg_cpm' => 'numeric|nullable',
-            'inst_link' => 'string|nullable',
-            'inst_subs' => 'numeric|nullable',
-            'inst_cover' => 'numeric|nullable',
-            'inst_er' => 'numeric|nullable',
-            'inst_cpm' => 'numeric|nullable',
-            'yt_link' => 'string|nullable',
-            'yt_subs' => 'numeric|nullable',
-            'yt_cover' => 'numeric|nullable',
-            'yt_er' => 'numeric|nullable',
-            'yt_cpm' => 'numeric|nullable',
+            'telegram_link' => 'string|nullable',
+            'telegram_subs' => 'numeric|nullable',
+            'telegram_cover' => 'numeric|nullable',
+            'telegram_additional_coverage' => 'numeric|nullable',
+            'telegram_er' => 'numeric|nullable',
+            'telegram_additional_engagement_rate' => 'numeric|nullable',
+            'telegram_cpm' => 'numeric|nullable',
+            'instagram_link' => 'string|nullable',
+            'instagram_subs' => 'numeric|nullable',
+            'instagram_cover' => 'numeric|nullable',
+            'instagram_additional_coverage' => 'numeric|nullable',
+            'instagram_er' => 'numeric|nullable',
+            'instagram_additional_engagement_rate' => 'numeric|nullable',
+            'instagram_cpm' => 'numeric|nullable',
+            'youtube_link' => 'string|nullable',
+            'youtube_subs' => 'numeric|nullable',
+            'youtube_cover' => 'numeric|nullable',
+            'youtube_additional_coverage' => 'numeric|nullable',
+            'youtube_er' => 'numeric|nullable',
+            'youtube_additional_engagement_rate' => 'numeric|nullable',
+            'youtube_cpm' => 'numeric|nullable',
             'vk_link' => 'string|nullable',
             'vk_subs' => 'numeric|nullable',
             'vk_cover' => 'numeric|nullable',
+            'vk_additional_coverage' => 'numeric|nullable',
             'vk_er' => 'numeric|nullable',
+            'vk_additional_engagement_rate' => 'numeric|nullable',
             'vk_cpm' => 'numeric|nullable',
         ]);
 
@@ -52,6 +63,16 @@ class AdminController extends Controller
         }
 
         $validated = $validator->validated();
+
+        if (
+            (!isset($validated['telegram_link']) || empty($validated['telegram_link'])) &&
+            (!isset($validated['instagram_link']) || empty($validated['instagram_link'])) &&
+            (!isset($validated['youtube_link']) || empty($validated['youtube_link'])) &&
+            (!isset($validated['vk_link']) || empty($validated['vk_link']))
+        ) {
+            return redirect()->back()->with('success', 'Необходима хотя бы одна ссылка на соц. сеть')->withInput();
+        }
+
         $blogger = Blogger::find($validated['blogger_id']);
 
         $blogger->update([
@@ -59,98 +80,39 @@ class AdminController extends Controller
             'sex' => $validated['sex'],
             'country_id' => $validated['country_id'],
             'gender_ratio' => $validated['gender_ratio'],
-            'is_achievement' => $validated['is_achievement'] ?? 0,
+            'is_achievement' => isset($validated['is_achievement']),
         ]);
 
-        if ($validated['tg_subs']) {
-            $tg_platform = $blogger->platforms()->where('name', BloggerPlatform::TELEGRAM)->first();
-            if ($tg_platform) {
-                $tg_platform->update([
-                    'link' => $validated['tg_link'],
-                    'subscriber_quantity' => $validated['tg_subs'],
-                    'coverage' => $validated['tg_cover'],
-                    'engagement_rate' => $validated['tg_er'],
-                    'cost_per_mille' => $validated['tg_cpm'],
-                ]);
-            } else {
-                BloggerPlatform::create([
-                    'blogger_id' => $blogger->id,
-                    'link' => $validated['tg_link'],
-                    'name' => BloggerPlatform::TELEGRAM,
-                    'subscriber_quantity' => $validated['tg_subs'],
-                    'coverage' => $validated['tg_cover'],
-                    'engagement_rate' => $validated['tg_er'],
-                    'cost_per_mille' => $validated['tg_cpm'],
-                ]);
-            }
-        }
-
-        if ($validated['inst_subs']) {
-            $inst_platform = $blogger->platforms()->where('name', BloggerPlatform::INSTAGRAM)->first();
-            if ($inst_platform) {
-                $inst_platform->update([
-                    'link' => $validated['inst_link'],
-                    'subscriber_quantity' => $validated['inst_subs'],
-                    'coverage' => $validated['inst_cover'],
-                    'engagement_rate' => $validated['inst_er'],
-                    'cost_per_mille' => $validated['inst_cpm'],
-                ]);
-            } else {
-                BloggerPlatform::create([
-                    'blogger_id' => $blogger->id,
-                    'name' => BloggerPlatform::INSTAGRAM,
-                    'link' => $validated['inst_link'],
-                    'subscriber_quantity' => $validated['inst_subs'],
-                    'coverage' => $validated['inst_cover'],
-                    'engagement_rate' => $validated['inst_er'],
-                    'cost_per_mille' => $validated['inst_cpm'],
-                ]);
-            }
-        }
-
-        if ($validated['yt_subs']) {
-            $yt_platform = $blogger->platforms()->where('name', BloggerPlatform::YOUTUBE)->first();
-            if ($yt_platform) {
-                $yt_platform->update([
-                    'link' => $validated['yt_link'],
-                    'subscriber_quantity' => $validated['yt_subs'],
-                    'coverage' => $validated['yt_cover'],
-                    'engagement_rate' => $validated['yt_er'],
-                    'cost_per_mille' => $validated['yt_cpm'],
-                ]);
-            } else {
-                BloggerPlatform::create([
-                    'blogger_id' => $blogger->id,
-                    'name' => BloggerPlatform::YOUTUBE,
-                    'subscriber_quantity' => $validated['yt_subs'],
-                    'link' => $validated['yt_link'],
-                    'coverage' => $validated['yt_cover'],
-                    'engagement_rate' => $validated['yt_er'],
-                    'cost_per_mille' => $validated['yt_cpm'],
-                ]);
-            }
-        }
-
-        if ($validated['vk_subs']) {
-            $vk_platform = $blogger->platforms()->where('name', BloggerPlatform::VK)->first();
-            if ($vk_platform) {
-                $vk_platform->update([
-                    'link' => $validated['vk_link'],
-                    'subscriber_quantity' => $validated['vk_subs'],
-                    'coverage' => $validated['vk_cover'],
-                    'engagement_rate' => $validated['vk_er'],
-                    'cost_per_mille' => $validated['vk_cpm'],
-                ]);
-            } else {
-                BloggerPlatform::create([
-                    'blogger_id' => $blogger->id,
-                    'name' => BloggerPlatform::VK,
-                    'link' => $validated['vk_link'],
-                    'subscriber_quantity' => $validated['vk_subs'],
-                    'coverage' => $validated['vk_cover'],
-                    'engagement_rate' => $validated['vk_er'],
-                    'cost_per_mille' => $validated['vk_cpm'],
-                ]);
+        foreach (BloggerPlatform::getLowerPlatforms() as $platform_type) {
+            $platform = $blogger->platforms()->where('name', $platform_type)->first();
+            if (isset($validated[$platform_type . '_link']) && !empty($validated[$platform_type . '_link'])) {
+                if ($platform) {
+                    $platform->update([
+                        'blogger_id' => $blogger->id,
+                        'name' => $platform_type,
+                        'link' => $validated[$platform_type . '_link'] ?? null,
+                        'subscriber_quantity' => $validated[$platform_type . '_subs'] ?? null,
+                        'coverage' => $validated[$platform_type . '_cover'] ?? null,
+                        'additional_coverage' => $validated[$platform_type . '_additional_coverage'] ?? null,
+                        'engagement_rate' => $validated[$platform_type . '_er'] ?? null,
+                        'additional_engagement_rate' => $validated[$platform_type . '_additional_engagement_rate'] ?? null,
+                        'cost_per_mille' => $validated[$platform_type . '_cpm'] ?? null,
+                    ]);
+                } else {
+                    BloggerPlatform::create([
+                        'blogger_id' => $blogger->id,
+                        'name' => $platform_type,
+                        'link' => $validated[$platform_type . '_link'] ?? null,
+                        'subscriber_quantity' => $validated[$platform_type . '_subs'] ?? null,
+                        'coverage' => $validated[$platform_type . '_cover'] ?? null,
+                        'additional_coverage' => $validated[$platform_type . '_additional_coverage'] ?? null,
+                        'engagement_rate' => $validated[$platform_type . '_er'] ?? null,
+                        'additional_engagement_rate' => $validated[$platform_type . '_additional_engagement_rate'] ?? null,
+                        'cost_per_mille' => $validated[$platform_type . '_cpm'] ?? null,
+                    ]);
+                }
+            } elseif ((!isset($validated[$platform_type . '_link']) || empty($validated[$platform_type . '_link'])) && $platform) {
+                $platform->delete();
             }
         }
 
@@ -210,7 +172,6 @@ class AdminController extends Controller
 
         if ($validator->fails()) {
             return response()->json('success', 200);
-
         }
         $validated = $validator->validated();
 
@@ -272,5 +233,130 @@ class AdminController extends Controller
         $user->save();
 
         return response()->json('success', 200);
+    }
+
+    public function editBlogger(User $user)
+    {
+        $countries = Country::get();
+        $themes = Theme::get();
+        $platforms = BloggerPlatform::PLATFORM_TYPES;
+        return view('admin.edit-blogger', compact('user', 'countries', 'platforms'));
+    }
+
+    public function updateBlogger(User $user)
+    {
+        $validator = Validator::make(request()->all(), [
+            'image' => 'image|nullable',
+            'name' => 'required|string',
+            'email' => 'required|email',
+            'country_id' => 'required|exists:countries,id',
+            'city' => 'string|nullable',
+            'description' => 'string|nullable',
+            'gender_ratio' => 'required|numeric',
+            'sex' => 'required|string',
+            'telegram_link' => 'string|nullable',
+            'telegram_subs' => 'numeric|nullable',
+            'telegram_cover' => 'numeric|nullable',
+            'telegram_additional_coverage' => 'numeric|nullable',
+            'telegram_er' => 'numeric|nullable',
+            'telegram_additional_engagement_rate' => 'numeric|nullable',
+            'telegram_cpm' => 'numeric|nullable',
+            'instagram_link' => 'string|nullable',
+            'instagram_subs' => 'numeric|nullable',
+            'instagram_cover' => 'numeric|nullable',
+            'instagram_additional_coverage' => 'numeric|nullable',
+            'instagram_er' => 'numeric|nullable',
+            'instagram_additional_engagement_rate' => 'numeric|nullable',
+            'instagram_cpm' => 'numeric|nullable',
+            'youtube_link' => 'string|nullable',
+            'youtube_subs' => 'numeric|nullable',
+            'youtube_cover' => 'numeric|nullable',
+            'youtube_additional_coverage' => 'numeric|nullable',
+            'youtube_er' => 'numeric|nullable',
+            'youtube_additional_engagement_rate' => 'numeric|nullable',
+            'youtube_cpm' => 'numeric|nullable',
+            'vk_link' => 'string|nullable',
+            'vk_subs' => 'numeric|nullable',
+            'vk_cover' => 'numeric|nullable',
+            'vk_additional_coverage' => 'numeric|nullable',
+            'vk_er' => 'numeric|nullable',
+            'vk_additional_engagement_rate' => 'numeric|nullable',
+            'vk_cpm' => 'numeric|nullable',
+            'is_achievement' => 'string|nullable',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $validated = $validator->validated();
+
+        if (
+            (!isset($validated['telegram_link']) || empty($validated['telegram_link'])) &&
+            (!isset($validated['instagram_link']) || empty($validated['instagram_link'])) &&
+            (!isset($validated['youtube_link']) || empty($validated['youtube_link'])) &&
+            (!isset($validated['vk_link']) || empty($validated['vk_link']))
+        ) {
+            return redirect()->back()->with('success', 'Необходима хотя бы одна ссылка на соц. сеть')->withInput();
+        }
+
+        $user->name = $validated['name'];
+        $user->email = $validated['email'];
+
+        if (request()->file('image')) {
+            if (Storage::exists($user->getImageURL())) {
+                Storage::delete($user->getImageURL());
+            }
+
+            $product_image = request()->file('image');
+            $image_path = $product_image->store('profile', 'public');
+            $user->image = $image_path;
+        }
+
+        $user->save();
+        $blogger = $user->blogger;
+
+        $blogger->update([
+            'city' => $validated['city'] ?? null,
+            'description' => $validated['description'] ?? '',
+            'sex' => $validated['sex'] ?? 'male',
+            'country_id' => $validated['country_id'],
+            'gender_ratio' => $validated['gender_ratio'] ?? 0,
+            'is_achievement' => isset($validated['is_achievement']),
+        ]);
+        foreach (BloggerPlatform::getLowerPlatforms() as $platform_type) {
+            $platform = $blogger->platforms()->where('name', $platform_type)->first();
+            if (isset($validated[$platform_type . '_link']) && !empty($validated[$platform_type . '_link'])) {
+                if ($platform) {
+                    $platform->update([
+                        'blogger_id' => $blogger->id,
+                        'name' => $platform_type,
+                        'link' => $validated[$platform_type . '_link'] ?? null,
+                        'subscriber_quantity' => $validated[$platform_type . '_subs'] ?? null,
+                        'coverage' => $validated[$platform_type . '_cover'] ?? null,
+                        'additional_coverage' => $validated[$platform_type . '_additional_coverage'] ?? null,
+                        'engagement_rate' => $validated[$platform_type . '_er'] ?? null,
+                        'additional_engagement_rate' => $validated[$platform_type . '_additional_engagement_rate'] ?? null,
+                        'cost_per_mille' => $validated[$platform_type . '_cpm'] ?? null,
+                    ]);
+                } else {
+                    BloggerPlatform::create([
+                        'blogger_id' => $blogger->id,
+                        'name' => $platform_type,
+                        'link' => $validated[$platform_type . '_link'] ?? null,
+                        'subscriber_quantity' => $validated[$platform_type . '_subs'] ?? null,
+                        'coverage' => $validated[$platform_type . '_cover'] ?? null,
+                        'additional_coverage' => $validated[$platform_type . '_additional_coverage'] ?? null,
+                        'engagement_rate' => $validated[$platform_type . '_er'] ?? null,
+                        'additional_engagement_rate' => $validated[$platform_type . '_additional_engagement_rate'] ?? null,
+                        'cost_per_mille' => $validated[$platform_type . '_cpm'] ?? null,
+                    ]);
+                }
+            } elseif ((!isset($validated[$platform_type . '_link']) || empty($validated[$platform_type . '_link'])) && $platform) {
+                $platform->delete();
+            }
+        }
+
+        return redirect()->back()->with('success', 'Данные успешно обновлены');
     }
 }

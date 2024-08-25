@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Blogger;
 use App\Models\BloggerPlatform;
 use App\Models\Country;
+use App\Models\DbLog;
 use App\Models\DeepLink;
 use App\Models\DeepLinkStat;
 use App\Models\Message;
@@ -161,52 +162,7 @@ class UserController extends Controller
 
     public function getAdminProfileData()
     {
-        $validator = Validator::make(request()->all(), [
-            'user_name' => 'string',
-            'blogger_name' => 'string',
-            'seller_name' => 'string',
-        ]);
-
-        if ($validator->fails()) {
-            return [];
-        }
-        $validated = $validator->validated();
-
-        $filter = [
-            ['role', 'blogger'],
-            ['status', 0],
-        ];
-
-        if (!empty($validated['user_name'])) {
-            $filter[] = ['user_name', 'like', '%' . $validated['user_name'] . '%'];
-        }
-
-        $unverified_users = User::where($filter)->whereHas('blogger')->get();
-
-        $bloggers = [];
-        if (!empty($validated['blogger_name'])) {
-            $bloggers = Blogger::whereHas('user', function (Builder $query) use ($validated) {
-                $query->where('name', 'like', '%' . $validated['blogger_name'] . '%')->where('status', 1);
-            })->get();
-        } else {
-            $bloggers = Blogger::whereHas('user', function (Builder $query) use ($validated) {
-                $query->where('status', 1);
-            })->get();
-        }
-
-        $sellers = [];
-        if (!empty($validated['seller_name'])) {
-            $sellers = Seller::whereHas('user', function (Builder $query) use ($validated) {
-                $query->where('name', 'like', '%' . $validated['seller_name'] . '%');
-            })->get();
-        } else {
-            $sellers = Seller::get();
-        }
-        $platforms = BloggerPlatform::PLATFORM_TYPES;
-        $countries = Country::get();
-        $all_projects = Project::get();
-        $payments = Payment::get();
-        return compact('unverified_users', 'bloggers', 'sellers', 'platforms', 'countries', 'all_projects', 'payments');
+        return [];
     }
 
     public function edit(Request $request)
@@ -360,5 +316,13 @@ class UserController extends Controller
         $message_text = "Форма обратной связи\n\nИмя: " . $validated['name'] ."\nТелефон: " . $validated['phone'] ."\nСообщение: " . $validated['comment'];
         $result = TgService::sendForm($message_text);
         return response()->json($result);
+    }
+
+    public function deleteUser(User $user) {
+        $log_message = 'Удалён пользователь ' . $user->name . ', роль ' . $user->role . ', телефон' . $user->phone . ', email' . $user->email;
+        DbLog::create(['text' => $log_message]);
+
+        $user->forceDelete();
+        return response()->json();
     }
 }

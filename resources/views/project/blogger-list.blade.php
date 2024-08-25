@@ -1,4 +1,9 @@
 @forelse ($project_works as $work)
+
+@if(!isset($work->project))
+    @continue
+@endif
+
 @if($type == 'applications')
     @php($project_work = $work->projectWork)
 @else
@@ -115,7 +120,9 @@
     }
 
     function goToChat(project_work_id) {
-        $('#blogger .chat-link').click();
-        $(`.item-chat[data-id="${project_work_id}"]`).click();
+        if($(`.item-chat[data-id="${project_work_id}"]`)){
+            $('#blogger .chat-link').click();
+            $(`.item-chat[data-id="${project_work_id}"]`).click();
+        }
     }
 </script>
