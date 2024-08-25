@@ -182,25 +182,6 @@ class BloggerController extends Controller
         return response()->json('success', 200);
     }
 
-    public function show(Blogger $blogger)
-    {
-        $blogger = $blogger->with('user')->with('platforms')->with('themes')->with('country')->get();
-
-        foreach ($blogger->platforms as &$blogger_platform) {
-            $blogger_platform->platform;
-        }
-
-        foreach ($blogger->themes as &$theme) {
-            $theme->theme;
-        }
-
-        $data = [
-            'blogger' => $blogger,
-        ];
-
-        return response()->json($data)->setStatusCode(200);
-    }
-
     /**
      * Update the specified resource in storage.
      *
