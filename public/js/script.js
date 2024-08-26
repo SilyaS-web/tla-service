@@ -2702,3 +2702,17 @@ function acceptWork(el, work_id, project_id){
         }
     })
 }
+
+$(window).on('load', function(){
+    $(document).on('click', '.btn-to-chat', (e)=>{
+
+        var id = $(e.target).closest('.btn-to-chat').data('work-id');
+        if($(document).find(`.item-chat[data-id="${id}"]`).length > 0){
+            $(document).find('.chat-link').click();
+            $(document).find(`.item-chat[data-id="${id}"]`).click();
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $(document).find(`.item-chat[data-id="${id}"]`).offset().top
+            }, 2000);
+        }
+    })
+})
