@@ -309,6 +309,14 @@ class WorkController extends Controller
     public function deny(Work $work) {
         $work->delete();
         $user = Auth::user();
+
+        Notification::create([
+            'user_id' => $work->getPartnerUser($user->role)->id,
+            'type' => 'Заявка отклонена',
+            'text' => $user->name . ' отклонил вашу заявку на проект' . $work->project->product_name,
+            'work_id' => $work->id,
+            'from_user_id' => $user->id,
+        ]);
         TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' отклонил вашу заявку на проект' . $work->project->product_name);
         return response()->json('success', 200);
     }
