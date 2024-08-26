@@ -2658,11 +2658,11 @@ function denyWork(el, work_id){
     el.disabled = true;
     $.ajax({
         url: 'apist/works/' + work_id + ' /deny',
-        success: (res)=>{
+        success: ()=>{
             notify('info', {title: 'Успешно!', message: 'Заявка отклонена'});
-            $.closest('.bloger-item').remove();
+            $(el).closest('.bloger-item').remove();
         },
-        error: (res) => {
+        error: () => {
             el.innerHTML = 'Отклонить';
             el.disabled = false;
             notify('error', {
@@ -2679,14 +2679,14 @@ function acceptWork(el, work_id){
     el.disabled = true;
     $.ajax({
         url: 'apist/works/' + work_id + ' /start',
-        success: (res)=>{
+        success: ()=>{
             el.innerHTML  = 'Перейти в диалог';
             el.classList.add('btn-to-chat');
             $(el).siblings('button').hide();
             notify('info', {title: 'Успешно!', message: 'Заявка принята'});
-            $.closest('.bloger-item').appendTo('[data-el="active-work-list"]');
+            $(el).closest('.bloger-item').appendTo('[data-el="active-work-list"]');
         },
-        error: (res) => {
+        error: () => {
             el.innerHTML = 'Принять';
             el.disabled = false;
             notify('error', {
