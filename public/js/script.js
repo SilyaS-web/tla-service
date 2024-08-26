@@ -2684,15 +2684,21 @@ function acceptWork(el, work_id, project_id){
             notify('info', {title: 'Успешно!', message: 'Заявка принята'});
             el.innerHTML  = 'Перейти в диалог';
             el.classList.add('btn-to-chat');
+            el.classList.remove('disabled');
+
             $(el).siblings('button').hide();
-            $(el).closest('.owl-carousel').trigger('refresh.owl.carousel');
-            $(el).closest('.bloger-item.card').appendTo('[data-el="active-work-list-'+project_id+'"]');
+
+            $('[data-el="active-work-list-'+project_id+'"] .empty-bloggers').remove();
+            $(el).closest('.bloger-item.card').appendTo('[data-el="active-work-list-'+project_id+'"] .owl-stage');
+
             $(el).closest('.owl-carousel').trigger('refresh.owl.carousel');
             $('[data-el="active-work-list-'+project_id+'"]').trigger('refresh.owl.carousel');
         },
         error: () => {
             el.innerHTML = 'Принять';
             el.disabled = false;
+            el.classList.remove('disabled');
+
             notify('error', {
                 title: 'Ошибка!',
                 message: 'Не удалось принять заявку'

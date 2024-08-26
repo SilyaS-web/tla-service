@@ -353,7 +353,9 @@
                         </div>
                     </div>
                     @empty
-                    Нет блогеров в работе
+                    <span class="empty-bloggers">
+                        Нет блогеров в работе
+                    </span>
                     @endforelse
             </div>
 
