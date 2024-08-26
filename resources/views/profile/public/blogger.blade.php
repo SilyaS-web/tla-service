@@ -70,7 +70,7 @@
 
                                     @switch(strtolower($blogger_platform->name))
                                         @case('youtube')
-                                            @if($blogger_platform->coverage && $blogger_platform->coverage > 0)
+                                            @if(($blogger_platform->coverage && $blogger_platform->coverage > 0) || ($blogger_platform->additional_coverage && $blogger_platform->additional_coverage > 0))
                                                 <div class="item-platforms__stats">
                                                     <div class = "item-platforms__stats-row">
                                                         <div class="item-platforms__stat">
@@ -82,24 +82,27 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class = "item-platforms__stats-row">
-                                                        <div class="item-platforms__stat">
-                                                            <div class="item-platforms__stat-title">
-                                                                Просмотры выпусков
+
+                                                    @if($blogger_platform->coverage && $blogger_platform->coverage > 0)
+                                                        <div class = "item-platforms__stats-row">
+                                                            <div class="item-platforms__stat">
+                                                                <div class="item-platforms__stat-title">
+                                                                    Просмотры выпусков
+                                                                </div>
+                                                                <div class="item-platforms__stat-value">
+                                                                    {{ $blogger_platform->coverage ?? 0 }}
+                                                                </div>
                                                             </div>
-                                                            <div class="item-platforms__stat-value">
-                                                                {{ $blogger_platform->coverage ?? 0 }}
+                                                            <div class="item-platforms__stat er">
+                                                                <div class="item-platforms__stat-title">
+                                                                    ER %
+                                                                </div>
+                                                                <div class="item-platforms__stat-value">
+                                                                    {{ $blogger_platform->engagement_rate ?? 0 }}
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div class="item-platforms__stat er">
-                                                            <div class="item-platforms__stat-title">
-                                                                ER %
-                                                            </div>
-                                                            <div class="item-platforms__stat-value">
-                                                                {{ $blogger_platform->engagement_rate ?? 0 }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    @endif
 
                                                     @if($blogger_platform->additional_coverage && $blogger_platform->additional_coverage > 0)
                                                         <div class = "item-platforms__stats-row">
@@ -126,7 +129,7 @@
                                         @break
 
                                         @case('instagram')
-                                            @if($blogger_platform->coverage && $blogger_platform->coverage > 0)
+                                            @if(($blogger_platform->coverage && $blogger_platform->coverage > 0))
                                                 <div class="item-platforms__stats">
                                                     <div class = "item-platforms__stats-row">
                                                         <div class="item-platforms__stat">
@@ -161,7 +164,7 @@
                                         @break
 
                                         @case('vk')
-                                            @if($blogger_platform->coverage && $blogger_platform->coverage > 0)
+                                            @if(($blogger_platform->coverage && $blogger_platform->coverage > 0) || ($blogger_platform->additional_coverage && $blogger_platform->additional_coverage > 0))
                                                 <div class="item-platforms__stats">
                                                     <div class = "item-platforms__stats-row">
                                                         <div class="item-platforms__stat">
@@ -173,24 +176,28 @@
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class = "item-platforms__stats-row">
-                                                        <div class="item-platforms__stat">
-                                                            <div class="item-platforms__stat-title">
-                                                                Просмотры постов
+
+                                                    @if($blogger_platform->coverage && $blogger_platform->coverage > 0)
+                                                        <div class = "item-platforms__stats-row">
+                                                            <div class="item-platforms__stat">
+                                                                <div class="item-platforms__stat-title">
+                                                                    Просмотры постов
+                                                                </div>
+                                                                <div class="item-platforms__stat-value">
+                                                                    {{ $blogger_platform->coverage ?? 0 }}
+                                                                </div>
                                                             </div>
-                                                            <div class="item-platforms__stat-value">
-                                                                {{ $blogger_platform->coverage ?? 0 }}
+                                                            <div class="item-platforms__stat er">
+                                                                <div class="item-platforms__stat-title">
+                                                                    ER %
+                                                                </div>
+                                                                <div class="item-platforms__stat-value">
+                                                                    {{ $blogger_platform->engagement_rate ?? 0 }}
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                        <div class="item-platforms__stat er">
-                                                            <div class="item-platforms__stat-title">
-                                                                ER %
-                                                            </div>
-                                                            <div class="item-platforms__stat-value">
-                                                                {{ $blogger_platform->engagement_rate ?? 0 }}
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    @endif
+
                                                     @if($blogger_platform->additional_coverage && $blogger_platform->additional_coverage > 0)
                                                         <div class = "item-platforms__stats-row">
                                                             <div class="item-platforms__stat">
@@ -216,7 +223,7 @@
                                         @break
 
                                         @case('telegram')
-                                            @if($blogger_platform->coverage && $blogger_platform->coverage > 0)
+                                            @if(($blogger_platform->coverage && $blogger_platform->coverage > 0))
                                                 <div class="item-platforms__stats">
                                                     <div class = "item-platforms__stats-row">
                                                         <div class="item-platforms__stat">

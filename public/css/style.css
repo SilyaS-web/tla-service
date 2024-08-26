@@ -121,6 +121,7 @@ a.btn:hover{
     border-color:grey;
     background-color:grey;
     box-shadow: none;
+    color:#fff;
 }
 .form{
     max-width:580px;
