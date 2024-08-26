@@ -2686,14 +2686,6 @@ function acceptWork(el, work_id, project_id){
             el.classList.add('btn-to-chat');
             el.classList.remove('disabled');
             $(el).siblings('button').hide();
-
-            $('[data-el="active-work-list-'+project_id+'"] .empty-bloggers').remove();
-
-            $('[data-el="active-work-list-'+project_id+'"]').trigger('add.owl.carousel', ['<div class="owl-item">' + $(el).closest('.bloger-item').html() + '</div>']);
-            $('[data-el="active-work-list-'+project_id+'"]').trigger('refresh.owl.carousel');
-
-            $(el).closest('.bloger-item').remove();
-            $(el).closest('.owl-carousel').trigger('refresh.owl.carousel');
         },
         error: () => {
             el.innerHTML = 'Принять';
