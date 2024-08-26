@@ -9,7 +9,7 @@ use App\Models\DbLog;
 use App\Models\DeepLink;
 use App\Models\DeepLinkStat;
 use App\Models\Message;
-use App\Models\Payment;
+use App\Models\Platform;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -74,7 +74,7 @@ class UserController extends Controller
         $active_project_works = ProjectWork::whereIn('id', $works->pluck('project_work_id'))->get();
 
         $all_projects = Project::where('status', Project::ACTIVE)->where('is_blogger_access', 1)->get();
-
+        $platforms = Platform::get();
         $application_works = Work::where([['blogger_id', $user_id]])->where('status', null)->where('created_by', '<>', $user_id)->where('accepted_by_blogger_at', null)->get();
         $role = $user->role;
 
@@ -108,7 +108,7 @@ class UserController extends Controller
         $works = Work::where([['seller_id', $user_id]])->get();
         $role = $user->role;
         $chat_role = "blogger";
-        $platforms = BloggerPlatform::PLATFORM_TYPES;
+        $platforms = Platform::get();
         $themes = Theme::get();
 
 

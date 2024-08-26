@@ -27,7 +27,7 @@
                         @if(!$platform->subscriber_quantity)
                             @continue
                         @endif
-                    <a target="_blank" href="{{ $platform->link }}" class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></a>
+                    <a target="_blank" href="{{ $platform->link }}" class="card__platform {{ strtolower($platform->platfrom->title) }}"><img src="{{ $platform->platform->image }}" alt=""></a>
                     @endforeach
                 </div>
             </div>

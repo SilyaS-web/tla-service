@@ -977,7 +977,7 @@
                                         <select name="filter-platform" id="filter-platform" class="input">
                                             <option value="">Выберите платформу</option>
                                             @foreach ($platforms as $platform)
-                                                <option value="{{ $platform }}">{{ $platform }}</option>
+                                                <option value="{{ $platform->id }}">{{ $platform->title }}</option>
                                             @endforeach
                                         </select>
                                     </div>
