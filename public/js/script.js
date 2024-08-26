@@ -2684,10 +2684,11 @@ function acceptWork(el, work_id, project_id){
             notify('info', {title: 'Успешно!', message: 'Заявка принята'});
             $(el).prop("onclick", null).off("click");
             $(el).siblings('button').hide();
-            
+
             el.innerHTML  = 'Перейти в диалог';
             el.classList.add('btn-to-chat');
             el.classList.remove('disabled');
+            el.disabled = false;
         },
         error: () => {
             el.innerHTML = 'Принять';
