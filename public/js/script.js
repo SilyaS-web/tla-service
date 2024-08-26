@@ -2682,10 +2682,12 @@ function acceptWork(el, work_id, project_id){
         url: 'apist/works/' + work_id + ' /start',
         success: ()=>{
             notify('info', {title: 'Успешно!', message: 'Заявка принята'});
+            $(el).prop("onclick", null).off("click");
+            $(el).siblings('button').hide();
+            
             el.innerHTML  = 'Перейти в диалог';
             el.classList.add('btn-to-chat');
             el.classList.remove('disabled');
-            $(el).siblings('button').hide();
         },
         error: () => {
             el.innerHTML = 'Принять';
