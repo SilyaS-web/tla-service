@@ -42,7 +42,7 @@
                 </div>
                 <div class="form-group">
                     <label for="country">Страна блогера</label>
-                    <select name="country" id="country" class="input" v-model="blogger.country_id">
+                    <select name="country" id="country" class="input" v-model="blogger.country.id">
                         <option
                             v-for="country in countries"
                             v-bind:id="country.id"
@@ -65,7 +65,7 @@
 
                 <div class="form-group">
                     <div class="input-checkbox-w">
-                        <input name="is_achievement" type="checkbox" class="checkbox whois" id="is_achievement" v-model="blogger.is_achievement">
+                        <input name="is_achievement" type="checkbox" class="checkbox" id="is_achievement" v-model="blogger.is_achievement">
                         <label for="is_achievement">Проверенный блогер</label>
                     </div>
                 </div>
@@ -86,7 +86,7 @@
     import PopupModal from '../../services/AppPopup.vue';
     import Platforms from './BloggerPlatformFields.vue';
     import axios from 'axios';
-    import {ref} from 'vue';
+    import {ref, toRaw} from 'vue';
 
     export default {
         name: 'AcceptBloggerPopup',
@@ -136,6 +136,7 @@
         methods: {
             async show(opts = {}) {
                 this.$refs.popup.open()
+
                 let requestData = await this.getBlogger(opts.id);
 
                 this.blogger = requestData.blogger;
@@ -183,10 +184,40 @@
                 };
             },
 
+            accept(){
+                // return new Promise((resolve, reject) => {
+                //     axios({
+                //         method: 'post',
+                //         url: '/api/bloggers/' + blogger.id + '/accept',
+                //         data: toRaw(this.blogger)
+                //     })
+                //     .then(result => resolve(result.data))
+                //     .catch(error => {
+                //         console.log(error)
+                //         resolve([])
+                //     })
+                // })
+            },
+
             _confirm() {
+                this.blogger.platforms = this.platformFields.map(_p => {
+                    if(!_p.blogger_platform.platform_id) {
+                        _p.blogger_platform.platform_id = _p.id
+                    };
+
+                    var newBloggerPlatforms = {};
+
+                    for(let key in _p.blogger_platform){
+                        newBloggerPlatforms[key] = _p.blogger_platform[key]
+                    }
+
+                    return toRaw(newBloggerPlatforms)
+                })
                 console.log(this.blogger);
-                this.$refs.popup.close()
-                this.resolvePromise()
+                this.accept(this.blogger).then(()=>{
+                    this.$refs.popup.close()
+                    this.resolvePromise(true)
+                })
             },
 
             _cancel() {

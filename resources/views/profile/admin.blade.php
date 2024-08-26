@@ -16,7 +16,7 @@
     <title>Панель управления</title>
 </head>
 <body>
-    <div class="wrapper" id = "admin-app" data-is-admin="{{ auth()->user()->id_admin }}">
+    <div class="wrapper" id = "admin-app" data-is-admin="{{ auth()->user()->is_admin ? 1 : 0 }}">
         <admin-index></admin-index>
     </div>
 </body>

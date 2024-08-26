@@ -5,7 +5,7 @@
                 <div class="card__row card__header">
                     <div class="card__img" v-bind:style="'background-image:url(' + (!blogger.user.image ? '/img/profile-icon.svg' : `/storage/profile/${blogger.user.image}`) + ')'">
                     </div>
-                    <div class="card__achive" title="Проверенный блогер"> <!--добавить проверку-->
+                    <div class="card__achive" title="Проверенный блогер" v-if="blogger.is_achievement">
                         <img src="img/achive-icon.svg" alt="">
                     </div>
                     <div class="card__name">
@@ -16,9 +16,9 @@
                     <div class="card__platforms">
                         <div
                             v-for="platform in blogger.platforms"
-                            v-bind:class="'card__platform ' +  (platform.platform.title ? platform.platform.title.toLowerCase() : '')"
+                            v-bind:class="'card__platform ' +  (platform.title ? platform.title.toLowerCase() : '')"
                             >
-                            <img v-bind:src="platform.platform.image || ''" alt="">
+                            <img v-bind:src="platform.image || ''" alt="">
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     <div
                         v-for="theme in blogger.themes"
                         class="card__tags-item">
-                        <span>{{ theme.theme.theme }}</span>
+                        <span>{{ theme.name }}</span>
                     </div>
                 </div>
                 <div class="card__row card__desc">
@@ -105,6 +105,9 @@
                     <button class="btn btn-secondary" v-on:click="ban">
                         Отклонить
                     </button>
+                    <div class="btn-delete btn-delete--icon">
+                        <img src="/img/trash-icon.svg" alt="" v-on:click="deletionConfirmation">
+                    </div>
                 </div>
                 <div v-else-if="blogger.user.status === 1" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
                     <button class="btn btn-primary" v-on:click="ban">
@@ -132,22 +135,19 @@
         components: { },
         methods:{
             deletionConfirmation() {
-                this.$emit('deletionConfirmation', this.blogger.id)
+                this.$emit('deletionConfirmation', this.blogger.user.id)
             },
 
             ban() {
-                let id = this.blogger.id;
-
-                this.$emit('ban', id)
+                this.$emit('ban', this.blogger.user.id)
             },
 
             agree() {
-                let id = this.blogger.id;
-                this.$emit('agree', 3)
+                this.$emit('agree', this.blogger.id)
             },
 
             unban() {
-                this.$emit('unban', this.blogger.id)
+                this.$emit('unban', this.blogger.user.id)
             },
 
             countER(subs, cover){
