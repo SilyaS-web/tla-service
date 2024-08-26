@@ -18,7 +18,7 @@ class BloggerResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'sex' => $this->sex,
-            'is_achievement' => $this->is_achievement,
+            'is_achievement' => (bool) $this->is_achievement,
             'gender_ratio' => $this->gender_ratio,
             'status' => $this->status,
             'city' => $this->city,
