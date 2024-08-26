@@ -88,10 +88,11 @@ class WorkController extends Controller
             ]);
 
             TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' принял вашу заявку' . ' на проект ' . $work->project->product_name);
-            return redirect()->back()->with('success', 'Заявка успешно принята');
+            return response()->json('success', 200);
+
         }
 
-        return redirect()->back()->with('success', 'Не удалось принять заявку');
+        return response()->json('error', 400);
     }
 
     public function acceptApplication(Request $request)
