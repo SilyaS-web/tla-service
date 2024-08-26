@@ -2661,6 +2661,7 @@ function denyWork(el, work_id){
         success: ()=>{
             notify('info', {title: 'Успешно!', message: 'Заявка отклонена'});
             $(el).closest('.bloger-item').remove();
+            $(el).closest(".owl-carousel").trigger('refresh.owl.carousel');
         },
         error: () => {
             el.innerHTML = 'Отклонить';
@@ -2680,11 +2681,12 @@ function acceptWork(el, work_id){
     $.ajax({
         url: 'apist/works/' + work_id + ' /start',
         success: ()=>{
+            notify('info', {title: 'Успешно!', message: 'Заявка принята'});
             el.innerHTML  = 'Перейти в диалог';
             el.classList.add('btn-to-chat');
             $(el).siblings('button').hide();
-            notify('info', {title: 'Успешно!', message: 'Заявка принята'});
-            $(el).closest('.bloger-item').appendTo('[data-el="active-work-list"]');
+            $(el).closest(".owl-carousel").trigger('refresh.owl.carousel');
+            $(el).closest('.bloger-item.card').appendTo('[data-el="active-work-list"]');
         },
         error: () => {
             el.innerHTML = 'Принять';
