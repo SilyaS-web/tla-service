@@ -2659,10 +2659,8 @@ function denyWork(el, work_id){
     $.ajax({
         url: 'apist/works/' + work_id + ' /deny',
         success: (res)=>{
-            self.closePopup();
             notify('info', {title: 'Успешно!', message: 'Заявка отклонена'});
-
-            el.innerHTML  = 'Заявка отклонена';
+            $.closest('.bloger-item').remove();
         },
         error: (res) => {
             el.innerHTML = 'Отклонить';
@@ -2682,7 +2680,6 @@ function acceptWork(el, work_id){
     $.ajax({
         url: 'apist/works/' + work_id + ' /start',
         success: (res)=>{
-            self.closePopup();
             el.innerHTML  = 'Перейти в диалог';
             el.classList.add('btn-to-chat');
             $(el).siblings('button').hide();
