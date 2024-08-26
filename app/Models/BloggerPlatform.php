@@ -49,7 +49,6 @@ class BloggerPlatform extends Model
 
     public function getIconURL()
     {
-        return "telegram.png";
         $key = strtoupper($this->name) == self::VK ? strtoupper($this->name) : ucfirst($this->name);
         return asset(self::PLATFORM_ICON_URLS[$key]);
     }
