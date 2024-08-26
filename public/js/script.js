@@ -2674,7 +2674,7 @@ function denyWork(el, work_id){
     })
 }
 
-function acceptWork(el, work_id){
+function acceptWork(el, work_id, project_id){
     el.innerHTML  = 'Принимаем заявку...';
     el.classList.add('disabled');
     el.disabled = true;
@@ -2685,8 +2685,10 @@ function acceptWork(el, work_id){
             el.innerHTML  = 'Перейти в диалог';
             el.classList.add('btn-to-chat');
             $(el).siblings('button').hide();
-            $(el).closest(".owl-carousel").trigger('refresh.owl.carousel');
-            $(el).closest('.bloger-item.card').appendTo('[data-el="active-work-list"]');
+            $(el).closest('.owl-carousel').trigger('refresh.owl.carousel');
+            $(el).closest('.bloger-item.card').appendTo('[data-el="active-work-list-'+project_id+'"]');
+            $(el).closest('.owl-carousel').trigger('refresh.owl.carousel');
+            $('[data-el="active-work-list-'+project_id+'"]').trigger('refresh.owl.carousel');
         },
         error: () => {
             el.innerHTML = 'Принять';

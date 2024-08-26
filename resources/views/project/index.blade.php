@@ -213,7 +213,7 @@
                                     <a href="{{ route('blogger-page', $blogger->id) . '?tab=profile-projects' }}" class="" style="width: 100%; color: #FE5E00; font-size:16px; font-weight:500; text-decoration:underline; margin-top: -10px;">Подробнее</a>
                                 </div>
                                 <div class="card__row bloger-item--btns" style="gap:12px; width:100%; flex-wrap: wrap; justify-content: center">
-                                    <button class="btn btn-primary" onclick="denyWork(this, {{ $work_application->id }})" data-work-id="{{ $work_application->id }}">
+                                    <button class="btn btn-primary" onclick="acceptWork(this, {{ $work_application->id }})" data-work-id="{{ $work_application->id }}">
                                         Принять
                                     </button>
                                     <button class="btn btn-secondary" onclick="denyWork(this, {{ $work_application->id }})">
@@ -228,7 +228,7 @@
                     @endforelse
             </div>
 
-            <div class="profile-projects__row profile-projects__blogers projects-blogers projects-blogers--in_work owl-carousel" data-el="active-work-list">
+            <div class="profile-projects__row profile-projects__blogers projects-blogers projects-blogers--in_work owl-carousel" data-el="active-work-list-{{$project->id}}">
                 @forelse ($project->getActiveWorks() as $active_work)
                     @php($blogger = $active_work->blogger)
                     <div class="list-blogers__item bloger-item card" data-id="{{ $active_work->id }}">
