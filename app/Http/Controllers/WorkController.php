@@ -308,6 +308,8 @@ class WorkController extends Controller
 
     public function deny(Work $work) {
         $work->delete();
+        $user = Auth::user();
+        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' отклонил вашу заявку на проект' . $work->project->product_name);
         return response()->json('success', 200);
     }
 
