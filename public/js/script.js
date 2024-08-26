@@ -2660,7 +2660,8 @@ function denyWork(el, work_id){
         url: 'apist/works/' + work_id + ' /deny',
         success: ()=>{
             notify('info', {title: 'Успешно!', message: 'Заявка отклонена'});
-            $(el).closest('.bloger-item').remove();
+            let index = $(el).closest('owl-item').index();
+            $(el).closest(".owl-carousel").trigger('remove.owl.carousel', [index]);
             $(el).closest(".owl-carousel").trigger('refresh.owl.carousel');
         },
         error: () => {
