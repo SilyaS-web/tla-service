@@ -21,22 +21,22 @@
             <div class="admin-view__container _container active-menu">
                 <div class="admin-view__body">
                     <!-- Левое меню -->
-                    <admin-aside v-on:switchTab="switchTab"></admin-aside>
+                    <admin-aside v-on:switchTab="switchTab" :isAdmin></admin-aside>
 
                     <!-- Модерация -->
-                    <admin-bloggers-moderation-page :bloggers="unverifiedBloggers" v-on:updateBloggers="updateBloggers"></admin-bloggers-moderation-page>
+                    <admin-bloggers-moderation-page :bloggers="unverifiedBloggers"  v-on:updateBloggers="updateBloggers"></admin-bloggers-moderation-page>
 
                     <!-- Список блогеров -->
                     <admin-bloggers-page :bloggers="bloggers" v-on:updateBloggers="updateBloggers"></admin-bloggers-page>
 
                     <!-- Список селлеров -->
-                    <admin-sellers-page :sellers="sellers" v-on:updateSellers="updateSellers"></admin-sellers-page>
+                    <admin-sellers-page v-if="isAdmin == 1" :sellers="sellers" v-on:updateSellers="updateSellers"></admin-sellers-page>
 
                     <!-- Список проектов -->
-                    <admin-projects-page :projects="projects" v-on:statusManagement="statusManagement"></admin-projects-page>
+                    <admin-projects-page v-if="isAdmin == 1" :projects="projects" v-on:statusManagement="statusManagement"></admin-projects-page>
 
                     <!-- Список заказов -->
-                    <admin-orders-page :orders="orders"></admin-orders-page>
+                    <admin-orders-page v-if="isAdmin == 1" :orders="orders"></admin-orders-page>
                 </div>
             </div>
         </section>
@@ -66,10 +66,11 @@
                 sellers: ref([]),
                 projects: ref([]),
                 orders: ref([]),
+                isAdmin: ref(false)
             }
         },
 
-        async mounted(){
+        async created(){
             this.loaderOn('.wrapper');
 
             Promise.all([
@@ -81,6 +82,9 @@
                     this.loaderOff();
                 }, 500)
             })
+            this.isAdmin = parseInt($('.wrapper').data('is-admin'));
+
+            console.log(this.isAdmin);
         },
 
         methods: {

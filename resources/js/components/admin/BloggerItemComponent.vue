@@ -5,7 +5,7 @@
                 <div class="card__row card__header">
                     <div class="card__img" v-bind:style="'background-image:url(' + (!blogger.user.image ? '/img/profile-icon.svg' : `/storage/profile/${blogger.user.image}`) + ')'">
                     </div>
-                    <div class="card__achive" title="Проверенный блогер"> <!--добавить проверку-->
+                    <div class="card__achive" title="Проверенный блогер" v-if="blogger.is_achievement">
                         <img src="img/achive-icon.svg" alt="">
                     </div>
                     <div class="card__name">
@@ -135,11 +135,11 @@
         components: { },
         methods:{
             deletionConfirmation() {
-                this.$emit('deletionConfirmation', this.blogger.id)
+                this.$emit('deletionConfirmation', this.blogger.user.id)
             },
 
             ban() {
-                this.$emit('ban', this.blogger.id)
+                this.$emit('ban', this.blogger.user.id)
             },
 
             agree() {
@@ -147,7 +147,7 @@
             },
 
             unban() {
-                this.$emit('unban', this.blogger.id)
+                this.$emit('unban', this.blogger.user.id)
             },
 
             countER(subs, cover){

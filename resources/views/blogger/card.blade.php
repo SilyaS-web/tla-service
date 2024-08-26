@@ -22,12 +22,13 @@
                         </p>
                     </p>
                 </div>
+                {{-- @dd($blogger->platforms) --}}
                 <div class="card__platforms">
-                    @foreach ($blogger->platforms as $platform)
-                        @if(!$platform->subscriber_quantity)
+                    @foreach ($blogger->platforms as $blogger_platform)
+                        @if(!$blogger_platform->subscriber_quantity)
                             @continue
                         @endif
-                    <a target="_blank" href="{{ $platform->link }}" class="card__platform {{ strtolower($platform->platfrom->title) }}"><img src="{{ $platform->platform->image }}" alt=""></a>
+                    <a target="_blank" href="{{ $blogger_platform->link }}" class="card__platform {{ strtolower($blogger_platform->platform->title) }}"><img src="{{ $blogger_platform->platform->image }}" alt=""></a>
                     @endforeach
                 </div>
             </div>

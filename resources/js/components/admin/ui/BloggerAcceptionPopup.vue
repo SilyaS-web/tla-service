@@ -65,7 +65,7 @@
 
                 <div class="form-group">
                     <div class="input-checkbox-w">
-                        <input name="is_achievement" type="checkbox" class="checkbox whois" id="is_achievement" v-model="blogger.is_achievement">
+                        <input name="is_achievement" type="checkbox" class="checkbox" id="is_achievement" v-model="blogger.is_achievement">
                         <label for="is_achievement">Проверенный блогер</label>
                     </div>
                 </div>
@@ -83,8 +83,7 @@
     </popup-modal>
 </template>
 <script>
-    import { forIn } from 'lodash';
-import PopupModal from '../../services/AppPopup.vue';
+    import PopupModal from '../../services/AppPopup.vue';
     import Platforms from './BloggerPlatformFields.vue';
     import axios from 'axios';
     import {ref, toRaw} from 'vue';
@@ -137,6 +136,7 @@ import PopupModal from '../../services/AppPopup.vue';
         methods: {
             async show(opts = {}) {
                 this.$refs.popup.open()
+
                 let requestData = await this.getBlogger(opts.id);
 
                 this.blogger = requestData.blogger;
@@ -184,19 +184,19 @@ import PopupModal from '../../services/AppPopup.vue';
                 };
             },
 
-            accept(blogger){
-                return new Promise((resolve, reject) => {
-                    axios({
-                        method: 'post',
-                        url: '/api/bloggers/' + blogger.id + '/accept',
-                        data: toRaw(blogger)
-                    })
-                    .then(result => resolve(result.data))
-                    .catch(error => {
-                        console.log(error)
-                        resolve([])
-                    })
-                })
+            accept(){
+                // return new Promise((resolve, reject) => {
+                //     axios({
+                //         method: 'post',
+                //         url: '/api/bloggers/' + blogger.id + '/accept',
+                //         data: toRaw(this.blogger)
+                //     })
+                //     .then(result => resolve(result.data))
+                //     .catch(error => {
+                //         console.log(error)
+                //         resolve([])
+                //     })
+                // })
             },
 
             _confirm() {
@@ -213,7 +213,7 @@ import PopupModal from '../../services/AppPopup.vue';
 
                     return toRaw(newBloggerPlatforms)
                 })
-
+                console.log(this.blogger);
                 this.accept(this.blogger).then(()=>{
                     this.$refs.popup.close()
                     this.resolvePromise(true)

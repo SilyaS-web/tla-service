@@ -61,18 +61,18 @@
                 </div>
 
                 <div v-if="seller.user.status == -1" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn btn-primary" v-on:click="unban" v-bind:id="seller.user.id">
+                    <button class="btn btn-primary" v-on:click="unban">
                         Разблокировать
                     </button>
-                    <button class="btn btn-delete" v-on:click="deletionConfirmation" v-bind:data-id="seller.user.id">
+                    <button class="btn btn-delete" v-on:click="deletionConfirmation">
                         Удалить
                     </button>
                 </div>
                 <div v-else class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn btn-primary" v-on:click="ban" v-bind:id="seller.user.id">
+                    <button class="btn btn-primary" v-on:click="ban">
                         Заблокировать
                     </button>
-                    <button class="btn btn-delete" v-on:click="deletionConfirmation" v-bind:data-id="seller.user.id">
+                    <button class="btn btn-delete" v-on:click="deletionConfirmation">
                         Удалить
                     </button>
                 </div>
@@ -82,24 +82,20 @@
 
 </template>
 <script>
-    import axios from 'axios'
-
     export default{
         props: ['seller', 'sellers'],
         methods:{
-            deletionConfirmation(event) {
-                let id = $(event.currentTarget).data('id');
-                this.$emit('deletionConfirmation', id)
+            deletionConfirmation() {
+
+                this.$emit('deletionConfirmation', this.seller.user.id)
             },
 
-            ban(event) {
-                let id = $(event.currentTarget).data('id');
-                this.$emit('ban', id)
+            ban() {
+                this.$emit('ban', this.seller.user.id)
             },
 
-            unban(event) {
-                let id = $(event.currentTarget).data('id');
-                this.$emit('unban', id)
+            unban() {
+                this.$emit('unban', this.seller.user.id)
             },
         }
     }
