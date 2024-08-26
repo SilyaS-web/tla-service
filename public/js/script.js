@@ -2628,3 +2628,74 @@ selectTab = (tabName)=>{
 
     $(`#${tabName}`).addClass('active')
 }
+
+function denyWork(el, work_id){
+    el.innerHTML  = 'Отклоняем заявку';
+    el.classList.add('disabled');
+    el.disabled = true;
+    $.ajax({
+        url: 'apist/works/' + work_id + ' /deny',
+        success: (res)=>{
+            self.closePopup();
+            notify('info', {title: 'Успешно!', message: 'Заявка отклонена'});
+
+            el.innerHTML  = 'Заявка отклонена';
+        },
+        error: (res) => {
+            el.innerHTML = 'Отклонить';
+            el.disabled = false;
+            notify('error', {
+                title: 'Ошибка!',
+                message: 'Не удалось отклонить заявку'
+            });
+        }
+    })
+}
+
+function denyWork(el, work_id){
+    el.innerHTML  = 'Отклоняем заявку...';
+    el.classList.add('disabled');
+    el.disabled = true;
+    $.ajax({
+        url: 'apist/works/' + work_id + ' /deny',
+        success: (res)=>{
+            self.closePopup();
+            notify('info', {title: 'Успешно!', message: 'Заявка отклонена'});
+
+            el.innerHTML  = 'Заявка отклонена';
+        },
+        error: (res) => {
+            el.innerHTML = 'Отклонить';
+            el.disabled = false;
+            notify('error', {
+                title: 'Ошибка!',
+                message: 'Не удалось отклонить заявку'
+            });
+        }
+    })
+}
+
+function acceptWork(el, work_id){
+    el.innerHTML  = 'Принимаем заявку...';
+    el.classList.add('disabled');
+    el.disabled = true;
+    $.ajax({
+        url: 'apist/works/' + work_id + ' /start',
+        success: (res)=>{
+            self.closePopup();
+            el.innerHTML  = 'Перейти в диалог';
+            el.classList.add('btn-to-chat');
+            $(el).siblings('button').hide();
+            notify('info', {title: 'Успешно!', message: 'Заявка принята'});
+            $.closest('.bloger-item').appendTo('[data-el="active-work-list"]');
+        },
+        error: (res) => {
+            el.innerHTML = 'Принять';
+            el.disabled = false;
+            notify('error', {
+                title: 'Ошибка!',
+                message: 'Не удалось принять заявку'
+            });
+        }
+    })
+}
