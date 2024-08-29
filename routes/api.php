@@ -5,7 +5,7 @@ use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\SellerController;
 use App\Http\Controllers\API\UserController;
-use App\Http\Controllers\ReferralController;
+use App\Http\Controllers\API\ReferralController;
 use Illuminate\Support\Facades\Route;
 
 /*
