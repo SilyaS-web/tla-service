@@ -51,19 +51,7 @@
                 }
             },
 
-            acceptForm(id) {
-                console.log(id)
-                // const isConfirmed = await this.$refs.acceptPopup.show({
-                //     id: id
-                // });
-
-                // if (isConfirmed) {
-                //     this.accept(id)
-                // }
-            },
-
             agree(id){
-                console.log(id);
                 this.$emit('updateBloggers', id);
             },
 
@@ -86,8 +74,8 @@
             unban(id) {
                 if(id){
                     axios({
-                        method: 'delete',
-                        url: '/api/users/' + id,
+                        method: 'get',
+                        url: '/api/users/' + id + '/unban/',
                     })
                     .then((response) => {
                         notify('info', {
