@@ -3,7 +3,7 @@
 namespace App\Services;
 
 use App\Models\ReferralCode;
-use App\Models\ReferralUsers;
+use App\Models\ReferralUser;
 
 class ReferralService
 {
@@ -11,7 +11,7 @@ class ReferralService
     {
         $referralCode = ReferralCode::where("code", $code)->first();
         if ($referralCode) {
-            ReferralUsers::create([
+            ReferralUser::create([
                 'referral_code_id' => $referralCode->id,
                 'user_id' => $user_id,
                 'role' => $role,
