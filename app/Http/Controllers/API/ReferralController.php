@@ -1,22 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Http\Resources\ReferralCodeResource;
-use App\Models\DeepLink;
-use App\Models\DeepLinkStat;
-use App\Models\Project;
 use App\Models\ReferralCode;
-use App\Models\Work;
-use Illuminate\Http\Request;
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Auth;
-use Dadata\DadataClient;
-use DeviceDetector\ClientHints;
-use DeviceDetector\DeviceDetector;
-use DeviceDetector\Parser\Device\AbstractDeviceParser;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 
 class ReferralController extends Controller
 {
