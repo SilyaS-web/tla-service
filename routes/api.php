@@ -5,6 +5,7 @@ use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\SellerController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\ReferralController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -33,3 +34,5 @@ Route::get('/projects/{project}/ban', [ProjectController::class, 'ban']);
 Route::get('/projects/{project}/unban', [ProjectController::class, 'unban']);
 
 Route::get('/payments', [PaymentController::class, 'index']);
+
+Route::get('/referrals', [ReferralController::class, 'index']);

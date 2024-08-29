@@ -10,6 +10,7 @@ use App\Services\TgService;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Services\PhoneService;
+use App\Services\ReferralService;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -19,6 +20,7 @@ class AuthController extends Controller
 {
     public function register()
     {
+        session()->put('ref_code', $_GET['code'] ?? session()->get('ref_code', null) ?? null);
         return view('auth.register');
     }
 
@@ -86,6 +88,10 @@ class AuthController extends Controller
                 'activation_date' => \Carbon\Carbon::now(),
             ]);
             $user->update(['status' => 1]);
+        }
+
+        if (session()->has('ref_code')) {
+            ReferralService::ref($user->id, session()->get('ref_code'), $user->role);
         }
 
         $credentials = [
