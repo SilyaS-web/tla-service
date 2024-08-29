@@ -19,7 +19,6 @@ class CreateReferralUsersTable extends Migration
             $table->foreign('referral_code_id')->references('id')->on('referral_codes')->cascadeOnDelete();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->string('role');
             $table->timestamps();
             $table->softDeletes();
         });

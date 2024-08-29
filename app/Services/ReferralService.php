@@ -14,7 +14,6 @@ class ReferralService
             ReferralUser::create([
                 'referral_code_id' => $referralCode->id,
                 'user_id' => $user_id,
-                'role' => $role,
             ]);
         }
     }
