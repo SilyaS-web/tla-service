@@ -35,9 +35,6 @@
     export default{
         props: ['bloggers'],
         components: {BloggerItem, ConfirmPopup, AcceptPopup},
-        // mounted(){
-        //     this.acceptionForm(2)
-        // },
         methods:{
             async deletionConfirmation(id) {
                 const isConfirmed = await this.$refs.confirmPopup.show({
@@ -62,7 +59,7 @@
                 }
             },
 
-            agree(id){
+            accept(id){
                 this.$emit('updateBloggers', id);
             },
 

@@ -185,25 +185,25 @@
             },
 
             accept(){
-                // return new Promise((resolve, reject) => {
-                //     axios({
-                //         method: 'post',
-                //         url: '/api/bloggers/' + blogger.id + '/accept',
-                //         data: toRaw(this.blogger)
-                //     })
-                //     .then(result => resolve(result.data))
-                //     .catch(error => {
-                //         console.log(error)
-                //         resolve([])
-                //     })
-                // })
+                return new Promise((resolve, reject) => {
+                    axios({
+                        method: 'post',
+                        url: '/api/bloggers/' + this.blogger.id + '/accept',
+                        data: toRaw(this.blogger)
+                    })
+                    .then(result => resolve(result.data))
+                    .catch(error => {
+                        console.log(error)
+                        resolve([])
+                    })
+                })
             },
 
             _confirm() {
                 this.blogger.platforms = this.platformFields.map(_p => {
                     if(!_p.blogger_platform.platform_id) {
                         _p.blogger_platform.platform_id = _p.id
-                    };
+                    }
 
                     var newBloggerPlatforms = {};
 
@@ -213,8 +213,8 @@
 
                     return toRaw(newBloggerPlatforms)
                 })
-                console.log(this.blogger);
-                this.accept(this.blogger).then(()=>{
+
+                this.accept().then(()=>{
                     this.$refs.popup.close()
                     this.resolvePromise(true)
                 })

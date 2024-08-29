@@ -86,7 +86,6 @@
         props: ['seller', 'sellers'],
         methods:{
             deletionConfirmation() {
-
                 this.$emit('deletionConfirmation', this.seller.user.id)
             },
 

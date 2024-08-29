@@ -37,6 +37,9 @@
 
                     <!-- Список заказов -->
                     <admin-orders-page v-if="isAdmin == 1" :orders="orders"></admin-orders-page>
+
+                    <!-- Список пользователей по реферальной ссылке -->
+                    <admin-referal-data-page v-if="isAdmin == 1" :referal_data="referals_data"></admin-referal-data-page>
                 </div>
             </div>
         </section>
@@ -66,6 +69,7 @@
                 sellers: ref([]),
                 projects: ref([]),
                 orders: ref([]),
+                referals_data: ref(false),
                 isAdmin: ref(false)
             }
         },
@@ -143,6 +147,19 @@
                     })
                 })
             },
+            getReferalsData(){
+                return new Promise((resolve, reject) => {
+                    axios({
+                        method: 'get',
+                        url: '/api/referals',
+                    })
+                    .then(result => resolve(result.data.referals))
+                    .catch(error => {
+                        console.log(error)
+                        resolve([])
+                    })
+                })
+            },
             findBiggestPlatform(blogger){
                 var summaryPlatform = { subscriber_quantity: 0 };
 
@@ -188,6 +205,7 @@
                 })
             },
             switchTab(tab){
+                console.log(tab)
                 switch(tab){
                     case 'moderation':
                         this.loaderOn('#moderation')
@@ -227,6 +245,7 @@
                                 this.loaderOff()
                             }, 500)
                         })
+                        break
 
                     case 'payment-history':
                         this.loaderOn('#payment-history')
@@ -236,6 +255,17 @@
                                 this.loaderOff()
                             }, 500)
                         })
+                        break
+
+                    case 'referral':
+                        this.loaderOn('#referral')
+                        this.getReferalsData().then((data) => {
+                            this.referals_data = data || [];
+                            setTimeout(()=>{
+                                this.loaderOff()
+                            }, 500)
+                        })
+                        break
                 }
             }
         }
