@@ -16,7 +16,7 @@ class ReferralUserWithPaymentResource extends JsonResource
     {
         $result = [];
         foreach ($this->user->payments()->where('status', TPayment::STATUS_CONFIRMED)->get() as $payment) {
-            return [
+            $result[] = [
                 'id' => $this->user_id,
                 'name' => $this->user->name,
                 'phone' => $this->user->phone,
@@ -28,6 +28,6 @@ class ReferralUserWithPaymentResource extends JsonResource
             ];
         }
 
-        return $result;
+        return empty($result) ? null : $result;
     }
 }
