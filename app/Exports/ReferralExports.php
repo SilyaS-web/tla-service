@@ -2,7 +2,6 @@
 namespace App\Exports;
 
 use App\Models\ReferralUser;
-use App\User;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithMapping;
