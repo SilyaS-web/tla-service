@@ -248,6 +248,61 @@
         </div>
     </div>
 </section>
+<div class="popup" id="send-statistics-blogger" style="">
+    <div class="popup__container _container">
+        <div class="popup__body">
+            <div class="popup__header">
+                <div class="popup__title title">
+                    Заполните статистику
+                </div>
+                <div class="popup__subtitle">
+                    После того, как вы прикрепите статистику по интеграции, проект будет завершен
+                </div>
+            </div>
+            <div class="popup__form">
+                <div class="form-group">
+                    <label for="views">Просмотры</label>
+                    <input id="views" name="views" type="views" class="input">
+                </div>
+                <div class="form-group">
+                    <label for="likes">Лайки</label>
+                    <input id="likes" name="likes" type="likes" class="input">
+                </div>
+                <div class="form-group">
+                    <label for="reposts">Репосты</label>
+                    <input id="reposts" name="reposts" type="reposts" class="input">
+                </div>
+                <div class="form-group">
+                    <label for="platform">Площадки</label>
+                    <select id="platform" name="platform" class="input">
+                        <option value="">Не выбрано</option>
+                        @foreach ($platforms as $platform)
+                            <option value="{{ $platform->id }}">{{ $platform->title }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="input-file input-file--stat tab-content__profile-img-upload" style="padding-left:0; margin-bottom:20px;">
+                    <label for="statistics-file">Прикрепить отчет по статитстике</label>
+                    <input id="statistics-file" type="file" multiple hidden>
+                    <script>
+                        $(window).on('load', function(){
+                            $('#send-statistics-blogger #statistics-file').on('change', function(e){
+                                $(e.target).closest('.tab-content__profile-img-upload').addClass('uploaded');
+                                $(e.target).closest('.tab-content__profile-img-upload').find('label').text('Изображение загружено');
+                            })
+                        })
+                    </script>
+                </div>
+                <button class="btn btn-primary send-data">
+                    Отправить
+                </button>
+            </div>
+            <div class="close-popup">
+                <img src="{{ asset('img/close-icon.svg') }}" alt="">
+            </div>
+        </div>
+    </div>
+</div>
 <div class="popup" id="project-item-info" style="">
     <div class="popup__container _container">
         <div class="popup__body">

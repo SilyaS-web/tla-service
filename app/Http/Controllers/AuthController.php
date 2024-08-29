@@ -20,7 +20,7 @@ class AuthController extends Controller
 {
     public function register()
     {
-        $_SESSION['ref_code'] = $_GET['code'];
+        session()->put('ref_code', $_GET['code'] ?? session()->get('ref_code', null) ?? null);
         return view('auth.register');
     }
 
@@ -90,8 +90,8 @@ class AuthController extends Controller
             $user->update(['status' => 1]);
         }
 
-        if (!empty($_SESSION['ref_code'])) {
-            ReferralService::ref($user->id, $_SESSION['ref_code']);
+        if (session()->has('ref_code')) {
+            ReferralService::ref($user->id, session()->get('ref_code'));
         }
 
         $credentials = [
