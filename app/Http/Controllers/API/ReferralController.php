@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exports\ReferralExports;
 use App\Http\Resources\ReferralCodeResource;
 use App\Models\ReferralCode;
 use App\Http\Controllers\Controller;
+use Maatwebsite\Excel\Facades\Excel;
 
 class ReferralController extends Controller
 {
@@ -17,5 +19,10 @@ class ReferralController extends Controller
         ];
 
         return response()->json($data)->setStatusCode(200);
+    }
+
+    public function export()
+    {
+        return Excel::download(new ReferralExports, 'referals.xlsx');
     }
 }

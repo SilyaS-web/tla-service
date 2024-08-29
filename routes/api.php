@@ -36,3 +36,4 @@ Route::get('/projects/{project}/unban', [ProjectController::class, 'unban']);
 Route::get('/payments', [PaymentController::class, 'index']);
 
 Route::get('/referrals', [ReferralController::class, 'index']);
+Route::get('/referrals/export', [ReferralController::class, 'export']);
