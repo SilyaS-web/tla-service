@@ -91,7 +91,7 @@ class AuthController extends Controller
         }
 
         if (session()->has('ref_code')) {
-            ReferralService::ref($user->id, session()->get('ref_code'));
+            ReferralService::ref($user->id, session()->get('ref_code'), $user->role);
         }
 
         $credentials = [

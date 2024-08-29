@@ -7,13 +7,14 @@ use App\Models\ReferralUsers;
 
 class ReferralService
 {
-    public static function ref($user_id, $code)
+    public static function ref($user_id, $code, $role)
     {
         $referralCode = ReferralCode::where("code", $code)->first();
         if ($referralCode) {
             ReferralUsers::create([
                 'referral_code_id' => $referralCode->id,
-                'user_id' => $user_id
+                'user_id' => $user_id,
+                'role' => $role,
             ]);
         }
     }

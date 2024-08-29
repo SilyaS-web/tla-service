@@ -20,9 +20,9 @@ use Illuminate\Support\Facades\DB;
 
 class ReferralController extends Controller
 {
-    public function index($user_id)
+    public function index()
     {
-        $referral_codes = ReferralCode::where("user_id", $user_id)->get();
+        $referral_codes = ReferralCode::all();
 
         $data = [
             'referral_codes' => ReferralCodeResource::collection($referral_codes),
