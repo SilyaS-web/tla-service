@@ -18,6 +18,7 @@ class ReferralCodeResource extends JsonResource
             'id' => $this->id,
             'user_id' => $this->user_id,
             'code' => $this->code,
+            'name' => $this->name,
             'referral_users' => ReferralUserResource::collection($this->referralUsers),
         ];
     }

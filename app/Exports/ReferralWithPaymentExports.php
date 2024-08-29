@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\WithMapping;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use JustCommunication\TinkoffAcquiringAPIClient\Model\Payment as TPayment;
 
-class ReferralExports implements FromCollection, WithHeadings, WithMapping
+class ReferralWithPaymentExports implements FromCollection, WithHeadings, WithMapping
 {
     use Exportable;
     public $referral_code_id = null;
@@ -26,20 +26,29 @@ class ReferralExports implements FromCollection, WithHeadings, WithMapping
             'Номер',
             'Роль',
             'Дата регистрации',
+            'ID плтаежа',
+            'Дата плтаежа',
             'Оплата',
         ];
     }
 
     public function map($referral_user): array
     {
-        return [
-            $referral_user->user_id,
-            $referral_user->user->name,
-            $referral_user->user->phone,
-            $referral_user->user->role,
-            date_format($referral_user->user->created_at, 'd.m.y'),
-            $referral_user->user->payments()->where('status', TPayment::STATUS_CONFIRMED)->sum('price') / 100,
-        ];
+        $result = [];
+        foreach ($referral_user->user->payments()->where('status', TPayment::STATUS_CONFIRMED)->get() as $payment) {
+            $result[] = [
+                $referral_user->user_id,
+                $referral_user->user->name,
+                $referral_user->user->phone,
+                $referral_user->user->role,
+                date_format($referral_user->user->created_at, 'd.m.y'),
+                $payment->id,
+                date_format($payment->created_at, 'd.m.y'),
+                $payment->price / 100,
+            ];
+        }
+
+        return $result;
     }
 
     public function collection()
