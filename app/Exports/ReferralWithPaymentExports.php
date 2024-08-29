@@ -42,7 +42,7 @@ class ReferralWithPaymentExports implements FromCollection, WithHeadings, WithMa
                 $referral_user->user->phone,
                 $referral_user->user->role,
                 date_format($referral_user->user->created_at, 'd.m.y'),
-                $payment->id,
+                $payment->payment_id,
                 date_format($payment->created_at, 'd.m.y'),
                 $payment->price / 100,
             ];
