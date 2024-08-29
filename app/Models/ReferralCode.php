@@ -22,6 +22,6 @@ class ReferralCode extends Model
 
     public function referralUsers()
     {
-        return $this->hasMany(ReferralUsers::class, 'code_id', 'id');
+        return $this->hasMany(ReferralUser::class, 'code_id', 'id');
     }
 }
