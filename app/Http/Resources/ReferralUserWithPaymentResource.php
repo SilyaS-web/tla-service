@@ -27,7 +27,8 @@ class ReferralUserWithPaymentResource extends JsonResource
                 'received' => $payment->price / 100,
             ];
         }
-
-        return empty($result) ? null : $result;
+        if (!empty($result)) {
+            return $result;
+        }
     }
 }
