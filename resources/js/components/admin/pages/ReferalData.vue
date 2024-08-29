@@ -23,74 +23,147 @@
                 <div class="referal__content-wrap" v-if="currentTab == 'company'">
                     <div class="referal__summary summary-referal">
                         <div class="summary-referal__item">
-                            <span>Кол-во зарегистрированных по ссылке: <b>5</b></span>
+                            <span>Кол-во зарегистрированных по ссылке: <b>{{ ref_data.company.summary.total_register }}</b></span>
                         </div>
                         <div class="summary-referal__item">
-                            <span>Общее кол-во селлеров/блогеров: <b>3</b> / <b>2</b></span>
+                            <span>Общее кол-во селлеров: <b>{{ ref_data.company.summary.total_sellers }}</b></span><br>
+                            <span>Общее кол-во блогеров: <b>{{ ref_data.company.summary.total_bloggers }}</b></span>
                         </div>
                         <div class="summary-referal__item">
-                            <span>Общая сумма всех оплат: <b>20 000</b> руб.</span>
+                            <span>Общая сумма всех оплат: <b>{{ ref_data.company.summary.total_received }}</b> руб.</span>
+                        </div>
+                        <div class="summary-referal__item">
+                            <span>Ссылка: <a href="#" v-on:click="copyLink">https://lk.adswap.ru/reg?code=12345</a></span>
                         </div>
                     </div>
-                    <div class="table">
-                        <div class="table__head">
-                            <div class="table__row">
-                                <div href="" class="table__col w75px">
-                                    <span>ID</span>
+                    <div class="referal__tabs">
+                        <div
+                            v-bind:class="'referal__tab ' +  (currentCompanyTab == 'users' ? 'active' : '')"
+                            @click="switchCompanyTab"
+                            data-content="users">
+                            <span>
+                                Пользователи
+                            </span>
+                        </div>
+                        <div
+                            v-bind:class="'referal__tab ' +  (currentCompanyTab == 'payments' ? 'active' : '')"
+                            @click="switchCompanyTab"
+                            data-content="payments">
+                            <span>
+                                Платежи
+                            </span>
+                        </div>
+                    </div>
+                    <div class="referal__content-wrap" v-if="currentCompanyTab == 'users'" id = "users">
+                        <div class="table">
+                            <div class="table__head">
+                                <div class="table__row">
+                                    <div href="" class="table__col w75px">
+                                        <span>ID</span>
+                                    </div>
+                                    <div href="" class="table__col w200px">
+                                        <span>ФИО</span>
+                                    </div>
+                                    <div href="" class="table__col w200px">
+                                        <span>Номер</span>
+                                    </div>
+                                    <div href="" class="table__col w150px">
+                                        <span>Роль</span>
+                                    </div>
+                                    <div href="" class="table__col w200px">
+                                        <span>Дата регистрации</span>
+                                    </div>
+                                    <div href="" class="table__col w200px">
+                                        <span>Оплата тарифа</span>
+                                    </div>
                                 </div>
-                                <div href="" class="table__col w200px">
-                                    <span>ФИО</span>
-                                </div>
-                                <div href="" class="table__col w200px">
-                                    <span>Номер</span>
-                                </div>
-                                <div href="" class="table__col w150px">
-                                    <span>Роль</span>
-                                </div>
-                                <div href="" class="table__col w150px">
-                                    <span>Дата регистрации</span>
-                                </div>
-                                <div href="" class="table__col w200px">
-                                    <span>Оплата тарифа</span>
+                            </div>
+                            <div class="table__body">
+                                <div
+                                    class="table__row"
+                                    v-for="user in ref_data.company.list.users"
+                                    :user="user">
+                                    <div href="" class="table__col w75px">
+                                        <span>{{ user.id }}</span>
+                                    </div>
+                                    <div href="" class="table__col w200px">
+                                        <span>{{ user.name }}</span>
+                                    </div>
+                                    <div href="" class="table__col w200px">
+                                        <span>{{ user.phone }}</span>
+                                    </div>
+                                    <div href="" class="table__col w150px">
+                                        <span>{{ roles[user.role] }}</span>
+                                    </div>
+                                    <div href="" class="table__col w200px">
+                                        <span>{{ user.created_at }}</span>
+                                    </div>
+                                    <div href="" class="table__col w200px">
+                                        <span>{{ user.received || '-' }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="table__body">
-                            <div class="table__row">
-                                <div href="" class="table__col w75px">
-                                    <span>id</span>
+                        <div class="table__btns">
+                            <a href="/api/referrals/export" download="" class="btn btn-primary">
+                                Скачать таблицу
+                            </a>
+                        </div>
+
+                    </div>
+                    <div class="referal__content-wrap" v-if="currentCompanyTab == 'payments'" id = "payments">
+                        <div class="table">
+                            <div class="table__head">
+                                <div class="table__row">
+                                    <div href="" class="table__col w75px">
+                                        <span>ID</span>
+                                    </div>
+                                    <div href="" class="table__col w150px">
+                                        <span>ID платежа</span>
+                                    </div>
+                                    <div href="" class="table__col w200px">
+                                        <span>Дата регистрации</span>
+                                    </div>
+                                    <div href="" class="table__col w200px">
+                                        <span>Сумма</span>
+                                    </div>
                                 </div>
-                                <div href="" class="table__col w200px">
-                                    <span>fio</span>
-                                </div>
-                                <div href="" class="table__col w200px">
-                                    <span>fio</span>
-                                </div>
-                                <div href="" class="table__col w150px">
-                                    <span>role</span>
-                                </div>
-                                <div href="" class="table__col w150px">
-                                    <span>registration_date</span>
-                                </div>
-                                <div href="" class="table__col w200px">
-                                    <span>received</span>
+                            </div>
+                            <div class="table__body">
+                                <div
+                                    class="table__row"
+                                    v-for="payment in ref_data.company.list.payments"
+                                    :payment="payment">
+                                    <div href="" class="table__col w75px">
+                                        <span>{{ payment.id }}</span>
+                                    </div>
+                                    <div href="" class="table__col w150px">
+                                        <span>{{ payment.payment_id }}</span>
+                                    </div>
+                                    <div href="" class="table__col w200px">
+                                        <span>{{ payment.created_at }}</span>
+                                    </div>
+                                    <div href="" class="table__col w200px">
+                                        <span>{{ payment.received }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="table__btns">
-                        <div class="btn btn-primary">
-                            Скачать таблицу
+                        <div class="table__btns">
+                            <a href="/api/referrals/export" download="" class="btn btn-primary">
+                                Скачать таблицу
+                            </a>
                         </div>
-                        <div class="btn btn-secondary">
-                            Печтать
-                        </div>
+
                     </div>
                 </div>
                 <div class="referal__content-wrap" v-if="currentTab == 'managers'">
                     <div class="referal__summary summary-referal">
                         <div class="summary-referal__item">
-                            <span>Кол-во зарегистрированных по ссылке: <b></b></span>
+                            <span>Кол-во зарегистрированных по ссылке: <b>{{ ref_data.managers.summary.total_register }}</b></span>
+                        </div>
+                        <div class="summary-referal__item">
+                            <span>Ссылка: <a href="#" v-on:click="copyLink">https://lk.adswap.ru/reg?code=54321</a></span>
                         </div>
                     </div>
                     <div class="table">
@@ -99,55 +172,49 @@
                                 <div href="" class="table__col w75px">
                                     <span>ID</span>
                                 </div>
-                                <div href="" class="table__col w300px">
+                                <div href="" class="table__col w200px">
                                     <span>ФИО</span>
                                 </div>
-                                <div href="" class="table__col w300px">
+                                <div href="" class="table__col w200px">
                                     <span>Номер</span>
                                 </div>
                                 <div href="" class="table__col w150px">
                                     <span>Роль</span>
                                 </div>
-                                <div href="" class="table__col w150px">
-                                    <span>Дата регистрации</span>
-                                </div>
                                 <div href="" class="table__col w200px">
-                                    <span>Оплата тарифа</span>
+                                    <span>Дата регистрации</span>
                                 </div>
                             </div>
                         </div>
                         <div class="table__body">
                             <div class="table__body">
-                                <div class="table__row">
+                                <div
+                                    class="table__row"
+                                    v-for="user in ref_data.managers.list.users"
+                                    :user="user">
                                     <div href="" class="table__col w75px">
-                                        <span>id</span>
-                                    </div>
-                                    <div href="" class="table__col w300px">
-                                        <span>fio</span>
-                                    </div>
-                                    <div href="" class="table__col w300px">
-                                        <span>fio</span>
-                                    </div>
-                                    <div href="" class="table__col w150px">
-                                        <span>role</span>
-                                    </div>
-                                    <div href="" class="table__col w150px">
-                                        <span>registration_date</span>
+                                        <span>{{ user.id }}</span>
                                     </div>
                                     <div href="" class="table__col w200px">
-                                        <span>received</span>
+                                        <span>{{ user.name }}</span>
+                                    </div>
+                                    <div href="" class="table__col w200px">
+                                        <span>{{ user.phone }}</span>
+                                    </div>
+                                    <div href="" class="table__col w150px">
+                                        <span>{{ roles[user.role] }}</span>
+                                    </div>
+                                    <div href="" class="table__col w200px">
+                                        <span>{{ user.created_at }}</span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="table__btns">
-                        <div class="btn btn-primary">
+                        <a href="/api/referrals/export" download="" class="btn btn-primary">
                             Скачать таблицу
-                        </div>
-                        <div class="btn btn-secondary">
-                            Печтать
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -155,21 +222,30 @@
     </div>
 </template>
 <script>
-    import {ref} from 'vue'
+    import {ref, reactive} from 'vue'
 
     export default{
-        props: ['referal_data'],
+        props: ['ref_data'],
         data(){
             return {
-                currentTab: ref('company')
+                roles: {
+                    'seller': 'Селлер',
+                    'blogger': 'Блогер',
+                },
+                currentTab: ref('company'),
+                currentCompanyTab: ref('users')
             }
-        },
-        mounted() {
-
         },
         methods:{
             switchTab(event){
                 this.currentTab = $(event.currentTarget).data('content')
+            },
+            switchCompanyTab(event){
+                this.currentCompanyTab = $(event.currentTarget).data('content')
+            },
+            async copyLink(event){
+                event.preventDefault();
+
             }
         }
     }

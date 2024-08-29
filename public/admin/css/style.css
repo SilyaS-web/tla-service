@@ -89,6 +89,7 @@ a.btn:hover{
     background-color: var(--pale);
     font-weight: 500;
     border:1px solid rgba(0, 0, 0, 0);
+    cursor: pointer;
 }
 .btn-primary{
     background-color: var(--primary);
@@ -1254,7 +1255,7 @@ label{
 }
 .referal__tabs{
     display: flex;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     margin-bottom: 15px;
     padding: 10px 15px;
@@ -1294,13 +1295,9 @@ label{
 .table{
     font-size: 15px;
     font-weight: 500;
-    margin-bottom: 25px;
+    margin-bottom: 40px;
 }
 .table__head{
-    display: flex;
-    flex-direction: column;
-}
-.table__column{
     display: flex;
     flex-direction: column;
 }
@@ -1312,7 +1309,10 @@ label{
 .table__col{
     text-align: center;
     padding:10px;
-    border:1px solid #EDE3E3
+    border:1px solid #EDE3E3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .table__btns{
     display: flex;

@@ -25,7 +25,7 @@
                             История заказов
                         </a>
                         <a v-on:click="switchTab" v-if="isAdmin == 1" href="#" class="nav__link tab" data-content="referral" title="Реферальные ссылки">
-                            <img src="/admin/img/history-icon.svg" alt="" class="nav__link-img">
+                            <img src="/admin/img/link-icon.svg" alt="" class="nav__link-img">
                             Реферальные ссылки
                         </a>
                     </div>
