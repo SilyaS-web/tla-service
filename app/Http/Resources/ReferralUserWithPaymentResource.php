@@ -14,21 +14,15 @@ class ReferralUserWithPaymentResource extends JsonResource
      */
     public function toArray($request)
     {
-        $result = [];
-        foreach ($this->user->payments()->where('status', TPayment::STATUS_CONFIRMED)->get() as $payment) {
-            $result[] = [
-                'id' => $this->user_id,
-                'name' => $this->user->name,
-                'phone' => $this->user->phone,
-                'role' => $this->user->role,
-                'created_at' => date_format($this->user->created_at, 'd.m.y'),
-                'payment_id' => $payment->payment_id,
-                'payment_data' => $payment->payment_id,
-                'received' => $payment->price / 100,
-            ];
-        }
-        if (!empty($result)) {
-            return $result;
-        }
+        return [
+            'id' => $this->user_id,
+            'name' => $this->user->name,
+            'phone' => $this->user->phone,
+            'role' => $this->user->role,
+            'created_at' => date_format($this->user->created_at, 'd.m.y'),
+            'payment_id' => $this->payment_id,
+            'payment_data' => date_format($this->created_at, 'd.m.y'),
+            'received' => $this->price / 100,
+        ];
     }
 }
