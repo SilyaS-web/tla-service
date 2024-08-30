@@ -71,6 +71,7 @@
                 orders: ref([]),
                 referals_data: ref({
                     company:{
+                        id: 0,
                         summary:{
                             total_sellers: 0,
                             total_bloggers: 0,
@@ -83,6 +84,7 @@
                         }
                     },
                     managers: {
+                        id: 0,
                         summary:{
                             total_register: 0,
                         },
@@ -104,6 +106,7 @@
                 })
             ]).then(() => {
                 setTimeout(()=>{
+
                     this.loaderOff();
                 }, 500)
             })
@@ -185,6 +188,7 @@
                                                                     .reduce((a, b) => a + b);
 
                         let company_data = {
+                            id: company.id,
                             summary:{
                                 total_sellers: total_sellers,
                                 total_bloggers: total_bloggers,
@@ -199,6 +203,7 @@
 
                         //managers summary
                         let managers_data = {
+                            id: managers.id,
                             summary:{
                                 total_register: managers.referral_users.length
                             },

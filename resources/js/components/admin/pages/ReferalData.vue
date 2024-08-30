@@ -105,7 +105,10 @@
                             </div>
                         </div>
                         <div class="table__btns">
-                            <a href="/api/referrals/export" download="" class="btn btn-primary">
+                            <a
+                                v-bind:href="'/api/referrals/export?id=' + ref_data.company.id || 0"
+                                download=""
+                                class="btn btn-primary">
                                 Скачать таблицу
                             </a>
                         </div>
@@ -150,7 +153,10 @@
                             </div>
                         </div>
                         <div class="table__btns">
-                            <a href="/api/referrals/export" download="" class="btn btn-primary">
+                            <a
+                                v-bind:href="'/api/referrals/export?payments=1&id=' + ref_data.company.id || 0"
+                                download=""
+                                class="btn btn-primary">
                                 Скачать таблицу
                             </a>
                         </div>
@@ -212,7 +218,10 @@
                         </div>
                     </div>
                     <div class="table__btns">
-                        <a href="/api/referrals/export" download="" class="btn btn-primary">
+                        <a
+                            v-bind:href="'/api/referrals/export?id=' + ref_data.managers.id || 0"
+                            download=""
+                            class="btn btn-primary">
                             Скачать таблицу
                         </a>
                     </div>
@@ -246,6 +255,14 @@
             async copyLink(event){
                 event.preventDefault();
 
+                if(navigator.clipboard != undefined){
+                    navigator.clipboard.writeText($(event.currentTarget).text()).then(function() {
+                        notify('info', {
+                            title: 'Успешно!',
+                            message: 'Ссылка скопирована в буфер обмена'
+                        })
+                    });
+                }
             }
         }
     }
