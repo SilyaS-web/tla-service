@@ -254,7 +254,7 @@ class WorkController extends Controller
             'views' => 'numeric',
             'reposts' => 'numeric',
             'likes' => 'numeric',
-            'platform' => 'string|nullable',
+            'platform' => 'numeric|nullable',
             'images' => 'array',
             'images.*' => 'image',
         ]);

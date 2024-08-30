@@ -56,19 +56,19 @@
                                         $is = trim($blogger_platform->link)[0] == '@';
 
                                         if($is){
-                                            if($blogger_platform->name == 'Telegram'){
+                                            if($blogger_platform->platform->title == 'Telegram'){
                                                 $link = 'https://t.me/' . substr($link, 1);
                                             }
-                                            else if($blogger_platform->name == 'Instagram'){
+                                            else if($blogger_platform->platform->title == 'Instagram'){
                                                 $link = 'https://www.instagram.com/' .  substr($link, 1);
                                             }
                                         }
                                     ?>
-                                    <a target="_blank" href="{{ $link }}" class="item-platforms__title item-platforms__title--{{ $types[strtolower($blogger_platform->name)] }}">
-                                        {{ strtoupper($blogger_platform->name) == 'VK' ? strtoupper($blogger_platform->name) : ucfirst($blogger_platform->name); }}
+                                    <a target="_blank" href="{{ $link }}" class="item-platforms__title item-platforms__title--{{ $types[strtolower($blogger_platform->platform->title)] }}">
+                                        {{ strtoupper($blogger_platform->platform->title) == 'VK' ? strtoupper($blogger_platform->platform->title) : ucfirst($blogger_platform->platform->title) }}
                                     </a>
 
-                                    @switch(strtolower($blogger_platform->name))
+                                    @switch(strtolower($blogger_platform->platform->title))
                                         @case('youtube')
                                             @if(($blogger_platform->coverage && $blogger_platform->coverage > 0) || ($blogger_platform->additional_coverage && $blogger_platform->additional_coverage > 0))
                                                 <div class="item-platforms__stats">

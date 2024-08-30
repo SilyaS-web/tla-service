@@ -128,7 +128,8 @@
                                 ]
                             )
                             @foreach($platforms as $platform)
-                                @php( $blogger_platform = $user->blogger->platforms()->where('name', $platform)->first() )
+                                @php( $blogger_platform = $user->blogger->platforms()->where('platform_id', $platform->id)->first() )
+                                <input type="text" class="input" name="platforms[{{$platform->id}}]['platform_id']" style="width:100%; max-width:100%" value="{{ $platform->id }}" hidden>
                                 <div class="popup__form-row popup__form-stat form-stat">
                                     <div class="form-stat__title">
                                         {{ $platform }}
@@ -136,43 +137,43 @@
                                     <div class="form-stat__content">
                                         <div class="form-stat__row">
                                             <div class="form-group" style="width:100%; max-width:100%">
-                                                <label for="{{ strtolower($platform) }}_link">Ссылка</label>
-                                                <input id="{{ strtolower($platform) }}_link" type="text" class="input" name="{{ strtolower($platform) }}_link" style="width:100%; max-width:100%" value="{{ $blogger_platform->link ?? '' }}">
+                                                <label for="platforms[{{$platform->id}}]['link']">Ссылка</label>
+                                                <input id="platforms[{{$platform->id}}]['link']" type="text" class="input" name="platforms[{{$platform->id}}]['link']" style="width:100%; max-width:100%" value="{{ $blogger_platform->link ?? '' }}">
                                             </div>
                                         </div>
                                         <div class="form-stat__row">
                                             <div class="form-group">
-                                                <label for="{{ strtolower($platform) }}_subs">Подписчики</label>
-                                                <input id="{{ strtolower($platform) }}_subs" type="text" class="input" name="{{ strtolower($platform) }}_subs" value = "{{ $blogger_platform->subscriber_quantity  ?? '' }}">
+                                                <label for="platforms[{{$platform->id}}]['subscriber_quantity']">Подписчики</label>
+                                                <input id="platforms[{{$platform->id}}]['subscriber_quantity']" type="text" class="input" name="platforms[{{$platform->id}}]['subscriber_quantity']" value = "{{ $blogger_platform->subscriber_quantity  ?? '' }}">
                                             </div>
                                             <div class="form-group">
-                                                <label for="{{ strtolower($platform) }}_cpm">CPM</label>
-                                                <input id="{{ strtolower($platform) }}_cpm" type="text" class="input" name="{{ strtolower($platform) }}_cpm" value = "{{ $blogger_platform->cost_per_mille  ?? '' }}">
+                                                <label for="platforms[{{$platform->id}}]['cost_per_mille']">CPM</label>
+                                                <input id="platforms[{{$platform->id}}]['cost_per_mille']" type="text" class="input" name="platforms[{{$platform->id}}]['cost_per_mille']" value = "{{ $blogger_platform->cost_per_mille  ?? '' }}">
                                             </div>
                                         </div>
 
-                                        @if(isset($platforms_main_cover_titles[$platform]))
+                                        @if(isset($platforms_main_cover_titles[$platform->title]))
                                             <div class="form-stat__row">
                                                 <div class="form-group">
-                                                    <label for="{{ strtolower($platform) }}_cover">{{ $platforms_main_cover_titles[$platform] }}</label>
-                                                    <input id="{{ strtolower($platform) }}_cover" type="text" class="input" name="{{ strtolower($platform) }}_cover" value = "{{ $blogger_platform->coverage   ?? ''}}">
+                                                    <label for="platforms[{{$platform->id}}]['coverage']">{{ $platforms_main_cover_titles[$platform] }}</label>
+                                                    <input id="platforms[{{$platform->id}}]['coverage']" type="text" class="input" name="platforms[{{$platform->id}}]['coverage']" value = "{{ $blogger_platform->coverage   ?? ''}}">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="{{ strtolower($platform) }}_er">ER %</label>
-                                                    <input id="{{ strtolower($platform) }}_er" type="text" class="input" name="{{ strtolower($platform) }}_er" value = "{{ $blogger_platform->engagement_rate  ?? '' }}">
+                                                    <label for="platforms[{{$platform->id}}]['engagement_rate']">ER %</label>
+                                                    <input id="platforms[{{$platform->id}}]['engagement_rate']" type="text" class="input" name="platforms[{{$platform->id}}]['engagement_rate']" value = "{{ $blogger_platform->engagement_rate  ?? '' }}">
                                                 </div>
                                             </div>
                                         @endif
 
-                                        @if(isset($platforms_additional_cover_titles[$platform]))
+                                        @if(isset($platforms_additional_cover_titles[$platform->title]))
                                             <div class="form-stat__row">
                                                 <div class="form-group">
-                                                    <label for="{{ strtolower($platform) }}_additional_cover">{{ $platforms_additional_cover_titles[$platform] }}</label>
-                                                    <input id="{{ strtolower($platform) }}_additional_cover" type="text" class="input" name="{{ strtolower($platform) }}_additional_coverage" value = "{{ $blogger_platform->additional_coverage  ?? '' }}">
+                                                    <label for="platforms[{{$platform->id}}]['additional_coverage']">{{ $platforms_additional_cover_titles[$platform->title] }}</label>
+                                                    <input id="platforms[{{$platform->id}}]['additional_coverage']" type="text" class="input" name="platforms[{{$platform->id}}]['additional_coverage']" value = "{{ $blogger_platform->additional_coverage  ?? '' }}">
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="{{ strtolower($platform) }}_additional_er">ER %</label>
-                                                    <input id="{{ strtolower($platform) }}_additional_er" type="text" class="input" name="{{ strtolower($platform) }}_additional_engagement_rate" value = "{{ $blogger_platform->additional_engagement_rate  ?? '' }}">
+                                                    <label for="platforms[{{$platform->id}}]['additional_engagement_rate']">ER %</label>
+                                                    <input id="platforms[{{$platform->id}}]['additional_engagement_rate']" type="text" class="input" name="platforms[{{$platform->id}}]['additional_engagement_rate']" value = "{{ $blogger_platform->additional_engagement_rate  ?? '' }}">
                                                 </div>
                                             </div>
                                         @endif

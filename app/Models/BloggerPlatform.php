@@ -10,28 +10,9 @@ class BloggerPlatform extends Model
 {
     use HasFactory, SoftDeletes;
 
-    public const YOUTUBE = 'Youtube';
-    public const INSTAGRAM = 'Instagram';
-    public const VK = 'VK';
-    public const TELEGRAM = 'Telegram';
-
-    const PLATFORM_TYPES = [
-        self::YOUTUBE,
-        self::INSTAGRAM,
-        self::VK,
-        self::TELEGRAM,
-    ];
-
-    const PLATFORM_ICON_URLS = [
-        self::YOUTUBE => 'img/youtube-colored-icon.svg',
-        self::INSTAGRAM => 'img/inst-icon.svg',
-        self::VK => 'img/vk-icon.svg',
-        self::TELEGRAM => 'img/telegram-icon.svg',
-    ];
-
     protected $fillable = [
         'blogger_id',
-        'name',
+        'platform_id',
         'subscriber_quantity',
         'coverage',
         'additional_coverage',
@@ -42,23 +23,32 @@ class BloggerPlatform extends Model
         'icon_url',
     ];
 
+    public function platform()
+    {
+        return $this->hasOne(Platform::class, 'id', 'platform_id');
+    }
+
     public function blogger()
     {
         return $this->belongsTo(Blogger::class, 'id', 'blogger_id');
     }
 
-    public function getIconURL()
-    {
-        $key = strtoupper($this->name) == self::VK ? strtoupper($this->name) : ucfirst($this->name);
-        return asset(self::PLATFORM_ICON_URLS[$key]);
-    }
-
-    public static function getLowerPlatforms() {
-        $platform_names = [];
-        foreach (self::PLATFORM_TYPES as $platform_type) {
-            $platform_names[] = strtolower($platform_type);
-        }
-
-        return $platform_names;
+    public static function getFields() {
+        return [
+            'Telegram' => [
+                'coverage' => 'Просмотры',
+            ],
+            'VK' => [
+                'coverage' => 'Просмотры постов',
+                'additional_coverage' => 'Просмотры клипов',
+            ],
+            'Youtube' => [
+                'coverage' => 'Просмотры выпуска',
+                'additional_coverage' => 'Просмотры shorts',
+            ],
+            'Instagram' => [
+                'coverage' => 'Просмотры reels',
+            ],
+        ];
     }
 }

@@ -59,6 +59,11 @@ class User extends Authenticatable
         'telegram_verified_at' => 'datetime',
     ];
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class, 'user_id', 'id');
+    }
+
     public function projects()
     {
         return $this->hasMany(Project::class, 'seller_id', 'id');

@@ -5,7 +5,7 @@
                 <div class="card__row card__header">
                     <div class="card__img" v-bind:style="'background-image:url(' + (!blogger.user.image ? '/img/profile-icon.svg' : `/storage/profile/${blogger.user.image}`) + ')'">
                     </div>
-                    <div class="card__achive" title="Проверенный блогер"> <!--добавить проверку-->
+                    <div class="card__achive" title="Проверенный блогер" v-if="blogger.is_achievement">
                         <img src="img/achive-icon.svg" alt="">
                     </div>
                     <div class="card__name">
@@ -16,9 +16,9 @@
                     <div class="card__platforms">
                         <div
                             v-for="platform in blogger.platforms"
-                            v-bind:class="'card__platform ' +  (platform.name ? platform.name.toLowerCase() : '')"
+                            v-bind:class="'card__platform ' +  (platform.title ? platform.title.toLowerCase() : '')"
                             >
-                            <img v-bind:src="platform.icon_url" alt="">
+                            <img v-bind:src="platform.image || ''" alt="">
                         </div>
                     </div>
                 </div>
@@ -27,7 +27,7 @@
                     <div
                         v-for="theme in blogger.themes"
                         class="card__tags-item">
-                        <span>{{ theme.theme.theme }}</span>
+                        <span>{{ theme.name }}</span>
                     </div>
                 </div>
                 <div class="card__row card__desc">
@@ -98,15 +98,31 @@
                         text-decoration:underline;
                         margin-top: -20px;">Подробнее</a>
                 </div>
-                <div v-if="blogger.user.status === 0" class="admin-bloger__btns">
-                    <a href="#" class="btn btn-primary btn-accept" data-id="{{ blogger.id }}">Принять</a>
-                    <button class="btn btn-secondary" v-on:click="banUser" v-bind:id="blogger.id">
+                <div v-if="blogger.user.status === 0" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" v-on:click="agree">
+                        Принять
+                    </button>
+                    <button class="btn btn-secondary" v-on:click="ban">
                         Отклонить
                     </button>
+                    <div class="btn-delete btn-delete--icon">
+                        <img src="/img/trash-icon.svg" alt="" v-on:click="deletionConfirmation">
+                    </div>
                 </div>
-                <div v-else class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn btn-primary" v-on:click="banUser" v-bind:id="blogger.id">
+                <div v-else-if="blogger.user.status === 1" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" v-on:click="ban">
                         Заблокировать
+                    </button>
+                    <button class="btn btn-delete" v-on:click="deletionConfirmation">
+                        Удалить
+                    </button>
+                </div>
+                <div v-else-if="blogger.user.status === -1" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
+                    <button class="btn btn-primary" v-on:click="unban">
+                        Разблокировать
+                    </button>
+                    <button class="btn btn-delete" v-on:click="deletionConfirmation">
+                        Удалить
                     </button>
                 </div>
             </div>
@@ -114,38 +130,26 @@
     </div>
 </template>
 <script>
-    import axios from 'axios'
-
     export default{
         props: ['blogger', 'bloggers'],
+        components: { },
         methods:{
-            banUser(e) {
-                var el = e.currentTarget;
-                var id = $(el).attr('id');
-
-                axios({
-                    method: 'get',
-                    url: '/api/bloggers/' + id + '/deny/',
-                })
-                .then((response) => {
-                    switch (response.data){
-                        case 'success':
-                            notify('info', {
-                                title: 'Успешно!',
-                                message: 'Блогер успешно заблокирован!'
-                            });
-
-                            $(el).closest('.card').remove();
-                            this.$emit('ban', id);
-                            break
-                        default:
-                            notify('erroe', {
-                                title: 'Ошибка!',
-                                message: 'Не удалось заблокировать блогера, попробуйте позже!'
-                            });
-                    }
-                })
+            deletionConfirmation() {
+                this.$emit('deletionConfirmation', this.blogger.user.id)
             },
+
+            ban() {
+                this.$emit('ban', this.blogger.user.id)
+            },
+
+            agree() {
+                this.$emit('agree', this.blogger.id)
+            },
+
+            unban() {
+                this.$emit('unban', this.blogger.user.id)
+            },
+
             countER(subs, cover){
                 var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
 
