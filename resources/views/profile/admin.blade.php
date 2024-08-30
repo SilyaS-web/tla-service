@@ -20,6 +20,6 @@
         <admin-index></admin-index>
     </div>
 </body>
-<script src="{{ asset('admin/js/script.js') }}"></script>
-<script src = "./js/app.js"></script>
+<script src="{{ asset('admin/js/script.js?v=1') }}"></script>
+<script src = "./js/app.js?v=1"></script>
 </html>
