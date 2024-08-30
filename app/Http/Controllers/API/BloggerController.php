@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Models\Blogger;
 use App\Models\BloggerPlatform;
-use App\Models\User;
-use App\Services\TgService;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\BloggerResource;
+use App\Services\TgService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
@@ -17,7 +17,8 @@ class BloggerController extends Controller
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'status' => 'numeric|nullable',
+            'statuses' => 'array|nullable',
+            'statuses.*' => 'numeric',
         ]);
 
         if ($validator->fails()) {
@@ -26,55 +27,49 @@ class BloggerController extends Controller
 
         $validated = $validator->validated();
         $bloggers = Blogger::where([]);
-        if (isset($validated['status'])) {
+        if (isset($validated['statuses'])) {
             $bloggers->whereHas('user', function (Builder $query) use ($validated) {
-                $query->where('status', $validated['status']);
+                $query->whereIn('status', array_values($validated['statuses']));
             });
         }
 
-        $bloggers = $bloggers->with('user')->with('platforms')->with('themes')->with('country')->get();
-        foreach ($bloggers as &$blogger) {
-            foreach ($blogger->platforms as &$platform) {
-                $platform->icon_url = $platform->getIconURL();
-            }
+        $data = [
+            'bloggers' => BloggerResource::collection($bloggers->get()),
+            'platform_fields' => BloggerPlatform::getFields(),
+        ];
 
-            foreach ($blogger->themes as &$theme) {
-                $theme->theme;
-            }
-        }
+        return response()->json($data)->setStatusCode(200);
+    }
 
-        return response()->json($bloggers)->setStatusCode(200);
+    public function show(Blogger $blogger)
+    {
+        $data = [
+            'blogger' => new BloggerResource($blogger),
+            'platform_fields' => BloggerPlatform::getFields(),
+        ];
+
+        return  response()->json($data)->setStatusCode(200);
     }
 
     public function accept(Blogger $blogger, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'desc' => 'string|nullable',
-            'sex' => 'required|string',
-            'country_id' => 'required|exists:countries,id',
-            // 'city' => 'required|string',
-            'is_achievement' => 'string|nullable',
+            'description' => 'string|nullable',
+            'is_achievement' => 'boolean|nullable',
+            'country' => 'array',
+            'country.id' => 'required|exists:countries,id',
+            'city' => 'string|nullable',
             'gender_ratio' => 'required|numeric',
-            'tg_link' => 'string|nullable',
-            'tg_subs' => 'numeric|nullable',
-            'tg_cover' => 'numeric|nullable',
-            'tg_er' => 'numeric|nullable',
-            'tg_cpm' => 'numeric|nullable',
-            'inst_link' => 'string|nullable',
-            'inst_subs' => 'numeric|nullable',
-            'inst_cover' => 'numeric|nullable',
-            'inst_er' => 'numeric|nullable',
-            'inst_cpm' => 'numeric|nullable',
-            'yt_link' => 'string|nullable',
-            'yt_subs' => 'numeric|nullable',
-            'yt_cover' => 'numeric|nullable',
-            'yt_er' => 'numeric|nullable',
-            'yt_cpm' => 'numeric|nullable',
-            'vk_link' => 'string|nullable',
-            'vk_subs' => 'numeric|nullable',
-            'vk_cover' => 'numeric|nullable',
-            'vk_er' => 'numeric|nullable',
-            'vk_cpm' => 'numeric|nullable',
+            'sex' => 'required|string',
+            'platforms' => 'array',
+            'platforms.*.link' => 'string|nullable',
+            'platforms.*.subscriber_quantity' => 'numeric|nullable',
+            'platforms.*.coverage' => 'numeric|nullable',
+            'platforms.*.engagement_rate' => 'numeric|nullable',
+            'platforms.*.cost_per_mille' => 'numeric|nullable',
+            'platforms.*.additional_coverage' => 'numeric|nullable',
+            'platforms.*.additional_engagement_rate' => 'numeric|nullable',
+            'platforms.*.platform_id' => 'numeric|exists:platforms,id',
         ]);
 
         if ($validator->fails()) {
@@ -82,105 +77,59 @@ class BloggerController extends Controller
         }
 
         $validated = $validator->validated();
-        $blogger = Blogger::find($validated['blogger_id']);
+        $is_platform = false;
+
+        foreach ($validated['platforms'] as $platform) {
+            if (isset($validated['telegram_link']) && !empty($validated['telegram_link'])) {
+                $is_platform = true;
+                break;
+            }
+        }
+        if ($is_platform) {
+            return response()->json(['message' => 'Укажите хотя бы одну соц сеть'], 400);
+        }
 
         $blogger->update([
-            'description' => $validated['desc'] ?? null,
-            'sex' => $validated['sex'],
-            'country_id' => $validated['country_id'],
+            'description' => $validated['description'] ?? null,
+            'is_achievement' => isset($validated['is_achievement']) ? $validated['is_achievement'] : false,
+            'country_id' => $validated['country']['id'],
+            'city' => isset($validated['city']),
             'gender_ratio' => $validated['gender_ratio'],
-            'is_achievement' => $validated['is_achievement'] ?? 0,
+            'sex' => $validated['sex'],
         ]);
 
-        if ($validated['tg_subs']) {
-            $tg_platform = $blogger->platforms()->where('name', BloggerPlatform::TELEGRAM)->first();
-            if ($tg_platform) {
-                $tg_platform->update([
-                    'link' => $validated['tg_link'],
-                    'subscriber_quantity' => $validated['tg_subs'],
-                    'coverage' => $validated['tg_cover'],
-                    'engagement_rate' => $validated['tg_er'],
-                    'cost_per_mille' => $validated['tg_cpm'],
-                ]);
-            } else {
-                BloggerPlatform::create([
-                    'blogger_id' => $blogger->id,
-                    'link' => $validated['tg_link'],
-                    'name' => BloggerPlatform::TELEGRAM,
-                    'subscriber_quantity' => $validated['tg_subs'],
-                    'coverage' => $validated['tg_cover'],
-                    'engagement_rate' => $validated['tg_er'],
-                    'cost_per_mille' => $validated['tg_cpm'],
-                ]);
+        foreach ($validated['platforms'] as $blogger_platform) {
+            if (empty($blogger_platform) || empty($blogger_platform['platform_id'])) {
+                continue;
             }
-        }
 
-        if ($validated['inst_subs']) {
-            $inst_platform = $blogger->platforms()->where('name', BloggerPlatform::INSTAGRAM)->first();
-            if ($inst_platform) {
-                $inst_platform->update([
-                    'link' => $validated['inst_link'],
-                    'subscriber_quantity' => $validated['inst_subs'],
-                    'coverage' => $validated['inst_cover'],
-                    'engagement_rate' => $validated['inst_er'],
-                    'cost_per_mille' => $validated['inst_cpm'],
-                ]);
-            } else {
-                BloggerPlatform::create([
-                    'blogger_id' => $blogger->id,
-                    'name' => BloggerPlatform::INSTAGRAM,
-                    'link' => $validated['inst_link'],
-                    'subscriber_quantity' => $validated['inst_subs'],
-                    'coverage' => $validated['inst_cover'],
-                    'engagement_rate' => $validated['inst_er'],
-                    'cost_per_mille' => $validated['inst_cpm'],
-                ]);
-            }
-        }
-
-        if ($validated['yt_subs']) {
-            $yt_platform = $blogger->platforms()->where('name', BloggerPlatform::YOUTUBE)->first();
-            if ($yt_platform) {
-                $yt_platform->update([
-                    'link' => $validated['yt_link'],
-                    'subscriber_quantity' => $validated['yt_subs'],
-                    'coverage' => $validated['yt_cover'],
-                    'engagement_rate' => $validated['yt_er'],
-                    'cost_per_mille' => $validated['yt_cpm'],
-                ]);
-            } else {
-                BloggerPlatform::create([
-                    'blogger_id' => $blogger->id,
-                    'name' => BloggerPlatform::YOUTUBE,
-                    'subscriber_quantity' => $validated['yt_subs'],
-                    'link' => $validated['yt_link'],
-                    'coverage' => $validated['yt_cover'],
-                    'engagement_rate' => $validated['yt_er'],
-                    'cost_per_mille' => $validated['yt_cpm'],
-                ]);
-            }
-        }
-
-        if ($validated['vk_subs']) {
-            $vk_platform = $blogger->platforms()->where('name', BloggerPlatform::VK)->first();
-            if ($vk_platform) {
-                $vk_platform->update([
-                    'link' => $validated['vk_link'],
-                    'subscriber_quantity' => $validated['vk_subs'],
-                    'coverage' => $validated['vk_cover'],
-                    'engagement_rate' => $validated['vk_er'],
-                    'cost_per_mille' => $validated['vk_cpm'],
-                ]);
-            } else {
-                BloggerPlatform::create([
-                    'blogger_id' => $blogger->id,
-                    'name' => BloggerPlatform::VK,
-                    'link' => $validated['vk_link'],
-                    'subscriber_quantity' => $validated['vk_subs'],
-                    'coverage' => $validated['vk_cover'],
-                    'engagement_rate' => $validated['vk_er'],
-                    'cost_per_mille' => $validated['vk_cpm'],
-                ]);
+            $platform = $blogger->platforms()->where('platform_id', $blogger_platform['platform_id'])->first();
+            if (isset($blogger_platform['link']) && !empty($blogger_platform['link'])) {
+                if ($platform) {
+                    $platform->update([
+                        'link' => $blogger_platform['link'] ?? null,
+                        'subscriber_quantity' => $blogger_platform['subscriber_quantity'] ?? null,
+                        'coverage' => $blogger_platform['coverage'] ?? null,
+                        'additional_coverage' => $blogger_platform['additional_coverage'] ?? null,
+                        'engagement_rate' => $blogger_platform['engagement_rate'] ?? null,
+                        'additional_engagement_rate' => $blogger_platform['additional_engagement_rate'] ?? null,
+                        'cost_per_mille' => $blogger_platform['cost_per_mille'] ?? null,
+                    ]);
+                } else {
+                    BloggerPlatform::create([
+                        'blogger_id' => $blogger->id,
+                        'platform_id' => $blogger_platform['platform_id'],
+                        'link' => $blogger_platform['link'] ?? null,
+                        'subscriber_quantity' => $blogger_platform['subscriber_quantity'] ?? null,
+                        'coverage' => $blogger_platform['coverage'] ?? null,
+                        'additional_coverage' => $blogger_platform['additional_coverage'] ?? null,
+                        'engagement_rate' => $blogger_platform['engagement_rate'] ?? null,
+                        'additional_engagement_rate' => $blogger_platform['additional_engagement_rate'] ?? null,
+                        'cost_per_mille' => $blogger_platform['cost_per_mille'] ?? null,
+                    ]);
+                }
+            } elseif ((!isset($blogger_platform['link']) || empty($blogger_platform['link'])) && $platform) {
+                $platform->delete();
             }
         }
 
@@ -189,20 +138,6 @@ class BloggerController extends Controller
         $user->save();
 
         TgService::notify($blogger->user->tgPhone->chat_id, 'Вы успешно прошли модерацию');
-
-        return response()->json('success', 200);
-    }
-
-    public function deny(Blogger $blogger)
-    {
-        $user = $blogger->user;
-        $user->status = -1;
-        $user->save();
-        if ($user->status == 0) {
-            TgService::notify($user->tgPhone->chat_id, 'Вы не прошли модерацию');
-        } else {
-            TgService::notify($user->tgPhone->chat_id, 'Вы были забанены');
-        }
 
         return response()->json('success', 200);
     }

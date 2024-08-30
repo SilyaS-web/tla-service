@@ -132,7 +132,7 @@
                                     </div>
                                     <div class="card__platforms">
                                         @foreach ($blogger->platforms as $platform)
-                                            <a target="_blank" href="{{ $platform->link }}" class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></a>
+                                            <a target="_blank" href="{{ $platform->link }}" class="card__platform {{ strtolower($platform->platform->title) }}"><img src="{{ $platform->platform->image }}" alt=""></a>
                                         @endforeach
                                     </div>
                                 </div>
@@ -261,7 +261,7 @@
                                     </div>
                                     <div class="card__platforms">
                                         @foreach ($blogger->platforms as $platform)
-                                            <a target="_blank" href="{{ $platform->link }}" class="card__platform {{ strtolower($platform->name) }}"><img src="{{ $platform->getIconURL() }}" alt=""></a>
+                                            <a target="_blank" href="{{ $platform->link }}" class="card__platform {{ strtolower($platform->platform->title) }}"><img src="{{ $platform->platform->image }}" alt=""></a>
                                         @endforeach
                                     </div>
                                 </div>

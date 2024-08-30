@@ -11,7 +11,7 @@
                         </a>
                     </div>
                 </nav>
-                <a href="#" class="admin-menu__leave">Выйти</a>
+                <a href="/logout" class="admin-menu__leave">Выйти</a>
             </div>
         </div>
 
@@ -21,22 +21,25 @@
             <div class="admin-view__container _container active-menu">
                 <div class="admin-view__body">
                     <!-- Левое меню -->
-                    <admin-aside v-on:switchTab="switchTab"></admin-aside>
+                    <admin-aside v-on:switchTab="switchTab" :isAdmin></admin-aside>
 
                     <!-- Модерация -->
-                    <admin-bloggers-moderation-page :bloggers="unverifiedBloggers" v-on:changedBloggersList="changedBloggersList"></admin-bloggers-moderation-page>
+                    <admin-bloggers-moderation-page :bloggers="unverifiedBloggers"  v-on:updateBloggers="updateBloggers"></admin-bloggers-moderation-page>
 
                     <!-- Список блогеров -->
-                    <admin-bloggers-page :bloggers="bloggers" v-on:changedBloggersList="changedBloggersList"></admin-bloggers-page>
+                    <admin-bloggers-page :bloggers="bloggers" v-on:updateBloggers="updateBloggers"></admin-bloggers-page>
 
                     <!-- Список селлеров -->
-                    <admin-sellers-page :sellers="sellers" v-on:changedSellersList="changedSellersList"></admin-sellers-page>
+                    <admin-sellers-page v-if="isAdmin == 1" :sellers="sellers" v-on:updateSellers="updateSellers"></admin-sellers-page>
 
                     <!-- Список проектов -->
-                    <admin-projects-page :projects="projects"></admin-projects-page>
+                    <admin-projects-page v-if="isAdmin == 1" :projects="projects" v-on:statusManagement="statusManagement"></admin-projects-page>
 
                     <!-- Список заказов -->
-                    <admin-orders-page :orders="orders"></admin-orders-page>
+                    <admin-orders-page v-if="isAdmin == 1" :orders="orders"></admin-orders-page>
+
+                    <!-- Список пользователей по реферальной ссылке -->
+                    <admin-referal-data-page v-if="isAdmin == 1" :ref_data="referals_data"></admin-referal-data-page>
                 </div>
             </div>
         </section>
@@ -51,7 +54,7 @@
         </div>
 </template>
 <script>
-    import { ref } from 'vue'
+    import {reactive, ref} from 'vue'
     import axios from 'axios'
     import Loader from '../../services/AppLoader.vue'
 
@@ -60,89 +63,175 @@
             return Loader
         },
         setup() {
-            let unverifiedBloggers = [],
-                bloggers = [],
-                sellers = [
-                    {
-                        id: 1,
-                        user: {
-                            name: 'Илья Софронов',
-                            email: 'ilya.sofron@mail.ru',
-                            phone: '+7(902)122-32-90',
-                            image: null,
-                        },
-                        inn: '11223344556',
-                        agent: true,
-                        organization_type: 'ИП',
-                    },
-                    {
-                        id: 2,
-                        user: {
-                            name: 'Алексей Андреев',
-                            email: 'andrey.gaga@mail.ru',
-                            phone: '+7(903)133-33-90',
-                            image: null,
-                        },
-                        inn: '6554433221',
-                        agent: false,
-                        organization_type: 'ООО',
-                    },
-                    {
-                        id: 3,
-                        user: {
-                            name: 'Владислав Савинов',
-                            email: 'savin@ebanaya.su',
-                            phone: '+7(912)155-44-90',
-                            image: null,
-                        },
-                        inn: '',
-                        agent: false,
-                        organization_type: '-',
-                    },
-
-                ],
-                projects = [],
-                orders = [],
-                isLoading = false;
-
             return {
-                unverifiedBloggers: ref(unverifiedBloggers),
-                bloggers: ref(bloggers),
-                sellers: ref(sellers),
-                projects: ref(projects),
-                orders: ref(orders),
+                unverifiedBloggers: ref([]),
+                bloggers: ref([]),
+                sellers: ref([]),
+                projects: ref([]),
+                orders: ref([]),
+                referals_data: ref({
+                    company:{
+                        id: 0,
+                        code: null,
+                        summary:{
+                            total_sellers: 0,
+                            total_bloggers: 0,
+                            total_received: 0,
+                            total_register: 0,
+                        },
+                        list: {
+                            users: [],
+                            payments: [],
+                        }
+                    },
+                    managers: {
+                        id: 0,
+                        code: null,
+                        summary:{
+                            total_register: 0,
+                        },
+                        list: {
+                            users: [],
+                        }
+                    }
+                }),
+                isAdmin: ref(false)
             }
         },
 
-        async mounted(){
+        async created(){
             this.loaderOn('.wrapper');
 
             Promise.all([
-                this.getBloggers(0).then(list => {
-                    this.unverifiedBloggers = (list || []).map(_b => this.findBiggerPlatform(_b));;
+                this.getBloggers([0]).then(list => {
+                    this.unverifiedBloggers = (list || []).map(_b => this.findBiggestPlatform(_b));
                 })
             ]).then(() => {
                 setTimeout(()=>{
+
                     this.loaderOff();
                 }, 500)
             })
+            this.isAdmin = parseInt($('.wrapper').data('is-admin'));
         },
 
         methods: {
-            getBloggers(status = false){
+            getBloggers(status = []){
                 return new Promise((resolve, reject) => {
                     axios({
                         method: 'get',
-                        url: '/api/bloggers' + (status !== false ? `?status=${status}` : ''),
+                        url: '/api/bloggers',
+                        params: {
+                            statuses: status || []
+                        }
                     })
-                    .then(data => resolve(data.data))
+                    .then(result => resolve(result.data.bloggers))
                     .catch(error => {
                         console.log(error)
                         resolve([])
                     })
                 })
             },
-            findBiggerPlatform(blogger){
+            getSellers(){
+                return new Promise((resolve, reject) => {
+                    axios({
+                        method: 'get',
+                        url: '/api/sellers',
+                    })
+                    .then(result => resolve(result.data.sellers))
+                    .catch(error => {
+                        console.log(error)
+                        resolve([])
+                    })
+                })
+            },
+            getProjects(){
+                return new Promise((resolve, reject) => {
+                    axios({
+                        method: 'get',
+                        url: '/api/projects',
+                    })
+                    .then(result => resolve(result.data.projects))
+                    .catch(error => {
+                        console.log(error)
+                        resolve([])
+                    })
+                })
+            },
+            getOrders(){
+                return new Promise((resolve, reject) => {
+                    axios({
+                        method: 'get',
+                        url: '/api/payments',
+                    })
+                    .then(result => resolve(result.data.payments))
+                    .catch(error => {
+                        console.log(error)
+                        resolve([])
+                    })
+                })
+            },
+            getReferalsData(){
+                return new Promise((resolve, reject) => {
+                    axios({
+                        method: 'get',
+                        url: '/api/referrals',
+                    })
+                    .then(result => {
+                        var data = result.data.referral_codes || [],
+                            managers = (data.find(_r => _r.name == 'managers') || {}),
+                            company = (data.find(_r => _r.name == 'company') || {});
+
+                        //company summary
+                        let total_sellers = company.referral_users.filter(_u => _u.role == "seller").length,
+                            total_bloggers = company.referral_users.filter(_u => _u.role == "blogger").length;
+
+                        let total_received = company.referral_users.map(_u => _u.received ? parseFloat(_u.received) : 0)
+                                                                    .reduce((a, b) => a + b, 0);
+
+                        let company_data = {
+                            id: company.id,
+                            code: company.code,
+                            summary:{
+                                total_sellers: total_sellers,
+                                total_bloggers: total_bloggers,
+                                total_received: total_received,
+                                total_register: company.referral_users.length || 0,
+                            },
+                            list: {
+                                users: company.referral_users || [],
+                                payments: company.referral_users_with_payments || [],
+                            }
+                        }
+
+                        //managers summary
+                        let managers_data = {
+                            id: managers.id,
+                            code: managers.code,
+                            summary:{
+                                total_register: managers.referral_users.length
+                            },
+                            list: {
+                                users: managers.referral_users || [],
+                            }
+                        }
+
+                        this.referals_data = {
+                            company: company_data,
+                            managers: managers_data
+                        }
+
+                        console.log(this.referals_data)
+
+                        resolve(true)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        resolve(false)
+                    })
+                })
+            },
+            findBiggestPlatform(blogger){
                 var summaryPlatform = { subscriber_quantity: 0 };
 
                 if(blogger.platforms){
@@ -156,25 +245,42 @@
 
                 return blogger;
             },
-            changedBloggersList(){
+            updateBloggers(){
                 Promise.all([
-                    this.getBloggers(1).then(list => {
-                        this.bloggers = (list || []).map(_b => this.findBiggerPlatform(_b));
+                    this.getBloggers([1, -1]).then(list => {
+                        this.bloggers = (list || []).map(_b => this.findBiggestPlatform(_b));
                     }),
-                    this.getBloggers(0).then(list => {
-                        this.unverifiedBloggers = (list || []).map(_b => this.findBiggerPlatform(_b));;
+                    this.getBloggers([0]).then(list => {
+                        this.unverifiedBloggers = (list || []).map(_b => this.findBiggestPlatform(_b));;
                     })
                 ])
             },
-            changedSellersList(id){
-                this.sellers = this.sellers.filter(_s => _s.id != id);
+            updateSellers(){
+                this.loaderOn('#sellers-list')
+                this.getSellers().then((list) => {
+                    this.sellers = list || [];
+
+                    setTimeout(()=>{
+                        this.loaderOff()
+                    }, 500)
+                })
+            },
+            statusManagement(){
+                this.loaderOn('#projects-list')
+                this.getProjects().then((list) => {
+                    this.projects = list || [];
+
+                    setTimeout(()=>{
+                        this.loaderOff()
+                    }, 500)
+                })
             },
             switchTab(tab){
                 switch(tab){
                     case 'moderation':
                         this.loaderOn('#moderation')
-                        this.getBloggers(0).then(list => {
-                            this.bloggers = (list || []).map(_b => this.findBiggerPlatform(_b));
+                        this.getBloggers([0]).then(list => {
+                            this.unverifiedBloggers = (list || []).map(_b => this.findBiggestPlatform(_b));
                             setTimeout(()=>{
                                 this.loaderOff()
                             }, 500)
@@ -183,8 +289,8 @@
 
                     case 'blogers-list':
                         this.loaderOn('#blogers-list')
-                        this.getBloggers(1).then(list => {
-                            this.bloggers = (list || []).map(_b => this.findBiggerPlatform(_b));
+                        this.getBloggers([1, -1]).then(list => {
+                            this.bloggers = (list || []).map(_b => this.findBiggestPlatform(_b));
                             setTimeout(()=>{
                                 this.loaderOff()
                             }, 500)
@@ -193,61 +299,42 @@
 
                     case 'sellers-list':
                         this.loaderOn('#sellers-list')
-                        this.sellers = [
-                            {
-                                id: 1,
-                                user: {
-                                    name: 'Илья Софронов',
-                                    email: 'ilya.sofron@mail.ru',
-                                    phone: '+7(902)122-32-90',
-                                    image: null,
-                                },
-                                inn: '11223344556',
-                                agent: true,
-                                organization_type: 'ИП',
-                            },
-                            {
-                                id: 2,
-                                user: {
-                                    name: 'Алексей Андреев',
-                                    email: 'andrey.gaga@mail.ru',
-                                    phone: '+7(903)133-33-90',
-                                    image: null,
-                                },
-                                inn: '6554433221',
-                                agent: false,
-                                organization_type: 'ООО',
-                            },
-                            {
-                                id: 3,
-                                user: {
-                                    name: 'Владислав Савинов',
-                                    email: 'savin@ebanaya.su',
-                                    phone: '+7(912)155-44-90',
-                                    image: null,
-                                },
-                                inn: '',
-                                agent: false,
-                                organization_type: '-',
-                            },
-                        ];
-
-                        setTimeout(()=>{
-                            this.loaderOff()
-                        }, 500)
+                        this.getSellers().then((list) => {
+                            this.sellers = list || [];
+                            setTimeout(()=>{
+                                this.loaderOff()
+                            }, 500)
+                        })
                         break;
 
                     case 'projects-list':
                         this.loaderOn('#projects-list')
-                        setTimeout(()=>{
-                            this.loaderOff()
-                        }, 100)
+                        this.getProjects().then((list) => {
+                            this.projects = list || [];
+                            setTimeout(()=>{
+                                this.loaderOff()
+                            }, 500)
+                        })
+                        break
 
                     case 'payment-history':
                         this.loaderOn('#payment-history')
-                        setTimeout(()=>{
-                            this.loaderOff()
-                        }, 100)
+                        this.getOrders().then((list) => {
+                            this.orders = list || [];
+                            setTimeout(()=>{
+                                this.loaderOff()
+                            }, 500)
+                        })
+                        break
+
+                    case 'referral':
+                        this.loaderOn('#referral')
+                        this.getReferalsData().then((data) => {
+                            setTimeout(()=>{
+                                this.loaderOff()
+                            }, 500)
+                        })
+                        break
                 }
             }
         }

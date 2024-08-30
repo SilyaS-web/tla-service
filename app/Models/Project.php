@@ -66,7 +66,7 @@ class Project extends Model
         'marketplace_description',
         'marketplace_options',
         'marketplace_rate',
-        'is_blogger_access'
+        'is_blogger_access',
     ];
 
     public function executor() {}
@@ -248,6 +248,7 @@ class Project extends Model
         foreach ($project_works as $project_work) {
             if (isset(self::TYPE_NAMES[$project_work->type])) {
                 $formats[] = [
+                    'id' => $project_work->id,
                     'name' => self::TYPE_NAMES[$project_work->type],
                     'total_quantity' => $project_work->quantity,
                     'lost_quantity' => $project_work->quantity - $this->works()->where('project_work_id', $project_work->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count(),
