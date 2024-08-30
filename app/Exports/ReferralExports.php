@@ -37,7 +37,7 @@ class ReferralExports implements FromCollection, WithHeadings, WithMapping
             $referral_user->user->name,
             $referral_user->user->phone,
             $referral_user->user->role,
-            date_format($referral_user->user->created_at, 'd.m.y'),
+            date_format($referral_user->user->created_at, 'd.m.y H:i'),
             $referral_user->user->payments()->where('status', TPayment::STATUS_CONFIRMED)->sum('price') / 100,
         ];
     }
