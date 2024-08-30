@@ -27,7 +27,7 @@ class ReferralController extends Controller
     public function export(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id' => 'numeric|exists:referral_codes,id',
+            'id' => 'numeric|exists:referral_codes,id|required',
             'payments' => 'boolean|nullable',
         ]);
 
@@ -37,7 +37,7 @@ class ReferralController extends Controller
 
         $validated = $validator->validated();
 
-        if ($validated['payments']) {
+        if (isset($validated['payments']) && $validated['payments'] == true) {
             return Excel::download(new ReferralWithPaymentExports($validated['id']), 'referals.xlsx');
         }
 
