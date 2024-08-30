@@ -21319,7 +21319,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             return _u.received ? parseFloat(_u.received) : 0;
           }).reduce(function (a, b) {
             return a + b;
-          });
+          }, 0);
           var company_data = {
             id: company.id,
             code: company.code,
@@ -22579,7 +22579,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_BloggerItem = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("BloggerItem");
   var _component_confirm_popup = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("confirm-popup");
   var _component_accept_popup = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("accept-popup");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, " Модерация блогеров • " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.bloggers.length), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-blogers__search form-group\">\n                    <input type=\"name\" id=\"moderation-search\" class=\"input\" placeholder=\"Введите название\">\n                    <button class=\"btn btn-primary moderation-search-btn\">Найти</button>\n                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.bloggers, function (blogger) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, " Модерация блогеров • " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.bloggers.length), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-blogers__search form-group\">\r\n                    <input type=\"name\" id=\"moderation-search\" class=\"input\" placeholder=\"Введите название\">\r\n                    <button class=\"btn btn-primary moderation-search-btn\">Найти</button>\r\n                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.bloggers, function (blogger) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_BloggerItem, {
       bloggers: $props.bloggers,
       blogger: blogger,

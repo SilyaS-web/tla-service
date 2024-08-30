@@ -187,7 +187,7 @@
                             total_bloggers = company.referral_users.filter(_u => _u.role == "blogger").length;
 
                         let total_received = company.referral_users.map(_u => _u.received ? parseFloat(_u.received) : 0)
-                                                                    .reduce((a, b) => a + b);
+                                                                    .reduce((a, b) => a + b, 0);
 
                         let company_data = {
                             id: company.id,
