@@ -3,7 +3,7 @@
         <div class="card__row card__content">
             <div class="card__col">
                 <div class="card__row card__header">
-                    <div class="card__img" v-bind:style="'background-image:url(' + (!seller.user.image ? '/img/profile-icon.svg' : `/storage/profile/${seller.user.image}`) + ')'">
+                    <div class="card__img" v-bind:style="'background-image:url(' + (!seller.user.image ? '/img/profile-icon.svg' : `${seller.user.image}`) + ')'">
                     </div>
                     <div class="card__name">
                         <p class="card__name-name">
