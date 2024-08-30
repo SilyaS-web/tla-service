@@ -33,7 +33,7 @@
                             <span>Общая сумма всех оплат: <b>{{ ref_data.company.summary.total_received }}</b> руб.</span>
                         </div>
                         <div class="summary-referal__item">
-                            <span>Ссылка: <a href="#" v-on:click="copyLink">https://lk.adswap.ru/reg?code=12345</a></span>
+                            <span>Ссылка: <a href="#" v-on:click="copyLink">https://lk.adswap.ru/reg?code={{ ref_data.company.code }}</a></span>
                         </div>
                     </div>
                     <div class="referal__tabs">
@@ -169,7 +169,7 @@
                             <span>Кол-во зарегистрированных по ссылке: <b>{{ ref_data.managers.summary.total_register }}</b></span>
                         </div>
                         <div class="summary-referal__item">
-                            <span>Ссылка: <a href="#" v-on:click="copyLink">https://lk.adswap.ru/reg?code=54321</a></span>
+                            <span>Ссылка: <a href="#" v-on:click="copyLink">https://lk.adswap.ru/reg?code={{ ref_data.managers.code }}</a></span>
                         </div>
                     </div>
                     <div class="table">

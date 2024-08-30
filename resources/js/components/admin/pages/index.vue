@@ -72,6 +72,7 @@
                 referals_data: ref({
                     company:{
                         id: 0,
+                        code: null,
                         summary:{
                             total_sellers: 0,
                             total_bloggers: 0,
@@ -85,6 +86,7 @@
                     },
                     managers: {
                         id: 0,
+                        code: null,
                         summary:{
                             total_register: 0,
                         },
@@ -189,6 +191,7 @@
 
                         let company_data = {
                             id: company.id,
+                            code: company.code,
                             summary:{
                                 total_sellers: total_sellers,
                                 total_bloggers: total_bloggers,
@@ -204,6 +207,7 @@
                         //managers summary
                         let managers_data = {
                             id: managers.id,
+                            code: managers.code,
                             summary:{
                                 total_register: managers.referral_users.length
                             },
