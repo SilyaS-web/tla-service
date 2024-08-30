@@ -11,7 +11,7 @@
                         </a>
                     </div>
                 </nav>
-                <a href="#" class="admin-menu__leave">Выйти</a>
+                <a href="/logout" class="admin-menu__leave">Выйти</a>
             </div>
         </div>
 

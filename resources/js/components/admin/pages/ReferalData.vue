@@ -124,8 +124,8 @@
                                     <div href="" class="table__col w150px">
                                         <span>ID платежа</span>
                                     </div>
-                                    <div href="" class="table__col w200px">
-                                        <span>Дата регистрации</span>
+                                    <div href="" class="table__col w300px">
+                                        <span>Дата платежа</span>
                                     </div>
                                     <div href="" class="table__col w200px">
                                         <span>Сумма</span>
@@ -143,7 +143,7 @@
                                     <div href="" class="table__col w150px">
                                         <span>{{ payment.payment_id }}</span>
                                     </div>
-                                    <div href="" class="table__col w200px">
+                                    <div href="" class="table__col w300px">
                                         <span>{{ payment.created_at }}</span>
                                     </div>
                                     <div href="" class="table__col w200px">

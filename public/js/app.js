@@ -22704,7 +22704,7 @@ var _hoisted_34 = {
 var _hoisted_35 = {
   "class": "table"
 };
-var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"table__head\"><div class=\"table__row\"><div href=\"\" class=\"table__col w75px\"><span>ID</span></div><div href=\"\" class=\"table__col w150px\"><span>ID платежа</span></div><div href=\"\" class=\"table__col w200px\"><span>Дата регистрации</span></div><div href=\"\" class=\"table__col w200px\"><span>Сумма</span></div></div></div>", 1);
+var _hoisted_36 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"table__head\"><div class=\"table__row\"><div href=\"\" class=\"table__col w75px\"><span>ID</span></div><div href=\"\" class=\"table__col w150px\"><span>ID платежа</span></div><div href=\"\" class=\"table__col w300px\"><span>Дата платежа</span></div><div href=\"\" class=\"table__col w200px\"><span>Сумма</span></div></div></div>", 1);
 var _hoisted_37 = {
   "class": "table__body"
 };
@@ -22719,7 +22719,7 @@ var _hoisted_40 = {
 };
 var _hoisted_41 = {
   href: "",
-  "class": "table__col w200px"
+  "class": "table__col w300px"
 };
 var _hoisted_42 = {
   href: "",
@@ -22857,7 +22857,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 
-var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"burger-menu\"><div class=\"admin-menu__body\"><div class=\"admin-menu__title\"> Выберите раздел </div><nav class=\"nav admin-menu__nav\"><div class=\"nav__items\"><a href=\"\" class=\"nav__link\"> Модерация блогеров </a></div></nav><a href=\"#\" class=\"admin-menu__leave\">Выйти</a></div></div>", 1);
+var _hoisted_1 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"burger-menu\"><div class=\"admin-menu__body\"><div class=\"admin-menu__title\"> Выберите раздел </div><nav class=\"nav admin-menu__nav\"><div class=\"nav__items\"><a href=\"\" class=\"nav__link\"> Модерация блогеров </a></div></nav><a href=\"/logout\" class=\"admin-menu__leave\">Выйти</a></div></div>", 1);
 var _hoisted_2 = {
   "class": "admin-view"
 };
@@ -23048,7 +23048,7 @@ __webpack_require__.r(__webpack_exports__);
 var _hoisted_1 = {
   "class": "header"
 };
-var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"header__container _container\"><div class=\"header__body\"><div class=\"header__row\"><div class=\"header__title\"> Панель управления </div><div class=\"header__menu-btn\"><img src=\"/admin/img/menu-icon.svg\" alt=\"\"></div></div><div class=\"header__col\"><div class=\"header__leave\"><button type=\"header__leave\">Выход</button></div></div></div></div>", 1);
+var _hoisted_2 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"header__container _container\"><div class=\"header__body\"><div class=\"header__row\"><div class=\"header__title\"> Панель управления </div><div class=\"header__menu-btn\"><img src=\"/admin/img/menu-icon.svg\" alt=\"\"></div></div><div class=\"header__col\"><div class=\"header__leave\"><a href=\"/logout\" type=\"header__leave\">Выход</a></div></div></div></div>", 1);
 var _hoisted_3 = [_hoisted_2];
 function render(_ctx, _cache) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("header", _hoisted_1, [].concat(_hoisted_3));

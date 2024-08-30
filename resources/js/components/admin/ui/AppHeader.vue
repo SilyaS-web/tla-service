@@ -12,7 +12,7 @@
                     </div>
                     <div class="header__col">
                         <div class="header__leave">
-                            <button type="header__leave">Выход</button>
+                            <a href="/logout" type="header__leave">Выход</a>
                         </div>
                     </div>
                 </div>
