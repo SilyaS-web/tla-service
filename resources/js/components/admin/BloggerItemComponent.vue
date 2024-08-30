@@ -3,7 +3,7 @@
         <div class="card__row card__content">
             <div class="card__col">
                 <div class="card__row card__header">
-                    <div class="card__img" v-bind:style="'background-image:url(' + (!blogger.user.image ? '/img/profile-icon.svg' : `/storage/profile/${blogger.user.image}`) + ')'">
+                    <div class="card__img" v-bind:style="'background-image:url(' + (!blogger.user.image ? '/img/profile-icon.svg' : `${blogger.user.image}`) + ')'">
                     </div>
                     <div class="card__achive" title="Проверенный блогер" v-if="blogger.is_achievement">
                         <img src="img/achive-icon.svg" alt="">
