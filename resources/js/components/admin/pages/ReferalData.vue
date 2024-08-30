@@ -33,7 +33,7 @@
                             <span>Общая сумма всех оплат: <b>{{ ref_data.company.summary.total_received }}</b> руб.</span>
                         </div>
                         <div class="summary-referal__item">
-                            <span>Ссылка: <a href="#" v-on:click="copyLink">https://lk.adswap.ru/reg?code=12345</a></span>
+                            <span>Ссылка: <a href="#" v-on:click="copyLink">https://lk.adswap.ru/reg?code={{ ref_data.company.code }}</a></span>
                         </div>
                     </div>
                     <div class="referal__tabs">
@@ -105,7 +105,10 @@
                             </div>
                         </div>
                         <div class="table__btns">
-                            <a href="/api/referrals/export" download="" class="btn btn-primary">
+                            <a
+                                v-bind:href="'/api/referrals/export?id=' + ref_data.company.id || 0"
+                                download=""
+                                class="btn btn-primary">
                                 Скачать таблицу
                             </a>
                         </div>
@@ -150,7 +153,10 @@
                             </div>
                         </div>
                         <div class="table__btns">
-                            <a href="/api/referrals/export" download="" class="btn btn-primary">
+                            <a
+                                v-bind:href="'/api/referrals/export?payments=1&id=' + ref_data.company.id || 0"
+                                download=""
+                                class="btn btn-primary">
                                 Скачать таблицу
                             </a>
                         </div>
@@ -163,7 +169,7 @@
                             <span>Кол-во зарегистрированных по ссылке: <b>{{ ref_data.managers.summary.total_register }}</b></span>
                         </div>
                         <div class="summary-referal__item">
-                            <span>Ссылка: <a href="#" v-on:click="copyLink">https://lk.adswap.ru/reg?code=54321</a></span>
+                            <span>Ссылка: <a href="#" v-on:click="copyLink">https://lk.adswap.ru/reg?code={{ ref_data.managers.code }}</a></span>
                         </div>
                     </div>
                     <div class="table">
@@ -212,7 +218,10 @@
                         </div>
                     </div>
                     <div class="table__btns">
-                        <a href="/api/referrals/export" download="" class="btn btn-primary">
+                        <a
+                            v-bind:href="'/api/referrals/export?id=' + ref_data.managers.id || 0"
+                            download=""
+                            class="btn btn-primary">
                             Скачать таблицу
                         </a>
                     </div>
@@ -246,6 +255,14 @@
             async copyLink(event){
                 event.preventDefault();
 
+                if(navigator.clipboard != undefined){
+                    navigator.clipboard.writeText($(event.currentTarget).text()).then(function() {
+                        notify('info', {
+                            title: 'Успешно!',
+                            message: 'Ссылка скопирована в буфер обмена'
+                        })
+                    });
+                }
             }
         }
     }

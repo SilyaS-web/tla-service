@@ -71,6 +71,8 @@
                 orders: ref([]),
                 referals_data: ref({
                     company:{
+                        id: 0,
+                        code: null,
                         summary:{
                             total_sellers: 0,
                             total_bloggers: 0,
@@ -83,6 +85,8 @@
                         }
                     },
                     managers: {
+                        id: 0,
+                        code: null,
                         summary:{
                             total_register: 0,
                         },
@@ -104,6 +108,7 @@
                 })
             ]).then(() => {
                 setTimeout(()=>{
+
                     this.loaderOff();
                 }, 500)
             })
@@ -182,9 +187,11 @@
                             total_bloggers = company.referral_users.filter(_u => _u.role == "blogger").length;
 
                         let total_received = company.referral_users.map(_u => _u.received ? parseFloat(_u.received) : 0)
-                                                                    .reduce((a, b) => a + b);
+                                                                    .reduce((a, b) => a + b, 0);
 
                         let company_data = {
+                            id: company.id,
+                            code: company.code,
                             summary:{
                                 total_sellers: total_sellers,
                                 total_bloggers: total_bloggers,
@@ -199,6 +206,8 @@
 
                         //managers summary
                         let managers_data = {
+                            id: managers.id,
+                            code: managers.code,
                             summary:{
                                 total_register: managers.referral_users.length
                             },
