@@ -21,7 +21,7 @@ class ReferralCodeResource extends JsonResource
             'code' => $this->code,
             'name' => $this->name,
             'referral_users' => ReferralUserResource::collection($this->referralUsers),
-            'referral_users_with_payments' => ReferralUserWithPaymentResource::collection(Payment::whereIn('user_id', $this->referralUsers->pluck('id')->all())->where('status', TPayment::STATUS_CONFIRMED)->get()),
+            'referral_users_with_payments' => ReferralUserWithPaymentResource::collection(Payment::whereIn('user_id', $this->referralUsers->pluck('user_id')->all())->where('status', TPayment::STATUS_CONFIRMED)->get()),
         ];
     }
 }
