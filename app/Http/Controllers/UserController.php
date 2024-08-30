@@ -9,7 +9,7 @@ use App\Models\DbLog;
 use App\Models\DeepLink;
 use App\Models\DeepLinkStat;
 use App\Models\Message;
-use App\Models\Platform;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -106,7 +106,7 @@ class UserController extends Controller
         $works = Work::where([['seller_id', $user_id]])->get();
         $role = $user->role;
         $chat_role = "blogger";
-        $platforms = Platform::get();
+        $platforms = BloggerPlatform::PLATFORM_TYPES;
         $themes = Theme::get();
 
 
@@ -160,7 +160,52 @@ class UserController extends Controller
 
     public function getAdminProfileData()
     {
-        return [];
+        $validator = Validator::make(request()->all(), [
+            'user_name' => 'string',
+            'blogger_name' => 'string',
+            'seller_name' => 'string',
+        ]);
+
+        if ($validator->fails()) {
+            return [];
+        }
+        $validated = $validator->validated();
+
+        $filter = [
+            ['role', 'blogger'],
+            ['status', 0],
+        ];
+
+        if (!empty($validated['user_name'])) {
+            $filter[] = ['user_name', 'like', '%' . $validated['user_name'] . '%'];
+        }
+
+        $unverified_users = User::where($filter)->whereHas('blogger')->get();
+
+        $bloggers = [];
+        if (!empty($validated['blogger_name'])) {
+            $bloggers = Blogger::whereHas('user', function (Builder $query) use ($validated) {
+                $query->where('name', 'like', '%' . $validated['blogger_name'] . '%')->where('status', 1);
+            })->get();
+        } else {
+            $bloggers = Blogger::whereHas('user', function (Builder $query) use ($validated) {
+                $query->where('status', 1);
+            })->get();
+        }
+
+        $sellers = [];
+        if (!empty($validated['seller_name'])) {
+            $sellers = Seller::whereHas('user', function (Builder $query) use ($validated) {
+                $query->where('name', 'like', '%' . $validated['seller_name'] . '%');
+            })->get();
+        } else {
+            $sellers = Seller::get();
+        }
+        $platforms = BloggerPlatform::PLATFORM_TYPES;
+        $countries = Country::get();
+        $all_projects = Project::get();
+        $payments = Payment::get();
+        return compact('unverified_users', 'bloggers', 'sellers', 'platforms', 'countries', 'all_projects', 'payments');
     }
 
     public function edit(Request $request)
