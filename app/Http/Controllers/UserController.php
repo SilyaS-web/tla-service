@@ -106,7 +106,7 @@ class UserController extends Controller
         $works = Work::where([['seller_id', $user_id]])->get();
         $role = $user->role;
         $chat_role = "blogger";
-        $platforms = BloggerPlatform::PLATFORM_TYPES;
+        $platforms = Platform::get();
         $themes = Theme::get();
 
 
