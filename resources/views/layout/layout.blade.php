@@ -706,6 +706,7 @@
 </body>
 <script src="{{ asset("libs/owl/owl.carousel.min.js") }}"></script>
 <script src="{{ asset("js/script.js") }}"></script>
+<script src="{{ asset("js/app.js") }}"></script>
 @yield('scripts')
 
 @if(session()->has('success'))

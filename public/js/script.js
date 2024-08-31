@@ -2119,14 +2119,6 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
-    $(document).on('click', '.roles-cards__card', function(e) {
-        var role = $(e.currentTarget).data('role');
-
-        $(e.currentTarget).closest('.roles-cards').find('input[name="role"]').val($(e.currentTarget).hasClass('active') ? false : role);
-        $(e.currentTarget).toggleClass('active');
-        $(document).find('.roles-cards__card').not($(e.currentTarget)).removeClass('active')
-    })
-
     $(document).on('click', '.owl-dots', (e) => e.stopPropagation())
 
     var popupBlogerProjectMoreInfo = new PopupBlogerProjectMoreInfo('#project-item-info');

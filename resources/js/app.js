@@ -12,17 +12,29 @@ import AdminProjectsPage from './components/admin/pages/AppProjects.vue'
 import AdminOrdersPage from './components/admin/pages/AppOrders.vue'
 import AdminReferalDataPage from './components/admin/pages/ReferalData.vue'
 
+const adminApp = createApp();
+
+adminApp.component('admin-index', AdminIndex)
+adminApp.component('admin-header', AdminHeader)
+adminApp.component('admin-aside', AdminAside)
+adminApp.component('admin-bloggers-moderation-page', AdminModerationPage)
+adminApp.component('admin-bloggers-page', AdminBloggersPage)
+adminApp.component('admin-sellers-page', AdminSellersPage)
+adminApp.component('admin-projects-page', AdminProjectsPage)
+adminApp.component('admin-orders-page', AdminOrdersPage)
+adminApp.component('admin-referal-data-page', AdminReferalDataPage)
+
+adminApp.mount('#admin-app')
+
+
+import Auth from './components/auth/pages/AppAuth.vue'
+import Register from './components/auth/pages/AppRegister.vue'
+import BloggerData from './components/auth/pages/BloggerData.vue'
+
 const app = createApp();
 
-app.component('admin-index', AdminIndex)
-app.component('admin-header', AdminHeader)
-app.component('admin-aside', AdminAside)
-app.component('admin-bloggers-moderation-page', AdminModerationPage)
-app.component('admin-bloggers-page', AdminBloggersPage)
-app.component('admin-sellers-page', AdminSellersPage)
-app.component('admin-projects-page', AdminProjectsPage)
-app.component('admin-orders-page', AdminOrdersPage)
-app.component('admin-referal-data-page', AdminReferalDataPage)
+app.component('auth-page', Auth)
+app.component('register-page', Register)
+app.component('blogger-data-page', BloggerData)
 
-
-app.mount('#admin-app')
+app.mount('#app')

@@ -242,6 +242,9 @@ input[type='range']::-webkit-slider-thumb{
 input[type='range']::-webkit-slider-runnable-track{
     background-color: var(--pale);
 }
+.input.no-correct{
+    border-color:red;
+}
 .error{
     font-size: 16px;
     font-weight: 600;

@@ -3,7 +3,7 @@
 @section('title', $title ?? $user->name)
 
 @section('content')
-<section class="user-view">
+<section class="user-view" id = "app">
     <div class="user-view__container _container">
         <div class="user-view__body">
             <a href={{url('/profile/?switch-tab=' . request()->get("tab"))}} class="user-view__back">
