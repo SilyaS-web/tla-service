@@ -11,7 +11,7 @@
                         </a>
                     </div>
                 </nav>
-                <a href="#" class="admin-menu__leave">Выйти</a>
+                <a href="/logout" class="admin-menu__leave">Выйти</a>
             </div>
         </div>
 
@@ -37,6 +37,9 @@
 
                     <!-- Список заказов -->
                     <admin-orders-page v-if="isAdmin == 1" :orders="orders"></admin-orders-page>
+                    
+                    <!-- Список пользователей по реферальной ссылке -->
+                    <admin-referal-data-page v-if="isAdmin == 1" :ref_data="referals_data"></admin-referal-data-page>
                 </div>
             </div>
         </section>
@@ -51,7 +54,7 @@
         </div>
 </template>
 <script>
-    import { ref } from 'vue'
+    import {reactive, ref} from 'vue'
     import axios from 'axios'
     import Loader from '../../services/AppLoader.vue'
 
@@ -66,6 +69,32 @@
                 sellers: ref([]),
                 projects: ref([]),
                 orders: ref([]),
+                referals_data: ref({
+                    company:{
+                        id: 0,
+                        code: null,
+                        summary:{
+                            total_sellers: 0,
+                            total_bloggers: 0,
+                            total_received: 0,
+                            total_register: 0,
+                        },
+                        list: {
+                            users: [],
+                            payments: [],
+                        }
+                    },
+                    managers: {
+                        id: 0,
+                        code: null,
+                        summary:{
+                            total_register: 0,
+                        },
+                        list: {
+                            users: [],
+                        }
+                    }
+                }),
                 isAdmin: ref(false)
             }
         },
@@ -83,8 +112,6 @@
                 }, 500)
             })
             this.isAdmin = parseInt($('.wrapper').data('is-admin'));
-
-            console.log(this.isAdmin);
         },
 
         methods: {
@@ -140,6 +167,66 @@
                     .catch(error => {
                         console.log(error)
                         resolve([])
+                    })
+                })
+            },
+            getReferalsData(){
+                return new Promise((resolve, reject) => {
+                    axios({
+                        method: 'get',
+                        url: '/api/referrals',
+                    })
+                    .then(result => {
+                        var data = result.data.referral_codes || [],
+                            managers = (data.find(_r => _r.name == 'managers') || {}),
+                            company = (data.find(_r => _r.name == 'company') || {});
+
+                        //company summary
+                        let total_sellers = company.referral_users.filter(_u => _u.role == "seller").length,
+                            total_bloggers = company.referral_users.filter(_u => _u.role == "blogger").length;
+
+                        let total_received = company.referral_users.map(_u => _u.received ? parseFloat(_u.received) : 0)
+                                                                    .reduce((a, b) => a + b, 0);
+
+                        let company_data = {
+                            id: company.id,
+                            code: company.code,
+                            summary:{
+                                total_sellers: total_sellers,
+                                total_bloggers: total_bloggers,
+                                total_received: total_received,
+                                total_register: company.referral_users.length || 0,
+                            },
+                            list: {
+                                users: company.referral_users || [],
+                                payments: company.referral_users_with_payments || [],
+                            }
+                        }
+
+                        //managers summary
+                        let managers_data = {
+                            id: managers.id,
+                            code: managers.code,
+                            summary:{
+                                total_register: managers.referral_users.length
+                            },
+                            list: {
+                                users: managers.referral_users || [],
+                            }
+                        }
+
+                        this.referals_data = {
+                            company: company_data,
+                            managers: managers_data
+                        }
+
+                        console.log(this.referals_data)
+
+                        resolve(true)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        resolve(false)
                     })
                 })
             },
@@ -227,6 +314,7 @@
                                 this.loaderOff()
                             }, 500)
                         })
+                        break
 
                     case 'payment-history':
                         this.loaderOn('#payment-history')
@@ -236,6 +324,16 @@
                                 this.loaderOff()
                             }, 500)
                         })
+                        break
+
+                    case 'referral':
+                        this.loaderOn('#referral')
+                        this.getReferalsData().then((data) => {
+                            setTimeout(()=>{
+                                this.loaderOff()
+                            }, 500)
+                        })
+                        break
                 }
             }
         }

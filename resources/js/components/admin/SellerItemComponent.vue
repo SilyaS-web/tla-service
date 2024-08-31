@@ -3,7 +3,7 @@
         <div class="card__row card__content">
             <div class="card__col">
                 <div class="card__row card__header">
-                    <div class="card__img" v-bind:style="'background-image:url(' + (!seller.user.image ? '/img/profile-icon.svg' : `/storage/profile/${seller.user.image}`) + ')'">
+                    <div class="card__img" v-bind:style="'background-image:url(' + (!seller.user.image ? '/img/profile-icon.svg' : `${seller.user.image}`) + ')'">
                     </div>
                     <div class="card__name">
                         <p class="card__name-name">
@@ -57,7 +57,7 @@
                     </div>
                 </div>
                 <div class="card__row" style="text-align: center; justify-content:center">
-                    <a v-bind:href="'/seller/' + seller.user.id" class="" style="color:rgba(0,0,0,.4); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -20px;">Подробнее</a>
+                    <a v-bind:href="'/seller/' + seller.id" class="" style="color:rgba(0,0,0,.4); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -20px;">Подробнее</a>
                 </div>
 
                 <div v-if="seller.user.status == -1" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
@@ -86,7 +86,6 @@
         props: ['seller', 'sellers'],
         methods:{
             deletionConfirmation() {
-
                 this.$emit('deletionConfirmation', this.seller.user.id)
             },
 

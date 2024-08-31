@@ -24,6 +24,10 @@
                             <img src="/admin/img/history-icon.svg" alt="" class="nav__link-img">
                             История заказов
                         </a>
+                        <a v-on:click="switchTab" v-if="isAdmin == 1" href="#" class="nav__link tab" data-content="referral" title="Реферальные ссылки">
+                            <img src="/admin/img/link-icon.svg" alt="" class="nav__link-img">
+                            Реферальные ссылки
+                        </a>
                     </div>
                 </nav>
             </div>
@@ -38,13 +42,8 @@
         data(){
             return Tabs;
         },
-        created(){
-            console.log(this);
-
-        },
         methods:{
             switchTab(event){
-                console.log($(event.target).data('content'));
                 this.$emit('switchTab', $(event.target).data('content'))
                 this.tabClick(event)
             }

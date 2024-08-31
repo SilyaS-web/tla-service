@@ -64,7 +64,7 @@
                 }
             },
 
-            agree(id){
+            accept(id){
                 this.$emit('updateBloggers', id);
             },
 
