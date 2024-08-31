@@ -36,6 +36,8 @@ Route::post('/bloggers/{blogger}/accept', [BloggerController::class, 'accept']);
 Route::get('/sellers', [SellerController::class, 'index']);
 
 Route::get('/projects', [ProjectController::class, 'index']);
+Route::post('/projects', [ProjectController::class, 'store']);
+Route::get('/projects/{project}', [ProjectController::class, 'show']);
 Route::get('/projects/{project}/ban', [ProjectController::class, 'ban']);
 Route::get('/projects/{project}/unban', [ProjectController::class, 'unban']);
 
