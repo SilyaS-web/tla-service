@@ -2,6 +2,9 @@
     import axios from 'axios'
 
     const User = {
+        getCurrent: () => {
+            //local storage or request
+        },
         auth: (data) => {
             return new Promise((resolve, reject) => {
                 axios({

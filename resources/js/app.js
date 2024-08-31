@@ -28,11 +28,13 @@ adminApp.mount('#admin-app')
 
 import Auth from './components/auth/pages/AppAuth.vue'
 import Register from './components/auth/pages/AppRegister.vue'
+import BloggerData from './components/auth/pages/BloggerData.vue'
 
 const app = createApp();
 
 app.component('auth-page', Auth)
 app.component('register-page', Register)
+app.component('blogger-data-page', BloggerData)
 
 
 app.mount('#app')
