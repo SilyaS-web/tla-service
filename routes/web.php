@@ -43,8 +43,6 @@ Route::prefix('lnk')->group(function () {
 });
 
 Route::prefix('apist')->group(function () {
-    Route::post('/password/reset', [AuthController::class, 'resetPassword']);
-    Route::post('/tg/confirmed', [AuthController::class, 'isTgConfirmed']);
     Route::post('/tg', [AuthController::class, 'setTGPhone']);
     Route::get('/check-tariffs', [SellerController::class, 'checkTariffs']);
     Route::get('/check-projects', [SellerController::class, 'checkProjectWorks']);

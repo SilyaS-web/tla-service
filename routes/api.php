@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BloggerController;
 use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\ProjectController;
@@ -19,6 +20,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::post('/login', [AuthController::class, 'authenticate']);
+Route::get('/users/reset-password', [AuthController::class, 'resetPassword']);
+Route::get('/users/phone-confirmed', [AuthController::class, 'isTgConfirmed']);
+
+Route::post('/users', [AuthController::class, 'store']);
 Route::delete('/users/{user}', [UserController::class, 'delete']);
 Route::get('/users/{user}/ban', [UserController::class, 'ban']);
 Route::get('/users/{user}/unban', [UserController::class, 'unban']);
