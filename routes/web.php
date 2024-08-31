@@ -25,11 +25,7 @@ use App\Http\Controllers\WorkController;
 */
 
 Route::get('/', function () {
-    if (Auth::check()) {
-        return redirect()->route('profile');
-    } else {
-        return redirect()->route('login');
-    }
+    return view('index');
 });
 
 Route::get('/policy', function () {

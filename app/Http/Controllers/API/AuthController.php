@@ -161,7 +161,10 @@ class AuthController extends Controller
         }
 
         if (auth()->attempt($credentials)) {
-            return response()->json(['user' => Auth::user()], 200);
+            $user = Auth::user();
+            $token = $user->createToken('Bearer');
+
+            return response()->json(['user' => $user, 'token' => $token->plainTextToken], 200);
         };
 
         return response()->json(['errors' => [
