@@ -460,7 +460,7 @@ class ProjectController extends Controller
     public function getProductInfo(Project $project)
     {
         $total_quantity = $project->projectWorks()->sum('quantity');
-        $lost_quantity = $total_quantity - $project->works()->where('status', '<>', null)->count();
+        $lost_quantity = $total_quantity - $project->works()->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
 
         return response()->json([
             'category' => $project->marketplace_category,

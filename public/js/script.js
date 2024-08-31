@@ -2620,3 +2620,92 @@ selectTab = (tabName)=>{
 
     $(`#${tabName}`).addClass('active')
 }
+
+function denyWork(el, work_id){
+    el.innerHTML  = 'Отклоняем заявку';
+    el.classList.add('disabled');
+    el.disabled = true;
+    $.ajax({
+        url: 'apist/works/' + work_id + ' /deny',
+        success: (res)=>{
+            self.closePopup();
+            notify('info', {title: 'Успешно!', message: 'Заявка отклонена'});
+
+            el.innerHTML  = 'Заявка отклонена';
+        },
+        error: (res) => {
+            el.innerHTML = 'Отклонить';
+            el.disabled = false;
+            notify('error', {
+                title: 'Ошибка!',
+                message: 'Не удалось отклонить заявку'
+            });
+        }
+    })
+}
+
+function denyWork(el, work_id){
+    el.innerHTML  = 'Отклоняем заявку...';
+    el.classList.add('disabled');
+    el.disabled = true;
+    $.ajax({
+        url: 'apist/works/' + work_id + ' /deny',
+        success: ()=>{
+            notify('info', {title: 'Успешно!', message: 'Заявка отклонена'});
+            let index = $(el).closest('owl-item').index() - 1;
+            $(el).closest(".owl-carousel").trigger('remove.owl.carousel', [index]);
+            $(el).closest(".owl-carousel").trigger('refresh.owl.carousel');
+        },
+        error: () => {
+            el.innerHTML = 'Отклонить';
+            el.disabled = false;
+            notify('error', {
+                title: 'Ошибка!',
+                message: 'Не удалось отклонить заявку'
+            });
+        }
+    })
+}
+
+function acceptWork(el, work_id, project_id){
+    el.innerHTML  = 'Принимаем заявку...';
+    el.classList.add('disabled');
+    el.disabled = true;
+    $.ajax({
+        url: 'apist/works/' + work_id + ' /start',
+        success: ()=>{
+            notify('info', {title: 'Успешно!', message: 'Заявка принята'});
+            $(el).prop("onclick", null).off("click");
+            $(el).siblings('button').hide();
+
+            el.innerHTML  = 'Перейти в диалог';
+            el.classList.add('btn-to-chat');
+            el.classList.remove('disabled');
+            el.disabled = false;
+        },
+        error: () => {
+            el.innerHTML = 'Принять';
+            el.disabled = false;
+            el.classList.remove('disabled');
+
+            notify('error', {
+                title: 'Ошибка!',
+                message: 'Не удалось принять заявку'
+            });
+        }
+    })
+}
+
+$(window).on('load', function(){
+    $(document).on('click', '.btn-to-chat', (e)=>{
+
+        var id = $(e.target).closest('.btn-to-chat').data('work-id');
+        if($(document).find(`.item-chat[data-id="${id}"]`).length > 0){
+            $(document).find('.chat-link').click();
+            $(document).find(`.item-chat[data-id="${id}"]`).click();
+            $([document.documentElement, document.body]).animate({
+                scrollTop: $(document).find(`.item-chat[data-id="${id}"]`).offset().top
+            }, 2000);
+        }
+    })
+})

@@ -88,10 +88,11 @@ class WorkController extends Controller
             ]);
 
             TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' принял вашу заявку' . ' на проект ' . $work->project->product_name);
-            return redirect()->back()->with('success', 'Заявка успешно принята');
+            return response()->json('success', 200);
+
         }
 
-        return redirect()->back()->with('success', 'Не удалось принять заявку');
+        return response()->json('error', 400);
     }
 
     public function acceptApplication(Request $request)
@@ -307,7 +308,17 @@ class WorkController extends Controller
 
     public function deny(Work $work) {
         $work->delete();
-        return redirect()->route('profile')->with('success', 'Заявка откланена')->with('switch-tab', 'profile-projects');
+        $user = Auth::user();
+
+        Notification::create([
+            'user_id' => $work->getPartnerUser($user->role)->id,
+            'type' => 'Заявка отклонена',
+            'text' => $user->name . ' отклонил вашу заявку на проект' . $work->project->product_name,
+            'work_id' => $work->id,
+            'from_user_id' => $user->id,
+        ]);
+        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' отклонил вашу заявку на проект' . $work->project->product_name);
+        return response()->json('success', 200);
     }
 
     public function viewChat(Work $work) {

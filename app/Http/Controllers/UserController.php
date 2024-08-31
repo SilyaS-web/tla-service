@@ -9,7 +9,7 @@ use App\Models\DbLog;
 use App\Models\DeepLink;
 use App\Models\DeepLinkStat;
 use App\Models\Message;
-use App\Models\Platform;
+use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -18,14 +18,12 @@ use App\Models\Project;
 use App\Models\ProjectWork;
 use App\Models\Seller;
 use App\Models\TariffGroup;
-use App\Models\TgPhone;
+use App\Models\Platform;
 use App\Models\Theme;
 use Illuminate\Database\Eloquent\Builder;
 use App\Models\User;
 use App\Models\Work;
 use App\Services\TgService;
-use Carbon\Carbon;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -78,7 +76,7 @@ class UserController extends Controller
         $application_works = Work::where([['blogger_id', $user_id]])->where('status', null)->where('created_by', '<>', $user_id)->where('accepted_by_blogger_at', null)->get();
         $role = $user->role;
 
-        return compact('active_project_works', 'all_projects', 'application_works', 'works', 'role', 'user_id');
+        return compact('active_project_works', 'all_projects', 'application_works', 'works', 'role', 'user_id', 'platforms');
     }
 
     public function getSellerProfileData()

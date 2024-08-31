@@ -213,12 +213,12 @@
                                     <a href="{{ route('blogger-page', $blogger->id) . '?tab=profile-projects' }}" class="" style="width: 100%; color: #FE5E00; font-size:16px; font-weight:500; text-decoration:underline; margin-top: -10px;">Подробнее</a>
                                 </div>
                                 <div class="card__row bloger-item--btns" style="gap:12px; width:100%; flex-wrap: wrap; justify-content: center">
-                                    <a href="apist/works/{{ $work_application->id }}/start" class="btn btn-primary" data-project-id="">
+                                    <button class="btn btn-primary" onclick="acceptWork(this, {{ $work_application->id }}, {{ $project->id}})" data-work-id="{{ $work_application->id }}">
                                         Принять
-                                    </a>
-                                    <a class="btn btn-secondary" href="apist/works/{{ $work_application->id }}/deny" data-project-id="">
+                                    </button>
+                                    <button class="btn btn-secondary" onclick="denyWork(this, {{ $work_application->id }})">
                                         Отклонить
-                                    </a>
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -228,7 +228,7 @@
                     @endforelse
             </div>
 
-            <div class="profile-projects__row profile-projects__blogers projects-blogers projects-blogers--in_work owl-carousel">
+            <div class="profile-projects__row profile-projects__blogers projects-blogers projects-blogers--in_work owl-carousel" data-el="active-work-list-{{$project->id}}">
                 @forelse ($project->getActiveWorks() as $active_work)
                     @php($blogger = $active_work->blogger)
                     <div class="list-blogers__item bloger-item card" data-id="{{ $active_work->id }}">
@@ -353,7 +353,9 @@
                         </div>
                     </div>
                     @empty
-                    Нет блогеров в работе
+                    <span class="empty-bloggers">
+                        Нет блогеров в работе
+                    </span>
                     @endforelse
             </div>
 
@@ -732,18 +734,3 @@
     })
 
 </script>
-<script>
-    $(window).on('load', function(){
-        $('.projects-blogers--in_work .btn-to-chat').on('click', (e)=>{
-            var id = $(e.target).closest('.btn-to-chat').data('work-id');
-            if($(document).find(`.item-chat[data-id="${id}"]`).length > 0){
-                $(document).find('.chat-link').click();
-                $(document).find(`.item-chat[data-id="${id}"]`).click();
-                $([document.documentElement, document.body]).animate({
-                    scrollTop: $(document).find(`.item-chat[data-id="${id}"]`).offset().top
-                }, 2000);
-            }
-        })
-    })
-</script>
-
