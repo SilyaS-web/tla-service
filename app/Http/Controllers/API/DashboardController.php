@@ -73,6 +73,7 @@ class DashboardController extends Controller
             'unanswered_feedbacks_count' => $user->seller->getCountUnansweredWB(),
             'total_clicks' => $total_clicks,
             'statistics' => $total_stats,
+            'feedback_ratio' => $wb_stats["percent"],
         ];
 
         return response()->json($data)->setStatusCode(200);
