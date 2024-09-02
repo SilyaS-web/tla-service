@@ -22,6 +22,20 @@ use App\Http\Controllers\Controller;
 
 class WorkController extends Controller
 {
+    public function index(Project $project, Request $request) {
+        $validator = Validator::make($request->all(), [
+            'statuses' => 'array|nullable',
+            'statuses.*' => 'numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
