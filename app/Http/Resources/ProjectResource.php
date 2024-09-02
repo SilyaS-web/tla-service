@@ -13,6 +13,10 @@ class ProjectResource extends JsonResource
      */
     public function toArray($request)
     {
+        $statCount = $this->getCountStatistics();
+        $finish_stats = $this->getFinishStats();
+        $clicks_count = $this->getClicksCount();
+
         return [
             'id' => $this->id,
             'user_id' => $this->seller_id,
@@ -31,6 +35,14 @@ class ProjectResource extends JsonResource
             'marketplace_options' => $this->marketplace_options,
             'marketplace_rate' => $this->marketplace_rate,
             'is_blogger_access' => (bool) $this->is_blogger_access,
+            'active_bloggers_count' => $this->works()->where('status', '<>', null)->count(),
+            'applications_sent_count' => $this->works()->where('status', null)->where('created_by', $this->seller_id->id)->count(),
+            'pending_bloggers_count' => $this->works()->where('status', 'pending')->count(),
+            'in_work_bloggers_count' => $this->works()->where('status', 'progress')->count(),
+            'completed_bloggers_count' => $this->works()->where('status', 'completed')->count(),
+            'product_rating' => $statCount->reviewRating ?? 0,
+            'product_feedbacks_count' => $statCount->feedbacks ?? 0,
+            'clicks_count' => $clicks_count,
             'created_at' => date_format($this->created_at, 'd.m.y'),
         ];
     }
