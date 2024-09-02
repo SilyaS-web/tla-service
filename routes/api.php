@@ -7,6 +7,7 @@ use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\SellerController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ReferralController;
+use App\Http\Controllers\API\WorkController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,6 +41,13 @@ Route::post('/projects', [ProjectController::class, 'store']);
 Route::get('/projects/{project}', [ProjectController::class, 'show']);
 Route::get('/projects/{project}/ban', [ProjectController::class, 'ban']);
 Route::get('/projects/{project}/unban', [ProjectController::class, 'unban']);
+
+Route::post('/works', [WorkController::class, 'store']);
+Route::get('/works/{work}/deny', [WorkController::class, 'deny']);
+Route::get('/works/{work_id}/accept', [WorkController::class, 'accept']);
+Route::get('/works/{work_id}/start', [WorkController::class, 'start']);
+Route::get('/works/{work}/confirm', [WorkController::class, 'confirm']);
+Route::post('/works/{work}/stats', [WorkController::class, 'stats']);
 
 Route::get('/payments', [PaymentController::class, 'index']);
 

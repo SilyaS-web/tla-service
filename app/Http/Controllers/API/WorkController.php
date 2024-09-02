@@ -67,10 +67,10 @@ class WorkController extends Controller
         ]);
 
         TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Вам поступила новая заявка от ' . $user->name  . ' на проект ' . $project_work->project->product_name);
-        return response()->json(['success'], 200);
+        return response()->json()->setStatusCode(200);
     }
 
-    public function start($work_id)
+    public function accept($work_id)
     {
         $work = Work::find($work_id);
         $user = Auth::user();
@@ -89,41 +89,14 @@ class WorkController extends Controller
             ]);
 
             TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' принял вашу заявку' . ' на проект ' . $work->project->product_name);
-            return response()->json('success', 200);
+            return response()->json('success')->setStatusCode(200);
 
         }
 
         return response()->json('error', 400);
     }
 
-    public function acceptApplication(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'work_id' => 'required|exists:works,id',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
-
-        $validated = $validator->validated();
-
-        $user = Auth::user();
-        $work = Work::find($validated['work_id']);
-
-        $work->update(['status' => Work::PENDING]);
-        $partner_user = $work->getPartnerUser($user->role);
-        Notification::create([
-            'user_id' => $partner_user->id,
-            'type' => 'Подтверждение',
-            'text' => $partner_user->name . ' принял вашу заявку по проекту ' . $work->project->product_name,
-            'work_id' => $work->id,
-            'from_user_id' => $user->id,
-        ]);
-        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' принял вашу заявку по проекту ' . $work->project->product_name);
-    }
-
-    public function accept($work_id)
+    public function start($work_id)
     {
         $work = Work::find($work_id);
         $user = Auth::user();
@@ -173,7 +146,7 @@ class WorkController extends Controller
             TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' готов приступить к работе по проекту ' . $work->project->product_name);
         }
 
-        return response()->json('success', 200);
+        return response()->json()->setStatusCode(200);
     }
 
     public function createDeepLinkByWork($work)
@@ -204,7 +177,7 @@ class WorkController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+            return response()->json($validator->errors())->setStatusCode(400);
         }
 
         $user = Auth::user();
@@ -246,7 +219,7 @@ class WorkController extends Controller
             TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' подтвердил выполнение проекта ' . $work->project->product_name);
         }
 
-        return redirect()->route('profile')->with('success');
+        return response()->json()->setStatusCode(200);
     }
 
     public function stats(Work $work, Request $request)
@@ -261,7 +234,7 @@ class WorkController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+            return response()->json($validator->errors())->setStatusCode(400);
         }
 
         $user = Auth::user();
@@ -304,10 +277,14 @@ class WorkController extends Controller
             }
         }
 
-        return response()->json('success', 200);
+        return response()->json('success')->setStatusCode(200);
     }
 
     public function deny(Work $work) {
+        if ($work->status != null && $work->status == Work::PENDING) {
+            return response()->json(['message' => 'Из этого статуса нельзя отклонить заявку'])->setStatusCode(400);
+        }
+
         $work->delete();
         $user = Auth::user();
 
@@ -319,7 +296,8 @@ class WorkController extends Controller
             'from_user_id' => $user->id,
         ]);
         TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' отклонил вашу заявку на проект' . $work->project->product_name);
-        return response()->json('success', 200);
+
+        return response()->json()->setStatusCode(200);
     }
 
     public function viewChat(Work $work) {
