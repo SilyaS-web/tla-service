@@ -28,7 +28,7 @@ class WorkResource extends JsonResource
             'project_work_id' => $this->project_work_id,
             'last_message_at' => date_format($this->last_message_at, 'd.m.y H:i'),
             'created_at' => date_format($this->created_at, 'd.m.y H:i'),
-            // 'statistics' =>
+            'statistics' => new FinishStatsResource($this->finishStats),
         ];
     }
 }

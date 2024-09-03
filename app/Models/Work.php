@@ -60,7 +60,7 @@ class Work extends Model
         return $this->hasOne(ProjectWork::class, 'id', 'project_work_id');
     }
 
-    public function FinishStats()
+    public function finishStats()
     {
         return $this->hasOne(FinishStats::class, 'work_id', 'id');
     }
