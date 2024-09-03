@@ -38,7 +38,7 @@ class ProjectResource extends JsonResource
             'marketplace_rate' => $this->marketplace_rate,
             'is_blogger_access' => (bool) $this->is_blogger_access,
             'active_bloggers_count' => $this->works()->where('status', '<>', null)->count(),
-            'applications_sent_count' => $this->works()->where('status', null)->where('created_by', $this->seller_id->id)->count(),
+            'applications_sent_count' => $this->works()->where('status', null)->where('created_by', $this->seller_id)->count(),
             'pending_bloggers_count' => $this->works()->where('status', 'pending')->count(),
             'in_work_bloggers_count' => $this->works()->where('status', 'progress')->count(),
             'completed_bloggers_count' => $this->works()->where('status', 'completed')->count(),
