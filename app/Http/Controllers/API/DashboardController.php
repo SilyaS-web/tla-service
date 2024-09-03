@@ -63,7 +63,7 @@ class DashboardController extends Controller
         }
 
         $data = [
-            'is_api_key' => isset($user->seller->wb_api_key) && !empty($user->seller->wb_api_key),
+            'is_wb_api_key' => isset($user->seller->wb_api_key) && !empty($user->seller->wb_api_key),
             'total_feedbacks_count' => $wb_stats["total"],
             'avg_feedbacks_value' => $wb_stats["avg"],
             'products_bad_feedbacks' => $wb_stats["low"],
