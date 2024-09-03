@@ -13,10 +13,11 @@ class ProjectResource extends JsonResource
      */
     public function toArray($request)
     {
+        $user = Auth()->user();
         $statCount = $this->getCountStatistics();
         $finish_stats = $this->getFinishStats();
         $clicks_count = $this->getClicksCount();
-
+        $stats = $this->getStatistics($user->seller->ozon_client_id, $user->seller->ozon_api_key);
         return [
             'id' => $this->id,
             'user_id' => $this->seller_id,
