@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BloggerController;
 use App\Http\Controllers\API\DashboardController;
 use App\Http\Controllers\API\PaymentController;
+use App\Http\Controllers\API\PlatformController;
 use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\SellerController;
 use App\Http\Controllers\API\UserController;
@@ -25,6 +26,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [AuthController::class, 'authenticate']);
 Route::get('/users/reset-password', [AuthController::class, 'resetPassword']);
 Route::get('/users/phone-confirmed', [AuthController::class, 'isTgConfirmed']);
+Route::get('/platforms', [PlatformController::class, 'isTgConfirmed']);
+Route::get('/themes', [AuthController::class, 'isTgConfirmed']);
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/users', [AuthController::class, 'store']);
