@@ -101,7 +101,6 @@ class AuthController extends Controller
         return response()->json(['message' => 'Неудалось авторизоваться'])->setStatusCode(400);
     }
 
-
     public function setTGPhone()
     {
         $validator = Validator::make(request()->all(), [
@@ -140,7 +139,6 @@ class AuthController extends Controller
 
         return response()->json('success', 200);
     }
-
     public function authenticate()
     {
         $validated = request()->validate([
