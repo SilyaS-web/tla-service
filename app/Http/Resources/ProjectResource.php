@@ -46,6 +46,7 @@ class ProjectResource extends JsonResource
             'product_feedbacks_count' => $statCount->feedbacks ?? 0,
             'clicks_count' => $clicks_count,
             'created_at' => date_format($this->created_at, 'd.m.y'),
+            'completed_works' => WorkResource::collection($this->works()->where('status', 'completed')->get())
         ];
     }
 }

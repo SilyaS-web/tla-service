@@ -61,7 +61,7 @@ class DashboardController extends Controller
         foreach ($projects as $project) {
             $subscribers = ($subscribers + $project->getSuscribers()) / 2;
         }
-
+        $avg_price = $projects->avg('product_price');
         $data = [
             'is_wb_api_key' => isset($user->seller->wb_api_key) && !empty($user->seller->wb_api_key),
             'total_feedbacks_count' => $wb_stats["total"],
@@ -75,6 +75,8 @@ class DashboardController extends Controller
             'total_clicks' => $total_clicks,
             'statistics' => $total_stats,
             'feedback_ratio' => $wb_stats["percent"],
+            'er' => $total_clicks / ($subscribers == 0 ? 1 : $subscribers),
+            'cpc' => $total_clicks == 0 ? 0 : $avg_price / $total_clicks,
         ];
 
         return response()->json($data)->setStatusCode(200);
