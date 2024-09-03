@@ -365,6 +365,7 @@ class ProjectController extends Controller
 
         return redirect()->route('profile')->with('success', 'Проект успешно обновлён')->with('switch-tab', 'profile-projects');
     }
+
     public function destroy($id)
     {
         if ($project = Project::find($id)) {
@@ -559,7 +560,6 @@ class ProjectController extends Controller
         return "basket-$t.wbbasket.ru";
     }
 
-
     public function getOzonInfo(int $product_nm, int $client_id, string $api_key)
     {
         $card = $this->getOzonGeneralInfo($product_nm, $client_id, $api_key);
@@ -596,7 +596,6 @@ class ProjectController extends Controller
             'description' => $product_description,
         ];
     }
-
 
     public function getOzonGeneralInfo(int $product_nm, int $client_id, string $api_key)
     {

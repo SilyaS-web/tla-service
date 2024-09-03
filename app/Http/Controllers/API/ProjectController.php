@@ -8,7 +8,9 @@ use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use App\Models\ProjectFile;
 use App\Models\ProjectWork;
+use App\Models\Work;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ProjectController extends Controller
@@ -23,7 +25,6 @@ class ProjectController extends Controller
 
         return response()->json($data)->setStatusCode(200);
     }
-
 
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
@@ -133,7 +134,6 @@ class ProjectController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-
     public function show(Project $project) {
         $data = new ProjectResource($project);
 
@@ -153,26 +153,399 @@ class ProjectController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Blogger  $blogger
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request)
+    public function update(Project $project)
     {
-        //
+        $validator = Validator::make(request()->all(), [
+            'product_name' => 'required|min:3|max:250',
+            'product_nm' => 'required|min:3|numeric',
+            'product_link' => 'required|min:3|max:1000',
+            'product_price' => 'required|numeric',
+            'uploaded_images' => 'array',
+            'uploaded_images.*' => 'numeric',
+            'images' => 'array',
+            'images.*' => 'image|max:10240',
+            'feedback-quantity' => 'numeric|nullable',
+            'inst-quantity' => 'numeric|nullable',
+            'youtube-quantity' => 'numeric|nullable',
+            'vk-quantity' => 'numeric|nullable',
+            'telegram-quantity' => 'numeric|nullable',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $validated = $validator->validated();
+        $product_images = request()->file('images');
+        if (empty($product_images) && empty($validated['uploaded_images'])) {
+            return redirect()->back()->with('success', 'Выберите хотя бы одно изображение для проекта');
+        }
+
+        foreach ($project->projectFiles as $file) {
+            if (!isset($validated['uploaded_images']) || empty($validated['uploaded_images']) || !in_array($file->id, $validated['uploaded_images'])) {
+                $file->delete();
+            }
+        }
+
+        if (!empty($product_images)) {
+            foreach ($product_images as $product_image) {
+                $image_path = $product_image->store('projects', 'public');
+                ProjectFile::create([
+                    'source_id' => $project->id,
+                    'type' => 0,
+                    'link' => $image_path,
+                ]);
+            }
+        }
+
+        $project->update($validated);
+
+        foreach (Project::TYPES as $type) {
+            $project_work = $project->projectWorks()->where('type', $type)->first();
+            if ($project_work) {
+                if (!isset($validated[$type . '-quantity']) || $validated[$type . '-quantity'] == 0) {
+                    $project_work->delete();
+                } else {
+                    $project_work->update([
+                        'quantity' => $validated[$type . '-quantity'],
+                    ]);
+                }
+            } else {
+                if (isset($validated[$type . '-quantity']) && $validated[$type . '-quantity'] > 0) {
+                    ProjectWork::create([
+                        'type' => $type,
+                        'quantity' => $validated[$type . '-quantity'],
+                        'project_id' => $project->id,
+                    ]);
+                }
+            }
+        }
+
+        return redirect()->route('profile')->with('success', 'Проект успешно обновлён')->with('switch-tab', 'profile-projects');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Blogger  $blogger
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Seller $blogger)
+    public function destroy($id)
     {
-        //
+        if ($project = Project::find($id)) {
+            $project->delete();
+            return redirect()->route('profile')->with('success', 'Проект успешно удалён');
+        }
+
+        return redirect()->route('profile')->with('success', 'Произошла ошибка при удалении проекта');
+    }
+
+    public function activate(Project $project)
+    {
+        $user = Auth::user();
+        foreach ($project->projectWorks as $project_work) {
+            $seller_tariff = $user->getActiveTariffs($project_work->type);
+            if (!$seller_tariff || $seller_tariff->quantity < $project_work->quantity) {
+                return redirect()->back()->with('success', 'Вашего тарифа недостаточно для того, чтобы опубликовать');
+            }
+        }
+
+        foreach ($project->projectWorks as $project_work) {
+            $seller_tariff = $user->getActiveTariffs($project_work->type);
+            $project_work->update(['finish_date' => $seller_tariff->finish_date]);
+            $seller_tariff->update(['quantity' => $seller_tariff->quantity - $project_work->quantity]);
+        }
+
+        $project->update(['is_blogger_access' => true]);
+        return redirect()->route('profile')->with('switch-tab', 'profile-projects')->with('success', 'Проект успешно опубликован');
+    }
+
+    public function stop(Project $project)
+    {
+        $project->update(['status' => Project::STOPPED]);
+        return redirect()->route('profile')->with('switch-tab', 'projects-list')->with('success', 'Проект остановлен');
+    }
+
+    public function start(Project $project)
+    {
+        $project->update(['status' => Project::ACTIVE]);
+        return redirect()->route('profile')->with('switch-tab', 'projects-list')->with('success', 'Проект возобновлён');
+    }
+    public function getProductInfo(Project $project)
+    {
+        $total_quantity = $project->projectWorks()->sum('quantity');
+        $lost_quantity = $total_quantity - $project->works()->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
+
+        return response()->json([
+            'category' => $project->marketplace_category,
+            'product_name' => $project->marketplace_product_name ?? $project->product_name,
+            'description' => $project->marketplace_description,
+            'total_quantity' => $total_quantity,
+            'lost_quantity' => $lost_quantity,
+            'product_code' => $project->product_nm,
+            'price' =>  $project->product_price,
+            'images' => $project->getImageURL(),
+            'optioins' => $project->marketplace_options != 'null' ? $project->marketplace_options : NULL,
+            'link' => $project->product_link,
+            'application_sent' => $project->isSended(),
+        ], 200);
+    }
+
+    public function curlWBStats(int $product_nm)
+    {
+        $r = $product_nm;
+        $n = ~~($r / 1e5);
+        $a = ~~($r / 1e3);
+        $o = $this->getHost($n);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://$o/vol$n/part$a/$r/info/ru/card.json");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
+
+        $response = curl_exec($ch);
+        $http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($http_code != 200) {
+            return false;
+        }
+
+        $card = json_decode($response);
+        return $card;
+    }
+
+    public function getHost($e)
+    {
+        $t = "01";
+        switch (!0) {
+            case $e >= 0 && $e <= 143:
+                $t = "01";
+                break;
+            case $e >= 144 && $e <= 287:
+                $t = "02";
+                break;
+            case $e >= 288 && $e <= 431:
+                $t = "03";
+                break;
+            case $e >= 432 && $e <= 719:
+                $t = "04";
+                break;
+            case $e >= 720 && $e <= 1007:
+                $t = "05";
+                break;
+            case $e >= 1008 && $e <= 1061:
+                $t = "06";
+                break;
+            case $e >= 1062 && $e <= 1115:
+                $t = "07";
+                break;
+            case $e >= 1116 && $e <= 1169:
+                $t = "08";
+                break;
+            case $e >= 1170 && $e <= 1313:
+                $t = "09";
+                break;
+            case $e >= 1314 && $e <= 1601:
+                $t = "10";
+                break;
+            case $e >= 1602 && $e <= 1655:
+                $t = "11";
+                break;
+            case $e >= 1656 && $e <= 1919:
+                $t = "12";
+                break;
+            case $e >= 1920 && $e <= 2045:
+                $t = "13";
+                break;
+            case $e >= 2046 && $e <= 2189:
+                $t = "14";
+                break;
+            case $e >= 2090 && $e <= 2405:
+                $t = "15";
+                break;
+            case $e >= 2406 && $e <= 2621:
+                $t = "16";
+                break;
+            default:
+                $t = "17";
+        }
+        return "basket-$t.wbbasket.ru";
+    }
+
+    public function getOzonInfo(int $product_nm, int $client_id, string $api_key)
+    {
+        $card = $this->getOzonGeneralInfo($product_nm, $client_id, $api_key);
+        if (!isset($card->id)) return false;
+
+        $product_attributes_without_names = $this->getOzonProductAttributestInfo($card->id, $client_id, $api_key);
+        $attributes = $this->getOzonAttributestInfo($card->description_category_id, $card->type_id, $client_id, $api_key);
+        $product_attributes = [];
+        $product_brand = '';
+
+        foreach ($product_attributes_without_names as $product_attribute) {
+            foreach ($attributes as $attribute) {
+                if ($attribute->id == $product_attribute->attribute_id && is_string($product_attribute->values[0]->value)) {
+                    $product_attributes[] = [
+                        'name' => $attribute->name,
+                        'value' => $product_attribute->values[0]->value,
+                    ];
+
+                    if ($attribute->name == 'Бренд') {
+                        $product_brand = $product_attribute->values[0]->value;
+                    }
+
+                    break;
+                }
+            }
+        }
+        $product_description = $this->getOzonProductDescription($card->id, $client_id, $api_key);
+
+        return [
+            'name' => $card->name,
+            'brand' => $product_brand,
+            'category' => '',
+            'options' => $product_attributes,
+            'description' => $product_description,
+        ];
+    }
+
+    public function getOzonGeneralInfo(int $product_nm, int $client_id, string $api_key)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api-seller.ozon.ru/v2/product/info',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '{
+                "sku": ' . $product_nm . '
+            }',
+            CURLOPT_HTTPHEADER => array(
+                'Api-Key: ' . $api_key,
+                'Client-Id: ' . $client_id,
+                'Content-Type: application/json',
+                'Cookie: abt_data=b89761760b8de852bf55c8ddb5c67e8d:832e12896ab719f7407396c381b35f3a3d643bbfa0faf7dc57be5fa479853d4abf58774b252ef432ca7222519c8c820723fbec410cfd0621dce2aa17bb312ad413cb085f1861a4f3740e3762e4d6ae0614e33e4c098957a50fd58f0af0978798359d6d40d544c115a7ab52adf63d59debd62021596171bf292470486511a05fb80c63d1c1b372b051eb5508704cdfd2479451d755c1f861efc363f5760900b1a40b1cf1f2d759ad9936fca12bfed8abd'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+        $result = json_decode($response);
+        if (!isset($result->result)) {
+            return false;
+        }
+
+        return $result->result;
+    }
+
+    public function getOzonProductAttributestInfo(int $product_nm, int $client_id, string $api_key)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api-seller.ozon.ru/v3/products/info/attributes',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '{
+                "filter" : {
+                    "product_id": ["' . $product_nm . '"]
+                },
+                "limit": 1
+            }',
+            CURLOPT_HTTPHEADER => array(
+                'Api-Key: ' . $api_key,
+                'Client-Id: ' . $client_id,
+                'Content-Type: application/json',
+                'Cookie: abt_data=b89761760b8de852bf55c8ddb5c67e8d:832e12896ab719f7407396c381b35f3a3d643bbfa0faf7dc57be5fa479853d4abf58774b252ef432ca7222519c8c820723fbec410cfd0621dce2aa17bb312ad413cb085f1861a4f3740e3762e4d6ae0614e33e4c098957a50fd58f0af0978798359d6d40d544c115a7ab52adf63d59debd62021596171bf292470486511a05fb80c63d1c1b372b051eb5508704cdfd2479451d755c1f861efc363f5760900b1a40b1cf1f2d759ad9936fca12bfed8abd'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        $attributes = json_decode($response)->result[0]->attributes;
+
+        return $attributes;
+    }
+
+    public function getOzonAttributestInfo(int $description_category_id, int $type_id, int $client_id, string $api_key)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api-seller.ozon.ru/v1/description-category/attribute',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '{
+                "description_category_id": ' . $description_category_id . ',
+                "type_id": ' . $type_id . '
+            }',
+            CURLOPT_HTTPHEADER => array(
+                'Api-Key: ' . $api_key,
+                'Client-Id: ' . $client_id,
+                'Content-Type: application/json',
+                'Cookie: abt_data=b89761760b8de852bf55c8ddb5c67e8d:832e12896ab719f7407396c381b35f3a3d643bbfa0faf7dc57be5fa479853d4abf58774b252ef432ca7222519c8c820723fbec410cfd0621dce2aa17bb312ad413cb085f1861a4f3740e3762e4d6ae0614e33e4c098957a50fd58f0af0978798359d6d40d544c115a7ab52adf63d59debd62021596171bf292470486511a05fb80c63d1c1b372b051eb5508704cdfd2479451d755c1f861efc363f5760900b1a40b1cf1f2d759ad9936fca12bfed8abd'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $attributes = json_decode($response)->result;
+
+        return $attributes;
+    }
+
+    public function getOzonProductDescription(int $product_nm, int $client_id, string $api_key)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://api-seller.ozon.ru/v1/product/info/description',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => '{
+                "product_id": ' . $product_nm . '
+            }',
+            CURLOPT_HTTPHEADER => array(
+                'Api-Key: ' . $api_key,
+                'Client-Id: ' . $client_id,
+                'Content-Type: application/json',
+                'Cookie: abt_data=b89761760b8de852bf55c8ddb5c67e8d:832e12896ab719f7407396c381b35f3a3d643bbfa0faf7dc57be5fa479853d4abf58774b252ef432ca7222519c8c820723fbec410cfd0621dce2aa17bb312ad413cb085f1861a4f3740e3762e4d6ae0614e33e4c098957a50fd58f0af0978798359d6d40d544c115a7ab52adf63d59debd62021596171bf292470486511a05fb80c63d1c1b372b051eb5508704cdfd2479451d755c1f861efc363f5760900b1a40b1cf1f2d759ad9936fca12bfed8abd'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+
+        $description = json_decode($response)->result->description;
+        return $description;
+    }
+
+    public function getApplicationsCount()
+    {
+        $user = Auth::user();
+        $projects = $user->projects;
+        $application_count_by_projects = [];
+        foreach ($projects as $project) {
+            $application_count_by_projects[$project->id] = $project->works()->where('status', null)->where('created_by', '<>', $user->id)->count();
+        }
+
+        return $application_count_by_projects;
     }
 }
