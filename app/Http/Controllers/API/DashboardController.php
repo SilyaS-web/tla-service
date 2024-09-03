@@ -70,7 +70,7 @@ class DashboardController extends Controller
             'products_good_feedbacks' => $wb_stats["mid"],
             'products_great_feedbacks' => $wb_stats["hig"],
             'products_few_feedbacks_count' => $wb_stats["pr_low"],
-            'products_normal_feedbacks_count' => $wb_stats["pr_low"],
+            'products_normal_feedbacks_count' => $wb_stats["pr_mid"],
             'unanswered_feedbacks_count' => $user->seller->getCountUnansweredWB(),
             'total_clicks' => $total_clicks,
             'statistics' => $total_stats,
