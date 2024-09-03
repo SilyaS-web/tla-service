@@ -27,11 +27,11 @@ class ProjectController extends Controller
 
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
-            'feedback-quantity' => 'numeric|nullable',
-            'inst-quantity' => 'numeric|nullable',
-            'youtube-quantity' => 'numeric|nullable',
-            'vk-quantity' => 'numeric|nullable',
-            'telegram-quantity' => 'numeric|nullable',
+            'feedback_quantity' => 'numeric|nullable',
+            'inst_quantity' => 'numeric|nullable',
+            'youtube_quantity' => 'numeric|nullable',
+            'vk_quantity' => 'numeric|nullable',
+            'telegram_quantity' => 'numeric|nullable',
             'product_name' => 'required|min:3|max:250',
             'product_nm' => 'required|numeric|digits_between:1,14',
             'product_link' => 'required|min:3|max:1000',
@@ -46,11 +46,11 @@ class ProjectController extends Controller
 
         $validated = $validator->validated();
         if (
-            (!isset($validated['feedback-quantity']) || $validated['feedback-quantity'] < 1) &&
-            (!isset($validated['inst-quantity']) || $validated['inst-quantity'] < 1) &&
-            (!isset($validated['youtube-quantity']) || $validated['youtube-quantity'] < 1) &&
-            (!isset($validated['vk-quantity']) || $validated['vk-quantity'] < 1) &&
-            (!isset($validated['telegram-quantity']) || $validated['telegram-quantity'] < 1)
+            (!isset($validated['feedback_quantity']) || $validated['feedback_quantity'] < 1) &&
+            (!isset($validated['inst_quantity']) || $validated['inst_quantity'] < 1) &&
+            (!isset($validated['youtube_quantity']) || $validated['youtube_quantity'] < 1) &&
+            (!isset($validated['vk_quantity']) || $validated['vk_quantity'] < 1) &&
+            (!isset($validated['telegram_quantity']) || $validated['telegram_quantity'] < 1)
         ) {
 
             return response()->json(['message' => 'Количество видов рекламы не было выбрано'])->setStatusCode(400);
@@ -80,42 +80,42 @@ class ProjectController extends Controller
         $validated['status'] = Project::ACTIVE;
         $project = Project::create($validated);
 
-        if (isset($validated['feedback-quantity']) && $validated['feedback-quantity'] > 0) {
+        if (isset($validated['feedback_quantity']) && $validated['feedback_quantity'] > 0) {
             ProjectWork::create([
                 'type' => Project::FEEDBACK,
-                'quantity' => $validated['feedback-quantity'],
+                'quantity' => $validated['feedback_quantity'],
                 'project_id' => $project->id,
             ]);
         }
 
-        if (isset($validated['inst-quantity']) && $validated['inst-quantity'] > 0) {
+        if (isset($validated['inst_quantity']) && $validated['inst_quantity'] > 0) {
             ProjectWork::create([
                 'type' => Project::INSTAGRAM,
-                'quantity' => $validated['inst-quantity'],
+                'quantity' => $validated['inst_quantity'],
                 'project_id' => $project->id,
             ]);
         }
 
-        if (isset($validated['youtube-quantity']) && $validated['youtube-quantity'] > 0) {
+        if (isset($validated['youtube_quantity']) && $validated['youtube_quantity'] > 0) {
             ProjectWork::create([
                 'type' => Project::YOUTUBE,
-                'quantity' => $validated['youtube-quantity'],
+                'quantity' => $validated['youtube_quantity'],
                 'project_id' => $project->id,
             ]);
         }
 
-        if (isset($validated['vk-quantity']) && $validated['vk-quantity'] > 0) {
+        if (isset($validated['vk_quantity']) && $validated['vk_quantity'] > 0) {
             ProjectWork::create([
                 'type' => Project::VK,
-                'quantity' => $validated['vk-quantity'],
+                'quantity' => $validated['vk_quantity'],
                 'project_id' => $project->id,
             ]);
         }
 
-        if (isset($validated['telegram-quantity']) && $validated['telegram-quantity'] > 0) {
+        if (isset($validated['telegram_quantity']) && $validated['telegram_quantity'] > 0) {
             ProjectWork::create([
                 'type' => Project::TELEGRAM,
-                'quantity' => $validated['telegram-quantity'],
+                'quantity' => $validated['telegram_quantity'],
                 'project_id' => $project->id,
             ]);
         }
