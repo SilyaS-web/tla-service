@@ -36,6 +36,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users/{user}/dashboard', [DashboardController::class, 'index']);
     Route::get('/users/{user}/ban', [UserController::class, 'ban']);
     Route::get('/users/{user}/unban', [UserController::class, 'unban']);
+    Route::get('/users/{user}/projects', [UserController::class, 'projects']);
 
     Route::get('/bloggers', [BloggerController::class, 'index']);
     Route::get('/bloggers/{blogger}', [BloggerController::class, 'show']);

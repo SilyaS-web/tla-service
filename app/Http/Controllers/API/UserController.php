@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Blogger;
-use App\Models\BloggerPlatform;
 use App\Models\User;
 use App\Services\TgService;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ProjectResource;
 use App\Models\DbLog;
-use Illuminate\Http\Request;
+use App\Models\Project;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -42,5 +42,24 @@ class UserController extends Controller
 
         $user->forceDelete();
         return response()->json()->setStatusCode(200);
+    }
+
+    public function projects(User $user) {
+        $validator = Validator::make(request()->all(), [
+            'project_type' => [Rule::in(Project::TYPES)],
+            'product_name' => '',
+            'status' => '',
+        ]);
+
+        $projects = $user->projects()->where($validator->validated())->withCount(['works' => function (Builder $query) {
+            $query->where('status', 1);
+        }])->get();
+
+
+        $data = [
+            'projects' => ProjectResource::collection($projects),
+        ];
+
+        return response()->json($data)->setStatusCode(200);
     }
 }
