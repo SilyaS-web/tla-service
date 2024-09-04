@@ -65,7 +65,7 @@
                                         Тарифы
                                     </a>
                                 @endif
-                                <form action="{{ route('logout') }}" method="POST" class="row">
+                                <form action="{{ route('logout') }}" method="GET" class="row">
                                     @csrf
                                     <button type="submit" style="width:100%; text-align:left">Выход</button>
                                 </form>
@@ -237,7 +237,7 @@
                                         Тарифы
                                     </a>
                                 @endif
-                                <form action="{{ route('logout') }}" method="POST" class="row">
+                                <form action="{{ route('logout') }}" method="GET" class="row">
                                     @csrf
                                     <button type="submit" style="width:100%; text-align:left">Выход</button>
                                 </form>
