@@ -15,7 +15,7 @@ class WorkResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'blogger_id' => new BloggerResource($this->blogger),
+            'blogger' => new BloggerResource($this->blogger),
             'seller_id' => $this->seller_id,
             'project_id' => $this->project_id,
             'message' => $this->message,

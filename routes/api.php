@@ -49,6 +49,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/projects/{project}', [ProjectController::class, 'show']);
     Route::get('/projects/{project}/ban', [ProjectController::class, 'ban']);
     Route::get('/projects/{project}/unban', [ProjectController::class, 'unban']);
+    Route::get('/projects/{project}/works', [ProjectController::class, 'works']);
 
     Route::post('/works', [WorkController::class, 'store']);
     Route::get('/works/{work}/deny', [WorkController::class, 'deny']);

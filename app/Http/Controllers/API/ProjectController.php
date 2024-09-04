@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\WorkResource;
 use App\Models\Seller;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProjectResource;
@@ -267,18 +268,11 @@ class ProjectController extends Controller
     }
 
     public function works (Project $project, Request $request) {
+        $user = Auth::user();
         $validator = Validator::make($request->all(), [
-            'feedback_quantity' => 'numeric|nullable',
-            'inst_quantity' => 'numeric|nullable',
-            'youtube_quantity' => 'numeric|nullable',
-            'vk_quantity' => 'numeric|nullable',
-            'telegram_quantity' => 'numeric|nullable',
-            'product_name' => 'required|min:3|max:250',
-            'product_nm' => 'required|numeric|digits_between:1,14',
-            'product_link' => 'required|min:3|max:1000',
-            'product_price' => 'required|numeric|digits_between:1,14',
-            'images' => 'required|array',
-            'images.*' => 'image|max:10240',
+            'created_by' => 'string||nullable',
+            'statuses' => 'array|nullable',
+            'statuses.*' => 'string',
         ]);
 
         if ($validator->fails()) {
@@ -286,6 +280,24 @@ class ProjectController extends Controller
         }
 
         $validated = $validator->validated();
+
+        $works = Work::where([]);
+        if (isset($validated['creator_role']) && !empty($validated['creator_role'])) {
+            if ($validated['creator_role'] == 'seller') {
+                $works->where('created_by', $user->id);
+            } else {
+                $works->where('created_by', '<>', $user->id);
+            }
+        }
+        if (isset($validated['statuses']) && !empty($validated['statuses'])) {
+            $works->whereIn('status', $validated['statuses']);
+        }
+
+        $data = [
+            'works' => WorkResource::collection($works->get()),
+        ];
+
+        return response()->json($data)->setStatusCode(200);
     }
 
     public function getProductInfo(Project $project)
