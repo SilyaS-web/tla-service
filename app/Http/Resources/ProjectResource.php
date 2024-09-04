@@ -48,7 +48,7 @@ class ProjectResource extends JsonResource
             'created_at' => date_format($this->created_at, 'd.m.y'),
             'completed_works' => WorkResource::collection($this->works()->where('status', 'completed')->get()),
             'completed_works_statistics' => $finish_stats,
-            'marketplace_statistics' => $finish_stats,
+            'marketplace_statistics' => $stats,
         ];
     }
 }

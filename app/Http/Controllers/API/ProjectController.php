@@ -265,6 +265,29 @@ class ProjectController extends Controller
         $project->update(['status' => Project::ACTIVE]);
         return redirect()->route('profile')->with('switch-tab', 'projects-list')->with('success', 'Проект возобновлён');
     }
+
+    public function works (Project $project, Request $request) {
+        $validator = Validator::make($request->all(), [
+            'feedback_quantity' => 'numeric|nullable',
+            'inst_quantity' => 'numeric|nullable',
+            'youtube_quantity' => 'numeric|nullable',
+            'vk_quantity' => 'numeric|nullable',
+            'telegram_quantity' => 'numeric|nullable',
+            'product_name' => 'required|min:3|max:250',
+            'product_nm' => 'required|numeric|digits_between:1,14',
+            'product_link' => 'required|min:3|max:1000',
+            'product_price' => 'required|numeric|digits_between:1,14',
+            'images' => 'required|array',
+            'images.*' => 'image|max:10240',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors())->setStatusCode(400);
+        }
+
+        $validated = $validator->validated();
+    }
+
     public function getProductInfo(Project $project)
     {
         $total_quantity = $project->projectWorks()->sum('quantity');
