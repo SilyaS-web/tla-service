@@ -49,6 +49,7 @@ class ProjectResource extends JsonResource
             'completed_works' => WorkResource::collection($this->works()->where('status', 'completed')->get()),
             'completed_works_statistics' => $finish_stats,
             'marketplace_statistics' => $stats,
+            'works_count' => $this->works()->count(),
         ];
     }
 }
