@@ -281,7 +281,7 @@ class ProjectController extends Controller
     public function start(Project $project)
     {
         $project->update(['status' => Project::ACTIVE]);
-        return redirect()->route('profile')->with('switch-tab', 'projects-list')->with('success', 'Проект возобновлён');
+        return response()->json()->setStatusCode(200);
     }
 
     public function works (Project $project, Request $request) {
