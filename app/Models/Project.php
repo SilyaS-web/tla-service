@@ -286,7 +286,7 @@ class Project extends Model
         if (strripos($this->product_link, 'ozon') !== false && $ozon_client_id && $ozon_api_key) {
             $stats = array_merge(OzonService::getOrdersStats($this->product_nm, intval($ozon_client_id), $ozon_api_key) ?? [], ['bloggers_history' => array_values($bloggers_history)]);
         } else {
-            $stats = array_merge(WbService::getOrdersStats($this->nm) ?? [], ['bloggers_history' => array_values($bloggers_history)]);
+            $stats = array_merge(WbService::getOrdersStats($this->product_nm) ?? [], ['bloggers_history' => array_values($bloggers_history)]);
         }
 
         return json_encode($stats);
