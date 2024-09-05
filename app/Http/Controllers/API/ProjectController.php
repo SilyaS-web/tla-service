@@ -275,7 +275,7 @@ class ProjectController extends Controller
     public function stop(Project $project)
     {
         $project->update(['status' => Project::STOPPED]);
-        return redirect()->route('profile')->with('switch-tab', 'projects-list')->with('success', 'Проект остановлен');
+        return response()->json()->setStatusCode(200);
     }
 
     public function start(Project $project)
