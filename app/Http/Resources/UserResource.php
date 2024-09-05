@@ -13,12 +13,14 @@ class UserResource extends JsonResource
      */
     public function toArray($request)
     {
-        $organization_name = '';
+        $organization_name = false;
+        $channel_name = false;
+
         if ($this->role == 'seller') {
             $seller = $this->seller;
             $organization_name = isset($seller->organization_name) && !empty($seller->organization_name) ? $seller->organization_type . ' '. $seller->organization_name : '';
         } else if ($this->role == 'blogger') {
-            $organization_name = $this->blogger->name;
+            $channel_name = $this->name;
         }
 
         return [
@@ -30,6 +32,7 @@ class UserResource extends JsonResource
             'status' => $this->status,
             'role' => $this->role,
             'organization_name' => $organization_name,
+            'channel_name' => $channel_name,
         ];
     }
 }

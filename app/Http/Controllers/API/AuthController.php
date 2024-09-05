@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 
 class AuthController extends Controller
 {
@@ -162,7 +163,7 @@ class AuthController extends Controller
             $user = Auth::user();
             $token = $user->createToken('Bearer');
 
-            return response()->json(['user' => $user, 'token' => $token->plainTextToken], 200);
+            return response()->json(['user' => new UserResource($user), 'token' => $token->plainTextToken], 200);
         };
 
         return response()->json(['errors' => [
