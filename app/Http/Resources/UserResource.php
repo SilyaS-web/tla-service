@@ -33,6 +33,7 @@ class UserResource extends JsonResource
             'role' => $this->role,
             'organization_name' => $organization_name,
             'channel_name' => $channel_name,
+            'tariffs' => SellerTariffResource::collection($this->getActiveTariffs())
         ];
     }
 }
