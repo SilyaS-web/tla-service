@@ -4,7 +4,7 @@
             <div class="auth__title title">
                 Авторизуйтесь
             </div>
-            <div class="form auth__form" method="POST">
+            <div class="form auth__form">
                 <div class="form-group">
                     <label for="phone">Номер телефона</label>
                     <InputPhone v-model="user.phone"></InputPhone>
@@ -22,9 +22,11 @@
                     <button class="btn btn-primary" type="submit" v-on:click="login">
                         Войти
                     </button>
-                    <a href="/reg" class="btn btn-secondary"  style="cursor: pointer">
-                        Зарегистрируйтесь
-                    </a>
+                    <router-link :to="{name: 'Register'}">
+                        <button class="btn btn-secondary"  style="cursor: pointer">
+                            Зарегистрируйтесь
+                        </button>
+                    </router-link>
                 </div>
                 <p class="form-addit">Авторизуясь, вы даёте на это согласие и принимаете условия <a href="https://adswap.ru/privacy" target="_blank">Политики конфиденциальности.</a> </p>
             </div>
@@ -34,27 +36,37 @@
 <script>
     import InputPhone from '../ui/InputPhone.vue'
     import User from '../../services/api/User.vue'
-    import {reactive} from 'vue'
+    import {ref} from 'vue'
 
     export default{
-        components:{InputPhone, User},
+        components:{InputPhone},
         data(){
             return {
-                user: reactive({
+                user: ref({
                     phone: null,
                     password: null
                 }),
-                errors: reactive({
+                errors: ref({
                     phone: null,
                     password: null
                 }),
                 User
             }
         },
+        created(){
+        },
         methods:{
-            async login(){
-                var response = await this.User.auth(this.user);
-                console.log(response);
+            login(){
+                this.User.auth(this.user).then(data => {
+                    if(data.errors){
+                        this.errors = data.errors;
+                        return
+                    }
+
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
+
+                    this.$router.replace('/profile')
+                })
             },
         }
     }

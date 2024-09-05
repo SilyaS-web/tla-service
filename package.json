@@ -17,8 +17,9 @@
         "vue-loader": "^16.2.0"
     },
     "dependencies": {
-        "chart.js": "^4.4.3",
+        "chart.js": "^4.4.4",
         "chartjs-chart-funnel": "^4.2.0",
-        "vue": "^3.4.37"
+        "vue": "^3.4.37",
+        "vue-router": "^4.4.3"
     }
 }

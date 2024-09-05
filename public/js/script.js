@@ -2324,23 +2324,23 @@ $(window).on('load', function(){
         })
     })
 
-    var quant = $(document).find('.quantity-w');
-
-    quant.on('click', function(e){
-        var prevVal = Number($(this).find('.quantity-input .input').val()),
-            maxVal = Number($(this).data('max'));
-
-        if($(e.target).closest('.quantity-minus').length > 0){
-            if(prevVal > 0){
-                $(this).find('.quantity-input .input').val(prevVal - 1)
-            }
-        }
-        if($(e.target).closest('.quantity-plus').length > 0){
-            if(prevVal < maxVal){
-                $(this).find('.quantity-input .input').val(prevVal + 1)
-            }
-        }
-    })
+    // var quant = $(document).find('.quantity-w');
+    //
+    // quant.on('click', function(e){
+    //     var prevVal = Number($(this).find('.quantity-input .input').val()),
+    //         maxVal = Number($(this).data('max'));
+    //
+    //     if($(e.target).closest('.quantity-minus').length > 0){
+    //         if(prevVal > 0){
+    //             $(this).find('.quantity-input .input').val(prevVal - 1)
+    //         }
+    //     }
+    //     if($(e.target).closest('.quantity-plus').length > 0){
+    //         if(prevVal < maxVal){
+    //             $(this).find('.quantity-input .input').val(prevVal + 1)
+    //         }
+    //     }
+    // })
 
     $(document).on('click', '.profile .nav-menu__close', function(e){
         $(e.target).closest('.profile__navigation.nav-menu').toggleClass('active')
