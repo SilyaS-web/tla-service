@@ -10,6 +10,7 @@ use App\Models\Project;
 use App\Models\ProjectFile;
 use App\Models\ProjectWork;
 use App\Models\Work;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
@@ -290,6 +291,7 @@ class ProjectController extends Controller
             'created_by' => 'string||nullable',
             'statuses' => 'array|nullable',
             'statuses.*' => 'string',
+            'status' => 'string|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -298,7 +300,28 @@ class ProjectController extends Controller
 
         $validated = $validator->validated();
 
-        $works = Work::where([]);
+
+        if (isset($validated['status']) && !empty($validated['status'])) {
+            $works = null;
+            if ($validated['status'] == 'avtive') {
+                $works = $project->works()->where(function (Builder $query) use ($project) {
+                    return $query->where('created_by', $project->seller_id)
+                        ->orWhere('status', '<>', null);
+                })->get();
+
+            } else {
+                $works = $project->works()->where('created_by', '<>', $project->seller_id)->where('status', null)->get();
+            }
+
+
+            $data = [
+                'works' => WorkResource::collection($works),
+            ];
+
+            return response()->json($data)->setStatusCode(200);
+        }
+
+        $works = $project->works();
         if (isset($validated['creator_role']) && !empty($validated['creator_role'])) {
             if ($validated['creator_role'] == 'seller') {
                 $works->where('created_by', $user->id);
