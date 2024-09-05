@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Services\WbService;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProjectResource extends JsonResource
@@ -14,7 +15,7 @@ class ProjectResource extends JsonResource
     public function toArray($request)
     {
         $user = Auth()->user();
-        $statCount = $this->getCountStatistics();
+        $statCount = WbService::getFeedbackCounters($this->product_nm);
         $finish_stats = $this->getFinishStats();
         $clicks_count = $this->getClicksCount();
         $stats = $this->getStatistics($user->seller->ozon_client_id, $user->seller->ozon_api_key);
