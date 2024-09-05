@@ -225,6 +225,23 @@ class ProjectController extends Controller
         return redirect()->route('profile')->with('success', 'Проект успешно обновлён')->with('switch-tab', 'profile-projects');
     }
 
+    public function delete(Project $project)
+    {
+        $user = Auth::user();
+        if ($project->is_blogger_access) {
+            foreach ($project->projectWorks as $project_work) {
+                $seller_tariff = $user->getActiveTariffs($project_work->type);
+                if ($seller_tariff) {
+                    $lost = $project_work->quantity - $project->works()->where('project_work_id', $project_work->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
+                    $seller_tariff->update(['quantity' => $seller_tariff->quantity + $lost]);
+                }
+            }
+        }
+
+        $project->delete();
+        return response()->json()->setStatusCode(200);
+    }
+
     public function destroy($id)
     {
         if ($project = Project::find($id)) {
