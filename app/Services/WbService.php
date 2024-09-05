@@ -27,7 +27,7 @@ class WbService
         $ch = curl_init();
 
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://anabar.ai/api/chrome/v1/product/wb/' . $this->product_nm);
+        curl_setopt($ch, CURLOPT_URL, 'https://anabar.ai/api/chrome/v1/product/wb/' . $nm);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'GET');
         curl_setopt($ch, CURLOPT_HTTPHEADER, [

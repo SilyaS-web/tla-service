@@ -47,7 +47,7 @@ class OzonService
 
     public static function getOrdersStats(int $nm, int $ozon_client_id, string $ozon_api_key)
     {
-        $card = self::getOzonGeneralInfo($nm, $ozon_client_id, $ozon_api_key);
+        $card = self::getGeneralInfo($nm, $ozon_client_id, $ozon_api_key);
         if (!$card) {
             $result = [
                 'orders' => 0,
