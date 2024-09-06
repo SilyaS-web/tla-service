@@ -14,9 +14,10 @@ class SellerTariffResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'tariff_id' => $this->id,
-            'quantity' => $this->theme,
-            'type' => $this->theme,
+            'id' => $this->id,
+            'tariff_id' => $this->tariff_id,
+            'quantity' => $this->quantity,
+            'type' => $this->type,
             'finish_date' => isset($this->finish_date) ? $this->finish_date->format('Y-m-d H:i') : null,
             'activation_date' => isset($this->activation_date) ? $this->activation_date->format('Y-m-d H:i') : null,
             'can_extend' => $this->canExtend(),
