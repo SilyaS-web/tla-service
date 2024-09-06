@@ -5,12 +5,18 @@ namespace App\Http\Controllers\API;
 use App\Models\User;
 use App\Services\TgService;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\MessageResource;
+use App\Http\Resources\NotificationResource;
 use App\Http\Resources\ProjectResource;
+use App\Http\Resources\WorkResource;
 use App\Models\DbLog;
+use App\Models\Notification;
 use App\Models\Project;
+use App\Models\Work;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -36,7 +42,8 @@ class UserController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function delete(User $user) {
+    public function delete(User $user)
+    {
         $log_message = 'Удалён пользователь ' . $user->name . ', роль ' . $user->role . ', телефон' . $user->phone . ', email' . $user->email;
         DbLog::create(['text' => $log_message]);
 
@@ -44,22 +51,121 @@ class UserController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function projects(User $user) {
+    public function projects(User $user)
+    {
         $validator = Validator::make(request()->all(), [
             'project_type' => [Rule::in(Project::TYPES)],
             'product_name' => '',
-            'status' => '',
+            'statuses' => 'array|nullable',
+            'statuses.*' => 'string',
+            'is_blogger_access' => 'boolean|nullable'
         ]);
 
-        $projects = $user->projects()->where($validator->validated())->withCount(['works' => function (Builder $query) {
-            $query->where('status', 1);
-        }])->get();
+        if ($validator->fails()) {
+            return response()->json($validator->errors())->setStatusCode(400);
+        }
 
+        $projects = $user->projects();
+
+        $validated = $validator->validated();
+
+        if (isset($validated['statuses']) && !empty($validated['statuses'])) {
+            $projects->whereIn('status', $validated['statuses']);
+        }
+
+        if (isset($validated['is_blogger_access']) && !empty($validated['is_blogger_access'])) {
+            $projects->where('is_blogger_access', $validated['is_blogger_access']);
+        }
+
+        if (isset($validated['project_name']) && !empty($validated['project_name'])) {
+            $projects->where('product_name', 'like', '%' . $validated['project_name'] . '%');
+        }
+
+        if (isset($validated['project_type']) && !empty($validated['project_type'])) {
+            $projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
+                $query->where('type', $validated['project_type']);
+            });
+        }
 
         $data = [
             'projects' => ProjectResource::collection($projects),
         ];
 
         return response()->json($data)->setStatusCode(200);
+    }
+
+    public function works(User $user, Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'is_active' => 'boolean|nullable',
+            'order_by_last_message' => 'string|nullable'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+
+        $works = $user->works();
+
+        if (isset($validated['is_active']) && !empty($validated['is_active'])) {
+            if ($validated['is_active']) {
+                $works->where('status', '<>', null);
+            } else {
+                $works->where('status', null);
+            }
+        }
+
+        if (isset($validated['order_by_last_message']) && !empty($validated['order_by_last_message'])) {
+            $works->orderBy('last_message_at', $validated['order_by_last_message']);
+        }
+
+        $data = [
+            'works' => WorkResource::collection($works->get()),
+        ];
+
+        return response()->json($data)->setStatusCode(200);
+    }
+
+    public function messages(User $user, Work $work, Request $request) {
+        $validator = Validator::make($request->all(), [
+            'order_by' => 'string|nullable'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+
+        $messages = $work->messages();
+
+        if (isset($validated['order_by']) && !empty($validated['order_by'])) {
+            $messages->orderBy('created_at', $validated['order_by']);
+        }
+
+        $data = [
+            'messages' => MessageResource::collection($messages->get()),
+        ];
+
+        return response()->json($data)->setStatusCode(200);
+    }
+
+    public function notifications(User $user, Request $request) {
+        $notifications = $user->notifications()->where('viewed_at', null)->get();
+
+        $data = [
+            'notifications' => NotificationResource::collection($notifications),
+        ];
+
+        return response()->json($data)->setStatusCode(200);
+    }
+
+    public function viewNotification(Notification $notification) {
+        $notification->viewed_at = date('Y-m-d H:i');
+        $notification->save();
+
+        return response()->json("success", 200);
     }
 }

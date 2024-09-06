@@ -37,6 +37,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users/{user}/ban', [UserController::class, 'ban']);
     Route::get('/users/{user}/unban', [UserController::class, 'unban']);
     Route::get('/users/{user}/projects', [UserController::class, 'projects']);
+    Route::get('/users/{user}/works', [UserController::class, 'works']);
+    Route::get('/users/{user}/works/{work}/messages', [UserController::class, 'messages']);
+    Route::get('/users/{user}/notifications', [UserController::class, 'notifications']);
+    Route::get('/users/{user}/notifications/{notification}/view', [UserController::class, 'viewNotification']);
 
     Route::get('/bloggers', [BloggerController::class, 'index']);
     Route::get('/bloggers/{blogger}', [BloggerController::class, 'show']);
@@ -54,6 +58,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/projects/{project}/stop', [ProjectController::class, 'stop']);
     Route::get('/projects/{project}/start', [ProjectController::class, 'start']);
     Route::get('/projects/{project}/activate', [ProjectController::class, 'activate']);
+    Route::get('/projects/barnds', [ProjectController::class, 'brands']);
 
     Route::post('/works', [WorkController::class, 'store']);
     Route::get('/works/{work}/deny', [WorkController::class, 'deny']);

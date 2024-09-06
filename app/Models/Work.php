@@ -35,6 +35,21 @@ class Work extends Model
         'last_message_at'
     ];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'accepted_by_blogger_at',
+        'accepted_by_seller_at',
+        'confirmed_by_blogger_at',
+        'confirmed_by_seller_at',
+        'last_message_at',
+        'created_at',
+        'updated_at',
+    ];
+
     public function blogger()
     {
         return $this->hasOne(Blogger::class, 'user_id', 'blogger_id');

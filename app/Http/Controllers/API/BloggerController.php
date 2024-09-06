@@ -17,6 +17,15 @@ class BloggerController extends Controller
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'name' => 'string|nullable',
+            'platform' => 'nullable',
+            'subscriber_quantity_min' => 'numeric',
+            'subscriber_quantity_max' => 'numeric',
+            'city' => 'string|nullable',
+            'country' => 'numeric|exists:countries,id|nullable',
+            'sex' => 'string|nullable',
+            'themes' => 'array|nullable',
+            'themes.*' => 'numeric',
             'statuses' => 'array|nullable',
             'statuses.*' => 'numeric',
         ]);
@@ -27,10 +36,56 @@ class BloggerController extends Controller
 
         $validated = $validator->validated();
         $bloggers = Blogger::where([]);
+
         if (isset($validated['statuses'])) {
             $bloggers->whereHas('user', function (Builder $query) use ($validated) {
                 $query->whereIn('status', array_values($validated['statuses']));
             });
+        }
+
+        if (!empty($validated['name']) && !empty($validated['name'])) {
+            $bloggers = $bloggers->whereHas('user', function (Builder $query) use ($validated) {
+                $query->where('name', 'like', '%' . $validated['name'] . '%');
+            });
+        }
+
+        if (isset($validated['subscriber_quantity_min']) && !empty($validated['subscriber_quantity_min'])) {
+            $bloggers->whereHas('platforms', function (Builder $query) use ($validated) {
+                $query->where('subscriber_quantity', '>=', $validated['subscriber_quantity_min']);
+            });
+        }
+
+        if (isset($validated['subscriber_quantity_max']) && !empty($validated['subscriber_quantity_max'])) {
+            $bloggers->whereHas('platforms', function (Builder $query) use ($validated) {
+                $query->where('subscriber_quantity', '<=', $validated['subscriber_quantity_max']);
+            });
+        }
+
+        if (isset($validated['themes']) && !empty($validated['themes'])) {
+            $bloggers->whereHas('themes', function (Builder $query) use ($validated) {
+                $query->whereIn('theme_id', $validated['themes']);
+            });
+        }
+
+        if (isset($validated['platform_id'])  && !empty($validated['platform_id'])) {
+            $bloggers->whereHas('platforms', function (Builder $query) use ($validated) {
+                $query->where('platform_id', $validated['platform_id']);
+            });
+        }
+
+        if (isset($validated['city'])  && !empty($validated['city'])) {
+            $bloggers->where('city', $validated['city']);
+        }
+
+        if (isset($validated['country'])  && !empty($validated['country'])) {
+            $bloggers->whereHas('country', function (Builder $query) use ($validated) {
+                $query->where('id', $validated['country']);
+            });
+        }
+
+        if (isset($validated['sex'])  && !empty($validated['sex'])) {
+            $sex_array = explode(',', $validated['sex']);
+            $bloggers->whereIn('sex', $sex_array);
         }
 
         $data = [

@@ -12,6 +12,7 @@ use App\Models\ProjectWork;
 use App\Models\Work;
 use App\Services\OzonService;
 use App\Services\WbService;
+use Illuminate\Validation\Rule;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -21,10 +22,37 @@ class ProjectController extends Controller
 {
     public function index(Request $request)
     {
-        $projects = Project::all();
+        $validator = Validator::make($request->all(), [
+            'project_type' => [Rule::in(Project::TYPES), 'nullable'],
+            'project_name' => 'string|nullable',
+            'statuses' => 'array|nullable',
+            'statuses.*' => 'string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors())->setStatusCode(400);
+        }
+
+        $validated = $validator->validated();
+
+        $projects = Project::where([]);
+
+        if (isset($validated['statuses']) && !empty($validated['statuses'])) {
+            $projects->whereIn('status', $validated['statuses']);
+        }
+
+        if (isset($validated['project_name']) && !empty($validated['project_name'])) {
+            $projects->where('product_name', 'like', '%' . $validated['project_name'] . '%');
+        }
+
+        if (isset($validated['project_type']) && !empty($validated['project_type'])) {
+            $projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
+                $query->where('type', $validated['project_type']);
+            });
+        }
 
         $data = [
-            'projects' => ProjectResource::collection($projects),
+            'projects' => ProjectResource::collection($projects->get()),
         ];
 
         return response()->json($data)->setStatusCode(200);
@@ -369,5 +397,16 @@ class ProjectController extends Controller
         }
 
         return $application_count_by_projects;
+    }
+
+    public function brands()
+    {
+        $user = Auth::user();
+        $brands = $user->projects()->distinct()->where('marketplace_brand', '<>', null)->pluck('marketplace_brand')->get();
+        $data = [
+            'brands' => $brands,
+        ];
+
+        return response()->json($data)->setStatusCode(200);
     }
 }

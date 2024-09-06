@@ -59,6 +59,15 @@ class User extends Authenticatable
         'telegram_verified_at' => 'datetime',
     ];
 
+    public function works()
+    {
+        if ($this->role == 'seller') {
+            return $this->seller->works();
+        } else {
+            return $this->blogger->works();
+        }
+    }
+
     public function payments()
     {
         return $this->hasMany(Payment::class, 'user_id', 'id');
