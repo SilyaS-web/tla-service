@@ -26,7 +26,9 @@
                                 href="/tariffs" class="row">
                                 Тарифы
                             </a>
-                            <a style="width:100%; text-align:left">Выход</a>
+                            <a
+                                @click="logout"
+                                style="width:100%; text-align:left">Выход</a>
                         </div>
                     </div>
                     <a href="#" class="header__col header__notif header__profile-item--js" title="Уведомления">
@@ -167,7 +169,9 @@
                                 Тарифы
                             </a>
 
-                            <a class = "row" style="width:100%; text-align:left">Выход</a>
+                            <a
+                                @click="logout"
+                                class = "row" style="width:100%; text-align:left">Выход</a>
                         </div>
                     </div>
                 </div>
@@ -181,10 +185,22 @@
     </header>
 </template>
 <script>
+    import axios from "axios";
+
     export default {
         props:['user'],
         mounted(){
 
+        },
+        methods:{
+            logout(event){
+                event.preventDefault()
+
+                localStorage.clear();
+
+                axios.defaults.headers.common['Authorization'] = '';
+                this.$router.replace('/login');
+            },
         }
     }
 </script>
