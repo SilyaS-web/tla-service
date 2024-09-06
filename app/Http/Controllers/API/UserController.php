@@ -5,10 +5,12 @@ namespace App\Http\Controllers\API;
 use App\Models\User;
 use App\Services\TgService;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\MessageResource;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\WorkResource;
 use App\Models\DbLog;
 use App\Models\Project;
+use App\Models\Work;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
@@ -124,6 +126,27 @@ class UserController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function messages(User $user, Work $work) {
+    public function messages(User $user, Work $work, Request $request) {
+        $validator = Validator::make($request->all(), [
+            'order_by' => 'string|nullable'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+
+        $messages = $work->messages();
+
+        if (isset($validated['order_by']) && !empty($validated['order_by'])) {
+            $messages->orderBy('created_at', $validated['order_by']);
+        }
+
+        $data = [
+            'messages' => MessageResource::collection($messages->get()),
+        ];
+
+        return response()->json($data)->setStatusCode(200);
     }
 }
