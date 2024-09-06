@@ -12,6 +12,7 @@ use App\Models\Project;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -89,18 +90,40 @@ class UserController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function works(User $user)
+    public function works(User $user, Request $request)
     {
-        $works = $user->works;
+        $validator = Validator::make($request->all(), [
+            'is_active' => 'boolean|nullable',
+            'order_by_last_message' => 'string|nullable'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+
+        $works = $user->works();
+
+        if (isset($validated['is_active']) && !empty($validated['is_active'])) {
+            if ($validated['is_active']) {
+                $works->where('status', '<>', null);
+            } else {
+                $works->where('status', null);
+            }
+        }
+
+        if (isset($validated['order_by_last_message']) && !empty($validated['order_by_last_message'])) {
+            $works->orderBy('last_message_at', $validated['order_by_last_message']);
+        }
 
         $data = [
-            'works' => WorkResource::collection($works),
+            'works' => WorkResource::collection($works->get()),
         ];
 
         return response()->json($data)->setStatusCode(200);
     }
 
     public function messages(User $user, Work $work) {
-
     }
 }
