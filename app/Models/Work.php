@@ -35,11 +35,6 @@ class Work extends Model
         'last_message_at'
     ];
 
-    protected $casts = [
-        'expired_at' => 'datetime'
-    ];
-
-
     /**
      * The attributes that should be mutated to dates.
      *
