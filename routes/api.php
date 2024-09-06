@@ -54,6 +54,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/projects/{project}/stop', [ProjectController::class, 'stop']);
     Route::get('/projects/{project}/start', [ProjectController::class, 'start']);
     Route::get('/projects/{project}/activate', [ProjectController::class, 'activate']);
+    Route::get('/projects/barnds', [ProjectController::class, 'brands']);
 
     Route::post('/works', [WorkController::class, 'store']);
     Route::get('/works/{work}/deny', [WorkController::class, 'deny']);
@@ -63,6 +64,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/works/{work}/stats', [WorkController::class, 'stats']);
 
     Route::get('/payments', [PaymentController::class, 'index']);
+
 
     Route::get('/referrals', [ReferralController::class, 'index']);
     Route::get('/referrals/export', [ReferralController::class, 'export']);
