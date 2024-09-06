@@ -6,6 +6,7 @@ use App\Models\User;
 use App\Services\TgService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProjectResource;
+use App\Http\Resources\WorkResource;
 use App\Models\DbLog;
 use App\Models\Project;
 use Illuminate\Validation\Rule;
@@ -36,7 +37,8 @@ class UserController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function delete(User $user) {
+    public function delete(User $user)
+    {
         $log_message = 'Удалён пользователь ' . $user->name . ', роль ' . $user->role . ', телефон' . $user->phone . ', email' . $user->email;
         DbLog::create(['text' => $log_message]);
 
@@ -44,7 +46,8 @@ class UserController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function projects(User $user) {
+    public function projects(User $user)
+    {
         $validator = Validator::make(request()->all(), [
             'project_type' => [Rule::in(Project::TYPES)],
             'product_name' => '',
@@ -84,5 +87,20 @@ class UserController extends Controller
         ];
 
         return response()->json($data)->setStatusCode(200);
+    }
+
+    public function works(User $user)
+    {
+        $works = $user->works;
+
+        $data = [
+            'works' => WorkResource::collection($works),
+        ];
+
+        return response()->json($data)->setStatusCode(200);
+    }
+
+    public function messages(User $user, Work $work) {
+
     }
 }

@@ -37,6 +37,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users/{user}/ban', [UserController::class, 'ban']);
     Route::get('/users/{user}/unban', [UserController::class, 'unban']);
     Route::get('/users/{user}/projects', [UserController::class, 'projects']);
+    Route::get('/users/{user}/works', [UserController::class, 'works']);
+    Route::get('/users/{user}/works/{work}/messages', [UserController::class, 'messages']);
 
     Route::get('/bloggers', [BloggerController::class, 'index']);
     Route::get('/bloggers/{blogger}', [BloggerController::class, 'show']);
@@ -64,7 +66,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/works/{work}/stats', [WorkController::class, 'stats']);
 
     Route::get('/payments', [PaymentController::class, 'index']);
-
 
     Route::get('/referrals', [ReferralController::class, 'index']);
     Route::get('/referrals/export', [ReferralController::class, 'export']);

@@ -142,7 +142,6 @@ class Project extends Model
 
             case self::STOPPED:
                 return "Приостановлен";
-
         }
 
         $is_null = true;
@@ -160,7 +159,8 @@ class Project extends Model
         return "Активно";
     }
 
-    public function isSended($user = null) {
+    public function isSended($user = null)
+    {
         if (!$user) {
             $user = Auth::user();
         }
