@@ -48,13 +48,36 @@ class UserController extends Controller
         $validator = Validator::make(request()->all(), [
             'project_type' => [Rule::in(Project::TYPES)],
             'product_name' => '',
-            'status' => '',
+            'statuses' => 'array|nullable',
+            'statuses.*' => 'string',
+            'is_blogger_access' => 'boolean|nullable'
         ]);
 
-        $projects = $user->projects()->where($validator->validated())->withCount(['works' => function (Builder $query) {
-            $query->where('status', 1);
-        }])->get();
+        if ($validator->fails()) {
+            return response()->json($validator->errors())->setStatusCode(400);
+        }
 
+        $projects = $user->projects();
+
+        $validated = $validator->validated();
+
+        if (isset($validated['statuses']) && !empty($validated['statuses'])) {
+            $projects->whereIn('status', $validated['statuses']);
+        }
+
+        if (isset($validated['is_blogger_access']) && !empty($validated['is_blogger_access'])) {
+            $projects->where('is_blogger_access', $validated['is_blogger_access']);
+        }
+
+        if (isset($validated['project_name']) && !empty($validated['project_name'])) {
+            $projects->where('product_name', 'like', '%' . $validated['project_name'] . '%');
+        }
+
+        if (isset($validated['project_type']) && !empty($validated['project_type'])) {
+            $projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
+                $query->where('type', $validated['project_type']);
+            });
+        }
 
         $data = [
             'projects' => ProjectResource::collection($projects),

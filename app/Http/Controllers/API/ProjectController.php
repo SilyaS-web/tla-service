@@ -41,7 +41,6 @@ class ProjectController extends Controller
             $projects->whereIn('status', $validated['statuses']);
         }
 
-
         if (isset($validated['project_name']) && !empty($validated['project_name'])) {
             $projects->where('product_name', 'like', '%' . $validated['project_name'] . '%');
         }
