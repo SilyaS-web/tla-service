@@ -6,9 +6,11 @@ use App\Models\User;
 use App\Services\TgService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MessageResource;
+use App\Http\Resources\NotificationResource;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\WorkResource;
 use App\Models\DbLog;
+use App\Models\Notification;
 use App\Models\Project;
 use App\Models\Work;
 use Illuminate\Validation\Rule;
@@ -148,5 +150,22 @@ class UserController extends Controller
         ];
 
         return response()->json($data)->setStatusCode(200);
+    }
+
+    public function notifications(User $user, Request $request) {
+        $notifications = $user->notifications()->where('viewed_at', null)->get();
+
+        $data = [
+            'notifications' => NotificationResource::collection($notifications),
+        ];
+
+        return response()->json($data)->setStatusCode(200);
+    }
+
+    public function viewNotification(Notification $notification) {
+        $notification->viewed_at = date('Y-m-d H:i');
+        $notification->save();
+
+        return response()->json("success", 200);
     }
 }
