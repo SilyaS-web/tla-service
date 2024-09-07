@@ -174,7 +174,9 @@ class UserController extends Controller
         if ($user->role != 'seller') {
             return response()->json(['message' => 'У пользователя должна быть роль селлер'])->setStatusCode(400);
         }
-        $brands = $user->projects()->distinct()->where('marketplace_brand', '<>', null)->get();;
+
+        $brands = $user->projects()->distinct()->where('marketplace_brand', '<>', null)->get(['marketplace_brand'])->pluck('marketplace_brand');
+
         $data = [
             'brands' => $brands,
         ];
