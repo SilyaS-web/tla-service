@@ -168,4 +168,17 @@ class UserController extends Controller
 
         return response()->json()->setStatusCode(200);
     }
+
+    public function brands(User $user)
+    {
+        if ($user->role != 'seller') {
+            return response()->json(['message' => 'У пользователя должна быть роль селлер'])->setStatusCode(400);
+        }
+        $brands = $user->projects()->distinct()->where('marketplace_brand', '<>', null)->get();;
+        $data = [
+            'brands' => $brands,
+        ];
+
+        return response()->json($data)->setStatusCode(200);
+    }
 }
