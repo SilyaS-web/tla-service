@@ -55,10 +55,13 @@ class WorkController extends Controller
 
         if ($user->role == 'blogger') {
             if ($project_work->project->isSended()) {
-                return response()->json('заявка отправлена')->setStatusCode(400);
+                return response()->json(['message' => 'Заявка отправлена'])->setStatusCode(400);
             }
             $blogger_user = $user;
         } else {
+            if (!isset($validated['blogger_id']) || empty($validated['blogger_id'])) {
+                return response()->json(['message' => 'У пользователя должна быть роль blogger либо укажите blogger_id'])->setStatusCode(400);
+            }
             $blogger_user = Blogger::find($validated['blogger_id']);
         }
 
