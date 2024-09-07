@@ -188,12 +188,11 @@ class WorkController extends Controller
         return $deep_link;
     }
 
-    public function confirm(Request $request)
+    public function confirm(Work $work, Request $request)
     {
         $validator = Validator::make($request->all(), [
             'message' => '',
             'mark' => 'numeric',
-            'work_id' => 'required|exists:works,id'
         ]);
 
         if ($validator->fails()) {
@@ -201,7 +200,6 @@ class WorkController extends Controller
         }
 
         $user = Auth::user();
-        $work = Work::find($request->work_id);
         $work->confirm($user);
         $work->save();
 
@@ -248,7 +246,7 @@ class WorkController extends Controller
             'views' => 'numeric',
             'reposts' => 'numeric',
             'likes' => 'numeric',
-            'platform' => 'numeric|nullable',
+            'platform_id' => 'numeric|exists:platforms,id|required',
             'images' => 'array',
             'images.*' => 'image',
         ]);
@@ -269,10 +267,10 @@ class WorkController extends Controller
 
         FinishStats::create([
             'subs' => 0,
-            'platform' => $validated['platform'],
-            'views' => $validated['views'],
-            'reposts' => $validated['reposts'],
-            'likes' => $validated['likes'],
+            'platform' => $validated['platform_id'],
+            'views' => $validated['views'] ?? 0,
+            'reposts' => $validated['reposts'] ?? 0,
+            'likes' => $validated['likes'] ?? 0,
             'work_id' => $work->id,
             'message_id' => $message->id
         ]);
@@ -297,7 +295,7 @@ class WorkController extends Controller
             }
         }
 
-        return response()->json('success')->setStatusCode(200);
+        return response()->json()->setStatusCode(200);
     }
 
     public function deny(Work $work)
