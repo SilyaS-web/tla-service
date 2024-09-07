@@ -88,7 +88,7 @@ class UserController extends Controller
         }
 
         $data = [
-            'projects' => ProjectResource::collection($projects),
+            'projects' => ProjectResource::collection($projects->get()),
         ];
 
         return response()->json($data)->setStatusCode(200);
@@ -162,10 +162,25 @@ class UserController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function viewNotification(Notification $notification) {
+    public function viewNotification(User $user, Notification $notification) {
         $notification->viewed_at = date('Y-m-d H:i');
         $notification->save();
 
-        return response()->json("success", 200);
+        return response()->json()->setStatusCode(200);
+    }
+
+    public function brands(User $user)
+    {
+        if ($user->role != 'seller') {
+            return response()->json(['message' => 'У пользователя должна быть роль селлер'])->setStatusCode(400);
+        }
+
+        $brands = $user->projects()->distinct()->where('marketplace_brand', '<>', null)->get(['marketplace_brand'])->pluck('marketplace_brand');
+
+        $data = [
+            'brands' => $brands,
+        ];
+
+        return response()->json($data)->setStatusCode(200);
     }
 }

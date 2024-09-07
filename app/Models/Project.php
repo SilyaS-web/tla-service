@@ -71,6 +71,10 @@ class Project extends Model
         'is_blogger_access',
     ];
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
     public function projectFiles()
     {
         return $this->hasMany(ProjectFile::class, 'source_id', 'id');

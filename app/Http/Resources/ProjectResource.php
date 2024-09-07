@@ -46,7 +46,7 @@ class ProjectResource extends JsonResource
             'product_rating' => $statCount->reviewRating ?? 0,
             'product_feedbacks_count' => $statCount->feedbacks ?? 0,
             'clicks_count' => $clicks_count,
-            'created_at' => date_format($this->created_at, 'd.m.y'),
+            'created_at' => isset($this->created_at) ? $this->created_at->format('d.m.Y') : null,
             'completed_works' => WorkResource::collection($this->works()->where('status', 'completed')->get()),
             'completed_works_statistics' => $finish_stats,
             'marketplace_statistics' => $stats,

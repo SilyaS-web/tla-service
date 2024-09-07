@@ -21,7 +21,7 @@ class ProjectWorkResource extends JsonResource
             'name' => $this->getProjectWorkName(),
             'quantity' => $this->quantity,
             'lost_quantity' => $this->quantity - $this->works()->where('project_work_id', $this->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count(),
-            'created_at' => date_format($this->created_at, 'd.m.y'),
+            'created_at' => isset($this->created_at) ? $this->created_at->format('d.m.Y H:i') : null,
         ];
     }
 }

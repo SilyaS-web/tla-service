@@ -398,15 +398,4 @@ class ProjectController extends Controller
 
         return $application_count_by_projects;
     }
-
-    public function brands()
-    {
-        $user = Auth::user();
-        $brands = $user->projects()->distinct()->where('marketplace_brand', '<>', null)->pluck('marketplace_brand')->get();
-        $data = [
-            'brands' => $brands,
-        ];
-
-        return response()->json($data)->setStatusCode(200);
-    }
 }

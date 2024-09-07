@@ -116,7 +116,7 @@ class BloggerController extends Controller
             'city' => 'string|nullable',
             'gender_ratio' => 'required|numeric',
             'sex' => 'required|string',
-            'platforms' => 'array',
+            'platforms' => 'array|required',
             'platforms.*.link' => 'string|nullable',
             'platforms.*.subscriber_quantity' => 'numeric|nullable',
             'platforms.*.coverage' => 'numeric|nullable',
@@ -135,12 +135,12 @@ class BloggerController extends Controller
         $is_platform = false;
 
         foreach ($validated['platforms'] as $platform) {
-            if (isset($validated['telegram_link']) && !empty($validated['telegram_link'])) {
+            if (isset($platform['link']) && !empty($platform['link'])) {
                 $is_platform = true;
                 break;
             }
         }
-        if ($is_platform) {
+        if (!$is_platform) {
             return response()->json(['message' => 'Укажите хотя бы одну соц сеть'], 400);
         }
 
