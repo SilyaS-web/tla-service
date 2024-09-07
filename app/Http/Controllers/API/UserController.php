@@ -88,7 +88,7 @@ class UserController extends Controller
         }
 
         $data = [
-            'projects' => ProjectResource::collection($projects),
+            'projects' => ProjectResource::collection($projects->get()),
         ];
 
         return response()->json($data)->setStatusCode(200);
