@@ -22,7 +22,8 @@ use App\Http\Controllers\Controller;
 
 class WorkController extends Controller
 {
-    public function index(Project $project, Request $request) {
+    public function index(Project $project, Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'statuses' => 'array|nullable',
             'statuses.*' => 'numeric',
@@ -33,7 +34,6 @@ class WorkController extends Controller
         }
 
         $validated = $validator->validated();
-
     }
 
     public function store(Request $request)
@@ -84,7 +84,7 @@ class WorkController extends Controller
         ]);
 
         TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Вам поступила новая заявка от ' . $user->name  . ' на проект ' . $project_work->project->product_name);
-        return response()->json()->setStatusCode(200);
+        return response()->json(['id' => $work->id])->setStatusCode(200);
     }
 
     public function accept($work_id)
@@ -92,25 +92,28 @@ class WorkController extends Controller
         $work = Work::find($work_id);
         $user = Auth::user();
 
-        if (!$work->status && $work->created_by != $user->id) {
-            $work->status = Work::PENDING;
-            $work->last_message_at = date('Y-m-d H:i');
-            $work->save();
-
-            Notification::create([
-                'user_id' => $work->getPartnerUser($user->role)->id,
-                'type' => 'Новая заявка',
-                'text' => $user->name . ' принял вашу заявку на проект ' . $work->project->product_name,
-                'work_id' => $work->id,
-                'from_user_id' => $user->id,
-            ]);
-
-            TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' принял вашу заявку' . ' на проект ' . $work->project->product_name);
-            return response()->json('success')->setStatusCode(200);
-
+        if ($work->created_by == $user->id) {
+            return response()->json(['message' => 'Вы не можете принять свою заявку'])->setStatusCode(400);
         }
 
-        return response()->json('error', 400);
+        if ($work->status) {
+            return response()->json(['message' => 'Заявка уже принята или отклонена'])->setStatusCode(400);
+        }
+
+        $work->status = Work::PENDING;
+        $work->last_message_at = date('Y-m-d H:i');
+        $work->save();
+
+        Notification::create([
+            'user_id' => $work->getPartnerUser($user->role)->id,
+            'type' => 'Новая заявка',
+            'text' => $user->name . ' принял вашу заявку на проект ' . $work->project->product_name,
+            'work_id' => $work->id,
+            'from_user_id' => $user->id,
+        ]);
+
+        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' принял вашу заявку' . ' на проект ' . $work->project->product_name);
+        return response()->json('success')->setStatusCode(200);
     }
 
     public function start($work_id)
@@ -297,7 +300,8 @@ class WorkController extends Controller
         return response()->json('success')->setStatusCode(200);
     }
 
-    public function deny(Work $work) {
+    public function deny(Work $work)
+    {
         if ($work->status != null && $work->status == Work::PENDING) {
             return response()->json(['message' => 'Из этого статуса нельзя отклонить заявку'])->setStatusCode(400);
         }
@@ -317,7 +321,8 @@ class WorkController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function viewChat(Work $work) {
+    public function viewChat(Work $work)
+    {
         if (Auth::user()->role !== 'admin') {
             return redirect()->route('profile');
         }
