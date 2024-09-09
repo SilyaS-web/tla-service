@@ -172,7 +172,7 @@ class WorkController extends Controller
             TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' готов приступить к работе по проекту ' . $work->project->product_name);
         }
 
-        return response()->json('success', 200);
+        return response()->json()->setStatusCode(200);
     }
 
     public function createDeepLinkByWork($work)
