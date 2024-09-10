@@ -328,18 +328,13 @@ class ProjectController extends Controller
 
         $validated = $validator->validated();
 
-
         if (isset($validated['status']) && !empty($validated['status'])) {
             $works = null;
             if ($validated['status'] == 'avtive') {
-                $works = $project->works()->where(function (Builder $query) use ($project) {
-                    return $query->where('created_by', $project->seller_id)
-                        ->orWhere('status', '<>', null);
-                })->get();
+                $works = $project->works()->where('created_by', $project->seller_id)->orWhere('status', '<>', null)->get();
             } else {
                 $works = $project->works()->where('created_by', '<>', $project->seller_id)->where('status', null)->get();
             }
-
 
             $data = [
                 'works' => WorkResource::collection($works),
