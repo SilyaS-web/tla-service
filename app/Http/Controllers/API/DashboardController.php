@@ -73,7 +73,7 @@ class DashboardController extends Controller
             'products_normal_feedbacks_count' => $wb_stats["pr_mid"],
             'unanswered_feedbacks_count' => $user->seller->getCountUnansweredWB(),
             'total_clicks' => $total_clicks,
-            'statistics' => $total_stats,
+            'statistics' => array_values($total_stats),
             'feedback_ratio' => $wb_stats["percent"],
             'er' => $total_clicks / ($subscribers == 0 ? 1 : $subscribers),
             'cpc' => $total_clicks == 0 ? 0 : $avg_price / $total_clicks,
