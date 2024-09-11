@@ -10,6 +10,8 @@ use App\Http\Resources\NotificationResource;
 use App\Http\Resources\ProjectResource;
 use App\Http\Resources\WorkResource;
 use App\Models\DbLog;
+use App\Models\Message;
+use App\Models\MessageFile;
 use App\Models\Notification;
 use App\Models\Project;
 use App\Models\Work;
@@ -182,5 +184,46 @@ class UserController extends Controller
         ];
 
         return response()->json($data)->setStatusCode(200);
+    }
+
+    public function storeMessage(User $user, Work $work, Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'message' => 'required|string',
+            'img' => '',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors())->setStatusCode(400);
+        }
+
+        $validated = $validator->validated();
+
+        $message = Message::create([
+            'work_id' => $work->id,
+            'user_id' => $user->id,
+            'message' => $validated['message'],
+        ]);
+
+        if ($request->file('img')) {
+            $product_image = $request->file('img');
+            $image_path = $product_image->store('messages', 'public');
+            MessageFile::create([
+                'source_id' => $message->id,
+                'type' => 0,
+                'link' => $image_path,
+            ]);
+        }
+
+        $work->update(['last_message_at' => date('Y-m-d H:i')]);
+        Notification::create([
+            'user_id' => $work->getPartnerUser($user->role)->id,
+            'work_id' => $work->id,
+            'type' => 'Новое сообщение',
+            'text' => 'Вам поступило новое сообщение от ' . $user->name,
+        ]);
+        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Вам поступило новое сообщение от ' . $user->name);
+
+        return response()->json()->setStatusCode(200);
     }
 }

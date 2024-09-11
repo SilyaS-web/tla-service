@@ -40,6 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users/{user}/projects/barnds', [UserController::class, 'brands']);
     Route::get('/users/{user}/works', [UserController::class, 'works']);
     Route::get('/users/{user}/works/{work}/messages', [UserController::class, 'messages']);
+    Route::post('/users/{user}/works/{work}/messages', [UserController::class, 'storeMessage']);
     Route::get('/users/{user}/notifications', [UserController::class, 'notifications']);
     Route::get('/users/{user}/notifications/{notification}/view', [UserController::class, 'viewNotification']);
 
