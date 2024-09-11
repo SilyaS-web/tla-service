@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class WorkResource extends JsonResource
 {
@@ -13,9 +14,12 @@ class WorkResource extends JsonResource
      */
     public function toArray($request)
     {
+        $user = Auth::user();
+
         return [
             'id' => $this->id,
             'blogger' => new BloggerResource($this->blogger),
+            'partner_user' => new UserResource($this->getPartnerUser($user->role)),
             'seller_user_id' => $this->seller_id,
             'blogger_user_id' => $this->blogger_id,
             'project_id' => $this->project_id,

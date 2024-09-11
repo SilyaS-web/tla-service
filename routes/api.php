@@ -33,6 +33,7 @@ Route::get('/themes', [ThemeController::class, 'index']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/users', [AuthController::class, 'store']);
     Route::delete('/users/{user}', [UserController::class, 'delete']);
+    Route::delete('/users/{user}', [UserController::class, 'delete']);
     Route::get('/users/{user}/dashboard', [DashboardController::class, 'index']);
     Route::get('/users/{user}/ban', [UserController::class, 'ban']);
     Route::get('/users/{user}/unban', [UserController::class, 'unban']);
@@ -50,6 +51,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/bloggers/{blogger}/accept', [BloggerController::class, 'accept']);
 
     Route::get('/sellers', [SellerController::class, 'index']);
+    Route::get('/sellers/{seller}', [SellerController::class, 'show']);
 
     Route::get('/projects', [ProjectController::class, 'index']);
     Route::post('/projects', [ProjectController::class, 'store']);

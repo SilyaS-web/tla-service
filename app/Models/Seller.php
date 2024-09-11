@@ -30,6 +30,11 @@ class Seller extends Model
         'ozon_client_id',
     ];
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
+
     public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
