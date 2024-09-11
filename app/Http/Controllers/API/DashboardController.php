@@ -45,7 +45,7 @@ class DashboardController extends Controller
             }
         }
 
-        $bloggers_finish = Work::selectRaw('DATE_FORMAT(confirmed_by_seller_at, "%Y-%m-%e") as date')->where('seller_id', $user->id)->where('status', Work::COMPLETED)->whereBetween('created_at', [$start_date, $end_date])->get();
+        $bloggers_finish = Work::selectRaw('DATE_FORMAT(confirmed_by_seller_at, "%Y-%m-%d") as date')->where('seller_id', $user->id)->where('status', Work::COMPLETED)->whereBetween('created_at', [$start_date, $end_date])->get();
         foreach ($bloggers_finish as $blogger_finish) {
             if (isset($total_stats[$blogger_finish->date])) {
                 $total_stats[$blogger_finish->date]['bloggers'] += 1;
