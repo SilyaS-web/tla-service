@@ -320,6 +320,7 @@ class ProjectController extends Controller
             'statuses' => 'array|nullable',
             'statuses.*' => 'string',
             'status' => 'string|nullable',
+            'order_by_last_message' => 'string|nullable'
         ]);
 
         if ($validator->fails()) {
@@ -331,14 +332,19 @@ class ProjectController extends Controller
         if (isset($validated['status']) && !empty($validated['status'])) {
             $works = null;
             $seller_id = $project->seller_id;
+
             if ($validated['status'] == 'active') {
-                $works = $project->works()->where('created_by', $seller_id)->orWhereNotNull('status')->get();
+                $works = $project->works()->where('created_by', $seller_id)->orWhereNotNull('status');
             } else {
-                $works = $project->works()->where('created_by', '<>', $seller_id)->where('status', null)->get();
+                $works = $project->works()->where('created_by', '<>', $seller_id)->where('status', null);
+            }
+
+            if (isset($validated['order_by_last_message']) && !empty($validated['order_by_last_message'])) {
+                $works->orderBy('last_message_at', $validated['order_by_last_message']);
             }
 
             $data = [
-                'works' => WorkResource::collection($works),
+                'works' => WorkResource::collection($works->get()),
             ];
 
             return response()->json($data)->setStatusCode(200);
@@ -354,6 +360,10 @@ class ProjectController extends Controller
         }
         if (isset($validated['statuses']) && !empty($validated['statuses'])) {
             $works->whereIn('status', $validated['statuses']);
+        }
+
+        if (isset($validated['order_by_last_message']) && !empty($validated['order_by_last_message'])) {
+            $works->orderBy('last_message_at', $validated['order_by_last_message']);
         }
 
         $data = [
