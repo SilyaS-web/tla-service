@@ -330,10 +330,11 @@ class ProjectController extends Controller
 
         if (isset($validated['status']) && !empty($validated['status'])) {
             $works = null;
-            if ($validated['status'] == 'avtive') {
-                $works = $project->works()->where('created_by', $project->seller_id)->orWhere('status', '<>', null)->get();
+            $seller_id = $project->seller_id;
+            if ($validated['status'] == 'active') {
+                $works = $project->works()->where('created_by', $seller_id)->orWhereNotNull('status')->get();
             } else {
-                $works = $project->works()->where('created_by', '<>', $project->seller_id)->where('status', null)->get();
+                $works = $project->works()->where('created_by', '<>', $seller_id)->where('status', null)->get();
             }
 
             $data = [
