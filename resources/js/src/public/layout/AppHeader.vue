@@ -18,9 +18,9 @@
                             </span>
                         </div>
                         <div class="header__profile-settings">
-                            <a href="/edit-profile" class="row">
+                            <router-link :to="{path: '/edit-profile'}">
                                 Личные данные
-                            </a>
+                            </router-link>
                             <a
                                 v-if="user.role == 'seller'"
                                 href="/tariffs" class="row">
@@ -161,9 +161,9 @@
                             </span>
                         </div>
                         <div class="header__profile-settings">
-                            <a href="/profile" class="row">
+                            <router-link :to="{path: '/edit-profile'}">
                                 Личные данные
-                            </a>
+                            </router-link>
 
                             <a href="/tariffs" class="row">
                                 Тарифы

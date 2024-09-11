@@ -31,13 +31,17 @@ adminApp.mount('#admin-app')
 import Auth from './src/auth/pages/AppAuth.vue'
 import Register from './src/auth/pages/AppRegister.vue'
 import Profile from './src/public/pages/index.vue'
+import SellerEditProfile from './src/public/pages/seller/EditProfile.vue'
+import Tariffs from './src/public/pages/seller/AppTariffs.vue'
 
 const app = createApp();
 
 const routes = [
     { path: '/profile', name: 'Profile', component: Profile },
-    { path: '/login', name: 'Login', component: Auth },
     { path: '/register', name: 'Register', component: Register },
+    { path: '/login', name: 'Login', component: Auth },
+    { path: '/seller/edit-profile', name: 'SellerEditProfile', component: SellerEditProfile },
+    { path: '/tariffs', name: 'Tariffs', component: Tariffs },
 ]
 
 const router = createRouter({

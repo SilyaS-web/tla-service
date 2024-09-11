@@ -1,21 +1,16 @@
 <template>
-    <div class="profile-projects tab-content" id="all-projects">
+    <div class="profile-projects tab-content active" id = "my-projects">
         <div class="profile-projects__body">
             <div class="projects-list__header">
                 <div class="list-projects__title title">
-                    Все проекты
+                    Принятые проекты
                 </div>
                 <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
                     <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
                 </div>
             </div>
-            <div class="profile-projects__items list-projects__items" style="max-width:1030px">
-                <ListItem
-                    v-if="projects.length > 0"
-                    v-for="project in projects"
-                    :project="project"
-                ></ListItem>
-                <span v-else>Проектов нет</span>
+            <div class="list-projects__items">
+
             </div>
         </div>
         <div class="profile-projects__filters">
@@ -31,12 +26,12 @@
                     </div>
                     <div class="filter__items">
                         <div class="form-group filter__item">
-                            <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию">
+                            <input type="text" class="input" name="filter-name" id="" placeholder="Поиск по названию">
                         </div>
                         <div class="form-group filter__item">
                             <label for="filter-category">Категория</label>
                             <input type="text" class="input" name="filter-category" id="filter-category" placeholder="Введите категорию">
-                            <input type="text" id = "filter-category-id" hidden>
+                            <input type="text" id = "" hidden>
                             <div class="filter-tooltip" style="display: none">
                                 <div class="filter-tooltip__items">
                                 </div>
@@ -53,6 +48,7 @@
                                 <option value="telegram" class="">Интеграция Telegram</option>
                             </select>
                         </div>
+
                         <div class="filter__btns">
                             <button class="btn btn-primary btn-filter-send">Применить</button>
                         </div>
@@ -63,11 +59,7 @@
     </div>
 </template>
 <script>
-    import ListItem from './ProjectsListItem.vue'
-    import {ref} from "vue";
-
     export default{
-        props:['projects'],
-        components:{ListItem},
+
     }
 </script>

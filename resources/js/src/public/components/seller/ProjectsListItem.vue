@@ -1,12 +1,12 @@
 <template>
-    <div class="list-projects__item project-item" v-if="project.status != 'completed'">
+    <div class="list-projects__item project-item">
         <div class="owl-carousel project-item__carousel">
             <div
-                :style="'background-image: url(' + project.image + ')'"
+                :style="'background-image: url(' + project.project_files[0].link + ')'"
                 class="project-item__img">
             </div>
             <div class="project-item__status active">
-                {{ project.status }}
+                {{ project.status_name }}
             </div>
         </div>
         <div class="project-item__content">
@@ -18,11 +18,10 @@
             </div>
             <div class="project-item__left" style="margin-bottom: 12px;">
                 <div class="line">
-                    <div
-                        :style="'width:' + (project.lost_seats / (project.total_seats * 100)) + '%'"
-                        class="line__val"></div>
+                    <div class="line__val"
+                         :style="'width:' + ((project.project_works.map(_p => parseInt(_p.lost_quantity)).reduce((a, b) => a + b, 0) / project.project_works.map(_p => parseInt(_p.quantity)).reduce((a, b) => a + b, 0)) * 100) + '%'"></div>
                 </div>
-                Осталось мест на интеграцию <span style="font-weight: 700;">{{ project.lost_seats }}/{{ project.total_seats }}</span>
+                Осталось мест на интеграцию <span style="font-weight: 700;">{{ project.project_works.map(_p => parseInt(_p.lost_quantity)).reduce((a, b) => a + b, 0) }} / {{ project.project_works.map(_p => parseInt(_p.quantity)).reduce((a, b) => a + b, 0) }}</span>
             </div>
             <div class="project-item__format-tags card__row card__tags">
                 <div
@@ -32,12 +31,12 @@
                     <span>{{ project_work.type }} - {{ project_work.quantity - project_work.lost_quantity }}/{{ project_work.quantity }}</span>
                 </div>
             </div>
-            <div class="project-item__btns">
-                <a
-                    :data-project-id="project.id"
-                    :data-articul="project.product_nm "
-                    href="#" class="btn btn-primary btn-choose-project">Выбрать</a>
-            </div>
+<!--            <div class="project-item__btns">-->
+<!--                <a-->
+<!--                    :data-project-id="project.id"-->
+<!--                    :data-articul="project.product_nm"-->
+<!--                    href="#" class="btn btn-primary btn-choose-project">Выбрать</a>-->
+<!--            </div>-->
         </div>
     </div>
 </template>

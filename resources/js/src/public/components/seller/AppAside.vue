@@ -2,22 +2,22 @@
     <div class="profile__navigation nav-menu">
         <div class="nav-menu__body">
             <div class="nav-menu__items">
-                <a href="#" v-on:click="switchTab" class="nav-menu__item nav-menu__link tab project-link" data-content="create-project">
+                <a href="#" v-on:click="switchTab('create-project')" class="nav-menu__item nav-menu__link tab project-link" data-content="create-project">
                     Создать проект
                 </a>
-                <a href="#" v-on:click="switchTab" class="nav-menu__item nav-menu__link tab projects-list-link" data-content="profile-projects">
+                <a href="#" v-on:click="switchTab('profile-projects')" class="nav-menu__item nav-menu__link tab projects-list-link" data-content="profile-projects">
                     Мои проекты
                 </a>
-                <a href="#" v-on:click="switchTab" class="nav-menu__item nav-menu__link tab all-projects-list-link" data-content="all-projects">
+                <a href="#" v-on:click="switchTab('all-projects')" class="nav-menu__item nav-menu__link tab all-projects-list-link" data-content="all-projects">
                     Все проекты
                 </a>
-                <a href="#" v-on:click="switchTab" class="nav-menu__item nav-menu__link tab active dashboard-link" data-content="dashboard">
+                <a href="#" v-on:click="switchTab('dashboard')" class="nav-menu__item nav-menu__link tab active dashboard-link" data-content="dashboard">
                     Дашборд
                 </a>
-                <a href="#" v-on:click="switchTab" class="nav-menu__item nav-menu__link tab blogers-list-link" data-content="profile-blogers-list">
+                <a href="#" v-on:click="switchTab('profile-blogers-list')" class="nav-menu__item nav-menu__link tab blogers-list-link" data-content="profile-blogers-list">
                     Каталог блогеров
                 </a>
-                <a href="#" v-on:click="switchTab" class="nav-menu__item nav-menu__link tab chat-link" data-content="chat">
+                <a href="#" v-on:click="switchTab('chat')" class="nav-menu__item nav-menu__link tab chat-link" data-content="chat">
                     Чат с блогерами
                     <div class="nav-menu__item-notifs notifs notifs-chat" style="display: none">
                         1
@@ -33,8 +33,8 @@
 <script>
 export default{
     methods:{
-        switchTab(event){
-            this.$emit('switchTab', $(event.target).data('content'))
+        switchTab(link){
+            this.$emit('switchTab', link)
         }
     }
 }

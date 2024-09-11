@@ -13,19 +13,32 @@
                             <span class="header__profile-name">
                                 {{ user.name }}
                             </span>
-                            <span class="header__profile-org">
-                                {{ user.organization_type || user.channel_name  }}
+                            <span
+                                v-if="user.role =='seller'"
+                                class="header__profile-org">
+                                {{ user.organization_name }}
+                            </span>
+                            <span
+                                v-else-if="user.role =='blogger'"
+                                class="header__profile-org">
+                                {{ user.channel_name }}
+                            </span>
+                            <span
+                                v-else
+                                class="header__profile-org">
+                                {{ '-' }}
                             </span>
                         </div>
                         <div class="header__profile-settings">
-                            <a href="/edit-profile" class="row">
+                            <router-link :to="{path: '/seller/edit-profile'}">
                                 Личные данные
-                            </a>
-                            <a
+                            </router-link>
+
+                            <router-link
                                 v-if="user.role == 'seller'"
-                                href="/tariffs" class="row">
+                                :to="{ path: '/tariffs' }" class="row">
                                 Тарифы
-                            </a>
+                            </router-link>
                             <a
                                 @click="logout"
                                 style="width:100%; text-align:left">Выход</a>
@@ -46,20 +59,33 @@
                 <div
                     v-if="user.role == 'seller'"
                     class="header__col header__tarrif tarrif-header header__profile-item--js">
-<!--                    @php($seller_tariffs = Auth()->user()->getActiveTariffs())-->
-<!--                    Мои тарифы-->
-<!--                    <div class="tarrif-header__items">-->
-<!--                        <div class="tarrif-header__item tarrif-header__adv">-->
-<!--                            {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->quantity }}</span> шт.</b>-->
-<!--                            <div class="tarrif-header__date">-->
-<!--                                Действует до {{ date('d.m.Y', strtotime($seller_tariff->finish_date)) }}-->
-<!--                            </div>-->
-<!--                            <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>-->
-<!--                        </div>-->
-<!--                    </div>-->
+                    Мои тарифы
+                    <div class="tarrif-header__items">
+                        <div
+                            v-if="user.tariffs && user.tariffs.length > 0"
+                            v-for="tariff in user.tariffs"
+                            class="tarrif-header__item tarrif-header__adv">
+                            {{ tariff.title }} - <b><span class="counter">{{ tariff.quantity }}</span> шт.</b>
+                            <div class="tarrif-header__date">
+                                Действует до {{ format_date(tariff.finish_date) }}
+                            </div>
+                            <a href="/tariff" class="tarrif-header__buy">Продлить</a>
+                        </div>
+
+                        <div
+                            v-else
+                            class="tarrif-header__item tarrif-header__adv">
+                            Нет оплаченых тарифов
+                            <router-link
+                                :to="{ path: '/tariffs' }"
+                                class="tarrif-header__buy">Выбрать тариф</router-link>
+                        </div>
+                    </div>
                     <div class="tarrif-header__item tarrif-header__adv">
                         Нет оплаченых тарифов
-                        <a href="/tariffs" class="tarrif-header__buy">Выбрать тариф</a>
+                        <router-link
+                            :to="{ path: '/tariffs' }"
+                            class="tarrif-header__buy">Выбрать тариф</router-link>
                     </div>
                 </div>
             </div>
@@ -95,16 +121,14 @@
                     v-if="user"
                     class="nav header__nav">
                     <div class="nav__items">
-                        <a href="/profile" class="nav__link">
+                        <router-link :to="{ path: '/profile' }" class="nav__link">
                             {{ user.role == 'seller' ? 'Дашборд' : 'Главная' }}
-                        </a>
+                        </router-link>
                         <a href="https://adswap.ru/instructions" class="nav__link">Инструкции</a>
                         <a href="https://adswap.ru/files" class="nav__link">Файлы</a>
                         <a href="https://adswap.ru/news" class="nav__link">Новости</a>
                     </div>
                 </nav>
-
-
                 <div
                     v-if="user"
                     class=" header__profile-items header__profile-items--desktop header__row">
@@ -115,18 +139,24 @@
 
                         Мои тарифы
                         <div class="tarrif-header__items">
-<!--                            @forelse ($seller_tariffs as $seller_tariff)-->
-<!--                            <div class="tarrif-header__item tarrif-header__adv">-->
-<!--                                {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->quantity }}</span> шт.</b>-->
-<!--                                <div class="tarrif-header__date">-->
-<!--                                    Действует до {{ date('d.m.Y', strtotime($seller_tariff->finish_date)) }}-->
-<!--                                </div>-->
-<!--                                <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>-->
-<!--                            </div>-->
+                            <div
+                                v-if="user.tariffs && user.tariffs.length > 0"
+                                v-for="tariff in user.tariffs"
+                                class="tarrif-header__item tarrif-header__adv">
+                                {{ tariff.title }} - <b><span class="counter">{{ tariff.quantity }}</span> шт.</b>
+                                <div class="tarrif-header__date">
+                                    Действует до {{ format_date(tariff.finish_date) }}
+                                </div>
+                                <a href="/tariff" class="tarrif-header__buy">Продлить</a>
+                            </div>
 
-                            <div class="tarrif-header__item tarrif-header__adv">
+                            <div
+                                v-else
+                                class="tarrif-header__item tarrif-header__adv">
                                 Нет оплаченых тарифов
-                                <a href="/tariffs" class="tarrif-header__buy">Выбрать тариф</a>
+                                <router-link
+                                    :to="{ path: '/tariffs' }"
+                                    class="tarrif-header__buy">Выбрать тариф</router-link>
                             </div>
                         </div>
                     </div>
@@ -156,18 +186,31 @@
                                 class="header__profile-name">
                                 {{ user.name }}
                             </span>
-                            <span class="header__profile-org">
-                                {{ user.organization_type || user.channel_name  }}
+                            <span
+                                v-if="user.role == 'seller'"
+                                class="header__profile-org">
+                                {{ user.organization_name }}
+                            </span>
+                            <span
+                                v-else-if="user.role =='blogger'"
+                                class="header__profile-org">
+                                {{ user.channel_name }}
+                            </span>
+                            <span
+                                v-else
+                                class="header__profile-org">
+                                {{ '-' }}
                             </span>
                         </div>
                         <div class="header__profile-settings">
-                            <a href="/profile" class="row">
+                            <router-link :to="{path: '/seller/edit-profile'}">
                                 Личные данные
-                            </a>
+                            </router-link>
 
-                            <a href="/tariffs" class="row">
+                            <router-link
+                                :to="{ path: '/tariffs' }" class="row">
                                 Тарифы
-                            </a>
+                            </router-link>
 
                             <a
                                 @click="logout"
@@ -185,14 +228,20 @@
     </header>
 </template>
 <script>
+    import moment from 'moment'
     import axios from "axios";
 
     export default {
         props:['user'],
         mounted(){
-
         },
         methods:{
+            format_date(value){
+                console.log(value)
+                if (value) {
+                    return moment(String(value)).format('DD.MM.YY')
+                }
+            },
             logout(event){
                 event.preventDefault()
 

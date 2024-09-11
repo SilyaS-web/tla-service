@@ -162,6 +162,28 @@ const Project = {
         })
     },
 
+    getList: () => {
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'get',
+                url: 'api/projects'
+            })
+            .then(response => {
+                resolve(response.data.projects);
+            })
+            .catch((errors) => {
+                console.log(errors);
+
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'Не удалось загрузить проекты, попробуйте зайти позже или обратитесь в поддержку.'
+                })
+
+                resolve([])
+            })
+        })
+    },
+
     getUsersProjectsList: (user_id) => {
         return new Promise((resolve, reject) => {
             axios({

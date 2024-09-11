@@ -45,7 +45,24 @@ const Blogger = {
                 resolve(response.data)
             })
         })
-    }
+    },
+
+    getList(status = []){
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'get',
+                url: '/api/bloggers',
+                params: {
+                    statuses: status || []
+                }
+            })
+            .then(result => resolve(result.data.bloggers))
+            .catch(error => {
+                console.log(error)
+                resolve([])
+            })
+        })
+    },
 };
 
 export default Blogger

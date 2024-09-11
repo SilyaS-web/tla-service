@@ -9,7 +9,7 @@
             let user = localStorage.getItem('user');
 
             if(!user){
-                router.push({ name: 'login' })
+                router.replace({ name: 'login' })
             }
 
             return JSON.parse(user);
@@ -79,7 +79,55 @@
             let user = User.getCurrent();
 
             return user && user.role == 'seller'
-        }
+        },
+
+        getWorks(user_id){
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: 'get',
+                    url: 'api/users/' + user_id + '/works/'
+                })
+                .then(response => {
+                    console.log(response);
+
+                    resolve(response.data);
+                })
+                .catch((errors) => {
+                    console.log(errors);
+
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'
+                    })
+
+                    resolve([])
+                })
+            })
+        },
+
+        getMessages(work_id, user_id){
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: 'get',
+                    url: 'api/users/' + user_id + '/works/' + work_id + '/messages'
+                })
+                .then(response => {
+                    console.log(response);
+
+                    resolve(response.data);
+                })
+                .catch((errors) => {
+                    console.log(errors);
+
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'
+                    })
+
+                    resolve([])
+                })
+            })
+        },
     };
 
     export default User

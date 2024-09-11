@@ -6,184 +6,12 @@
                 <div class="profile__content">
                     <div class="profile__content-inner">
                         <CreateProject></CreateProject>
-                        <Dashboard :dashboard="dashboard" @switchTab="switchTab"></Dashboard>
-<!--                        <ProjectsList></ProjectsList>-->
+                        <Dashboard :dashboard="dashboard"></Dashboard>
+                        <ProjectsList :projects="projects"></ProjectsList>
                         <MyProjectsList :myProjects="myProjects" v-on:updateMyProjects="updateMyProjects"></MyProjectsList>
-<!--                        <div class="profile-projects tab-content" id="all-projects">-->
-<!--                            <div class="profile-projects__body">-->
-<!--                                <div class="projects-list__header">-->
-<!--                                    <div class="list-projects__title title">-->
-<!--                                        Все проекты-->
-<!--                                    </div>-->
-<!--                                    <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">-->
-<!--                                        <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="profile-projects__items list-projects__items">-->
-<!--&lt;!&ndash;                                    @include('project.all-seller-list', ['all_projects' => $all_projects, 'type' => 'all'])&ndash;&gt;-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="profile-projects__filters">-->
-<!--                                <div class="projects-list__filter filter">-->
-<!--                                    <div class="filter__body">-->
-<!--                                        <div class="filter__top">-->
-<!--                                            <p class = "filter__title">-->
-<!--                                                Фильтр-->
-<!--                                            </p>-->
-<!--                                            <a href="#" class="filter__reset">-->
-<!--                                                Сбросить-->
-<!--                                            </a>-->
-<!--                                        </div>-->
-<!--                                        <div class="filter__items">-->
-<!--                                            <div class="form-group filter__item">-->
-<!--                                                <input type="text" class="input" name="filter-name" id="" placeholder="Поиск по названию">-->
-<!--                                            </div>-->
-<!--                                            <div class="form-group filter__item">-->
-<!--                                                <label for="filter-category">Категория</label>-->
-<!--                                                <input type="text" class="input" name="filter-category" id="filter-category" placeholder="Введите категорию">-->
-<!--                                                <input type="text" id = "filter-category-id" hidden>-->
-<!--                                                <div class="filter-tooltip" style="display: none">-->
-<!--                                                    <div class="filter-tooltip__items">-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="form-group filter__item">-->
-<!--                                                <label for="">Формат рекламы</label>-->
-<!--                                                <select name="filter-format" id="filter-format" class = "input">-->
-<!--                                                    <option value="" class="">Выберите формат</option>-->
-<!--                                                    <option value="feedback" class="">Отзыв на товар</option>-->
-<!--                                                    <option value="inst" class="">Интеграция Ins</option>-->
-<!--                                                    <option value="youtube" class="">Интеграция YTube</option>-->
-<!--                                                    <option value="vk" class="">Интеграция VK</option>-->
-<!--                                                    <option value="telegram" class="">Интеграция Telegram</option>-->
-<!--                                                </select>-->
-<!--                                            </div>-->
-<!--                                            <div class="filter__btns">-->
-<!--                                                <button class="btn btn-primary btn-filter-send">Применить</button>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="profile-blogers tab-content" id="profile-blogers-list">-->
-<!--                            <div class="profile-blogers__body">-->
-<!--                                <div class="projects-list__header">-->
-<!--                                    <div class="list-projects__title title">-->
-<!--                                        Список блогеров-->
-<!--                                    </div>-->
-<!--                                    <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">-->
-<!--                                        <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>-->
-<!--                                        <button class="btn btn-primary projects-list__choose-btn">Выберите проект</button>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="projects-list__row projects-list__current-project current-project" style="display:none">-->
-<!--                                    <div class="current-project__col current-project__main">-->
-<!--                                        <div class="current-project__row">-->
-<!--                                            <div class="current-project__img" style="background-image:url('img/profile-icon.svg')">-->
-<!--                                        </div>-->
-<!--                                        <div class="current-project__title">-->
-<!--                                            <p class="name"><b>Проект не выбран</b></p>-->
-<!--                                            <p class="articul">Артикул товара: <span class=""></span></p>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="current-project__col current-project__format">-->
-<!--                                    <div class="current-project__row">-->
-<!--                                        <div class="current-project__title">-->
-<!--                                            <p class="name"><b>Формат рекламы</b></p>-->
-<!--                                            <p class="articul">Отзыв на товар </p>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                                <div class="current-project__btn">-->
-<!--                                    <a href="" class="btn btn-secondary projects-list__choose-btn">Выбрать другой проект</a>-->
-<!--                                </div>-->
-<!--&lt;!&ndash;                                @include("blogger.list")&ndash;&gt;-->
-<!--                                <div class="projects-list__filter filter blogers-list__filter">-->
-<!--                                    <div class="filter__body">-->
-<!--                                        <div class="filter__top">-->
-<!--                                            <p class="filter__title">-->
-<!--                                                Фильтр-->
-<!--                                            </p>-->
-<!--                                            <a href="#" class="filter__reset">-->
-<!--                                                Сбросить-->
-<!--                                            </a>-->
-<!--                                        </div>-->
-<!--                                        <div class="filter__items">-->
-<!--                                            <div class="form-group filter__item">-->
-<!--                                                <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию">-->
-<!--                                            </div>-->
-<!--                                            <div class="form-group filter__item">-->
-<!--                                                <label for="">Платформа</label>-->
-<!--                                                <select name="filter-platform" id="filter-platform" class="input">-->
-<!--                                                    <option value="">Выберите платформу</option>-->
-<!--                                                    <option-->
-<!--                                                        v-for="platform in platforms"-->
-<!--                                                        :value="platform.id">-->
-<!--                                                        {{ platform.title }}-->
-<!--                                                    </option>-->
-
-<!--                                                </select>-->
-<!--                                            </div>-->
-<!--                                            <div class="form-group filter__item">-->
-<!--                                                <label for="filter-country">Страна блогера</label>-->
-<!--                                                <select name="filter-country" id="filter-country" class="input">-->
-<!--                                                    <option value="" class="">Выберите страну</option>-->
-<!--                                                    <option value="1" class="">Россия</option>-->
-<!--                                                </select>-->
-<!--                                            </div>-->
-<!--                                            <div class="form-group filter__item">-->
-<!--                                                <label for="filter-city">Город блогера</label>-->
-<!--                                                <input type="text" class="input" name="filter-city" id="filter-city" placeholder="Введите город">-->
-<!--                                            </div>-->
-<!--                                            <div class="form-group" style="flex-direction: column;">-->
-<!--                                                <label for="">Выберите тематику</label>-->
-<!--                                                <div class="form-formats">-->
-<!--                                                    <div-->
-<!--                                                        v-for="theme in themes"-->
-<!--                                                        class="form__row form-format">-->
-<!--                                                        <input-->
-<!--                                                            :id="'theme-' + theme.id"-->
-<!--                                                            :value="theme.id"-->
-<!--                                                            type="checkbox" name="themes[]" class="form-format__check">-->
-<!--                                                        <label :for="'theme-' + theme.id">theme.theme</label>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                            <div class="form-group filter__item">-->
-<!--                                                <label for="">Пол блогера</label>-->
-<!--                                                <div class="filter__item&#45;&#45;sex" id = "filter__item&#45;&#45;sex">-->
-<!--                                                    <div class="input-checkbox-w">-->
-<!--                                                        <input type="checkbox" class="checkbox" id="male">-->
-<!--                                                        <label for="male">Мужской</label>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="input-checkbox-w">-->
-<!--                                                        <input type="checkbox" class="checkbox" id="female">-->
-<!--                                                        <label for="female">Женский</label>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--&lt;!&ndash;                                            <div class="form-group filter__item">&ndash;&gt;-->
-<!--&lt;!&ndash;                                                <label for="">Количество подписчиков</label>&ndash;&gt;-->
-<!--&lt;!&ndash;                                                <div class="input-range-w">&ndash;&gt;-->
-<!--&lt;!&ndash;                                                    <input id="subs-range" name="" type="range" class="input input-range" min="{{ $blogger_platforms->min("subscriber_quantity") ?? 0 }}" max="{{ $blogger_platforms->max("subscriber_quantity") ?? 0 }}">&ndash;&gt;-->
-<!--&lt;!&ndash;                                                    <div class="input-range-content">&ndash;&gt;-->
-<!--&lt;!&ndash;                                                        <input id="subs-min" type="number" class="input input-number" value="{{ $blogger_platforms->min("subscriber_quantity") ?? 0 }}">&ndash;&gt;-->
-<!--&lt;!&ndash;                                                        <input id="subs-max" type="number" class="input input-number" value="{{ $blogger_platforms->max("subscriber_quantity") ?? 0 }}">&ndash;&gt;-->
-<!--&lt;!&ndash;                                                    </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                                </div>&ndash;&gt;-->
-<!--&lt;!&ndash;                                            </div>&ndash;&gt;-->
-<!--                                            <div class="filter__btns">-->
-<!--                                                <button class="btn btn-primary btn-filter-send">Применить</button>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                    </div>-->
-                </div>
+                        <BloggersList :bloggers="bloggers" :user="user"></BloggersList>
+                        <Chat></Chat>
+                    </div>
                 </div>
             </div>
         </div>
@@ -196,6 +24,7 @@ import axios from "axios";
 import User from '../../../services/api/User.vue'
 import Seller from '../../../services/api/Seller.vue'
 import Project from '../../../services/api/Project.vue'
+import Blogger from '../../../services/api/Blogger.vue'
 
 import Loader from '../../../services/AppLoader.vue'
 import Meter from '../../services/AppMeter.vue'
@@ -204,12 +33,17 @@ import Tabs from '../../../services/AppTabs.vue'
 import CreateProject from '../../components/seller/CreateProjectComponent.vue'
 import ProjectsList from '../../components/seller/ProjectsList.vue'
 import MyProjectsList from '../../components/seller/MyProjectsList.vue'
+import BloggersList from '../../components/seller/BloggersListComponent.vue'
 import Dashboard from '../../components/seller/AppDashboard.vue'
+import Chat from '../../components/ChatIndex.vue'
 import Aside from '../../components/seller/AppAside.vue'
 
 
 export default{
-    components: {Aside, CreateProject, Dashboard, ProjectsList, MyProjectsList},
+    components: {
+        Aside, CreateProject, Dashboard, ProjectsList,
+        MyProjectsList, BloggersList, Chat
+    },
     data(){
         return {
             user: ref(null),
@@ -218,7 +52,10 @@ export default{
             myProjects: ref([]),
             brands: ref([]),
             dashboard: ref({}),
-            User, Seller, Project,
+            bloggers: ref([]),
+            projects: ref([]),
+
+            User, Seller, Blogger, Project,
             Loader, Meter, Tabs
         }
     },
@@ -381,11 +218,39 @@ export default{
                     })
 
                     break;
+
+                case 'profile-blogers-list':
+                    this.Loader.loaderOn('.wrapper .profile__content-inner');
+
+                    this.Blogger.getList().then(data => {
+                        this.bloggers = (data || []).map(_b => this.findBloggerBiggestPlatform(_b));
+
+                        setTimeout(()=>{
+                            this.Loader.loaderOff();
+                        }, 300)
+                    })
+
+                    break;
+
+                case 'all-projects':
+                    this.Loader.loaderOn('.wrapper .profile__content-inner');
+
+                    this.Project.getList().then(data => {
+                        this.projects = data || [];
+
+                        setTimeout(()=>{
+                            this.Loader.loaderOff();
+                        }, 300)
+                    })
+
+                    break;
             }
         },
+
         async updateMyProjects(){
             this.myProjects = await this.Project.getUsersProjectsList(this.user.id);
         },
+
         getSellerStats(id){
             return new Promise((resolve, reject) => {
                 axios({
@@ -419,6 +284,21 @@ export default{
                     })
                 })
             })
+        },
+
+        findBloggerBiggestPlatform(blogger){
+            var summaryPlatform = { subscriber_quantity: 0 };
+
+            if(blogger.platforms){
+                blogger.platforms.forEach(_p => {
+                    if(summaryPlatform.subscriber_quantity < _p.subscriber_quantity)
+                        summaryPlatform = _p
+                });
+            }
+
+            blogger.summaryPlatform = summaryPlatform;
+
+            return blogger;
         },
     }
 }
