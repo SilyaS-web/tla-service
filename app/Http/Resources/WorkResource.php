@@ -19,7 +19,7 @@ class WorkResource extends JsonResource
             'seller_id' => $this->seller_id,
             'project_id' => $this->project_id,
             'message' => $this->message,
-            'product_name' => $this->project->product_name,
+            'product_name' => $this->project->product_link ?? 'Проект удалён или заблокирован',
             'accepted_by_blogger_at' => isset($this->accepted_by_blogger_at) ? $this->accepted_by_blogger_at->format('Y-m-d H:i') : null,
             'accepted_by_seller_at' => isset($this->accepted_by_seller_at) ? $this->accepted_by_seller_at->format('Y-m-d H:i') : null,
             'confirmed_by_blogger_at' => isset($this->confirmed_by_blogger_at) ? $this->confirmed_by_blogger_at->format('Y-m-d H:i') : null,
