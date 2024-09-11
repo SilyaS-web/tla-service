@@ -26,7 +26,7 @@ class DashboardController extends Controller
 
         $works = Work::where([['seller_id', $user->id]])->get();
         $deep_link_ids = DeepLink::whereIn('work_id', $works->pluck('id'))->get()->pluck('id');
-        $deep_link_stats = DeepLinkStat::selectRaw('DATE_FORMAT(created_at, "%Y-%m-%e") as date')->whereHas('deepLink', function (Builder $query) use ($deep_link_ids) {
+        $deep_link_stats = DeepLinkStat::selectRaw('DATE_FORMAT(created_at, "%Y-%m-%d") as date')->whereHas('deepLink', function (Builder $query) use ($deep_link_ids) {
             $query->whereIn('link_id', $deep_link_ids);
         })->whereBetween('created_at', [$start_date, $end_date])->get();
 
