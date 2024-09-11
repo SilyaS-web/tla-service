@@ -16,6 +16,7 @@ class MessageResource extends JsonResource
         return [
             'id' => $this->id,
             'message' => $this->message,
+            'user_id' => $this->user_id,
             'files' => MessageFileResource::collection($this->messageFiles),
             'viewed_at' => isset($this->viewed_at) ? $this->viewed_at->format('Y-m-d H:i') : null,
             'created_at' => isset($this->created_at) ? $this->created_at->format('Y-m-d H:i') : null,
