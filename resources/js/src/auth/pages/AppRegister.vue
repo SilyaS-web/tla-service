@@ -90,9 +90,9 @@
                     <button class="btn btn-primary next" type="submit" @click="registration">
                         Зарегистрироваться
                     </button>
-                    <a href="/login" class="btn btn-secondary" type="submit">
+                    <router-link :to="{path: '/login'}" class="btn btn-secondary">
                         Войти
-                    </a>
+                    </router-link>
                 </div>
                 <p class="form-addit">
                     Регистрируясь, вы даёте на это согласие и принимаете условия <a href="https://adswap.ru/privacy">Политики конфиденциальности.</a>
@@ -126,11 +126,8 @@
             var phoneConfirmationIntervalID = setInterval(() => {
                 if (!this.isConfirmed) {
                     axios({
-                        method: 'post',
-                        url: '/apist/tg/confirmed',
-                        data: {
-                            phone: this.user.phone
-                        }
+                        method: 'get',
+                        url: 'api/users/phone-confirmed?phone=' + this.user.phone,
                     })
                     .then((response) => {
                         if(response.data.is_confirmed){
@@ -139,8 +136,8 @@
                                 message: 'Ваш номер подтвержден.'
                             });
                         }
-
-                        this.isConfirmed = response.data.is_confirmed
+                        this.isConfirmed = response.data === 'success'
+                        console.log(this.isConfirmed)
                     })
                     .catch((errors) => {
                         // notify('error', {

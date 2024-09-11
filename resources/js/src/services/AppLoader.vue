@@ -2,6 +2,8 @@
     const Loader = {
         // Принимает селлектор элемента, куда нужно вставить загрузку
         loaderOn: (node) => {
+            console.log()
+
             const loaderTemplate = `<div class="loader" v-if="isLoading">
                                         <img src="/img/loading.gif" alt="">
                                     </div>`;

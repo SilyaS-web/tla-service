@@ -38,7 +38,7 @@ class CreateProject extends Quest {
     constructor(node) {
         super(node);
 
-        $(node).find('.quest__step-arrow.send').on('click', this.sendData)
+        // $(node).find('.quest__step-arrow.send').on('click', this.sendData)
         $(node).find('.input-file input').on('change', function(){
             $(this).closest('.input-file').find('span').text('Изображение успешно загружено')
         })
@@ -1755,161 +1755,161 @@ class PopupBloggerSendOffer extends Popup{
     }
 }
 
-class PopupSellerChooseProjectsFormat extends Popup{
-    constructor(node){
-        super(node);
-
-        this.node = node;
-
-        $(this.node).find('.btn-confirm').on('click', this.confirm);
-        $(this.node).on('click', '.input-checkbox-w', function(e){
-            var wrap = $(e.target).closest('.input-checkbox-w'),
-                cRadio = wrap.find('input[type="radio"]'),
-                allRadio = $(e.target).closest('.popup__form').find(`.popup__formats .input-checkbox-w[data-id!="${cRadio.closest('.input-checkbox-w').data('id')}"] input[type="radio"]`);
-
-            allRadio.prop('checked', false);
-        })
-
-
-        if(!this.instance) this.instance = this;
-
-        return this.instance;
-    }
-    instance = null;
-
-    node = '';
-    projectNode = null;
-
-    formatTemplate = `<div class="input-checkbox-w" data-id="%%ID%%">
-        <input id="format_%%COUNTER%%" name="format_%%COUNTER%%" type="radio" class="checkbox">
-        <label for="format_%%COUNTER%%">%%NAME%%</label>
-    </div>`;
-
-    addFormats = (list) => {
-        $(this.node).find('.popup__formats').empty();
-
-        list.each((i, v)=>{
-            var name = $(v).find('span').text(),
-                counter = i,
-                id = $(v).data('id');
-
-            var template = this.formatTemplate;
-
-            template = template.replaceAll('%%ID%%', id);
-            template = template.replaceAll('%%NAME%%', name);
-            template = template.replaceAll('%%COUNTER%%', counter);
-
-            $(this.node).find('.popup__formats').append(template);
-        })
-    }
-
-    confirm = () => {
-        var currentFormat = $(this.node).find('.popup__formats .input-checkbox-w input:checked');
-
-        if(currentFormat.length == 0){
-            notify('info', {title: 'Внимание!', message: 'Необходимо выбрать проект'});
-            return
-        }
-
-        $('.current-project').show();
-        $(document).find('#profile-blogers-list .projects-list__header .projects-list__choose-btn').hide();
-
-        $('.current-project').find('.projects-list__choose-btn').show();
-        $('#profile-projects-choose').removeClass('active');
-        $('#profile-blogers-list').addClass('active');
-
-        var articul = $(this.projectNode).find('.btn-choose-project').data('articul'),
-            name = $(this.projectNode).find('.project-item__subtitle').text(),
-            imgUrl = $(this.projectNode).find('.project-item__img').css('backgroundImage'),
-            price = $(this.projectNode).find('.project-item__price').text();
-
-        var bloggers = $('#profile-blogers-list .bloger-item.card');
-
-        bloggers.each((i, v)=>{
-            var coverage = Number($(v).find('.card__stats-val.coverage').text().split(' ').join('')),
-                cpm = coverage > 0 ? ((Number(price.trim().split(' ').join('')) / coverage) * 1000).toFixed(2) : 0;
-
-            $(v).find('.card__stats-val.cpm span').text(`${cpm}₽`)
-            $(v).find('.card__stats-val.card__stats-val--empty').removeClass('card__stats-val--empty')
-        })
-
-        $('.current-project').find('.current-project__main .current-project__title .articul span').text(articul)
-        $('.current-project').find('.current-project__main .current-project__title .name b').text(name)
-        $('.current-project').find('.current-project__img').css('backgroundImage', imgUrl)
-        $('.current-project').find('.current-project__format .articul').text(currentFormat.closest('.input-checkbox-w').find('label').text())
-        $('.current-project').data('id', currentFormat.closest('.input-checkbox-w').data('id'))
-
-        this.closePopup();
-    }
-}
-
-class PopupBloggerChooseProjectsFormat extends Popup{
-    constructor(node){
-        super(node);
-
-        this.node = node;
-        console.log($(this.node).find('.btn-confirm'));
-        $(this.node).find('.btn-confirm').on('click', this.confirm);
-        $(this.node).on('click', '.input-checkbox-w', function(e){
-            var wrap = $(e.target).closest('.input-checkbox-w'),
-                cRadio = wrap.find('input[type="radio"]'),
-                allRadio = $(e.target).closest('.popup__form').find(`.popup__formats .input-checkbox-w[data-id!="${cRadio.closest('.input-checkbox-w').data('id')}"] input[type="radio"]`);
-
-            allRadio.prop('checked', false);
-        })
-
-
-        if(!this.instance) this.instance = this;
-
-        return this.instance;
-    }
-    instance = null;
-
-    node = '';
-    projectNode = null;
-    projectID = null;
-
-    formatTemplate = `<div class="input-checkbox-w" data-id="%%ID%%">
-        <input id="format_%%COUNTER%%" name="format_%%COUNTER%%" type="radio" class="checkbox">
-        <label for="format_%%COUNTER%%">%%NAME%%</label>
-    </div>`;
-
-    addFormats = (list) => {
-        $(this.node).find('.popup__formats').empty();
-
-        list.each((i, v)=>{
-            var name = $(v).find('span').text(),
-                counter = i,
-                id = $(v).attr('data-id');
-
-            var template = this.formatTemplate;
-
-            template = template.replaceAll('%%ID%%', id);
-            template = template.replaceAll('%%NAME%%', name);
-            template = template.replaceAll('%%COUNTER%%', counter);
-
-            $(this.node).find('.popup__formats').append(template);
-        })
-    }
-
-    confirm = () => {
-        var currentFormat = $(this.node).find('.popup__formats .input-checkbox-w input:checked');
-
-        if(currentFormat.length == 0){
-            notify('info', {title: 'Внимание!', message: 'Необходимо выбрать проект'});
-            return
-        }
-
-        var popupBloggerSendOffer = new PopupBloggerSendOffer('#blogger-send-offer');
-
-        popupBloggerSendOffer.openPopup();
-
-        popupBloggerSendOffer.projectWorkId = this.projectID;
-        popupBloggerSendOffer.projectFormat = currentFormat.closest('.input-checkbox-w').data('id');
-
-        this.closePopup();
-    }
-}
+// class PopupSellerChooseProjectsFormat extends Popup{
+//     constructor(node){
+//         super(node);
+//
+//         this.node = node;
+//
+//         $(this.node).find('.btn-confirm').on('click', this.confirm);
+//         $(this.node).on('click', '.input-checkbox-w', function(e){
+//             var wrap = $(e.target).closest('.input-checkbox-w'),
+//                 cRadio = wrap.find('input[type="radio"]'),
+//                 allRadio = $(e.target).closest('.popup__form').find(`.popup__formats .input-checkbox-w[data-id!="${cRadio.closest('.input-checkbox-w').data('id')}"] input[type="radio"]`);
+//
+//             allRadio.prop('checked', false);
+//         })
+//
+//
+//         if(!this.instance) this.instance = this;
+//
+//         return this.instance;
+//     }
+//     instance = null;
+//
+//     node = '';
+//     projectNode = null;
+//
+//     formatTemplate = `<div class="input-checkbox-w" data-id="%%ID%%">
+//         <input id="format_%%COUNTER%%" name="format_%%COUNTER%%" type="radio" class="checkbox">
+//         <label for="format_%%COUNTER%%">%%NAME%%</label>
+//     </div>`;
+//
+//     addFormats = (list) => {
+//         $(this.node).find('.popup__formats').empty();
+//
+//         list.each((i, v)=>{
+//             var name = $(v).find('span').text(),
+//                 counter = i,
+//                 id = $(v).data('id');
+//
+//             var template = this.formatTemplate;
+//
+//             template = template.replaceAll('%%ID%%', id);
+//             template = template.replaceAll('%%NAME%%', name);
+//             template = template.replaceAll('%%COUNTER%%', counter);
+//
+//             $(this.node).find('.popup__formats').append(template);
+//         })
+//     }
+//
+//     confirm = () => {
+//         var currentFormat = $(this.node).find('.popup__formats .input-checkbox-w input:checked');
+//
+//         if(currentFormat.length == 0){
+//             notify('info', {title: 'Внимание!', message: 'Необходимо выбрать проект'});
+//             return
+//         }
+//
+//         $('.current-project').show();
+//         $(document).find('#profile-blogers-list .projects-list__header .projects-list__choose-btn').hide();
+//
+//         $('.current-project').find('.projects-list__choose-btn').show();
+//         $('#profile-projects-choose').removeClass('active');
+//         $('#profile-blogers-list').addClass('active');
+//
+//         var articul = $(this.projectNode).find('.btn-choose-project').data('articul'),
+//             name = $(this.projectNode).find('.project-item__subtitle').text(),
+//             imgUrl = $(this.projectNode).find('.project-item__img').css('backgroundImage'),
+//             price = $(this.projectNode).find('.project-item__price').text();
+//
+//         var bloggers = $('#profile-blogers-list .bloger-item.card');
+//
+//         bloggers.each((i, v)=>{
+//             var coverage = Number($(v).find('.card__stats-val.coverage').text().split(' ').join('')),
+//                 cpm = coverage > 0 ? ((Number(price.trim().split(' ').join('')) / coverage) * 1000).toFixed(2) : 0;
+//
+//             $(v).find('.card__stats-val.cpm span').text(`${cpm}₽`)
+//             $(v).find('.card__stats-val.card__stats-val--empty').removeClass('card__stats-val--empty')
+//         })
+//
+//         $('.current-project').find('.current-project__main .current-project__title .articul span').text(articul)
+//         $('.current-project').find('.current-project__main .current-project__title .name b').text(name)
+//         $('.current-project').find('.current-project__img').css('backgroundImage', imgUrl)
+//         $('.current-project').find('.current-project__format .articul').text(currentFormat.closest('.input-checkbox-w').find('label').text())
+//         $('.current-project').data('id', currentFormat.closest('.input-checkbox-w').data('id'))
+//
+//         this.closePopup();
+//     }
+// }
+//
+// class PopupBloggerChooseProjectsFormat extends Popup{
+//     constructor(node){
+//         super(node);
+//
+//         this.node = node;
+//         console.log($(this.node).find('.btn-confirm'));
+//         $(this.node).find('.btn-confirm').on('click', this.confirm);
+//         $(this.node).on('click', '.input-checkbox-w', function(e){
+//             var wrap = $(e.target).closest('.input-checkbox-w'),
+//                 cRadio = wrap.find('input[type="radio"]'),
+//                 allRadio = $(e.target).closest('.popup__form').find(`.popup__formats .input-checkbox-w[data-id!="${cRadio.closest('.input-checkbox-w').data('id')}"] input[type="radio"]`);
+//
+//             allRadio.prop('checked', false);
+//         })
+//
+//
+//         if(!this.instance) this.instance = this;
+//
+//         return this.instance;
+//     }
+//     instance = null;
+//
+//     node = '';
+//     projectNode = null;
+//     projectID = null;
+//
+//     formatTemplate = `<div class="input-checkbox-w" data-id="%%ID%%">
+//         <input id="format_%%COUNTER%%" name="format_%%COUNTER%%" type="radio" class="checkbox">
+//         <label for="format_%%COUNTER%%">%%NAME%%</label>
+//     </div>`;
+//
+//     addFormats = (list) => {
+//         $(this.node).find('.popup__formats').empty();
+//
+//         list.each((i, v)=>{
+//             var name = $(v).find('span').text(),
+//                 counter = i,
+//                 id = $(v).attr('data-id');
+//
+//             var template = this.formatTemplate;
+//
+//             template = template.replaceAll('%%ID%%', id);
+//             template = template.replaceAll('%%NAME%%', name);
+//             template = template.replaceAll('%%COUNTER%%', counter);
+//
+//             $(this.node).find('.popup__formats').append(template);
+//         })
+//     }
+//
+//     confirm = () => {
+//         var currentFormat = $(this.node).find('.popup__formats .input-checkbox-w input:checked');
+//
+//         if(currentFormat.length == 0){
+//             notify('info', {title: 'Внимание!', message: 'Необходимо выбрать проект'});
+//             return
+//         }
+//
+//         var popupBloggerSendOffer = new PopupBloggerSendOffer('#blogger-send-offer');
+//
+//         popupBloggerSendOffer.openPopup();
+//
+//         popupBloggerSendOffer.projectWorkId = this.projectID;
+//         popupBloggerSendOffer.projectFormat = currentFormat.closest('.input-checkbox-w').data('id');
+//
+//         this.closePopup();
+//     }
+// }
 
 
 class PopupBlogerProjectMoreInfo extends Popup{
@@ -2122,13 +2122,13 @@ $(window).on('load', function(){
     $(document).on('click', '.owl-dots', (e) => e.stopPropagation())
 
     var popupBlogerProjectMoreInfo = new PopupBlogerProjectMoreInfo('#project-item-info');
-    var choosePopup = new PopupSellerChooseProjectsFormat('#choose-projects-adv-format');
+    // var choosePopup = new PopupSellerChooseProjectsFormat('#choose-projects-adv-format');
     var popupBloggerSendStatistics = new PopupBloggerSendStatistics('#send-statistics-blogger');
     var popupCallUs = new PopupCallUs('#contact-form');
     var popupChangePassword = new PopupChangePassword('#change-password');
     var popupConfirmCompletion = new PopupConfirmCompletion('#confirm-completion');
     var popupConfirmCompletionBlogger = new PopupConfirmCompletionBlogger('#confirm-completion-blogger');
-    var choosePopupBlogger = new PopupBloggerChooseProjectsFormat('#choose-projects-adv-format-blogger');
+    // var choosePopupBlogger = new PopupBloggerChooseProjectsFormat('#choose-projects-adv-format-blogger');
     var confirmPublic = new PopupConfirmPublication('#confirm-publication');
     var confirmDelete = new PopupConfirmPublication('#confirm-deleting');
 
@@ -2165,11 +2165,12 @@ $(window).on('load', function(){
 
 
     $(document).on('click', '.btn-tariffs-callus', function(e){
-        popupCallUs
         popupCallUs.openPopup()
     })
 
     $(document).on('click', '.btn-tariffs-payment', function(e){
+        e.preventDefault();
+
         var btn = $(e.target),
             card = btn.closest('.tariff-card'),
             tariffID = card.find('select').val();
@@ -2192,31 +2193,31 @@ $(window).on('load', function(){
         confirmDelete.openPopup()
     })
 
-    $(document).on('click', '.btn-blogger-send-offer', function(e){
-        var btn = $(e.target).closest('.btn-blogger-send-offer');
-
-        choosePopupBlogger.openPopup();
-
-        var formats = $(e.target).closest('.project-item').find('.project-item__format-tags .card__tags-item');
-
-        choosePopupBlogger.addFormats(formats);
-
-        choosePopupBlogger.projectNode = $(e.target).closest('.project-item')
-        choosePopupBlogger.projectID = $(btn).data('project-work')
-    })
-    $(document).on('click', '.btn-blogger-send-offer-popup', function(e){
-        var btn = $(e.target).closest('.btn-blogger-send-offer-popup'),
-            product_id = $(btn).data('project-work');
-
-        choosePopupBlogger.openPopup();
-        console.log($(`#profile-projects .project-item[data-id="${product_id}"]`))
-        var formats = $(`.profile-projects__body .project-item[data-id="${product_id}"]`).find('.project-item__format-tags .card__tags-item');
-
-        choosePopupBlogger.addFormats(formats);
-
-        choosePopupBlogger.projectNode = $(e.target).closest('.project-item')
-        choosePopupBlogger.projectID = product_id
-    })
+    // $(document).on('click', '.btn-blogger-send-offer', function(e){
+    //     var btn = $(e.target).closest('.btn-blogger-send-offer');
+    //
+    //     choosePopupBlogger.openPopup();
+    //
+    //     var formats = $(e.target).closest('.project-item').find('.project-item__format-tags .card__tags-item');
+    //
+    //     choosePopupBlogger.addFormats(formats);
+    //
+    //     choosePopupBlogger.projectNode = $(e.target).closest('.project-item')
+    //     choosePopupBlogger.projectID = $(btn).data('project-work')
+    // })
+    // $(document).on('click', '.btn-blogger-send-offer-popup', function(e){
+    //     var btn = $(e.target).closest('.btn-blogger-send-offer-popup'),
+    //         product_id = $(btn).data('project-work');
+    //
+    //     choosePopupBlogger.openPopup();
+    //     console.log($(`#profile-projects .project-item[data-id="${product_id}"]`))
+    //     var formats = $(`.profile-projects__body .project-item[data-id="${product_id}"]`).find('.project-item__format-tags .card__tags-item');
+    //
+    //     choosePopupBlogger.addFormats(formats);
+    //
+    //     choosePopupBlogger.projectNode = $(e.target).closest('.project-item')
+    //     choosePopupBlogger.projectID = product_id
+    // })
 
     $(document).on('click', '#blogger .project-item', function(e){
         if($(e.target).closest('.project-item__btns').length == 0){
@@ -2240,22 +2241,6 @@ $(window).on('load', function(){
 
     $(document).find('.form-stat__title').on('click', function(e){
         $(e.target).closest('.form-stat').toggleClass('active');
-    })
-
-    $(document).on('click', '.projects-list__choose-btn', function(e){
-        e.preventDefault();
-
-        $('#profile-projects-choose').addClass('active');
-        $('#profile-blogers-list').removeClass('active');
-
-        $(document).on('click', '.btn-choose-project', function(e){
-            choosePopup.openPopup();
-
-            var formats = $(e.target).closest('.project-item').find('.project-item__format-tags .card__tags-item');
-            choosePopup.addFormats(formats);
-
-            choosePopup.projectNode = $(e.target).closest('.project-item')
-        })
     })
 
     $(document).on('click', '.item-chat__project-link--seller', function(e){
@@ -2324,23 +2309,23 @@ $(window).on('load', function(){
         })
     })
 
-    var quant = $(document).find('.quantity-w');
-
-    quant.on('click', function(e){
-        var prevVal = Number($(this).find('.quantity-input .input').val()),
-            maxVal = Number($(this).data('max'));
-
-        if($(e.target).closest('.quantity-minus').length > 0){
-            if(prevVal > 0){
-                $(this).find('.quantity-input .input').val(prevVal - 1)
-            }
-        }
-        if($(e.target).closest('.quantity-plus').length > 0){
-            if(prevVal < maxVal){
-                $(this).find('.quantity-input .input').val(prevVal + 1)
-            }
-        }
-    })
+    // var quant = $(document).find('.quantity-w');
+    //
+    // quant.on('click', function(e){
+    //     var prevVal = Number($(this).find('.quantity-input .input').val()),
+    //         maxVal = Number($(this).data('max'));
+    //
+    //     if($(e.target).closest('.quantity-minus').length > 0){
+    //         if(prevVal > 0){
+    //             $(this).find('.quantity-input .input').val(prevVal - 1)
+    //         }
+    //     }
+    //     if($(e.target).closest('.quantity-plus').length > 0){
+    //         if(prevVal < maxVal){
+    //             $(this).find('.quantity-input .input').val(prevVal + 1)
+    //         }
+    //     }
+    // })
 
     $(document).on('click', '.profile .nav-menu__close', function(e){
         $(e.target).closest('.profile__navigation.nav-menu').toggleClass('active')
@@ -2348,8 +2333,8 @@ $(window).on('load', function(){
 
     var dbTabs = new DashboardTabs('.dashboard');
 
-    var chat = new Chat('.profile-chat__body');
-    $(document).find('.nav-menu__link.chat-link').on('click', () => chat.getChats())
+    // var chat = new Chat('.profile-chat__body');
+    // $(document).find('.nav-menu__link.chat-link').on('click', () => chat.getChats())
 
     $(document).on('click', '.tarrif-header', function(e){
         $('.header__profile-item--js').not($(e.target).closest('.tarrif-header')).removeClass('active')
@@ -2403,30 +2388,6 @@ $(window).on('load', function(){
         $(e.target).closest('.profile-projects__item').toggleClass('active-bloggers-in_work');
     })
 
-    $('.profile-projects__item').find('.projects-blogers--leads').owlCarousel({
-        margin: 5,
-        nav: true,
-        responsive: {
-            0:{
-                items: 1
-            },
-            1180: {
-                items:2
-            }
-        }
-    });
-    $('.profile-projects__item').find('.projects-blogers--in_work').owlCarousel({
-        margin: 5,
-        nav: true,
-        responsive: {
-            0:{
-                items: 1
-            },
-            1180: {
-                items:2
-            }
-        }
-    });
     $('.profile-projects__item').find('.profile-projects--carousel').owlCarousel({
         margin: 5,
         nav: false,
@@ -2576,39 +2537,53 @@ function ibg(){
 window.addEventListener('load', ibg)
 
 setInterval(() => {
-    $.ajax({
-        url: '/apist/notifications',
-    })
-    .done(function( data ) {
-        $('.header-notif-container').html(data.view);
-        $('.header-notif-count').html(data.count);
-        if (data.count == 0) {
-            $('.header-notif-count').hide();
-        } else {
-            $('.header-notif-count').show();
-        }
-    });
+    var authorization_token = localStorage.getItem('session_token');
+
+    if(authorization_token){
+        var user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {}
+
+        $.ajax({
+            url: '/api/users/' + user.id + '/notifications',
+            headers: {"Authorization": "Bearer " + authorization_token}
+        })
+        .then(function( data ) {
+            $('.header-notif-container').html(data.view);
+            $('.header-notif-count').html(data.count);
+            if (data.count == 0) {
+                $('.header-notif-count').hide();
+            } else {
+                $('.header-notif-count').show();
+            }
+        })
+        .catch((error) => {
+        });
+    }
 }, 5000)
 
 setInterval(() => {
-    $.ajax({
-        url: '/apist/applications-count',
-    })
-    .done(function( data ) {
-        var apps = data || false;
+    var authorization_token = localStorage.getItem('session_token');
 
-        if(apps){
-            for(var k in apps){
-                var cProjectNotifs = $(`#seller .profile-projects__item[data-id="${k}"]`).find('.notifs-application');
-                if(Number(apps[k]) > 0)
-                    cProjectNotifs.show();
-                else
-                    cProjectNotifs.hide();
+    if(authorization_token){
+        $.ajax({
+            url: '/apist/applications-count',
+            headers: {"Authorization": "Bearer " + authorization_token}
+        })
+        .done(function( data ) {
+            var apps = data || false;
 
-                cProjectNotifs.text(apps[k]);
+            if(apps){
+                for(var k in apps){
+                    var cProjectNotifs = $(`#seller .profile-projects__item[data-id="${k}"]`).find('.notifs-application');
+                    if(Number(apps[k]) > 0)
+                        cProjectNotifs.show();
+                    else
+                        cProjectNotifs.hide();
+
+                    cProjectNotifs.text(apps[k]);
+                }
             }
-        }
-    });
+        });
+    }
 }, 5000)
 
 selectTab = (tabName)=>{
@@ -2621,80 +2596,80 @@ selectTab = (tabName)=>{
     $(`#${tabName}`).addClass('active')
 }
 
-function denyWork(el, work_id){
-    el.innerHTML  = 'Отклоняем заявку';
-    el.classList.add('disabled');
-    el.disabled = true;
-    $.ajax({
-        url: 'apist/works/' + work_id + ' /deny',
-        success: (res)=>{
-            self.closePopup();
-            notify('info', {title: 'Успешно!', message: 'Заявка отклонена'});
-
-            el.innerHTML  = 'Заявка отклонена';
-        },
-        error: (res) => {
-            el.innerHTML = 'Отклонить';
-            el.disabled = false;
-            notify('error', {
-                title: 'Ошибка!',
-                message: 'Не удалось отклонить заявку'
-            });
-        }
-    })
-}
-
-function denyWork(el, work_id){
-    el.innerHTML  = 'Отклоняем заявку...';
-    el.classList.add('disabled');
-    el.disabled = true;
-    $.ajax({
-        url: 'apist/works/' + work_id + ' /deny',
-        success: ()=>{
-            notify('info', {title: 'Успешно!', message: 'Заявка отклонена'});
-            let index = $(el).closest('owl-item').index() - 1;
-            $(el).closest(".owl-carousel").trigger('remove.owl.carousel', [index]);
-            $(el).closest(".owl-carousel").trigger('refresh.owl.carousel');
-        },
-        error: () => {
-            el.innerHTML = 'Отклонить';
-            el.disabled = false;
-            notify('error', {
-                title: 'Ошибка!',
-                message: 'Не удалось отклонить заявку'
-            });
-        }
-    })
-}
-
-function acceptWork(el, work_id, project_id){
-    el.innerHTML  = 'Принимаем заявку...';
-    el.classList.add('disabled');
-    el.disabled = true;
-    $.ajax({
-        url: 'apist/works/' + work_id + ' /start',
-        success: ()=>{
-            notify('info', {title: 'Успешно!', message: 'Заявка принята'});
-            $(el).prop("onclick", null).off("click");
-            $(el).siblings('button').hide();
-
-            el.innerHTML  = 'Перейти в диалог';
-            el.classList.add('btn-to-chat');
-            el.classList.remove('disabled');
-            el.disabled = false;
-        },
-        error: () => {
-            el.innerHTML = 'Принять';
-            el.disabled = false;
-            el.classList.remove('disabled');
-
-            notify('error', {
-                title: 'Ошибка!',
-                message: 'Не удалось принять заявку'
-            });
-        }
-    })
-}
+// function denyWork(el, work_id){
+//     el.innerHTML  = 'Отклоняем заявку';
+//     el.classList.add('disabled');
+//     el.disabled = true;
+//     $.ajax({
+//         url: 'apist/works/' + work_id + ' /deny',
+//         success: (res)=>{
+//             self.closePopup();
+//             notify('info', {title: 'Успешно!', message: 'Заявка отклонена'});
+//
+//             el.innerHTML  = 'Заявка отклонена';
+//         },
+//         error: (res) => {
+//             el.innerHTML = 'Отклонить';
+//             el.disabled = false;
+//             notify('error', {
+//                 title: 'Ошибка!',
+//                 message: 'Не удалось отклонить заявку'
+//             });
+//         }
+//     })
+// }
+//
+// function denyWork(el, work_id){
+//     el.innerHTML  = 'Отклоняем заявку...';
+//     el.classList.add('disabled');
+//     el.disabled = true;
+//     $.ajax({
+//         url: 'apist/works/' + work_id + ' /deny',
+//         success: ()=>{
+//             notify('info', {title: 'Успешно!', message: 'Заявка отклонена'});
+//             let index = $(el).closest('owl-item').index() - 1;
+//             $(el).closest(".owl-carousel").trigger('remove.owl.carousel', [index]);
+//             $(el).closest(".owl-carousel").trigger('refresh.owl.carousel');
+//         },
+//         error: () => {
+//             el.innerHTML = 'Отклонить';
+//             el.disabled = false;
+//             notify('error', {
+//                 title: 'Ошибка!',
+//                 message: 'Не удалось отклонить заявку'
+//             });
+//         }
+//     })
+// }
+//
+// function acceptWork(el, work_id, project_id){
+//     el.innerHTML  = 'Принимаем заявку...';
+//     el.classList.add('disabled');
+//     el.disabled = true;
+//     $.ajax({
+//         url: 'apist/works/' + work_id + ' /start',
+//         success: ()=>{
+//             notify('info', {title: 'Успешно!', message: 'Заявка принята'});
+//             $(el).prop("onclick", null).off("click");
+//             $(el).siblings('button').hide();
+//
+//             el.innerHTML  = 'Перейти в диалог';
+//             el.classList.add('btn-to-chat');
+//             el.classList.remove('disabled');
+//             el.disabled = false;
+//         },
+//         error: () => {
+//             el.innerHTML = 'Принять';
+//             el.disabled = false;
+//             el.classList.remove('disabled');
+//
+//             notify('error', {
+//                 title: 'Ошибка!',
+//                 message: 'Не удалось принять заявку'
+//             });
+//         }
+//     })
+// }
 
 $(window).on('load', function(){
     $(document).on('click', '.btn-to-chat', (e)=>{
