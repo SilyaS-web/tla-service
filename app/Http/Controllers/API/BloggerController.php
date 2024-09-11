@@ -6,10 +6,12 @@ use App\Models\Blogger;
 use App\Models\BloggerPlatform;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BloggerResource;
+use App\Models\BloggerTheme;
 use App\Services\TgService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Auth;
 
 class BloggerController extends Controller
 {
@@ -96,6 +98,75 @@ class BloggerController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
+    public function store(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'desc' => 'string|nullable',
+            'sex' => 'required|string',
+            'city' => 'required|string',
+            'country' => 'required|numeric',
+            'image' => 'image|nullable|required',
+            'platforms' => 'array|required',
+            'platforms.*.link' => 'string|nullable',
+            'platforms.*.platform_id' => 'numeric|exists:platforms,id',
+            'themes' => 'required|array',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+        $user = Auth::user();
+        $validated = $validator->validated();
+
+        $is_platform = false;
+        foreach ($validated['platforms'] as $blogger_platform) {
+            if (isset($blogger_platform['link']) && !empty($blogger_platform['link'])) {
+                $is_platform = true;
+                break;
+            }
+        }
+
+        if (!$is_platform) {
+            return response()->json(['message' => 'Укажите хотя бы одну соц сеть'], 400);
+        }
+
+        $blogger = Blogger::create([
+            'user_id' => $user->id,
+            'city' => $validated['city'],
+            'country_id' => $validated['country'],
+            'description' => $validated['desc'] ?? null,
+            'sex' => $validated['sex'],
+        ]);
+
+        foreach ($validated['platforms'] as $blogger_platform) {
+            if (isset($blogger_platform['link']) && !empty($blogger_platform['link'])) {
+                BloggerPlatform::create([
+                    'blogger_id' => $blogger->id,
+                    'platform_id' => $blogger_platform['platform_id'],
+                    'link' => $blogger_platform['link'] ?? null,
+                ]);
+            }
+        }
+
+        if ($request->file('image')) {
+            $product_image = $request->file('image');
+            $image_path = $product_image->store('profile', 'public');
+            $user->image = $image_path;
+            $user->save();
+        }
+
+        foreach ($validated['themes'] as $theme_id) {
+            BloggerTheme::create([
+                'blogger_id' => $blogger->id,
+                'theme_id' => (int) $theme_id,
+            ]);
+        }
+
+        TgService::sendModeration($user->name . ' оставил заявку на модерацию');
+        return redirect()->route('profile');
+    }
+
     public function show(Blogger $blogger)
     {
         $data = [
@@ -132,14 +203,15 @@ class BloggerController extends Controller
         }
 
         $validated = $validator->validated();
-        $is_platform = false;
 
+        $is_platform = false;
         foreach ($validated['platforms'] as $platform) {
             if (isset($platform['link']) && !empty($platform['link'])) {
                 $is_platform = true;
                 break;
             }
         }
+
         if (!$is_platform) {
             return response()->json(['message' => 'Укажите хотя бы одну соц сеть'], 400);
         }

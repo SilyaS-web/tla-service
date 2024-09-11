@@ -41,7 +41,7 @@ class ProjectResource extends JsonResource
             'active_bloggers_count' => $this->works()->where('status', '<>', null)->count(),
             'applications_sent_count' => $this->works()->whereNull('status')->where('created_by', $this->seller_id)->count(),
             'pending_bloggers_count' => $this->works()->where('status', 'pending')->count(),
-            'in_work_bloggers_count' => WorkResource::collection($this->works()->where('status', 'progress')->get()),
+            'in_work_bloggers_count' => $this->works()->where('status', 'progress')->count(),
             'completed_bloggers_count' => $this->works()->where('status', 'completed')->count(),
             'product_rating' => $statCount->reviewRating ?? 0,
             'product_feedbacks_count' => $statCount->feedbacks ?? 0,
