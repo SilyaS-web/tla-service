@@ -57,7 +57,7 @@ class UserController extends Controller
     {
         $validator = Validator::make(request()->all(), [
             'project_type' => [Rule::in(Project::TYPES)],
-            'product_name' => '',
+            'product_name' => 'string|nullable',
             'statuses' => 'array|nullable',
             'statuses.*' => 'string',
             'is_blogger_access' => 'boolean|nullable'

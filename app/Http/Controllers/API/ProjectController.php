@@ -24,7 +24,7 @@ class ProjectController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'project_type' => [Rule::in(Project::TYPES), 'nullable'],
-            'project_name' => 'string|nullable',
+            'product_name' => 'string|nullable',
             'statuses' => 'array|nullable',
             'statuses.*' => 'string',
         ]);
@@ -41,8 +41,8 @@ class ProjectController extends Controller
             $projects->whereIn('status', $validated['statuses']);
         }
 
-        if (isset($validated['project_name']) && !empty($validated['project_name'])) {
-            $projects->where('product_name', 'like', '%' . $validated['project_name'] . '%');
+        if (isset($validated['product_name']) && !empty($validated['product_name'])) {
+            $projects->where('product_name', 'like', '%' . $validated['product_name'] . '%');
         }
 
         if (isset($validated['project_type']) && !empty($validated['project_type'])) {
