@@ -72,6 +72,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/projects/{project}/stop', [ProjectController::class, 'stop']);
     Route::get('/projects/{project}/start', [ProjectController::class, 'start']);
     Route::get('/projects/{project}/activate', [ProjectController::class, 'activate']);
+    Route::get('/projects/categories', [ProjectController::class, 'categories']);
 
     Route::post('/works', [WorkController::class, 'store']);
     Route::get('/works/{work}/deny', [WorkController::class, 'deny']);

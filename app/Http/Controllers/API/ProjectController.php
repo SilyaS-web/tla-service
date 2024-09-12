@@ -402,4 +402,23 @@ class ProjectController extends Controller
 
         return $application_count_by_projects;
     }
+
+    public function categories(Request $request) {
+        $validator = Validator::make($request->all(), [
+            'category' => 'string|nullable',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors())->setStatusCode(400);
+        }
+
+        $validated = $validator->validated();
+        $categories = [];
+
+        if (isset($validated['category']) && !empty($validated['category'])) {
+            $categories = Project::selectRaw('marketplace_category as theme')->where('marketplace_category', 'like', '%' . $validated['category'] . '%')->distinct('marketplace_category')->get();
+        }
+
+        return response()->json(['categories' => $categories])->setStatusCode(200);
+    }
 }
