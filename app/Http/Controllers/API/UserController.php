@@ -157,6 +157,7 @@ class UserController extends Controller
     public function notifications(User $user, Request $request) {
         $validator = Validator::make($request->all(), [
             'order_by' => 'string|nullable',
+            'viewed' => 'boolean|nullable',
             'limit' => 'numeric|nullable',
         ]);
 
@@ -176,6 +177,10 @@ class UserController extends Controller
 
         if (isset($validated['limit']) && !empty($validated['limit'])) {
             $notifications->offset(0)->limit($validated['limit']);
+        }
+
+        if (isset($validated['viewed']) && !empty($validated['viewed'])) {
+            $notifications->whereNotNull('viewed_at');
         }
 
         $data = [
