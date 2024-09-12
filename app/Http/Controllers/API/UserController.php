@@ -156,7 +156,8 @@ class UserController extends Controller
 
     public function notifications(User $user, Request $request) {
         $validator = Validator::make($request->all(), [
-            'order_by' => 'string|nullable'
+            'order_by' => 'string|nullable',
+            'limit' => 'numeric|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -171,6 +172,10 @@ class UserController extends Controller
             $notifications->orderBy('created_at', $validated['order_by']);
         } else {
             $notifications->orderBy('created_at', 'desc');
+        }
+
+        if (isset($validated['limit']) && !empty($validated['limit'])) {
+            $notifications->offset(0)->limit($validated['limit']);
         }
 
         $data = [
