@@ -77,6 +77,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/referrals', [ReferralController::class, 'index']);
     Route::get('/referrals/export', [ReferralController::class, 'export']);
 
+    Route::get('/tariifs', [TariffController::class, 'index']);
     Route::get('/tariifs/{tariff}/price', [TariffController::class, 'getPrice']);
 });
 
