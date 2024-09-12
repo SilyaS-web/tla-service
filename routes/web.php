@@ -24,9 +24,7 @@ use App\Http\Controllers\WorkController;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+return view('index');
 
 Route::get('/policy', function () {
     return view('policy');

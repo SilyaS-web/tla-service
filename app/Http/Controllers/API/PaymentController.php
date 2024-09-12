@@ -133,14 +133,15 @@ class PaymentController extends Controller
                 return $response->getPaymentURL();
             }
 
-            return redirect($response->getPaymentURL());
+            return response()->json(['link' => $response->getPaymentURL()])->setStatusCode(200);
         } catch (TinkoffAPIException $e) {
             Log::channel('single')->info($e);
 
             if ($from_landing) {
                 return $fail_url;
             }
-            return redirect($fail_url);
+
+            return response()->json(['message' => 'Произошла ошибка на стороне банка'])->setStatusCode(400);
         }
     }
 
