@@ -2243,39 +2243,39 @@ $(window).on('load', function(){
         $(e.target).closest('.form-stat').toggleClass('active');
     })
 
-    $(document).on('click', '.item-chat__project-link--seller', function(e){
-        var pId = $(e.target).closest('.item-chat__project-link--seller').data('project-id');
+    // $(document).on('click', '.item-chat__project-link--seller', function(e){
+    //     var pId = $(e.target).closest('.item-chat__project-link--seller').data('project-id');
+    //
+    //     if($(`.profile-projects__item[data-id="${pId}"]`).length > 0){
+    //         $(document).find('.projects-list-link').click();
+    //
+    //         $(`.profile-projects__item[data-id="${pId}"]`).addClass('hovered')
+    //
+    //         $([document.documentElement, document.body]).animate({
+    //             scrollTop: $(`.profile-projects__item[data-id="${pId}"]`).offset().top
+    //             });
+    //
+    //         setTimeout(()=>{
+    //             $(`.profile-projects__item[data-id="${pId}"]`).removeClass('hovered')
+    //         }, 3000)
+    //     }
+    // })
 
-        if($(`.profile-projects__item[data-id="${pId}"]`).length > 0){
-            $(document).find('.projects-list-link').click();
-
-            $(`.profile-projects__item[data-id="${pId}"]`).addClass('hovered')
-
-            $([document.documentElement, document.body]).animate({
-                scrollTop: $(`.profile-projects__item[data-id="${pId}"]`).offset().top
-                });
-
-            setTimeout(()=>{
-                $(`.profile-projects__item[data-id="${pId}"]`).removeClass('hovered')
-            }, 3000)
-        }
-    })
-
-    $(document).on('click', '.item-chat__project-link--blogger', function(e){
-        var pId = $(e.target).closest('.item-chat__project-link--blogger').data('project-id');
-
-        $(document).find('.projects-work-link').click();
-
-        $(`.project-item[data-id="${pId}"]`).addClass('hovered')
-
-        $([document.documentElement, document.body]).animate({
-            scrollTop: $(`.project-item[data-id="${pId}"]`).offset().top
-            });
-
-        setTimeout(()=>{
-            $(`.project-item[data-id="${pId}"]`).removeClass('hovered')
-        }, 3000)
-    })
+    // $(document).on('click', '.item-chat__project-link--blogger', function(e){
+    //     var pId = $(e.target).closest('.item-chat__project-link--blogger').data('project-id');
+    //
+    //     $(document).find('.projects-work-link').click();
+    //
+    //     $(`.project-item[data-id="${pId}"]`).addClass('hovered')
+    //
+    //     $([document.documentElement, document.body]).animate({
+    //         scrollTop: $(`.project-item[data-id="${pId}"]`).offset().top
+    //         });
+    //
+    //     setTimeout(()=>{
+    //         $(`.project-item[data-id="${pId}"]`).removeClass('hovered')
+    //     }, 3000)
+    // })
 
     $(document).on('click', '#send-stats-blogger-btn', function(e){
         var btn = $(e.target).closest('#send-stats-blogger-btn');
@@ -2292,22 +2292,22 @@ $(window).on('load', function(){
             $(document).find(`.item-chat[data-id="${$(e.target).closest('.notif-header__goto').data('work-id')}"]`).addClass('current');
         }
     })
-    $(document).on('click', '.notif-header__hide', function(e){
-        e.preventDefault();
-
-        var id = $(e.target).closest('.notif-header__hide').data('id');
-
-        $.ajax({
-            url: `apist/notifications/view/${id}`,
-            method: 'GET',
-            success: (res)=>{
-                $(e.target).closest('.notif-header__col').remove();
-
-                var nCount = Number($('#header-notif-count').text());
-                $('#header-notif-count').text(nCount > 0 ? nCount - 1 : 0);
-            }
-        })
-    })
+    // $(document).on('click', '.notif-header__hide', function(e){
+    //     e.preventDefault();
+    //
+    //     var id = $(e.target).closest('.notif-header__hide').data('id');
+    //
+    //     $.ajax({
+    //         url: `apist/notifications/view/${id}`,
+    //         method: 'GET',
+    //         success: (res)=>{
+    //             $(e.target).closest('.notif-header__col').remove();
+    //
+    //             var nCount = Number($('#header-notif-count').text());
+    //             $('#header-notif-count').text(nCount > 0 ? nCount - 1 : 0);
+    //         }
+    //     })
+    // })
 
     // var quant = $(document).find('.quantity-w');
     //
@@ -2464,7 +2464,7 @@ $(window).on('load', function(){
 
 
     //profile
-    var profileTabs = new Tabs('.profile__body')
+    // var profileTabs = new Tabs('.profile__body')
     var profileForm = new ProfileInfoForm('#info')
 
     //popups
@@ -2535,56 +2535,32 @@ function ibg(){
 }
 
 window.addEventListener('load', ibg)
-
-setInterval(() => {
-    var authorization_token = localStorage.getItem('session_token');
-
-    if(authorization_token){
-        var user = localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : {}
-
-        $.ajax({
-            url: '/api/users/' + user.id + '/notifications',
-            headers: {"Authorization": "Bearer " + authorization_token}
-        })
-        .then(function( data ) {
-            $('.header-notif-container').html(data.view);
-            $('.header-notif-count').html(data.count);
-            if (data.count == 0) {
-                $('.header-notif-count').hide();
-            } else {
-                $('.header-notif-count').show();
-            }
-        })
-        .catch((error) => {
-        });
-    }
-}, 5000)
-
-setInterval(() => {
-    var authorization_token = localStorage.getItem('session_token');
-
-    if(authorization_token){
-        $.ajax({
-            url: '/apist/applications-count',
-            headers: {"Authorization": "Bearer " + authorization_token}
-        })
-        .done(function( data ) {
-            var apps = data || false;
-
-            if(apps){
-                for(var k in apps){
-                    var cProjectNotifs = $(`#seller .profile-projects__item[data-id="${k}"]`).find('.notifs-application');
-                    if(Number(apps[k]) > 0)
-                        cProjectNotifs.show();
-                    else
-                        cProjectNotifs.hide();
-
-                    cProjectNotifs.text(apps[k]);
-                }
-            }
-        });
-    }
-}, 5000)
+//
+// setInterval(() => {
+//     var authorization_token = localStorage.getItem('session_token');
+//
+//     if(authorization_token){
+//         $.ajax({
+//             url: '/apist/applications-count',
+//             headers: {"Authorization": "Bearer " + authorization_token}
+//         })
+//         .done(function( data ) {
+//             var apps = data || false;
+//
+//             if(apps){
+//                 for(var k in apps){
+//                     var cProjectNotifs = $(`#seller .profile-projects__item[data-id="${k}"]`).find('.notifs-application');
+//                     if(Number(apps[k]) > 0)
+//                         cProjectNotifs.show();
+//                     else
+//                         cProjectNotifs.hide();
+//
+//                     cProjectNotifs.text(apps[k]);
+//                 }
+//             }
+//         });
+//     }
+// }, 5000)
 
 selectTab = (tabName)=>{
     $('.tab').removeClass('active');

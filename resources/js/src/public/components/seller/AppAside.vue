@@ -19,8 +19,8 @@
                 </a>
                 <a href="#" v-on:click="switchTab('chat')" class="nav-menu__item nav-menu__link tab chat-link" data-content="chat">
                     Чат с блогерами
-                    <div class="nav-menu__item-notifs notifs notifs-chat" style="display: none">
-                        1
+                    <div class="nav-menu__item-notifs notifs notifs-chat" v-if="chatMessages && chatMessages > 0">
+                        {{ chatMessages }}
                     </div>
                 </a>
             </div>
@@ -32,6 +32,7 @@
 </template>
 <script>
 export default{
+    props:['chatMessages'],
     methods:{
         switchTab(link){
             this.$emit('switchTab', link)

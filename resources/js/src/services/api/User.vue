@@ -81,16 +81,14 @@
             return user && user.role == 'seller'
         },
 
-        getWorks(user_id){
+        getWorks(user_id, orderBy = 'asc', is_active = 1){
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'get',
-                    url: 'api/users/' + user_id + '/works/'
+                    url: 'api/users/' + user_id + '/works?order_by_last_message=' + orderBy + '&is_active=' + is_active
                 })
                 .then(response => {
-                    console.log(response);
-
-                    resolve(response.data);
+                    resolve(response.data.works);
                 })
                 .catch((errors) => {
                     console.log(errors);
@@ -112,9 +110,7 @@
                     url: 'api/users/' + user_id + '/works/' + work_id + '/messages'
                 })
                 .then(response => {
-                    console.log(response);
-
-                    resolve(response.data);
+                    resolve(response.data.messages);
                 })
                 .catch((errors) => {
                     console.log(errors);

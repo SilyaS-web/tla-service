@@ -60,11 +60,11 @@
                 </div>
                 <div class="filter__items">
                     <div class="form-group filter__item">
-                        <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию">
+                        <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию" v-model="bloggerFilter.name">
                     </div>
                     <div class="form-group filter__item">
                         <label for="">Платформа</label>
-                        <select name="filter-platform" id="filter-platform" class="input">
+                        <select name="filter-platform" id="filter-platform" class="input" v-model="bloggerFilter.platform">
                             <option value="">Выберите платформу</option>
                             <option
                                 v-for="platform in platforms"
@@ -75,14 +75,14 @@
                     </div>
                     <div class="form-group filter__item">
                         <label for="filter-country">Страна блогера</label>
-                        <select name="filter-country" id="filter-country" class="input">
+                        <select name="filter-country" id="filter-country" class="input" v-model="bloggerFilter.country">
                             <option value="" class="">Выберите страну</option>
                             <option value="1" class="">Россия</option>
                         </select>
                     </div>
                     <div class="form-group filter__item">
                         <label for="filter-city">Город блогера</label>
-                        <input type="text" class="input" name="filter-city" id="filter-city" placeholder="Введите город">
+                        <input type="text" class="input" name="filter-city" id="filter-city" placeholder="Введите город" v-model="bloggerFilter.city">
                     </div>
                     <div class="form-group" style="flex-direction: column;">
                         <label for="">Выберите тематику</label>
@@ -105,11 +105,11 @@
                         <label for="">Пол блогера</label>
                         <div class="filter__item--sex" id = "filter__item--sex">
                             <div class="input-checkbox-w">
-                                <input type="checkbox" class="checkbox" id="male">
+                                <input type="checkbox" class="checkbox" id="male" >
                                 <label for="male">Мужской</label>
                             </div>
                             <div class="input-checkbox-w">
-                                <input type="checkbox" class="checkbox" id="female">
+                                <input type="checkbox" class="checkbox" id="female" :checked="bloggerFilter.sex == 'female'">
                                 <label for="female">Женский</label>
                             </div>
                         </div>
@@ -228,7 +228,6 @@
 </template>
 <script>
     import {ref} from "vue";
-    import axios from "axios";
 
     import User from '../../../services/api/User.vue'
     import Project from '../../../services/api/Project.vue'
@@ -250,6 +249,16 @@
                 projects:ref([]),
                 currentProject: ref(null),
                 isChooseProjectList: ref(false),
+
+                bloggerFilter: ref({
+                    name: '',
+                    platform: '',
+                    subscriber_quantity_min: '',
+                    subscriber_quantity_max: '',
+                    city: '',
+                    country: '',
+                    sex: '',
+                }),
 
                 Project, User,
                 Loader
@@ -281,12 +290,25 @@
 
                 this.Project.getUsersProjectsList(this.user.id).then(data => {
                     this.projects = data || [];
-                    console.log(this.projects, this.isChooseProjectList)
                     setTimeout(()=>{
                         this.Loader.loaderOff();
                     }, 300)
                 })
             },
+            applyBloggersFilter(){
+                this.$emit('applyFilter', this.bloggerFilter);
+            },
+            resetBloggersFilter(){
+                this.bloggerFilter = {
+                    name: '',
+                    platform: '',
+                    subscriber_quantity_min: '',
+                    subscriber_quantity_max: '',
+                    city: '',
+                    country: '',
+                    sex: '',
+                }
+            }
         }
     }
 </script>

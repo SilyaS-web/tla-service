@@ -28,6 +28,7 @@
                     v-if="myProjects && myProjects.length > 0"
                     v-for="project in myProjects"
                     :project = "project"
+                    v-on:switchTab="switchTab"
                 ></MyProjectsListItem>
                 <span v-else> Проектов нет </span>
             </div>
@@ -39,18 +40,20 @@
                         <p class="filter__title">
                             Фильтр
                         </p>
-                        <a href="#" class="filter__reset">
+                        <a
+                            @click="resetFilter"
+                            href="#" class="filter__reset">
                             Сбросить
                         </a>
                     </div>
                     <div class="filter__items">
                         <div class="form-group filter__item">
-                            <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию">
+                            <input type="text" class="input" name="filter-name" id="filter-name" v-model="filter.product_name" placeholder="Поиск по названию">
                         </div>
                         <div class="form-group filter__item">
                             <label for="">Формат рекламы</label>
-                            <select name="project_type" id="filter-format" class="input">
-                                <option value="" class="">Выберите формат</option>
+                            <select name="project_type" id="filter-format" class="input" v-model="filter.project_type">
+                                <option value="" class="" >Выберите формат</option>
                                 <option value="feedback" class="">Отзыв на товар</option>
                                 <option value="inst" class="">Интеграция Ins</option>
                                 <option value="youtube" class="">Интеграция YTube</option>
@@ -60,7 +63,9 @@
                         </div>
 
                         <div class="filter__btns">
-                            <button class="btn btn-primary btn-filter-send">Применить</button>
+                            <button
+                                @click="applyFilter"
+                                class="btn btn-primary">Применить</button>
                         </div>
                     </div>
                 </div>
@@ -80,6 +85,10 @@
         data(){
             return {
                 brands: ref([]),
+                filter: ref({
+                    project_type: '',
+                    product_name: '',
+                }),
                 Project
             }
         },
@@ -110,6 +119,21 @@
                     notify('info', {title: 'Внимание!', message: 'Проектов с таким брендом не найдено.'});
                 }
             },
+            switchTab(work_id){
+                this.$emit('switchTab', 'chat', {
+                    item: 'chat',
+                    id: work_id
+                })
+            },
+            applyFilter(){
+                this.$emit('applyFilter', this.filter);
+            },
+            resetFilter(){
+                this.filter = {
+                    product_name: '',
+                    project_type: '',
+                }
+            }
         }
     }
 </script>

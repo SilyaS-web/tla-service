@@ -159,8 +159,6 @@
                     $(e.target).prop('checked', false);
                     notify('info', {title: 'Внимание', message: 'Нельзя выбрать больше 3-х тематик'});
                 }
-
-                console.log(list);
             }
         }
     }

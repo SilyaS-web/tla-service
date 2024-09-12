@@ -3,7 +3,7 @@
         v-if="project"
         :data-id="project.id"
         :data-brand = "project.marketplace_brand"
-        class="profile-projects__row profile-projects__item">
+        :class="'profile-projects__row profile-projects__item ' + (project.currentProject ? 'hovered' : '')">
             <div class="profile-projects__col profile-projects__img profile-projects--carousel owl-carousel">
                 <div
                     v-for="image in project.project_files"
@@ -348,8 +348,8 @@
                                 <button
                                     v-else
                                     :data-work-id="work.id"
-                                    @click="goToChat"
-                                    class="btn btn-primary btn-to-chat">
+                                    @click="goToChat(work)"
+                                    class="btn btn-primary">
                                     Перейти в диалог
                                 </button>
                             </div>
@@ -490,7 +490,7 @@
                                     </div>
                                     <div class="table-stats__body">
                                         <div
-                                            v-for="work in project.project.completed_works"
+                                            v-for="work in project.completed_works"
                                             :data-work-id = "work.id"
                                             class="table-stats__row">
                                             <div class="table-stats__col table-stats__blogger-img" style="width: 10%">
@@ -517,7 +517,7 @@
                                                 </span>
                                             </div>
                                             <div class="table-stats__col" style="width: 11%;">
-                                                {{ work.statistics.views }}
+                                                {{ work.statistics ? work.statistics.views : '...' }}
                                             </div>
                                             <div class="table-stats__col" style="width: 6%;">
                                                 <span
@@ -549,7 +549,7 @@
                                             </div>
                                             <div class="table-stats__col" style="width: 9%;">
                                                 <span
-                                                    v-if="!work.finish_stats.cpr"
+                                                    v-if="!work.statistics"
                                                     @click="function(event){ event.stopPropagation() }"
                                                     class="table-stats__quest">
                                                     ?
@@ -557,13 +557,13 @@
                                                         <p>Запросите статистику у блогера</p>
                                                     </div>
                                                 </span>
-                                                <span>{{ Math.round(project.total_clicks / (work.statistics.views == 0 ? 1 : work.statistics.views) * 100) }}</span>
+                                                <span v-else>{{ Math.round(project.total_clicks / (work.statistics.views == 0 ? 1 : work.statistics.views) * 100) }}</span>
                                             </div>
                                             <div class="table-stats__col" style="width: 14%;">
                                                 {{ work.confirmed_by_seller_at }}
                                             </div>
                                             <div
-                                                @click="goToChat"
+                                                @click="goToChat(work)"
                                                 class="table-stats__col table-stats__col--chat" style="width: 6%; cursor:pointer">
                                                 <img src="img/chat-black-icon.svg" alt="">
                                             </div>
@@ -640,12 +640,14 @@
     import ConfirmPopup from '../../../ui/ConfirmationPopup.vue';
 
     export default{
-        props:['project'],
+        props:['project', 'currentItem'],
         components: {ConfirmPopup},
         data(){
             return {
                 bloggers_leads: ref([]),
                 bloggers_active: ref([]),
+
+                currentProject: ref(null),
 
                 isProjectOptsOpen: ref(false),
                 Project, Work,
@@ -665,27 +667,34 @@
             prices_ctx = $(`.profile-projects__item[data-id="${this.project.id}"]`).find('#prices-graph-desktop');
             orders_ctx = $(`.profile-projects__item[data-id="${this.project.id}"]`).find('#orders-graph-desktop');
 
-            var data = this.project.marketplace_statistics ? JSON.parse(this.project.marketplace_statistics) : {orders: 0, earnings: 0, bloggers_history: 0, prices_history: [], orders_history: [], },
-                lineData = [], barData = [];
+            var data = this.project.marketplace_statistics
+                ? JSON.parse(this.project.marketplace_statistics)
+                : {
+                    orders: 0,
+                    earnings: 0,
+                    bloggers_history: 0,
+                    prices_history: [],
+                    orders_history: [],
+                };
 
             var datasets = [
-            {
-                label: 'Выручка',
-                data: data.prices_history.map((item, index) => {
-                    if (item["earnings"] !== undefined) {
-                        return {x: (item.dt.split('-')[2] + ' ' + month[Number(item.dt.split('-')[1]) - 1]), y: Math.round(item.earnings)};
+                {
+                    label: 'Выручка',
+                    data: data.prices_history.map((item, index) => {
+                        if (item["earnings"] !== undefined) {
+                            return {x: (item.dt.split('-')[2] + ' ' + month[Number(item.dt.split('-')[1]) - 1]), y: Math.round(item.earnings)};
 
-                    } else {
-                        return {x: (item.dt.split('-')[2] + ' ' + month[Number(item.dt.split('-')[1]) - 1]), y: Math.round(item.price * data.orders_history[index].orders)};
-                    }
-                }),
-                showLine: true,
-                type: 'line',
-                backgroundColor: data.prices_history.map(() => {
-                    return 'rgb(255, 99, 132, 0.5)'
-                }),
-                order: 0,
-            },
+                        } else {
+                            return {x: (item.dt.split('-')[2] + ' ' + month[Number(item.dt.split('-')[1]) - 1]), y: Math.round(item.price * data.orders_history[index].orders)};
+                        }
+                    }),
+                    showLine: true,
+                    type: 'line',
+                    backgroundColor: data.prices_history.map(() => {
+                        return 'rgb(255, 99, 132, 0.5)'
+                    }),
+                    order: 0,
+                },
                 {
                     label: 'Заказы',
                     data: data.orders_history.map(item => {
@@ -792,6 +801,12 @@
                     }
                 }
             });
+
+            if(this.project.currentProject){
+                $([document.documentElement, document.body]).animate({
+                    scrollTop: $(document).find(`.profile-projects__item[data-id="${this.project.id}"]`).offset().top
+                }, 1000);
+            }
         },
         updated(){
             $(`.profile-projects__item[data-id="${this.project.id}"]`).find('.projects-blogers--in_work').owlCarousel({
@@ -820,11 +835,8 @@
             });
         },
         methods:{
-            goToChat(){
-                var id = $(e.target).closest('.table-stats__row').data('work-id');
-
-                $('.chat-link').click();
-                $(`.item-chat[data-id="${id}"]`).click();
+            goToChat(work){
+                this.$emit('switchTab', work.id)
             },
 
             getBloggersInWork(){
@@ -974,8 +986,7 @@
                 this.Work.accept(work.id).then(data => {
                     if(data){
                         Promise.all([
-                            this.getBloggersLeads(),
-                            this.getBloggersInWork()
+                            this.getBloggersLeads()
                         ]).then(() => {
                             console.log('Loaded')
                         })

@@ -1,5 +1,5 @@
 <template>
-    <div class="dashboard tab-content active" id="dashboard">
+    <div class="dashboard tab-content active" v-if="dashboard" id="dashboard">
         <div class="dashboard__body">
             <div class="dashboard__title title">
                 Статистика
@@ -14,7 +14,7 @@
                         v-if="!dashboard.is_wb_api_key"
                         class="dashboard__placeholder" style="z-index: 9998">
                         <div class="dashboard__placeholder-text">
-                            <a href="/edit-profile">Введите API ключ</a> в настройках профиля
+                            <router-link :to="{path: '/seller/edit-profile' }">Введите API ключ</router-link> в настройках профиля
                         </div>
                         <div class="dashboard__placeholder-overflow">
 
@@ -217,7 +217,7 @@
                 </div>
                 <div class="dashboard__row">
                     <div class="dashboard__col dashboard__item dashboard__item--cover">
-                        <div class="dashboard__item-cover" style="{{($total_clicks < 10) ? 'text-align:center' : ''}} ">
+                        <div class="dashboard__item-cover" :style="(dashboard.total_clicks < 10) ? 'text-align:center' : ''">
                             <div class="dashboard__item-title">
                                 Переходы по интеграциям
                             </div>
@@ -236,19 +236,19 @@
                             </div>
                         </div>
                     </div>
-                    <div class="dashboard__col dashboard__item funnel-statistics" style="{{($total_clicks < 10) ? 'text-align:center' : ''}} ">
-                        <div class="dashboard__col">
-                            <div class="dashboard__item-title" >
+                    <div class="dashboard__col dashboard__item funnel-statistics" :style="(dashboard.total_clicks < 10) ? 'text-align:center' : ''">
+                        <div class="dashboard__item-cover" :style="(dashboard.total_clicks < 10) ? 'justify-content:center' : ''">
+                            <div
+                                class="dashboard__item-title" >
                                 Поĸазатели эффеĸтивности за 30 дней
                             </div>
-                            <div class="dashboard__row" style="{{($total_clicks < 10) ? 'justify-content:center' : ''}} ">
-                                <canvas
-                                    v-if="dashboard.total_clicks > 10"
-                                    id="funnel-graph"></canvas>
-                                <span v-else>
-                                    Недостаточно данных для отображения статистики
-                                </span>
-                            </div>
+                            <canvas
+                                v-if="dashboard.total_clicks > 10"
+                                id="funnel-graph"
+                            ></canvas>
+                            <span v-if="dashboard.total_clicks <= 10">
+                                Недостаточно данных для отображения статистики
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -287,13 +287,131 @@
 
     import User from '../../../services/api/User.vue'
     import Loader from "../../../services/AppLoader"
+    import Meter from "../../services/AppMeter";
 
     export default {
         props: ['dashboard'],
         data(){
             return {
-                User, Loader
+                User, Loader, Meter
             }
+        },
+        updated(){
+            if(this.dashboard && this.dashboard.total_clicks && this.dashboard.total_clicks > 10){
+                var coverageGraph = document.getElementById("coverage-graph"),
+                    data = this.dashboard.statistics;
+
+                var month = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+
+                var coverage_stats = new Chart(coverageGraph, {
+                    type: 'scatter',
+                    data: {
+                        labels: data.map(item => `${item.dt.split("-")[2]} ${month[Number(item.dt.split("-")[1]) - 1]}`),
+                        datasets: [
+                            {
+                                label: "Переходы",
+                                data: data.map(item => item.coverage),
+                                backgroundColor: data.map(() => {
+                                    return "rgb(152,203,237, 1)"
+                                }),
+                                order:0,
+                                type: "bar",
+                            },
+                            {
+                                label: "Блоггеров завершило работу",
+                                data: data.map(item => item.bloggers),
+                                type: "bar",
+                                backgroundColor: data.map(() => {
+                                    return "rgb(254,94,0, 0.4)"
+                                }),
+                                order: 1,
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        onResize: (chart, size) => {
+                            var media = window.matchMedia('(max-width: 500px)');
+                            if(media.matches){
+                                chart.height = 200;
+                            }
+                        },
+                        plugins: {
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                            },
+                        },
+                        hover: {
+                            mode: 'nearest',
+                            intersect: true
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                type: 'logarithmic',
+                                ticks: {
+                                    callback: (tick, index, array)=> {
+                                        var newTick = '';
+
+                                        if(Math.trunc(tick) === tick){
+                                            newTick = tick
+                                        }
+
+                                        return tick === 0 ? 0 : newTick;
+                                    }
+                                },
+                            }
+                        }
+                    }
+                });
+
+                var config = {
+                    type: "funnel",
+                    data: {
+                        datasets: [{
+                            data: [30, 60, 90],
+                            backgroundColor: [
+                                "#FF6384",
+                                "#36A2EB",
+                                "#FFCE56"
+                            ],
+                            hoverBackgroundColor: [
+                                "#FF6384",
+                                "#36A2EB",
+                                "#FFCE56"
+                            ]
+                        }],
+                        labels: [
+                            "Red",
+                            "Blue",
+                            "Yellow"
+                        ]
+                    }
+                }
+
+                var funnelChart = FunnelChart("funnel-graph", {
+                    values: [
+                        this.dashboard.total_clicks ,
+                        Math.ceil(this.dashboard.er || 1 ).toFixed(2),
+                        Math.ceil(this.dashboard.cpc || 1 ).toFixed(2),
+                    ],
+                    sectionColor: ["#98CBED", "#F0C457", "#FD6567"],
+                    displayPercentageChange: false,
+                    pSectionHeightPercent: 100,
+                    font: "Inter, sans-serif",
+                    labelWidthPercent: 30,
+                    labelFontColor: "#000",
+                    labels: [
+                        "Переходы",
+                        "ER, %",
+                        "CPC, Руб.",
+                    ],
+                    maxFontSize: 18,
+                });
+            }
+
+            this.Meter.init(this.dashboard && this.dashboard.feedback_ratio || 0);
         },
         methods:{
             toggleArticles(event){

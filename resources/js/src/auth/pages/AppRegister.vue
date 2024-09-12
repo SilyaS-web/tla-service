@@ -137,7 +137,6 @@
                             });
                         }
                         this.isConfirmed = response.data === 'success'
-                        console.log(this.isConfirmed)
                     })
                     .catch((errors) => {
                         // notify('error', {
@@ -170,8 +169,6 @@
                 }
 
                 var response = await this.User.register(this.user);
-
-                console.log(response);
             },
         }
     }

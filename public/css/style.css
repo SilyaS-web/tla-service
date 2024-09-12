@@ -129,7 +129,7 @@ a.btn:hover{
     height: calc(100% + 8px);
     top:-8px; left:-8px;
     position: absolute;
-    z-index: 9999;
+    z-index: 9998;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -3352,6 +3352,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .item-chat.current{
     background-color: var(--pale);
+    border: 1px solid var(--primary);
 }
 .current {
 }
@@ -3379,6 +3380,8 @@ input[type='range']::-webkit-slider-runnable-track{
 .item-chat__last-msg {
     font-size: 14px;
     color: rgba(0, 0, 0, .4);
+    max-width: 160px;
+    width: 100%;
 }
 .item-chat__project-link{
     font-size: 12px;
@@ -3518,7 +3521,7 @@ input[type='range']::-webkit-slider-runnable-track{
     border-radius: 5px;
     cursor: pointer;
 }
-.messages-chat__item-msg>a{
+.messages-chat__item-msg a{
     word-break: break-all;
 }
 .messages-create {

@@ -14,19 +14,22 @@
                                     v-if="works.length > 0"
                                     v-for="work in works"
                                     :data-id="work.id"
-                                    class="chat__chat-item item-chat" style="position:relative">
-                                    <div class="item-chat__img" :style="'background-image: url(' + work.user.image + ')'">
+                                    @click="getMessages(work)"
+                                    :class="'chat__chat-item item-chat ' + (work.currentWork ? 'current' : '')"
+                                    style="position:relative">
+                                    <div class="item-chat__img" :style="'background-image: url(' + work.partner_user.image + ')'">
                                     </div>
                                     <div class="item-chat__text">
-                                        <div class="item-chat__title">{{ work.user.name }}</div>
+                                        <div class="item-chat__title">{{ work.partner_user.name }}</div>
                                         <div class="item-chat__last-msg">
                                             <p>Проект:</p>
-                                            <span>{{ work.project ? work.project.product_name : 'Проект удалён' }}</span>
+                                            <span>{{ work.product_name || 'Проект удалён' }}</span>
                                             <p>ID: {{ work.id }}</p>
                                         </div>
                                         <a href="#"
                                            :class="'item-chat__project-link' + (user.role == 'seller' ? 'item-chat__project-link--seller' : 'item-chat__project-link--blogger')"
-                                           :data-project-id = "work.project.id || 0">
+                                           :data-project-id = "work.project_id"
+                                            @click="goToProjects(work.project_id)">
                                             Перейти к проекту
                                         </a>
                                     </div>
@@ -61,27 +64,23 @@
                                     :class="'messages-chat__item ' + getMessageClass(message)">
                                     <div class="messages-chat__item-header">
                                         <div class="messages-chat__item-title">
-                                            {{ message.user.name }}
+                                            {{ getSenderName(message) }}
                                         </div>
                                         <div class="messages-chat__item-date">
                                             {{ format_date(message.created_at, 'd.m.y H:i') }}
                                         </div>
                                     </div>
                                     <div class="messages-chat__item-msg">
-                                        <span v-if="message.user_id == 1">
-                                            {{ message.message }}
-                                        </span>
+                                        <span v-if="message.sender_id == 1" v-html="message.message"></span>
 
                                         <div
-                                            v-if="message.finishStats"
+                                            v-else-if="message.finishStats"
                                             class="messages-chat__item-stats">
                                             Просмотры: {{ message.finishStats.views }}
                                             Репосты: {{ message.finishStats.reposts }}
                                             Лайки: {{ message.finishStats.likes }}
                                         </div>
-                                        <span v-else>
-                                            {{ message.message }}
-                                        </span>
+                                        <span v-else v-html="message.message"></span>
 
                                         <img
                                             v-for="image in message.images"
@@ -122,18 +121,24 @@
                                         <label for = "chat-upload" class="textarea-upload__text">
                                             Прикрепите файл
                                         </label>
-                                        <input type="file" id = "chat-upload" hidden>
+                                        <input
+                                            @change="onFileChange"
+                                            type="file" id = "chat-upload" hidden>
                                     </div>
-                                    <textarea name="" id="" placeholder="Введите текст" class="messages-create__textarea textarea"></textarea>
+                                    <textarea
+                                        v-model="currentMessage.message"
+                                        name="" id="" placeholder="Введите текст" class="messages-create__textarea textarea"></textarea>
                                 </div>
                                 <div class="chat__btns" style="display: flex; flex-wrap: wrap; gap:8px;">
-                                    <button class="btn btn-primary btn-send-msg">Отправить</button>
+                                    <button
+                                        @click="sendMessage"
+                                        class="btn btn-primary">Отправить</button>
                                     <a href="" class="btn btn-secondary btn-action" id="">Подтвердить выполнение проекта</a>
                                 </div>
                             </div>
 
                             <div
-                                v-if="!currentChatId"
+                                v-if="!currentChat"
                                 class="chat__overflow">
                                 <div v-if="works.length == 0"
                                      class="chat__overflow-text">
@@ -156,8 +161,10 @@
 
     import User from '../../services/api/User.vue'
     import moment from "moment";
+    import axios from "axios";
 
     export default{
+        props:['currentItem'],
         data(){
             return {
                 works:ref([]),
@@ -166,44 +173,168 @@
                     message: null,
                     file: null
                 }),
-                currentChatId: ref(null),
+                currentChat: ref(null),
+                currentChatIntervalId: ref(null),
+                chatsListIntervalId: ref(null),
                 user: ref(null),
                 User
             }
         },
         mounted(){
             this.user = this.User.getCurrent();
-            // this.loadChats();
+
+            this.getChats();
+
+            this.chatsListIntervalId = setInterval(() => {
+                this.getChats()
+            }, 5000)
+        },
+        updated(){
+
+            if(this.currentItem){ //если мы перешли с другого модуля
+                if(this.currentItem.item === 'chat'){
+                    var list = this.works.map(_w => {
+                        if(_w.id == this.currentItem.id){
+                            _w.currentWork = true
+                        }
+                        else {
+                            _w.currentWork = false
+                        }
+
+                        return _w;
+                    });
+
+                    this.$emit('updateCurrentItem', null);
+
+                    var childOffset = $(document).find(`.item-chat[data-id="${this.currentItem.id}"]`).offset().top,
+                        wrapOffset = $(document).find('#chat .chat__chat-items').offset().top,
+                        scrolledValue = $(document).find('#chat .chat__chat-items').scrollTop();
+
+                    $('.chat__chat-items').animate({
+                        scrollTop: (childOffset - wrapOffset + scrolledValue) - 20
+                    }, 1000);
+                }
+            }
         },
         methods: {
-            sendMessage(){
+            onFileChange(e) {
+                var files = e.target.files || e.dataTransfer.files;
 
+                if (!files.length)
+                    return;
+
+                $(e.target).closest('.textarea-upload').find('.textarea-upload__text').text('Изображение успешно загружено')
+
+                this.currentMessage.file = files[0];
             },
-            loadChats(){
+            sendMessage(){
                 return new Promise((resolve, reject) => {
-                    this.User.getWorks(this.user.id).then(data => {
-                        this.works = (data || []);
+                    if(!this.currentMessage || [null, undefined, ''].includes(this.currentMessage.message)) {
+                        resolve(false)
+                    }
+
+                    var formData = new FormData;
+
+                    formData.append('message', this.currentMessage.message);
+                    formData.append('img', this.currentMessage.file);
+
+                    if(!this.currentChat){
+                        notify('error', {
+                            title: 'Внимание!',
+                            message: 'Не выбран чат.'
+                        })
+
+                        resolve(false)
+                    }
+
+                    axios({
+                        method: 'post',
+                        url: 'api/users/' + this.user.id + '/works/' + this.currentChat.id + '/messages',
+                        data: formData
+                    })
+                    .then(response => {
+                        this.currentMessage.message = null;
+
+                        $('#chat-upload').val(null)
+                        $('#chat-upload').closest('.textarea-upload').find('.textarea-upload__text').text('Прикрепите файл')
+
+                        resolve(true);
+                    })
+                    .catch((errors) => {
+                        console.log(errors);
+
+                        notify('error', {
+                            title: 'Внимание!',
+                            message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'
+                        })
+
+                        resolve(false)
+                    })
+                })
+            },
+            getMessages(work){
+                return new Promise((resolve, reject) => {
+                    this.currentChat = work;
+
+                    this.User.getMessages(work.id, this.user.id).then(data => {
+                        this.messages = (data || []);
+
+                        if(!this.currentChatIntervalId){
+                            this.currentChatIntervalId = setInterval(() => {
+                                this.getMessages(this.currentChat);
+                            }, 5000)
+                        }
 
                         resolve(data)
                     })
                 })
             },
-            openChat(){
+            getChats(){
+                return new Promise((resolve, reject) => {
+                    this.User.getWorks(this.user.id).then(data => {
+                        var list = (data || []);
 
+                        var newMessages = this.works.filter(w => w.new_messages_count).map(w => w.new_messages_count).reduce((a, b) => a + b, 0);
+
+                        if(newMessages && newMessages > 0){
+                            this.$emit('newMessages', newMessages)
+                        }
+
+                        this.works = list
+
+                        resolve(data)
+                    })
+                })
             },
             getMessageClass(message){
-                if(message.user_id === 1){
+                if(message.sender_id === 1){
                     return 'messages-chat__item--system'
                 }
-                if(message.user_id === this.user.id){
+                if(message.sender_id === this.user.id){
                     return 'messages-chat__item--author'
                 }
 
                 return '';
             },
+            getSenderName(message){
+                if(message.sender_id === 1){
+                    return ''
+                }
+                if(message.sender_id === this.user.id){
+                    return this.user.name
+                }
+
+                return this.currentChat.partner_user.name;
+            },
+            goToProjects(project_id){
+                this.$emit('switchTab', 'profile-projects', {
+                    item: 'projects',
+                    id: project_id
+                });
+            },
             format_date(value){
                 if (value) {
-                    return moment(String(value)).format('DD.MM.YY H:i')
+                    return moment(String(value)).format('DD.MM.YY H:mm')
                 }
             },
         }

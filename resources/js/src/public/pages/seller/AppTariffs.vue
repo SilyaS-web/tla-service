@@ -168,7 +168,7 @@ export default {
                 okButton: 'Отправить',
                 cancelButton: 'Отмена',
             }).then(() => {
-                console.log(123)
+
             })
         }
     }

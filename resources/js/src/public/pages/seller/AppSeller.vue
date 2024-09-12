@@ -1,16 +1,41 @@
 <template>
+    <Header v-on:switchTab="switchTab"></Header>
+
     <section class="profile" id="seller">
         <div class="profile__container _container">
             <div class="profile__body">
-                <Aside @switchTab="switchTab"></Aside>
+                <Aside v-on:switchTab="switchTab" :chatMessages="newChatMessagesCount"></Aside>
                 <div class="profile__content">
                     <div class="profile__content-inner">
-                        <CreateProject></CreateProject>
+                        <!-- создание проекта -->
+                        <CreateProject v-on:switchTab="switchTab"></CreateProject>
+
+                        <!-- дашборд -->
                         <Dashboard :dashboard="dashboard"></Dashboard>
-                        <ProjectsList :projects="projects"></ProjectsList>
-                        <MyProjectsList :myProjects="myProjects" v-on:updateMyProjects="updateMyProjects"></MyProjectsList>
+
+                        <!-- Список всех проектов -->
+                        <ProjectsList
+                            :projects="projects"
+                            v-on:applyFilter="applyFilterProjects">
+                        </ProjectsList>
+
+                        <!-- список моих проектов -->
+                        <MyProjectsList
+                            :myProjects="myProjects"
+                            v-on:updateMyProjects="updateMyProjects"
+                            v-on:switchTab="switchTab"
+                            v-on:applyFilter="applyFilterMyProjects"
+                        ></MyProjectsList>
+
+                        <!-- список блогеров -->
                         <BloggersList :bloggers="bloggers" :user="user"></BloggersList>
-                        <Chat></Chat>
+
+                        <!-- чат -->
+                        <Chat
+                            :currentItem=currentItem
+                            v-on:switchTab="switchTab"
+                            v-on:newMessages="newChatMessages"
+                            v-on:updateCurrentItem="currentItem = $event"></Chat>
                     </div>
                 </div>
             </div>
@@ -27,7 +52,6 @@ import Project from '../../../services/api/Project.vue'
 import Blogger from '../../../services/api/Blogger.vue'
 
 import Loader from '../../../services/AppLoader.vue'
-import Meter from '../../services/AppMeter.vue'
 import Tabs from '../../../services/AppTabs.vue'
 
 import CreateProject from '../../components/seller/CreateProjectComponent.vue'
@@ -37,12 +61,12 @@ import BloggersList from '../../components/seller/BloggersListComponent.vue'
 import Dashboard from '../../components/seller/AppDashboard.vue'
 import Chat from '../../components/ChatIndex.vue'
 import Aside from '../../components/seller/AppAside.vue'
-
+import Header from '../../components/layout/AppHeader.vue'
 
 export default{
     components: {
         Aside, CreateProject, Dashboard, ProjectsList,
-        MyProjectsList, BloggersList, Chat
+        MyProjectsList, BloggersList, Chat, Header
     },
     data(){
         return {
@@ -51,12 +75,30 @@ export default{
             themes: ref([]),
             myProjects: ref([]),
             brands: ref([]),
-            dashboard: ref({}),
+            dashboard: ref({
+                "is_wb_api_key": false,
+                "total_feedbacks_count": 0,
+                "avg_feedbacks_value": 0,
+                "products_bad_feedbacks": [],
+                "products_good_feedbacks": [],
+                "products_great_feedbacks": [],
+                "products_few_feedbacks_count": [],
+                "products_normal_feedbacks_count": [],
+                "unanswered_feedbacks_count": 0,
+                "total_clicks": 0,
+                "statistics": [],
+                "feedback_ratio": 0,
+                "er": 0,
+                "cpc": 0
+            }),
             bloggers: ref([]),
             projects: ref([]),
 
+            currentItem: ref(null),
+            newChatMessagesCount: ref(0),
+
             User, Seller, Blogger, Project,
-            Loader, Meter, Tabs
+            Loader, Tabs
         }
     },
     async mounted(){
@@ -66,137 +108,24 @@ export default{
 
         this.dashboard = await this.getSellerStats(this.user.id);
 
-        if(this.dashboard.total_clicks && this.dashboard.total_clicks > 10){
-            var coverageGraph = document.getElementById("coverage-graph"),
-                data = this.dashboard.statistics;
-
-            var coverage_stats = new Chart(coverageGraph, {
-                type: 'scatter',
-                data: {
-                    labels: data.coverage.map(item => `${item.dt.split("-")[2]} ${month[Number(item.dt.split("-")[1]) - 1]}`),
-                    datasets: [
-                        {
-                            label: "Переходы",
-                            data: data.coverage.map(item => item.coverage),
-                            backgroundColor: data.coverage.map(() => {
-                                return "rgb(152,203,237, 1)"
-                            }),
-                            order:0,
-                            type: "bar",
-                        },
-                        {
-                            label: "Блоггеров завершило работу",
-                            data: data.coverage.map(item => item.bloggers),
-                            type: "bar",
-                            backgroundColor: data.coverage.map(() => {
-                                return "rgb(254,94,0, 0.4)"
-                            }),
-                            order: 1,
-                        }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    onResize: (chart, size) => {
-                        var media = window.matchMedia('(max-width: 500px)');
-                        if(media.matches){
-                            chart.height = 200;
-                        }
-                    },
-                    plugins: {
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                        },
-                    },
-                    hover: {
-                        mode: 'nearest',
-                        intersect: true
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            type: 'logarithmic',
-                            ticks: {
-                                callback: (tick, index, array)=> {
-                                    var newTick = '';
-
-                                    if(Math.trunc(tick) === tick){
-                                        newTick = tick
-                                    }
-
-                                    return tick === 0 ? 0 : newTick;
-                                }
-                            },
-                        }
-                    }
-                }
-            });
-
-            var config = {
-                type: "funnel",
-                data: {
-                    datasets: [{
-                        data: [30, 60, 90],
-                        backgroundColor: [
-                            "#FF6384",
-                            "#36A2EB",
-                            "#FFCE56"
-                        ],
-                        hoverBackgroundColor: [
-                            "#FF6384",
-                            "#36A2EB",
-                            "#FFCE56"
-                        ]
-                    }],
-                    labels: [
-                        "Red",
-                        "Blue",
-                        "Yellow"
-                    ]
-                }
-            }
-
-            var funnelChart = FunnelChart("funnel-graph", {
-                values: [
-                    this.dashboard.total_clicks ,
-                    Math.round(this.dashboard.total_clicks / (this.sellers.subscribers == 0 ? 1 : this.sellers.subscribers)).toFixed(3),
-                    this.sellers.coverage.total_clicks == 0 ? 0 : Math.round(this.sellers.coverage.avg_price / this.sellers.coverage.total_clicks).toFixed(1)
-                ],
-                sectionColor: ["#98CBED", "#F0C457", "#FD6567"],
-                displayPercentageChange: false,
-                pSectionHeightPercent: 100,
-                font: "Inter, sans-serif",
-                labelWidthPercent: 30,
-                labelFontColor: "#000",
-                labels: [
-                    "Переходы",
-                    "ER, %",
-                    "CPC, Руб.",
-                ],
-                maxFontSize: 18,
-            });
-        }
-
-        this.Meter.init(this.dashboard.feedback_ratio || 0);
-
-        setTimeout(()=>{
+        setTimeout(() => {
             this.Loader.loaderOff();
         }, 300)
     },
     methods:{
-        async switchTab(tab){
+        async switchTab(tab, currentItem = false){
             this.Tabs.tabClick(tab)
+
+            this.currentItem = null
+
+            if(currentItem)
+                this.currentItem = currentItem;
 
             switch (tab){
                 case 'dashboard':
                     this.Loader.loaderOn('.wrapper .profile__content-inner');
 
-                    var db = await this.getSellerStats(this.user.id);
-
-                    if(db){
-                        this.dashboard = db.data;
-                    }
+                    this.dashboard = await this.getSellerStats(this.user.id)
 
                     setTimeout(()=>{
                         this.Loader.loaderOff();
@@ -210,7 +139,26 @@ export default{
                     this.myProjects = []
 
                     this.Project.getUsersProjectsList(this.user.id).then(data => {
-                        this.myProjects = data || [];
+                        var list = data || [];
+
+                        if(this.currentItem){ //если мы перешли с другого модуля
+                            if(this.currentItem.item === 'projects'){
+                                list = list.map(_p => {
+                                    if(_p.id == this.currentItem.id){
+                                        _p.currentProject = true
+                                    }
+                                    else {
+                                        _p.currentProject = false
+                                    }
+
+                                    return _p;
+                                });
+
+                                this.currentItem = null
+                            }
+                        }
+
+                        this.myProjects = list;
 
                         setTimeout(()=>{
                             this.Loader.loaderOff();
@@ -248,7 +196,13 @@ export default{
         },
 
         async updateMyProjects(){
+            this.Loader.loaderOn('.wrapper .profile__content-inner');
+
             this.myProjects = await this.Project.getUsersProjectsList(this.user.id);
+
+            setTimeout(()=>{
+                this.Loader.loaderOff();
+            }, 300)
         },
 
         getSellerStats(id){
@@ -300,6 +254,30 @@ export default{
 
             return blogger;
         },
+
+        newChatMessages(messagesCount){
+            this.newChatMessagesCount = messagesCount
+        },
+
+        async applyFilterMyProjects(filterData){
+            this.Loader.loaderOn('.wrapper .profile__content-inner');
+
+            this.myProjects = await this.Project.getUsersProjectsList(this.user.id, filterData);
+
+            setTimeout(()=>{
+                this.Loader.loaderOff();
+            }, 300)
+        },
+
+        async applyFilterProjects(filterData){
+            this.Loader.loaderOn('.wrapper .profile__content-inner');
+
+            this.projects = await this.Project.getList(filterData);
+
+            setTimeout(()=>{
+                this.Loader.loaderOff();
+            }, 300)
+        }
     }
 }
 </script>

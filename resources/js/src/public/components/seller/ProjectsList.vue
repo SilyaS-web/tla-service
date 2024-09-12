@@ -25,13 +25,15 @@
                         <p class = "filter__title">
                             Фильтр
                         </p>
-                        <a href="#" class="filter__reset">
+                        <a
+                            @click="resetFilter"
+                            href="#" class="filter__reset">
                             Сбросить
                         </a>
                     </div>
                     <div class="filter__items">
                         <div class="form-group filter__item">
-                            <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию">
+                            <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию" v-model="filter.project_name">
                         </div>
                         <div class="form-group filter__item">
                             <label for="filter-category">Категория</label>
@@ -44,7 +46,7 @@
                         </div>
                         <div class="form-group filter__item">
                             <label for="">Формат рекламы</label>
-                            <select name="filter-format" id="filter-format" class = "input">
+                            <select name="filter-format" id="filter-format" class = "input" v-model="filter.project_type">
                                 <option value="" class="">Выберите формат</option>
                                 <option value="feedback" class="">Отзыв на товар</option>
                                 <option value="inst" class="">Интеграция Ins</option>
@@ -54,7 +56,9 @@
                             </select>
                         </div>
                         <div class="filter__btns">
-                            <button class="btn btn-primary btn-filter-send">Применить</button>
+                            <button
+                                @click="applyFilter"
+                                class="btn btn-primary ">Применить</button>
                         </div>
                     </div>
                 </div>
@@ -68,6 +72,25 @@
 
     export default{
         props:['projects'],
+        data(){
+            return {
+                filter: ref({
+                    project_type: '',
+                    product_name: '',
+                }),
+            }
+        },
         components:{ListItem},
+        methods:{
+            applyFilter(){
+                this.$emit('applyFilter', this.filter);
+            },
+            resetFilter(){
+                this.filter = {
+                    product_name: '',
+                    project_type: '',
+                }
+            }
+        }
     }
 </script>

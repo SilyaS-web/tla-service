@@ -4,11 +4,11 @@
             <div class="header__col header__profile-items">
                 <div class="header__row">
                     <div href="#" class="header__profile-w header__profile-header header__profile-item--js">
-                        <a href="/">
+                        <router-link :to="{path: '/profile'}">
                             <img
                                 :src="user.image ? user.image : '/img/profile-icon.svg'"
                                 alt="" class="header__profile">
-                        </a>
+                        </router-link>
                         <div class="header__profile-col">
                             <span class="header__profile-name">
                                 {{ user.name }}
@@ -45,13 +45,39 @@
                         </div>
                     </div>
                     <a href="#" class="header__col header__notif header__profile-item--js" title="Уведомления">
-                        <div class="header__profile-notif header-notif-count" style="display: none">
-                            0
+                        <div class="header__profile-notif header-notif-count" style="display: none" v-if="notifications && notifications.length > 0">
+                            {{ notifications.length }}
                         </div>
                         <img src="/img/notif-icon.svg" alt="" class="">
-                        <div class="header__notif-items notif-header">
-                            <div class="notif-header__items header-notif-container">
-                                @include('shared.notifications')
+                        <div class="header__notif-items notif-header" v-if="notifications && notifications.length > 0">
+                            <div class="notif-header__items header-notif-container" >
+                                <div
+                                    v-for="notif in notifications"
+                                    class="notif-header__col ">
+                                    <div class="notif-header__row">
+                                        <div class="notif-header__col notif-header__img">
+                                            <img :src="notif.image" alt="">
+                                        </div>
+                                        <div class="notif-header__col">
+                                            <div class="notif-header__title">
+                                                {{ notif.title || 'Новое уведомление' }}
+                                            </div>
+                                            <div class="notif-header__text">
+                                                {{ notif.text }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="notif-header__btns">
+                                        <a
+                                            v-if="notif.work_id && notif.is_work_active"
+                                            @click="goToChat(notif.work_id)"
+                                            href="#" class="notif-header__goto">Перейти</a>
+
+                                        <a
+                                            @click="hideNotification(notif)"
+                                            href="#" class="notif-header__hide">Скрыть</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </a>
@@ -69,7 +95,7 @@
                             <div class="tarrif-header__date">
                                 Действует до {{ format_date(tariff.finish_date) }}
                             </div>
-                            <a href="/tariff" class="tarrif-header__buy">Продлить</a>
+                            <router-link :to="{ path: '/tariffs' }" class="tarrif-header__buy">Продлить</router-link>
                         </div>
 
                         <div
@@ -90,9 +116,9 @@
                 </div>
             </div>
             <div class="burger-menu__nav nav-burger">
-                <a href="/profile" class="nav-burger__link nav__link">
+                <router-link :to="{path: '/profile'}" class="nav-burger__link nav__link">
                     {{ user.role == 'seller' ? 'Дашборд' : 'Главная' }}
-                </a>
+                </router-link>
                 <a href="https://adswap.ru/instructions" class="nav-burger__link nav__link">Инструкции</a>
                 <a href="https://adswap.ru/files" class="nav-burger__link nav__link">Файлы</a>
                 <a href="https://adswap.ru/news" class="nav-burger__link nav__link">Новости</a>
@@ -114,9 +140,9 @@
     <header class="header">
         <div class="header__container _container">
             <div class="header__body">
-                <a href="/" class="logo header__logo-w">
+                <router-link :to="{path: '/profile'}" class="logo header__logo-w">
                     <img src="/img/logo.svg" alt="" class="logo__logo header__logo">
-                </a>
+                </router-link>
                 <nav
                     v-if="user"
                     class="nav header__nav">
@@ -147,7 +173,7 @@
                                 <div class="tarrif-header__date">
                                     Действует до {{ format_date(tariff.finish_date) }}
                                 </div>
-                                <a href="/tariff" class="tarrif-header__buy">Продлить</a>
+                                <router-link :to="{ path: '/tariffs' }" class="tarrif-header__buy">Продлить</router-link>
                             </div>
 
                             <div
@@ -164,13 +190,39 @@
                     <a
                         v-if="user"
                         href="#" class="header__col header__notif header__profile-item--js" title="Уведомления">
-                        <div class="header__profile-notif header-notif-count" style="display: none">
-
+                        <div class="header__profile-notif header-notif-count" v-if="notifications && notifications.length > 0">
+                            {{ notifications.length }}
                         </div>
                         <img src="/img/notif-icon.svg" alt="" class="">
-                        <div class="header__notif-items notif-header">
+                        <div class="header__notif-items notif-header" v-if="notifications && notifications.length > 0">
                             <div class="notif-header__items header-notif-container" >
-                                @include('shared.notifications')
+                                <div
+                                    v-for="notif in notifications"
+                                    class="notif-header__col ">
+                                    <div class="notif-header__row">
+                                        <div class="notif-header__col notif-header__img">
+                                            <img :src="notif.image" alt="">
+                                        </div>
+                                        <div class="notif-header__col">
+                                            <div class="notif-header__title">
+                                                {{ notif.title || 'Новое уведомление' }}
+                                            </div>
+                                            <div class="notif-header__text">
+                                                {{ notif.text }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="notif-header__btns">
+                                        <a
+                                            v-if="notif.work_id && notif.is_work_active"
+                                            @click="goToChat(notif.work_id)"
+                                            href="#" class="notif-header__goto">Перейти</a>
+
+                                        <a
+                                            @click="hideNotification(notif)"
+                                            href="#" class="notif-header__hide">Скрыть</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </a>
@@ -230,14 +282,27 @@
 <script>
     import moment from 'moment'
     import axios from "axios";
+    import {ref} from "vue";
+
+    import User from '../../../services/api/User.vue'
 
     export default {
-        props:['user'],
+        inheritAttrs: false,
+        data(){
+            return {
+                notifications: ref([]),
+                user: ref(null),
+                User
+            }
+        },
         mounted(){
+            this.user = this.User.getCurrent();
+            this.getNotifications();
+
+            setInterval(this.getNotifications, 5000)
         },
         methods:{
             format_date(value){
-                console.log(value)
                 if (value) {
                     return moment(String(value)).format('DD.MM.YY')
                 }
@@ -250,6 +315,44 @@
                 axios.defaults.headers.common['Authorization'] = '';
                 this.$router.replace('/login');
             },
+            getNotifications(){
+                if(this.user && this.user.id){
+                    axios({
+                        method: 'get',
+                        url: '/api/users/' + this.user.id + '/notifications?viewed=0&limit=10',
+                    })
+                    .then(( response ) => {
+                        this.notifications = response.data.notifications
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
+                }
+            },
+
+            goToChat(work_id){
+                this.$emit('switchTab', 'chat', {
+                    item: 'chat',
+                    id: work_id
+                });
+            },
+
+            hideNotification(notification){
+                axios({
+                    method: 'get',
+                    url: 'api/users/' + this.user.id + '/notifications/' + notification.id + '/view',
+                })
+                .then(( response ) => {
+                    this.getNotifications()
+                })
+                .catch((error) => {
+                    notify('info', {
+                        title: 'Внимание!',
+                        message: 'Что-то пошло не так, попробуйте позже.'
+                    })
+                    console.log(error)
+                });
+            }
         }
     }
 </script>

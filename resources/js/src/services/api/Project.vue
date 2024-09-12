@@ -169,6 +169,7 @@ const Project = {
                 url: 'api/projects'
             })
             .then(response => {
+
                 resolve(response.data.projects);
             })
             .catch((errors) => {
@@ -184,11 +185,22 @@ const Project = {
         })
     },
 
-    getUsersProjectsList: (user_id) => {
+    getUsersProjectsList: (user_id, filterData = false) => {
         return new Promise((resolve, reject) => {
+            var filterString = '';
+
+            if(filterData){
+                var keys = Object.keys(filterData);
+
+                keys.forEach(k => {
+                    if(filterData[k])
+                        filterString += `${k}=${filterData[k]}`
+                })
+            }
+
             axios({
                 method: 'get',
-                url: 'api/users/' + user_id + '/projects'
+                url: 'api/users/' + user_id + '/projects' + (filterString ? `?${filterString}` : '')
             })
             .then(response => {
                 resolve(response.data.projects);
