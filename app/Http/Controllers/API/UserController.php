@@ -79,8 +79,8 @@ class UserController extends Controller
             $projects->where('is_blogger_access', $validated['is_blogger_access']);
         }
 
-        if (isset($validated['project_name']) && !empty($validated['project_name'])) {
-            $projects->where('product_name', 'like', '%' . $validated['project_name'] . '%');
+        if (isset($validated['product_name']) && !empty($validated['product_name'])) {
+            $projects->where('product_name', 'like', '%' . $validated['product_name'] . '%');
         }
 
         if (isset($validated['project_type']) && !empty($validated['project_type'])) {
