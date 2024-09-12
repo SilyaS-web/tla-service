@@ -155,10 +155,26 @@ class UserController extends Controller
     }
 
     public function notifications(User $user, Request $request) {
-        $notifications = $user->notifications()->where('viewed_at', null)->get();
+        $validator = Validator::make($request->all(), [
+            'order_by' => 'string|nullable'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+
+        $notifications = $user->notifications()->where('viewed_at', null);
+
+        if (isset($validated['order_by']) && !empty($validated['order_by'])) {
+            $notifications->orderBy('created_at', $validated['order_by']);
+        } else {
+            $notifications->orderBy('created_at', 'desc');
+        }
 
         $data = [
-            'notifications' => NotificationResource::collection($notifications),
+            'notifications' => NotificationResource::collection($notifications->get()),
         ];
 
         return response()->json($data)->setStatusCode(200);

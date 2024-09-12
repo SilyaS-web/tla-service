@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class NotificationResource extends JsonResource
 {
@@ -13,9 +14,17 @@ class NotificationResource extends JsonResource
      */
     public function toArray($request)
     {
+
+        $image_url = asset('img/profile-icon.svg');
+        if ($this->fromUser) {
+            $image_url = $this->fromUser->getImageURL();
+        } else if ($this->work_id && $user = Auth::user()) {
+            $image_url = $this->work->getPartnerUser($user->role)->getImageURL();
+        }
+
         return [
             'id' => $this->id,
-            'image' => $this->fromUser ? $this->fromUser->getImageURL() : asset('img/profile-icon.svg'),
+            'image' =>  $image_url,
             'title' => $this->type ?? 'Новое уведомление',
             'text' => $this->text,
             'is_work_active' => (bool) ($this->work && $this->work->status !== null),
