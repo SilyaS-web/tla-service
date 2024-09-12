@@ -6,7 +6,7 @@ use App\Models\Tariff;
 
 class TariffService
 {
-    public static function getPrice(String $tariff_type, Int $selected_quantity): false | int
+    public static function getPrice(String $tariff_type, Int $selected_quantity)
     {
         if (!isset(Tariff::PRICE_CONDITIONS[$tariff_type])) {
             return false;
