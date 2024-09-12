@@ -9,6 +9,7 @@ use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\SellerController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ReferralController;
+use App\Http\Controllers\API\TariffController;
 use App\Http\Controllers\API\ThemeController;
 use App\Http\Controllers\API\WorkController;
 use Illuminate\Support\Facades\Route;
@@ -75,5 +76,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/referrals', [ReferralController::class, 'index']);
     Route::get('/referrals/export', [ReferralController::class, 'export']);
+
+    Route::get('/tariifs/{tariff}/price', [TariffController::class, 'getPrice']);
 });
 
