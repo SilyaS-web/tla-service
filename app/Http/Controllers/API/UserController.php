@@ -121,6 +121,8 @@ class UserController extends Controller
 
         if (isset($validated['order_by_last_message']) && !empty($validated['order_by_last_message'])) {
             $works->orderBy('last_message_at', $validated['order_by_last_message']);
+        } else {
+            $works->orderBy('last_message_at', 'desc');
         }
 
         $data = [
