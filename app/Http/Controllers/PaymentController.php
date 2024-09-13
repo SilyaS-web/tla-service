@@ -10,6 +10,7 @@ use App\Models\Tariff;
 use App\Models\TgPhone;
 use App\Models\User;
 use App\Services\PhoneService;
+use App\Services\TariffService;
 use App\Services\TgService;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -48,7 +49,7 @@ class PaymentController extends Controller
                     'user_id' => Auth::user()->id,
                     'tariff_id' => $tariff->id,
                     'type' => $tariff->type,
-                    'quantity' => $tariff->quantity,
+                    'quantity' => $payment->quantity,
                     'finish_date' => Carbon::now()->addDays($tariff->period),
                     'activation_date' => Carbon::now(),
                 ]);
@@ -82,8 +83,23 @@ class PaymentController extends Controller
         echo 'OK';
     }
 
-    public function init(Tariff $tariff, $from_landing = false, $user_id = null, $degug_price = null)
+    public function init(Tariff $tariff, Int $selected_quantity, $from_landing = false, $user_id = null, $degug_price = null)
     {
+        // TODO: Удалить после измененний на лэндинге
+        if ($from_landing) {
+            return redirect('https://adswap.ru');
+        }
+
+        $validator = Validator::make($request->all(), [
+            'quantity' => 'numeric|nullable',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+
         $user = null;
         if (!$user_id) {
             $user = Auth::user();
@@ -91,10 +107,19 @@ class PaymentController extends Controller
             $user = User::find($user_id);
         }
 
+        $price = $tariff->price;
+        $quantity = $tariff->quantity;
+
+        if ($selected_quantity || isset($validated['quantity'])) {
+            $quantity = $validated['quantity'] ?? $selected_quantity;
+            $price = TariffService::getPrice($tariff->type, $quantity) * 100;
+        }
+
         $payment = Payment::create([
             'user_id' => $user->id,
             'tariff_id' => $tariff->id,
-            'price' => $tariff->price
+            'price' => $price,
+            'quantity' => $quantity,
         ]);
 
         $price = $degug_price ?? $tariff->price;
