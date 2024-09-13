@@ -83,7 +83,7 @@ class PaymentController extends Controller
         echo 'OK';
     }
 
-    public function init(Tariff $tariff, Int $selected_quantity, $from_landing = false, $user_id = null, $degug_price = null)
+    public function init(Tariff $tariff, Int $selected_quantity = null, $from_landing = false, $user_id = null, $degug_price = null)
     {
         // TODO: Удалить после измененний на лэндинге
         if ($from_landing) {
