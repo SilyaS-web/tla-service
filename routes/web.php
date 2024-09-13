@@ -24,7 +24,10 @@ use App\Http\Controllers\WorkController;
 |
 */
 
-//return view('index');
+Route::get('{any?}', function () {
+    return view('index');
+})->where('any', '.*');
+
 
 Route::get('/policy', function () {
     return view('policy');

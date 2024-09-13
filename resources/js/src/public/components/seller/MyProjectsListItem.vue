@@ -433,7 +433,7 @@
                                 </div>
                             </div>
                             <div class="view-project__props-graph">
-                                <canvas id="orders-graph-desktop" class=""></canvas>
+                                <canvas :id="'orders-graph-desktop_' + project.id" class=""></canvas>
                             </div>
                             <div class="dashboard__placeholder" style="z-index: 1; top:0; left:0;">
                                 <div class="dashboard__placeholder-text">
@@ -662,14 +662,12 @@
             var mediaQuery = window.matchMedia('(max-width: 911px)');
             var month = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
 
-            var prices_ctx, orders_ctx;
+            var orders_ctx;
 
-            prices_ctx = $(`.profile-projects__item[data-id="${this.project.id}"]`).find('#prices-graph-desktop');
-            orders_ctx = $(`.profile-projects__item[data-id="${this.project.id}"]`).find('#orders-graph-desktop');
+            //prices_ctx = $(`.profile-projects__item[data-id="${this.project.id}"]`).find('#prices-graph-desktop');
+            orders_ctx = $(`.profile-projects__item[data-id="${this.project.id}"]`).find('#orders-graph-desktop_' + this.project.id);
 
-            var data = this.project.marketplace_statistics
-                ? JSON.parse(this.project.marketplace_statistics)
-                : {
+            var data = this.project.marketplace_statistics ? JSON.parse(this.project.marketplace_statistics) : {
                     orders: 0,
                     earnings: 0,
                     bloggers_history: 0,
@@ -680,7 +678,7 @@
             var datasets = [
                 {
                     label: 'Выручка',
-                    data: data.prices_history.map((item, index) => {
+                    data: (data.prices_history || []).map((item, index) => {
                         if (item["earnings"] !== undefined) {
                             return {x: (item.dt.split('-')[2] + ' ' + month[Number(item.dt.split('-')[1]) - 1]), y: Math.round(item.earnings)};
 
@@ -690,7 +688,7 @@
                     }),
                     showLine: true,
                     type: 'line',
-                    backgroundColor: data.prices_history.map(() => {
+                    backgroundColor: (data.prices_history || []).map(() => {
                         return 'rgb(255, 99, 132, 0.5)'
                     }),
                     order: 0,

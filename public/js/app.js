@@ -22530,103 +22530,107 @@ __webpack_require__.r(__webpack_exports__);
   props: ['dashboard'],
   data: function data() {
     return {
+      isFirst: true,
       User: _services_api_User_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
       Loader: _services_AppLoader__WEBPACK_IMPORTED_MODULE_3__["default"],
       Meter: _services_AppMeter__WEBPACK_IMPORTED_MODULE_4__["default"]
     };
   },
   updated: function updated() {
-    if (this.dashboard && this.dashboard.total_clicks && this.dashboard.total_clicks > 10) {
-      var coverageGraph = document.getElementById("coverage-graph"),
-        data = this.dashboard.statistics;
-      var month = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-      var coverage_stats = new Chart(coverageGraph, {
-        type: 'scatter',
-        data: {
-          labels: data.map(function (item) {
-            return "".concat(item.dt.split("-")[2], " ").concat(month[Number(item.dt.split("-")[1]) - 1]);
-          }),
-          datasets: [{
-            label: "Переходы",
-            data: data.map(function (item) {
-              return item.coverage;
+    if (this.isFirst) {
+      if (this.dashboard && this.dashboard.total_clicks && this.dashboard.total_clicks > 10) {
+        var coverageGraph = document.getElementById("coverage-graph"),
+          data = this.dashboard.statistics;
+        var month = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+        var coverage_stats = new Chart(coverageGraph, {
+          type: 'scatter',
+          data: {
+            labels: data.map(function (item) {
+              return "".concat(item.dt.split("-")[2], " ").concat(month[Number(item.dt.split("-")[1]) - 1]);
             }),
-            backgroundColor: data.map(function () {
-              return "rgb(152,203,237, 1)";
-            }),
-            order: 0,
-            type: "bar"
-          }, {
-            label: "Блоггеров завершило работу",
-            data: data.map(function (item) {
-              return item.bloggers;
-            }),
-            type: "bar",
-            backgroundColor: data.map(function () {
-              return "rgb(254,94,0, 0.4)";
-            }),
-            order: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          onResize: function onResize(chart, size) {
-            var media = window.matchMedia('(max-width: 500px)');
-            if (media.matches) {
-              chart.height = 200;
-            }
+            datasets: [{
+              label: "Переходы",
+              data: data.map(function (item) {
+                return item.coverage;
+              }),
+              backgroundColor: data.map(function () {
+                return "rgb(152,203,237, 1)";
+              }),
+              order: 0,
+              type: "bar"
+            }, {
+              label: "Блоггеров завершило работу",
+              data: data.map(function (item) {
+                return item.bloggers;
+              }),
+              type: "bar",
+              backgroundColor: data.map(function () {
+                return "rgb(254,94,0, 0.4)";
+              }),
+              order: 1
+            }]
           },
-          plugins: {
-            tooltip: {
-              mode: 'index',
-              intersect: false
-            }
-          },
-          hover: {
-            mode: 'nearest',
-            intersect: true
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              type: 'logarithmic',
-              ticks: {
-                callback: function callback(tick, index, array) {
-                  var newTick = '';
-                  if (Math.trunc(tick) === tick) {
-                    newTick = tick;
+          options: {
+            responsive: true,
+            onResize: function onResize(chart, size) {
+              var media = window.matchMedia('(max-width: 500px)');
+              if (media.matches) {
+                chart.height = 200;
+              }
+            },
+            plugins: {
+              tooltip: {
+                mode: 'index',
+                intersect: false
+              }
+            },
+            hover: {
+              mode: 'nearest',
+              intersect: true
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                type: 'logarithmic',
+                ticks: {
+                  callback: function callback(tick, index, array) {
+                    var newTick = '';
+                    if (Math.trunc(tick) === tick) {
+                      newTick = tick;
+                    }
+                    return tick === 0 ? 0 : newTick;
                   }
-                  return tick === 0 ? 0 : newTick;
                 }
               }
             }
           }
-        }
-      });
-      var config = {
-        type: "funnel",
-        data: {
-          datasets: [{
-            data: [30, 60, 90],
-            backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-            hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
-          }],
-          labels: ["Red", "Blue", "Yellow"]
-        }
-      };
-      var funnelChart = FunnelChart("funnel-graph", {
-        values: [this.dashboard.total_clicks, Math.ceil(this.dashboard.er || 1).toFixed(2), Math.ceil(this.dashboard.cpc || 1).toFixed(2)],
-        sectionColor: ["#98CBED", "#F0C457", "#FD6567"],
-        displayPercentageChange: false,
-        pSectionHeightPercent: 100,
-        font: "Inter, sans-serif",
-        labelWidthPercent: 30,
-        labelFontColor: "#000",
-        labels: ["Переходы", "ER, %", "CPC, Руб."],
-        maxFontSize: 18
-      });
+        });
+        var config = {
+          type: "funnel",
+          data: {
+            datasets: [{
+              data: [30, 60, 90],
+              backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+              hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"]
+            }],
+            labels: ["Red", "Blue", "Yellow"]
+          }
+        };
+        var funnelChart = FunnelChart("funnel-graph", {
+          values: [this.dashboard.total_clicks, Math.ceil(this.dashboard.er || 1).toFixed(2), Math.ceil(this.dashboard.cpc || 1).toFixed(2)],
+          sectionColor: ["#98CBED", "#F0C457", "#FD6567"],
+          displayPercentageChange: false,
+          pSectionHeightPercent: 100,
+          font: "Inter, sans-serif",
+          labelWidthPercent: 30,
+          labelFontColor: "#000",
+          labels: ["Переходы", "ER, %", "CPC, Руб."],
+          maxFontSize: 18
+        });
+      }
+      this.Meter.init(this.dashboard && this.dashboard.feedback_ratio || 0);
+      this.isFirst = false;
     }
-    this.Meter.init(this.dashboard && this.dashboard.feedback_ratio || 0);
   },
   methods: {
     toggleArticles: function toggleArticles(event) {
@@ -23028,9 +23032,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     });
     var mediaQuery = window.matchMedia('(max-width: 911px)');
     var month = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-    var prices_ctx, orders_ctx;
-    prices_ctx = $(".profile-projects__item[data-id=\"".concat(this.project.id, "\"]")).find('#prices-graph-desktop');
-    orders_ctx = $(".profile-projects__item[data-id=\"".concat(this.project.id, "\"]")).find('#orders-graph-desktop');
+    var orders_ctx;
+
+    //prices_ctx = $(`.profile-projects__item[data-id="${this.project.id}"]`).find('#prices-graph-desktop');
+    orders_ctx = $(".profile-projects__item[data-id=\"".concat(this.project.id, "\"]")).find('#orders-graph-desktop_' + this.project.id);
     var data = this.project.marketplace_statistics ? JSON.parse(this.project.marketplace_statistics) : {
       orders: 0,
       earnings: 0,
@@ -23040,7 +23045,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     };
     var datasets = [{
       label: 'Выручка',
-      data: data.prices_history.map(function (item, index) {
+      data: (data.prices_history || []).map(function (item, index) {
         if (item["earnings"] !== undefined) {
           return {
             x: item.dt.split('-')[2] + ' ' + month[Number(item.dt.split('-')[1]) - 1],
@@ -23055,7 +23060,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       }),
       showLine: true,
       type: 'line',
-      backgroundColor: data.prices_history.map(function () {
+      backgroundColor: (data.prices_history || []).map(function () {
         return 'rgb(255, 99, 132, 0.5)';
       }),
       order: 0
@@ -29552,54 +29557,63 @@ var _hoisted_154 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
 var _hoisted_155 = {
   "class": "money"
 };
-var _hoisted_156 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"view-project__props-graph\"><canvas id=\"orders-graph-desktop\" class=\"\"></canvas></div><div class=\"dashboard__placeholder\" style=\"z-index:1;top:0;left:0;\"><div class=\"dashboard__placeholder-text\"> Переверните экран, чтобы посмотреть статистику </div><div class=\"dashboard__placeholder-overflow\"></div></div>", 2);
-var _hoisted_158 = {
+var _hoisted_156 = {
+  "class": "view-project__props-graph"
+};
+var _hoisted_157 = ["id"];
+var _hoisted_158 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "dashboard__placeholder",
+  style: {
+    "z-index": "1",
+    "top": "0",
+    "left": "0"
+  }
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "dashboard__placeholder-text"
+}, " Переверните экран, чтобы посмотреть статистику "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "dashboard__placeholder-overflow"
+})], -1 /* HOISTED */);
+var _hoisted_159 = {
   "class": "view-project__props-wrap",
   style: {
     "margin-top": "45px"
   }
 };
-var _hoisted_159 = {
+var _hoisted_160 = {
   "class": "view-project__props-col"
 };
-var _hoisted_160 = {
+var _hoisted_161 = {
   "class": "card__col card__stats-stats",
   style: {
     "width": "100%"
   }
 };
-var _hoisted_161 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_162 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "projects-statistics__title",
   style: {
     "margin-bottom": "0"
   }
 }, " Статистика по завершённым работам ", -1 /* HOISTED */);
-var _hoisted_162 = {
+var _hoisted_163 = {
   key: 0,
   "class": "card__stats-table table-stats"
 };
-var _hoisted_163 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"table-stats__header\"><div class=\"table-stats__row\"><div class=\"table-stats__col table-stats__blogger-img\" style=\"width:10%;height:50px;\"></div><div class=\"table-stats__col\" style=\"width:13%;\"> Имя </div><div class=\"table-stats__col\" style=\"width:11%;\"> Подписчики </div><div class=\"table-stats__col\" style=\"width:11%;\"> Охваты </div><div class=\"table-stats__col\" style=\"width:11%;\"> Переходы </div><div class=\"table-stats__col\" style=\"width:6%;\"> ER % </div><div class=\"table-stats__col\" style=\"width:9%;\"> CPM </div><div class=\"table-stats__col\" style=\"width:9%;\"> CTR % </div><div class=\"table-stats__col\" style=\"width:14%;\"> Дата завершения </div><div class=\"table-stats__col\" style=\"width:6%;\"></div></div></div>", 1);
-var _hoisted_164 = {
+var _hoisted_164 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"table-stats__header\"><div class=\"table-stats__row\"><div class=\"table-stats__col table-stats__blogger-img\" style=\"width:10%;height:50px;\"></div><div class=\"table-stats__col\" style=\"width:13%;\"> Имя </div><div class=\"table-stats__col\" style=\"width:11%;\"> Подписчики </div><div class=\"table-stats__col\" style=\"width:11%;\"> Охваты </div><div class=\"table-stats__col\" style=\"width:11%;\"> Переходы </div><div class=\"table-stats__col\" style=\"width:6%;\"> ER % </div><div class=\"table-stats__col\" style=\"width:9%;\"> CPM </div><div class=\"table-stats__col\" style=\"width:9%;\"> CTR % </div><div class=\"table-stats__col\" style=\"width:14%;\"> Дата завершения </div><div class=\"table-stats__col\" style=\"width:6%;\"></div></div></div>", 1);
+var _hoisted_165 = {
   "class": "table-stats__body"
 };
-var _hoisted_165 = ["data-work-id"];
-var _hoisted_166 = {
+var _hoisted_166 = ["data-work-id"];
+var _hoisted_167 = {
   "class": "table-stats__col table-stats__blogger-img",
   style: {
     "width": "10%"
   }
 };
-var _hoisted_167 = ["src"];
-var _hoisted_168 = {
-  "class": "table-stats__col",
-  style: {
-    "width": "13%"
-  }
-};
+var _hoisted_168 = ["src"];
 var _hoisted_169 = {
   "class": "table-stats__col",
   style: {
-    "width": "11%"
+    "width": "13%"
   }
 };
 var _hoisted_170 = {
@@ -29608,67 +29622,73 @@ var _hoisted_170 = {
     "width": "11%"
   }
 };
-var _hoisted_171 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "table-stats__quest-text"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Запросите статистику у блогера")], -1 /* HOISTED */);
-var _hoisted_172 = {
-  key: 1
-};
-var _hoisted_173 = {
+var _hoisted_171 = {
   "class": "table-stats__col",
   style: {
     "width": "11%"
   }
 };
+var _hoisted_172 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  "class": "table-stats__quest-text"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Запросите статистику у блогера")], -1 /* HOISTED */);
+var _hoisted_173 = {
+  key: 1
+};
 var _hoisted_174 = {
+  "class": "table-stats__col",
+  style: {
+    "width": "11%"
+  }
+};
+var _hoisted_175 = {
   "class": "table-stats__col",
   style: {
     "width": "6%"
   }
 };
-var _hoisted_175 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_176 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "table-stats__quest-text"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Запросите статистику у блогера")], -1 /* HOISTED */);
-var _hoisted_176 = {
-  key: 1
-};
 var _hoisted_177 = {
+  key: 1
+};
+var _hoisted_178 = {
   "class": "table-stats__col",
   style: {
     "width": "9%"
   }
 };
-var _hoisted_178 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_179 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "table-stats__quest-text"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Запросите статистику у блогера")], -1 /* HOISTED */);
-var _hoisted_179 = {
-  key: 1
-};
 var _hoisted_180 = {
+  key: 1
+};
+var _hoisted_181 = {
   "class": "table-stats__col",
   style: {
     "width": "9%"
   }
 };
-var _hoisted_181 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_182 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "table-stats__quest-text"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "Запросите статистику у блогера")], -1 /* HOISTED */);
-var _hoisted_182 = {
+var _hoisted_183 = {
   key: 1
 };
-var _hoisted_183 = {
+var _hoisted_184 = {
   "class": "table-stats__col",
   style: {
     "width": "14%"
   }
 };
-var _hoisted_184 = ["onClick"];
-var _hoisted_185 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_185 = ["onClick"];
+var _hoisted_186 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "img/chat-black-icon.svg",
   alt: ""
 }, null, -1 /* HOISTED */);
-var _hoisted_186 = [_hoisted_185];
-var _hoisted_187 = {
+var _hoisted_187 = [_hoisted_186];
+var _hoisted_188 = {
   key: 1,
   "class": "dashboard__placeholder",
   style: {
@@ -29677,59 +29697,59 @@ var _hoisted_187 = {
     "left": "0"
   }
 };
-var _hoisted_188 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_189 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "dashboard__placeholder-text"
 }, " Переверните экран, чтобы посмотреть статистику ", -1 /* HOISTED */);
-var _hoisted_189 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_190 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "dashboard__placeholder-overflow"
 }, null, -1 /* HOISTED */);
-var _hoisted_190 = [_hoisted_188, _hoisted_189];
-var _hoisted_191 = {
+var _hoisted_191 = [_hoisted_189, _hoisted_190];
+var _hoisted_192 = {
   key: 2
 };
-var _hoisted_192 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_193 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "profile-projects__dots",
   title: "Опции"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "img/dots-icon.svg",
   alt: ""
 })], -1 /* HOISTED */);
-var _hoisted_193 = {
+var _hoisted_194 = {
   "class": "profile-projects__opts"
 };
-var _hoisted_194 = ["href"];
-var _hoisted_195 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_195 = ["href"];
+var _hoisted_196 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "img/pencil-icon.svg",
   alt: ""
 }, null, -1 /* HOISTED */);
-var _hoisted_196 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_197 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "profile-projects__opts-name"
 }, "Редактировать", -1 /* HOISTED */);
-var _hoisted_197 = [_hoisted_195, _hoisted_196];
-var _hoisted_198 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_198 = [_hoisted_196, _hoisted_197];
+var _hoisted_199 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "img/hide-icon.svg",
   alt: ""
 }, null, -1 /* HOISTED */);
-var _hoisted_199 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_200 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "profile-projects__opts-name"
 }, "Скрыть", -1 /* HOISTED */);
-var _hoisted_200 = [_hoisted_198, _hoisted_199];
-var _hoisted_201 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_201 = [_hoisted_199, _hoisted_200];
+var _hoisted_202 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "img/show-icon.svg",
   alt: ""
 }, null, -1 /* HOISTED */);
-var _hoisted_202 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_203 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "profile-projects__opts-name"
 }, "Показывать", -1 /* HOISTED */);
-var _hoisted_203 = [_hoisted_201, _hoisted_202];
-var _hoisted_204 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_204 = [_hoisted_202, _hoisted_203];
+var _hoisted_205 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "img/delete-icon.svg",
   alt: ""
 }, null, -1 /* HOISTED */);
-var _hoisted_205 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_206 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "profile-projects__opts-name"
 }, "Удалить", -1 /* HOISTED */);
-var _hoisted_206 = [_hoisted_204, _hoisted_205];
+var _hoisted_207 = [_hoisted_205, _hoisted_206];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_confirm_popup = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("confirm-popup");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [$props.project ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
@@ -29849,38 +29869,41 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       },
       "class": "btn btn-primary"
     }, " Перейти в диалог ", 8 /* PROPS */, _hoisted_123))])])])], 8 /* PROPS */, _hoisted_82);
-  }), 256 /* UNKEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_124, " Нет блогеров в работе "))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_125, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_126, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_127, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_128, [_hoisted_129, $props.project.clicks_count > 1 || $props.project.completed_works_statistics.total_subs > 1 || $props.project.completed_works_statistics.total_views ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_130, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_131, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_132, [_hoisted_133, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_134, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.project.clicks_count), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_135, [_hoisted_136, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_137, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.project.completed_works_statistics.total_subs), 1 /* TEXT */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_138, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_139, [_hoisted_140, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_141, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(($props.project.product_price / (($props.project.completed_works_statistics.total_views == 0 || !$props.project.completed_works_statistics.total_views ? 1 : $props.project.completed_works_statistics.total_views) * 1000)).toFixed(2)) + " ₽", 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_142, [_hoisted_143, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_144, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(($props.project.product_price / ($props.project.clicks_count == 0 ? 1 : $props.project.clicks_count)).toFixed(2)) + " ₽", 1 /* TEXT */)])])])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_145, " Нет данных "))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_146, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_147, [_hoisted_148, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_149, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_150, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Заказы за 30 дн"), _hoisted_151, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_152, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.project.marketplace_statistics && $props.project.marketplace_statistics.orders_count) + " шт", 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_153, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Выручка за 30 дн"), _hoisted_154, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_155, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.project.marketplace_statistics && $props.project.marketplace_statistics.earnings) + " ₽", 1 /* TEXT */)])]), _hoisted_156])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_158, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_159, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_160, [_hoisted_161, $props.project.completed_works.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_162, [_hoisted_163, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_164, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.project.completed_works, function (work) {
+  }), 256 /* UNKEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_124, " Нет блогеров в работе "))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_125, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_126, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_127, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_128, [_hoisted_129, $props.project.clicks_count > 1 || $props.project.completed_works_statistics.total_subs > 1 || $props.project.completed_works_statistics.total_views ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_130, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_131, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_132, [_hoisted_133, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_134, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.project.clicks_count), 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_135, [_hoisted_136, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_137, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.project.completed_works_statistics.total_subs), 1 /* TEXT */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_138, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_139, [_hoisted_140, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_141, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(($props.project.product_price / (($props.project.completed_works_statistics.total_views == 0 || !$props.project.completed_works_statistics.total_views ? 1 : $props.project.completed_works_statistics.total_views) * 1000)).toFixed(2)) + " ₽", 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_142, [_hoisted_143, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_144, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(($props.project.product_price / ($props.project.clicks_count == 0 ? 1 : $props.project.clicks_count)).toFixed(2)) + " ₽", 1 /* TEXT */)])])])])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_145, " Нет данных "))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_146, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_147, [_hoisted_148, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_149, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_150, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Заказы за 30 дн"), _hoisted_151, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_152, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.project.marketplace_statistics && $props.project.marketplace_statistics.orders_count) + " шт", 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_153, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Выручка за 30 дн"), _hoisted_154, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_155, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.project.marketplace_statistics && $props.project.marketplace_statistics.earnings) + " ₽", 1 /* TEXT */)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_156, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("canvas", {
+    id: 'orders-graph-desktop_' + $props.project.id,
+    "class": ""
+  }, null, 8 /* PROPS */, _hoisted_157)]), _hoisted_158])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_159, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_160, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_161, [_hoisted_162, $props.project.completed_works.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_163, [_hoisted_164, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_165, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.project.completed_works, function (work) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "data-work-id": work.id,
       "class": "table-stats__row"
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_166, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_167, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
       src: work.blogger.user.image,
       alt: ""
-    }, null, 8 /* PROPS */, _hoisted_167)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_168, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.blogger.user.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_169, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.blogger.subscribers), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_170, [!work.statistics ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+    }, null, 8 /* PROPS */, _hoisted_168)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_169, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.blogger.user.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_170, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.blogger.subscribers), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_171, [!work.statistics ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
       key: 0,
       onClick: _cache[6] || (_cache[6] = function (event) {
         event.stopPropagation();
       }),
       "class": "table-stats__quest"
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? "), _hoisted_171])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_172, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.statistics.views), 1 /* TEXT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_173, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.statistics ? work.statistics.views : '...'), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_174, [!work.statistics ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? "), _hoisted_172])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_173, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.statistics.views), 1 /* TEXT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_174, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.statistics ? work.statistics.views : '...'), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_175, [!work.statistics ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
       key: 0,
       onClick: _cache[7] || (_cache[7] = function (event) {
         event.stopPropagation();
       }),
       "class": "table-stats__quest"
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? "), _hoisted_175])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_176, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round(work.statistics.views / (work.blogger.subscribers == 0 ? 1 : work.blogger.subscribers) * 100)), 1 /* TEXT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_177, [!work.statistics ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? "), _hoisted_176])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_177, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round(work.statistics.views / (work.blogger.subscribers == 0 ? 1 : work.blogger.subscribers) * 100)), 1 /* TEXT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_178, [!work.statistics ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
       key: 0,
       onClick: _cache[8] || (_cache[8] = function (event) {
         event.stopPropagation();
       }),
       "class": "table-stats__quest"
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? "), _hoisted_178])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_179, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round($props.project.product_price / (work.statistics.views == 0 ? 1 : work.statistics.views) * 1000).toFixed(2)), 1 /* TEXT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_180, [!work.statistics ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? "), _hoisted_179])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_180, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round($props.project.product_price / (work.statistics.views == 0 ? 1 : work.statistics.views) * 1000).toFixed(2)), 1 /* TEXT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_181, [!work.statistics ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", {
       key: 0,
       onClick: _cache[9] || (_cache[9] = function (event) {
         event.stopPropagation();
       }),
       "class": "table-stats__quest"
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? "), _hoisted_181])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_182, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round($props.project.total_clicks / (work.statistics.views == 0 ? 1 : work.statistics.views) * 100)), 1 /* TEXT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_183, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.confirmed_by_seller_at), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? "), _hoisted_182])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_183, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(Math.round($props.project.total_clicks / (work.statistics.views == 0 ? 1 : work.statistics.views) * 100)), 1 /* TEXT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_184, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.confirmed_by_seller_at), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
       onClick: function onClick($event) {
         return $options.goToChat(work);
       },
@@ -29889,37 +29912,37 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "width": "6%",
         "cursor": "pointer"
       }
-    }, [].concat(_hoisted_186), 8 /* PROPS */, _hoisted_184)], 8 /* PROPS */, _hoisted_165);
-  }), 256 /* UNKEYED_FRAGMENT */))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.project.completed_works.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_187, [].concat(_hoisted_190))) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_191, "Статистика пустая"))])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    }, [].concat(_hoisted_187), 8 /* PROPS */, _hoisted_185)], 8 /* PROPS */, _hoisted_166);
+  }), 256 /* UNKEYED_FRAGMENT */))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.project.completed_works.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_188, [].concat(_hoisted_191))) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_192, "Статистика пустая"))])])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     onClick: _cache[13] || (_cache[13] = function ($event) {
       return $data.isProjectOptsOpen = !$data.isProjectOptsOpen;
     }),
     "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('profile-projects__control-btns ' + ($data.isProjectOptsOpen && 'active'))
-  }, [_hoisted_192, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_193, [$props.project.works_count == 0 && $props.project.is_bloggers_access == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
+  }, [_hoisted_193, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_194, [$props.project.works_count == 0 && $props.project.is_bloggers_access == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
     key: 0,
     href: 'apist/projects/' + $props.project.id + '/edit',
     "class": "profile-projects__opts-item"
-  }, [].concat(_hoisted_197), 8 /* PROPS */, _hoisted_194)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.project.status != -3 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
+  }, [].concat(_hoisted_198), 8 /* PROPS */, _hoisted_195)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.project.status != -3 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
     key: 1,
     href: "#",
     onClick: _cache[10] || (_cache[10] = function () {
       return $options.stop && $options.stop.apply($options, arguments);
     }),
     "class": "profile-projects__opts-item"
-  }, [].concat(_hoisted_200))) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
+  }, [].concat(_hoisted_201))) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
     key: 2,
     href: "#",
     onClick: _cache[11] || (_cache[11] = function () {
       return $options.start && $options.start.apply($options, arguments);
     }),
     "class": "profile-projects__opts-item"
-  }, [].concat(_hoisted_203))), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+  }, [].concat(_hoisted_204))), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
     onClick: _cache[12] || (_cache[12] = function () {
       return $options.deleteProject && $options.deleteProject.apply($options, arguments);
     }),
     href: "#",
     "class": "profile-projects__opts-item"
-  }, [].concat(_hoisted_206))])], 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_1)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_confirm_popup, {
+  }, [].concat(_hoisted_207))])], 2 /* CLASS */)], 10 /* CLASS, PROPS */, _hoisted_1)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_confirm_popup, {
     ref: "confirmPopup"
   }, null, 512 /* NEED_PATCH */)], 64 /* STABLE_FRAGMENT */);
 }
@@ -30275,7 +30298,7 @@ var _hoisted_10 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   src: "/img/star-icon.svg",
   alt: ""
 })], -1 /* HOISTED */);
-var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"tariff__col tariff-card\"><div class=\"tariff-card__header\"><div class=\"tariff-card__title\"> Селлер </div><div class=\"tariff-card__subtitle\"> Действует 30 дней </div></div><div class=\"tariff-card__prices\"><div class=\"tariff-card__total\"> 4900 руб </div><div class=\"tariff-card__single\"> 490 за шт </div></div><div class=\"tariff-card__select form-group\"><select name=\"\" id=\"\" class=\"select\"><option value=\"2\">Отзывы на WB, OZON - 10 шт</option><option value=\"5\">Интеграции Ins - 10 шт</option><option value=\"11\">Интеграции VK - 10 шт</option><option value=\"14\">Интеграции Telegram - 10 шт</option><option value=\"8\">Интеграции YTube - 10 шт</option></select></div><div class=\"tariff-card__btns\"><button class=\"btn btn-primary btn-tariffs-payment\">Оплатить</button></div><div class=\"tariff-card__count\"> 01 </div></div><div class=\"tariff__col tariff-card\"><div class=\"tariff-card__header\"><div class=\"tariff-card__title\"> Бизнес </div><div class=\"tariff-card__subtitle\"> Действует 30 дней </div></div><div class=\"tariff-card__prices\"><div class=\"tariff-card__total\"> 13500 руб </div><div class=\"tariff-card__single\"> 450 за шт </div></div><div class=\"tariff-card__select form-group\"><select name=\"\" id=\"\" class=\"select\"><option value=\"3\">Отзывы на WB, OZON - 30 шт</option><option value=\"6\">Интеграции Ins - 30 шт</option><option value=\"12\">Интеграции VK - 30 шт</option><option value=\"15\">Интеграции Telegram - 30 шт</option><option value=\"9\">Интеграции YTube - 30 шт</option></select></div><div class=\"tariff-card__btns\"><button class=\"btn btn-primary btn-tariffs-payment\">Оплатить</button></div><div class=\"tariff-card__count\"> 02 </div></div><div class=\"tariff__col tariff-card\"><div class=\"tariff-card__header\"><div class=\"tariff-card__title\"> Компания </div><div class=\"tariff-card__subtitle\"> Действует 30 дней </div></div><div class=\"tariff-card__prices\"><div class=\"tariff-card__total\"> 20000 руб </div><div class=\"tariff-card__single\"> 400 за шт </div></div><div class=\"tariff-card__select form-group\"><select name=\"\" id=\"\" class=\"select\"><option value=\"4\">Отзывы на WB, OZON - 50 шт</option><option value=\"7\">Интеграции Ins - 50 шт</option><option value=\"13\">Интеграции VK - 50 шт</option><option value=\"16\">Интеграции Telegram - 50 шт</option><option value=\"10\">Интеграции YTube - 50 шт</option></select></div><div class=\"tariff-card__btns\"><button class=\"btn btn-primary btn-tariffs-payment\">Оплатить</button></div><div class=\"tariff-card__count\"> 03 </div></div>", 3);
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"tariff__col tariff-card\"><div class=\"tariff-card__header\"><div class=\"tariff-card__title\"> Стартовый </div><div class=\"tariff-card__subtitle\"> 7 дней бесплатно </div></div><div class=\"tariff-card__prices\"><div class=\"tariff-card__total\"> 0 руб </div><div class=\"tariff-card__single\"> 1 шт </div></div><div class=\"form-group quantity-w\" data-max=\"100\"><div class=\"quantity-minus\" style=\"opacity:.6;\"><img src=\"img/minus-icon.svg\" alt=\"\"></div><div class=\"quantity-input\"><input type=\"number\" class=\"input\" value=\"1\" name=\"start-quantity\"></div><div class=\"quantity-plus\" style=\"opacity:.6;\"><img src=\"img/plus-icon.svg\" alt=\"\"></div></div><!--                        &lt;div class=&quot;tariff-card__select form-group&quot;&gt;--><!--                            &lt;select name=&quot;&quot; id=&quot;&quot; class = &quot;select&quot;&gt;--><!--                                &lt;option value=&quot;2&quot;&gt;Отзывы на WB, OZON - 10 шт&lt;/option&gt;--><!--                                &lt;option value=&quot;5&quot;&gt;Интеграции Ins - 10 шт&lt;/option&gt;--><!--                                &lt;option value=&quot;11&quot;&gt;Интеграции VK - 10 шт&lt;/option&gt;--><!--                                &lt;option value=&quot;14&quot;&gt;Интеграции Telegram - 10 шт&lt;/option&gt;--><!--                                &lt;option value=&quot;8&quot;&gt;Интеграции YTube - 10 шт&lt;/option&gt;--><!--                            &lt;/select&gt;--><!--                        &lt;/div&gt;--><div class=\"tariff-card__btns\"><button class=\"btn btn-primary btn-tariffs-payment\">Оплатить</button></div><div class=\"tariff-card__count\"> 01 </div></div><div class=\"tariff__col tariff-card\"><div class=\"tariff-card__header\"><div class=\"tariff-card__title\"> Отзывы </div><div class=\"tariff-card__subtitle\"> Действует 30 дней </div></div><div class=\"tariff-card__prices\"><div class=\"tariff-card__total\"> 100 руб </div><div class=\"tariff-card__single\"> от 10 шт </div></div><div class=\"form-group quantity-w\" data-max=\"100\"><div class=\"quantity-minus\"><img src=\"img/minus-icon.svg\" alt=\"\"></div><div class=\"quantity-input\"><input type=\"number\" class=\"input\" value=\"10\" min=\"10\" name=\"feedback-quantity\"></div><div class=\"quantity-plus\"><img src=\"img/plus-icon.svg\" alt=\"\"></div></div><div class=\"tariff-card__btns\"><button class=\"btn btn-primary btn-tariffs-payment\">Оплатить</button></div><div class=\"tariff-card__count\"> 02 </div></div><div class=\"tariff__col tariff-card\"><div class=\"tariff-card__header\"><div class=\"tariff-card__title\"> Интеграция </div><div class=\"tariff-card__subtitle\"> Действует 30 дней </div></div><div class=\"tariff-card__prices\"><div class=\"tariff-card__total\"> 200 руб </div><div class=\"tariff-card__single\"> от 10 шт </div></div><div class=\"form-group quantity-w\" data-max=\"100\"><div class=\"quantity-minus\"><img src=\"img/minus-icon.svg\" alt=\"\"></div><div class=\"quantity-input\"><input type=\"number\" class=\"input\" value=\"10\" min=\"10\" name=\"integration-quantity\"></div><div class=\"quantity-plus\"><img src=\"img/plus-icon.svg\" alt=\"\"></div></div><div class=\"tariff-card__btns\"><button class=\"btn btn-primary btn-tariffs-payment\">Оплатить</button></div><div class=\"tariff-card__count\"> 03 </div></div>", 3);
 var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "tariff__row"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {

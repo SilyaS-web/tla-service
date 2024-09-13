@@ -101,7 +101,7 @@
                                 <img src="img/minus-icon.svg" alt="">
                             </div>
                             <div class="quantity-input">
-                                <input type="number" class="input" value="10" name="feedback-quantity">
+                                <input type="number" class="input" value="10" min="10" name="feedback-quantity">
                             </div>
                             <div class="quantity-plus">
                                 <img src="img/plus-icon.svg" alt="">
@@ -117,7 +117,7 @@
                     <div class="tariff__col tariff-card">
                         <div class="tariff-card__header">
                             <div class="tariff-card__title">
-                                Компания
+                                Интеграция
                             </div>
                             <div class="tariff-card__subtitle">
                                 Действует 30 дней
@@ -136,7 +136,7 @@
                                 <img src="img/minus-icon.svg" alt="">
                             </div>
                             <div class="quantity-input">
-                                <input type="number" class="input" value="10" name="integration-quantity">
+                                <input type="number" class="input" value="10" min="10" name="integration-quantity">
                             </div>
                             <div class="quantity-plus">
                                 <img src="img/plus-icon.svg" alt="">
