@@ -311,6 +311,10 @@
                             </div>
                             <div class="list-projects__items">
                                 @forelse (($user->blogger->works ?? []) as $work)
+                                    @if (!$work->project)
+                                        @continue
+                                    @endif
+
                                     <div class="list-projects__item project-item">
                                         <div class="owl-carousel project-item__carousel">
                                             <div class="project-item__img" style="background-image:url({{ $work->project->getImageURL(true) }})"></div>
