@@ -90,7 +90,7 @@ class PaymentController extends Controller
             return redirect('https://adswap.ru');
         }
 
-        $validator = Validator::make($request->all(), [
+        $validator = Validator::make(request()->all(), [
             'quantity' => 'numeric|nullable',
         ]);
 
