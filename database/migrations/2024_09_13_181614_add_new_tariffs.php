@@ -21,6 +21,19 @@ class AddNewTariffs extends Migration
             'is_best' => false,
         ]);
 
+        DB::table('tariff_groups')->insert([
+            [
+                'title' => 'Отзывы', // 7
+                "created_at" =>  \Carbon\Carbon::now(),
+                "updated_at" => \Carbon\Carbon::now(),
+            ],
+            [
+                'title' => 'Интеграции', // 8
+                "created_at" =>  \Carbon\Carbon::now(),
+                "updated_at" => \Carbon\Carbon::now(),
+            ],
+        ]);
+
         DB::table('tariffs')->insert([
             [
                 'title' => 'Отзывы',
@@ -29,7 +42,7 @@ class AddNewTariffs extends Migration
                 'type' => Project::FEEDBACK,
                 'quantity' => 0,
                 'period' => 30,
-                'group_id' => 2,
+                'group_id' => 7,
                 'is_active' => true,
                 'is_best' => false,
                 'created_at' =>  \Carbon\Carbon::now(),
@@ -42,7 +55,7 @@ class AddNewTariffs extends Migration
                 'type' => Project::INTEGRATIONS,
                 'quantity' => 0,
                 'period' => 30,
-                'group_id' => 2,
+                'group_id' => 8,
                 'is_active' => true,
                 'is_best' => false,
                 'created_at' =>  \Carbon\Carbon::now(),
