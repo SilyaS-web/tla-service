@@ -122,7 +122,7 @@ class PaymentController extends Controller
             'quantity' => $quantity,
         ]);
 
-        $price = $degug_price ?? $tariff->price;
+        $price = $degug_price ?? $price;
         $description = $degug_price != null ? 'Тестовый платёж' : $tariff->title;
 
         $client = new TinkoffAcquiringAPIClient(config('tbank.terminal_key'), config('tbank.secret'));
