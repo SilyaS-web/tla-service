@@ -2173,16 +2173,16 @@ $(window).on('load', function(){
 
 
     $(document).on('click', '.btn-tariffs-callus', function(e){
-        popupCallUs
         popupCallUs.openPopup()
     })
 
     $(document).on('click', '.btn-tariffs-payment', function(e){
         var btn = $(e.target),
             card = btn.closest('.tariff-card'),
-            tariffID = card.find('select').val();
+            tariffID = card.data('id'),
+            quantity = card.find('.quantity-input input').val();
 
-        window.location.href = '/payment/' + tariffID + '/init'
+        window.location.href = '/payment/' + tariffID + '/init?quantity=' + quantity
     })
 
     $(document).on('click', '.btn-public', function(e){
@@ -2336,10 +2336,11 @@ $(window).on('load', function(){
 
     quant.on('click', function(e){
         var prevVal = Number($(this).find('.quantity-input .input').val()),
-            maxVal = Number($(this).data('max'));
+            maxVal = Number($(this).data('max')),
+            minVal = Number($(this).data('min')) || 0;
 
         if($(e.target).closest('.quantity-minus').length > 0){
-            if(prevVal > 0){
+            if(prevVal > minVal){
                 $(this).find('.quantity-input .input').val(prevVal - 1)
             }
         }
@@ -2347,6 +2348,53 @@ $(window).on('load', function(){
             if(prevVal < maxVal){
                 $(this).find('.quantity-input .input').val(prevVal + 1)
             }
+        }
+    })
+
+    var tCardQuant = $(document).find('.tariff-card .quantity-w');
+
+    tCardQuant.on('click', function(e){
+        var wrap = $(this).closest('.tariff-card');
+
+        if(wrap.hasClass('tariff-card--feedback')){
+            var value = $(this).find('.quantity-input .input').val(),
+                price = 1000,
+                priceWithoutPromo = (parseInt(value) * 100);
+
+            if(parseInt(value) > 30){
+                price += 10 * 100 + 10 * 90 + ((parseInt(value) - 30) * 80);
+                wrap.find('.tariff-card__total--old').show()
+            }
+            else if(parseInt(value) > 20){
+                price += 10 * 100 + ((parseInt(value) - 20) * 90)
+                wrap.find('.tariff-card__total--old').show()
+            }
+            else{
+                price += ((parseInt(value) - 10) * 100)
+            }
+
+            wrap.find('.tariff-card__total--price').text(price)
+            wrap.find('.tariff-card__total--old .tariff-card__total--price').text(priceWithoutPromo)
+        }
+        else if(wrap.hasClass('tariff-card--integration')){
+            var value = $(this).find('.quantity-input .input').val(),
+                price = 2000,
+                priceWithoutPromo = (parseInt(value) * 200);
+
+            if(parseInt(value) > 30){
+                price += 10 * 200 + 10 * 180 + ((parseInt(value) - 30) * 160);
+                wrap.find('.tariff-card__total--old .tariff-card__total--price').show()
+            }
+            else if(parseInt(value) > 20){
+                price += 10 * 200 + ((parseInt(value) - 20) * 180)
+                wrap.find('.tariff-card__total--old .tariff-card__total--price').show()
+            }
+            else{
+                price += ((parseInt(value) - 10) * 200)
+            }
+
+            wrap.find('.tariff-card__total--price').text(price)
+            wrap.find('.tariff-card__total--old .tariff-card__total--price').text(priceWithoutPromo)
         }
     })
 
