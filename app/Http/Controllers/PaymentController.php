@@ -180,14 +180,10 @@ class PaymentController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+            return redirect('https://adswap.ru');
         }
 
         $validated = $validator->validated();
-
-        // if (!request()->has('phone')) {
-        //     return redirect()->route('login')->with('success', 'Аккаунт с таким номером телефона не найден')->withInput();
-        // }
 
         $phone = PhoneService::format($validated['phone']);
         $user = User::where([['phone', '=',  $phone]])->first();
