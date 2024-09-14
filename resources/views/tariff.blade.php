@@ -86,7 +86,7 @@
                             </div>
                         </div>
                         <div class="tariff-card__single">
-                            от 10 шт
+                            100 р. за шт
                         </div>
                     </div>
                     <div class="form-group quantity-w" data-max="100" data-min="10">
@@ -126,7 +126,7 @@
                             </div>
                         </div>
                         <div class="tariff-card__single">
-                            от 10 шт
+                            200 р. за шт
                         </div>
                     </div>
                     <div class="form-group quantity-w" data-max="100" data-min="10">
