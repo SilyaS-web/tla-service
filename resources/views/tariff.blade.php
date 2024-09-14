@@ -86,7 +86,7 @@
                             </div>
                         </div>
                         <div class="tariff-card__single">
-                            от 10 шт
+                            100 р. за шт
                         </div>
                     </div>
                     <div class="form-group quantity-w" data-max="100" data-min="10">
@@ -94,14 +94,14 @@
                             <img src="img/minus-icon.svg" alt="">
                         </div>
                         <div class="quantity-input">
-                            <input type="number" class="input" value="10" min="10" name="feedback-quantity">
+                            <input type="number" class="input" value="10" min="10" max="100" name="feedback-quantity">
                         </div>
                         <div class="quantity-plus">
                             <img src="img/plus-icon.svg" alt="">
                         </div>
                     </div>
                     <div class="tariff-card__btns">
-                        <button class="btn btn-primary btn-tariffs-payment">Оплатить</button>
+                        <button class="btn btn-primary btn-tariffs-payment" style="margin-top: 15px">Оплатить</button>
                     </div>
                     <div class="tariff-card__count">
                         02
@@ -126,7 +126,7 @@
                             </div>
                         </div>
                         <div class="tariff-card__single">
-                            от 10 шт
+                            200 р. за шт
                         </div>
                     </div>
                     <div class="form-group quantity-w" data-max="100" data-min="10">
@@ -134,7 +134,7 @@
                             <img src="img/minus-icon.svg" alt="">
                         </div>
                         <div class="quantity-input">
-                            <input type="number" class="input" value="10" min="10" name="integration-quantity">
+                            <input type="number" class="input" value="10" min="10" max="100" name="integration-quantity">
                         </div>
                         <div class="quantity-plus">
                             <img src="img/plus-icon.svg" alt="">

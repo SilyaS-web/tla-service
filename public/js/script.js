@@ -2358,19 +2358,23 @@ $(window).on('load', function(){
 
         if(wrap.hasClass('tariff-card--feedback')){
             var value = $(this).find('.quantity-input .input').val(),
-                price = 1000,
+                price = 0,
                 priceWithoutPromo = (parseInt(value) * 100);
 
-            if(parseInt(value) > 30){
-                price += 10 * 100 + 10 * 90 + ((parseInt(value) - 30) * 80);
+            if(parseInt(value) >= 30){
+                price += 10 * 80 + 10 * 80 + 10 * 80 + ((parseInt(value) - 30) * 80);
+                wrap.find('.tariff-card__single').text('80 р. за шт')
                 wrap.find('.tariff-card__total--old').show()
             }
-            else if(parseInt(value) > 20){
-                price += 10 * 100 + ((parseInt(value) - 20) * 90)
+            else if(parseInt(value) >= 20){
+                price += 10 * 90 + 10 * 90 + ((parseInt(value) - 20) * 90)
+                wrap.find('.tariff-card__single').text('90 р. за шт')
                 wrap.find('.tariff-card__total--old').show()
             }
             else{
-                price += ((parseInt(value) - 10) * 100)
+                wrap.find('.tariff-card__total--old').hide()
+                wrap.find('.tariff-card__single').text('100 р. за шт')
+                price += 10 * 100 + ((parseInt(value) - 10) * 100)
             }
 
             wrap.find('.tariff-card__total--price').text(price)
@@ -2378,24 +2382,45 @@ $(window).on('load', function(){
         }
         else if(wrap.hasClass('tariff-card--integration')){
             var value = $(this).find('.quantity-input .input').val(),
-                price = 2000,
+                price = 0,
                 priceWithoutPromo = (parseInt(value) * 200);
 
-            if(parseInt(value) > 30){
-                price += 10 * 200 + 10 * 180 + ((parseInt(value) - 30) * 160);
-                wrap.find('.tariff-card__total--old .tariff-card__total--price').show()
+            if(parseInt(value) >= 30){
+                wrap.find('.tariff-card__single').text('160 р. за шт')
+                price += 10 * 160 + 10 * 160 + 10 * 160 + ((parseInt(value) - 30) * 160);
+                wrap.find('.tariff-card__total--old').show()
             }
-            else if(parseInt(value) > 20){
-                price += 10 * 200 + ((parseInt(value) - 20) * 180)
-                wrap.find('.tariff-card__total--old .tariff-card__total--price').show()
+            else if(parseInt(value) >= 20){
+                wrap.find('.tariff-card__single').text('180 р. за шт')
+                price += 10 * 180 + 10 * 180 + ((parseInt(value) - 20) * 180)
+                wrap.find('.tariff-card__total--old').show()
             }
             else{
-                price += ((parseInt(value) - 10) * 200)
+                wrap.find('.tariff-card__single').text('200 р. за шт')
+                wrap.find('.tariff-card__total--old').hide()
+                price += 10 * 200 + ((parseInt(value) - 10) * 200)
             }
 
             wrap.find('.tariff-card__total--price').text(price)
             wrap.find('.tariff-card__total--old .tariff-card__total--price').text(priceWithoutPromo)
         }
+    })
+
+    var tCardQuantInputs = $(document).find('.tariff-card .quantity-w .input');
+
+    $(tCardQuantInputs).on('change', function(e){
+        var value = $(this).val(),
+            min = $(this).closest('.quantity-w').data('min'),
+            max = $(this).closest('.quantity-w').data('max');
+
+        if(parseInt(value) < parseInt(min)){
+            $(this).val(min)
+        }
+        else if(parseInt(value) > parseInt(max)){
+            $(this).val(max)
+        }
+
+        $(this).closest('.quantity-w').click()
     })
 
     $(document).on('click', '.profile .nav-menu__close', function(e){
