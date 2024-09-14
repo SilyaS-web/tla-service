@@ -32,7 +32,7 @@ class PaymentController extends Controller
         $state = $this->checkState($payment);
         if ($state == TPayment::STATUS_CONFIRMED) {
             $tariff = Tariff::find($payment->tariff_id);
-            $message_text = "Новая оплата\n\nИмя: " . $user->name . "\nТелефон: " . $user->phone . "\nТариф: " . $tariff->title . " — ". $tariff->tariffGroup->title . "\nСумма: " . ($tariff->price / 100) . " руб.\nID в банке: " . $payment->payment_id;
+            $message_text = "Новая оплата\n\nИмя: " . $user->name . "\nТелефон: " . $user->phone . "\nТариф: " . $tariff->title . " — ". $tariff->tariffGroup->title . "\nСумма: " . ($payment->price / 100) . " руб.\nID в банке: " . $payment->payment_id;
             TgService::sendPayment($message_text);
 
             $seller_start_tariff = $user->getActiveTariffByGroup(1);
@@ -85,12 +85,14 @@ class PaymentController extends Controller
 
     public function init(Tariff $tariff, Int $selected_quantity = null, $from_landing = false, $user_id = null, $degug_price = null)
     {
-        $validator = Validator::make(request()->all(), [
-            'quantity' => 'numeric|nullable',
-        ]);
+        if (!$selected_quantity || $selected_quantity < 10) {
+            $validator = Validator::make(request()->all(), [
+                'quantity' => 'numeric|nullable',
+            ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 400);
+            }
         }
 
         $validated = $validator->validated();
