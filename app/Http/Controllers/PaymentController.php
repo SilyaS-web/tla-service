@@ -85,6 +85,9 @@ class PaymentController extends Controller
 
     public function init(Tariff $tariff, Int $selected_quantity = null, $from_landing = false, $user_id = null, $degug_price = null)
     {
+        $price = $tariff->price;
+        $quantity = $tariff->quantity;
+
         if (!$selected_quantity || $selected_quantity < 10) {
             $validator = Validator::make(request()->all(), [
                 'quantity' => 'numeric|nullable',
@@ -93,23 +96,20 @@ class PaymentController extends Controller
             if ($validator->fails()) {
                 return response()->json($validator->errors(), 400);
             }
-        }
 
-        $validated = $validator->validated();
+            $validated = $validator->validated();
+
+            if ($selected_quantity || isset($validated['quantity'])) {
+                $quantity = $validated['quantity'] ?? $selected_quantity;
+                $price = TariffService::getPrice($tariff->type, $quantity) * 100;
+            }
+        }
 
         $user = null;
         if (!$user_id) {
             $user = Auth::user();
         } else {
             $user = User::find($user_id);
-        }
-
-        $price = $tariff->price;
-        $quantity = $tariff->quantity;
-
-        if ($selected_quantity || isset($validated['quantity'])) {
-            $quantity = $validated['quantity'] ?? $selected_quantity;
-            $price = TariffService::getPrice($tariff->type, $quantity) * 100;
         }
 
         $payment = Payment::create([
