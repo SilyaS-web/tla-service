@@ -595,31 +595,33 @@
                                 <img src="{{ asset('img/star-icon.svg') }}" alt="">
                             </div>
                         </div>
-                        <div class="tariff__col tariff-card">
+                        <div class="tariff__col tariff-card tariff-card--start" data-id="16">
                             <div class="tariff-card__header">
                                 <div class="tariff-card__title">
-                                    Селлер
+                                    Стартовый
                                 </div>
                                 <div class="tariff-card__subtitle">
-                                    Действует 30 дней
+                                    7 дней бесплатно
                                 </div>
                             </div>
                             <div class="tariff-card__prices">
                                 <div class="tariff-card__total">
-                                    4900 руб
+                                    0 руб
                                 </div>
                                 <div class="tariff-card__single">
-                                    / 490 шт
+                                    1 шт
                                 </div>
                             </div>
-                            <div class="tariff-card__select form-group">
-                                <select name="" id="" class = "select">
-                                    <option value="2">Отзывы на WB, OZON - 10</option>
-                                    <option value="5">Интеграции Ins - 10</option>
-                                    <option value="11">Интеграции VK - 10</option>
-                                    <option value="14">Интеграции Telegram - 10</option>
-                                    <option value="8">Интеграции YTube - 10</option>
-                                </select>
+                            <div class="form-group quantity-w" data-max="100" data-min="10">
+                                <div class="quantity-minus disabled">
+                                    <img src="img/minus-icon.svg" alt="">
+                                </div>
+                                <div class="quantity-input">
+                                    <input type="number" class="input disabled" value="1" name="start-quantity">
+                                </div>
+                                <div class="quantity-plus disabled">
+                                    <img src="img/plus-icon.svg" alt="">
+                                </div>
                             </div>
                             <div class="tariff-card__btns">
                                 <button class="btn btn-primary btn-tariffs-payment">Оплатить</button>
@@ -628,31 +630,38 @@
                                 01
                             </div>
                         </div>
-                        <div class="tariff__col tariff-card">
+                        <div class="tariff__col tariff-card tariff-card--feedback" data-id="17">
                             <div class="tariff-card__header">
                                 <div class="tariff-card__title">
-                                    Бизнес
+                                    Отзывы
                                 </div>
                                 <div class="tariff-card__subtitle">
                                     Действует 30 дней
                                 </div>
                             </div>
                             <div class="tariff-card__prices">
-                                <div class="tariff-card__total">
-                                    13500 руб
+                                <div class="col">
+                                    <div class="tariff-card__total">
+                                        <span class="tariff-card__total--price">1000</span> руб
+                                    </div>
+                                    <div class="tariff-card__total tariff-card__total--old" style="display: none">
+                                        <span class="tariff-card__total--price">1000</span> руб
+                                    </div>
                                 </div>
                                 <div class="tariff-card__single">
-                                    / 490 шт
+                                    от 10 шт
                                 </div>
                             </div>
-                            <div class="tariff-card__select form-group">
-                                <select name="" id="" class = "select">
-                                    <option value="3">Отзывы на WB, OZON - 30</option>
-                                    <option value="6">Интеграции Ins - 30</option>
-                                    <option value="12">Интеграции VK - 30</option>
-                                    <option value="15">Интеграции Telegram - 30</option>
-                                    <option value="9">Интеграции YTube - 30</option>
-                                </select>
+                            <div class="form-group quantity-w" data-max="100" data-min="10">
+                                <div class="quantity-minus">
+                                    <img src="img/minus-icon.svg" alt="">
+                                </div>
+                                <div class="quantity-input">
+                                    <input type="number" class="input" value="10" min="10" name="feedback-quantity">
+                                </div>
+                                <div class="quantity-plus">
+                                    <img src="img/plus-icon.svg" alt="">
+                                </div>
                             </div>
                             <div class="tariff-card__btns">
                                 <button class="btn btn-primary btn-tariffs-payment">Оплатить</button>
@@ -661,31 +670,38 @@
                                 02
                             </div>
                         </div>
-                        <div class="tariff__col tariff-card">
+                        <div class="tariff__col tariff-card tariff-card--integration" data-id="18">
                             <div class="tariff-card__header">
                                 <div class="tariff-card__title">
-                                    Компания
+                                    Интеграция
                                 </div>
                                 <div class="tariff-card__subtitle">
                                     Действует 30 дней
                                 </div>
                             </div>
                             <div class="tariff-card__prices">
-                                <div class="tariff-card__total">
-                                    20000 руб
+                                <div class="col">
+                                    <div class="tariff-card__total">
+                                        <span class="tariff-card__total--price">2000</span> руб
+                                    </div>
+                                    <div class="tariff-card__total tariff-card__total--old" style="display: none">
+                                        <span class="tariff-card__total--price">2000</span> руб
+                                    </div>
                                 </div>
                                 <div class="tariff-card__single">
-                                    / 490 шт
+                                    от 10 шт
                                 </div>
                             </div>
-                            <div class="tariff-card__select form-group">
-                                <select name="" id="" class = "select">
-                                    <option value="4">Отзывы на WB, OZON - 50</option>
-                                    <option value="7">Интеграции Ins - 50</option>
-                                    <option value="13">Интеграции VK - 50</option>
-                                    <option value="16">Интеграции Telegram - 50</option>
-                                    <option value="10">Интеграции YTube - 50</option>
-                                </select>
+                            <div class="form-group quantity-w" data-max="100" data-min="10">
+                                <div class="quantity-minus">
+                                    <img src="img/minus-icon.svg" alt="">
+                                </div>
+                                <div class="quantity-input">
+                                    <input type="number" class="input" value="10" min="10" name="integration-quantity">
+                                </div>
+                                <div class="quantity-plus">
+                                    <img src="img/plus-icon.svg" alt="">
+                                </div>
                             </div>
                             <div class="tariff-card__btns">
                                 <button class="btn btn-primary btn-tariffs-payment">Оплатить</button>
