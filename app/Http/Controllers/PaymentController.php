@@ -88,7 +88,7 @@ class PaymentController extends Controller
         $price = $tariff->price;
         $quantity = $tariff->quantity;
 
-        if (!$selected_quantity || $selected_quantity < 10) {
+        if (!$selected_quantity || $selected_quantity <= 10) {
             $validator = Validator::make(request()->all(), [
                 'quantity' => 'numeric|nullable',
             ]);
