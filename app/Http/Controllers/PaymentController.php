@@ -85,11 +85,6 @@ class PaymentController extends Controller
 
     public function init(Tariff $tariff, Int $selected_quantity = null, $from_landing = false, $user_id = null, $degug_price = null)
     {
-        // TODO: Удалить после измененний на лэндинге
-        if ($from_landing) {
-            return redirect('https://adswap.ru');
-        }
-
         $validator = Validator::make(request()->all(), [
             'quantity' => 'numeric|nullable',
         ]);
@@ -179,6 +174,16 @@ class PaymentController extends Controller
 
     public function regFromPayment(Tariff $tariff)
     {
+        $validator = Validator::make(request()->all(), [
+            'quantity' => 'numeric|nullable',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+
         if (!request()->has('phone')) {
             return redirect()->route('login')->with('success', 'Аккаунт с таким номером телефона не найден')->withInput();
         }
@@ -190,7 +195,7 @@ class PaymentController extends Controller
             return redirect()->route('login')->with('success', 'Аккаунт с таким номером телефона не найден')->withInput();
         }
 
-        $redirect_url = $this->init($tariff, true, $user->id);
+        $redirect_url = $this->init($tariff, $validated['quantity'], true, $user->id);
         return redirect($redirect_url);
     }
 
