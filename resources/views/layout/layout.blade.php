@@ -575,7 +575,7 @@
                             Получайте отзывы на карточки и повышайте их рейтинг. Размещайте рекламу в обмен на товары  и анализируйте результаты интеграций у блогеров — все в одном сервисе.
                         </div>
                     </div>
-                    <div class="tariff__items">
+                    <div class="tariff__items" style="margin-bottom:40px;">
                         <div class="tariff__col tariff-card">
                             <div class="tariff-card__header">
                                 <div class="tariff-card__title">
@@ -587,9 +587,11 @@
                             </div>
                             <div class="tariff-card__text">
                                 Индивидуальный тариф позволяет клиентам свободно выбирать количество интеграций и отзывов в своем плане.
+                                <br>
+                                <b>Рассматривается только от 100 заявок.</b>
                             </div>
                             <div class="tariff-card__btns">
-                                <button class="btn btn-primary btn-tariffs-callus">Подробности</button>
+                                <button class="btn btn-primary btn-tariffs-callus">Оставить заявку</button>
                             </div>
                             <div class="tariff-card__star">
                                 <img src="{{ asset('img/star-icon.svg') }}" alt="">
@@ -657,14 +659,14 @@
                                     <img src="img/minus-icon.svg" alt="">
                                 </div>
                                 <div class="quantity-input">
-                                    <input type="number" class="input" value="10" min="10" name="feedback-quantity">
+                                    <input type="number" class="input" value="10" min="10" max="100" name="feedback-quantity">
                                 </div>
                                 <div class="quantity-plus">
                                     <img src="img/plus-icon.svg" alt="">
                                 </div>
                             </div>
                             <div class="tariff-card__btns">
-                                <button class="btn btn-primary btn-tariffs-payment">Оплатить</button>
+                                <button class="btn btn-primary btn-tariffs-payment" style="margin-top: 15px">Оплатить</button>
                             </div>
                             <div class="tariff-card__count">
                                 02
@@ -697,7 +699,7 @@
                                     <img src="img/minus-icon.svg" alt="">
                                 </div>
                                 <div class="quantity-input">
-                                    <input type="number" class="input" value="10" min="10" name="integration-quantity">
+                                    <input type="number" class="input" value="10" min="10" max="100" name="integration-quantity">
                                 </div>
                                 <div class="quantity-plus">
                                     <img src="img/plus-icon.svg" alt="">

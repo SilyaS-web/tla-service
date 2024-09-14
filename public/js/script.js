@@ -2370,6 +2370,7 @@ $(window).on('load', function(){
                 wrap.find('.tariff-card__total--old').show()
             }
             else{
+                wrap.find('.tariff-card__total--old').hide()
                 price += ((parseInt(value) - 10) * 100)
             }
 
@@ -2383,13 +2384,14 @@ $(window).on('load', function(){
 
             if(parseInt(value) > 30){
                 price += 10 * 200 + 10 * 180 + ((parseInt(value) - 30) * 160);
-                wrap.find('.tariff-card__total--old .tariff-card__total--price').show()
+                wrap.find('.tariff-card__total--old').show()
             }
             else if(parseInt(value) > 20){
                 price += 10 * 200 + ((parseInt(value) - 20) * 180)
-                wrap.find('.tariff-card__total--old .tariff-card__total--price').show()
+                wrap.find('.tariff-card__total--old').show()
             }
             else{
+                wrap.find('.tariff-card__total--old').hide()
                 price += ((parseInt(value) - 10) * 200)
             }
 

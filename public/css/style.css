@@ -4333,7 +4333,8 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .tariff-card .quantity-w .quantity-input .input{
     max-width: 100%;
-    height:50px
+    height:50px;
+    width:100%;
 }
 .tariff-card .quantity-w .quantity-minus, .tariff-card .quantity-w .quantity-plus{
     max-width: 55px;
