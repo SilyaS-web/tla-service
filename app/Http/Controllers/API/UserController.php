@@ -44,4 +44,3 @@ class UserController extends Controller
         return response()->json()->setStatusCode(200);
     }
 }
-Ye 
