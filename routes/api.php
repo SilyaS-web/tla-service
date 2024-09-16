@@ -66,6 +66,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/projects', [ProjectController::class, 'index']);
     Route::post('/projects', [ProjectController::class, 'store']);
+    Route::get('/projects/categories', [ProjectController::class, 'categories']);
     Route::get('/projects/{project}', [ProjectController::class, 'show']);
     Route::get('/projects/{project}/ban', [ProjectController::class, 'ban']);
     Route::get('/projects/{project}/unban', [ProjectController::class, 'unban']);
@@ -75,7 +76,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/projects/{project}/stop', [ProjectController::class, 'stop']);
     Route::get('/projects/{project}/start', [ProjectController::class, 'start']);
     Route::get('/projects/{project}/activate', [ProjectController::class, 'activate']);
-    Route::get('/projects/categories', [ProjectController::class, 'categories']);
 
     Route::post('/works', [WorkController::class, 'store']);
     Route::get('/works/{work}/deny', [WorkController::class, 'deny']);
