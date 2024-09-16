@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class BloggerController extends Controller
 {
@@ -269,16 +270,58 @@ class BloggerController extends Controller
         return response()->json('success', 200);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Blogger  $blogger
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Blogger $blogger)
+    public function update(Blogger $blogger, Request $request)
     {
-        //
+        $validator = Validator::make(request()->all(), [
+            'user' => 'array',
+            'user.name' => 'required|min:3',
+            'user.email' => 'required|email',
+            'user.image' => 'image|nullable',
+            'user.old_password' => 'min:8|nullable',
+            'user.password' => 'min:8|nullable',
+            'country_id' => 'required|exists:countries,id',
+            'city' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return  response()->json($validator->errors())->setStatusCode(200);
+        }
+
+        $validated = $validator->validated();
+
+        $user = $blogger->user;
+        if (isset($validated['user']['password'])) {
+            if (auth()->attempt(['phone' => $user->phone, 'password' => $validated['user']['old_password']])) {
+                $user->password = bcrypt($validated['user']['password']);
+                $user->save();
+            } else {
+                return  response()->json(['message' => 'Введён неверный пароль'])->setStatusCode(400);
+            }
+        }
+
+        $user->name = $validated['user']['name'];
+
+        if ($user->email != $validated['user']['email']) {
+            $user->email = $validated['user']['email'];
+        }
+
+        if ($request->file('image')) {
+            if (Storage::exists($user->getImageURL())) {
+                Storage::delete($user->getImageURL());
+            }
+
+            $product_image = $request->file('image');
+            $image_path = $product_image->store('profile', 'public');
+            $user->image = $image_path;
+        }
+        $user->save();
+
+        $blogger->country_id = $validated['country_id'];
+        $blogger->city = $validated['city'];
+
+        $blogger->save();
+
+        return response()->json()->setStatusCode(200);
     }
 
     /**

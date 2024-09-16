@@ -5,10 +5,9 @@ namespace App\Http\Controllers\API;
 use App\Models\Seller;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SellerResource;
-use App\Models\Country;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Storage;
 
 class SellerController extends Controller
 {
@@ -30,66 +29,70 @@ class SellerController extends Controller
         return  response()->json($data)->setStatusCode(200);
     }
 
-    public function update(Request $request)
+    public function update(Seller $seller, Request $request)
     {
-        // $user = Auth::user();
-        // $countries = Country::get();
-        // $validator = Validator::make(request()->all(), [
-        //     'user' => ''
-        //     'name' => 'required|min:3',
-        //     'email' => 'required|email',
-        //     'image' => 'image|nullable',
-        //     'old_password' => 'min:8|nullable',
-        //     'password' => 'min:8|nullable',
-        //     'wb_link' => 'string|nullable',
-        //     'wb_api_key' => 'string|nullable',
-        //     'ozon_link' => 'string|nullable',
-        //     'ozon_client_id' => 'numeric|nullable',
-        //     'ozon_api_key' => 'string|nullable',
-        //     'inn' => 'string|nullable',
-        //     'organization_type' => 'string|nullable',
-        //     'organization_name' => 'string|nullable',
-        // ]);
+        $validator = Validator::make(request()->all(), [
+            'user' => 'array',
+            'user.name' => 'required|min:3',
+            'user.email' => 'required|email',
+            'user.image' => 'image|nullable',
+            'user.old_password' => 'min:8|nullable',
+            'user.password' => 'min:8|nullable',
+            'wb_link' => 'string|nullable',
+            'wb_api_key' => 'string|nullable',
+            'ozon_link' => 'string|nullable',
+            'ozon_client_id' => 'numeric|nullable',
+            'ozon_api_key' => 'string|nullable',
+            'inn' => 'string|nullable',
+            'organization_type' => 'string|nullable',
+            'organization_name' => 'string|nullable',
+        ]);
 
-        // if ($validator->fails()) {
-        //     return redirect()->back()->withErrors($validator)->withInput();
-        // }
+        if ($validator->fails()) {
+            return  response()->json($validator->errors())->setStatusCode(200);
+        }
 
-        // $validated = $validator->validated();
-        // if (isset($validated['password'])) {
-        //     if (auth()->attempt(['phone' => $user->phone, 'password' => $validated['old_password']])) {
-        //         $user->password = bcrypt($validated['password']);
-        //         $user->save();
-        //     } else {
-        //         return redirect()->route('edit-profile')->with('success', 'Введён неверный пароль');
-        //     }
-        // }
+        $validated = $validator->validated();
 
-        // $user->name = $validated['name'];
+        $user = $seller->user;
+        if (isset($validated['user']['password'])) {
+            if (auth()->attempt(['phone' => $user->phone, 'password' => $validated['user']['old_password']])) {
+                $user->password = bcrypt($validated['user']['password']);
+                $user->save();
+            } else {
+                return  response()->json(['message' => 'Введён неверный пароль'])->setStatusCode(400);
+            }
+        }
 
-        // if ($user->email != $validated['email']) {
-        //     $user->email = $validated['email'];
-        // }
+        $user->name = $validated['user']['name'];
 
-        // if ($request->file('image')) {
-        //     if (Storage::exists($user->getImageURL())) {
-        //         Storage::delete($user->getImageURL());
-        //     }
+        if ($user->email != $validated['user']['email']) {
+            $user->email = $validated['user']['email'];
+        }
 
-        //     $product_image = $request->file('image');
-        //     $image_path = $product_image->store('profile', 'public');
-        //     $user->image = $image_path;
-        // }
+        if ($request->file('image')) {
+            if (Storage::exists($user->getImageURL())) {
+                Storage::delete($user->getImageURL());
+            }
 
-        // $user->save();
+            $product_image = $request->file('image');
+            $image_path = $product_image->store('profile', 'public');
+            $user->image = $image_path;
+        }
 
-        // if ($user->role == 'seller') {
-        //     $this->updateSeller();
-        // } else {
-        //     $this->updateBlogger();
-        // }
+        $user->save();
+        $seller->update([
+            'wb_link' => $validated['wb_link'],
+            'wb_api_key' => $validated['wb_api_key'],
+            'ozon_api_key' => $validated['ozon_api_key'],
+            'ozon_link' => $validated['ozon_link'],
+            'ozon_client_id' => $validated['ozon_client_id'],
+            'inn' => $validated['inn'],
+            'organization_type' => $validated['organization_type'],
+            'organization_name' => $validated['organization_name'],
+        ]);
 
-        // return redirect()->route('edit-profile')->with('success', 'Данные успешно обновлены');
+        return  response()->json()->setStatusCode(200);
     }
 
     /**
