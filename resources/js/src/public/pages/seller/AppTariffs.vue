@@ -11,16 +11,14 @@
                     <div class="tariff__col tariff-card">
                         <div class="tariff-card__header">
                             <div class="tariff-card__title">
-                                Индивидуальные условия
+                                Индивидуальное сопровождение
                             </div>
                             <div class="tariff-card__subtitle">
                                 Действует по договоренности
                             </div>
                         </div>
                         <div class="tariff-card__text">
-                            Индивидуальный тариф позволяет клиентам свободно выбирать количество интеграций и отзывов в своем плане.
-                            <br>
-                            <b>Рассматривается только от 100 заявок.</b>
+                            Наши менеджеры возьмут на себя заботу о вашем бренде и обеспечат ему профессиональное сопровождение.
                         </div>
                         <div class="tariff-card__btns">
                             <button

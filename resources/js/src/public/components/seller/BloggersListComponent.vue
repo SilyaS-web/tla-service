@@ -132,6 +132,10 @@
                                 :max="10000000"
                             ></Slider>
                         </div>
+                        <div class="form-group row" style="margin-top: 10px; flex-direction:row; justify-content: space-between; display:flex; gap: 15px">
+                            <input style="width:150px" type="number" class="input" v-model="filterSubscribersQuantity.value[0]">
+                            <input style="width:150px" type="number" class="input" v-model="filterSubscribersQuantity.value[1]">
+                        </div>
                     </div>
                     <div class="filter__btns">
                         <button
@@ -152,6 +156,9 @@
                     <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
                         <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
                     </div>
+                    <button
+                        v-if = "isChooseProjectList"
+                        class="btn btn-primary" @click="isChooseProjectList = !isChooseProjectList">Вернуться</button>
                 </div>
                 <div class="profile-projects__items list-projects__items" style="max-width:1030px">
                     <div
@@ -206,17 +213,23 @@
                             <p class="filter__title">
                                 Фильтр
                             </p>
-                            <a href="#" class="filter__reset">
+                            <a
+                                @click="resetProjectsFilter"
+                                href="#" class="filter__reset">
                                 Сбросить
                             </a>
                         </div>
                         <div class="filter__items">
                             <div class="form-group filter__item">
-                                <input type="text" class="input" name="filter-name" placeholder="Поиск по названию">
+                                <input
+                                    v-model="projectsFilter.product_name"
+                                    type="text" class="input" name="filter-name" placeholder="Поиск по названию">
                             </div>
                             <div class="form-group filter__item">
                                 <label>Формат рекламы</label>
-                                <select name="project_type" id="filter-format" class="input">
+                                <select
+                                    v-model="projectsFilter.project_type"
+                                    name="project_type" id="filter-format" class="input">
                                     <option value="" class="">Выберите формат</option>
                                     <option value="feedback" class="">Отзыв на товар</option>
                                     <option value="inst" class="">Интеграция Ins</option>
@@ -227,7 +240,9 @@
                             </div>
 
                             <div class="filter__btns">
-                                <button class="btn btn-primary btn-filter-send">Применить</button>
+                                <button
+                                    @click="applyProjectsFilter"
+                                    class="btn btn-primary">Применить</button>
                             </div>
                         </div>
                     </div>
@@ -279,6 +294,11 @@
                     subscriber_quantity_max: 10000000,
                 }),
 
+                projectsFilter: ref({
+                    project_type: "",
+                    product_name: '',
+                }),
+
                 filterSubscribersQuantity: ref({
                     value: [0, 10000000]
                 }),
@@ -327,12 +347,12 @@
             switchToProjectsList(){
                 this.isChooseProjectList = true;
 
-                this.Loader.loaderOn('.wrapper .profile__content-inner');
+                this.Loader.loaderOn('#profile-blogers-list');
 
                 this.Project.getUsersProjectsList(this.user.id).then(data => {
                     this.projects = data || [];
                     setTimeout(()=>{
-                        this.Loader.loaderOff();
+                        this.Loader.loaderOff('#profile-blogers-list');
                     }, 300)
                 })
             },
@@ -361,6 +381,31 @@
                 $('.filter__item--sex').prop('checked', false)
 
                 this.$emit('applyFilter', {})
+            },
+            applyProjectsFilter(){
+                this.Loader.loaderOn('#profile-blogers-list');
+
+                this.Project.getUsersProjectsList(this.user.id, this.projectsFilter).then(data => {
+                    this.projects = data || [];
+                    setTimeout(()=>{
+                        this.Loader.loaderOff('#profile-blogers-list');
+                    }, 300)
+                })
+            },
+            resetProjectsFilter(){
+                this.projectsFilter = {
+                    product_name: '',
+                    project_type: '',
+                }
+
+                this.Loader.loaderOn('#profile-blogers-list');
+
+                this.Project.getUsersProjectsList(this.user.id, {}).then(data => {
+                    this.projects = data || [];
+                    setTimeout(()=>{
+                        this.Loader.loaderOff('#profile-blogers-list');
+                    }, 300)
+                })
             }
         }
     }
