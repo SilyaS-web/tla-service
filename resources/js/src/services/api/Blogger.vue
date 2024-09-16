@@ -47,13 +47,25 @@ const Blogger = {
         })
     },
 
-    getList(status = []){
+    getList(status = [], filterData = {}){
         return new Promise((resolve, reject) => {
+            var filterString = '';
+
+            if(filterData){
+                var keys = Object.keys(filterData);
+
+                keys.forEach(k => {
+                    if(filterData[k])
+                        filterString += `${k}=${filterData[k]}`
+                })
+            }
+
             axios({
                 method: 'get',
                 url: '/api/bloggers',
                 params: {
-                    statuses: status || []
+                    statuses: status || [],
+                    filter: filterData
                 }
             })
             .then(result => resolve(result.data.bloggers))

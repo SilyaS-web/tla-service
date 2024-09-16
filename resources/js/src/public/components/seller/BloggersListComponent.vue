@@ -54,7 +54,9 @@
                     <p class="filter__title">
                         Фильтр
                     </p>
-                    <a href="#" class="filter__reset">
+                    <a
+                        @click="resetBloggersFilter"
+                        href="#" class="filter__reset">
                         Сбросить
                     </a>
                 </div>
@@ -93,10 +95,12 @@
                                 <input
                                     :id="'theme-' + theme.id"
                                     :value="theme.id"
-                                    type="checkbox" name="themes[]" class="form-format__check" >
+                                    type="checkbox" name="themes[]" class="form-format__check"
+                                    @change="setBloggersFilterThemes($event, theme.id)"
+                                >
                                 <label
                                     :for="'theme-' + theme.id">
-                                    {{ theme.theme }}
+                                    {{ theme.name }}
                                 </label>
                             </div>
                         </div>
@@ -105,11 +109,15 @@
                         <label for="">Пол блогера</label>
                         <div class="filter__item--sex" id = "filter__item--sex">
                             <div class="input-checkbox-w">
-                                <input type="checkbox" class="checkbox" id="male" >
+                                <input
+                                    @change="setBloggersFilterSex($event, 'male')"
+                                    type="checkbox" class="checkbox" id="male" :checked="bloggerFilter.sex.includes('male')">
                                 <label for="male">Мужской</label>
                             </div>
                             <div class="input-checkbox-w">
-                                <input type="checkbox" class="checkbox" id="female" :checked="bloggerFilter.sex == 'female'">
+                                <input
+                                    @change="setBloggersFilterSex($event, 'female')"
+                                    type="checkbox" class="checkbox" id="female" :checked="bloggerFilter.sex.includes('female')">
                                 <label for="female">Женский</label>
                             </div>
                         </div>
@@ -117,15 +125,18 @@
                     <div class="form-group filter__item">
                         <label for="">Количество подписчиков</label>
                         <div class="input-range-w">
-                            <input id="subs-range" name="" type="range" class="input input-range" min="10" max="10000000">
-                            <div class="input-range-content">
-                                <input id="subs-min" type="number" class="input input-number" value="10">
-                                <input id="subs-max" type="number" class="input input-number" value="10000000">
-                            </div>
+                            <Slider
+                                v-model="filterSubscribersQuantity.value"
+                                v-bind="filterSubscribersQuantity"
+                                :min="0"
+                                :max="10000000"
+                            ></Slider>
                         </div>
                     </div>
                     <div class="filter__btns">
-                        <button class="btn btn-primary btn-filter-send">Применить</button>
+                        <button
+                            @click="applyBloggersFilter"
+                            class="btn btn-primary">Применить</button>
                     </div>
                 </div>
             </div>
@@ -229,7 +240,11 @@
 <script>
     import {ref} from "vue";
 
+    import Slider from '@vueform/slider'
+
     import User from '../../../services/api/User.vue'
+    import Themes from '../../../services/api/Themes.vue'
+    import Platforms from '../../../services/api/Platforms.vue'
     import Project from '../../../services/api/Project.vue'
     import Loader from '../../../services/AppLoader.vue'
 
@@ -241,7 +256,10 @@
 
     export default{
         props:['bloggers', 'user'],
-        components:{ProjectsList, BloggersListItem, ProjectsListItem, ChooseProjectPopup},
+        components:{
+            ProjectsList, BloggersListItem, ProjectsListItem,
+            ChooseProjectPopup, Slider
+        },
         data(){
             return {
                 platforms: ref([]),
@@ -253,20 +271,43 @@
                 bloggerFilter: ref({
                     name: '',
                     platform: '',
-                    subscriber_quantity_min: '',
-                    subscriber_quantity_max: '',
                     city: '',
                     country: '',
-                    sex: '',
+                    themes: [],
+                    sex: [],
+                    subscriber_quantity_min: 0,
+                    subscriber_quantity_max: 10000000,
                 }),
 
-                Project, User,
+                filterSubscribersQuantity: ref({
+                    value: [0, 10000000]
+                }),
+
+                Project, User, Themes, Platforms,
                 Loader
             }
         },
-        mounted(){
+        async mounted(){
+            this.themes = await this.Themes.getList();
+            this.platforms = await this.Platforms.getList();
         },
         methods:{
+            setBloggersFilterSex(e, value){
+                if($(e.target).prop('checked')){
+                   this.bloggerFilter.sex.push(value)
+                }
+                else{
+                    this.bloggerFilter.sex.splice(this.bloggerFilter.sex.indexOf(value), 1);
+                }
+            },
+            setBloggersFilterThemes(e, id){
+                if($(e.target).prop('checked')){
+                    this.bloggerFilter.themes.push(id)
+                }
+                else{
+                    this.bloggerFilter.themes.splice(this.bloggerFilter.themes.indexOf(id), 1);
+                }
+            },
             async chooseProject(project){
                 const data = await this.$refs.chooseProjectPopup.show({
                     title: 'Выберите формат рекламы',
@@ -296,18 +337,30 @@
                 })
             },
             applyBloggersFilter(){
+                this.bloggerFilter.subscriber_quantity_min = this.filterSubscribersQuantity.value[0]
+                this.bloggerFilter.subscriber_quantity_max = this.filterSubscribersQuantity.value[1]
+
                 this.$emit('applyFilter', this.bloggerFilter);
             },
             resetBloggersFilter(){
                 this.bloggerFilter = {
                     name: '',
                     platform: '',
-                    subscriber_quantity_min: '',
-                    subscriber_quantity_max: '',
                     city: '',
                     country: '',
-                    sex: '',
+                    themes: [],
+                    sex: [],
+                    subscriber_quantity_min: 0,
+                    subscriber_quantity_max: 10000000,
                 }
+                this.filterSubscribersQuantity = {
+                    value: [0, 10000000]
+                }
+
+                $('.form-format__check').prop('checked', false)
+                $('.filter__item--sex').prop('checked', false)
+
+                this.$emit('applyFilter', {})
             }
         }
     }
