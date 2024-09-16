@@ -32,7 +32,7 @@ class PaymentController extends Controller
         $state = $this->checkState($payment);
         if ($state == TPayment::STATUS_CONFIRMED) {
             $tariff = Tariff::find($payment->tariff_id);
-            $message_text = "Новая оплата\n\nИмя: " . $user->name . "\nТелефон: " . $user->phone . "\nТариф: " . $tariff->title . " — ". $tariff->tariffGroup->title . "\nСумма: " . ($tariff->price / 100) . " руб.\nID в банке: " . $payment->payment_id;
+            $message_text = "Новая оплата\n\nИмя: " . $user->name . "\nТелефон: " . $user->phone . "\nТариф: " . $tariff->title . " — ". $tariff->tariffGroup->title . "\nСумма: " . ($payment->price / 100) . " руб.\nID в банке: " . $payment->payment_id;
             TgService::sendPayment($message_text);
 
             $seller_start_tariff = $user->getActiveTariffByGroup(1);
@@ -85,34 +85,31 @@ class PaymentController extends Controller
 
     public function init(Tariff $tariff, Int $selected_quantity = null, $from_landing = false, $user_id = null, $degug_price = null)
     {
-        // TODO: Удалить после измененний на лэндинге
-        if ($from_landing) {
-            return redirect('https://adswap.ru');
+        $price = $tariff->price;
+        $quantity = $tariff->quantity;
+
+        if (!$selected_quantity || $selected_quantity <= 10) {
+            $validator = Validator::make(request()->all(), [
+                'quantity' => 'numeric|nullable',
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json($validator->errors(), 400);
+            }
+
+            $validated = $validator->validated();
+
+            if ($selected_quantity || isset($validated['quantity'])) {
+                $quantity = $validated['quantity'] ?? $selected_quantity;
+                $price = TariffService::getPrice($tariff->type, $quantity) * 100;
+            }
         }
-
-        $validator = Validator::make(request()->all(), [
-            'quantity' => 'numeric|nullable',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
-
-        $validated = $validator->validated();
 
         $user = null;
         if (!$user_id) {
             $user = Auth::user();
         } else {
             $user = User::find($user_id);
-        }
-
-        $price = $tariff->price;
-        $quantity = $tariff->quantity;
-
-        if ($selected_quantity || isset($validated['quantity'])) {
-            $quantity = $validated['quantity'] ?? $selected_quantity;
-            $price = TariffService::getPrice($tariff->type, $quantity) * 100;
         }
 
         $payment = Payment::create([
@@ -179,18 +176,25 @@ class PaymentController extends Controller
 
     public function regFromPayment(Tariff $tariff)
     {
-        if (!request()->has('phone')) {
-            return redirect()->route('login')->with('success', 'Аккаунт с таким номером телефона не найден')->withInput();
+        $validator = Validator::make(request()->all(), [
+            'quantity' => 'numeric|required',
+            'phone' => 'string|required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('https://adswap.ru');
         }
 
-        $phone = PhoneService::format(request()->get('phone'));
+        $validated = $validator->validated();
+
+        $phone = PhoneService::format($validated['phone']);
         $user = User::where([['phone', '=',  $phone]])->first();
 
         if (!$user) {
             return redirect()->route('login')->with('success', 'Аккаунт с таким номером телефона не найден')->withInput();
         }
 
-        $redirect_url = $this->init($tariff, true, $user->id);
+        $redirect_url = $this->init($tariff, $validated['quantity'], true, $user->id);
         return redirect($redirect_url);
     }
 
