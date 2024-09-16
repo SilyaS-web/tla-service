@@ -70,6 +70,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/projects/{project}/ban', [ProjectController::class, 'ban']);
     Route::get('/projects/{project}/unban', [ProjectController::class, 'unban']);
     Route::get('/projects/{project}/works', [ProjectController::class, 'works']);
+    Route::get('/projects/{project}/statistics', [ProjectController::class, 'statistics']);
     Route::delete('/projects/{project}', [ProjectController::class, 'delete']);
     Route::get('/projects/{project}/stop', [ProjectController::class, 'stop']);
     Route::get('/projects/{project}/start', [ProjectController::class, 'start']);
