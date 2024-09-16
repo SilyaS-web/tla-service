@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\ProjectStatisticsResource;
 use App\Http\Resources\WorkResource;
 use App\Models\Seller;
 use App\Http\Controllers\Controller;
@@ -420,5 +421,14 @@ class ProjectController extends Controller
         }
 
         return response()->json(['categories' => $categories])->setStatusCode(200);
+    }
+
+    public function statistics(Project $project) {
+        $data = [
+            'statistics' => new ProjectStatisticsResource($project),
+        ];
+
+        return response()->json($data)->setStatusCode(200);
+
     }
 }

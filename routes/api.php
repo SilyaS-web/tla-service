@@ -58,9 +58,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/bloggers', [BloggerController::class, 'index']);
     Route::get('/bloggers/{blogger}', [BloggerController::class, 'show']);
     Route::post('/bloggers/{blogger}/accept', [BloggerController::class, 'accept']);
+    Route::put('/bloggers/{blogger}', [BloggerController::class, 'update']);
 
     Route::get('/sellers', [SellerController::class, 'index']);
     Route::get('/sellers/{seller}', [SellerController::class, 'show']);
+    Route::put('/sellers/{seller}', [SellerController::class, 'update']);
 
     Route::get('/projects', [ProjectController::class, 'index']);
     Route::post('/projects', [ProjectController::class, 'store']);
@@ -68,6 +70,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/projects/{project}/ban', [ProjectController::class, 'ban']);
     Route::get('/projects/{project}/unban', [ProjectController::class, 'unban']);
     Route::get('/projects/{project}/works', [ProjectController::class, 'works']);
+    Route::get('/projects/{project}/statistics', [ProjectController::class, 'statistics']);
     Route::delete('/projects/{project}', [ProjectController::class, 'delete']);
     Route::get('/projects/{project}/stop', [ProjectController::class, 'stop']);
     Route::get('/projects/{project}/start', [ProjectController::class, 'start']);
