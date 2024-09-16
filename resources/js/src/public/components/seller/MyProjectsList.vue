@@ -133,6 +133,7 @@
                     product_name: '',
                     project_type: '',
                 }
+                this.$emit('applyFilter', false);
             }
         }
     }

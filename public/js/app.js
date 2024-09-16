@@ -22721,6 +22721,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         subscriber_quantity_min: 0,
         subscriber_quantity_max: 10000000
       }),
+      projectsFilter: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({
+        project_type: "",
+        product_name: ''
+      }),
       filterSubscribersQuantity: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({
         value: [0, 10000000]
       }),
@@ -22799,11 +22803,11 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     switchToProjectsList: function switchToProjectsList() {
       var _this3 = this;
       this.isChooseProjectList = true;
-      this.Loader.loaderOn('.wrapper .profile__content-inner');
+      this.Loader.loaderOn('#profile-blogers-list');
       this.Project.getUsersProjectsList(this.user.id).then(function (data) {
         _this3.projects = data || [];
         setTimeout(function () {
-          _this3.Loader.loaderOff();
+          _this3.Loader.loaderOff('#profile-blogers-list');
         }, 300);
       });
     },
@@ -22829,6 +22833,30 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       $('.form-format__check').prop('checked', false);
       $('.filter__item--sex').prop('checked', false);
       this.$emit('applyFilter', {});
+    },
+    applyProjectsFilter: function applyProjectsFilter() {
+      var _this4 = this;
+      this.Loader.loaderOn('#profile-blogers-list');
+      this.Project.getUsersProjectsList(this.user.id, this.projectsFilter).then(function (data) {
+        _this4.projects = data || [];
+        setTimeout(function () {
+          _this4.Loader.loaderOff('#profile-blogers-list');
+        }, 300);
+      });
+    },
+    resetProjectsFilter: function resetProjectsFilter() {
+      var _this5 = this;
+      this.projectsFilter = {
+        product_name: '',
+        project_type: ''
+      };
+      this.Loader.loaderOn('#profile-blogers-list');
+      this.Project.getUsersProjectsList(this.user.id, {}).then(function (data) {
+        _this5.projects = data || [];
+        setTimeout(function () {
+          _this5.Loader.loaderOff('#profile-blogers-list');
+        }, 300);
+      });
     }
   }
 });
@@ -23052,6 +23080,7 @@ __webpack_require__.r(__webpack_exports__);
         product_name: '',
         project_type: ''
       };
+      this.$emit('applyFilter', false);
     }
   }
 });
@@ -23629,14 +23658,14 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       return _regeneratorRuntime().wrap(function _callee$(_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
-            _this.Loader.loaderOn('.wrapper .profile__content-inner');
+            _this.Loader.loaderOn('.wrapper #dashboard');
             _this.user = _this.User.getCurrent();
             _context.next = 4;
             return _this.getSellerStats(_this.user.id);
           case 4:
             _this.dashboard = _context.sent;
             setTimeout(function () {
-              _this.Loader.loaderOff();
+              _this.Loader.loaderOff('#dashboard');
             }, 300);
           case 6:
           case "end":
@@ -23658,21 +23687,20 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               _this2.Tabs.tabClick(tab);
               _this2.currentItem = null;
               if (currentItem) _this2.currentItem = currentItem;
+              _this2.Loader.loaderOn('.wrapper #' + tab);
               _context2.t0 = tab;
-              _context2.next = _context2.t0 === 'dashboard' ? 7 : _context2.t0 === 'profile-projects' ? 13 : _context2.t0 === 'profile-blogers-list' ? 17 : _context2.t0 === 'all-projects' ? 20 : 23;
+              _context2.next = _context2.t0 === 'dashboard' ? 8 : _context2.t0 === 'profile-projects' ? 13 : _context2.t0 === 'profile-blogers-list' ? 16 : _context2.t0 === 'all-projects' ? 18 : 20;
               break;
-            case 7:
-              _this2.Loader.loaderOn('.wrapper .profile__content-inner');
+            case 8:
               _context2.next = 10;
               return _this2.getSellerStats(_this2.user.id);
             case 10:
               _this2.dashboard = _context2.sent;
               setTimeout(function () {
-                _this2.Loader.loaderOff();
+                _this2.Loader.loaderOff('#dashboard');
               }, 300);
-              return _context2.abrupt("break", 23);
+              return _context2.abrupt("break", 22);
             case 13:
-              _this2.Loader.loaderOn('.wrapper .profile__content-inner');
               _this2.myProjects = [];
               _this2.Project.getUsersProjectsList(_this2.user.id).then(function (data) {
                 var list = data || [];
@@ -23680,11 +23708,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   //если мы перешли с другого модуля
                   if (_this2.currentItem.item === 'projects') {
                     list = list.map(function (_p) {
-                      if (_p.id == _this2.currentItem.id) {
-                        _p.currentProject = true;
-                      } else {
-                        _p.currentProject = false;
-                      }
+                      _p.currentProject = _p.id == _this2.currentItem.id;
                       return _p;
                     });
                     _this2.currentItem = null;
@@ -23692,31 +23716,34 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 }
                 _this2.myProjects = list;
                 setTimeout(function () {
-                  _this2.Loader.loaderOff();
+                  _this2.Loader.loaderOff('#profile-projects');
                 }, 300);
               });
-              return _context2.abrupt("break", 23);
-            case 17:
-              _this2.Loader.loaderOn('.wrapper .profile__content-inner');
+              return _context2.abrupt("break", 22);
+            case 16:
               _this2.Blogger.getList().then(function (data) {
                 _this2.bloggers = (data || []).map(function (_b) {
                   return _this2.findBloggerBiggestPlatform(_b);
                 });
                 setTimeout(function () {
-                  _this2.Loader.loaderOff();
+                  _this2.Loader.loaderOff('#profile-blogers-list');
                 }, 300);
               });
-              return _context2.abrupt("break", 23);
-            case 20:
-              _this2.Loader.loaderOn('.wrapper .profile__content-inner');
+              return _context2.abrupt("break", 22);
+            case 18:
               _this2.Project.getList().then(function (data) {
                 _this2.projects = data || [];
                 setTimeout(function () {
-                  _this2.Loader.loaderOff();
+                  _this2.Loader.loaderOff('#all-projects');
                 }, 300);
               });
-              return _context2.abrupt("break", 23);
-            case 23:
+              return _context2.abrupt("break", 22);
+            case 20:
+              setTimeout(function () {
+                _this2.Loader.loaderOff();
+              }, 300);
+              return _context2.abrupt("break", 22);
+            case 22:
             case "end":
               return _context2.stop();
           }
@@ -24102,11 +24129,18 @@ __webpack_require__.r(__webpack_exports__);
 var Loader = {
   // Принимает селлектор элемента, куда нужно вставить загрузку
   loaderOn: function loaderOn(node) {
-    var loaderTemplate = "<div class=\"loader\" v-if=\"isLoading\">\n                                        <img src=\"/img/loading.gif\" alt=\"\">\n                                    </div>";
+    var loaderTemplate = "<div class=\"loader-wrap\">\n                                        <span class=\"loader\"></span>\n                                    </div>";
     $(document).find(node).append(loaderTemplate);
+    // $(document).find(node).css('height', '100vh')
+    // $(document).find(node).css('overflow', 'hidden')
   },
   loaderOff: function loaderOff() {
-    $(document).find('.loader').remove();
+    var node = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : '';
+    // $(document).find(node).css('height', '100%')
+    // $(document).find(node).css('overflow', 'unset')
+
+    node += ' .loader-wrap';
+    $(document).find(node).remove();
   }
 };
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Loader);
@@ -24222,20 +24256,19 @@ var Blogger = {
     var status = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
     var filterData = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
     return new Promise(function (resolve, reject) {
-      var filterString = '';
+      var params = {
+        statuses: status || []
+      };
       if (filterData) {
         var keys = Object.keys(filterData);
         keys.forEach(function (k) {
-          if (filterData[k]) filterString += "".concat(k, "=").concat(filterData[k]);
+          params[k] = filterData[k];
         });
       }
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
         method: 'get',
         url: '/api/bloggers',
-        params: {
-          statuses: status || [],
-          filter: filterData
-        }
+        params: params
       }).then(function (result) {
         return resolve(result.data.bloggers);
       })["catch"](function (error) {
@@ -24463,7 +24496,8 @@ var Project = {
       }
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
         method: 'get',
-        url: 'api/users/' + user_id + '/projects' + (filterString ? "?".concat(filterString) : '')
+        url: 'api/users/' + user_id + '/projects',
+        params: filterData
       }).then(function (response) {
         resolve(response.data.projects);
       })["catch"](function (errors) {
@@ -28254,21 +28288,33 @@ var _hoisted_56 = {
   "class": "input-range-w"
 };
 var _hoisted_57 = {
-  "class": "filter__btns"
+  "class": "form-group row",
+  style: {
+    "margin-top": "10px",
+    "flex-direction": "row",
+    "justify-content": "space-between",
+    "display": "flex",
+    "gap": "15px"
+  }
 };
 var _hoisted_58 = {
+  "class": "filter__btns"
+};
+var _hoisted_59 = {
   key: 2,
   "class": "profile-projects",
   id: "profile-projects-choose"
 };
-var _hoisted_59 = {
+var _hoisted_60 = {
   "class": "profile-projects__body"
 };
-var _hoisted_60 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_61 = {
   "class": "projects-list__header"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+};
+var _hoisted_62 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "list-projects__title title"
-}, " Список моих проектов "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, " Список моих проектов ", -1 /* HOISTED */);
+var _hoisted_63 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "",
   style: {
     "display": "flex",
@@ -28277,58 +28323,87 @@ var _hoisted_60 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
   }
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
   "class": "btn btn-primary projects-list__filter-btn"
-}, "Фильтры")])], -1 /* HOISTED */);
-var _hoisted_61 = {
+}, "Фильтры")], -1 /* HOISTED */);
+var _hoisted_64 = {
   "class": "profile-projects__items list-projects__items",
   style: {
     "max-width": "1030px"
   }
 };
-var _hoisted_62 = {
+var _hoisted_65 = {
   "class": "list-projects__item project-item"
 };
-var _hoisted_63 = {
+var _hoisted_66 = {
   "class": "owl-carousel project-item__carousel"
 };
-var _hoisted_64 = {
+var _hoisted_67 = {
   "class": "project-item__status active"
 };
-var _hoisted_65 = {
+var _hoisted_68 = {
   "class": "project-item__content"
 };
-var _hoisted_66 = {
+var _hoisted_69 = {
   "class": "project-item__title"
 };
-var _hoisted_67 = {
+var _hoisted_70 = {
   "class": "project-item__price"
 };
-var _hoisted_68 = ["title"];
-var _hoisted_69 = {
+var _hoisted_71 = ["title"];
+var _hoisted_72 = {
   "class": "project-item__left",
   style: {
     "margin-bottom": "12px"
   }
 };
-var _hoisted_70 = {
+var _hoisted_73 = {
   "class": "line"
 };
-var _hoisted_71 = {
+var _hoisted_74 = {
   style: {
     "font-weight": "700"
   }
 };
-var _hoisted_72 = {
+var _hoisted_75 = {
   "class": "project-item__format-tags card__row card__tags"
 };
-var _hoisted_73 = ["data-id"];
-var _hoisted_74 = {
+var _hoisted_76 = ["data-id"];
+var _hoisted_77 = {
   "class": "project-item__btns"
 };
-var _hoisted_75 = ["onClick"];
-var _hoisted_76 = {
+var _hoisted_78 = ["onClick"];
+var _hoisted_79 = {
   key: 1
 };
-var _hoisted_77 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"profile-projects__filters profile-projects__filters--choose\"><div class=\"projects-list__filter filter\"><div class=\"filter__body\"><div class=\"filter__top\"><p class=\"filter__title\"> Фильтр </p><a href=\"#\" class=\"filter__reset\"> Сбросить </a></div><div class=\"filter__items\"><div class=\"form-group filter__item\"><input type=\"text\" class=\"input\" name=\"filter-name\" placeholder=\"Поиск по названию\"></div><div class=\"form-group filter__item\"><label>Формат рекламы</label><select name=\"project_type\" id=\"filter-format\" class=\"input\"><option value=\"\" class=\"\">Выберите формат</option><option value=\"feedback\" class=\"\">Отзыв на товар</option><option value=\"inst\" class=\"\">Интеграция Ins</option><option value=\"youtube\" class=\"\">Интеграция YTube</option><option value=\"vk\" class=\"\">Интеграция VK</option><option value=\"telegram\" class=\"\">Интеграция Telegram</option></select></div><div class=\"filter__btns\"><button class=\"btn btn-primary btn-filter-send\">Применить</button></div></div></div></div></div>", 1);
+var _hoisted_80 = {
+  "class": "profile-projects__filters profile-projects__filters--choose"
+};
+var _hoisted_81 = {
+  "class": "projects-list__filter filter"
+};
+var _hoisted_82 = {
+  "class": "filter__body"
+};
+var _hoisted_83 = {
+  "class": "filter__top"
+};
+var _hoisted_84 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "filter__title"
+}, " Фильтр ", -1 /* HOISTED */);
+var _hoisted_85 = {
+  "class": "filter__items"
+};
+var _hoisted_86 = {
+  "class": "form-group filter__item"
+};
+var _hoisted_87 = {
+  "class": "form-group filter__item"
+};
+var _hoisted_88 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "Формат рекламы", -1 /* HOISTED */);
+var _hoisted_89 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<option value=\"\" class=\"\">Выберите формат</option><option value=\"feedback\" class=\"\">Отзыв на товар</option><option value=\"inst\" class=\"\">Интеграция Ins</option><option value=\"youtube\" class=\"\">Интеграция YTube</option><option value=\"vk\" class=\"\">Интеграция VK</option><option value=\"telegram\" class=\"\">Интеграция Telegram</option>", 6);
+var _hoisted_95 = [_hoisted_89];
+var _hoisted_96 = {
+  "class": "filter__btns"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_BloggersListItem = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("BloggersListItem");
   var _component_Slider = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Slider");
@@ -28433,21 +28508,45 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, $data.filterSubscribersQuantity, {
     min: 0,
     max: 10000000
-  }), null, 16 /* FULL_PROPS */, ["modelValue"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    onClick: _cache[10] || (_cache[10] = function () {
+  }), null, 16 /* FULL_PROPS */, ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    style: {
+      "width": "150px"
+    },
+    type: "number",
+    "class": "input",
+    "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
+      return $data.filterSubscribersQuantity.value[0] = $event;
+    })
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.filterSubscribersQuantity.value[0]]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    style: {
+      "width": "150px"
+    },
+    type: "number",
+    "class": "input",
+    "onUpdate:modelValue": _cache[11] || (_cache[11] = function ($event) {
+      return $data.filterSubscribersQuantity.value[1] = $event;
+    })
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.filterSubscribersQuantity.value[1]]])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[12] || (_cache[12] = function () {
       return $options.applyBloggersFilter && $options.applyBloggersFilter.apply($options, arguments);
     }),
     "class": "btn btn-primary"
-  }, "Применить")])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.isChooseProjectList ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_59, [_hoisted_60, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [$data.projects.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+  }, "Применить")])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.isChooseProjectList ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_59, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [_hoisted_62, _hoisted_63, $data.isChooseProjectList ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
+    key: 0,
+    "class": "btn btn-primary",
+    onClick: _cache[13] || (_cache[13] = function ($event) {
+      return $data.isChooseProjectList = !$data.isChooseProjectList;
+    })
+  }, "Вернуться")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [$data.projects.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     key: 0
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.projects, function (project) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_62, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_65, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
       style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)('background-image: url(' + project.project_files[0].link + ')'),
       "class": "project-item__img"
-    }, null, 4 /* STYLE */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project.status_name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_67, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project.product_price), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("₽ ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    }, null, 4 /* STYLE */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project.status_name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_69, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_70, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project.product_price), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("₽ ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
       "class": "project-item__subtitle",
       title: project.product_name
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project.product_name), 9 /* TEXT, PROPS */, _hoisted_68), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_69, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_70, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project.product_name), 9 /* TEXT, PROPS */, _hoisted_71), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_73, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
       "class": "line__val",
       style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)('width:' + project.project_works.map(function (_p) {
         return parseInt(_p.lost_quantity);
@@ -28458,7 +28557,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }).reduce(function (a, b) {
         return a + b;
       }, 0) * 100 + '%')
-    }, null, 4 /* STYLE */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Осталось мест на интеграцию "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_71, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project.project_works.map(function (_p) {
+    }, null, 4 /* STYLE */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Осталось мест на интеграцию "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_74, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project.project_works.map(function (_p) {
       return parseInt(_p.lost_quantity);
     }).reduce(function (a, b) {
       return a + b;
@@ -28466,19 +28565,45 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return parseInt(_p.quantity);
     }).reduce(function (a, b) {
       return a + b;
-    }, 0)), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(project.project_works, function (project_work) {
+    }, 0)), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_75, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(project.project_works, function (project_work) {
       return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
         "data-id": project_work.id,
         "class": "card__tags-item"
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project_work.type) + " - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(parseInt(project_work.quantity) - project_work.lost_quantity) + "/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project_work.quantity), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_73);
-    }), 256 /* UNKEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project_work.type) + " - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(parseInt(project_work.quantity) - project_work.lost_quantity) + "/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project_work.quantity), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_76);
+    }), 256 /* UNKEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_77, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       onClick: function onClick($event) {
         return $options.chooseProject(project);
       },
       href: "#",
       "class": "btn btn-primary"
-    }, "Выбрать", 8 /* PROPS */, _hoisted_75)])])]);
-  }), 256 /* UNKEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_76, "Проектов нет"))])]), _hoisted_77])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_choose_project_popup, {
+    }, "Выбрать", 8 /* PROPS */, _hoisted_78)])])]);
+  }), 256 /* UNKEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_79, "Проектов нет"))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_80, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_81, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_82, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_83, [_hoisted_84, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+    onClick: _cache[14] || (_cache[14] = function () {
+      return $options.resetProjectsFilter && $options.resetProjectsFilter.apply($options, arguments);
+    }),
+    href: "#",
+    "class": "filter__reset"
+  }, " Сбросить ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_85, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_86, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[15] || (_cache[15] = function ($event) {
+      return $data.projectsFilter.product_name = $event;
+    }),
+    type: "text",
+    "class": "input",
+    name: "filter-name",
+    placeholder: "Поиск по названию"
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.projectsFilter.product_name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_87, [_hoisted_88, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    "onUpdate:modelValue": _cache[16] || (_cache[16] = function ($event) {
+      return $data.projectsFilter.project_type = $event;
+    }),
+    name: "project_type",
+    id: "filter-format",
+    "class": "input"
+  }, [].concat(_hoisted_95), 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.projectsFilter.project_type]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_96, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[17] || (_cache[17] = function () {
+      return $options.applyProjectsFilter && $options.applyProjectsFilter.apply($options, arguments);
+    }),
+    "class": "btn btn-primary"
+  }, "Применить")])])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_choose_project_popup, {
     ref: "chooseProjectPopup"
   }, null, 512 /* NEED_PATCH */)], 64 /* STABLE_FRAGMENT */);
 }
@@ -30537,9 +30662,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onSwitchTab: $options.switchTab,
     onApplyFilter: $options.applyFilterMyProjects
   }, null, 8 /* PROPS */, ["myProjects", "onUpdateMyProjects", "onSwitchTab", "onApplyFilter"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" список блогеров "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BloggersList, {
+    onApplyFilter: $options.applyFilterBloggers,
     bloggers: $data.bloggers,
     user: $data.user
-  }, null, 8 /* PROPS */, ["bloggers", "user"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" чат "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Chat, {
+  }, null, 8 /* PROPS */, ["onApplyFilter", "bloggers", "user"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" чат "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Chat, {
     currentItem: $data.currentItem,
     onSwitchTab: $options.switchTab,
     onNewMessages: $options.newChatMessages,
@@ -30593,12 +30719,12 @@ var _hoisted_7 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementV
   "class": "tariff-card__header"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "tariff-card__title"
-}, " Индивидуальные условия "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+}, " Индивидуальное сопровождение "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "tariff-card__subtitle"
 }, " Действует по договоренности ")], -1 /* HOISTED */);
 var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "tariff-card__text"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Индивидуальный тариф позволяет клиентам свободно выбирать количество интеграций и отзывов в своем плане. "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "Рассматривается только от 100 заявок.")], -1 /* HOISTED */);
+}, " Наши менеджеры возьмут на себя заботу о вашем бренде и обеспечат ему профессиональное сопровождение. ", -1 /* HOISTED */);
 var _hoisted_9 = {
   "class": "tariff-card__btns"
 };

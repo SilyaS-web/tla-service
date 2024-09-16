@@ -28,7 +28,11 @@
                         ></MyProjectsList>
 
                         <!-- список блогеров -->
-                        <BloggersList :bloggers="bloggers" :user="user"></BloggersList>
+                        <BloggersList
+                            v-on:applyFilter="applyFilterBloggers"
+                            :bloggers="bloggers"
+                            :user="user">
+                        </BloggersList>
 
                         <!-- чат -->
                         <Chat
@@ -102,14 +106,14 @@ export default{
         }
     },
     async mounted(){
-        this.Loader.loaderOn('.wrapper .profile__content-inner');
+        this.Loader.loaderOn('.wrapper #dashboard');
 
         this.user = this.User.getCurrent();
 
         this.dashboard = await this.getSellerStats(this.user.id);
 
         setTimeout(() => {
-            this.Loader.loaderOff();
+            this.Loader.loaderOff('#dashboard');
         }, 300)
     },
     methods:{
@@ -121,21 +125,19 @@ export default{
             if(currentItem)
                 this.currentItem = currentItem;
 
+            this.Loader.loaderOn('.wrapper #' + tab);
+
             switch (tab){
                 case 'dashboard':
-                    this.Loader.loaderOn('.wrapper .profile__content-inner');
-
                     this.dashboard = await this.getSellerStats(this.user.id)
 
                     setTimeout(()=>{
-                        this.Loader.loaderOff();
+                        this.Loader.loaderOff('#dashboard');
                     }, 300)
 
                     break;
 
                 case 'profile-projects':
-                    this.Loader.loaderOn('.wrapper .profile__content-inner');
-
                     this.myProjects = []
 
                     this.Project.getUsersProjectsList(this.user.id).then(data => {
@@ -144,12 +146,7 @@ export default{
                         if(this.currentItem){ //если мы перешли с другого модуля
                             if(this.currentItem.item === 'projects'){
                                 list = list.map(_p => {
-                                    if(_p.id == this.currentItem.id){
-                                        _p.currentProject = true
-                                    }
-                                    else {
-                                        _p.currentProject = false
-                                    }
+                                    _p.currentProject = _p.id == this.currentItem.id
 
                                     return _p;
                                 });
@@ -161,37 +158,39 @@ export default{
                         this.myProjects = list;
 
                         setTimeout(()=>{
-                            this.Loader.loaderOff();
+                            this.Loader.loaderOff('#profile-projects');
                         }, 300)
                     })
 
                     break;
 
                 case 'profile-blogers-list':
-                    this.Loader.loaderOn('.wrapper .profile__content-inner');
-
                     this.Blogger.getList().then(data => {
                         this.bloggers = (data || []).map(_b => this.findBloggerBiggestPlatform(_b));
 
                         setTimeout(()=>{
-                            this.Loader.loaderOff();
+                            this.Loader.loaderOff('#profile-blogers-list');
                         }, 300)
                     })
 
                     break;
 
                 case 'all-projects':
-                    this.Loader.loaderOn('.wrapper .profile__content-inner');
-
                     this.Project.getList().then(data => {
                         this.projects = data || [];
 
                         setTimeout(()=>{
-                            this.Loader.loaderOff();
+                            this.Loader.loaderOff('#all-projects');
                         }, 300)
                     })
 
                     break;
+
+                default:
+                    setTimeout(()=>{
+                        this.Loader.loaderOff();
+                    }, 300)
+                    break
             }
         },
 

@@ -200,7 +200,8 @@ const Project = {
 
             axios({
                 method: 'get',
-                url: 'api/users/' + user_id + '/projects' + (filterString ? `?${filterString}` : '')
+                url: 'api/users/' + user_id + '/projects',
+                params: filterData
             })
             .then(response => {
                 resolve(response.data.projects);
