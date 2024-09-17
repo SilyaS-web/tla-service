@@ -47,7 +47,9 @@
                             @click="activate"
                             href="#" class="btn btn-primary" style="text-align: center">Опубликовать</a>
 
-                        <button class="btn btn-secondary btn-statistics">Статистика</button>
+                        <button
+                            @click="getProjectStatistics"
+                            class="btn btn-secondary btn-statistics">Статистика</button>
                     </div>
                 </div>
             </div>
@@ -369,7 +371,7 @@
                                 Общая статистика
                             </div>
                             <div
-                                v-if="project.clicks_count > 1 || project.completed_works_statistics.total_subs > 1 || project.completed_works_statistics.total_views"
+                                v-if="project.clicks_count > 1 || (completed_works_statistics && completed_works_statistics.total_subs > 1) || (completed_works_statistics && completed_works_statistics.total_views)"
                                 class="card__col card__stats-stats card__stats-stats--total" style="width:100%; flex-direction:row; flex-wrap:wrap; gap: 8px">
                                 <div class="card__row card__stats-row" style="width:calc(100% / 2 - 4px); margin-right:0!important">
                                     <div class="card__col card__stats-item">
@@ -385,7 +387,7 @@
                                             <span>Охваты</span>
                                         </div>
                                         <div class="card__stats-val">
-                                            <span>{{ project.completed_works_statistics.total_subs }}</span>
+                                            <span>{{ completed_works_statistics ? completed_works_statistics.total_subs : '-' }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -395,10 +397,10 @@
                                             <span>CPM</span>
                                         </div>
                                         <div class="card__stats-val ">
-                                            <span>{{ (project.product_price / ((project.completed_works_statistics.total_views == 0 || !project.completed_works_statistics.total_views  ? 1 : project.completed_works_statistics.total_views) * 1000)).toFixed(2) }} ₽</span>
+                                            <span>{{ (project.product_price / (((completed_works_statistics && completed_works_statistics.total_views == 0) || completed_works_statistics && !completed_works_statistics.total_views ? 1 : (completed_works_statistics ? completed_works_statistics.total_views : 1)) * 1000)).toFixed(2) }} ₽</span>
                                         </div>
                                     </div>
-                                    <div class="card__col card__stats-item" style="flex: 1: width: auto">
+                                    <div class="card__col card__stats-item" style="flex: 1; width: auto">
                                         <div class="card__stats-title">
                                             <span>CPC</span>
                                         </div>
@@ -425,11 +427,11 @@
                             <div class="view-project__props-total">
                                 <div class="view-project__props-orders">
                                     Заказы за 30 дн<br>
-                                    <span class="count">{{ project.marketplace_statistics && project.marketplace_statistics.orders_count }} шт</span>
+                                    <span class="count">{{ marketplace_statistics && marketplace_statistics.orders }} шт</span>
                                 </div>
                                 <div class="view-project__props-money">
                                     Выручка за 30 дн<br>
-                                    <span class="money">{{ project.marketplace_statistics && project.marketplace_statistics.earnings  }} ₽</span>
+                                    <span class="money">{{ marketplace_statistics && marketplace_statistics.earnings  }} ₽</span>
                                 </div>
                             </div>
                             <div class="view-project__props-graph">
@@ -452,7 +454,7 @@
                                     Статистика по завершённым работам
                                 </div>
                                 <div
-                                    v-if="project.completed_works.length > 0"
+                                    v-if="completed_works.length > 0"
                                     class="card__stats-table table-stats">
                                     <div class="table-stats__header">
                                         <div class="table-stats__row">
@@ -490,11 +492,13 @@
                                     </div>
                                     <div class="table-stats__body">
                                         <div
-                                            v-for="work in project.completed_works"
+                                            v-for="work in completed_works"
                                             :data-work-id = "work.id"
                                             class="table-stats__row">
-                                            <div class="table-stats__col table-stats__blogger-img" style="width: 10%">
-                                                <img :src="work.blogger.user.image" alt="">
+                                            <div
+                                                class="table-stats__col table-stats__blogger-img"
+                                                :style="'width: 10%; background-image:' + work.blogger.user.image + ''">
+
                                             </div>
                                             <div class="table-stats__col" style="width: 13%;">
                                                 {{ work.blogger.user.name }}
@@ -571,7 +575,7 @@
                                     </div>
                                 </div>
                                 <div
-                                    v-if="project.completed_works.length > 0"
+                                    v-if="completed_works.length > 0"
                                     class="dashboard__placeholder" style="z-index: 1; top:0; left:0;">
                                     <div class="dashboard__placeholder-text">
                                         Переверните экран, чтобы посмотреть статистику
@@ -630,7 +634,7 @@
     <confirm-popup ref="confirmPopup"></confirm-popup>
 </template>
 <script>
-    import { ref } from 'vue'
+import {ref, shallowRef} from 'vue'
 
     import Project from "../../../services/api/Project.vue";
     import Work from "../../../services/api/Work.vue";
@@ -638,6 +642,7 @@
     import Loader from "../../../services/AppLoader.vue";
 
     import ConfirmPopup from '../../../ui/ConfirmationPopup.vue';
+    import axios from "axios";
 
     export default{
         props:['project', 'currentItem'],
@@ -648,6 +653,12 @@
                 bloggers_active: ref([]),
 
                 currentProject: ref(null),
+
+                marketplace_statistics: ref(null),
+                completed_works_statistics: ref(null),
+                completed_works: ref([]),
+                prodsStatisticsChart: null,
+                prodsStatisticsChartData: ref(null),
 
                 isProjectOptsOpen: ref(false),
                 Project, Work,
@@ -660,96 +671,6 @@
             })
 
             var mediaQuery = window.matchMedia('(max-width: 911px)');
-            var month = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-
-            var orders_ctx;
-
-            //prices_ctx = $(`.profile-projects__item[data-id="${this.project.id}"]`).find('#prices-graph-desktop');
-            orders_ctx = $(`.profile-projects__item[data-id="${this.project.id}"]`).find('#orders-graph-desktop_' + this.project.id);
-
-            var data = this.project.marketplace_statistics ? JSON.parse(this.project.marketplace_statistics) : {
-                    orders: 0,
-                    earnings: 0,
-                    bloggers_history: 0,
-                    prices_history: [],
-                    orders_history: [],
-                };
-
-            var datasets = [
-                {
-                    label: 'Выручка',
-                    data: (data.prices_history || []).map((item, index) => {
-                        if (item["earnings"] !== undefined) {
-                            return {x: (item.dt.split('-')[2] + ' ' + month[Number(item.dt.split('-')[1]) - 1]), y: Math.round(item.earnings)};
-
-                        } else {
-                            return {x: (item.dt.split('-')[2] + ' ' + month[Number(item.dt.split('-')[1]) - 1]), y: Math.round(item.price * data.orders_history[index].orders)};
-                        }
-                    }),
-                    showLine: true,
-                    type: 'line',
-                    backgroundColor: (data.prices_history || []).map(() => {
-                        return 'rgb(255, 99, 132, 0.5)'
-                    }),
-                    order: 0,
-                },
-                {
-                    label: 'Заказы',
-                    data: data.orders_history.map(item => {
-                        return {x: (item.dt.split('-')[2] + ' ' + month[Number(item.dt.split('-')[1]) - 1]), y: Math.round(item.orders)};
-
-                    }),
-                    showLine: true,
-                    type: 'bar',
-                    backgroundColor: data.orders_history.map(() => {
-                        return 'rgb(54, 162, 235, 0.5)'
-                    }),
-                    order: 1,
-                    tension: 0.1
-                },
-                {
-                    label: 'Блоггеров завершило работу',
-                    data: data.bloggers_history.map(item => {
-                        return {x: (item.dt.split('-')[2] + ' ' + month[Number(item.dt.split('-')[1]) - 1]), y: item.bloggers};
-                    }),
-                    showLine: true,
-                    type: 'bar',
-                    backgroundColor: data.bloggers_history.map(() => {
-                        return 'rgb(254,94,0, 0.4)'
-                    }),
-                    order: 2
-                },
-            ];
-
-            var prodsStatistics = new Chart(orders_ctx, {
-                type: 'scatter',
-                data: {
-                    labels: data.prices_history.map(item => {
-                        return `${item.dt.split('-')[2]} ${month[Number(item.dt.split('-')[1]) - 1]}`
-                    }),
-                    datasets: datasets
-                },
-                options: {
-                    plugins: {
-                        tooltip: {
-                            mode: 'index',
-                            intersect: false,
-                        },
-                    },
-                    hover: {
-                        mode: 'nearest',
-                        intersect: true
-                    },
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            type: 'logarithmic',
-                        },
-                    },
-                }
-            });
-
-            prodsStatistics.update();
 
             window
                 .matchMedia('(orientation: portrait)')
@@ -805,6 +726,31 @@
                     scrollTop: $(document).find(`.profile-projects__item[data-id="${this.project.id}"]`).offset().top
                 }, 1000);
             }
+
+            var orders_ctx = $(`.profile-projects__item[data-id="${this.project.id}"]`).find('#orders-graph-desktop_' + this.project.id);
+
+            this.prodsStatisticsChart = shallowRef(new Chart(orders_ctx, {
+                type: 'scatter',
+                data: this.prodsStatisticsChartData,
+                options: {
+                    plugins: {
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false,
+                        },
+                    },
+                    hover: {
+                        mode: 'nearest',
+                        intersect: true
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            type: 'logarithmic',
+                        },
+                    },
+                }
+            }));
         },
         updated(){
             $(`.profile-projects__item[data-id="${this.project.id}"]`).find('.projects-blogers--in_work').owlCarousel({
@@ -896,7 +842,126 @@
 
                 return blogger;
             },
+            getProjectStatistics(){
+                return new Promise((resolve, reject) => {
+                    this.Loader.loaderOn(`.profile-projects__item[data-id="${this.project.id}"] .projects-statistics`)
 
+                    axios({
+                        method: 'get',
+                        url: '/api/projects/' + this.project.id + '/statistics',
+                    })
+                    .then(result => {
+                        if(result.data.statistics.completed_works)
+                            this.completed_works = result.data.statistics.completed_works;
+
+                        if(result.data.statistics.completed_works_statistics)
+                            this.completed_works_statistics = result.data.statistics.completed_works_statistics;
+
+                        if(result.data.statistics.marketplace_statistics)
+                            this.marketplace_statistics = JSON.parse(result.data.statistics.marketplace_statistics);
+                        console.log(result.data)
+                        this.updateProductStatistics()
+
+                        this.Loader.loaderOff()
+                        resolve(result.data)
+                    })
+                    .catch(error => {
+                        console.log(error)
+                        resolve([])
+                    })
+                })
+            },
+            updateProductStatistics(){
+                this.prodsStatisticsChart.destroy()
+
+                var month = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+
+                var data = this.marketplace_statistics ? this.marketplace_statistics : {
+                        orders: 0,
+                        earnings: 0,
+                        bloggers_history: 0,
+                        prices_history: [],
+                        orders_history: [],
+                    };
+
+                var datasets = [
+                    {
+                        label: 'Выручка',
+                        data: (data.prices_history || []).map((item, index) => {
+                            if (item["earnings"] !== undefined) {
+                                return {x: (item.dt.split('-')[2] + ' ' + month[Number(item.dt.split('-')[1]) - 1]), y: Math.round(item.earnings)};
+
+                            } else {
+                                return {x: (item.dt.split('-')[2] + ' ' + month[Number(item.dt.split('-')[1]) - 1]), y: Math.round(item.price * data.orders_history[index].orders)};
+                            }
+                        }),
+                        showLine: true,
+                        type: 'line',
+                        backgroundColor: (data.prices_history || []).map(() => {
+                            return 'rgb(255, 99, 132, 0.5)'
+                        }),
+                        order: 0,
+                    },
+                    {
+                        label: 'Заказы',
+                        data: data.orders_history.map(item => {
+                            return {x: (item.dt.split('-')[2] + ' ' + month[Number(item.dt.split('-')[1]) - 1]), y: Math.round(item.orders)};
+
+                        }),
+                        showLine: true,
+                        type: 'bar',
+                        backgroundColor: data.orders_history.map(() => {
+                            return 'rgb(54, 162, 235, 0.5)'
+                        }),
+                        order: 1,
+                        tension: 0.1
+                    },
+                    {
+                        label: 'Блоггеров завершило работу',
+                        data: data.bloggers_history.map(item => {
+                            return {x: (item.dt.split('-')[2] + ' ' + month[Number(item.dt.split('-')[1]) - 1]), y: item.bloggers};
+                        }),
+                        showLine: true,
+                        type: 'bar',
+                        backgroundColor: data.bloggers_history.map(() => {
+                            return 'rgb(254,94,0, 0.4)'
+                        }),
+                        order: 2
+                    },
+                ];
+
+                this.prodsStatisticsChartData = {
+                    'labels' : data.prices_history.map(item => {
+                        return `${item.dt.split('-')[2]} ${month[Number(item.dt.split('-')[1]) - 1]}`
+                    }),
+                    'datasets' : datasets
+                }
+
+                var orders_ctx = $(`.profile-projects__item[data-id="${this.project.id}"]`).find('#orders-graph-desktop_' + this.project.id);
+
+                this.prodsStatisticsChart = shallowRef(new Chart(orders_ctx, {
+                    type: 'scatter',
+                    data: this.prodsStatisticsChartData,
+                    options: {
+                        plugins: {
+                            tooltip: {
+                                mode: 'index',
+                                intersect: false,
+                            },
+                        },
+                        hover: {
+                            mode: 'nearest',
+                            intersect: true
+                        },
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                type: 'logarithmic',
+                            },
+                        },
+                    }
+                }));
+            },
             async deleteProject(event){
                 event.preventDefault();
 

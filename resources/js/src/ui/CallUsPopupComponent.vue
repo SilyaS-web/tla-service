@@ -11,15 +11,21 @@
         <div class="popup__form">
             <div class="form-group">
                 <label for="">Ваше имя</label>
-                <input id="name" name="name" type="text" class="input">
+                <input
+                    v-model="userData.name"
+                    id="name" name="name" type="text" class="input">
             </div>
             <div class="form-group">
                 <label for="phone">Ваш номер</label>
-                <input id="phone" name="phone" type="phone" class="input" placeholder = "+7(900)800-00-00">
+                <input
+                    v-model="userData.phone"
+                    id="phone" name="phone" type="phone" class="input" placeholder = "+7(900)800-00-00">
             </div>
             <div class="form-group">
                 <label for="comment">Комментарий</label>
-                <textarea name="comment" id="comment" cols="30" rows="10" class="textarea" placeholder="Введите сообщение"></textarea>
+                <textarea
+                    v-model="userData.comment"
+                    name="comment" id="comment" cols="30" rows="10" class="textarea" placeholder="Введите сообщение"></textarea>
             </div>
             <p class="form-addit">
                 Оставляя свои данные, вы даёте на это согласие <br>
@@ -38,6 +44,7 @@
 </template>
 <script>
 import PopupModal from '../services/AppPopup.vue';
+import {ref} from "vue";
 
 export default {
     name: 'ConfirmPopup',
@@ -51,6 +58,12 @@ export default {
         // Private variables
         resolvePromise: undefined,
         rejectPromise: undefined,
+
+        userData: ref({
+            name: null,
+            phone: null,
+            comment: null
+        })
     }),
     methods: {
         show(opts = {}) {
@@ -70,8 +83,15 @@ export default {
         },
 
         _confirm() {
+            if(!this.userData.phone){
+                notify('error', {
+                    title: 'Ошибка!',
+                    message: 'Заполните номер'
+                });
+            }
+
             this.$refs.popup.close()
-            this.resolvePromise(this.choosedWork)
+            this.resolvePromise(this.userData)
         },
 
         _cancel() {

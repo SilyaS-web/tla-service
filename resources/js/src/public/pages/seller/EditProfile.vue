@@ -8,7 +8,7 @@
                 </div>
                 <div class="edit-profile__content" >
                     <div class="tab-content__profile-img">
-                        <img :src="seller && seller.image ? seller.image : '/img/profile-icon.svg'  " alt="">
+                        <img :src="seller.user && seller.user.image ? seller.user.image : '/img/profile-icon.svg'  " alt="">
                         <div class="tab-content__profile-img-text">
                             <p>Фото профиля</p>
                             <div class="form-group form-group--file">
@@ -26,17 +26,17 @@
                             <div class="tab-content__form-right">
                                 <div class="form-group">
                                     <label for="">Имя</label>
-                                    <input type="text" class="input" name="name" id="name" v-model="seller.name">
+                                    <input type="text" class="input" name="name" id="name" v-model="seller.user.name">
                                     <span v-if = "errors.name" class="error">{{ errors.name }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="">E-mail</label>
-                                    <input type="email" class="input" id="email" name="email" v-model="seller.email">
+                                    <input type="email" class="input" id="email" name="email" v-model="seller.user.email">
                                     <span v-if = "errors.email" class="error">{{ errors.email }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">Номер телефона</label>
-                                    <input type="phone" id="phone" placeholder="" name="phone" class="input input--phone" v-model="seller.phone" disabled>
+                                    <input type="phone" id="phone" placeholder="" name="phone" class="input input--phone" v-model="seller.user.phone" disabled>
                                     <span v-if = "errors.phone" class="error">{{ errors.phone }}</span>
                                 </div>
                             </div>
@@ -118,7 +118,9 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary desktop">Сохранить</button>
+                    <button
+                        @click="saveSeller"
+                        class="btn btn-primary">Сохранить</button>
                 </div>
             </div>
         </div>
@@ -129,20 +131,51 @@
 
     import User from "../../../services/api/User";
     import Header from '../../components/layout/AppHeader.vue'
+    import Seller from "../../../services/api/Seller";
+
+    import Loader from "../../../services/AppLoader";
 
     export default {
         components:{ Header },
         data(){
             return{
                 user: ref(null),
-                User,
+                Loader,
+                User, Seller,
 
-                seller: ref({}),
+                seller: ref({
+                    user: {}
+                }),
                 errors: ref({})
             }
         },
-        mounted(){
+        async mounted(){
             this.user = this.User.getCurrent();
+            this.seller = await this.Seller.getItem(this.user.seller_id)
         },
+        methods:{
+            saveSeller(){
+                this.Loader.loaderOn('.edit-profile');
+
+                this.Seller.save().then(data => {
+                    if(data.errors){
+                        this.errors = data.errors;
+                        this.Loader.loaderOff('.edit-profile');
+                        return
+                    }
+
+                    this.seller = data.seller;
+
+                    var user = data.seller.user;
+
+                    if(user){
+                        this.user = user;
+                        localStorage.setItem('user', JSON.stringify(user));
+                    }
+
+                    this.Loader.loaderOff('.edit-profile');
+                })
+            }
+        }
     }
 </script>

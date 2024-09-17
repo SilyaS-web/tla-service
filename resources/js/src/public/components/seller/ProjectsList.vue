@@ -37,10 +37,20 @@
                         </div>
                         <div class="form-group filter__item">
                             <label for="filter-category">Категория</label>
-                            <input type="text" class="input" name="filter-category" id="filter-category" placeholder="Введите категорию">
+                            <input
+                                @input="getCategories"
+                                @focusout="categories = []"
+                                v-model="currentCategory"
+                                type="text" class="input" name="filter-category" id="filter-category" placeholder="Введите категорию">
                             <input type="text" id = "filter-category-id" hidden>
-                            <div class="filter-tooltip" style="display: none">
+                            <div class="filter-tooltip" v-if="categories && categories.length">
                                 <div class="filter-tooltip__items">
+                                    <div
+                                        v-for="category in categories"
+                                        @click="chooseFormat(category)"
+                                        class="filter-tooltip__row">
+                                        {{ category.theme }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -77,7 +87,10 @@
                 filter: ref({
                     project_type: '',
                     product_name: '',
+                    project_category: '',
                 }),
+                currentCategory: ref(''),
+                categories: ref([]),
             }
         },
         components:{ListItem},
@@ -89,7 +102,30 @@
                 this.filter = {
                     product_name: '',
                     project_type: '',
+                    project_category: '',
                 }
+                this.currentCategory = ''
+            },
+            getCategories(event){
+                var value = $(event.target).val();
+
+                axios({
+                    method: 'get',
+                    url: '/api/projects/categories',
+                    params:{
+                        category: value
+                    }
+                })
+                .then(response => {
+                    this.categories = response.data.categories
+                })
+                .catch(error => {
+                    console.log(error)
+                })
+            },
+            chooseCategory(category){
+                this.filter.project_category = category.id;
+                this.currentCategory = category.theme
             }
         }
     }

@@ -86,8 +86,8 @@
             return {
                 brands: ref([]),
                 filter: ref({
-                    project_type: '',
-                    product_name: '',
+                    project_type: null,
+                    product_name: null,
                 }),
                 Project
             }

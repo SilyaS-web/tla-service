@@ -58,7 +58,8 @@
                             </div>
                         </div>
                         <div class="tariff-card__btns">
-                            <button class="btn btn-primary btn-tariffs-payment">Оплатить</button>
+                            <button
+                                class="btn btn-secondary">Оплатить</button>
                         </div>
                         <div class="tariff-card__count">
                             01
@@ -101,7 +102,9 @@
                             </div>
                         </div>
                         <div class="tariff-card__btns">
-                            <button class="btn btn-primary btn-tariffs-payment" style="margin-top: 15px">Оплатить</button>
+                            <button
+                                @click="buyFeedback"
+                                class="btn btn-primary btn-tariffs-payment" style="margin-top: 15px">Оплатить</button>
                         </div>
                         <div class="tariff-card__count">
                             02
@@ -141,7 +144,9 @@
                             </div>
                         </div>
                         <div class="tariff-card__btns">
-                            <button class="btn btn-primary btn-tariffs-payment">Оплатить</button>
+                            <button
+                                @click="buyIntegration"
+                                class="btn btn-primary btn-tariffs-payment">Оплатить</button>
                         </div>
                         <div class="tariff-card__count">
                             03
@@ -158,8 +163,10 @@
 </template>
 <script>
 import {ref} from "vue";
+import axios from "axios";
 
 import User from "../../../services/api/User";
+import Seller from "../../../services/api/Seller";
 import Header from '../../components/layout/AppHeader.vue'
 
 import CallUsPopup from '../../../ui/CallUsPopupComponent.vue'
@@ -190,8 +197,46 @@ export default {
                 subtitle: 'Укажите свои контактные данные и наш менеджер свяжется с вами в течении 15 минут',
                 okButton: 'Отправить',
                 cancelButton: 'Отмена',
-            }).then(() => {
+            }).then((data) => {
+                axios({
+                    method: 'get',
+                    url: '/api/feedback',
+                    params: data
+                })
+                .then(data => {
+                    notify('error', {
+                        title: 'Успешно!',
+                        message: 'Ваше обращение успешно доставлено'
+                    });
+                })
+                .catch(data => {
+                    console.log(data)
 
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'Невозможно отправить обращение, попробуйте позже или напишите в поддержку'
+                    });
+                })
+            })
+        },
+        buyFeedback(){
+            var quantity = $(document)
+            axios({
+                method: 'get',
+                url: '/api/payment/17/init?quantity='
+            })
+            .then(data => {
+                if(data){
+                    window.location.href = data
+                }
+            })
+            .catch(data => {
+                console.log(data)
+
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'Невозможно купить тариф, попробуйте позже или напишите в поддержку'
+                });
             })
         },
         // changeQuantity(e){
