@@ -55,7 +55,12 @@
                 });
 
                 if (isConfirmed) {
-                    this.accept(id)
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Блогер одобрен!'
+                    });
+
+                    this.$emit('updateBloggers', id);
                 }
             },
 

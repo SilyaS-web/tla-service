@@ -20,6 +20,13 @@ class SellerTariff extends Model
         'user_id',
     ];
 
+    protected $dates = [
+        'finish_date',
+        'activation_date',
+        'created_at',
+        'updated_at',
+    ];
+
     public function tariff()
     {
         return $this->hasOne(Tariff::class, 'id', 'tariff_id');

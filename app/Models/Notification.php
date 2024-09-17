@@ -19,6 +19,12 @@ class Notification extends Model
         'viewed_at'
     ];
 
+    protected $dates = [
+        'viewed_at',
+        'created_at',
+        'updated_at',
+    ];
+
     public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
