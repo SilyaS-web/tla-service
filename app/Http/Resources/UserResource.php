@@ -31,6 +31,8 @@ class UserResource extends JsonResource
             'image' => $this->getImageURL(),
             'status' => $this->status,
             'role' => $this->role,
+            'seller_id' => $this->seller->id ?? false,
+            'blogger_id' => $this->blogger->id ?? false,
             'organization_name' => $organization_name,
             'channel_name' => $channel_name,
             'created_at' => isset($this->created_at) ? $this->created_at->format('d.m.Y H:i') : null,

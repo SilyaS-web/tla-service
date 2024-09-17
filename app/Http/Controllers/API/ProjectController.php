@@ -25,6 +25,7 @@ class ProjectController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'project_type' => [Rule::in(Project::TYPES), 'nullable'],
+            'category' => 'string|nullable',
             'product_name' => 'string|nullable',
             'statuses' => 'array|nullable',
             'statuses.*' => 'string',
@@ -50,6 +51,10 @@ class ProjectController extends Controller
             $projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
                 $query->where('type', $validated['project_type']);
             });
+        }
+
+        if (isset($validated['category']) && !empty($validated['category'])) {
+            $projects->where('marketplace_category', 'like', '%' . $validated['category'] . '%');
         }
 
         $data = [
