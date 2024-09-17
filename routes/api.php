@@ -91,5 +91,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/tariifs', [TariffController::class, 'index']);
     Route::get('/tariifs/{tariff}/price', [TariffController::class, 'getPrice']);
+
+    Route::post('/feedback', [UserController::class, 'sendFeedback']);
+
 });
 

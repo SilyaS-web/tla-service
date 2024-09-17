@@ -4508,6 +4508,40 @@ input[type='range']::-webkit-slider-runnable-track{
     max-width: 17px;
     width:100%
 }
+.tariff-card__btns{
+    margin-top: auto;
+}
+.tariff-card .quantity-w{
+    margin-left:unset;
+    flex-direction: row;
+}
+.tariff-card .quantity-w .quantity-input{
+    width:65%;
+}
+.tariff-card .quantity-w .quantity-input .input{
+    max-width: 100%;
+    height:50px;
+    width:100%;
+}
+.tariff-card .quantity-w .quantity-minus, .tariff-card .quantity-w .quantity-plus{
+    max-width: 55px;
+    width:100%
+}
+.tariff-card .quantity-w .quantity-minus.disabled,
+.tariff-card .quantity-w .quantity-plus.disabled,
+.tariff-card .quantity-w .quantity-input .input.disabled
+{
+    opacity: .6;
+    pointer-events: none;
+}
+.tariff-card .quantity-w .quantity-minus img{
+    max-width: 17px;
+    width:100%
+}
+.tariff-card .quantity-w .quantity-plus img{
+    max-width: 17px;
+    width:100%
+}
 .form-group {
 }
 .select {

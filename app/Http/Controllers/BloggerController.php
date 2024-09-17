@@ -114,6 +114,10 @@ class BloggerController extends Controller
         $user = Auth::user();
         $validated = $validator->validated();
 
+        if (Blogger::where('user_id', $user->id)->first()) {
+            return redirect('/');
+        }
+
         if (
             (!isset($validated['tg-link']) || empty($validated['tg-link'])) &&
             (!isset($validated['inst-link']) || empty($validated['inst-link'])) &&

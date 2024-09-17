@@ -19,6 +19,7 @@ class Payment extends Model
         'tariff_id',
         'price',
         'status',
+        'quantity',
     ];
 
     /**

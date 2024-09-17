@@ -53,9 +53,13 @@ class Seller extends Model
     public function getActiveTariffs($type = null) {
         $tariffs = $this->sellerTariffs()->where('finish_date', '>', Carbon::now());
         if ($type) {
-            $tariffs->where('type', $type);
-            return $tariffs->first();
+            $tariff = $tariffs->where('type', $type)->first();
+            if (!$tariff && in_array($type, Project::INTEGRATION_TYPES)) {
+                $tariff = $tariffs->where('type', Project::INTEGRATIONS)->first();
+            }
+            return $tariff;
         }
+
         return $tariffs->get();
     }
 
