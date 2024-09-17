@@ -257,4 +257,21 @@ class UserController extends Controller
 
         return response()->json()->setStatusCode(200);
     }
+
+    public function sendFeedback() {
+        $validator = Validator::make(request()->all(), [
+            'phone' => 'string|required',
+            'name' => 'string|required',
+            'comment' => 'string|required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+        $message_text = "Форма обратной связи\n\nИмя: " . $validated['name'] ."\nТелефон: " . $validated['phone'] ."\nСообщение: " . $validated['comment'];
+        $result = TgService::sendForm($message_text);
+        return response()->json()->setStatusCode(200);
+    }
 }
