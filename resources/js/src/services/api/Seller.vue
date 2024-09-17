@@ -9,27 +9,42 @@ const Seller = {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'get',
-                url: '/api/seller/' + id,
+                url: '/api/sellers/' + id,
             })
             .then((response) => {
-                if(!response.data.id){
-                    notify('error', {
-                        title: 'Внимание!',
-                        message: 'Ошибка сервера, напишите в поддержку.'
-                    });
-                }
-
-                resolve(response.data)
+                resolve(response.data.seller)
             })
             .catch((data) => {
                 notify('error', {
                     title: 'Внимание!',
-                    message: 'Ошибка сервера, напишите в поддержку.'
+                    message: 'Невозможно получить информацию по селлеру, напишите в поддержку или попробуйте позже'
                 });
 
                 console.log(data)
 
                 resolve(false)
+            })
+        })
+    },
+    save: (data) => {
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'put',
+                url: '/api/sellers/' + data.id,
+                params: data
+            })
+            .then((response) => {
+                resolve(response.data)
+            })
+            .catch((data) => {
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'Невозможно сохранить информацию по селлеру, напишите в поддержку или попробуйте позже'
+                });
+
+                console.log(data)
+
+                resolve(data)
             })
         })
     },

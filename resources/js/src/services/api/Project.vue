@@ -193,8 +193,9 @@ const Project = {
                 var keys = Object.keys(filterData);
 
                 keys.forEach(k => {
-                    if(filterData[k])
+                    if(filterData[k]) {
                         filterString += `${k}=${filterData[k]}`
+                    }
                 })
             }
 

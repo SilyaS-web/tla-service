@@ -15,7 +15,7 @@
                                     v-for="work in works"
                                     :data-id="work.id"
                                     @click="getMessages(work)"
-                                    :class="'chat__chat-item item-chat ' + (work.currentWork ? 'current' : '')"
+                                    :class="'chat__chat-item item-chat ' + (work.currentWork ? 'current' : (currentChat && currentChat.id == work.id ? 'current' : ''))"
                                     style="position:relative">
                                     <div class="item-chat__img" :style="'background-image: url(' + work.partner_user.image + ')'">
                                     </div>
@@ -81,11 +81,25 @@
                                             Лайки: {{ message.finishStats.likes }}
                                         </div>
                                         <span v-else v-html="message.message"></span>
+                                        <div
+                                            v-for = "file in message.files">
+                                            <img
+                                                v-if="isImg(file.link)"
+                                                :src="file.link"
+                                                @click="openImage(file.link)"
+                                                alt="" class="chat-img-popup">
 
-                                        <img
-                                            v-for="image in message.images"
-                                            :src="image.link"
-                                            alt="" class="chat-img-popup">
+                                            <a
+                                                v-else
+                                                :href="file.link" download class = "chat-file">
+
+                                                <div class="chat-file__icon">{{ getFileType(file.link) }}</div>
+                                                <div class="chat-file__text">
+                                                    {{ file.link }}
+                                                </div>
+
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -155,6 +169,22 @@
             </div>
         </div>
     </div>
+    <div
+        v-if="imageIsOpen"
+        class="popup" id="chat-img" style="">
+        <div class="popup__container _container">
+            <div class="popup__body" style="max-width:790px">
+                <div class="chat-img__w">
+                    <img :src="openedImageUrl" alt="" class="chat-img" style="width:100%">
+                </div>
+                <div
+                    @click="imageIsOpen = false"
+                    class="close-popup">
+                    <img src="img/close-icon.svg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 <script>
     import {ref} from "vue";
@@ -167,6 +197,8 @@
         props:['currentItem'],
         data(){
             return {
+                imageIsOpen: false,
+                openedImageUrl: '',
                 works:ref([]),
                 messages:ref([]),
                 currentMessage: ref({
@@ -190,7 +222,6 @@
             }, 5000)
         },
         updated(){
-
             if(this.currentItem){ //если мы перешли с другого модуля
                 if(this.currentItem.item === 'chat'){
                     var list = this.works.map(_w => {
@@ -277,6 +308,7 @@
                     this.currentChat = work;
 
                     this.User.getMessages(work.id, this.user.id).then(data => {
+                        console.log(data)
                         this.messages = (data || []);
 
                         if(!this.currentChatIntervalId){
@@ -337,6 +369,20 @@
                     return moment(String(value)).format('DD.MM.YY H:mm')
                 }
             },
+            getFileType(file){
+                return file.split('.').pop();
+            },
+            isImg(file){
+                var types = ['png', 'jpg', 'jpeg', 'webp'],
+                    isImg = false,
+                    fileType = this.getFileType(file)
+
+                return types.includes(fileType)
+            },
+            openImage(src){
+                this.openedImageUrl = src;
+                this.imageIsOpen = true;
+            }
         }
     }
 </script>

@@ -81,7 +81,7 @@
             return user && user.role == 'seller'
         },
 
-        getWorks(user_id, orderBy = 'asc', is_active = 1){
+        getWorks(user_id, orderBy = 'desc', is_active = 1){
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'get',
