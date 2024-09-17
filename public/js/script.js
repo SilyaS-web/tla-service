@@ -2173,9 +2173,10 @@ $(window).on('load', function(){
 
         var btn = $(e.target),
             card = btn.closest('.tariff-card'),
-            tariffID = card.find('select').val();
+            tariffID = card.data('id'),
+            quantity = card.find('.quantity-input input').val();
 
-        window.location.href = '/payment/' + tariffID + '/init'
+        window.location.href = '/payment/' + tariffID + '/init?quantity=' + quantity
     })
 
     $(document).on('click', '.btn-public', function(e){
@@ -2311,10 +2312,11 @@ $(window).on('load', function(){
 
     $(document).on('click', '.tariff-card .quantity-w', function(e){
         var prevVal = Number($(this).find('.quantity-input .input').val()),
-            maxVal = Number($(this).data('max'));
+            maxVal = Number($(this).data('max')),
+            minVal = Number($(this).data('min')) || 0;
 
         if($(e.target).closest('.quantity-minus').length > 0){
-            if(prevVal > 0){
+            if(prevVal > minVal){
                 $(this).find('.quantity-input .input').val(prevVal - 1)
             }
         }
@@ -2325,7 +2327,9 @@ $(window).on('load', function(){
         }
     })
 
-    $(document).on('click', '.tariff-card .quantity-w', function(e){
+    var tCardQuant = $(document).find('.tariff-card .quantity-w');
+
+    tCardQuant.on('click', function(e){
         var wrap = $(this).closest('.tariff-card');
 
         if(wrap.hasClass('tariff-card--feedback')){
@@ -2378,7 +2382,9 @@ $(window).on('load', function(){
         }
     })
 
-    $(document).on('change', '.tariff-card .quantity-w .input', function(e){
+    var tCardQuantInputs = $(document).find('.tariff-card .quantity-w .input');
+
+    $(tCardQuantInputs).on('change', function(e){
         var value = $(this).val(),
             min = $(this).closest('.quantity-w').data('min'),
             max = $(this).closest('.quantity-w').data('max');

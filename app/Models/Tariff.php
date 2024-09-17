@@ -11,23 +11,20 @@ class Tariff extends Model
 {
     use HasFactory;
 
-    const FEEDBACKS = 'feedbacks';
-    const INTEGRATIONS = 'integrations';
-
     const MINIMAL_QUANTITY = [
-        self::FEEDBACKS => 10,
-        self::INTEGRATIONS => 10,
+        Project::FEEDBACK => 10,
+        Project::INTEGRATIONS => 10,
     ];
 
     // Массив для расчета стоимости по тарифу
     // Количество штук => Цена за штуку у тарифа с отзывами
     const PRICE_CONDITIONS = [
-        self::FEEDBACKS => [
+        Project::FEEDBACK => [
             10 => 100,
             20 => 90,
             30 => 80,
         ],
-        self::INTEGRATIONS => [
+        Project::INTEGRATIONS => [
             10 => 200,
             20 => 180,
             30 => 160,

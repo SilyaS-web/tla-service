@@ -19,6 +19,7 @@ class Project extends Model
     public const YOUTUBE = 'youtube';
     public const VK = 'vk';
     public const TELEGRAM = 'telegram';
+    public const INTEGRATIONS = 'integrations';
 
     public const TYPE_NAMES = [
         self::FEEDBACK => 'Отзыв',
@@ -26,12 +27,20 @@ class Project extends Model
         self::YOUTUBE => 'Интеграция YouTube',
         self::VK => 'Интеграция VK',
         self::TELEGRAM => 'Интеграция Telegram',
+        self::INTEGRATIONS => 'Все интеграции',
     ];
 
     public const TYPES = [
         self::FEEDBACK,
         self::INSTAGRAM,
         self::YOUTUBE,
+        self::VK,
+        self::TELEGRAM,
+    ];
+
+    public const INTEGRATION_TYPES = [
+        self::INSTAGRAM,
+        self::YOUTUBE ,
         self::VK,
         self::TELEGRAM,
     ];
