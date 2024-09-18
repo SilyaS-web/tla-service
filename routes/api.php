@@ -51,6 +51,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users/{user}/works/{work}/messages', [UserController::class, 'messages']);
     Route::post('/users/{user}/works/{work}/messages', [UserController::class, 'storeMessage']);
     Route::get('/users/{user}/notifications', [UserController::class, 'notifications']);
+    Route::get('/users/{user}/notifications/view', [UserController::class, 'viewNotification']);
     Route::get('/users/{user}/notifications/{notification}/view', [UserController::class, 'viewNotification']);
 
     Route::post('/bloggers', [BloggerController::class, 'store']);

@@ -220,9 +220,15 @@ class UserController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function viewNotification(User $user, Notification $notification) {
-        $notification->viewed_at = date('Y-m-d H:i');
-        $notification->save();
+    public function viewNotification(User $user, Notification $notification = null) {
+        if ($notification) {
+            $notification->viewed_at = date('Y-m-d H:i');
+            $notification->save();
+        } else {
+            $user->notifications()->update([
+                'viewed_at' => date('Y-m-d H:i'),
+            ]);
+        }
 
         return response()->json()->setStatusCode(200);
     }
