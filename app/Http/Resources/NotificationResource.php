@@ -18,7 +18,7 @@ class NotificationResource extends JsonResource
         $image_url = asset('img/profile-icon.svg');
         if ($this->fromUser) {
             $image_url = $this->fromUser->getImageURL();
-        } else if ($this->work_id && $user = Auth::user()) {
+        } else if ($this->work && $user = Auth::user()) {
             $image_url = $this->work->getPartnerUser($user->role)->getImageURL();
         }
 
