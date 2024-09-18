@@ -157,16 +157,14 @@
             saveSeller(){
                 this.Loader.loaderOn('.edit-profile');
 
-                this.Seller.save().then(data => {
+                this.Seller.save(this.seller).then(data => {
                     if(data.errors){
                         this.errors = data.errors;
                         this.Loader.loaderOff('.edit-profile');
                         return
                     }
 
-                    this.seller = data.seller;
-
-                    var user = data.seller.user;
+                    var user = this.seller.user;
 
                     if(user){
                         this.user = user;

@@ -30,224 +30,6 @@
 </head>
 <body>
     <div class="wrapper" style="background-color: #fff;">
-        @auth
-        <div class="burger-menu">
-            <div class="burger-menu__body">
-                <div class="header__col header__profile-items">
-                    <div class="header__row">
-                        <div href="#" class="header__profile-w header__profile-header header__profile-item--js">
-                            <a href="/">
-                                <img src="{{ auth()->user()->getImageURL() }}" alt="" class="header__profile">
-                            </a>
-                            <div class="header__profile-col">
-                                <span class="header__profile-name">
-                                    {{ auth()->user()->name }}
-                                </span>
-                                <span class="header__profile-org">
-                                    @if ( auth()->user()->role == 'seller')
-                                        @if (isset(auth()->user()->seller->organization_name) && !empty(auth()->user()->seller->organization_name))
-                                            {{ auth()->user()->seller->organization_type }} "{{ auth()->user()->seller->organization_name }}"
-                                        @endif
-                                    @elseif (auth()->user()->blogger)
-                                    {{ auth()->user()->blogger->name }}
-                                    @endif
-                                </span>
-                            </div>
-                            <div class="header__profile-settings">
-                                <a href="{{ route('edit-profile') }}" class="row">
-                                    Личные данные
-                                </a>
-                                @if ( auth()->user()->role == 'seller')
-                                    <a href="{{ route('tariff') }}" class="row">
-                                        Тарифы
-                                    </a>
-                                @endif
-                                <form action="{{ route('logout') }}" method="GET" class="row">
-                                    @csrf
-                                    <button type="submit" style="width:100%; text-align:left">Выход</button>
-                                </form>
-                            </div>
-                        </div>
-                        <a href="#" class="header__col header__notif header__profile-item--js" title="Уведомления">
-                            <div class="header__profile-notif header-notif-count" style="display: none">
-                                0
-                            </div>
-                            <img src="{{ asset('img/notif-icon.svg') }}" alt="" class="">
-                            <div class="header__notif-items notif-header">
-                                <div class="notif-header__items header-notif-container">
-                                    @include('shared.notifications')
-                                </div>
-                            </div>
-                        </a>
-                        {{-- <a href="#" class="header__col header__notif header__profile-item--js" title="Уведомления">
-                            <div class="header__profile-notif">
-                                0
-                            </div>
-                            <img src="{{ asset('img/notif-icon.svg') }}" alt="" class="">
-                            <div class="header__notif-items notif-header">
-                                <div class="notif-header__items">
-                                    <div class="notif-header__row ">
-                                        <div class="notif-header__col notif-header__img">
-                                            <img src="{{ asset('img/profile-icon.svg') }}" alt="">
-                                        </div>
-                                        <div class="notif-header__col">
-                                            <div class="notif-header__title">
-                                                Заявка №1233 подтверждена
-                                            </div>
-                                            <div class="notif-header__text">
-                                                Блогер "Чертовски мило" подтвердил заявку, начните переписку с ним, чтобы обсудить подробности.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </a> --}}
-                    </div>
-                    @if ( auth()->user()->role == 'seller')
-                        <div href="#" class="header__col header__tarrif tarrif-header header__profile-item--js">
-                            @php($seller_tariffs = Auth()->user()->getActiveTariffs())
-                            Мои тарифы
-                            <div class="tarrif-header__items">
-                                @forelse ($seller_tariffs as $seller_tariff)
-                                    <div class="tarrif-header__item tarrif-header__adv">
-                                        {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->quantity }}</span> шт.</b>
-                                        <div class="tarrif-header__date">
-                                            Действует до {{ date('d.m.Y', strtotime($seller_tariff->finish_date)) }}
-                                        </div>
-                                        <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
-                                    </div>
-                                @empty
-                                    <div class="tarrif-header__item tarrif-header__adv">
-                                        Нет оплаченых тарифов
-                                        <a href="{{ route('tariff') }}" class="tarrif-header__buy">Выбрать тариф</a>
-                                    </div>
-                                @endforelse
-                            </div>
-                        </div>
-                    @endif
-                </div>
-                <div class="burger-menu__nav nav-burger">
-                    <a href="{{ route('profile') }}" class="nav-burger__link nav__link">
-                        @if ( auth()->user()->role == 'seller')
-                            Дашборд
-                        @elseif (auth()->user()->blogger)
-                            Главная
-                        @endif
-                    </a>
-                    <a href="https://adswap.ru/instructions" class="nav-burger__link nav__link">Инструкции</a>
-                    <a href="https://adswap.ru/files" class="nav-burger__link nav__link">Файлы</a>
-                    <a href="https://adswap.ru/news" class="nav-burger__link nav__link">Новости</a>
-                </div>
-                <a href="#" class="burger-menu__close">
-                    <img src="{{ asset('img/close-icon.svg') }}" alt="">
-                </a>
-
-                <div class="burger-contacts">
-                    <div class="footer__contacts-contacts">
-                        <div class="footer__contacts-item">
-                            adswap.ru@ya.ru
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        @endauth
-        <header class="header">
-            <div class="header__container _container">
-                <div class="header__body">
-                    <a href="/" class="logo header__logo-w">
-                        <img src="{{ asset('img/logo.svg') }}" alt="" class="logo__logo header__logo">
-                    </a>
-                    @auth
-                    <nav class="nav header__nav">
-                        <div class="nav__items">
-                            <a href="{{ route('profile') }}" class="nav__link">
-                                @if ( auth()->user()->role == 'seller')
-                                Дашборд
-                                @elseif (auth()->user()->blogger)
-                                Главная
-                                @endif
-                            </a>
-                            <a href="https://adswap.ru/instructions" class="nav__link">Инструкции</a>
-                            <a href="https://adswap.ru/files" class="nav__link">Файлы</a>
-                            <a href="https://adswap.ru/news" class="nav__link">Новости</a>
-                        </div>
-                    </nav>
-
-
-                    <div class=" header__profile-items header__profile-items--desktop header__row">
-                        @if ( auth()->user()->role == 'seller')
-                            <div href="#" class="header__col header__tarrif tarrif-header header__profile-item--js">
-                                @php($seller_tariffs = Auth()->user()->getActiveTariffs())
-                                 Мои тарифы
-                                <div class="tarrif-header__items">
-                                    @forelse ($seller_tariffs as $seller_tariff)
-                                        <div class="tarrif-header__item tarrif-header__adv">
-                                            {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->quantity }}</span> шт.</b>
-                                            <div class="tarrif-header__date">
-                                                Действует до {{ date('d.m.Y', strtotime($seller_tariff->finish_date)) }}
-                                            </div>
-                                            <a href="{{ route('tariff') }}" class="tarrif-header__buy">Продлить</a>
-                                        </div>
-                                    @empty
-                                        <div class="tarrif-header__item tarrif-header__adv">
-                                            Нет оплаченых тарифов
-                                            <a href="{{ route('tariff') }}" class="tarrif-header__buy">Выбрать тариф</a>
-                                        </div>
-                                    @endforelse
-                                </div>
-                            </div>
-                        @endif
-                        <a href="#" class="header__col header__notif header__profile-item--js" title="Уведомления">
-                            <div class="header__profile-notif header-notif-count" style="display: none">
-
-                            </div>
-                            <img src="{{ asset('img/notif-icon.svg') }}" alt="" class="">
-                            <div class="header__notif-items notif-header">
-                                <div class="notif-header__items header-notif-container" >
-                                    @include('shared.notifications')
-                                </div>
-                            </div>
-                        </a>
-                        <div href="#" class="header__profile-w header__profile-header header__profile-item--js">
-                            <img src="{{ auth()->user()->getImageURL() }}" alt="" class="header__profile">
-                            <div class="header__profile-col">
-                                <span class="header__profile-name" data-user-id="{{ auth()->user()->id }}">
-                                    {{ auth()->user()->name }}
-                                </span>
-                                <span class="header__profile-org">
-                                    @if ( auth()->user()->role == 'seller')
-                                        @if (isset(auth()->user()->seller->organization_name) && !empty(auth()->user()->seller->organization_name))
-                                            {{ auth()->user()->seller->organization_type }} "{{ auth()->user()->seller->organization_name }}"
-                                        @endif
-                                    @elseif (auth()->user()->blogger)
-                                        {{ auth()->user()->blogger->name }}
-                                    @endif
-                                </span>
-                            </div>
-                            <div class="header__profile-settings">
-                                <a href="{{ route('edit-profile') }}" class="row">
-                                    Личные данные
-                                </a>
-                                @if ( auth()->user()->role == 'seller')
-                                    <a href="{{ route('tariff') }}" class="row">
-                                        Тарифы
-                                    </a>
-                                @endif
-                                <form action="{{ route('logout') }}" method="GET" class="row">
-                                    @csrf
-                                    <button type="submit" style="width:100%; text-align:left">Выход</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                    <a href="#" class="header__menu burger">
-                        <img src="{{ asset('img/menu-icon.svg') }}" alt="">
-                    </a>
-                    @endauth
-                </div>
-            </div>
-        </header>
         @yield('content')
 
         <footer class="footer">
@@ -549,172 +331,172 @@
 {{--                    </div>--}}
 {{--                    <div class="popup__form">--}}
 {{--                        <div class="popup__formats">--}}
-                        </div>
-                        <button class="btn btn-primary btn-confirm">
-                            Выбрать
-                        </button>
-                    </div>
-                    <div class="close-popup">
-                        <img src="{{ asset('img/close-icon.svg') }}" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="popup popup-tariffs" id="tariff-popup" style="">
-            <div class="popup__container _container">
-                <div class="popup__body">
-                    <div class="popup__header">
-                        <div class="popup__title title">
-                            Тарифы
-                        </div>
-                        <div class="popup__subtitle">
-                            Получайте отзывы на карточки и повышайте их рейтинг. Размещайте рекламу в обмен на товары  и анализируйте результаты интеграций у блогеров — все в одном сервисе.
-                        </div>
-                    </div>
-                    <div class="tariff__items" style="margin-bottom:40px;">
-                        <div class="tariff__col tariff-card">
-                            <div class="tariff-card__header">
-                                <div class="tariff-card__title">
-                                    Индивидуальные условия
-                                </div>
-                                <div class="tariff-card__subtitle">
-                                    Действует по договоренности
-                                </div>
-                            </div>
-                            <div class="tariff-card__text">
-                                Индивидуальный тариф позволяет клиентам свободно выбирать количество интеграций и отзывов в своем плане.
-                                <br>
-                                <b>Рассматривается только от 100 заявок.</b>
-                            </div>
-                            <div class="tariff-card__btns">
-                                <button class="btn btn-primary btn-tariffs-callus">Оставить заявку</button>
-                            </div>
-                            <div class="tariff-card__star">
-                                <img src="{{ asset('img/star-icon.svg') }}" alt="">
-                            </div>
-                        </div>
-                        <div class="tariff__col tariff-card tariff-card--start" data-id="16">
-                            <div class="tariff-card__header">
-                                <div class="tariff-card__title">
-                                    Стартовый
-                                </div>
-                                <div class="tariff-card__subtitle">
-                                    7 дней бесплатно
-                                </div>
-                            </div>
-                            <div class="tariff-card__prices">
-                                <div class="tariff-card__total">
-                                    0 руб
-                                </div>
-                                <div class="tariff-card__single">
-                                    1 шт
-                                </div>
-                            </div>
-                            <div class="form-group quantity-w" data-max="100" data-min="10">
-                                <div class="quantity-minus disabled">
-                                    <img src="img/minus-icon.svg" alt="">
-                                </div>
-                                <div class="quantity-input">
-                                    <input type="number" class="input disabled" value="1" name="start-quantity">
-                                </div>
-                                <div class="quantity-plus disabled">
-                                    <img src="img/plus-icon.svg" alt="">
-                                </div>
-                            </div>
-                            <div class="tariff-card__btns">
-                                <button class="btn btn-primary btn-tariffs-payment">Оплатить</button>
-                            </div>
-                            <div class="tariff-card__count">
-                                01
-                            </div>
-                        </div>
-                        <div class="tariff__col tariff-card tariff-card--feedback" data-id="17">
-                            <div class="tariff-card__header">
-                                <div class="tariff-card__title">
-                                    Отзывы
-                                </div>
-                                <div class="tariff-card__subtitle">
-                                    Действует 30 дней
-                                </div>
-                            </div>
-                            <div class="tariff-card__prices">
-                                <div class="col">
-                                    <div class="tariff-card__total">
-                                        <span class="tariff-card__total--price">1000</span> руб
-                                    </div>
-                                    <div class="tariff-card__total tariff-card__total--old" style="display: none">
-                                        <span class="tariff-card__total--price">1000</span> руб
-                                    </div>
-                                </div>
-                                <div class="tariff-card__single">
-                                    от 10 шт
-                                </div>
-                            </div>
-                            <div class="form-group quantity-w" data-max="100" data-min="10">
-                                <div class="quantity-minus">
-                                    <img src="img/minus-icon.svg" alt="">
-                                </div>
-                                <div class="quantity-input">
-                                    <input type="number" class="input" value="10" min="10" max="100" name="feedback-quantity">
-                                </div>
-                                <div class="quantity-plus">
-                                    <img src="img/plus-icon.svg" alt="">
-                                </div>
-                            </div>
-                            <div class="tariff-card__btns">
-                                <button class="btn btn-primary btn-tariffs-payment" style="margin-top: 15px">Оплатить</button>
-                            </div>
-                            <div class="tariff-card__count">
-                                02
-                            </div>
-                        </div>
-                        <div class="tariff__col tariff-card tariff-card--integration" data-id="18">
-                            <div class="tariff-card__header">
-                                <div class="tariff-card__title">
-                                    Интеграция
-                                </div>
-                                <div class="tariff-card__subtitle">
-                                    Действует 30 дней
-                                </div>
-                            </div>
-                            <div class="tariff-card__prices">
-                                <div class="col">
-                                    <div class="tariff-card__total">
-                                        <span class="tariff-card__total--price">2000</span> руб
-                                    </div>
-                                    <div class="tariff-card__total tariff-card__total--old" style="display: none">
-                                        <span class="tariff-card__total--price">2000</span> руб
-                                    </div>
-                                </div>
-                                <div class="tariff-card__single">
-                                    от 10 шт
-                                </div>
-                            </div>
-                            <div class="form-group quantity-w" data-max="100" data-min="10">
-                                <div class="quantity-minus">
-                                    <img src="img/minus-icon.svg" alt="">
-                                </div>
-                                <div class="quantity-input">
-                                    <input type="number" class="input" value="10" min="10" max="100" name="integration-quantity">
-                                </div>
-                                <div class="quantity-plus">
-                                    <img src="img/plus-icon.svg" alt="">
-                                </div>
-                            </div>
-                            <div class="tariff-card__btns">
-                                <button class="btn btn-primary btn-tariffs-payment">Оплатить</button>
-                            </div>
-                            <div class="tariff-card__count">
-                                03
-                            </div>
-                        </div>
-                    </div>
-                    <div class="close-popup">
-                        <img src="{{ asset('img/close-icon.svg') }}" alt="">
-                    </div>
-                </div>
-            </div>
-        </div>
+{{--                        </div>--}}
+{{--                        <button class="btn btn-primary btn-confirm">--}}
+{{--                            Выбрать--}}
+{{--                        </button>--}}
+{{--                    </div>--}}
+{{--                    <div class="close-popup">--}}
+{{--                        <img src="{{ asset('img/close-icon.svg') }}" alt="">--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--        <div class="popup popup-tariffs" id="tariff-popup" style="">--}}
+{{--            <div class="popup__container _container">--}}
+{{--                <div class="popup__body">--}}
+{{--                    <div class="popup__header">--}}
+{{--                        <div class="popup__title title">--}}
+{{--                            Тарифы--}}
+{{--                        </div>--}}
+{{--                        <div class="popup__subtitle">--}}
+{{--                            Получайте отзывы на карточки и повышайте их рейтинг. Размещайте рекламу в обмен на товары  и анализируйте результаты интеграций у блогеров — все в одном сервисе.--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="tariff__items" style="margin-bottom:40px;">--}}
+{{--                        <div class="tariff__col tariff-card">--}}
+{{--                            <div class="tariff-card__header">--}}
+{{--                                <div class="tariff-card__title">--}}
+{{--                                    Индивидуальные условия--}}
+{{--                                </div>--}}
+{{--                                <div class="tariff-card__subtitle">--}}
+{{--                                    Действует по договоренности--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="tariff-card__text">--}}
+{{--                                Индивидуальный тариф позволяет клиентам свободно выбирать количество интеграций и отзывов в своем плане.--}}
+{{--                                <br>--}}
+{{--                                <b>Рассматривается только от 100 заявок.</b>--}}
+{{--                            </div>--}}
+{{--                            <div class="tariff-card__btns">--}}
+{{--                                <button class="btn btn-primary btn-tariffs-callus">Оставить заявку</button>--}}
+{{--                            </div>--}}
+{{--                            <div class="tariff-card__star">--}}
+{{--                                <img src="{{ asset('img/star-icon.svg') }}" alt="">--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="tariff__col tariff-card tariff-card--start" data-id="16">--}}
+{{--                            <div class="tariff-card__header">--}}
+{{--                                <div class="tariff-card__title">--}}
+{{--                                    Стартовый--}}
+{{--                                </div>--}}
+{{--                                <div class="tariff-card__subtitle">--}}
+{{--                                    7 дней бесплатно--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="tariff-card__prices">--}}
+{{--                                <div class="tariff-card__total">--}}
+{{--                                    0 руб--}}
+{{--                                </div>--}}
+{{--                                <div class="tariff-card__single">--}}
+{{--                                    1 шт--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group quantity-w" data-max="100" data-min="10">--}}
+{{--                                <div class="quantity-minus disabled">--}}
+{{--                                    <img src="img/minus-icon.svg" alt="">--}}
+{{--                                </div>--}}
+{{--                                <div class="quantity-input">--}}
+{{--                                    <input type="number" class="input disabled" value="1" name="start-quantity">--}}
+{{--                                </div>--}}
+{{--                                <div class="quantity-plus disabled">--}}
+{{--                                    <img src="img/plus-icon.svg" alt="">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="tariff-card__btns">--}}
+{{--                                <button class="btn btn-primary btn-tariffs-payment">Оплатить</button>--}}
+{{--                            </div>--}}
+{{--                            <div class="tariff-card__count">--}}
+{{--                                01--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="tariff__col tariff-card tariff-card--feedback" data-id="17">--}}
+{{--                            <div class="tariff-card__header">--}}
+{{--                                <div class="tariff-card__title">--}}
+{{--                                    Отзывы--}}
+{{--                                </div>--}}
+{{--                                <div class="tariff-card__subtitle">--}}
+{{--                                    Действует 30 дней--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="tariff-card__prices">--}}
+{{--                                <div class="col">--}}
+{{--                                    <div class="tariff-card__total">--}}
+{{--                                        <span class="tariff-card__total--price">1000</span> руб--}}
+{{--                                    </div>--}}
+{{--                                    <div class="tariff-card__total tariff-card__total--old" style="display: none">--}}
+{{--                                        <span class="tariff-card__total--price">1000</span> руб--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <div class="tariff-card__single">--}}
+{{--                                    от 10 шт--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group quantity-w" data-max="100" data-min="10">--}}
+{{--                                <div class="quantity-minus">--}}
+{{--                                    <img src="img/minus-icon.svg" alt="">--}}
+{{--                                </div>--}}
+{{--                                <div class="quantity-input">--}}
+{{--                                    <input type="number" class="input" value="10" min="10" max="100" name="feedback-quantity">--}}
+{{--                                </div>--}}
+{{--                                <div class="quantity-plus">--}}
+{{--                                    <img src="img/plus-icon.svg" alt="">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="tariff-card__btns">--}}
+{{--                                <button class="btn btn-primary btn-tariffs-payment" style="margin-top: 15px">Оплатить</button>--}}
+{{--                            </div>--}}
+{{--                            <div class="tariff-card__count">--}}
+{{--                                02--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                        <div class="tariff__col tariff-card tariff-card--integration" data-id="18">--}}
+{{--                            <div class="tariff-card__header">--}}
+{{--                                <div class="tariff-card__title">--}}
+{{--                                    Интеграция--}}
+{{--                                </div>--}}
+{{--                                <div class="tariff-card__subtitle">--}}
+{{--                                    Действует 30 дней--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="tariff-card__prices">--}}
+{{--                                <div class="col">--}}
+{{--                                    <div class="tariff-card__total">--}}
+{{--                                        <span class="tariff-card__total--price">2000</span> руб--}}
+{{--                                    </div>--}}
+{{--                                    <div class="tariff-card__total tariff-card__total--old" style="display: none">--}}
+{{--                                        <span class="tariff-card__total--price">2000</span> руб--}}
+{{--                                    </div>--}}
+{{--                                </div>--}}
+{{--                                <div class="tariff-card__single">--}}
+{{--                                    от 10 шт--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="form-group quantity-w" data-max="100" data-min="10">--}}
+{{--                                <div class="quantity-minus">--}}
+{{--                                    <img src="img/minus-icon.svg" alt="">--}}
+{{--                                </div>--}}
+{{--                                <div class="quantity-input">--}}
+{{--                                    <input type="number" class="input" value="10" min="10" max="100" name="integration-quantity">--}}
+{{--                                </div>--}}
+{{--                                <div class="quantity-plus">--}}
+{{--                                    <img src="img/plus-icon.svg" alt="">--}}
+{{--                                </div>--}}
+{{--                            </div>--}}
+{{--                            <div class="tariff-card__btns">--}}
+{{--                                <button class="btn btn-primary btn-tariffs-payment">Оплатить</button>--}}
+{{--                            </div>--}}
+{{--                            <div class="tariff-card__count">--}}
+{{--                                03--}}
+{{--                            </div>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
+{{--                    <div class="close-popup">--}}
+{{--                        <img src="{{ asset('img/close-icon.svg') }}" alt="">--}}
+{{--                    </div>--}}
+{{--                </div>--}}
+{{--            </div>--}}
+{{--        </div>--}}
         @include('shared.success-message')
     </div>
 </body>

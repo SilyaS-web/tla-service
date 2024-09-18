@@ -24235,14 +24235,13 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
     saveSeller: function saveSeller() {
       var _this2 = this;
       this.Loader.loaderOn('.edit-profile');
-      this.Seller.save().then(function (data) {
+      this.Seller.save(this.seller).then(function (data) {
         if (data.errors) {
           _this2.errors = data.errors;
           _this2.Loader.loaderOff('.edit-profile');
           return;
         }
-        _this2.seller = data.seller;
-        var user = data.seller.user;
+        var user = _this2.seller.user;
         if (user) {
           _this2.user = user;
           localStorage.setItem('user', JSON.stringify(user));
