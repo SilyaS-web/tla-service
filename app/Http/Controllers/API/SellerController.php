@@ -49,7 +49,7 @@ class SellerController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return  response()->json($validator->errors())->setStatusCode(200);
+            return  response()->json($validator->errors())->setStatusCode(400);
         }
 
         $validated = $validator->validated();
