@@ -60,7 +60,6 @@ class UserController extends Controller
             'product_name' => 'string|nullable',
             'statuses' => 'array|nullable',
             'statuses.*' => 'string',
-            'status' => 'string|nullable',
             'is_blogger_access' => 'boolean|nullable'
         ]);
 
@@ -89,30 +88,6 @@ class UserController extends Controller
                 $query->where('type', $validated['project_type']);
             });
         }
-
-        if (isset($validated['status']) && !empty($validated['status'])) {
-            $works = null;
-            $seller_id = $project->seller_id;
-
-            if ($validated['status'] == 'active') {
-                $works = $project->works()->where(function (Builder $query) use ($seller_id) {
-                    $query->where('created_by', $seller_id)->orWhere('status', '<>', null);
-                });
-            } else {
-                $works = $project->works()->where('created_by', '<>', $seller_id)->where('status', null);
-            }
-
-            if (isset($validated['order_by_last_message']) && !empty($validated['order_by_last_message'])) {
-                $works->orderBy('last_message_at', $validated['order_by_last_message']);
-            }
-
-            $data = [
-                'works' => WorkResource::collection($works->get()),
-            ];
-
-            return response()->json($data)->setStatusCode(200);
-        }
-
 
         $data = [
             'projects' => ProjectResource::collection($projects->get()),
