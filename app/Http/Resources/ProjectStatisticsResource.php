@@ -17,7 +17,7 @@ class ProjectStatisticsResource extends JsonResource
         $user = Auth()->user();
         $finish_stats = $this->getFinishStats();
         $clicks_count = $this->getClicksCount();
-        $stats = $this->getStatistics($user->seller->ozon_client_id, $user->seller->ozon_api_key);
+        $stats = $this->getStatistics($user->seller->ozon_client_id ?? null, $user->seller->ozon_api_key ?? null);
 
         return [
             'clicks_count' => $clicks_count,
