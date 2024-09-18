@@ -1,0 +1,130 @@
+<script>
+    import axios from 'axios'
+    import { useRouter } from 'vue-router'
+
+    const router = useRouter();
+
+    const User = {
+        getCurrent: () => {
+            let user = localStorage.getItem('user');
+
+            if(!user){
+                router.replace({ name: 'login' })
+            }
+
+            return JSON.parse(user);
+        },
+        auth: (data) => {
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: 'post',
+                    url: '/api/login',
+                    data: data
+                })
+                .then((response) => {
+                    if(!response.data.token || !response.data.user){
+                        notify('error', {
+                            title: 'Внимание!',
+                            message: 'Ошибка сервера, напишите в поддержку.'
+                        });
+                    }
+
+                    let token = response.data.token,
+                        user = response.data.user;
+
+                    localStorage.setItem('user', JSON.stringify(user));
+                    localStorage.setItem('session_token', token);
+
+                    resolve(user)
+                })
+                .catch((errors) => {
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'Невозможно авторизоваться. Проверьте все поля, если все в порядке, напишите в поддержку.'
+                    });
+
+                    resolve(errors)
+                })
+            })
+        },
+
+        register: (data) => {
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: 'post',
+                    url: '/api/users/',
+                    data: data
+                })
+                .then((response) => {
+                    resolve(response.data)
+                })
+                .catch((errors) => {
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'Невозможно зарегистрироваться. Проверьте все поля, если все в порядке, напишите в поддержку.'
+                    });
+
+                    resolve(errors)
+                })
+            })
+        },
+
+        isBlogger: () => {
+            let user = User.getCurrent();
+
+            return user && user.role == 'blogger'
+        },
+
+        isSeller: () => {
+            let user = User.getCurrent();
+
+            return user && user.role == 'seller'
+        },
+
+        getWorks(user_id, orderBy = 'asc', is_active = 1){
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: 'get',
+                    url: 'api/users/' + user_id + '/works?order_by_last_message=' + orderBy + '&is_active=' + is_active
+                })
+                .then(response => {
+                    resolve(response.data.works);
+                })
+                .catch((errors) => {
+                    console.log(errors);
+
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'
+                    })
+
+                    resolve([])
+                })
+            })
+        },
+
+        getMessages(work_id, user_id){
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: 'get',
+                    url: 'api/users/' + user_id + '/works/' + work_id + '/messages'
+                })
+                .then(response => {
+                    resolve(response.data.messages);
+                })
+                .catch((errors) => {
+                    console.log(errors);
+
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'
+                    })
+
+                    resolve([])
+                })
+            })
+        },
+    };
+
+    export default User
+</script>
