@@ -33,7 +33,6 @@ Route::get('/themes', [ThemeController::class, 'index']);
 
 Route::prefix('payment')->group(function () {
     Route::get('/debug/{tariff}', [PaymentController::class, 'debugPayment']);
-    Route::get('/{tariff}/init', [PaymentController::class, 'init']);
     Route::get('/{payment}/check', [PaymentController::class, 'checkState']);
     Route::get('/{payment}/success', [PaymentController::class, 'successPayment']);
     Route::get('/{payment}/fail', [PaymentController::class, 'failPayment']);
@@ -94,5 +93,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/feedback', [UserController::class, 'sendFeedback']);
 
+    Route::get('payment/{tariff}/init', [PaymentController::class, 'init']);
 });
 
