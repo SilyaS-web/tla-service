@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,6 +16,10 @@ class WorkResource extends JsonResource
     public function toArray($request)
     {
         $user = Auth::user();
+        $project = null;
+        if (isset($user) && $user->role == User::BLOGGER && $this->project) {
+            $project = new ProjectResource($this->project);
+        }
 
         return [
             'id' => $this->id,
@@ -23,6 +28,7 @@ class WorkResource extends JsonResource
             'seller_user_id' => $this->seller_id,
             'blogger_user_id' => $this->blogger_id,
             'project_id' => $this->project_id,
+            'project' => $project,
             'message' => $this->message,
             'product_name' => $this->project->product_name ?? 'Проект удалён или заблокирован',
             'accepted_by_blogger_at' => isset($this->accepted_by_blogger_at) ? $this->accepted_by_blogger_at->format('Y-m-d H:i') : null,
