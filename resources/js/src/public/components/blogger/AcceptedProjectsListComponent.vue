@@ -10,7 +10,12 @@
                 </div>
             </div>
             <div class="list-projects__items">
-
+                <ListItem
+                    v-if="projects.length > 0"
+                    v-for="project in projects"
+                    :project="project"
+                ></ListItem>
+                <span v-else>Проектов нет</span>
             </div>
         </div>
         <div class="profile-projects__filters">
@@ -59,7 +64,9 @@
     </div>
 </template>
 <script>
+    import ListItem from './AcceptedProjectsListItemComponent'
     export default{
-
+        props:['projects'],
+        components: {ListItem}
     }
 </script>

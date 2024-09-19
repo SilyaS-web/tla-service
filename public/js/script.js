@@ -2488,10 +2488,10 @@ $(window).on('load', function(){
     var quest = new CreateProject('.create-project__quest');
 
     // burger menu
-    $('.burger-menu__close').on('click', function(){
+    $(document).on('click', '.burger-menu__close', function(){
         $('.burger-menu').removeClass('opened');
     })
-    $('.burger').on('click', function(){
+    $(document).on('click', '.burger', function(){
         $('.burger-menu').addClass('opened');
     })
 

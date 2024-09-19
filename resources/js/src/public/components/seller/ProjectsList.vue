@@ -47,7 +47,7 @@
                                 <div class="filter-tooltip__items">
                                     <div
                                         v-for="category in categories"
-                                        @click="chooseFormat(category)"
+                                        @click="chooseCategory(category)"
                                         class="filter-tooltip__row">
                                         {{ category.theme }}
                                     </div>

@@ -20,14 +20,13 @@
                                     <div class="item-chat__img" :style="'background-image: url(' + work.partner_user.image + ')'">
                                     </div>
                                     <div class="item-chat__text">
-                                        <div class="item-chat__title">{{ work.partner_user.name }}</div>
+                                        <div class="item-chat__title">{{ work.product_name || 'Проект удалён' }}</div>
                                         <div class="item-chat__last-msg">
-                                            <p>Проект:</p>
-                                            <span>{{ work.product_name || 'Проект удалён' }}</span>
-                                            <p>ID: {{ work.id }}</p>
+                                            <p>{{ user.role == 'blogger' ? 'Селлер' : 'Блогер' }}: {{ work.partner_user.name }}</p>
+                                            <p>ID проекта: {{ work.id }}</p>
                                         </div>
                                         <a href="#"
-                                           :class="'item-chat__project-link' + (user.role == 'seller' ? 'item-chat__project-link--seller' : 'item-chat__project-link--blogger')"
+                                           :class="'item-chat__project-link ' + (user.role == 'seller' ? 'item-chat__project-link--seller' : 'item-chat__project-link--blogger')"
                                            :data-project-id = "work.project_id"
                                             @click="goToProjects(work.project_id)">
                                             Перейти к проекту
@@ -217,9 +216,14 @@
 
             this.getChats();
 
-            this.chatsListIntervalId = setInterval(() => {
-                this.getChats()
-            }, 5000)
+            this.chatsListIntervalId = localStorage.getItem('chats_interval_id')
+
+            if(!this.chatsListIntervalId) {
+                this.chatsListIntervalId = setInterval(() => {
+                    this.getChats()
+                }, 5000)
+                localStorage.setItem('chats_interval_id', this.chatsListIntervalId)
+            }
         },
         updated(){
             if(this.currentItem){ //если мы перешли с другого модуля
@@ -308,7 +312,6 @@
                     this.currentChat = work;
 
                     this.User.getMessages(work.id, this.user.id).then(data => {
-                        console.log(data)
                         this.messages = (data || []);
 
                         if(!this.currentChatIntervalId){
@@ -316,6 +319,8 @@
                                 this.getMessages(this.currentChat);
                             }, 5000)
                         }
+
+
 
                         resolve(data)
                     })

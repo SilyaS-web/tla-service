@@ -23,6 +23,27 @@ const Work = {
             })
         })
     },
+    getUserWorksList: (user_id) => {
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'get',
+                url: 'api/users/' + user_id +  '/works'
+            })
+            .then(response => {
+                resolve(response.data.works);
+            })
+            .catch((errors) => {
+                console.log(errors);
+
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'
+                })
+
+                resolve([])
+            })
+        })
+    },
     deny(work_id){
         return new Promise((resolve, reject) => {
             axios({

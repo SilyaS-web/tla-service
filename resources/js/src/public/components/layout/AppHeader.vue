@@ -30,7 +30,7 @@
                             </span>
                         </div>
                         <div class="header__profile-settings">
-                            <router-link :to="{path: '/seller/edit-profile'}">
+                            <router-link :to="{path: '/' + user.role + '/edit-profile'}">
                                 Личные данные
                             </router-link>
 
@@ -106,12 +106,6 @@
                                 :to="{ path: '/tariffs' }"
                                 class="tarrif-header__buy">Выбрать тариф</router-link>
                         </div>
-                    </div>
-                    <div class="tarrif-header__item tarrif-header__adv">
-                        Нет оплаченых тарифов
-                        <router-link
-                            :to="{ path: '/tariffs' }"
-                            class="tarrif-header__buy">Выбрать тариф</router-link>
                     </div>
                 </div>
             </div>
@@ -255,11 +249,12 @@
                             </span>
                         </div>
                         <div class="header__profile-settings">
-                            <router-link :to="{path: '/seller/edit-profile'}">
+                            <router-link :to="{path: '/' + user.role + '/edit-profile'}">
                                 Личные данные
                             </router-link>
 
                             <router-link
+                                v-if="user.role == 'seller'"
                                 :to="{ path: '/tariffs' }" class="row">
                                 Тарифы
                             </router-link>
@@ -292,6 +287,7 @@
             return {
                 notifications: ref([]),
                 user: ref(null),
+                notificationsInterval: ref(null),
                 User
             }
         },
@@ -299,7 +295,12 @@
             this.user = this.User.getCurrent();
             this.getNotifications();
 
-            setInterval(this.getNotifications, 5000)
+            this.notificationsInterval = localStorage.getItem('notifications_interval_id')
+
+            if(!this.notificationsInterval) {
+                this.notificationsInterval = setInterval(this.getNotifications, 5000)
+                localStorage.setItem('notifications_interval_id', this.notificationsInterval)
+            }
         },
         methods:{
             format_date(value){
@@ -309,6 +310,12 @@
             },
             logout(event){
                 event.preventDefault()
+
+                var notifsIntervalId = localStorage.getItem('notifications_interval_id'),
+                    chatsIntervalId = localStorage.getItem('chats_interval_id');
+
+                notifsIntervalId &&  window.clearInterval(notifsIntervalId);
+                chatsIntervalId && window.clearInterval(chatsIntervalId);
 
                 localStorage.clear();
 

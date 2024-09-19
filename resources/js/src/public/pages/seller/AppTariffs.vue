@@ -220,10 +220,48 @@ export default {
             })
         },
         buyFeedback(){
-            var quantity = $(document)
+            var quantity = $(document).find('input[name="feedback-quantity"]').val();
+
+            if(!quantity){
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'Невозможно отправить обращение, проверьте количество отзывов или напишите в поддержку'
+                });
+                return
+            }
+
             axios({
                 method: 'get',
-                url: '/api/payment/17/init?quantity='
+                url: '/api/payment/17/init?quantity=' + quantity
+            })
+            .then(data => {
+                if(data){
+                    window.location.href = data
+                }
+            })
+            .catch(data => {
+                console.log(data)
+
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'Невозможно купить тариф, попробуйте позже или напишите в поддержку'
+                });
+            })
+        },
+        buyIntegration(){
+            var quantity = $(document).find('input[name="integration-quantity"]').val();
+
+            if(!quantity){
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'Невозможно отправить обращение, проверьте количество интеграций или напишите в поддержку'
+                });
+                return
+            }
+
+            axios({
+                method: 'get',
+                url: '/api/payment/18/init?quantity=' + quantity
             })
             .then(data => {
                 if(data){
