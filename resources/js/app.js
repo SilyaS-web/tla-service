@@ -32,6 +32,7 @@ import Auth from './src/auth/pages/AppAuth.vue'
 import Register from './src/auth/pages/AppRegister.vue'
 import Profile from './src/public/pages/index.vue'
 import SellerEditProfile from './src/public/pages/seller/EditProfile.vue'
+import BloggerEditProfile from './src/public/pages/blogger/EditProfile.vue'
 import Tariffs from './src/public/pages/seller/AppTariffs.vue'
 
 const app = createApp();
@@ -41,6 +42,7 @@ const routes = [
     { path: '/register', name: 'Register', component: Register },
     { path: '/login', name: 'Login', component: Auth },
     { path: '/seller/edit-profile', name: 'SellerEditProfile', component: SellerEditProfile },
+    { path: '/blogger/edit-profile', name: 'BloggerEditProfile', component: BloggerEditProfile },
     { path: '/tariffs', name: 'Tariffs', component: Tariffs },
 ]
 
@@ -75,6 +77,9 @@ router.beforeEach((to, from) => {
     }
 })
 
+
+localStorage.setItem('notifications_interval_id', '')
+localStorage.setItem('chats_interval_id', '')
 
 app.use(router)
 app.mount('#app')

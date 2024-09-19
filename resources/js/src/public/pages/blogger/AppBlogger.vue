@@ -1,187 +1,36 @@
 <template>
+    <Header v-on:switchTab="switchTab"></Header>
     <section class="profile" id="blogger">
         <div class="profile__container _container">
             <div class="profile__body">
-                <Aside @switchTab="switchTab"></Aside>
+                <Aside @switchTab="switchTab" :chatMessages="newChatMessagesCount"></Aside>
                 <div class="profile__content">
                     <div class="profile__content-inner">
-                        <div class="profile-projects tab-content active" id = "my-projects">
-                            <div class="profile-projects__body">
-                                <div class="projects-list__header">
-                                    <div class="list-projects__title title">
-                                        Принятые проекты
-                                    </div>
-                                    <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
-                                        <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
-                                    </div>
-                                </div>
-                                <div class="list-projects__items">
 
-                                </div>
-                            </div>
-                            <div class="profile-projects__filters">
-                                <div class="projects-list__filter filter">
-                                    <div class="filter__body">
-                                        <div class="filter__top">
-                                            <p class = "filter__title">
-                                                Фильтр
-                                            </p>
-                                            <a href="#" class="filter__reset">
-                                                Сбросить
-                                            </a>
-                                        </div>
-                                        <div class="filter__items">
-                                            <div class="form-group filter__item">
-                                                <input type="text" class="input" name="filter-name" id="" placeholder="Поиск по названию">
-                                            </div>
-                                            <div class="form-group filter__item">
-                                                <label for="filter-category">Категория</label>
-                                                <input type="text" class="input" name="filter-category" id="filter-category" placeholder="Введите категорию">
-                                                <input type="text" id = "" hidden>
-                                                <div class="filter-tooltip" style="display: none">
-                                                    <div class="filter-tooltip__items">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group filter__item">
-                                                <label for="">Формат рекламы</label>
-                                                <select name="filter-format" id="filter-format" class = "input">
-                                                    <option value="" class="">Выберите формат</option>
-                                                    <option value="feedback" class="">Отзыв на товар</option>
-                                                    <option value="inst" class="">Интеграция Ins</option>
-                                                    <option value="youtube" class="">Интеграция YTube</option>
-                                                    <option value="vk" class="">Интеграция VK</option>
-                                                    <option value="telegram" class="">Интеграция Telegram</option>
-                                                </select>
-                                            </div>
+                        <!-- Список всех проектов -->
+                        <ProjectsList
+                            :projects="allProjects"
+                            v-on:applyFilter="applyFilterProjects">
+                        </ProjectsList>
 
-                                            <div class="filter__btns">
-                                                <button class="btn btn-primary btn-filter-send">Применить</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="profile-projects tab-content" id = "profile-projects">
-                            <div class="profile-projects__body">
-                                <div class="projects-list__header">
-                                    <div class="list-projects__title title">
-                                        Все проекты
-                                    </div>
-                                    <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
-                                        <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
-                                    </div>
-                                </div>
-                                <div class="profile-projects__items list-projects__items">
-<!--                                    @include('project.all-blogger-list', ['all_projects' => $all_projects, 'type' => 'all'])-->
-                                </div>
-                            </div>
-                            <div class="profile-projects__filters">
-                                <div class="projects-list__filter filter">
-                                    <div class="filter__body">
-                                        <div class="filter__top">
-                                            <p class = "filter__title">
-                                                Фильтр
-                                            </p>
-                                            <a href="#" class="filter__reset">
-                                                Сбросить
-                                            </a>
-                                        </div>
-                                        <div class="filter__items">
-                                            <div class="form-group filter__item">
-                                                <input type="text" class="input" name="filter-name" id="" placeholder="Поиск по названию">
-                                            </div>
-                                            <div class="form-group filter__item">
-                                                <label for="filter-category">Категория</label>
-                                                <input type="text" class="input" name="filter-category" id="" placeholder="Введите категорию">
-                                                <input type="text" id = "" hidden>
-                                                <div class="filter-tooltip" style="display: none">
-                                                    <div class="filter-tooltip__items">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group filter__item">
-                                                <label for="">Формат рекламы</label>
-                                                <select name="filter-format" id="" class = "input">
-                                                    <option value="" class="">Выберите формат</option>
-                                                    <option value="feedback" class="">Отзыв на товар</option>
-                                                    <option value="inst" class="">Интеграция Ins</option>
-                                                    <option value="youtube" class="">Интеграция YTube</option>
-                                                    <option value="vk" class="">Интеграция VK</option>
-                                                    <option value="telegram" class="">Интеграция Telegram</option>
-                                                </select>
-                                            </div>
+                        <!-- Список заявок -->
+                        <SellersWorks
+                            :projects="works"
+                            v-on:applyFilter="applyFilterProjects">
+                        </SellersWorks>
 
-                                            <div class="filter__btns">
-                                                <button class="btn btn-primary btn-filter-send">Применить</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="profile-projects tab-content" id = "avail-projects">
-                            <div class="profile-projects__body">
-                                <div class="projects-list__header">
-                                    <div class="list-projects__title title">
-                                        Заявки от селлеров
-                                    </div>
-                                    <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
-                                        <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
-                                    </div>
-                                </div>
-                                <div class="list-projects__items">
-<!--                                    @include('project.blogger-list', ['project_works' => $application_works, 'type' => 'applications'])-->
-                                </div>
-                            </div>
-                            <div class="profile-projects__filters">
-                                <div class="projects-list__filter filter">
-                                    <div class="filter__body">
-                                        <div class="filter__top">
-                                            <p class = "filter__title">
-                                                Фильтр
-                                            </p>
-                                            <a href="#" class="filter__reset">
-                                                Сбросить
-                                            </a>
-                                        </div>
-                                        <div class="filter__items">
-                                            <div class="form-group filter__item">
-                                                <input type="text" class="input" name="filter-name" id="" placeholder="Поиск по названию">
-                                            </div>
-                                            <div class="form-group filter__item">
-                                                <label for="filter-category">Категория</label>
-                                                <input type="text" class="input" name="filter-category" id="" placeholder="Введите категорию">
-                                                <input type="text" id = "" hidden>
-                                                <div class="filter-tooltip" style="display: none">
-                                                    <div class="filter-tooltip__items">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group filter__item">
-                                                <label for="">Формат рекламы</label>
-                                                <select name="filter-format" id="" class = "input">
-                                                    <option value="" class="">Выберите формат</option>
-                                                    <option value="feedback" class="">Отзыв на товар</option>
-                                                    <option value="inst" class="">Интеграция Ins</option>
-                                                    <option value="youtube" class="">Интеграция YTube</option>
-                                                    <option value="vk" class="">Интеграция VK</option>
-                                                    <option value="telegram" class="">Интеграция Telegram</option>
-                                                </select>
-                                            </div>
+                        <!-- Список моих проектов -->
+                        <AcceptedProjects
+                            :projects="projects"
+                            v-on:applyFilter="applyFilterProjects">
+                        </AcceptedProjects>
 
-                                            <div class="filter__btns">
-                                                <button class="btn btn-primary btn-filter-send">Применить</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="profile-chat tab-content" id = "chat">
-<!--                            @include('shared.chat.index')-->
-                        </div>
+                        <!-- Чат -->
+                        <Chat
+                            :currentItem=currentItem
+                            v-on:switchTab="switchTab"
+                            v-on:newMessages="newChatMessages"
+                            v-on:updateCurrentItem="currentItem = $event"></Chat>
                     </div>
                 </div>
             </div>
@@ -189,26 +38,110 @@
     </section>
 </template>
 <script>
+    import {ref} from "vue";
+
+    import Loader from '../../../services/AppLoader.vue'
+    import Tabs from '../../../services/AppTabs.vue'
+
+    import Project from '../../../services/api/Project'
+    import User from '../../../services/api/User'
+    import Work from '../../../services/api/Work'
+
     import Aside from '../../components/blogger/AppAside.vue'
+    import Header from '../../components/layout/AppHeader.vue'
+    import AcceptedProjects from '../../components/blogger/AcceptedProjectsListComponent'
+    import ProjectsList from '../../components/blogger/AllProjectsListComponent'
+    import SellersWorks from '../../components/blogger/SellersWorksListComponent'
+    import Chat from '../../components/ChatIndex'
 
     export default{
-        component: [Aside],
+        components: { Aside, Header, ProjectsList, Chat, SellersWorks, AcceptedProjects },
         data(){
+            return {
+                projects: ref([]),
+                allProjects: ref([]),
+                works: ref([]),
 
+                newChatMessagesCount: ref(0),
+                currentItem: ref(null),
+
+                Loader, Tabs,
+                Project, User, Work
+            }
         },
-        methods:{
-            switchTab(tab){
-                switch(tab){
-                    case 'moderation':
-                        this.loaderOn('#moderation')
-                        this.getBloggers([0]).then(list => {
-                            this.unverifiedBloggers = (list || []).map(_b => this.findBiggestPlatform(_b));
+        async mounted() {
+            this.Loader.loaderOn('.wrapper profile__content-inner');
+
+            this.user = this.User.getCurrent();
+            this.projects = await this.Project.getUsersProjectsList(this.user.id);
+
+            setTimeout(()=>{
+                this.Loader.loaderOff();
+            }, 300)
+        },
+        methods: {
+            newChatMessages(messagesCount){
+                this.newChatMessagesCount = messagesCount
+            },
+
+            async switchTab(tab, currentItem = false){
+                this.Tabs.tabClick(tab)
+
+                this.currentItem = null
+
+                if(currentItem)
+                    this.currentItem = currentItem;
+
+                this.Loader.loaderOn('.wrapper #' + tab);
+                console.log(tab)
+                switch (tab){
+                    case 'all-projects':
+                        this.Project.getList().then(data => {
+                            this.allProjects = data || [];
+
                             setTimeout(()=>{
-                                this.loaderOff()
-                            }, 500)
+                                this.Loader.loaderOff(`#${tab}`);
+                            }, 300)
                         })
+
                         break;
+
+                    case 'my-projects':
+
+                        this.projects = await this.Project.getUsersProjectsList(this.user.id);
+
+                        setTimeout(()=>{
+                            this.Loader.loaderOff(`#${tab}`);
+                        }, 300)
+
+                        break;
+
+                    case 'avail-projects':
+
+                        this.works = await this.Work.getUserWorksList(this.user.id);
+
+                        setTimeout(()=>{
+                            this.Loader.loaderOff(`#${tab}`);
+                        }, 300)
+
+                        break;
+
+                    default:
+                        setTimeout(()=>{
+                            this.Loader.loaderOff();
+                        }, 300)
+                        break
                 }
+            },
+
+            async applyFilterProjects(filterData){
+                this.Loader.loaderOn('.wrapper .profile__content-inner');
+
+                this.projects = await this.Project.getList(filterData);
+
+                setTimeout(()=>{
+                    this.Loader.loaderOff();
+                }, 300)
             }
         }
     }

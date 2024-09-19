@@ -2,15 +2,33 @@
 import axios from 'axios'
 
 const Blogger = {
-    getCurrent: () => {
-        //local storage or request
+    getItem: (id) => {
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'get',
+                url: '/api/bloggers/' + id,
+            })
+            .then((response) => {
+                resolve(response.data.blogger)
+            })
+            .catch((data) => {
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'Невозможно получить информацию по блогеру, напишите в поддержку или попробуйте позже'
+                });
+
+                console.log(data)
+
+                resolve(false)
+            })
+        })
     },
-    put: (data) => {
+    put: (id, formData) => {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'post',
-                url: '/api/bloggers/',
-                data: data
+                url: '/api/bloggers/ + id',
+                data: formData
             })
             .then((response) => {
                 resolve(response.data)

@@ -26,12 +26,12 @@ const Seller = {
             })
         })
     },
-    save: (data) => {
+    save: (id, formData) => {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'put',
-                url: '/api/sellers/' + data.id,
-                params: data
+                url: '/api/sellers/' + id,
+                data: formData
             })
             .then((response) => {
                 resolve(response.data)
@@ -44,7 +44,7 @@ const Seller = {
 
                 console.log(data)
 
-                resolve(data)
+                reject(data)
             })
         })
     },

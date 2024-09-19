@@ -3391,6 +3391,7 @@ input[type='range']::-webkit-slider-runnable-track{
     padding: 8px;
     cursor: pointer;
     border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0);
 }
 .item-chat:hover{
     background-color: var(--pale);
@@ -3402,9 +3403,9 @@ input[type='range']::-webkit-slider-runnable-track{
 .current {
 }
 .item-chat__img {
-    max-width:100px;
+    max-width:65px;
     width:100%;
-    height:100px;
+    height:65px;
     position: relative;
     overflow: hidden;
     object-fit: cover;
@@ -3412,25 +3413,27 @@ input[type='range']::-webkit-slider-runnable-track{
     background-size: cover;
     background-repeat: no-repeat;
     border-radius: 10px;
+    margin-top: 10px;
 }
-.item-chat__img img{
+.item-chat__img img {
 }
 .item-chat__text {
 }
 .item-chat__title {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 500;
     margin-bottom: 5px;
 }
 .item-chat__last-msg {
-    font-size: 14px;
+    font-size: 13px;
     color: rgba(0, 0, 0, .4);
     max-width: 160px;
     width: 100%;
+    font-weight: 600;
 }
 .item-chat__project-link{
-    font-size: 12px;
-    margin-top: 15px;
+    margin-top: 10px;
+    font-size: 14px;
     display: block;
 }
 .chat__right {
@@ -4602,7 +4605,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 @media(max-width:1280px){
     .projects-list__filter{
-        position: absolute;
+        position: fixed;
         left:-100%;top:0;
         height: 100vh;
     }

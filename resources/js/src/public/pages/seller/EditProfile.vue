@@ -13,10 +13,12 @@
                             <p>Фото профиля</p>
                             <div class="form-group form-group--file">
                                 <label class="tab-content__profile-img-upload input-file" for="profile-img">
-                                    <span>Загрузите изображение</span>
-                                    <input type="file" name="image" class="" id="profile-img">
+                                    <span>{{ imgSectionTitle }}</span>
+                                    <input
+                                        @change="imgSectionTitle = 'Изображение загружено'"
+                                        type="file" name="image" class="" id="profile-img">
                                 </label>
-                                <span v-if="errors.image" class="error">{{ errors.image }}</span>
+                                <span v-if="errors['user.image']" class="error">{{ errors['user.image'][0] }}</span>
                             </div>
                         </div>
                     </div>
@@ -27,17 +29,17 @@
                                 <div class="form-group">
                                     <label for="">Имя</label>
                                     <input type="text" class="input" name="name" id="name" v-model="seller.user.name">
-                                    <span v-if = "errors.name" class="error">{{ errors.name }}</span>
+                                    <span v-if = "errors['user.name']" class="error">{{ errors['user.name'][0] }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="">E-mail</label>
                                     <input type="email" class="input" id="email" name="email" v-model="seller.user.email">
-                                    <span v-if = "errors.email" class="error">{{ errors.email }}</span>
+                                    <span v-if = "errors['user.email']" class="error">{{ errors['user.email'][0] }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">Номер телефона</label>
                                     <input type="phone" id="phone" placeholder="" name="phone" class="input input--phone" v-model="seller.user.phone" disabled>
-                                    <span v-if = "errors.phone" class="error">{{ errors.phone }}</span>
+                                    <span v-if = "errors['user.phone']" class="error">{{ errors['user.phone'][0] }}</span>
                                 </div>
                             </div>
                             <div class="tab-content__form-left">
@@ -49,17 +51,17 @@
                                         <option value="ИП">ИП</option>
                                         <option value="ОАО">ОАО</option>
                                     </select>
-                                    <span v-if = "errors.phone" class="error">{{ errors.phone }}</span>
+                                    <span v-if = "errors['organization_type']" class="error">{{ errors['organization_type'][0] }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="organization_name">Название организации</label>
                                     <input type="text" class="input" id="organization_name" name="organization_name" v-model="seller.organization_name">
-                                    <span v-if = "errors.organization_name" class="error">{{ errors.organization_name }}</span>
+                                    <span v-if = "errors['organization_name']" class="error">{{ errors['organization_name'][0] }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="">ИНН</label>
                                     <input type="text" class="input" id="inn" name="inn" v-model="seller.inn">
-                                    <span v-if = "errors.inn" class="error">{{ errors.inn }}</span>
+                                    <span v-if = "errors['inn']" class="error">{{ errors['inn'][0] }}</span>
                                 </div>
                             </div>
                         </div>
@@ -71,14 +73,14 @@
                                 <div class="form-group">
                                     <label for="old_password">Старый пароль</label>
                                     <input class="input" id="old_password" type="password" name="old_password" v-model="seller.old_password">
-                                    <span v-if = "errors.old_password" class="error">{{ errors.old_password }}</span>
+                                    <span v-if = "errors['old_password']" class="error">{{ errors['old_password'][0] }}</span>
                                 </div>
                             </div>
                             <div class="tab-content__form-left">
                                 <div class="form-group">
                                     <label for="password">Новый пароль</label>
                                     <input class="input" id="password" type="password" name="password" v-model="seller.new_password">
-                                    <span v-if = "errors.new_password" class="error">{{ errors.new_password }}</span>
+                                    <span v-if = "errors['password']" class="error">{{ errors['password'] }}</span>
                                 </div>
                             </div>
                         </div>
@@ -90,29 +92,29 @@
                                 <div class="form-group">
                                     <label for="">Ссылка на магазин WB</label>
                                     <input type="text" class="input" id="marketplace" name="wb_link" v-model="seller.wb_link">
-                                    <span v-if = "errors.wb_link" class="error">{{ errors.wb_link }}</span>
+                                    <span v-if = "errors['wb_link']" class="error">{{ errors['wb_link'][0] }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="">Ключ API WB</label>
                                     <input type="text" class="input" id="wb_api_key" name="wb_api_key" v-model="seller.wb_api_key">
-                                    <span v-if = "errors.wb_api_key" class="error">{{ errors.wb_api_key }}</span>
+                                    <span v-if = "errors['wb_api_key']" class="error">{{ errors['wb_api_key'][0] }}</span>
                                 </div>
                             </div>
                             <div class="tab-content__form-left tab-content__form-left--ozon">
                                 <div class="form-group">
                                     <label for="ozon_link">Ссылка на магазин OZON</label>
                                     <input type="text" class="input" id="ozon_link" name="ozon_link" v-model="seller.ozon_link">
-                                    <span v-if = "errors.ozon_link" class="error">{{ errors.ozon_link }}</span>
+                                    <span v-if = "errors['ozon_link']" class="error">{{ errors['ozon_link'][0] }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="ozon_client_id">Client ID OZON</label>
                                     <input type="text" class="input" id="ozon_client_id" name="ozon_client_id" v-model="seller.ozon_client_id">
-                                    <span v-if = "errors.ozon_client_id" class="error">{{ errors.ozon_client_id }}</span>
+                                    <span v-if = "errors['ozon_client_id']" class="error">{{ errors['ozon_client_id'][0] }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="ozon_api_key">Ключ API OZON</label>
                                     <input type="text" class="input" id="ozon_api_key" name="ozon_api_key" v-model="seller.ozon_api_key">
-                                    <span v-if = "errors.ozon_api_key" class="error">{{ errors.ozon_api_key }}</span>
+                                    <span v-if = "errors['ozon_api_key']" class="error">{{ errors['ozon_api_key'][0] }}</span>
                                 </div>
                             </div>
                         </div>
@@ -146,33 +148,56 @@
                 seller: ref({
                     user: {}
                 }),
-                errors: ref({})
+                errors: ref([]),
+
+                imgSectionTitle: 'Загрузите изображение'
             }
         },
         async mounted(){
+            this.Loader.loaderOn('.edit-profile');
+
             this.user = this.User.getCurrent();
             this.seller = await this.Seller.getItem(this.user.seller_id)
+
+            this.Loader.loaderOff('.edit-profile');
         },
         methods:{
             saveSeller(){
                 this.Loader.loaderOn('.edit-profile');
 
-                this.Seller.save(this.seller).then(data => {
-                    if(data.errors){
-                        this.errors = data.errors;
+                var formdata = new FormData;
+
+                for(let k in this.seller){
+                    if(k != 'user')
+                        formdata.append(k, this.seller[k])
+                }
+
+                for(let k in this.seller.user){
+                    if(k != 'image')
+                        formdata.append(k, this.seller.user[k])
+                }
+
+                var image = $('.tab-content__profile-img').find('input[type="file"]')[0];
+
+                formdata.append('image', image.files[0]);
+
+                this.Seller.save(this.seller.id, formdata).then(
+                    (data) => {
+                        var user = this.seller.user;
+
+                        if(user){
+                            this.user = user;
+                            localStorage.setItem('user', JSON.stringify(user));
+                        }
+
                         this.Loader.loaderOff('.edit-profile');
-                        return
+                    },
+                    err => {
+                        this.errors = err.response.data
+
+                        this.Loader.loaderOff('.edit-profile');
                     }
-
-                    var user = this.seller.user;
-
-                    if(user){
-                        this.user = user;
-                        localStorage.setItem('user', JSON.stringify(user));
-                    }
-
-                    this.Loader.loaderOff('.edit-profile');
-                })
+                )
             }
         }
     }

@@ -2,17 +2,20 @@
     <div class="profile__navigation nav-menu">
         <div class="nav-menu__body">
             <div class="nav-menu__items">
-                <a href="#" v-on:click="switchTab" class="nav-menu__item nav-menu__link tab projects-work-link active" data-content = "my-projects">
+                <a href="#" v-on:click="switchTab('my-projects')" class="nav-menu__item nav-menu__link tab projects-work-link active" data-content = "my-projects">
                     Проекты в работе
                 </a>
-                <a href="#" v-on:click="switchTab" class="nav-menu__item nav-menu__link tab projects-list-link" data-content = "profile-projects">
+                <a href="#" v-on:click="switchTab('all-projects')" class="nav-menu__item nav-menu__link tab projects-list-link" data-content = "all-projects">
                     Все проекты
                 </a>
-                <a href="#" v-on:click="switchTab" class="nav-menu__item nav-menu__link tab projects-avail-link" data-content = "avail-projects">
+                <a href="#" v-on:click="switchTab('avail-projects')" class="nav-menu__item nav-menu__link tab projects-avail-link" data-content = "avail-projects">
                     Заявки от селлеров
                 </a>
-                <a href="#" v-on:click="switchTab" class="nav-menu__item nav-menu__link tab chat-link" data-content = "chat">
+                <a href="#" v-on:click="switchTab('chat')" class="nav-menu__item nav-menu__link tab chat-link" data-content = "chat">
                     Чат с селлерами
+                    <div class="nav-menu__item-notifs notifs notifs-chat" v-if="chatMessages && chatMessages > 0">
+                        {{ chatMessages }}
+                    </div>
                 </a>
             </div>
         </div>
@@ -22,16 +25,11 @@
     </div>
 </template>
 <script>
-    import Tabs from '../../../services/AppTabs.vue'
-
     export default{
-        data(){
-            return Tabs;
-        },
+        props:['chatMessages'],
         methods:{
-            switchTab(event){
-                this.$emit('switchTab', $(event.target).data('content'))
-                this.tabClick(event)
+            switchTab(link){
+                this.$emit('switchTab', link)
             }
         }
     }
