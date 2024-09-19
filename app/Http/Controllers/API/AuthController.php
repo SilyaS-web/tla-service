@@ -96,7 +96,8 @@ class AuthController extends Controller
         ];
 
         if (Auth::attempt($credentials)) {
-            return response()->json(['user' => $user])->setStatusCode(200);
+            $token = $user->createToken('Bearer');
+            return response()->json(['user' => $user, 'token' => $token->plainTextToken])->setStatusCode(200);
         }
 
         return response()->json(['message' => 'Неудалось авторизоваться'])->setStatusCode(400);
