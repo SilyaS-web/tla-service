@@ -110,10 +110,7 @@
         components:{InputPhone, User},
         data(){
             return {
-                user: reactive({
-                    phone: null,
-                    password: null
-                }),
+                user: reactive({}),
                 errors: reactive({
                     phone: null,
                     password: null
@@ -168,7 +165,20 @@
                     return
                 }
 
-                var response = await this.User.register(this.user);
+               this.User.register(this.user).then(
+                   data => {
+                       axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
+
+                       if(this.user.role == 'blogger'){
+                           this.$router.replace('/blogger/registration')
+                       }
+
+                       this.$router.replace('/profile')
+                   },
+                   err => {
+                       this.errors = err.response.data;
+                   }
+               )
             },
         }
     }

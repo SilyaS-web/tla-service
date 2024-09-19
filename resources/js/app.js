@@ -30,6 +30,7 @@ adminApp.mount('#admin-app')
 
 import Auth from './src/auth/pages/AppAuth.vue'
 import Register from './src/auth/pages/AppRegister.vue'
+import BloggerRegister from './src/auth/pages/BloggerData.vue'
 import Profile from './src/public/pages/index.vue'
 import SellerEditProfile from './src/public/pages/seller/EditProfile.vue'
 import BloggerEditProfile from './src/public/pages/blogger/EditProfile.vue'
@@ -40,6 +41,7 @@ const app = createApp();
 const routes = [
     { path: '/profile', name: 'Profile', component: Profile },
     { path: '/register', name: 'Register', component: Register },
+    { path: '/blogger/register', name: 'BloggerRegister', component: BloggerRegister },
     { path: '/login', name: 'Login', component: Auth },
     { path: '/seller/edit-profile', name: 'SellerEditProfile', component: SellerEditProfile },
     { path: '/blogger/edit-profile', name: 'BloggerEditProfile', component: BloggerEditProfile },

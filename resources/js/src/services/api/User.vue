@@ -52,10 +52,23 @@
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'post',
-                    url: '/api/users/',
+                    url: '/api/users',
                     data: data
                 })
                 .then((response) => {
+                    if(!response.data.token || !response.data.user){
+                        notify('error', {
+                            title: 'Внимание!',
+                            message: 'Ошибка сервера, напишите в поддержку.'
+                        });
+                    }
+
+                    let token = response.data.token,
+                        user = response.data.user;
+
+                    localStorage.setItem('user', JSON.stringify(user));
+                    localStorage.setItem('session_token', token);
+
                     resolve(response.data)
                 })
                 .catch((errors) => {
@@ -64,7 +77,7 @@
                         message: 'Невозможно зарегистрироваться. Проверьте все поля, если все в порядке, напишите в поддержку.'
                     });
 
-                    resolve(errors)
+                    reject(errors)
                 })
             })
         },

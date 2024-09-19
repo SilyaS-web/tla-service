@@ -30,6 +30,7 @@ Route::get('/users/reset-password', [AuthController::class, 'resetPassword']);
 Route::get('/users/phone-confirmed', [AuthController::class, 'isTgConfirmed']);
 Route::get('/platforms', [PlatformController::class, 'index']);
 Route::get('/themes', [ThemeController::class, 'index']);
+Route::post('/users', [AuthController::class, 'store']);
 
 Route::prefix('payment')->group(function () {
     Route::get('/debug/{tariff}', [PaymentController::class, 'debugPayment']);
@@ -39,7 +40,6 @@ Route::prefix('payment')->group(function () {
 });
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::post('/users', [AuthController::class, 'store']);
     Route::delete('/users/{user}', [UserController::class, 'delete']);
     Route::delete('/users/{user}', [UserController::class, 'delete']);
     Route::get('/users/{user}/dashboard', [DashboardController::class, 'index']);

@@ -314,8 +314,8 @@
                 var notifsIntervalId = localStorage.getItem('notifications_interval_id'),
                     chatsIntervalId = localStorage.getItem('chats_interval_id');
 
-                window.clearInterval(notifsIntervalId);
-                window.clearInterval(chatsIntervalId);
+                notifsIntervalId &&  window.clearInterval(notifsIntervalId);
+                chatsIntervalId && window.clearInterval(chatsIntervalId);
 
                 localStorage.clear();
 
