@@ -100,7 +100,10 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'is_active' => 'boolean|nullable',
-            'order_by_last_message' => 'string|nullable'
+            'order_by_last_message' => 'string|nullable',
+            'project_type' => [Rule::in(Project::TYPES), 'nullable'],
+            'category' => 'string|nullable',
+            'product_name' => 'string|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -123,6 +126,26 @@ class UserController extends Controller
             $works->orderBy('last_message_at', $validated['order_by_last_message']);
         } else {
             $works->orderBy('last_message_at', 'desc');
+        }
+
+        if (isset($validated['project_type']) && !empty($validated['project_type'])) {
+            $project_ids = Project::whereHas('projectWorks', function (Builder $query) use ($validated, $user) {
+                $query->where('type', $validated['project_type'])->where($user->role.'_id', $user->id);
+            })->get('id')->pluck('id');
+
+            $works->whereIn('project_id', $project_ids);
+        }
+
+        if (isset($validated['product_name']) && !empty($validated['product_name'])) {
+            $works->hereHas('project', function (Builder $query) use ($validated) {
+                $query->where('product_name', $validated['product_name']);
+            });
+        }
+
+        if (isset($validated['category']) && !empty($validated['project_name'])) {
+            $works->whereHas('project', function (Builder $query) use ($validated) {
+                $query->where('marketplace_category', 'like', '%' . $validated['category'] . '%');
+            });
         }
 
         $data = [
@@ -150,7 +173,6 @@ class UserController extends Controller
         }
 
         Message::where('work_id', $work->id)->where('viewed_at', null)->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
-
 
         $data = [
             'messages' => MessageResource::collection($messages->get()),
