@@ -32,12 +32,11 @@ class SellerController extends Controller
     public function update(Seller $seller, Request $request)
     {
         $validator = Validator::make(request()->all(), [
-            'user' => 'array',
-            'user.name' => 'required|min:3',
-            'user.email' => 'required|email',
-            'user.image' => 'image|nullable',
-            'user.old_password' => 'min:8|nullable',
-            'user.password' => 'min:8|nullable',
+            'name' => 'required|min:3',
+            'email' => 'required|email',
+            'image' => 'image|nullable',
+            'old_password' => 'min:8|nullable',
+            'password' => 'min:8|nullable',
             'wb_link' => 'string|nullable',
             'wb_api_key' => 'string|nullable',
             'ozon_link' => 'string|nullable',
@@ -55,19 +54,19 @@ class SellerController extends Controller
         $validated = $validator->validated();
 
         $user = $seller->user;
-        if (isset($validated['user']['password'])) {
-            if (auth()->attempt(['phone' => $user->phone, 'password' => $validated['user']['old_password']])) {
-                $user->password = bcrypt($validated['user']['password']);
+        if (isset($validated['password'])) {
+            if (auth()->attempt(['phone' => $user->phone, 'password' => $validated['old_password']])) {
+                $user->password = bcrypt($validated['password']);
                 $user->save();
             } else {
                 return  response()->json(['message' => 'Введён неверный пароль'])->setStatusCode(400);
             }
         }
 
-        $user->name = $validated['user']['name'];
+        $user->name = $validated['name'];
 
-        if ($user->email != $validated['user']['email']) {
-            $user->email = $validated['user']['email'];
+        if ($user->email != $validated['email']) {
+            $user->email = $validated['email'];
         }
 
         if ($request->file('image')) {
