@@ -169,7 +169,7 @@ class AuthController extends Controller
         };
 
         if (!App::environment('production') && $validated['password'] == 'password') {
-            $user = Auth::user();
+            $user = User::where('phone', $phone)->first();
             $token = $user->createToken('Bearer');
 
             return response()->json(['user' => new UserResource($user), 'token' => $token->plainTextToken], 200);
