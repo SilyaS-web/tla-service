@@ -42,9 +42,20 @@
     </div>
 </template>
 <script>
+import {ref} from 'vue'
+
 export default{
-    props: ['project'],
+    props: ['work'],
+    data(){
+        return {
+            project: ref(null)
+        }
+    },
+    mounted(){
+        this.project = this.work.project
+    },
     methods: {
+
         goToChat(){
 
         },

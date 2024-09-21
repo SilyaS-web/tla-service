@@ -79,7 +79,7 @@
                             <div class="tab-content__form-left">
                                 <div class="form-group">
                                     <label for="password">Новый пароль</label>
-                                    <input class="input" id="password" type="password" name="password" v-model="seller.new_password">
+                                    <input class="input" id="password" type="password" name="password" v-model="seller.password">
                                     <span v-if = "errors['password']" class="error">{{ errors['password'] }}</span>
                                 </div>
                             </div>

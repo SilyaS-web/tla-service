@@ -26,8 +26,8 @@ const Blogger = {
     put: (id, formData) => {
         return new Promise((resolve, reject) => {
             axios({
-                method: 'post',
-                url: '/api/bloggers/ + id',
+                method: 'put',
+                url: '/api/bloggers/' + id,
                 data: formData
             })
             .then((response) => {
@@ -39,7 +39,7 @@ const Blogger = {
                     message: 'Невозможно сохранить данные.'
                 });
 
-                resolve(response.data)
+                reject(errors)
             })
         })
     },

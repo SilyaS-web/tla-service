@@ -15,7 +15,7 @@
 
                         <!-- Список заявок -->
                         <SellersWorks
-                            :projects="works"
+                            :works="works"
                             v-on:applyFilter="applyFilterProjects">
                         </SellersWorks>
 

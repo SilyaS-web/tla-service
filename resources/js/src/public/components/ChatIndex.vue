@@ -14,7 +14,7 @@
                                     v-if="works.length > 0"
                                     v-for="work in works"
                                     :data-id="work.id"
-                                    @click="getMessages(work)"
+                                    @click="chooseChat(work)"
                                     :class="'chat__chat-item item-chat ' + (work.currentWork ? 'current' : (currentChat && currentChat.id == work.id ? 'current' : ''))"
                                     style="position:relative">
                                     <div class="item-chat__img" :style="'background-image: url(' + work.partner_user.image + ')'">
@@ -307,6 +307,11 @@
                     })
                 })
             },
+            chooseChat(work){
+                this.getMessages(work).then(() => {
+                    $('.chat__messages').animate({scrollTop: '10000px' }, 0);
+                })
+            },
             getMessages(work){
                 return new Promise((resolve, reject) => {
                     this.currentChat = work;
@@ -319,8 +324,6 @@
                                 this.getMessages(this.currentChat);
                             }, 5000)
                         }
-
-
 
                         resolve(data)
                     })

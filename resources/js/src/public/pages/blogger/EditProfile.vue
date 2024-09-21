@@ -18,7 +18,7 @@
                                         @change="imgSectionTitle = 'Изображение загружено'"
                                         type="file" name="image" class="" id="profile-img">
                                 </label>
-                                <span v-if="errors.image" class="error">{{ errors.image }}</span>
+                                <span v-if="errors && errors['user.image']" class="error">{{ errors['user.image'][0] }}</span>
                             </div>
                         </div>
                     </div>
@@ -28,17 +28,17 @@
                             <div class="form-group">
                                 <label for="">Имя</label>
                                 <input type="text" class="input" name="name" id="name" v-model="blogger.user.name">
-                                <span v-if = "errors.name" class="error">{{ errors.name }}</span>
+                                <span v-if = "errors && errors['user.name']" class="error">{{ errors['user.name'][0] }}</span>
                         </div>
                             <div class="form-group">
                                 <label for="">E-mail</label>
                                 <input type="email" class="input" id="email" name="email" v-model="blogger.user.email">
-                                <span v-if = "errors.email" class="error">{{ errors.email }}</span>
+                                <span v-if = "errors && errors['user.email']" class="error">{{ errors['user.email'][0] }}</span>
                             </div>
                             <div class="form-group">
                                 <label for="phone">Номер телефона</label>
                                 <input type="phone" id="phone" placeholder="" name="phone" class="input input--phone" v-model="blogger.user.phone" disabled>
-                                <span v-if = "errors.phone" class="error">{{ errors.phone }}</span>
+                                <span v-if = "errors && errors['user.email']" class="error">{{ errors['user.email'][0] }}</span>
                             </div>
                         </div>
                     </div>
@@ -53,7 +53,7 @@
                             <div class="form-group">
                                 <label for="password">Новый пароль</label>
                                 <input class="input" id="password" type="password" name="password" v-model="blogger.new_password">
-                                <span v-if = "errors.new_password" class="error">{{ errors.new_password }}</span>
+                                <span v-if = "errors.new_password" class="error">{{ errors.password }}</span>
                             </div>
                         </div>
                     </div>
@@ -105,10 +105,21 @@ export default {
 
             var formdata = new FormData;
 
+            console.log(this.blogger['city'])
             for(let k in this.blogger){
-                if(k != 'user')
+                if(!['user', 'country', 'platforms', 'themes'].includes(k))
                     formdata.append(k, this.blogger[k])
             }
+
+            formdata.append('country_id', this.blogger.country ? this.blogger.country.id : null)
+
+            this.blogger.platforms && this.blogger.platforms.map((p, ind) => {
+                formdata.append('platforms[' + ind + ']', p.platform_id)
+            })
+
+            this.blogger.themes && this.blogger.themes.map((p, ind) => {
+                formdata.append('themes[' + ind + ']', p.theme_id)
+            })
 
             for(let k in this.blogger.user){
                 if(k != 'image')
@@ -132,6 +143,7 @@ export default {
                 },
                 err => {
                     this.errors = err.response.data;
+                    console.log(this.errors)
                     this.Loader.loaderOff('.edit-profile');
                     return
                 }

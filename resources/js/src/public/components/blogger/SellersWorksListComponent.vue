@@ -11,9 +11,9 @@
             </div>
             <div class="list-projects__items">
                 <ListItem
-                    v-if="projects.length > 0"
-                    v-for="project in projects"
-                    :project="project"
+                    v-if="works.length > 0"
+                    v-for="work in works"
+                    :work="work"
                 ></ListItem>
                 <span v-else>Проектов нет</span>
             </div>
@@ -66,7 +66,7 @@
 <script>
     import ListItem from './SellersWorksListItemComponent'
     export default {
-        props: ['projects'],
+        props: ['works'],
         components: {ListItem},
         data(){
             return {}
