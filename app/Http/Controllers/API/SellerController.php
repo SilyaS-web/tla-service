@@ -81,14 +81,14 @@ class SellerController extends Controller
 
         $user->save();
         $seller->update([
-            'wb_link' => $validated['wb_link'],
-            'wb_api_key' => $validated['wb_api_key'],
-            'ozon_api_key' => $validated['ozon_api_key'],
-            'ozon_link' => $validated['ozon_link'],
-            'ozon_client_id' => $validated['ozon_client_id'],
-            'inn' => $validated['inn'],
-            'organization_type' => $validated['organization_type'],
-            'organization_name' => $validated['organization_name'],
+            'wb_link' => $validated['wb_link'] ?? null,
+            'wb_api_key' => $validated['wb_api_key'] ?? null,
+            'ozon_api_key' => $validated['ozon_api_key'] ?? null,
+            'ozon_link' => $validated['ozon_link'] ?? null,
+            'ozon_client_id' => $validated['ozon_client_id'] ?? null,
+            'inn' => $validated['inn'] ?? null,
+            'organization_type' => $validated['organization_type'] ?? null,
+            'organization_name' => $validated['organization_name'] ?? null,
         ]);
 
         return  response()->json()->setStatusCode(200);
