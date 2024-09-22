@@ -87,9 +87,8 @@ class WorkController extends Controller
         return response()->json(['id' => $work->id])->setStatusCode(200);
     }
 
-    public function accept($work_id)
+    public function accept(Work $work)
     {
-        $work = Work::find($work_id);
         $user = Auth::user();
 
         if ($work->created_by == $user->id) {
@@ -116,9 +115,8 @@ class WorkController extends Controller
         return response()->json('success')->setStatusCode(200);
     }
 
-    public function start($work_id)
+    public function start(Work $work)
     {
-        $work = Work::find($work_id);
         $user = Auth::user();
         $work->accept($user);
         $work->update(['last_message_at' => date('Y-m-d H:i')]);
@@ -169,7 +167,7 @@ class WorkController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function createDeepLinkByWork($work)
+    public function createDeepLinkByWork(Work $work)
     {
         $user = Auth::user();
         $data = [
