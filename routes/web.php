@@ -24,7 +24,7 @@ use App\Http\Controllers\WorkController;
 |
 */
 
-Route::get('/admin', function () {
+Route::get('/profile/admin', function () {
     return view('profile.admin');
 });
 
