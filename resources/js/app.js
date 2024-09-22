@@ -3,31 +3,18 @@ require('./bootstrap');
 import { createApp } from 'vue'
 import { createMemoryHistory, createRouter } from 'vue-router'
 
-// import AdminIndex from './src/admin/pages/index.vue'
-// import AdminHeader from './src/admin/ui/AppHeader.vue'
-// import AdminAside from './src/admin/ui/AppAside.vue'
-// import AdminModerationPage from './src/admin/pages/BloggersModeration.vue'
-// import AdminBloggersPage from './src/admin/pages/AppBloggers.vue'
-// import AdminSellersPage from './src/admin/pages/AppSellers.vue'
-// import AdminProjectsPage from './src/admin/pages/AppProjects.vue'
-// import AdminOrdersPage from './src/admin/pages/AppOrders.vue'
-// import AdminReferalDataPage from './src/admin/pages/ReferalData.vue'
-//
-// const adminApp = createApp();
-//
-// adminApp.component('admin-index', AdminIndex)
-// adminApp.component('admin-header', AdminHeader)
-// adminApp.component('admin-aside', AdminAside)
-// adminApp.component('admin-bloggers-moderation-page', AdminModerationPage)
-// adminApp.component('admin-bloggers-page', AdminBloggersPage)
-// adminApp.component('admin-sellers-page', AdminSellersPage)
-// adminApp.component('admin-projects-page', AdminProjectsPage)
-// adminApp.component('admin-orders-page', AdminOrdersPage)
-// adminApp.component('admin-referal-data-page', AdminReferalDataPage)
-//
-// adminApp.mount('#admin-app')
+// admin imports
+import AdminIndex from './src/admin/pages/index.vue'
+import AdminHeader from './src/admin/ui/AppHeader.vue'
+import AdminAside from './src/admin/ui/AppAside.vue'
+import AdminModerationPage from './src/admin/pages/BloggersModeration.vue'
+import AdminBloggersPage from './src/admin/pages/AppBloggers.vue'
+import AdminSellersPage from './src/admin/pages/AppSellers.vue'
+import AdminProjectsPage from './src/admin/pages/AppProjects.vue'
+import AdminOrdersPage from './src/admin/pages/AppOrders.vue'
+import AdminReferalDataPage from './src/admin/pages/ReferalData.vue'
 
-
+// user imports
 import Auth from './src/auth/pages/AppAuth.vue'
 import Register from './src/auth/pages/AppRegister.vue'
 import BloggerRegister from './src/auth/pages/BloggerData.vue'
@@ -35,6 +22,21 @@ import Profile from './src/public/pages/index.vue'
 import SellerEditProfile from './src/public/pages/seller/EditProfile.vue'
 import BloggerEditProfile from './src/public/pages/blogger/EditProfile.vue'
 import Tariffs from './src/public/pages/seller/AppTariffs.vue'
+
+const adminApp = createApp();
+
+adminApp.component('admin-index', AdminIndex)
+adminApp.component('admin-header', AdminHeader)
+adminApp.component('admin-aside', AdminAside)
+adminApp.component('admin-bloggers-moderation-page', AdminModerationPage)
+adminApp.component('admin-bloggers-page', AdminBloggersPage)
+adminApp.component('admin-sellers-page', AdminSellersPage)
+adminApp.component('admin-projects-page', AdminProjectsPage)
+adminApp.component('admin-orders-page', AdminOrdersPage)
+adminApp.component('admin-referal-data-page', AdminReferalDataPage)
+
+adminApp.mount('#admin-app')
+
 
 const app = createApp();
 
@@ -78,7 +80,6 @@ router.beforeEach((to, from) => {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
     }
 })
-
 
 localStorage.setItem('notifications_interval_id', '')
 localStorage.setItem('chats_interval_id', '')
