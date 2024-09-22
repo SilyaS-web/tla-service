@@ -11,9 +11,9 @@
             </div>
             <div class="list-projects__items">
                 <ListItem
-                    v-if="projects.length > 0"
-                    v-for="project in projects"
-                    :work="project"
+                    v-if="works.length > 0"
+                    v-for="work in works"
+                    :work="work"
                 ></ListItem>
                 <span v-else>Проектов нет</span>
             </div>
@@ -81,8 +81,9 @@
 <script>
     import ListItem from './AcceptedProjectsListItemComponent'
     import {ref} from "vue";
+
     export default{
-        props:['projects'],
+        props:['works'],
         components: {ListItem},
         data(){
             return{
@@ -94,6 +95,9 @@
                 currentCategory: ref(''),
                 categories: ref([]),
             }
+        },
+        mounted(){
+
         },
         methods: {
             applyFilter(){

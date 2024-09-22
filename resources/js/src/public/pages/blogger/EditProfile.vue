@@ -107,7 +107,6 @@ export default {
 
             var formdata = new FormData;
 
-            console.log(this.blogger['city'])
             for(let k in this.blogger){
                 if(!['user', 'country', 'platforms', 'themes'].includes(k))
                     formdata.append(k, this.blogger[k])
@@ -133,8 +132,20 @@ export default {
             formdata.append('image', image.files[0]);
 
             this.Blogger.put(this.blogger.id, formdata).then(
-                data => {
-                    var user = this.blogger.user;
+                response => {
+                    var user = {
+                        'id': this.user.id,
+                        'name': this.blogger.user.name,
+                        'email': this.blogger.user.email,
+                        'seller_id': this.blogger.id,
+                        'status': this.user.status,
+                        'role': this.user.role,
+                        'phone': this.user.phone,
+                        'created_at': this.user.created_at,
+                        'channel_name': this.user.channel_name,
+                        'blogger_id': this.user.blogger_id,
+                        'image': response.image ? response.image : this.user.image,
+                    }
 
                     if(user){
                         this.user = user;
@@ -145,7 +156,7 @@ export default {
                 },
                 err => {
                     this.errors = err.response.data;
-                    console.log(this.errors)
+
                     this.Loader.loaderOff('.edit-profile');
                     return
                 }

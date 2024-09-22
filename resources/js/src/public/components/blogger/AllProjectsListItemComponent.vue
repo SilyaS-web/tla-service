@@ -89,7 +89,7 @@
 
     export default{
         components: {ChooseProjectPopup},
-        props:['work'],
+        props:['project'],
         data(){
             return {
                 isSendOfferPopupOpen: ref(false),
@@ -99,13 +99,10 @@
                     blogger_id: null,
                 }),
                 user: ref(null),
-                project: ref(null),
                 User
             }
         },
         mounted(){
-            console.log(this.work)
-            this.project = this.work.project;
             this.user = this.User.getCurrent();
         },
         methods:{

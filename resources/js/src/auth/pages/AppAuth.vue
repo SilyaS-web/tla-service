@@ -1,5 +1,4 @@
 <template>
-    <ClientStyles></ClientStyles>
     <div class="auth__container _container">
         <div class="auth__body">
             <div class="auth__title title">
@@ -73,20 +72,16 @@
             </div>
         </div>
     </div>
-    <ClientScripts></ClientScripts>
 </template>
 <script>
     import InputPhone from '../ui/InputPhone.vue'
     import User from '../../services/api/User.vue'
 
-    import ClientStyles from '../../public/components/ClientStyles.vue'
-    import ClientScripts from '../../public/components/ClientScripts.vue'
-
     import {ref} from 'vue'
 
     export default{
         components:{
-            InputPhone, ClientStyles, ClientScripts
+            InputPhone
         },
         data(){
             return {

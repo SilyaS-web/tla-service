@@ -34,16 +34,27 @@
                 </div>
             </div>
             <div class="project-item__btns">
-                <button
-                    @click="goToChat"
-                    class="btn btn-primary btn-blogger-send-offer" style="width:100%">Перейти в чат</button>
+<!--                <button-->
+<!--                    @click="goToChat"-->
+<!--                    class="btn btn-primary btn-blogger-send-offer" style="width:100%">Перейти в чат</button>-->
             </div>
         </div>
     </div>
 </template>
 <script>
+import {ref} from "vue"
+
     export default{
         props: ['work'],
+        data(){
+            return {
+                project: ref(null)
+            }
+        },
+        mounted(){
+            console.log(this.work)
+            this.project = this.work.project;
+        },
         methods: {
             goToChat(){
 

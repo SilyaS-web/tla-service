@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="project"
-        class="list-projects__item project-item" :data-id="project.project_id">
+        class="list-projects__item project-item">
         <div class="project-item__carousel">
             <div class="project-item__carousel--carousel owl-carousel">
                 <div
