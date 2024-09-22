@@ -13,7 +13,7 @@
                 <ListItem
                     v-if="projects.length > 0"
                     v-for="project in projects"
-                    :project="project"
+                    :work="project"
                 ></ListItem>
                 <span v-else>Проектов нет</span>
             </div>

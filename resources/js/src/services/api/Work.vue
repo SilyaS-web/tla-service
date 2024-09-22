@@ -23,11 +23,20 @@ const Work = {
             })
         })
     },
-    getUserWorksList: (user_id) => {
+    getUserWorksList: (user_id, created_by = false, is_active = false) => {
         return new Promise((resolve, reject) => {
+            var params = {};
+
+            if(created_by)
+                params.created_by = created_by;
+
+            if(is_active)
+                params.is_active = is_active;
+
             axios({
                 method: 'get',
-                url: 'api/users/' + user_id +  '/works'
+                url: 'api/users/' + user_id +  '/works',
+                params: params
             })
             .then(response => {
                 resolve(response.data.works);

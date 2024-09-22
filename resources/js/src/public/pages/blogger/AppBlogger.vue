@@ -112,7 +112,13 @@
 
                     case 'my-projects':
 
-                        this.projects = await this.Project.getUsersProjectsList(this.user.id);
+                        this.Work.getUserWorksList(this.user.id, false, 1).then(data => {
+                            this.projects = data;
+                            console.log(this.projects)
+                            setTimeout(()=>{
+                                this.Loader.loaderOff(`#${tab}`);
+                            }, 300)
+                        })
 
                         setTimeout(()=>{
                             this.Loader.loaderOff(`#${tab}`);
@@ -122,7 +128,7 @@
 
                     case 'avail-projects':
 
-                        this.works = await this.Work.getUserWorksList(this.user.id);
+                        this.works = await this.Work.getUserWorksList(this.user.id, -this.user.id, 0);
 
                         setTimeout(()=>{
                             this.Loader.loaderOff(`#${tab}`);

@@ -12,7 +12,10 @@
                     </div>
                     <div class="header__col">
                         <div class="header__leave">
-                            <a href="/logout" type="header__leave">Выход</a>
+                            <a
+                                @click="logout"
+                                style="cursor:pointer"
+                                type="header__leave">Выход</a>
                         </div>
                     </div>
                 </div>
@@ -20,5 +23,18 @@
         </header>
 </template>
 <script>
-    export default{}
+    import axios from "axios";
+
+    export default{
+        methods:{
+            logout(event){
+                event.preventDefault()
+
+                localStorage.clear();
+
+                axios.defaults.headers.common['Authorization'] = '';
+                this.$router.replace('/login');
+            },
+        }
+    }
 </script>

@@ -1,4 +1,5 @@
 <template>
+    <ClientStyles></ClientStyles>
     <div class="auth__container _container">
         <div class="auth__body auth__steps">
             <div class="auth__title title">
@@ -96,14 +97,18 @@
             </div>
         </div>
     </div>
+    <ClientScripts></ClientScripts>
 </template>
 
 <script>
     import InputFile from "../../ui/forms/InputFile";
     import {ref} from "vue";
 
+    import ClientStyles from '../../public/components/ClientStyles.vue'
+    import ClientScripts from '../../public/components/ClientScripts.vue'
+
     export default{
-        components:{InputFile},
+        components:{InputFile, ClientStyles, ClientScripts},
         data(){
             return {
                 blogger:{},

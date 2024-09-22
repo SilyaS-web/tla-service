@@ -155,10 +155,10 @@
                     </div>
                     <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
                         <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
+                        <button
+                            v-if = "isChooseProjectList"
+                            class="btn btn-primary" @click="isChooseProjectList = !isChooseProjectList">Вернуться</button>
                     </div>
-                    <button
-                        v-if = "isChooseProjectList"
-                        class="btn btn-primary" @click="isChooseProjectList = !isChooseProjectList">Вернуться</button>
                 </div>
                 <div class="profile-projects__items list-projects__items" style="max-width:1030px">
                     <div
