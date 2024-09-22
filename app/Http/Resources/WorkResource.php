@@ -23,7 +23,9 @@ class WorkResource extends JsonResource
 
         return [
             'id' => $this->id,
-            'blogger' => new BloggerResource($this->blogger),
+            'blogger' => $this->when($user->role != 'blogger', function () use ($request) {
+                return new BloggerResource($this->blogger);
+            }),
             'partner_user' => new UserResource($this->getPartnerUser($user->role)),
             'seller_user_id' => $this->seller_id,
             'blogger_user_id' => $this->blogger_id,

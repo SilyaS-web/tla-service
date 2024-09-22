@@ -297,7 +297,7 @@ class BloggerController extends Controller
                 $user->password = bcrypt($validated['password']);
                 $user->save();
             } else {
-                return  response()->json(['message' => 'Введён неверный пароль'])->setStatusCode(400);
+                return  response()->json(['old_password' => 'Введён неверный пароль'])->setStatusCode(400);
             }
         }
 
@@ -323,7 +323,7 @@ class BloggerController extends Controller
 
         $blogger->save();
 
-        return response()->json()->setStatusCode(200);
+        return response()->json(isset($image_path) ? ['image' => 'storage/' . $image_path] : '')->setStatusCode(200);
     }
 
     /**
