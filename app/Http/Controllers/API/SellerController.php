@@ -64,7 +64,7 @@ class SellerController extends Controller
                 $user->password = bcrypt($validated['password']);
                 $user->save();
             } else {
-                return  response()->json(['password' => 'Введён неверный пароль'])->setStatusCode(400);
+                return response()->json(['old_password' => 'Введён неверный пароль'])->setStatusCode(400);
             }
         }
 
