@@ -24,7 +24,6 @@ class SellerController extends Controller
         return view('profile.public.seller', compact('user', 'projects'));
     }
 
-
     public function checkTariffs()
     {
         $sellers = Seller::get();

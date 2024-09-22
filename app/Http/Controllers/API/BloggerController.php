@@ -289,7 +289,11 @@ class BloggerController extends Controller
 
         $user = $blogger->user;
         if (isset($validated['password'])) {
-            if (auth()->attempt(['phone' => $user->phone, 'password' => $validated['old_password']])) {
+            $credentials = [
+                'phone' => $user->phone,
+                'password' => $validated['old_password'],
+            ];
+            if (Auth::guard('web')->attempt($credentials)) {
                 $user->password = bcrypt($validated['password']);
                 $user->save();
             } else {

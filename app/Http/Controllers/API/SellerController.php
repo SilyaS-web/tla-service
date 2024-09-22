@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Seller;
-use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SellerResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class SellerController extends Controller
 {
@@ -56,7 +56,11 @@ class SellerController extends Controller
 
         $user = $seller->user;
         if (isset($validated['password']) && null != $validated['password']) {
-            if (auth()->attempt(['phone' => $user->phone, 'password' => $validated['old_password']])) {
+            $credentials = [
+                'phone' => $user->phone,
+                'password' => $validated['old_password'],
+            ];
+            if (Auth::guard('web')->attempt($credentials)) {
                 $user->password = bcrypt($validated['password']);
                 $user->save();
             } else {
