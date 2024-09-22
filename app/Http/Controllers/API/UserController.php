@@ -114,13 +114,10 @@ class UserController extends Controller
         $validated = $validator->validated();
 
         $works = $user->works();
-<<<<<<< HEAD
-        dd($user);
-=======
->>>>>>> 314a57a34724d24d39f9d9be65ec145cb2fa313d
+
         if (isset($validated['created_by']) && !empty($validated['created_by'])) {
             if ($validated['created_by'] < 0) {
-                $works->where('created_by', '<>', $validated['created_by']);
+                $works->where('created_by', '<>', $validated['created_by'] * -1);
             } else {
                 $works->where('created_by', $validated['created_by']);
             }
