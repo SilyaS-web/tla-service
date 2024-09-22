@@ -24653,11 +24653,12 @@ var Work = {
   },
   getUserWorksList: function getUserWorksList(user_id) {
     var created_by = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
-    var is_active = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+    var is_active = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
     return new Promise(function (resolve, reject) {
-      var params = {};
+      var params = {
+        is_active: is_active
+      };
       if (created_by) params.created_by = created_by;
-      if (is_active) params.is_active = is_active;
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
         method: 'get',
         url: 'api/users/' + user_id + '/works',
