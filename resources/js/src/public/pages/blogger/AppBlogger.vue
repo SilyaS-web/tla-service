@@ -16,13 +16,13 @@
                         <!-- Список заявок -->
                         <SellersWorks
                             :works="works"
-                            v-on:applyFilter="applyFilterProjects">
+                            v-on:applyFilter="applyFilterWorks">
                         </SellersWorks>
 
                         <!-- Список моих проектов -->
                         <AcceptedProjects
                             :projects="projects"
-                            v-on:applyFilter="applyFilterProjects">
+                            v-on:applyFilter="applyFilterAcceptedProjects">
                         </AcceptedProjects>
 
                         <!-- Чат -->
@@ -36,6 +36,7 @@
             </div>
         </div>
     </section>
+    <Footer></Footer>
 </template>
 <script>
     import {ref} from "vue";
@@ -49,13 +50,16 @@
 
     import Aside from '../../components/blogger/AppAside.vue'
     import Header from '../../components/layout/AppHeader.vue'
+    import Footer from '../../components/layout/AppFooter.vue'
     import AcceptedProjects from '../../components/blogger/AcceptedProjectsListComponent'
     import ProjectsList from '../../components/blogger/AllProjectsListComponent'
     import SellersWorks from '../../components/blogger/SellersWorksListComponent'
     import Chat from '../../components/ChatIndex'
 
     export default{
-        components: { Aside, Header, ProjectsList, Chat, SellersWorks, AcceptedProjects },
+        components: {
+            Aside, Header, ProjectsList, Chat, SellersWorks, AcceptedProjects, Footer
+        },
         data(){
             return {
                 projects: ref([]),
@@ -93,7 +97,7 @@
                     this.currentItem = currentItem;
 
                 this.Loader.loaderOn('.wrapper #' + tab);
-                console.log(tab)
+
                 switch (tab){
                     case 'all-projects':
                         this.Project.getList().then(data => {
@@ -137,7 +141,17 @@
             async applyFilterProjects(filterData){
                 this.Loader.loaderOn('.wrapper .profile__content-inner');
 
-                this.projects = await this.Project.getList(filterData);
+                this.allProjects = await this.Project.getList(filterData);
+
+                setTimeout(()=>{
+                    this.Loader.loaderOff();
+                }, 300)
+            },
+
+            async applyFilterAcceptedProjects(filterData){
+                this.Loader.loaderOn('.wrapper .profile__content-inner');
+                console.log(filterData)
+                this.projects = await this.Project.getUsersProjectsList(this.user.id, filterData);
 
                 setTimeout(()=>{
                     this.Loader.loaderOff();

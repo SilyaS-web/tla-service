@@ -7,12 +7,12 @@
             <div class="form auth__form">
                 <div class="form-group">
                     <label for="city">Ваш город</label>
-                    <input type="text" id="city" name="city" placeholder="Введите название города" class="input input--city" value="{{ old('city') }}">
+                    <input type="text" id="city" name="city" placeholder="Введите название города" class="input input--city" v-model="blogger.city">
                     <span class="error" v-if="errors.city">{{ errors.city }}</span>
                 </div>
                 <div class="form-group">
                     <label for="country">Ваша страна (Страны СНГ)</label>
-                    <select id="country" name="country" class="input input--country select" :value="blogger.country">
+                    <select id="country" name="country" class="input input--country select" v-model="blogger.country_id">
                         <option
                             v-for="country in countries"
                             value="{{ country.id }}">
@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-group">
                     <label for="sex">Ваш пол</label>
-                    <select id="sex" name="sex" class="input input--sex select" :value="blogger.sex">
+                    <select id="sex" name="sex" class="input input--sex select" v-model="blogger.sex">
                         <option value="male">Мужской</option>
                         <option value="female">Женский</option>
                     </select>
@@ -31,7 +31,7 @@
                 </div>
                 <div class="form-group">
                     <label for="desc">Описание канала</label>
-                    <textarea name="desc" id="desc" cols="30" rows="10" class="textarea" placeholder="Введите текст" :description="blogger.description"></textarea>
+                    <textarea name="desc" id="desc" cols="30" rows="10" class="textarea" placeholder="Введите текст" v-model="blogger.description"></textarea>
                     <span class="error" v-if="errors.description">{{ errors.description }}</span>
                 </div>
                 <div class="form-group" style="flex-direction: column; margin-bottom:25px">
@@ -60,7 +60,7 @@
                 <div
                     v-for="field in platformFields"
                     :field="field"
-                    class="popup__form-row popup__form-stat form-stat active">
+                    class="popup__form-row popup__form-stat form-stat">
                     <div class="form-stat__title">
                         {{ field.name }}
                     </div>

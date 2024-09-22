@@ -101,16 +101,21 @@
         },
         methods:{
             login(){
-                this.User.auth(this.user).then(data => {
-                    if(data.errors){
-                        this.errors = data.errors;
-                        return
+                this.User.auth(this.user).then(
+                    data => {
+                        if(data.errors){
+                            this.errors = data.errors;
+                            return
+                        }
+
+                        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
+
+                        this.$router.replace('/profile')
+                    },
+                    err => {
+                        this.errors = err.response.data.errors
                     }
-
-                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
-
-                    this.$router.replace('/profile')
-                })
+                )
             },
             resetPassword(){
                 if(!this.resetPasswordData.phone){

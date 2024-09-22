@@ -15,50 +15,64 @@
             </div>
         </div>
 
-        <admin-header></admin-header>
+    <AdminHeader></AdminHeader>
 
-        <section class="admin-view">
-            <div class="admin-view__container _container active-menu">
-                <div class="admin-view__body">
-                    <!-- Левое меню -->
-                    <admin-aside v-on:switchTab="switchTab" :isAdmin></admin-aside>
+    <section class="admin-view">
+        <div class="admin-view__container _container active-menu">
+            <div class="admin-view__body">
+                <!-- Левое меню -->
+                <AdminAside v-on:switchTab="switchTab" :isAdmin></AdminAside>
 
-                    <!-- Модерация -->
-                    <admin-bloggers-moderation-page :bloggers="unverifiedBloggers"  v-on:updateBloggers="updateBloggers"></admin-bloggers-moderation-page>
+                <!-- Модерация -->
+                <AdminModerationPage :bloggers="unverifiedBloggers"  v-on:updateBloggers="updateBloggers"></AdminModerationPage>
 
-                    <!-- Список блогеров -->
-                    <admin-bloggers-page :bloggers="bloggers" v-on:updateBloggers="updateBloggers"></admin-bloggers-page>
+                <!-- Список блогеров -->
+                <AdminBloggersPage :bloggers="bloggers" v-on:updateBloggers="updateBloggers"></AdminBloggersPage>
 
-                    <!-- Список селлеров -->
-                    <admin-sellers-page v-if="isAdmin == 1" :sellers="sellers" v-on:updateSellers="updateSellers"></admin-sellers-page>
+                <!-- Список селлеров -->
+                <AdminSellersPage v-if="isAdmin == 1" :sellers="sellers" v-on:updateSellers="updateSellers"></AdminSellersPage>
 
-                    <!-- Список проектов -->
-                    <admin-projects-page v-if="isAdmin == 1" :projects="projects" v-on:statusManagement="statusManagement"></admin-projects-page>
+                <!-- Список проектов -->
+                <AdminProjectsPage v-if="isAdmin == 1" :projects="projects" v-on:statusManagement="statusManagement"></AdminProjectsPage>
 
-                    <!-- Список заказов -->
-                    <admin-orders-page v-if="isAdmin == 1" :orders="orders"></admin-orders-page>
-                    
-                    <!-- Список пользователей по реферальной ссылке -->
-                    <admin-referal-data-page v-if="isAdmin == 1" :ref_data="referals_data"></admin-referal-data-page>
-                </div>
-            </div>
-        </section>
+                <!-- Список заказов -->
+                <AdminOrdersPage v-if="isAdmin == 1" :orders="orders"></AdminOrdersPage>
 
-        <div class="notification" style="display: none;">
-            <div class="notification__body">
-                <div class="notification__title">Внимание!</div>
-                <div class="notification__text">
-                    Проект успешно создан
-                </div>
+                <!-- Список пользователей по реферальной ссылке -->
+                <AdminReferalDataPage v-if="isAdmin == 1" :ref_data="referals_data"></AdminReferalDataPage>
             </div>
         </div>
+    </section>
+
+    <div class="notification" style="display: none;">
+        <div class="notification__body">
+            <div class="notification__title">Внимание!</div>
+            <div class="notification__text">
+                Проект успешно создан
+            </div>
+        </div>
+    </div>
+
 </template>
 <script>
     import {reactive, ref} from 'vue'
     import axios from 'axios'
     import Loader from '../../services/AppLoader.vue'
+    import AdminHeader from '../ui/AppHeader.vue'
+    import AdminAside from '../ui/AppAside.vue'
+    import AdminModerationPage from './BloggersModeration.vue'
+    import AdminBloggersPage from './AppBloggers.vue'
+    import AdminSellersPage from './AppSellers.vue'
+    import AdminProjectsPage from './AppProjects.vue'
+    import AdminOrdersPage from './AppOrders.vue'
+    import AdminReferalDataPage from './ReferalData.vue'
 
     export default{
+        components:{
+            AdminHeader, AdminAside, AdminModerationPage,
+            AdminBloggersPage, AdminSellersPage, AdminProjectsPage,
+            AdminOrdersPage, AdminReferalDataPage
+        },
         data(){
             return Loader
         },

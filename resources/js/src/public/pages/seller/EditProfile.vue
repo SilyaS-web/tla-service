@@ -18,7 +18,7 @@
                                         @change="imgSectionTitle = 'Изображение загружено'"
                                         type="file" name="image" class="" id="profile-img">
                                 </label>
-                                <span v-if="errors['user.image']" class="error">{{ errors['user.image'][0] }}</span>
+                                <span v-if="errors['image']" class="error">{{ errors['image'] }}</span>
                             </div>
                         </div>
                     </div>
@@ -29,17 +29,17 @@
                                 <div class="form-group">
                                     <label for="">Имя</label>
                                     <input type="text" class="input" name="name" id="name" v-model="seller.user.name">
-                                    <span v-if = "errors['user.name']" class="error">{{ errors['user.name'][0] }}</span>
+                                    <span v-if = "errors['name']" class="error">{{ errors['name'] }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="">E-mail</label>
                                     <input type="email" class="input" id="email" name="email" v-model="seller.user.email">
-                                    <span v-if = "errors['user.email']" class="error">{{ errors['user.email'][0] }}</span>
+                                    <span v-if = "errors['email']" class="error">{{ errors['email'] }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="phone">Номер телефона</label>
                                     <input type="phone" id="phone" placeholder="" name="phone" class="input input--phone" v-model="seller.user.phone" disabled>
-                                    <span v-if = "errors['user.phone']" class="error">{{ errors['user.phone'][0] }}</span>
+                                    <span v-if = "errors['phone']" class="error">{{ errors['phone'] }}</span>
                                 </div>
                             </div>
                             <div class="tab-content__form-left">
@@ -51,17 +51,17 @@
                                         <option value="ИП">ИП</option>
                                         <option value="ОАО">ОАО</option>
                                     </select>
-                                    <span v-if = "errors['organization_type']" class="error">{{ errors['organization_type'][0] }}</span>
+                                    <span v-if = "errors['organization_type']" class="error">{{ errors['organization_type'] }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="organization_name">Название организации</label>
                                     <input type="text" class="input" id="organization_name" name="organization_name" v-model="seller.organization_name">
-                                    <span v-if = "errors['organization_name']" class="error">{{ errors['organization_name'][0] }}</span>
+                                    <span v-if = "errors['organization_name']" class="error">{{ errors['organization_name'] }}</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="">ИНН</label>
                                     <input type="text" class="input" id="inn" name="inn" v-model="seller.inn">
-                                    <span v-if = "errors['inn']" class="error">{{ errors['inn'][0] }}</span>
+                                    <span v-if = "errors['inn']" class="error">{{ errors['inn'] }}</span>
                                 </div>
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                                 <div class="form-group">
                                     <label for="old_password">Старый пароль</label>
                                     <input class="input" id="old_password" type="password" name="old_password" v-model="seller.old_password">
-                                    <span v-if = "errors['old_password']" class="error">{{ errors['old_password'][0] }}</span>
+                                    <span v-if = "errors['old_password']" class="error">{{ errors['old_password'] }}</span>
                                 </div>
                             </div>
                             <div class="tab-content__form-left">
@@ -127,18 +127,20 @@
             </div>
         </div>
     </section>
+    <Footer></Footer>
 </template>
 <script>
     import {ref} from "vue";
 
     import User from "../../../services/api/User";
     import Header from '../../components/layout/AppHeader.vue'
+    import Footer from '../../components/layout/AppFooter.vue'
     import Seller from "../../../services/api/Seller";
 
     import Loader from "../../../services/AppLoader";
 
     export default {
-        components:{ Header },
+        components:{ Header, Footer },
         data(){
             return{
                 user: ref(null),
@@ -167,28 +169,64 @@
 
                 var formdata = new FormData;
 
-                for(let k in this.seller){
-                    if(k != 'user')
-                        formdata.append(k, this.seller[k])
-                }
-
-                for(let k in this.seller.user){
-                    if(k != 'image')
-                        formdata.append(k, this.seller.user[k])
-                }
-
                 var image = $('.tab-content__profile-img').find('input[type="file"]')[0];
 
-                formdata.append('image', image.files[0]);
+                if(image.files[0])
+                    formdata.append('image', image.files[0]);
+
+                formdata.append('name', this.seller.user.name);
+                formdata.append('email', this.seller.user.email);
+
+                if(this.seller.old_password)
+                    formdata.append('old_password', this.seller.old_password);
+
+                if(this.seller.password)
+                    formdata.append('password', this.seller.password);
+
+                if(this.seller.wb_link)
+                    formdata.append('wb_link', this.seller.wb_link);
+
+                if(this.seller.wb_api_key)
+                    formdata.append('wb_api_key', this.seller.wb_api_key);
+
+                if(this.seller.ozon_link)
+                    formdata.append('ozon_link', this.seller.ozon_link);
+
+                if(this.seller.ozon_client_id)
+                    formdata.append('ozon_client_id', this.seller.ozon_client_id);
+
+                if(this.seller.ozon_api_key)
+                    formdata.append('ozon_api_key', this.seller.ozon_api_key);
+
+                if(this.seller.inn)
+                    formdata.append('inn', this.seller.inn);
+
+                if(this.seller.organization_type)
+                    formdata.append('organization_type', this.seller.organization_type);
+
+                if(this.seller.organization_name)
+                    formdata.append('organization_name', this.seller.organization_name);
 
                 this.Seller.save(this.seller.id, formdata).then(
-                    (data) => {
-                        var user = this.seller.user;
-
-                        if(user){
-                            this.user = user;
-                            localStorage.setItem('user', JSON.stringify(user));
+                    (response) => {
+                        var user = {
+                            'id': this.user.id,
+                            'name': this.seller.user.name,
+                            'email': this.seller.user.email,
+                            'seller_id': this.seller.id,
+                            'organization_name': this.seller.organization_name,
+                            'status': this.user.status,
+                            'role': this.user.role,
+                            'phone': this.user.phone,
+                            'created_at': this.user.created_at,
+                            'channel_name': this.user.channel_name,
+                            'blogger_id': this.user.blogger_id,
+                            'tariffs': this.user.tariffs,
+                            'image': response.image ? response.image : this.user.image,
                         }
+
+                        localStorage.setItem('user', JSON.stringify(user));
+                        this.user = user
 
                         this.Loader.loaderOff('.edit-profile');
                     },

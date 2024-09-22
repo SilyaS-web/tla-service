@@ -65,18 +65,20 @@
             </div>
         </div>
     </section>
+    <Footer></Footer>
 </template>
 <script>
 import {ref} from "vue";
 
 import User from "../../../services/api/User";
 import Header from '../../components/layout/AppHeader.vue'
+import Footer from '../../components/layout/AppFooter.vue'
 import Blogger from "../../../services/api/Blogger";
 
 import Loader from "../../../services/AppLoader";
 
 export default {
-    components:{ Header },
+    components:{ Header, Footer },
     data(){
         return{
             user: ref(null),

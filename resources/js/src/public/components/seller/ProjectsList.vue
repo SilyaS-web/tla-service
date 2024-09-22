@@ -39,7 +39,7 @@
                             <label for="filter-category">Категория</label>
                             <input
                                 @input="getCategories"
-                                @focusout="categories = []"
+                                @focusout="clearCategories"
                                 v-model="currentCategory"
                                 type="text" class="input" name="filter-category" id="filter-category" placeholder="Введите категорию">
                             <input type="text" id = "filter-category-id" hidden>
@@ -124,8 +124,11 @@
                 })
             },
             chooseCategory(category){
-                this.filter.project_category = category.id;
+                this.filter.project_category = category.theme;
                 this.currentCategory = category.theme
+            },
+            clearCategories(){
+                window.setTimeout(() => {this.categories = []}, 150)
             }
         }
     }

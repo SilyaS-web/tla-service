@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Seller;
+use App\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SellerResource;
 use Illuminate\Http\Request;
@@ -54,12 +55,12 @@ class SellerController extends Controller
         $validated = $validator->validated();
 
         $user = $seller->user;
-        if (isset($validated['password'])) {
+        if (isset($validated['password']) && null != $validated['password']) {
             if (auth()->attempt(['phone' => $user->phone, 'password' => $validated['old_password']])) {
                 $user->password = bcrypt($validated['password']);
                 $user->save();
             } else {
-                return  response()->json(['message' => 'Введён неверный пароль'])->setStatusCode(400);
+                return  response()->json(['password' => 'Введён неверный пароль'])->setStatusCode(400);
             }
         }
 
@@ -91,7 +92,7 @@ class SellerController extends Controller
             'organization_name' => $validated['organization_name'] ?? null,
         ]);
 
-        return  response()->json()->setStatusCode(200);
+        return  response()->json(isset($image_path) ? ['image' => 'storage/' . $image_path] : '')->setStatusCode(200);
     }
 
     /**

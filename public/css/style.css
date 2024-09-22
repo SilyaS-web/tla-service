@@ -987,6 +987,7 @@ input[type='range']::-webkit-slider-runnable-track{
     width: 180px;
     top: 101%;
     left: 0;
+    z-index: 1;
 }
 .table-stats__quest:hover .table-stats__quest-text{
     display: block;
@@ -2202,6 +2203,7 @@ input[type='range']::-webkit-slider-runnable-track{
     max-width: 380px;
     border-radius: 0;
     height:fit-content;
+    overflow-x: hidden;
 }
 .projects-list__filter::-webkit-scrollbar {
     width: 12px;               /* ширина scrollbar */

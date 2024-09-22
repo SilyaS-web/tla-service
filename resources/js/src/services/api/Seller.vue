@@ -29,7 +29,7 @@ const Seller = {
     save: (id, formData) => {
         return new Promise((resolve, reject) => {
             axios({
-                method: 'put',
+                method: 'post',
                 url: '/api/sellers/' + id,
                 data: formData
             })

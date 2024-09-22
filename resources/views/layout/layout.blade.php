@@ -12,41 +12,11 @@
     <script src="{{ asset('libs/jquery/jquery-3.7.1.min.js') }}" crossorigin="anonymous"></script>
     <script src="{{ asset('libs/jquery/jquery.maskedinput.min.js') }}"></script>
 
-    <link rel="stylesheet" href="{{ asset('libs/owl/owl.carousel.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('libs/owl/owl.theme.default.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('libs/meter/style.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('libs/range-slider/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/loader.css') }}">
-
-    <script src="{{ asset('libs/chart/chart.js') }}"></script>
-    <script src="{{ asset('libs/funnel/funnel-chart.js') }}"></script>
-
-    <script async src="https://script.click-chat.ru/chat.js?wid=f12436e7-a36d-437d-8783-ec27bf222c55"></script>
-
     <title>@yield('title')</title>
 </head>
 <body>
     <div class="wrapper" style="background-color: #fff;">
         @yield('content')
-
-        <footer class="footer">
-            <div class="footer__container _container">
-                <div class="footer__body">
-                    <a href="https://adswap.ru/privacy" target="_blank" class="footer__policy">
-                        Политика конфиденциальности
-                    </a>
-                    <a href="https://adswap.ru/agreement" target="_blank" class="footer__policy">
-                        Пользовательское соглашение
-                    </a>
-                    <a href="mailto:adswap.ru@ya.ru" class="footer__policy">
-                        adswap.ru@ya.ru
-                    </a>
-                </div>
-            </div>
-        </footer>
 
 {{--        <div class="popup" id="contact-form">--}}
 {{--            <div class="popup__container _container">--}}
@@ -564,35 +534,7 @@
         @include('shared.success-message')
     </div>
 </body>
-<script src="{{ asset("libs/owl/owl.carousel.min.js") }}"></script>
-<script src="{{ asset("js/script.js") }}"></script>
 <script src="{{ asset("js/app.js") }}"></script>
 @yield('scripts')
 
-@if(session()->has('success'))
-<script>
-    notify('info', {
-        title: 'Внимание!'
-        , message: "{{ session('success') }}"
-    });
-
-</script>
-@endif
-@if(session()->has('switch-tab') || request()->get('switch-tab'))
-    @php($tab = request()->get('switch-tab') ?? session('switch-tab'))
-    <script>
-        $(window).on('load', function() {
-            $(document).find('.nav-menu__link[data-content="{{ $tab }}"]').click();
-            window.history.replaceState("", 'Дашборд', '{{ url()->current() }}');
-        })
-    </script>
-@endif
-@if(session()->has('show_tariffs') || (bool)request()->get('show_tariffs'))
-    <script>
-        var tariffsPopup = new Popup('#tariff-popup')
-        tariffsPopup.openPopup();
-
-        $('.btn-tariffs-callus').on('click', () => { tariffsPopup.closePopup() })
-    </script>
-@endif
 </html>

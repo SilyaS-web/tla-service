@@ -160,6 +160,7 @@
         </div>
     </section>
     <call-us-popup ref="callUsPopup"></call-us-popup>
+    <Footer></Footer>
 </template>
 <script>
 import {ref} from "vue";
@@ -168,11 +169,12 @@ import axios from "axios";
 import User from "../../../services/api/User";
 import Seller from "../../../services/api/Seller";
 import Header from '../../components/layout/AppHeader.vue'
+import Footer from '../../components/layout/AppFooter.vue'
 
 import CallUsPopup from '../../../ui/CallUsPopupComponent.vue'
 
 export default {
-    components:{ Header, CallUsPopup },
+    components:{ Header, CallUsPopup, Footer },
     data(){
         return{
             user: ref(null),

@@ -36,21 +36,21 @@
                         <div class="roles-cards__items">
                             <div
                                 v-bind:class="'roles-cards__card' + (user.role == 'seller' ? ' active' : '')"
-                                @click="changeRole"
+                                @click="changeRole('seller')"
                                 data-role="seller">
                                 <img src='img/seller-role.png' alt="">
                                 <p>Селлер</p>
                             </div>
                             <div
                                 v-bind:class="'roles-cards__card' + (user.role == 'blogger' ? ' active' : '')"
-                                @click="changeRole"
+                                @click="changeRole('blogger')"
                                 data-role="blogger">
                                 <img src='img/blogger-role.png' alt="">
                                 <p>Блогер</p>
                             </div>
                             <div
                                 v-bind:class="'roles-cards__card' + (user.role == 'agent' ? ' active' : '')"
-                                @click="changeRole"
+                                @click="changeRole('agent')"
                                 data-role="agent">
                                 <img src='img/agent-role.png' alt="">
                                 <p title="Представитель бренда(Агенство)">Агенство</p>
@@ -147,8 +147,8 @@
             }, 1000)
         },
         methods:{
-            changeRole(e){
-                this.user.role = $(e.currentTarget).data('role');
+            changeRole(role){
+                this.user.role = role;
             },
             async registration(){
                 var isPasswordsMatches = (this.user.password === this.user.repeatPassword);
@@ -170,7 +170,8 @@
                        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
 
                        if(this.user.role == 'blogger'){
-                           this.$router.replace('/blogger/registration')
+                           this.$router.replace('/blogger/register')
+                           return
                        }
 
                        this.$router.replace('/profile')

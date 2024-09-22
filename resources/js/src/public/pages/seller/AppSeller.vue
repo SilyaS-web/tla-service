@@ -45,6 +45,7 @@
             </div>
         </div>
     </section>
+    <Footer></Footer>
 </template>
 <script>
 import {ref} from 'vue'
@@ -66,11 +67,12 @@ import Dashboard from '../../components/seller/AppDashboard.vue'
 import Chat from '../../components/ChatIndex.vue'
 import Aside from '../../components/seller/AppAside.vue'
 import Header from '../../components/layout/AppHeader.vue'
+import Footer from '../../components/layout/AppFooter.vue'
 
 export default{
     components: {
         Aside, CreateProject, Dashboard, ProjectsList,
-        MyProjectsList, BloggersList, Chat, Header
+        MyProjectsList, BloggersList, Chat, Header, Footer
     },
     data(){
         return {
@@ -282,7 +284,6 @@ export default{
 
         async applyFilterProjects(filterData){
             this.Loader.loaderOn('.wrapper .profile__content-inner');
-
             this.projects = await this.Project.getList(filterData);
 
             setTimeout(()=>{

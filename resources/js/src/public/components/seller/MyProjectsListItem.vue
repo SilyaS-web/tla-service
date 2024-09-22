@@ -111,7 +111,9 @@
                         <button
                             @click="getBloggersInWork"
                             class="btn btn-secondary btn-bloggers-in_work">Блогеры в работе</button>
-                        <button class="btn btn-secondary btn-statistics">Статистика</button>
+                        <button
+                            @click="getProjectStatistics"
+                            class="btn btn-secondary btn-statistics">Статистика</button>
 
                         <button
                             v-if="project.is_blogger_access"
@@ -843,32 +845,30 @@ import {ref, shallowRef} from 'vue'
                 return blogger;
             },
             getProjectStatistics(){
-                return new Promise((resolve, reject) => {
-                    this.Loader.loaderOn(`.profile-projects__item[data-id="${this.project.id}"] .projects-statistics`)
+                this.Loader.loaderOn(`.profile-projects__item[data-id="${this.project.id}"] .projects-statistics`)
 
-                    axios({
-                        method: 'get',
-                        url: '/api/projects/' + this.project.id + '/statistics',
-                    })
-                    .then(result => {
-                        if(result.data.statistics.completed_works)
-                            this.completed_works = result.data.statistics.completed_works;
+                axios({
+                    method: 'get',
+                    url: '/api/projects/' + this.project.id + '/statistics',
+                })
+                .then(result => {
+                    if(result.data.statistics.completed_works)
+                        this.completed_works = result.data.statistics.completed_works;
 
-                        if(result.data.statistics.completed_works_statistics)
-                            this.completed_works_statistics = result.data.statistics.completed_works_statistics;
+                    if(result.data.statistics.completed_works_statistics)
+                        this.completed_works_statistics = result.data.statistics.completed_works_statistics;
 
-                        if(result.data.statistics.marketplace_statistics)
-                            this.marketplace_statistics = JSON.parse(result.data.statistics.marketplace_statistics);
-                        console.log(result.data)
-                        this.updateProductStatistics()
+                    if(result.data.statistics.marketplace_statistics)
+                        this.marketplace_statistics = JSON.parse(result.data.statistics.marketplace_statistics);
 
-                        this.Loader.loaderOff()
-                        resolve(result.data)
-                    })
-                    .catch(error => {
-                        console.log(error)
-                        resolve([])
-                    })
+                    this.updateProductStatistics()
+
+                    this.Loader.loaderOff()
+                    resolve(result.data)
+                })
+                .catch(error => {
+                    console.log(error)
+                    resolve([])
                 })
             },
             updateProductStatistics(){
@@ -1028,6 +1028,7 @@ import {ref, shallowRef} from 'vue'
                     this.Project.activate(this.project.id).then((res) => {
                         if(res){
                             this.project.is_blogger_access = 1
+                            this.project.status_name = 'Опубликовано'
                         }
                     })
                 }

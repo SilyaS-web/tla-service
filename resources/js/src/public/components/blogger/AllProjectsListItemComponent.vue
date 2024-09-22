@@ -24,13 +24,13 @@
                     <div class="line__val" style="'width:' +
                     (project.works.map(_w => _w.lost_quantity).reduce((a, b) => a + b, 0) / project.works.map(_w => _w.quantity).reduce((a, b) => a + b, 0)) * 100 + '%'"></div>
                 </div>
-                Осталось мест на интеграцию <span style="font-weight: 700;">{{ project.project_works.map(_w => _w.lost_quantity).reduce((a, b) => a + b, 0) }}/{{ project.project_works.map(_w => _w.quantity).reduce((a, b) => a + b, 0) }}</span>
+                Осталось мест на интеграцию <span style="font-weight: 700;">{{ project.project_works.map(_w => _w.lost_quantity).reduce((a, b) => a + b, 0) }}/{{ project.project_works.map(_w => parseInt(_w.quantity)).reduce((a, b) => a + b, 0) }}</span>
             </div>
             <div class="project-item__format-tags card__row card__tags">
                 <div
                     v-for="work in project.project_works"
                     class="card__tags-item" :data-id="work.id">
-                    <span>{{ work.name }} - {{ work.quantity - work.lost_quantity }}/{{ work.quantity }}</span>
+                    <span>{{ work.name }} - {{ parseInt(work.quantity) - work.lost_quantity }}/{{ work.quantity }}</span>
                 </div>
             </div>
             <div class="project-item__btns">
@@ -94,7 +94,7 @@
             return {
                 isSendOfferPopupOpen: ref(false),
                 offer:ref({
-                    work_id: null,
+                    project_work_id: null,
                     message: null,
                     blogger_id: null,
                 }),
@@ -116,14 +116,14 @@
                 });
 
                 if(data){
-                    this.offer.work_id = data.id
+                    this.offer.project_work_id = data.id
                     this.isSendOfferPopupOpen = true;
                 }
             },
             sendOffer(){
                 this.isSendOfferPopupOpen = false;
 
-                if(!this.offer.work_id){
+                if(!this.offer.project_work_id){
                     notify('error', {
                         title: 'Внимание!',
                         message: 'Невозможно отправить предложение, не выбран формат рекламы'
@@ -136,7 +136,7 @@
 
                 axios({
                     method: 'post',
-                    url: '/api/works/',
+                    url: '/api/works',
                     data: this.offer
                 })
                 .then((response) => {
@@ -144,6 +144,10 @@
                         title: 'Успешно!',
                         message: 'Заявка отправлена.'
                     });
+
+                    this.offer.project_work_id = null;
+                    this.offer.message = null;
+                    this.project.is_blogger_works = true;
                 })
                 .catch((errors) => {
                     notify('error', {
