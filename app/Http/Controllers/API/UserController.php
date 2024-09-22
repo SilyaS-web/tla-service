@@ -123,7 +123,7 @@ class UserController extends Controller
             }
         }
 
-        if (isset($validated['is_active']) && !empty($validated['is_active'])) {
+        if (isset($validated['is_active'])) {
             if ($validated['is_active']) {
                 $works->whereNotNull('status');
             } else {
