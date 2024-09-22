@@ -63,9 +63,9 @@ class User extends Authenticatable
 
     public function works()
     {
-        if ($this->role == 'seller') {
+        if ($this->role == self::SELLER && $this->seller) {
             return $this->seller->works();
-        } else {
+        } else if ($this->role == self::BLOGGER && $this->blogger) {
             return $this->blogger->works();
         }
     }
@@ -126,7 +126,7 @@ class User extends Authenticatable
             }
             return $tariff;
         }
-        
+
         return $tariffs->get();
     }
 

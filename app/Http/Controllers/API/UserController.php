@@ -99,6 +99,7 @@ class UserController extends Controller
     public function works(User $user, Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'created_by' => 'numeric|nullable',
             'is_active' => 'boolean|nullable',
             'order_by_last_message' => 'string|nullable',
             'project_type' => [Rule::in(Project::TYPES), 'nullable'],
@@ -113,6 +114,14 @@ class UserController extends Controller
         $validated = $validator->validated();
 
         $works = $user->works();
+
+        if (isset($validated['created_by']) && !empty($validated['created_by'])) {
+            if ($validated['created_by'] < 0) {
+                $works->where('created_by', '<>', $validated['created_by']);
+            } else {
+                $works->where('created_by', $validated['created_by']);
+            }
+        }
 
         if (isset($validated['is_active']) && !empty($validated['is_active'])) {
             if ($validated['is_active']) {
