@@ -25,6 +25,11 @@ use App\Http\Controllers\WorkController;
 */
 
 Route::get('{any?}', function () {
+    $user = Auth::user();
+    if ($user && $user->role == 'admin') {
+        return view('profile.admin');
+    }
+
     return view('index');
 })->where('any', '.*');
 
