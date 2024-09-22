@@ -106,12 +106,11 @@
             login(){
                 this.User.auth(this.user).then(
                     data => {
-                        if(data.errors){
-                            this.errors = data.errors;
-                            return
-                        }
-
                         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
+
+                        if(data.role == 'admin'){
+                            window.location.href = '/profile/admin'
+                        }
 
                         this.$router.replace('/profile')
                     },
