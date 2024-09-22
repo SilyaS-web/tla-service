@@ -79,8 +79,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::post('/works', [WorkController::class, 'store']);
     Route::get('/works/{work}/deny', [WorkController::class, 'deny']);
-    Route::get('/works/{work_id}/accept', [WorkController::class, 'accept']);
-    Route::get('/works/{work_id}/start', [WorkController::class, 'start']);
+    Route::get('/works/{work}/accept', [WorkController::class, 'accept']);
+    Route::get('/works/{work}/start', [WorkController::class, 'start']);
     Route::get('/works/{work}/confirm', [WorkController::class, 'confirm']);
     Route::post('/works/{work}/stats', [WorkController::class, 'stats']);
 
