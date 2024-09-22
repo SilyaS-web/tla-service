@@ -129,7 +129,8 @@ export default {
 
             var image = $('.tab-content__profile-img').find('input[type="file"]')[0];
 
-            formdata.append('image', image.files[0]);
+            if(image && image.files[0])
+                formdata.append('image', image.files[0]);
 
             this.Blogger.put(this.blogger.id, formdata).then(
                 response => {
@@ -153,6 +154,8 @@ export default {
                     }
 
                     this.Loader.loaderOff('.edit-profile');
+
+
                 },
                 err => {
                     this.errors = err.response.data;

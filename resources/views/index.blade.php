@@ -34,6 +34,7 @@
         <router-view />
     </section>
 </div>
+@include('shared.success-message')
 </body>
 <script src="{{ asset("js/app.js") }}"></script>
 @yield('scripts')

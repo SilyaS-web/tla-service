@@ -58,9 +58,14 @@ export default{
     },
     methods: {
         acceptApplication(){
-            this.Work.accept(this.work.id).then(() => {
-                this.project = null
-            })
+            this.Work.accept(this.work.id).then(
+                () => {
+                    this.project = null
+                },
+                err => {
+
+                }
+            )
         }
     }
 }

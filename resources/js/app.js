@@ -5,14 +5,6 @@ import { createMemoryHistory, createRouter } from 'vue-router'
 
 // admin imports
 import AdminIndex from './src/admin/pages/index.vue'
-import AdminHeader from './src/admin/ui/AppHeader.vue'
-import AdminAside from './src/admin/ui/AppAside.vue'
-import AdminModerationPage from './src/admin/pages/BloggersModeration.vue'
-import AdminBloggersPage from './src/admin/pages/AppBloggers.vue'
-import AdminSellersPage from './src/admin/pages/AppSellers.vue'
-import AdminProjectsPage from './src/admin/pages/AppProjects.vue'
-import AdminOrdersPage from './src/admin/pages/AppOrders.vue'
-import AdminReferalDataPage from './src/admin/pages/ReferalData.vue'
 
 // user imports
 import Auth from './src/auth/pages/AppAuth.vue'
@@ -26,14 +18,6 @@ import Tariffs from './src/public/pages/seller/AppTariffs.vue'
 const adminApp = createApp();
 
 adminApp.component('admin-index', AdminIndex)
-adminApp.component('admin-header', AdminHeader)
-adminApp.component('admin-aside', AdminAside)
-adminApp.component('admin-bloggers-moderation-page', AdminModerationPage)
-adminApp.component('admin-bloggers-page', AdminBloggersPage)
-adminApp.component('admin-sellers-page', AdminSellersPage)
-adminApp.component('admin-projects-page', AdminProjectsPage)
-adminApp.component('admin-orders-page', AdminOrdersPage)
-adminApp.component('admin-referal-data-page', AdminReferalDataPage)
 
 adminApp.mount('#admin-app')
 

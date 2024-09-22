@@ -146,7 +146,7 @@ class UserController extends Controller
         }
 
         if (isset($validated['product_name']) && !empty($validated['product_name'])) {
-            $works->hereHas('project', function (Builder $query) use ($validated) {
+            $works->whereHas('project', function (Builder $query) use ($validated) {
                 $query->where('product_name', $validated['product_name']);
             });
         }

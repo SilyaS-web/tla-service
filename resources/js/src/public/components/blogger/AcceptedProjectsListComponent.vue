@@ -101,7 +101,14 @@
         },
         methods: {
             applyFilter(){
-                this.$emit('applyFilter', this.filter);
+                var filterData = {};
+
+                for(let k in this.filter){
+                    if(this.filter[k])
+                        filterData[k] = this.filter[k]
+                }
+
+                this.$emit('applyFilter', filterData);
             },
             resetFilter(){
                 this.filter = {

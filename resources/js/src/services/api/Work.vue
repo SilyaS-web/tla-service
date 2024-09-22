@@ -23,12 +23,19 @@ const Work = {
             })
         })
     },
-    getUserWorksList: (user_id, created_by = false, is_active = 0) => {
+    getUserWorksList: (user_id, created_by = false, is_active = 0, filterData = false) => {
         return new Promise((resolve, reject) => {
             var params = {is_active: is_active};
 
             if(created_by)
                 params.created_by = created_by;
+
+            if(filterData){
+                for(let k in filterData){
+                    if(filterData[k])
+                        params[k] = filterData[k]
+                }
+            }
 
             axios({
                 method: 'get',
@@ -102,7 +109,7 @@ const Work = {
                     message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'
                 })
 
-                resolve(false)
+                reject(false)
             })
         })
     },
