@@ -26,7 +26,7 @@ const Blogger = {
     put: (id, formData) => {
         return new Promise((resolve, reject) => {
             axios({
-                method: 'put',
+                method: 'post',
                 url: '/api/bloggers/' + id,
                 data: formData
             })

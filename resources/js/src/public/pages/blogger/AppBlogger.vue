@@ -21,7 +21,7 @@
 
                         <!-- Список моих проектов -->
                         <AcceptedProjects
-                            :projects="projects"
+                            :works="inWorkProjectsList"
                             v-on:applyFilter="applyFilterAcceptedProjects">
                         </AcceptedProjects>
 
@@ -62,7 +62,7 @@
         },
         data(){
             return {
-                projects: ref([]),
+                inWorkProjectsList: ref([]),
                 allProjects: ref([]),
                 works: ref([]),
 
@@ -77,7 +77,7 @@
             this.Loader.loaderOn('.wrapper profile__content-inner');
 
             this.user = this.User.getCurrent();
-            this.projects = await this.Project.getUsersProjectsList(this.user.id);
+            this.inWorkProjectsList = await this.Work.getUserWorksList(this.user.id, false, 1);
 
             setTimeout(()=>{
                 this.Loader.loaderOff();
@@ -113,16 +113,12 @@
                     case 'my-projects':
 
                         this.Work.getUserWorksList(this.user.id, false, 1).then(data => {
-                            this.projects = data;
-                            console.log(this.projects)
+                            this.inWorkProjectsList = data;
+
                             setTimeout(()=>{
                                 this.Loader.loaderOff(`#${tab}`);
                             }, 300)
                         })
-
-                        setTimeout(()=>{
-                            this.Loader.loaderOff(`#${tab}`);
-                        }, 300)
 
                         break;
 
@@ -156,7 +152,7 @@
 
             async applyFilterAcceptedProjects(filterData){
                 this.Loader.loaderOn('.wrapper .profile__content-inner');
-                console.log(filterData)
+
                 this.projects = await this.Project.getUsersProjectsList(this.user.id, filterData);
 
                 setTimeout(()=>{

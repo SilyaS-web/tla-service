@@ -58,7 +58,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/bloggers', [BloggerController::class, 'index']);
     Route::get('/bloggers/{blogger}', [BloggerController::class, 'show']);
     Route::post('/bloggers/{blogger}/accept', [BloggerController::class, 'accept']);
-    Route::put('/bloggers/{blogger}', [BloggerController::class, 'update']);
+    Route::post('/bloggers/{blogger}', [BloggerController::class, 'update']);
 
     Route::get('/sellers', [SellerController::class, 'index']);
     Route::get('/sellers/{seller}', [SellerController::class, 'show']);
