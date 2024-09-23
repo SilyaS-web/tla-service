@@ -139,7 +139,7 @@ class PaymentController extends Controller
         try {
             $response = $client->sendInitRequest($initRequest);
             $payment->update([
-                'payment_id' => $response->getPaymentId()
+                'payment_id' => $response->getPaymentId(),
             ]);
 
             if ($from_landing) {
