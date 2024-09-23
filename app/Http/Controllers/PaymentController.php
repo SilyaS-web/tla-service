@@ -177,7 +177,7 @@ class PaymentController extends Controller
     public function regFromPayment(Tariff $tariff)
     {
         $validator = Validator::make(request()->all(), [
-            'quantity' => 'numeric|required',
+            'quantity' => 'numeric|nullable',
             'phone' => 'string|required',
         ]);
 
@@ -194,7 +194,7 @@ class PaymentController extends Controller
             return redirect()->route('login')->with('success', 'Аккаунт с таким номером телефона не найден')->withInput();
         }
 
-        $redirect_url = $this->init($tariff, $validated['quantity'], true, $user->id);
+        $redirect_url = $this->init($tariff, $validated['quantity'] ?? null, true, $user->id);
         return redirect($redirect_url);
     }
 
