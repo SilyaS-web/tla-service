@@ -74,7 +74,7 @@
             }
         },
         async mounted() {
-            this.Loader.loaderOn('.wrapper profile__content-inner');
+            this.Loader.loaderOn('.wrapper .profile__content-inner');
 
             this.user = this.User.getCurrent();
             this.inWorkProjectsList = await this.Work.getUserWorksList(this.user.id, false, 1);

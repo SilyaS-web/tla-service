@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="project"
-        class="list-projects__item project-item" :data-id="project.id">
+        class="list-projects__item project-item">
         <div class="project-item__carousel">
             <div class="project-item__carousel--carousel owl-carousel">
                 <div
@@ -45,15 +45,12 @@
 import {ref} from "vue"
 
     export default{
-        props: ['work'],
+        props: ['project'],
         data(){
             return {
-                project: ref(null)
             }
         },
         mounted(){
-            console.log(this.work)
-            this.project = this.work.project;
         },
         methods: {
             goToChat(){

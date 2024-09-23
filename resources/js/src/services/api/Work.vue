@@ -96,7 +96,7 @@ const Work = {
 
                 notify('info', {
                     title: 'Успешно!',
-                    message: 'Заявка от блогера отклонена.'
+                    message: 'Заявка от блогера принята.'
                 })
 
                 resolve(true);
