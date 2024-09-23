@@ -2179,10 +2179,9 @@ $(window).on('load', function(){
     $(document).on('click', '.btn-tariffs-payment', function(e){
         var btn = $(e.target),
             card = btn.closest('.tariff-card'),
-            tariffID = card.data('id'),
-            quantity = card.find('.quantity-input input').val();
+            tariffID = card.data('id');
 
-        window.location.href = '/payment/' + tariffID + '/init?quantity=' + quantity
+        window.location.href = '/payment/' + tariffID + '/init'
     })
 
     $(document).on('click', '.btn-public', function(e){
