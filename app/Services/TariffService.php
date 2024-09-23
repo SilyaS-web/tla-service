@@ -26,3 +26,4 @@ class TariffService
         return $price_per_piece * $selected_quantity;
     }
 }
+

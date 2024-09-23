@@ -203,8 +203,7 @@
                 this.blogger.platforms = this.platformFields.map(_p => {
                     if(!_p.blogger_platform.platform_id) {
                         _p.blogger_platform.platform_id = _p.id
-                    };
-
+                    }
 
                     var newBloggerPlatforms = {};
 
@@ -214,6 +213,7 @@
 
                     return toRaw(newBloggerPlatforms)
                 })
+
                 this.accept().then(()=>{
                     this.$refs.popup.close()
                     this.resolvePromise(true)

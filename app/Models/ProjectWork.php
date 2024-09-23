@@ -16,17 +16,6 @@ class ProjectWork extends Model
         'finish_date'
     ];
 
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'finish_date',
-        'created_at',
-        'updated_at',
-    ];
-
     public function project() {
         return $this->hasOne(Project::class, 'id', 'project_id');
     }

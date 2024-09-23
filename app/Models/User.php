@@ -51,24 +51,13 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be mutated to dates.
+     * The attributes that should be cast.
      *
-     * @var array
+     * @var array<string, string>
      */
-    protected $dates = [
-        'telegram_verified_at',
-        'created_at',
-        'updated_at',
+    protected $casts = [
+        'telegram_verified_at' => 'datetime',
     ];
-
-    public function works()
-    {
-        if ($this->role == 'seller') {
-            return $this->seller->works();
-        } else {
-            return $this->blogger->works();
-        }
-    }
 
     public function payments()
     {

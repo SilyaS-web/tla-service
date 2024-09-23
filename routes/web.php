@@ -24,10 +24,13 @@ use App\Http\Controllers\WorkController;
 |
 */
 
-Route::get('{any?}', function () {
-    return view('index');
-})->where('any', '.*');
-
+Route::get('/', function () {
+    if (Auth::check()) {
+        return redirect()->route('profile');
+    } else {
+        return redirect()->route('login');
+    }
+});
 
 Route::get('/policy', function () {
     return view('policy');
@@ -40,6 +43,8 @@ Route::prefix('lnk')->group(function () {
 });
 
 Route::prefix('apist')->group(function () {
+    Route::post('/password/reset', [AuthController::class, 'resetPassword']);
+    Route::post('/tg/confirmed', [AuthController::class, 'isTgConfirmed']);
     Route::post('/tg', [AuthController::class, 'setTGPhone']);
     Route::get('/check-tariffs', [SellerController::class, 'checkTariffs']);
     Route::get('/check-projects', [SellerController::class, 'checkProjectWorks']);

@@ -1155,6 +1155,7 @@
 
 
 @section("scripts")
+<script src="{{ asset("libs/meter/script.js") }}"></script>
 <script>
     var mediaQuery = window.matchMedia("(max-width: 911px)");
 
@@ -1314,6 +1315,45 @@
                 , }
             , }
         }
+    , });
+
+    var config = {
+        type: "funnel",
+        data: {
+            datasets: [{
+                data: [30, 60, 90],
+                backgroundColor: [
+                    "#FF6384"
+                    , "#36A2EB"
+                    , "#FFCE56"
+                ]
+                , hoverBackgroundColor: [
+                    "#FF6384"
+                    , "#36A2EB"
+                    , "#FFCE56"
+                ]
+            }]
+            , labels: [
+                "Red"
+                , "Blue"
+                , "Yellow"
+            ]
+        }
+    }
+    var funnelChart = FunnelChart("funnel-graph", {
+        values: [ {{ $total_clicks }}, {{ round($total_clicks / ($subscribers == 0 ? 1 : $subscribers), 3) }}, {{ $total_clicks == 0 ? 0 : round($avg_price / $total_clicks, 1) }} ]
+        , sectionColor: ["#98CBED", "#F0C457", "#FD6567"]
+        , displayPercentageChange: false
+        , pSectionHeightPercent: 100
+        , font: "Inter, sans-serif"
+        , labelWidthPercent: 30
+        , labelFontColor: "#000"
+        , labels: [
+            "Переходы",
+            "ER, %",
+            "CPC, Руб."
+        , ]
+        , maxFontSize: 18
     , });
 
     // $(window).on('resize', function(){

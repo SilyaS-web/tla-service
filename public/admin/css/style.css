@@ -136,6 +136,7 @@ a.btn:hover{
 .btn-delete--icon:hover img{
     filter: invert(32%) sepia(92%) saturate(1116%) hue-rotate(323deg) brightness(85%) contrast(105%);
 }
+
 .w75px{
     width:75px;
 }
@@ -154,6 +155,7 @@ a.btn:hover{
 .w300px{
     width:300px;
 }
+
 .form{
     max-width:580px;
     background-color: #fff;

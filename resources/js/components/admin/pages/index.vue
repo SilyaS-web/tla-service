@@ -37,7 +37,7 @@
 
                     <!-- Список заказов -->
                     <admin-orders-page v-if="isAdmin == 1" :orders="orders"></admin-orders-page>
-                    
+
                     <!-- Список пользователей по реферальной ссылке -->
                     <admin-referal-data-page v-if="isAdmin == 1" :ref_data="referals_data"></admin-referal-data-page>
                 </div>
@@ -108,6 +108,7 @@
                 })
             ]).then(() => {
                 setTimeout(()=>{
+
                     this.loaderOff();
                 }, 500)
             })

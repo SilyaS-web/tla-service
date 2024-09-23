@@ -22,16 +22,6 @@ class Payment extends Model
         'quantity',
     ];
 
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-    ];
-
     public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');

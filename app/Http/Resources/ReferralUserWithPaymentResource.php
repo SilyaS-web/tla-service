@@ -19,9 +19,9 @@ class ReferralUserWithPaymentResource extends JsonResource
             'name' => $this->user->name,
             'phone' => $this->user->phone,
             'role' => $this->user->role,
-            'created_at' => isset($this->user->created_at) ? $this->user->created_at->format('d.m.Y H:i') : null,
+            'created_at' => date_format($this->user->created_at, 'd.m.y H:i'),
             'payment_id' => $this->payment_id,
-            'payment_data' => isset($this->created_at) ? $this->created_at->format('d.m.Y H:i') : null,
+            'payment_data' => date_format($this->created_at, 'd.m.y H:i'),
             'received' => $this->price / 100,
         ];
     }

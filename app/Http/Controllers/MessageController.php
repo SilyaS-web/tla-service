@@ -30,7 +30,6 @@ class MessageController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors(), 400);
         }
-        
         $user = Auth::user();
         if (!$user) {
             $user = User::find($request->user_id);

@@ -3,8 +3,118 @@
 @section('title', $title ?? 'Регистрация')
 
 @section('content')
-<section class="auth" id = "app">
-    <register-page></register-page>
+<section class="auth">
+    <div class="auth__container _container">
+        <div class="auth__body auth__steps">
+            <div class="auth__title title">
+                Зарегистрируйтесь
+            </div>
+            <form class="form auth__form" method="POST" action="{{ route('register') }}">
+                <div class="form-group">
+                    <label for="name">Ваше имя</label>
+                    <input type="text" id="name" name="name" placeholder="Введите ваше имя" class="input input--name" value="{{ old('name') }}">
+                    @error('name')
+                    <span class="error">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="email">Ваш E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="Введите почту" class="input input--email" value="{{ old('email') }}">
+                    @error('email')
+                    <span class="error">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="phone">Номер телефона</label>
+                    <input type="text" id="phone" name="phone" placeholder="Введите ваш номер" class="input input--phone" value="{{ old('phone') }}">
+                    @error('phone')
+                    <span class="error">{{ $message }}</span>
+                    @enderror
+                </div>
+                <script>
+                    $(function() {
+                        $.mask.definitions['h'] = "[0|1|3|4|5|6|7|9]"
+                        $("#phone").mask("+7 (h99) 999-99-99");
+                    });
+
+                </script>
+                <div class="form-group">
+                    <label for="pass">Пароль</label>
+                    <input type="password" id="pass" name="password" placeholder="Введите ваш пароль" class="input input--password">
+                    @error('password')
+                    <span class="error">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="repeat-pass">Повторите пароль</label>
+                    <input type="password" id="repeat-pass" name="password_confirmation" placeholder="Повторите пароль" class="input input--password">
+                    @error('password_confirmation')
+                    <span class="error">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group">
+                    <label for="role">Выберите роль</label>
+                    <div class="roles-cards">
+                        <div class="roles-cards__items">
+                            <div class="roles-cards__card {{ old('role') == 'seller' ? 'active' : '' }}" data-role="seller">
+                                <img src="{{asset('img/seller-role.png')}}" alt="">
+                                <p>Селлер</p>
+                            </div>
+                            <div class="roles-cards__card {{ old('role') == 'blogger' ? 'active' : '' }}" data-role="blogger">
+                                <img src="{{asset('img/blogger-role.png')}}" alt="">
+                                <p>Блогер</p>
+                            </div>
+                            <div class="roles-cards__card {{ old('role') == 'agent' ? 'active' : '' }}" data-role="agent">
+                                <img src="{{asset('img/agent-role.png')}}" alt="">
+                                <p title="Представитель бренда(Агенство)">Агенство</p>
+                            </div>
+                        </div>
+                        <input type="hidden" name="role" value="{{ old('role') }}">
+                    </div>
+                    @error('role')
+                    <span class="error">{{ $message }}</span>
+                    @enderror
+                </div>
+                <div class="form-group tg-confirmation">
+                    <div class="tg-confirmation__row" id="tg-confirmation">
+                        <div class="tg-confirmation__col">
+                            <div class="tg-confirmation__title">
+                                Подтвердите личность
+                            </div>
+                            <div class="tg-confirmation__text">
+                                Перейдите в телеграмм и подтведите свою личность, чтобы получать уведомления о новостях на площадкке.
+                            </div>
+                            <div class="tg-confirmation__btn">
+                                <a target="_blank" href="https://t.me/adswap_bot" class="">Перейти</a>
+                            </div>
+                        </div>
+                        <div class="tg-confirmation__col">
+                            <div class="tg-confirmation__qr" id="tg-qr">
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tg-confirmation__block" id="tg-confirmation__block" >
+                        <div>
+                            <img src="{{ asset('img/approved-aproved-confirm-2-svgrepo-com.svg') }}" />
+                        </div>
+                        <div>Телеграм-аккаунт успешно подтверждён</div>
+                    </div>
+                </div>
+                <div class="form-btns auth__form-btns">
+                    <button class="btn btn-primary next" type="submit">
+                        Зарегистрироваться
+                    </button>
+                    <a href="{{ route('login') }}" class="btn btn-secondary" type="submit">
+                        Войти
+                    </a>
+                </div>
+                <p class="form-addit">
+                    Регистрируясь, вы даёте на это согласие и принимаете условия <a href="https://adswap.ru/privacy">Политики конфиденциальности.</a>
+                </p>
+            </form>
+        </div>
+    </div>
 </section>
 @endsection
 

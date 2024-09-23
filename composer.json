@@ -11,7 +11,7 @@
         "hflabs/dadata": "^24.4",
         "justcommunication-ru/tinkoff-acquiring-api-client": "^1.0",
         "laravel/framework": "^8.75",
-        "laravel/sanctum": "^2.15",
+        "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
         "maatwebsite/excel": "^3.1",
         "matomo/device-detector": "^6.3",
