@@ -28,6 +28,9 @@ Route::get('/profile/admin', function () {
     return view('profile.admin');
 });
 
+Route::get('/blogger/{blogger}', [BloggerController::class, 'show'])->name('blogger-page');
+Route::get('/seller/{seller}', [SellerController::class, 'show'])->name('seller-page');
+
 Route::get('{any?}', function () {
     return view('index');
 })->where('any', '.*');
