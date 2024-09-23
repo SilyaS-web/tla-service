@@ -170,7 +170,6 @@ const Project = {
                 params: filterData
             })
             .then(response => {
-
                 resolve(response.data.projects);
             })
             .catch((errors) => {

@@ -319,10 +319,14 @@
                     this.User.getMessages(work.id, this.user.id).then(data => {
                         this.messages = (data || []);
 
+                        this.currentChatIntervalId = localStorage.getItem('chats_messages_interval_id')
+
                         if(!this.currentChatIntervalId){
                             this.currentChatIntervalId = setInterval(() => {
                                 this.getMessages(this.currentChat);
                             }, 5000)
+
+                            localStorage.setItem('chats_messages_interval_id', this.currentChatIntervalId)
                         }
 
                         resolve(data)

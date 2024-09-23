@@ -286,7 +286,7 @@
         data(){
             return {
                 notifications: ref([]),
-                user: ref(null),
+                user: ref(null),Ц
                 notificationsInterval: ref(null),
                 User
             }
@@ -312,10 +312,12 @@
                 event.preventDefault()
 
                 var notifsIntervalId = localStorage.getItem('notifications_interval_id'),
-                    chatsIntervalId = localStorage.getItem('chats_interval_id');
+                    chatsIntervalId = localStorage.getItem('chats_interval_id'),
+                    chatsMessagesIntervalId = localStorage.getItem('chats_messages_interval_id');
 
-                notifsIntervalId &&  window.clearInterval(notifsIntervalId);
+                notifsIntervalId && window.clearInterval(notifsIntervalId);
                 chatsIntervalId && window.clearInterval(chatsIntervalId);
+                chatsMessagesIntervalId && window.clearInterval(chatsMessagesIntervalId);
 
                 localStorage.clear();
 

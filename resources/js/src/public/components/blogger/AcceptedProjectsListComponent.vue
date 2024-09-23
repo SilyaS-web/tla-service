@@ -13,7 +13,7 @@
                 <ListItem
                     v-if="works.length > 0"
                     v-for="work in works"
-                    :work="work"
+                    :project="work.project"
                 ></ListItem>
                 <span v-else>Проектов нет</span>
             </div>
@@ -101,7 +101,14 @@
         },
         methods: {
             applyFilter(){
-                this.$emit('applyFilter', this.filter);
+                var filterData = {};
+
+                for(let k in this.filter){
+                    if(this.filter[k])
+                        filterData[k] = this.filter[k]
+                }
+
+                this.$emit('applyFilter', filterData);
             },
             resetFilter(){
                 this.filter = {

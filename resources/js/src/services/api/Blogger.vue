@@ -31,6 +31,11 @@ const Blogger = {
                 data: formData
             })
             .then((response) => {
+                notify('info', {
+                    title: 'Успешно!',
+                    message: 'Данные успешно изменены.'
+                });
+                console.log(123)
                 resolve(response.data)
             })
             .catch((errors) => {

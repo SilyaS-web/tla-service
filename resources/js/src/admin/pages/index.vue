@@ -1,19 +1,19 @@
 <template>
-    <div class="burger-menu">
-            <div class="admin-menu__body">
-                <div class="admin-menu__title">
-                    Выберите раздел
-                </div>
-                <nav class="nav admin-menu__nav">
-                    <div class="nav__items">
-                        <a href="" class="nav__link">
-                            Модерация блогеров
-                        </a>
-                    </div>
-                </nav>
-                <a href="/logout" class="admin-menu__leave">Выйти</a>
-            </div>
-        </div>
+<!--    <div class="burger-menu">-->
+<!--            <div class="admin-menu__body">-->
+<!--                <div class="admin-menu__title">-->
+<!--                    Выберите раздел-->
+<!--                </div>-->
+<!--                <nav class="nav admin-menu__nav">-->
+<!--                    <div class="nav__items">-->
+<!--                        <a href="" class="nav__link">-->
+<!--                            Модерация блогеров-->
+<!--                        </a>-->
+<!--                    </div>-->
+<!--                </nav>-->
+<!--                <a href="/logout" class="admin-menu__leave">Выйти</a>-->
+<!--            </div>-->
+<!--        </div>-->
 
     <AdminHeader></AdminHeader>
 

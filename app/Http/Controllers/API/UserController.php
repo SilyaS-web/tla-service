@@ -139,7 +139,7 @@ class UserController extends Controller
 
         if (isset($validated['project_type']) && !empty($validated['project_type'])) {
             $project_ids = Project::whereHas('projectWorks', function (Builder $query) use ($validated, $user) {
-                $query->where('type', $validated['project_type'])->where($user->role.'_id', $user->id);
+                $query->where('type', $validated['project_type']);
             })->get('id')->pluck('id');
 
             $works->whereIn('project_id', $project_ids);

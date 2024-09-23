@@ -74,7 +74,7 @@
             }
         },
         async mounted() {
-            this.Loader.loaderOn('.wrapper profile__content-inner');
+            this.Loader.loaderOn('.wrapper .profile__content-inner');
 
             this.user = this.User.getCurrent();
             this.inWorkProjectsList = await this.Work.getUserWorksList(this.user.id, false, 1);
@@ -153,7 +153,7 @@
             async applyFilterAcceptedProjects(filterData){
                 this.Loader.loaderOn('.wrapper .profile__content-inner');
 
-                this.projects = await this.Project.getUsersProjectsList(this.user.id, filterData);
+                this.inWorkProjectsList = await this.Work.getUserWorksList(this.user.id, false, 1, filterData);
 
                 setTimeout(()=>{
                     this.Loader.loaderOff();

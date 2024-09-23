@@ -34,6 +34,11 @@ const Seller = {
                 data: formData
             })
             .then((response) => {
+                notify('info', {
+                    title: 'Успешно!',
+                    message: 'Данные успешно изменены.'
+                });
+
                 resolve(response.data)
             })
             .catch((data) => {

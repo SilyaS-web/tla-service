@@ -1546,19 +1546,6 @@ class DashboardTabs extends Tabs{
     }
 }
 
-
-function notify(type, content){
-    $('.notification').fadeIn()
-    $('.notification').addClass(type)
-    $('.notification .notification__title').text(content.title);
-    $('.notification .notification__text').text(content.message);
-
-    setTimeout(()=>{
-        $('.notification').fadeOut()
-        $('.notification').removeClass(type)
-    }, 5000)
-}
-
 $(window).on('load', function(){
     $(document).on('click', '.owl-dots', (e) => e.stopPropagation())
 
@@ -2167,3 +2154,16 @@ $(window).on('load', function(){
         }
     })
 })
+
+function notify(type, content){
+    $('.notification').fadeIn()
+    $('.notification').addClass(type)
+    $('.notification .notification__title').text(content.title);
+    $('.notification .notification__text').text(content.message);
+
+    setTimeout(()=>{
+        $('.notification').fadeOut()
+        $('.notification').removeClass(type)
+    }, 5000)
+}
+
