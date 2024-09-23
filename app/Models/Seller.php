@@ -52,6 +52,10 @@ class Seller extends Model
             if (!$tariff && in_array($type, Project::INTEGRATION_TYPES)) {
                 $tariff = $tariffs->where('type', Project::INTEGRATIONS)->first();
             }
+
+            if (!$tariff && in_array($type, Project::BARTER_TYPES)) {
+                $tariff = $tariffs->where('type', Project::BARTER)->first();
+            }
             return $tariff;
         }
 

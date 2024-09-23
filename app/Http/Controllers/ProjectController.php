@@ -380,7 +380,7 @@ class ProjectController extends Controller
         $user = Auth::user();
         foreach ($project->projectWorks as $project_work) {
             $seller_tariff = $user->getActiveTariffs($project_work->type);
-            if (!$seller_tariff || $seller_tariff->quantity < $project_work->quantity) {
+            if (!$seller_tariff || ($seller_tariff->quantity >= 0 && $seller_tariff->quantity < $project_work->quantity) ) {
                 return redirect()->back()->with('success', 'Вашего тарифа недостаточно для того, чтобы опубликовать');
             }
         }
@@ -388,7 +388,8 @@ class ProjectController extends Controller
         foreach ($project->projectWorks as $project_work) {
             $seller_tariff = $user->getActiveTariffs($project_work->type);
             $project_work->update(['finish_date' => $seller_tariff->finish_date]);
-            $seller_tariff->update(['quantity' => $seller_tariff->quantity - $project_work->quantity]);
+            $new_quantity = $seller_tariff->quantity >= 0 ? $seller_tariff->quantity - $project_work->quantity : -1;
+            $seller_tariff->update(['quantity' => $new_quantity]);
         }
 
         $project->update(['is_blogger_access' => true]);
@@ -415,7 +416,8 @@ class ProjectController extends Controller
                 $seller_tariff = $user->getActiveTariffs($project_work->type);
                 if ($seller_tariff) {
                     $lost = $project_work->quantity - $project->works()->where('project_work_id', $project_work->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
-                    $seller_tariff->update(['quantity' => $seller_tariff->quantity + $lost]);
+                    $new_quantity = $seller_tariff->quantity >= 0 ? $seller_tariff->quantity + $lost : -1;
+                    $seller_tariff->update(['quantity' => $new_quantity]);
                 }
             }
         }
