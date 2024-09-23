@@ -44,7 +44,7 @@ class AddNewTariffsLimitless extends Migration
                 'updated_at' => \Carbon\Carbon::now(),
             ],
             [
-                'title' => 'Безлемит',
+                'title' => 'Безлимит',
                 'description' => 'Оплатив этот тариф, вы получаете доступ к получению бартеров на свой товар в течение 30 дней.',
                 'price' => 499000,
                 'type' => Project::BARTER,
