@@ -27,6 +27,7 @@ class AddNewTariffsLimitless extends Migration
 
         DB::table('tariff_groups')->insert([
             [
+                "id" => 9,
                 'title' => 'Безлимит', // 9
                 "created_at" =>  \Carbon\Carbon::now(),
                 "updated_at" => \Carbon\Carbon::now(),
@@ -35,6 +36,7 @@ class AddNewTariffsLimitless extends Migration
 
         DB::table('tariffs')->insert([
             [
+                "id" => 19,
                 'title' => 'Пробный',
                 'description' => 'Оплатив этот тариф, вы получаете доступ к получению бартеров на свой товар в течение 30 дней.',
                 'price' => 0,
@@ -48,6 +50,7 @@ class AddNewTariffsLimitless extends Migration
                 'updated_at' => \Carbon\Carbon::now(),
             ],
             [
+                "id" => 20,
                 'title' => 'Безлимит',
                 'description' => 'Оплатив этот тариф, вы получаете доступ к получению бартеров на свой товар в течение 30 дней.',
                 'price' => 499000,
