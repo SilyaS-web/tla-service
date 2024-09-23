@@ -36,7 +36,8 @@ class UserResource extends JsonResource
             'organization_name' => $organization_name,
             'channel_name' => $channel_name,
             'created_at' => isset($this->created_at) ? $this->created_at->format('d.m.Y H:i') : null,
-            'tariffs' => SellerTariffResource::collection($this->getActiveTariffs())
+            'tariffs' => SellerTariffResource::collection($this->getActiveTariffs()),
+            'is_admin' => (bool) $this->is_admin,
         ];
     }
 }
