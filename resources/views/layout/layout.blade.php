@@ -113,7 +113,7 @@
                             <div class="tarrif-header__items">
                                 @forelse ($seller_tariffs as $seller_tariff)
                                     <div class="tarrif-header__item tarrif-header__adv">
-                                        {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->quantity }}</span> шт.</b>
+                                        {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->quantity < 0 ? 'ꝏ' : $seller_tariff->quantity }}</span> шт.</b>
                                         <div class="tarrif-header__date">
                                             Действует до {{ date('d.m.Y', strtotime($seller_tariff->finish_date)) }}
                                         </div>
@@ -186,7 +186,7 @@
                                 <div class="tarrif-header__items">
                                     @forelse ($seller_tariffs as $seller_tariff)
                                         <div class="tarrif-header__item tarrif-header__adv">
-                                            {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->quantity }}</span> шт.</b>
+                                            {{ $seller_tariff->tariff->tariffGroup->title }} - <b><span class="counter">{{ $seller_tariff->quantity < 0 ? 'ꝏ' : $seller_tariff->quantity }}</span> шт.</b>
                                             <div class="tarrif-header__date">
                                                 Действует до {{ date('d.m.Y', strtotime($seller_tariff->finish_date)) }}
                                             </div>
