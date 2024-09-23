@@ -17,7 +17,7 @@ class AddNewTariffsLimitless extends Migration
     public function up()
     {
         Schema::table('seller_tariffs', function (Blueprint $table) {
-            $table->bigInteger('quantity');
+            $table->bigInteger('quantity')->change();
         });
 
         Tariff::where('id', '<>', 0)->update([
@@ -71,7 +71,7 @@ class AddNewTariffsLimitless extends Migration
     public function down()
     {
         Schema::table('seller_tariffs', function (Blueprint $table) {
-            $table->unsignedBigInteger('quantity');
+            $table->unsignedBigInteger('quantity')->change();
         });
     }
 }
