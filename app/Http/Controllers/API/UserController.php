@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\MessageResource;
 use App\Http\Resources\NotificationResource;
 use App\Http\Resources\ProjectResource;
+use App\Http\Resources\UserResource;
 use App\Http\Resources\WorkResource;
 use App\Models\DbLog;
 use App\Models\Message;
@@ -22,6 +23,14 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function show(User $user) {
+        $data = [
+            'user' => new UserResource($user),
+        ];
+
+        return  response()->json($data)->setStatusCode(200);
+    }
+
     public function ban(User $user)
     {
         $user->status = -1;
