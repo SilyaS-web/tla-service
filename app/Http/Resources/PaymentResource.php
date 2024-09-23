@@ -16,7 +16,7 @@ class PaymentResource extends JsonResource
         return [
             'id' => $this->id,
             'user_id' => $this->user_id,
-            'seller_id' => $this->user->seller->id,
+            'seller_id' => $this->user->seller->id ?? false,
             'payment_id' => $this->payment_id,
             'tariff' => $this->tariff->title . ' - ' . $this->tariff->tariffGroup->title,
             'created_at' => isset($this->created_at) ? $this->created_at->format('d.m.Y') : null,
