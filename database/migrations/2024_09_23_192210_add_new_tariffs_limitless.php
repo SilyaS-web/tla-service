@@ -23,7 +23,7 @@ class AddNewTariffsLimitless extends Migration
 
         DB::table('tariff_groups')->insert([
             [
-                'title' => 'Безлемит', // 9
+                'title' => 'Безлимит', // 9
                 "created_at" =>  \Carbon\Carbon::now(),
                 "updated_at" => \Carbon\Carbon::now(),
             ],
