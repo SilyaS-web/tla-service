@@ -2119,7 +2119,9 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
-    navigator.vibrate([200, 100, 200]);
+    $('#phone').on('focus', () => {
+        navigator.vibrate([200, 100, 200]);
+    })
 
     $(document).on('click', '.roles-cards__card', function(e) {
         var role = $(e.currentTarget).data('role');
