@@ -211,13 +211,13 @@ class ProjectController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return response()->json($validator->errors())->setStatusCode(400);
         }
 
         $validated = $validator->validated();
         $product_images = request()->file('images');
         if (empty($product_images) && empty($validated['uploaded_images'])) {
-            return redirect()->back()->with('success', 'Выберите хотя бы одно изображение для проекта');
+            return response()->json(['images' => 'Выберите хотя бы одно изображение для проекта'])->setStatusCode(400);
         }
 
         foreach ($project->projectFiles as $file) {
@@ -259,8 +259,7 @@ class ProjectController extends Controller
                 }
             }
         }
-
-        return redirect()->route('profile')->with('success', 'Проект успешно обновлён')->with('switch-tab', 'profile-projects');
+        return response()->json()->setStatusCode(200);
     }
 
     public function delete(Project $project)
