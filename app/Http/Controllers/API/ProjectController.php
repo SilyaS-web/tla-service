@@ -203,11 +203,12 @@ class ProjectController extends Controller
             'uploaded_images.*' => 'numeric',
             'images' => 'array',
             'images.*' => 'image|max:10240',
-            'feedback-quantity' => 'numeric|nullable',
-            'inst-quantity' => 'numeric|nullable',
-            'youtube-quantity' => 'numeric|nullable',
-            'vk-quantity' => 'numeric|nullable',
-            'telegram-quantity' => 'numeric|nullable',
+            'quantities' => 'array',
+            'quantities.feedback-quantity' => 'numeric|nullable',
+            'quantities.inst-quantity' => 'numeric|nullable',
+            'quantities.youtube-quantity' => 'numeric|nullable',
+            'quantities.vk-quantity' => 'numeric|nullable',
+            'quantities.telegram-quantity' => 'numeric|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -242,18 +243,18 @@ class ProjectController extends Controller
         foreach (Project::TYPES as $type) {
             $project_work = $project->projectWorks()->where('type', $type)->first();
             if ($project_work) {
-                if (!isset($validated[$type . '-quantity']) || $validated[$type . '-quantity'] == 0) {
+                if (!isset($validated['quantities'][$type . '-quantity']) || $validated['quantities'][$type . '-quantity'] == 0) {
                     $project_work->delete();
                 } else {
                     $project_work->update([
-                        'quantity' => $validated[$type . '-quantity'],
+                        'quantity' => $validated['quantities'][$type . '-quantity'],
                     ]);
                 }
             } else {
-                if (isset($validated[$type . '-quantity']) && $validated[$type . '-quantity'] > 0) {
+                if (isset($validated['quantities'][$type . '-quantity']) && $validated['quantities'][$type . '-quantity'] > 0) {
                     ProjectWork::create([
                         'type' => $type,
-                        'quantity' => $validated[$type . '-quantity'],
+                        'quantity' => $validated['quantities'][$type . '-quantity'],
                         'project_id' => $project->id,
                     ]);
                 }
