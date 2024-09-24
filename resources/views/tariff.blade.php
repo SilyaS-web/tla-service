@@ -42,7 +42,7 @@
                             0 руб
                         </div>
                         <div class="tariff-card__single">
-                            5 бартеров
+                            \ 5 бартеров
                         </div>
                     </div>
 {{--                    <div class="form-group quantity-w" data-max="100" data-min="10">--}}
@@ -73,11 +73,11 @@
                         </div>
                     </div>
                     <div class="tariff-card__prices">
-                        <div class="tariff-card__total">
+                        <div class="tariff-card__total" style="text-wrap:nowrap">
                             4990 руб
                         </div>
                         <div class="tariff-card__single">
-                            ꝏ бартеров
+                            \ неограниченное количество бартеров
                         </div>
                     </div>
 {{--                    <div class="form-group quantity-w" data-max="100" data-min="10">--}}
