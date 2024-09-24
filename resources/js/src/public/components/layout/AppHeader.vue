@@ -286,7 +286,7 @@
         data(){
             return {
                 notifications: ref([]),
-                user: ref(null),Ц
+                user: ref(null),
                 notificationsInterval: ref(null),
                 User
             }

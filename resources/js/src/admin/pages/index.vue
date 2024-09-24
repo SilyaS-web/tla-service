@@ -30,16 +30,16 @@
                 <AdminBloggersPage :bloggers="bloggers" v-on:updateBloggers="updateBloggers"></AdminBloggersPage>
 
                 <!-- Список селлеров -->
-                <AdminSellersPage v-if="isAdmin == 1" :sellers="sellers" v-on:updateSellers="updateSellers"></AdminSellersPage>
+                <AdminSellersPage v-if="isAdmin" :sellers="sellers" v-on:updateSellers="updateSellers"></AdminSellersPage>
 
                 <!-- Список проектов -->
-                <AdminProjectsPage v-if="isAdmin == 1" :projects="projects" v-on:statusManagement="statusManagement"></AdminProjectsPage>
+                <AdminProjectsPage v-if="isAdmin" :projects="projects" v-on:statusManagement="statusManagement"></AdminProjectsPage>
 
                 <!-- Список заказов -->
-                <AdminOrdersPage v-if="isAdmin == 1" :orders="orders"></AdminOrdersPage>
+                <AdminOrdersPage v-if="isAdmin" :orders="orders"></AdminOrdersPage>
 
                 <!-- Список пользователей по реферальной ссылке -->
-                <AdminReferalDataPage v-if="isAdmin == 1" :ref_data="referals_data"></AdminReferalDataPage>
+                <AdminReferalDataPage v-if="isAdmin" :ref_data="referals_data"></AdminReferalDataPage>
             </div>
         </div>
     </section>
@@ -66,6 +66,8 @@
     import AdminProjectsPage from './AppProjects.vue'
     import AdminOrdersPage from './AppOrders.vue'
     import AdminReferalDataPage from './ReferalData.vue'
+    import User from '../../services/api/User'
+    import { useRouter } from 'vue-router'
 
     export default{
         components:{
@@ -74,10 +76,9 @@
             AdminOrdersPage, AdminReferalDataPage
         },
         data(){
-            return Loader
-        },
-        setup() {
             return {
+                user: ref(null),
+                Loader,
                 unverifiedBloggers: ref([]),
                 bloggers: ref([]),
                 sellers: ref([]),
@@ -109,23 +110,35 @@
                         }
                     }
                 }),
-                isAdmin: ref(false)
+                isAdmin: ref(false),
+                User
             }
         },
 
-        async created(){
-            this.loaderOn('.wrapper');
+        async mounted(){
+            this.user = this.User.getCurrent();
 
-            Promise.all([
-                this.getBloggers([0]).then(list => {
-                    this.unverifiedBloggers = (list || []).map(_b => this.findBiggestPlatform(_b));
-                })
-            ]).then(() => {
+            const isAuthenticated = localStorage.getItem('session_token');
+
+            if(isAuthenticated){
+                axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
+            }
+
+            if(!this.user || this.user.role != 'admin'){
+                window.location.href = '/'
+            }
+
+            this.isAdmin = this.user.is_admin;
+
+            this.Loader.loaderOn('.wrapper');
+
+            this.getBloggers([0]).then(list => {
+                this.unverifiedBloggers = (list || []).map(_b => this.findBiggestPlatform(_b));
+
                 setTimeout(()=>{
-                    this.loaderOff();
+                    this.Loader.loaderOff();
                 }, 500)
             })
-            this.isAdmin = parseInt($('.wrapper').data('is-admin'));
         },
 
         methods: {
@@ -234,8 +247,6 @@
                             managers: managers_data
                         }
 
-                        console.log(this.referals_data)
-
                         resolve(true)
                     })
                     .catch(error => {
@@ -269,82 +280,82 @@
                 ])
             },
             updateSellers(){
-                this.loaderOn('#sellers-list')
+                this.Loader.loaderOn('#sellers-list')
                 this.getSellers().then((list) => {
                     this.sellers = list || [];
 
                     setTimeout(()=>{
-                        this.loaderOff()
+                        this.Loader.loaderOff()
                     }, 500)
                 })
             },
             statusManagement(){
-                this.loaderOn('#projects-list')
+                this.Loader.loaderOn('#projects-list')
                 this.getProjects().then((list) => {
                     this.projects = list || [];
 
                     setTimeout(()=>{
-                        this.loaderOff()
+                        this.Loader.loaderOff()
                     }, 500)
                 })
             },
             switchTab(tab){
                 switch(tab){
                     case 'moderation':
-                        this.loaderOn('#moderation')
+                        this.Loader.loaderOn('#moderation')
                         this.getBloggers([0]).then(list => {
                             this.unverifiedBloggers = (list || []).map(_b => this.findBiggestPlatform(_b));
                             setTimeout(()=>{
-                                this.loaderOff()
+                                this.Loader.loaderOff()
                             }, 500)
                         })
                         break;
 
                     case 'blogers-list':
-                        this.loaderOn('#blogers-list')
+                        this.Loader.loaderOn('#blogers-list')
                         this.getBloggers([1, -1]).then(list => {
                             this.bloggers = (list || []).map(_b => this.findBiggestPlatform(_b));
                             setTimeout(()=>{
-                                this.loaderOff()
+                                this.Loader.loaderOff()
                             }, 500)
                         })
                         break;
 
                     case 'sellers-list':
-                        this.loaderOn('#sellers-list')
+                        this.Loader.loaderOn('#sellers-list')
                         this.getSellers().then((list) => {
                             this.sellers = list || [];
                             setTimeout(()=>{
-                                this.loaderOff()
+                                this.Loader.loaderOff()
                             }, 500)
                         })
                         break;
 
                     case 'projects-list':
-                        this.loaderOn('#projects-list')
+                        this.Loader.loaderOn('#projects-list')
                         this.getProjects().then((list) => {
                             this.projects = list || [];
                             setTimeout(()=>{
-                                this.loaderOff()
+                                this.Loader.loaderOff()
                             }, 500)
                         })
                         break
 
                     case 'payment-history':
-                        this.loaderOn('#payment-history')
+                        this.Loader.loaderOn('#payment-history')
                         this.getOrders().then((list) => {
                             this.orders = list || [];
                             setTimeout(()=>{
-                                this.loaderOff()
+                                this.Loader.loaderOff()
                             }, 500)
                         })
                         break
 
                     case 'referral':
-                        this.loaderOn('#referral')
+                        this.Loader.loaderOn('#referral')
                         this.getReferalsData().then((data) => {
                             setTimeout(()=>{
-                                this.loaderOff()
+                                this.Loader.loaderOff()
                             }, 500)
                         })
                         break

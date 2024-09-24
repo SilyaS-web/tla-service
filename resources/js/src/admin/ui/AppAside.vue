@@ -12,19 +12,19 @@
                             <img src="/admin/img/blog-icon.svg" alt="" class="nav__link-img">
                             Список блогеров
                         </a>
-                        <a v-on:click="switchTab" v-if="isAdmin == 1" href="" class="nav__link tab" data-content="sellers-list" title="Список селлеров">
+                        <a v-on:click="switchTab" v-if="isAdmin" href="" class="nav__link tab" data-content="sellers-list" title="Список селлеров">
                             <img src="/admin/img/money-icon.svg" alt="" class="nav__link-img">
                             Список селлеров
                         </a>
-                        <a v-on:click="switchTab" v-if="isAdmin == 1" href="" class="nav__link tab" data-content="projects-list" title="Модерация проектов">
+                        <a v-on:click="switchTab" v-if="isAdmin" href="" class="nav__link tab" data-content="projects-list" title="Модерация проектов">
                             <img src="/admin/img/list-icon.svg" alt="" class="nav__link-img">
                             Модерация проектов
                         </a>
-                        <a v-on:click="switchTab" v-if="isAdmin == 1" href="#" class="nav__link tab" data-content="payment-history" title="История заказов">
+                        <a v-on:click="switchTab" v-if="isAdmin" href="#" class="nav__link tab" data-content="payment-history" title="История заказов">
                             <img src="/admin/img/history-icon.svg" alt="" class="nav__link-img">
                             История заказов
                         </a>
-                        <a v-on:click="switchTab" v-if="isAdmin == 1" href="#" class="nav__link tab" data-content="referral" title="Реферальные ссылки">
+                        <a v-on:click="switchTab" v-if="isAdmin" href="#" class="nav__link tab" data-content="referral" title="Реферальные ссылки">
                             <img src="/admin/img/link-icon.svg" alt="" class="nav__link-img">
                             Реферальные ссылки
                         </a>
@@ -45,7 +45,7 @@
         methods:{
             switchTab(event){
                 this.$emit('switchTab', $(event.target).data('content'))
-                this.tabClick(event)
+                this.tabClick($(event.target).data('content'))
             }
         }
     }

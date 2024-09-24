@@ -164,7 +164,7 @@ class BloggerController extends Controller
         }
 
         TgService::sendModeration($user->name . ' оставил заявку на модерацию');
-        return redirect()->route('profile');
+        return response()->json([])->setStatusCode(200);
     }
 
     public function show(Blogger $blogger)
