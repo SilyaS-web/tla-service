@@ -15,7 +15,7 @@
                     <select id="country" name="country" class="input input--country select" v-model="blogger.country_id">
                         <option
                             v-for="country in countries"
-                            value="{{ country.id }}">
+                            :value="country.id">
                             {{ country.name }}
                         </option>
                     </select>
@@ -39,7 +39,6 @@
                     <div class="form-formats">
                         <div
                             v-for="theme in themes"
-                            :theme="theme"
                             class="form__row form-format">
                             <input
                                 :id="'theme-' + theme.id"
@@ -86,7 +85,9 @@
                     <span class="error" v-if="errors.image">{{ errors.image }}</span>
                 </div>
                 <div class="form-btns auth__form-btns" style="margin-top:32px">
-                    <button class="btn btn-primary next" type="submit">
+                    <button
+                        @click="sendToModeration"
+                        class="btn btn-primary next" type="submit">
                         Отправить на модерацию
                     </button>
                 </div>
@@ -100,6 +101,10 @@
 
 <script>
     import InputFile from "../../ui/forms/InputFile";
+
+    import Themes from "../../services/api/Themes";
+
+    import axios from 'axios';
     import {ref} from "vue";
 
     export default{
@@ -108,15 +113,11 @@
             return {
                 blogger:{},
                 errors: {},
-                themes: {},
+                themes: ref({}),
                 countries: [
                     {
                         id: 1,
-                        name: 'Российская Федерация'
-                    },
-                    {
-                        id: 2,
-                        name: 'Беларусь'
+                        name: 'Россия'
                     },
                 ],
                 platformFields: ref([
@@ -124,41 +125,81 @@
                         name: 'Telegram',
                         key: 'Telegram',
                         prefix: 'tg',
-                        id: 1,
+                        platform_id: 1,
                         link: null
                     },
                     {
                         name: 'Ins',
                         key: 'Instagram',
                         prefix: 'inst',
-                        id: 3,
+                        platform_id: 3,
                         link: null
                     },
                     {
                         name: 'Ytube',
                         key: 'Youtube',
                         prefix: 'yt',
-                        id: 2,
+                        platform_id: 2,
                         link: null
                     },
                     {
                         name: 'Вконтакте',
                         key: 'VK',
                         prefix: 'vk',
-                        id: 4,
+                        platform_id: 4,
                         link: null
                     },
                 ]),
+                Themes
             }
         },
+        async mounted() {
+            this.themes = await this.Themes.getList();
+        },
         methods: {
-            chooseTheme(event){
+            chooseTheme(e){
                 var list = $('.form-format .form-format__check:checked');
 
                 if(list.length > 3){
                     $(e.target).prop('checked', false);
                     notify('info', {title: 'Внимание', message: 'Нельзя выбрать больше 3-х тематик'});
                 }
+            },
+            sendToModeration(){
+                var formdata = new FormData;
+
+                for(let k in this.blogger){
+                    if(!['platforms', 'themes'].includes(k))
+                        formdata.append(k, this.blogger[k])
+                }
+
+                var themes = $('.form-format .form-format__check:checked');
+
+                for (let i = 0; i < themes.length; i++){
+                    formdata.append(`themes[${i}]`, $(themes[i]).val())
+                }
+
+                for (let i = 0; i < this.platformFields.length; i++){
+                    formdata.append(`platforms[${i}]`, this.platformFields[i])
+                }
+
+                var image = $('.tab-content__profile-img-upload').find('input[type="file"]')[0];
+
+                if(image && image.files[0])
+                    formdata.append('image', image.files[0]);
+
+                axios({
+                    method: 'post',
+                    url: '/api/bloggers',
+                    data: formdata
+                })
+                .then((data) => {
+                    this.
+                    this.$router.replace('/moderation')
+                })
+                .catch(() =>{
+                    console.log('err')
+                })
             }
         }
     }

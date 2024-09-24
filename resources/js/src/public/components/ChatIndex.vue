@@ -47,9 +47,11 @@
                                     Проект завершен
                                 </div>
                             </div>
-                            <div class="chat__overflow chat__overflow--tariff" style="z-index: 1; display:none">
+                            <div
+                                v-if="isLostIntegrationQuantityZero"
+                                class="chat__overflow chat__overflow--tariff" style="z-index: 1;">
                                 <div class="chat__overflow-text">
-
+                                    Все доступные места на интеграцию заняты
                                 </div>
                             </div>
                             <div class="chat__back">
@@ -146,7 +148,9 @@
                                     <button
                                         @click="sendMessage"
                                         class="btn btn-primary">Отправить</button>
-                                    <a href="" class="btn btn-secondary btn-action" id="">Подтвердить выполнение проекта</a>
+                                    <a
+                                        v-if=""
+                                        href="" class="btn btn-secondary" id="">Проект завершен</a>
                                 </div>
                             </div>
 
@@ -186,7 +190,7 @@
     </div>
 </template>
 <script>
-    import {ref} from "vue";
+import {reactive, ref} from "vue";
 
     import User from '../../services/api/User.vue'
     import moment from "moment";
@@ -204,6 +208,7 @@
                     message: null,
                     file: null
                 }),
+                isLostIntegrationQuantityZero: ref(false),
                 currentChat: ref(null),
                 currentChatIntervalId: ref(null),
                 chatsListIntervalId: ref(null),
@@ -308,8 +313,20 @@
                 })
             },
             chooseChat(work){
+                this.works = this.works.map(_w => {
+                    if(_w.id == work.id){
+                        _w.new_messages_count = 0
+                    }
+
+                    return _w;
+                })
+
+                this.isLostIntegrationQuantityZero = false;
+
+                work.btnData = this.getChatBtnData(work);
+
                 this.getMessages(work).then(() => {
-                    $('.chat__messages').animate({scrollTop: '10000px' }, 0);
+                    $('.chat__messages').animate({scrollTop: '100000px' }, 0);
                 })
             },
             getMessages(work){
@@ -334,20 +351,14 @@
                 })
             },
             getChats(){
-                return new Promise((resolve, reject) => {
-                    this.User.getWorks(this.user.id).then(data => {
-                        var list = (data || []);
+                this.User.getWorks(this.user.id).then(data => {
+                    this.works = (data || [])
 
-                        var newMessages = this.works.filter(w => w.new_messages_count).map(w => w.new_messages_count).reduce((a, b) => a + b, 0);
+                    var newMessages = this.works.filter(w => w.new_messages_count).map(w => w.new_messages_count).reduce((a, b) => a + b, 0);
 
-                        if(newMessages && newMessages > 0){
-                            this.$emit('newMessages', newMessages)
-                        }
-
-                        this.works = list
-
-                        resolve(data)
-                    })
+                    if(newMessages && newMessages > 0){
+                        this.$emit('newMessages', newMessages)
+                    }
                 })
             },
             getMessageClass(message){
@@ -394,6 +405,60 @@
             openImage(src){
                 this.openedImageUrl = src;
                 this.imageIsOpen = true;
+            },
+            getChatBtnData(work){
+                if(work && (work.status == 'pending' || work.status == null) && work.project_work.lost_quantity < 1){
+                    this.isLostIntegrationQuantityZero = true
+                }
+
+                if(work && work.status == 'completed'){
+                    return {
+                        title: 'Проект завершен',
+                    }
+                }
+                else if(work && work.status == 'progress'){
+                    if(work.project_work.type != 'feedback' && work.statistics == null){
+                        if(this.user.role == 'blogger'){
+                            return {
+                                title: 'Прикрепить статистику',
+                                action: 'confirm'
+                            }
+                        }
+                        else{
+                            return {
+                                title: 'Ожидаем статистику от блогера',
+                            }
+                        }
+                    }
+                    else if(this.user.role == 'blogger' && work.confirmed_by_blogger_at != null){
+                        return {
+                            title: 'Ожидаем ответа от ' + work.partner_user.name
+                        }
+                    }
+                    else if(this.user.role == 'seller' && work.confirmed_by_seller_at != null){
+                        return {
+                            title: 'Завершить проект',
+                            action: 'confirm'
+                        }
+                    }
+                }
+                else if(work && work.status == 'pending'){
+                    if(this.user.role == 'blogger' && work.accepted_by_blogger_at != null){
+                        return {
+                            title: 'Ожидаем ответа от ' + work.partner_user.name
+                        }
+                    }
+                    else if(this.user.role == 'seller' && work.accepted_by_seller_at != null){
+                        return {
+                            title: 'Ожидаем ответа от ' + work.partner_user.name,
+                        }
+                    }
+
+                    return {
+                        title: 'Начать работу',
+                        action: 'start'
+                    }
+                }
             }
         }
     }

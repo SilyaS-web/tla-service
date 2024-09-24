@@ -13,7 +13,6 @@
             <div class='list-projects__items admin-view__content-wrap'>
                 <ProjectsItem
                     v-for="project in projects"
-                    :projects="projects"
                     :project="project"
                     v-on:statusManagement="statusManagement"
                 ></ProjectsItem>

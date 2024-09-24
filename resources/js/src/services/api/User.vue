@@ -2,14 +2,14 @@
     import axios from 'axios'
     import { useRouter } from 'vue-router'
 
-    const router = useRouter();
-
     const User = {
         getCurrent: () => {
             let user = localStorage.getItem('user');
 
+            const router = useRouter();
+
             if(!user){
-                router.replace({ name: 'login' })
+                router.push({ name: 'Login' })
             }
 
             return JSON.parse(user);
