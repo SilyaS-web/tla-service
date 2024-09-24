@@ -146,7 +146,12 @@
                                     <button
                                         @click="sendMessage"
                                         class="btn btn-primary">Отправить</button>
-                                    <a href="" class="btn btn-secondary btn-action" id="">Подтвердить выполнение проекта</a>
+                                    <a
+                                        v-if="currentChat && currentChat.status == 'completed'"
+                                        href="" class="btn btn-secondary" id="">Проект завершен</a>
+                                    <a
+                                        v-else-if="currentChat && (currentChat.status == 'progress' && currentChat.status)"
+                                        href="" class="btn btn-secondary btn-action" id="">Подтвердить выполнение проекта</a>
                                 </div>
                             </div>
 
@@ -186,7 +191,7 @@
     </div>
 </template>
 <script>
-    import {ref} from "vue";
+import {reactive, ref} from "vue";
 
     import User from '../../services/api/User.vue'
     import moment from "moment";
@@ -308,8 +313,15 @@
                 })
             },
             chooseChat(work){
+                this.works = this.works.map(_w => {
+                    if(_w.id == work.id){
+                        _w.new_messages_count = 0
+                    }
+
+                    return _w;
+                })
                 this.getMessages(work).then(() => {
-                    $('.chat__messages').animate({scrollTop: '10000px' }, 0);
+                    $('.chat__messages').animate({scrollTop: '100000px' }, 0);
                 })
             },
             getMessages(work){
@@ -334,20 +346,14 @@
                 })
             },
             getChats(){
-                return new Promise((resolve, reject) => {
-                    this.User.getWorks(this.user.id).then(data => {
-                        var list = (data || []);
+                this.User.getWorks(this.user.id).then(data => {
+                    this.works = (data || [])
 
-                        var newMessages = this.works.filter(w => w.new_messages_count).map(w => w.new_messages_count).reduce((a, b) => a + b, 0);
+                    var newMessages = this.works.filter(w => w.new_messages_count).map(w => w.new_messages_count).reduce((a, b) => a + b, 0);
 
-                        if(newMessages && newMessages > 0){
-                            this.$emit('newMessages', newMessages)
-                        }
-
-                        this.works = list
-
-                        resolve(data)
-                    })
+                    if(newMessages && newMessages > 0){
+                        this.$emit('newMessages', newMessages)
+                    }
                 })
             },
             getMessageClass(message){

@@ -22584,9 +22584,15 @@ __webpack_require__.r(__webpack_exports__);
       });
     },
     chooseChat: function chooseChat(work) {
+      this.works = this.works.map(function (_w) {
+        if (_w.id == work.id) {
+          _w.new_messages_count = 0;
+        }
+        return _w;
+      });
       this.getMessages(work).then(function () {
         $('.chat__messages').animate({
-          scrollTop: '10000px'
+          scrollTop: '100000px'
         }, 0);
       });
     },
@@ -22609,22 +22615,18 @@ __webpack_require__.r(__webpack_exports__);
     },
     getChats: function getChats() {
       var _this5 = this;
-      return new Promise(function (resolve, reject) {
-        _this5.User.getWorks(_this5.user.id).then(function (data) {
-          var list = data || [];
-          var newMessages = _this5.works.filter(function (w) {
-            return w.new_messages_count;
-          }).map(function (w) {
-            return w.new_messages_count;
-          }).reduce(function (a, b) {
-            return a + b;
-          }, 0);
-          if (newMessages && newMessages > 0) {
-            _this5.$emit('newMessages', newMessages);
-          }
-          _this5.works = list;
-          resolve(data);
-        });
+      this.User.getWorks(this.user.id).then(function (data) {
+        _this5.works = data || [];
+        var newMessages = _this5.works.filter(function (w) {
+          return w.new_messages_count;
+        }).map(function (w) {
+          return w.new_messages_count;
+        }).reduce(function (a, b) {
+          return a + b;
+        }, 0);
+        if (newMessages && newMessages > 0) {
+          _this5.$emit('newMessages', newMessages);
+        }
       });
     },
     getMessageClass: function getMessageClass(message) {
@@ -26961,7 +26963,7 @@ var _hoisted_5 = {
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_ProjectsItem = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ProjectsItem");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, " Список проектов • " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.projects.length), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-blogers__search form-group\">\n                    <input type=\"name\" id=\"sellers-search\" class=\"input\" placeholder=\"Введите название\">\n                    <button class=\"btn btn-primary sellers-search-btn\">Найти</button>\n                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.projects, function (project) {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, " Список проектов • " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.projects.length), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"admin-blogers__search form-group\">\r\n                    <input type=\"name\" id=\"sellers-search\" class=\"input\" placeholder=\"Введите название\">\r\n                    <button class=\"btn btn-primary sellers-search-btn\">Найти</button>\r\n                </div> ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.projects, function (project) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ProjectsItem, {
       project: project,
       onStatusManagement: $options.statusManagement
@@ -28751,55 +28753,62 @@ var _hoisted_43 = {
     "gap": "8px"
   }
 };
-var _hoisted_44 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
+var _hoisted_44 = {
+  key: 0,
+  href: "",
+  "class": "btn btn-secondary",
+  id: ""
+};
+var _hoisted_45 = {
+  key: 1,
   href: "",
   "class": "btn btn-secondary btn-action",
   id: ""
-}, "Подтвердить выполнение проекта", -1 /* HOISTED */);
-var _hoisted_45 = {
-  key: 0,
-  "class": "chat__overflow"
 };
 var _hoisted_46 = {
   key: 0,
-  "class": "chat__overflow-text"
+  "class": "chat__overflow"
 };
 var _hoisted_47 = {
-  key: 0
+  key: 0,
+  "class": "chat__overflow-text"
 };
 var _hoisted_48 = {
-  key: 1
+  key: 0
 };
 var _hoisted_49 = {
+  key: 1
+};
+var _hoisted_50 = {
   key: 1,
   "class": "chat__overflow-text"
 };
-var _hoisted_50 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Выберите чат, чтобы начать переписку", -1 /* HOISTED */);
-var _hoisted_51 = [_hoisted_50];
-var _hoisted_52 = {
+var _hoisted_51 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Выберите чат, чтобы начать переписку", -1 /* HOISTED */);
+var _hoisted_52 = [_hoisted_51];
+var _hoisted_53 = {
   key: 0,
   "class": "popup",
   id: "chat-img",
   style: {}
 };
-var _hoisted_53 = {
+var _hoisted_54 = {
   "class": "popup__container _container"
 };
-var _hoisted_54 = {
+var _hoisted_55 = {
   "class": "popup__body",
   style: {
     "max-width": "790px"
   }
 };
-var _hoisted_55 = {
+var _hoisted_56 = {
   "class": "chat-img__w"
 };
-var _hoisted_56 = ["src"];
-var _hoisted_57 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_57 = ["src"];
+var _hoisted_58 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "img/close-icon.svg",
   alt: ""
 }, null, -1 /* HOISTED */);
-var _hoisted_58 = [_hoisted_57];
+var _hoisted_59 = [_hoisted_58];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [$data.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [$data.user.role == 'blogger' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_4, " Чат с селлерами ")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_5, " Чат с блогерами "))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [$data.works.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     key: 0
@@ -28871,19 +28880,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.sendMessage && $options.sendMessage.apply($options, arguments);
     }),
     "class": "btn btn-primary"
-  }, "Отправить"), _hoisted_44])]), !$data.currentChat ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_45, [$data.works.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_46, [$data.user.role == 'seller' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_47, "Сейчас у вас нет возможности переписываться с блогерами. Чтобы отправлять сообщения создайте проект.")) : $data.user.role == 'blogger' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_48, " Сейчас у вас нет возможности общаться с другими пользователями. Чтобы начать переписку, начните сотрудничество с селлерами.")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_49, [].concat(_hoisted_51)))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), $data.imageIsOpen ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_52, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_53, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  }, "Отправить"), $data.currentChat && $data.currentChat.status == 'completed' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", _hoisted_44, "Проект завершен")) : $data.currentChat && $data.currentChat.status == 'progress' && $data.currentChat.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", _hoisted_45, "Подтвердить выполнение проекта")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), !$data.currentChat ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_46, [$data.works.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_47, [$data.user.role == 'seller' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_48, "Сейчас у вас нет возможности переписываться с блогерами. Чтобы отправлять сообщения создайте проект.")) : $data.user.role == 'blogger' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_49, " Сейчас у вас нет возможности общаться с другими пользователями. Чтобы начать переписку, начните сотрудничество с селлерами.")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_50, [].concat(_hoisted_52)))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), $data.imageIsOpen ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_53, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: $data.openedImageUrl,
     alt: "",
     "class": "chat-img",
     style: {
       "width": "100%"
     }
-  }, null, 8 /* PROPS */, _hoisted_56)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }, null, 8 /* PROPS */, _hoisted_57)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     onClick: _cache[3] || (_cache[3] = function ($event) {
       return $data.imageIsOpen = false;
     }),
     "class": "close-popup"
-  }, [].concat(_hoisted_58))])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
+  }, [].concat(_hoisted_59))])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
