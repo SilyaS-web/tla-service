@@ -47,9 +47,11 @@
                                     Проект завершен
                                 </div>
                             </div>
-                            <div class="chat__overflow chat__overflow--tariff" style="z-index: 1; display:none">
+                            <div
+                                v-if="isLostIntegrationQuantityZero"
+                                class="chat__overflow chat__overflow--tariff" style="z-index: 1;">
                                 <div class="chat__overflow-text">
-
+                                    Все доступные места на интеграцию заняты
                                 </div>
                             </div>
                             <div class="chat__back">
@@ -147,11 +149,8 @@
                                         @click="sendMessage"
                                         class="btn btn-primary">Отправить</button>
                                     <a
-                                        v-if="currentChat && currentChat.status == 'completed'"
+                                        v-if=""
                                         href="" class="btn btn-secondary" id="">Проект завершен</a>
-                                    <a
-                                        v-else-if="currentChat && (currentChat.status == 'progress' && currentChat.status)"
-                                        href="" class="btn btn-secondary btn-action" id="">Подтвердить выполнение проекта</a>
                                 </div>
                             </div>
 
@@ -209,6 +208,7 @@ import {reactive, ref} from "vue";
                     message: null,
                     file: null
                 }),
+                isLostIntegrationQuantityZero: ref(false),
                 currentChat: ref(null),
                 currentChatIntervalId: ref(null),
                 chatsListIntervalId: ref(null),
@@ -320,6 +320,11 @@ import {reactive, ref} from "vue";
 
                     return _w;
                 })
+
+                this.isLostIntegrationQuantityZero = false;
+
+                work.btnData = this.getChatBtnData(work);
+
                 this.getMessages(work).then(() => {
                     $('.chat__messages').animate({scrollTop: '100000px' }, 0);
                 })
@@ -400,6 +405,60 @@ import {reactive, ref} from "vue";
             openImage(src){
                 this.openedImageUrl = src;
                 this.imageIsOpen = true;
+            },
+            getChatBtnData(work){
+                if(work && (work.status == 'pending' || work.status == null) && work.project_work.lost_quantity < 1){
+                    this.isLostIntegrationQuantityZero = true
+                }
+
+                if(work && work.status == 'completed'){
+                    return {
+                        title: 'Проект завершен',
+                    }
+                }
+                else if(work && work.status == 'progress'){
+                    if(work.project_work.type != 'feedback' && work.statistics == null){
+                        if(this.user.role == 'blogger'){
+                            return {
+                                title: 'Прикрепить статистику',
+                                action: 'confirm'
+                            }
+                        }
+                        else{
+                            return {
+                                title: 'Ожидаем статистику от блогера',
+                            }
+                        }
+                    }
+                    else if(this.user.role == 'blogger' && work.confirmed_by_blogger_at != null){
+                        return {
+                            title: 'Ожидаем ответа от ' + work.partner_user.name
+                        }
+                    }
+                    else if(this.user.role == 'seller' && work.confirmed_by_seller_at != null){
+                        return {
+                            title: 'Завершить проект',
+                            action: 'confirm'
+                        }
+                    }
+                }
+                else if(work && work.status == 'pending'){
+                    if(this.user.role == 'blogger' && work.accepted_by_blogger_at != null){
+                        return {
+                            title: 'Ожидаем ответа от ' + work.partner_user.name
+                        }
+                    }
+                    else if(this.user.role == 'seller' && work.accepted_by_seller_at != null){
+                        return {
+                            title: 'Ожидаем ответа от ' + work.partner_user.name,
+                        }
+                    }
+
+                    return {
+                        title: 'Начать работу',
+                        action: 'start'
+                    }
+                }
             }
         }
     }
