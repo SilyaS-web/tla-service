@@ -34,7 +34,7 @@
                             Пробный
                         </div>
                         <div class="tariff-card__subtitle">
-                            7 дней бесплатно
+                            30 дней бесплатно
                         </div>
                     </div>
                     <div class="tariff-card__prices">
