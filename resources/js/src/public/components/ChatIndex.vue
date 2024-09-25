@@ -504,6 +504,16 @@ import {reactive, ref} from "vue";
 
                     var newMessages = this.works.filter(w => w.new_messages_count).map(w => w.new_messages_count).reduce((a, b) => a + b, 0);
 
+                    if(this.currentChat) {
+                        var work = this.works.find(w => w.id == this.currentChat.id)
+                        this.currentChat.status = work ? work.status : this.currentChat.status;
+                        this.currentChat.accepted_by_seller_at = work ? work.accepted_by_seller_at : this.currentChat.accepted_by_seller_at;
+                        this.currentChat.accepted_by_blogger_at = work ? work.accepted_by_blogger_at : this.currentChat.accepted_by_blogger_at;
+                        this.currentChat.confirmed_by_blogger_at = work ? work.confirmed_by_blogger_at : this.currentChat.confirmed_by_blogger_at;
+                        this.currentChat.confirmed_by_seller_at = work ? work.confirmed_by_seller_at : this.currentChat.confirmed_by_seller_at;
+
+                        this.getChatBtnData(this.currentChat)
+                    }
                     if(newMessages && newMessages > 0){
                         this.$emit('newMessages', newMessages)
                     }
@@ -558,7 +568,7 @@ import {reactive, ref} from "vue";
                 if(work && (work.status == 'pending' || work.status == null) && work.project_work.lost_quantity < 1){
                     this.isLostIntegrationQuantityZero = true
                 }
-
+                console.log(work)
                 if(work && work.status == 'completed'){
                     this.isWorkCompleted = true;
                     return {

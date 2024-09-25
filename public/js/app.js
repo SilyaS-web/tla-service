@@ -22711,6 +22711,17 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         }).reduce(function (a, b) {
           return a + b;
         }, 0);
+        if (_this8.currentChat) {
+          var work = _this8.works.find(function (w) {
+            return w.id == _this8.currentChat.id;
+          });
+          _this8.currentChat.status = work ? work.status : _this8.currentChat.status;
+          _this8.currentChat.accepted_by_seller_at = work ? work.accepted_by_seller_at : _this8.currentChat.accepted_by_seller_at;
+          _this8.currentChat.accepted_by_blogger_at = work ? work.accepted_by_blogger_at : _this8.currentChat.accepted_by_blogger_at;
+          _this8.currentChat.confirmed_by_blogger_at = work ? work.confirmed_by_blogger_at : _this8.currentChat.confirmed_by_blogger_at;
+          _this8.currentChat.confirmed_by_seller_at = work ? work.confirmed_by_seller_at : _this8.currentChat.confirmed_by_seller_at;
+          _this8.getChatBtnData(_this8.currentChat);
+        }
         if (newMessages && newMessages > 0) {
           _this8.$emit('newMessages', newMessages);
         }
@@ -22762,6 +22773,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       if (work && (work.status == 'pending' || work.status == null) && work.project_work.lost_quantity < 1) {
         this.isLostIntegrationQuantityZero = true;
       }
+      console.log(work);
       if (work && work.status == 'completed') {
         this.isWorkCompleted = true;
         return {
