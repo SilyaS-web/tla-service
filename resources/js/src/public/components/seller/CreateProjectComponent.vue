@@ -288,7 +288,7 @@
                                     <input type="number" class="input" v-model="project.telegram_quantity" name="telegram-quantity">
                                 </div>
                                 <div
-                                    v-on:click="(function(e){ if(project.telegram_quantity > 0) project.telegram_quantity -= 1})()"
+                                    v-on:click="(function(e){ if(project.telegram_quantity > 0) project.telegram_quantity += 1})()"
                                     class="quantity-plus">
                                     <img src="img/plus-icon.svg" alt="">
                                 </div>
@@ -361,7 +361,8 @@
                 var images = $('.upload-files__body').find('input[type="file"]');
 
                 images.each((i, v) => {
-                    this.project.images.push($(v)[0].files)
+                    if($(v)[0].files)
+                        this.project.images.push($(v)[0].files)
                 })
 
                 this.Project.create(this.project).then(data => {

@@ -536,7 +536,7 @@
                                                     </div>
                                                 </span>
                                                 <span v-else>
-                                                    {{ Math.round(work.statistics.views / (work.blogger.subscribers == 0 ? 1 : work.blogger.subscribers) * 100) }}
+                                                    {{ Math.round(work.statistics.views / (findBiggestPlatform(work.blogger).summaryPlatform.subscriber_quantity == 0 ? 1 : findBiggestPlatform(work.blogger).summaryPlatform.subscriber_quantity) * 100) }}
                                                 </span>
                                             </div>
                                             <div class="table-stats__col" style="width: 9%;">
@@ -563,7 +563,7 @@
                                                         <p>Запросите статистику у блогера</p>
                                                     </div>
                                                 </span>
-                                                <span v-else>{{ Math.round(project.total_clicks / (work.statistics.views == 0 ? 1 : work.statistics.views) * 100) }}</span>
+                                                <span v-else>{{ Math.round(project.clicks_count / (work.statistics.views == 0 ? 1 : work.statistics.views) * 100) }}</span>
                                             </div>
                                             <div class="table-stats__col" style="width: 14%;">
                                                 {{ work.confirmed_by_seller_at }}
@@ -600,8 +600,8 @@
                 </div>
                 <div class="profile-projects__opts">
                     <a
-                        v-if="project.works_count == 0 && project.is_bloggers_access == 0"
-                        :href="'apist/projects/' + project.id + '/edit'"
+                        v-if="project.works_count == 0 && !project.is_bloggers_access"
+                        @click="editProject(project)"
                         class="profile-projects__opts-item">
                         <img src="img/pencil-icon.svg" alt="">
                         <div class="profile-projects__opts-name">Редактировать</div>
@@ -781,6 +781,9 @@ import {ref, shallowRef} from 'vue'
             });
         },
         methods:{
+            editProject(project){
+                this.$emit('edit', project)
+            },
             goToChat(work){
                 this.$emit('switchTab', work.id)
             },
@@ -831,6 +834,10 @@ import {ref, shallowRef} from 'vue'
                 })
             },
             findBiggestPlatform(blogger){
+                if(!blogger){
+                    return { subscriber_quantity: 0 };
+                }
+
                 var summaryPlatform = { subscriber_quantity: 0 };
 
                 if(blogger.platforms){
@@ -841,7 +848,7 @@ import {ref, shallowRef} from 'vue'
                 }
 
                 blogger.summaryPlatform = summaryPlatform;
-
+                console.log(blogger)
                 return blogger;
             },
             getProjectStatistics(){

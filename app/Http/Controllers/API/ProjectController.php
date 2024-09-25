@@ -203,12 +203,11 @@ class ProjectController extends Controller
             'uploaded_images.*' => 'numeric',
             'images' => 'array',
             'images.*' => 'image|max:10240',
-            'quantities' => 'array',
-            'quantities.feedback-quantity' => 'numeric|nullable',
-            'quantities.inst-quantity' => 'numeric|nullable',
-            'quantities.youtube-quantity' => 'numeric|nullable',
-            'quantities.vk-quantity' => 'numeric|nullable',
-            'quantities.telegram-quantity' => 'numeric|nullable',
+            'feedback_quantity' => 'numeric|nullable',
+            'inst_quantity' => 'numeric|nullable',
+            'youtube_quantity' => 'numeric|nullable',
+            'vk_quantity' => 'numeric|nullable',
+            'telegram_quantity' => 'numeric|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -243,24 +242,24 @@ class ProjectController extends Controller
         foreach (Project::TYPES as $type) {
             $project_work = $project->projectWorks()->where('type', $type)->first();
             if ($project_work) {
-                if (!isset($validated['quantities'][$type . '-quantity']) || $validated['quantities'][$type . '-quantity'] == 0) {
+                if (!isset($validated[$type . '_quantity']) || $validated[$type . '_quantity'] == 0) {
                     $project_work->delete();
                 } else {
                     $project_work->update([
-                        'quantity' => $validated['quantities'][$type . '-quantity'],
+                        'quantity' => $validated[$type . '_quantity'],
                     ]);
                 }
             } else {
-                if (isset($validated['quantities'][$type . '-quantity']) && $validated['quantities'][$type . '-quantity'] > 0) {
+                if (isset($validated[$type . '_quantity']) && $validated[$type . '_quantity'] > 0) {
                     ProjectWork::create([
                         'type' => $type,
-                        'quantity' => $validated['quantities'][$type . '-quantity'],
+                        'quantity' => $validated[$type . '_quantity'],
                         'project_id' => $project->id,
                     ]);
                 }
             }
         }
-        return response()->json()->setStatusCode(200);
+        return response()->json('ты молодец')->setStatusCode(200);
     }
 
     public function delete(Project $project)

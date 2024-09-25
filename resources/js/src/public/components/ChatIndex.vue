@@ -42,7 +42,9 @@
                             </div>
                         </div>
                         <div class="chat__right">
-                            <div class="chat__overflow chat__overflow--completed" style="z-index: 1; display:none">
+                            <div
+                                v-if="isWorkCompleted"
+                                class="chat__overflow chat__overflow--completed" style="z-index: 1;">
                                 <div class="chat__overflow-text">
                                     Проект завершен
                                 </div>
@@ -148,9 +150,11 @@
                                     <button
                                         @click="sendMessage"
                                         class="btn btn-primary">Отправить</button>
-                                    <a
-                                        v-if=""
-                                        href="" class="btn btn-secondary" id="">Проект завершен</a>
+                                    <button
+                                        v-if="currentChat && currentChat.btnData"
+                                        @click="btnAction(currentChat.btnData.action)"
+                                        href=""
+                                        class="btn btn-secondary">{{ currentChat.btnData.title }}</button>
                                 </div>
                             </div>
 
@@ -188,11 +192,76 @@
             </div>
         </div>
     </div>
+
+    <div
+        v-if="isBloggerStatisticsPopupOpen"
+        class="popup" id="" style="">
+        <div class="popup__container _container">
+            <div class="popup__body">
+                <div class="popup__header">
+                    <div class="popup__title title">
+                        Заполните статистику
+                    </div>
+                    <div class="popup__subtitle">
+                        После того, как вы прикрепите статистику по интеграции, проект будет завершен
+                    </div>
+                </div>
+                <div class="popup__form">
+                    <div class="form-group">
+                        <label for="views">Просмотры</label>
+                        <input
+                            v-model="bloggerStatistics.views"
+                            id="views" name="views" type="views" class="input">
+                    </div>
+                    <div class="form-group">
+                        <label for="likes">Лайки</label>
+                        <input
+                            v-model="bloggerStatistics.likes"
+                            id="likes" name="likes" type="likes" class="input">
+                    </div>
+                    <div class="form-group">
+                        <label for="reposts">Репосты</label>
+                        <input
+                            v-model="bloggerStatistics.reposts"
+                            id="reposts" name="reposts" type="reposts" class="input">
+                    </div>
+                    <div class="form-group">
+                        <label for="platform">Площадка</label>
+                        <select
+                            v-model="bloggerStatistics.platform_id"
+                            id="platform" name="platform" class="input">
+                            <option value="">Не выбрано</option>
+                            <option
+                                v-for="platform in platforms"
+                                :value="platform.id">{{ platform.title }}</option>
+                        </select>
+                    </div>
+                    <div class="input-file input-file--stat tab-content__profile-img-upload" style="padding-left:0; margin-bottom:20px;">
+                        <label for="statistics-file">{{ uploadStatisticsFileTitle }}</label>
+                        <input
+                            @change="uploadStatisticsFileTitle = 'Файлы загружены'"
+                            id="statistics-file" type="file" multiple hidden>
+                    </div>
+                    <button
+                        @click="sendStatistics"
+                        class="btn btn-primary">
+                        Отправить
+                    </button>
+                </div>
+                <div
+                    @click="isBloggerStatisticsPopupOpen = false"
+                    class="close-popup">
+                    <img src="img/close-icon.svg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
 <script>
 import {reactive, ref} from "vue";
 
     import User from '../../services/api/User.vue'
+    import Platforms from '../../services/api/Platforms.vue'
     import moment from "moment";
     import axios from "axios";
 
@@ -208,15 +277,22 @@ import {reactive, ref} from "vue";
                     message: null,
                     file: null
                 }),
+                platforms: ref([]),
                 isLostIntegrationQuantityZero: ref(false),
                 currentChat: ref(null),
                 currentChatIntervalId: ref(null),
                 chatsListIntervalId: ref(null),
                 user: ref(null),
-                User
+                isBloggerStatisticsPopupOpen: ref(false),
+                bloggerStatistics: ref({
+
+                }),
+                uploadStatisticsFileTitle: 'Прикрепить отчет по статистике',
+                User, Platforms
             }
         },
-        mounted(){
+        async mounted(){
+            this.platforms = await this.Platforms.getList();
             this.user = this.User.getCurrent();
 
             this.getChats();
@@ -257,6 +333,77 @@ import {reactive, ref} from "vue";
             }
         },
         methods: {
+            sendStatistics(){
+                var formData = new FormData;
+
+                for (let k in this.bloggerStatistics){
+                    if(this.bloggerStatistics)
+                        formData.append(k, this.bloggerStatistics[k])
+                }
+
+                var images = $('.statistics-file')
+
+                images.each((i, v) => {
+                    if($(v)[0].files)
+                        formData.append('images[' + i + ']', $(v)[0].files[0])
+                })
+
+                axios({
+                    method: 'post',
+                    url: '/api/works/' + this.currentChat.id + '/stats',
+                    data: formData
+                })
+                .then(() => {
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Статистика отправлена.'
+                    })
+                    this.isBloggerStatisticsPopupOpen = false;
+                    this.getChatBtnData(this.currentChat);
+
+                    for (let k in this.bloggerStatistics){
+                        this.bloggerStatistics[k] = null;
+                    }
+
+                    this.uploadStatisticsFileTitle = 'Прикрепить отчет по статистике'
+                    $('#statistics-file').val(null)
+                })
+                .catch(() => {
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'Не удалось отправить статистику, попробуйте позже. Возможно какие-то поля не заполнены, либо заполнены некорректно.'
+                    })
+                })
+            },
+            btnAction(action){
+                if(!action){
+                    return
+                }
+
+                if(action != 'stats'){
+                    axios({
+                        method: 'get',
+                        url: '/api/works/' + this.currentChat.id + '/' + action,
+                    })
+                    .then(() => {
+                        notify('info', {
+                            title: 'Успешно!',
+                            message: 'Статус проекта успешо изменен.'
+                        })
+
+                        this.getChatBtnData(this.currentChat);
+                    })
+                    .catch(() => {
+                        notify('error', {
+                            title: 'Внимание!',
+                            message: 'Не удалось изменить статус проекта, попробуйте позже.'
+                        })
+                    })
+                }
+                else{
+                    this.isBloggerStatisticsPopupOpen = true;
+                }
+            },
             onFileChange(e) {
                 var files = e.target.files || e.dataTransfer.files;
 
@@ -322,12 +469,23 @@ import {reactive, ref} from "vue";
                 })
 
                 this.isLostIntegrationQuantityZero = false;
+                this.isWorkCompleted = false;
 
                 work.btnData = this.getChatBtnData(work);
 
-                this.getMessages(work).then(() => {
-                    $('.chat__messages').animate({scrollTop: '100000px' }, 0);
-                })
+                this.currentChatIntervalId = localStorage.getItem('chats_messages_interval_id')
+
+                if(!this.currentChatIntervalId){
+                    this.currentChatIntervalId = setInterval(() => {
+                        this.getMessages(this.currentChat);
+                    }, 5000)
+
+                    localStorage.setItem('chats_messages_interval_id', this.currentChatIntervalId)
+                }
+
+                this.getMessages(work)
+
+                $('.chat__messages').animate({scrollTop: '100000px' }, 0);
             },
             getMessages(work){
                 return new Promise((resolve, reject) => {
@@ -335,16 +493,6 @@ import {reactive, ref} from "vue";
 
                     this.User.getMessages(work.id, this.user.id).then(data => {
                         this.messages = (data || []);
-
-                        this.currentChatIntervalId = localStorage.getItem('chats_messages_interval_id')
-
-                        if(!this.currentChatIntervalId){
-                            this.currentChatIntervalId = setInterval(() => {
-                                this.getMessages(this.currentChat);
-                            }, 5000)
-
-                            localStorage.setItem('chats_messages_interval_id', this.currentChatIntervalId)
-                        }
 
                         resolve(data)
                     })
@@ -412,6 +560,7 @@ import {reactive, ref} from "vue";
                 }
 
                 if(work && work.status == 'completed'){
+                    this.isWorkCompleted = true;
                     return {
                         title: 'Проект завершен',
                     }
@@ -421,7 +570,7 @@ import {reactive, ref} from "vue";
                         if(this.user.role == 'blogger'){
                             return {
                                 title: 'Прикрепить статистику',
-                                action: 'confirm'
+                                action: 'stats'
                             }
                         }
                         else{
@@ -435,7 +584,7 @@ import {reactive, ref} from "vue";
                             title: 'Ожидаем ответа от ' + work.partner_user.name
                         }
                     }
-                    else if(this.user.role == 'seller' && work.confirmed_by_seller_at != null){
+                    else if(this.user.role == 'seller' && work.confirmed_by_seller_at == null){
                         return {
                             title: 'Завершить проект',
                             action: 'confirm'
@@ -453,11 +602,11 @@ import {reactive, ref} from "vue";
                             title: 'Ожидаем ответа от ' + work.partner_user.name,
                         }
                     }
+                }
 
-                    return {
-                        title: 'Начать работу',
-                        action: 'start'
-                    }
+                return {
+                    title: 'Начать работу',
+                    action: 'start'
                 }
             }
         }

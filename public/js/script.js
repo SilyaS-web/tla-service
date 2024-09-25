@@ -63,59 +63,7 @@ class CreateProject extends Quest {
                             <input type="text" data-id="" hidden>
                         </div>`
     dataProps = {
-        projectName: {
-            set: (value)=>{
-                $(this.node).find('#project-name').val(value);
-            },
-            get: ()=>{
-                return $(this.node).find('#project-name').val();
-            }
-        },
-        productName: {
-            set: (value)=>{
-                $(this.node).find('#product-name').val(value);
-            },
-            get: ()=>{
-                return $(this.node).find('#product-name').val();
-            }
-        },
-        productLink: {
-            set: (value)=>{
-                $(this.node).find('#project-link').val(value);
-            },
-            get: ()=>{
-                return $(this.node).find('#project-link').val();
-            }
-        },
-        productImg: {
-            get: ()=>{
-                return $(this.node).find('#product-img').prop('files');
-            }
-        },
-        productPrice: {
-            set: (value)=>{
-                return $(this.node).find('#project-price').val(value);
-            },
-            get: ()=>{
-                return $(this.node).find('#project-price').val();
-            }
-        },
-        format: {
-            set: (type, value)=>{
-                $(this.node).find(`#${type}`).val(value);
-            },
-            get: ()=>{
-                return $(this.node).find('.marketing-format').find('input:checked').attr('id');
-            }
-        },
-        feedback_q: {
-            set: ()=>{
 
-            },
-            get: ()=>{
-                return $(this.node).find('#feedback-quantity').find('input:checked').attr('id');
-            }
-        }
     }
 
     plusFile = ()=>{
@@ -143,29 +91,7 @@ class CreateProject extends Quest {
     }
 
     sendData = ()=>{
-        var questData = {}, isAnyFieldEmpty = false;
 
-        for(let key in this.dataProps){
-            let value = this.dataProps[key].get();
-
-            if(value == '' || value == null || value == undefined){
-                isAnyFieldEmpty = true;
-                notify('error', {'title': 'Ошибка.', 'message': `Поле "${this.emptyErrorsKeys[key]}" должно быть заполнено`})
-                break;
-            }
-
-            questData[key] = value;
-        }
-
-        if(!isAnyFieldEmpty){
-            var data = new FormData();
-
-            for(var key in questData){
-                data.append(key, questData[key]);
-            }
-
-            notify('success', {'title': 'Успешно!', 'message': 'Проект успешно сохранен, можете посмортеть список проектов во вкладке "Мои проекты"'})
-        }
     }
 }
 
@@ -1647,25 +1573,25 @@ $(window).on('load', function(){
     //     choosePopupBlogger.projectID = product_id
     // })
 
-    $(document).on('click', '#blogger .project-item', function(e){
-        if($(e.target).closest('.project-item__btns').length == 0){
-            console.log(e.target);
-            popupBlogerProjectMoreInfo.projectId = $(e.target).closest('.project-item').data('id');
-            popupBlogerProjectMoreInfo.getProjectInfo()
-            $(popupBlogerProjectMoreInfo.node).find('.btn-blogger-send-offer').css('display', 'block')
-            popupBlogerProjectMoreInfo.openPopup();
-        }
-    })
-    $(document).on('click', '#seller .project-item', function(e){
-        if($(e.target).closest('.project-item__btns').length == 0){
-            console.log(e.target);
-            popupBlogerProjectMoreInfo.projectId = $(e.target).closest('.project-item').data('id');
-
-            popupBlogerProjectMoreInfo.getProjectInfo()
-            $(popupBlogerProjectMoreInfo.node).find('.btn-blogger-send-offer').css('display', 'none')
-            popupBlogerProjectMoreInfo.openPopup();
-        }
-    })
+    // $(document).on('click', '#blogger .project-item', function(e){
+    //     if($(e.target).closest('.project-item__btns').length == 0){
+    //         console.log(e.target);
+    //         popupBlogerProjectMoreInfo.projectId = $(e.target).closest('.project-item').data('id');
+    //         popupBlogerProjectMoreInfo.getProjectInfo()
+    //         $(popupBlogerProjectMoreInfo.node).find('.btn-blogger-send-offer').css('display', 'block')
+    //         popupBlogerProjectMoreInfo.openPopup();
+    //     }
+    // })
+    // $(document).on('click', '#seller .project-item', function(e){
+    //     if($(e.target).closest('.project-item__btns').length == 0){
+    //         console.log(e.target);
+    //         popupBlogerProjectMoreInfo.projectId = $(e.target).closest('.project-item').data('id');
+    //
+    //         popupBlogerProjectMoreInfo.getProjectInfo()
+    //         $(popupBlogerProjectMoreInfo.node).find('.btn-blogger-send-offer').css('display', 'none')
+    //         popupBlogerProjectMoreInfo.openPopup();
+    //     }
+    // })
 
     $(document).find('.form-stat__title').on('click', function(e){
         $(e.target).closest('.form-stat').toggleClass('active');
@@ -1913,7 +1839,7 @@ $(window).on('load', function(){
         e.stopPropagation()
     })
 
-    var quest = new CreateProject('.create-project__quest');
+    var quest = new CreateProject('#create-project');
 
     // burger menu
     $(document).on('click', '.burger-menu__close', function(){

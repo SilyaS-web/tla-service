@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <a href="#" class="header__col header__notif header__profile-item--js" title="Уведомления">
-                        <div class="header__profile-notif header-notif-count" style="display: none" v-if="notifications && notifications.length > 0">
+                        <div class="header__profile-notif header-notif-count" v-if="notifications && notifications.length > 0">
                             {{ notifications.length }}
                         </div>
                         <img src="/img/notif-icon.svg" alt="" class="">
@@ -340,10 +340,17 @@
             },
 
             goToChat(work_id){
-                this.$emit('switchTab', 'chat', {
-                    item: 'chat',
-                    id: work_id
-                });
+                console.log(this.$router.currentRoute.value.name)
+                if(this.$router.currentRoute.value.name === 'Profile'){
+                    this.$emit('switchTab', 'chat', {
+                        item: 'chat',
+                        id: work_id
+                    });
+
+                    return;
+                }
+
+                this.$router.replace('/profile/chat/' + work_id)
             },
 
             hideNotification(notification){

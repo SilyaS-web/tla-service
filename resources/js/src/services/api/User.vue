@@ -14,6 +14,28 @@
 
             return JSON.parse(user);
         },
+        getUser(){
+            return new Promise((resolve, reject) => {
+                let user = localStorage.getItem('user');
+
+                const router = useRouter();
+
+                if(!user){
+                    router.push({ name: 'Login' })
+                }
+
+                user = JSON.parse(user);
+
+                axios({
+                    method:'get',
+                    url: '/api/users/' + user.id
+                })
+                .then((response) => {
+                    localStorage.setItem('user', JSON.stringify(response.data.user))
+                    resolve(response.data.user)
+                })
+            })
+        },
         auth: (data) => {
             return new Promise((resolve, reject) => {
                 axios({

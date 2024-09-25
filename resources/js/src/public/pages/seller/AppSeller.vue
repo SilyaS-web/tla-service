@@ -118,11 +118,18 @@ export default{
         setTimeout(() => {
             this.Loader.loaderOff('#dashboard');
         }, 300)
+
+        if(this.$router.currentRoute.value.params && this.$router.currentRoute.value.params.item && this.$router.currentRoute.value.params.id){
+            await this.switchTab('chat', {
+                item: this.$router.currentRoute.value.params.item,
+                id: this.$router.currentRoute.value.params.id
+            })
+        }
     },
     methods:{
         async switchTab(tab, currentItem = false){
             this.Tabs.tabClick(tab)
-
+            console.log(currentItem)
             this.currentItem = null
 
             if(currentItem)

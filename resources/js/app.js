@@ -15,11 +15,13 @@ import SellerEditProfile from './src/public/pages/seller/EditProfile.vue'
 import BloggerEditProfile from './src/public/pages/blogger/EditProfile.vue'
 import Tariffs from './src/public/pages/seller/AppTariffs.vue'
 import Moderation from './src/public/pages/blogger/AppModeration.vue'
+import Banned from './src/public/pages/AppBanned.vue'
+import User from './src/services/api/User.vue'
 
 const app = createApp();
 
 const routes = [
-    { path: '/profile', name: 'Profile', component: Profile },
+    { path: '/profile/:item?/:id?', name: 'Profile', component: Profile },
     { path: '/register', name: 'Register', component: Register },
     { path: '/blogger/register', name: 'BloggerRegister', component: BloggerRegister },
     { path: '/login', name: 'Login', component: Auth },
@@ -27,6 +29,7 @@ const routes = [
     { path: '/blogger/edit-profile', name: 'BloggerEditProfile', component: BloggerEditProfile },
     { path: '/tariffs', name: 'Tariffs', component: Tariffs },
     { path: '/moderation', name: 'Moderation', component: Moderation },
+    { path: '/banned', name: 'Banned', component: Banned },
 ]
 
 const router = createRouter({
@@ -41,8 +44,12 @@ const router = createRouter({
     },
 })
 
-router.beforeEach((to, from) => {
+router.beforeEach(async (to, from) => {
     const isAuthenticated = localStorage.getItem('session_token');
+
+    if(isAuthenticated){
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
+    }
 
     if (!['Register', 'Login'].includes(to.name) && !isAuthenticated) {
         return {
@@ -50,7 +57,13 @@ router.beforeEach((to, from) => {
         }
     }
     else if(!to.name && isAuthenticated){
-        var user = JSON.parse(localStorage.getItem('user'));
+        var user = await User.getUser();
+
+        if(user.status == -1){
+            return {
+                name: 'Banned'
+            }
+        }
 
         if(user.role == 'blogger'){
             if(!user.blogger_id){
@@ -69,14 +82,11 @@ router.beforeEach((to, from) => {
             name: 'Profile'
         }
     }
-
-    if(isAuthenticated){
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
-    }
 })
 
 localStorage.setItem('notifications_interval_id', '')
 localStorage.setItem('chats_interval_id', '')
+localStorage.setItem('chats_messages_interval_id', '')
 
 app.component('admin-index', AdminIndex)
 

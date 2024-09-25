@@ -89,7 +89,7 @@
                 </div>
                 <div class="card__row" style="text-align: center; justify-content:center">
                     <a
-                        v-bind:href="'/blogger/' + blogger.id"
+                        v-bind:href="'/bloggers/' + blogger.id"
                         target="_blank"
                         class=""
                         style="color:rgba(0,0,0,.4);
