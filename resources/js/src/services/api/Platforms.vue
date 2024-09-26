@@ -9,6 +9,7 @@ const Platforms = {
 
             if(platforms && platforms.length > 0){
                 resolve(platforms)
+                return;
             }
 
             axios({
@@ -16,8 +17,10 @@ const Platforms = {
                 url: 'api/platforms'
             })
             .then(response => {
-                localStorage.setItem('platforms', JSON.stringify(response.data.platforms))
-                resolve(response.data.platforms);
+                console.log(platforms)
+                var platforms = response.data.platforms || [];
+                localStorage.setItem('platforms', JSON.stringify(platforms))
+                resolve(platforms);
             })
             .catch((errors) => {
                 console.log(errors);

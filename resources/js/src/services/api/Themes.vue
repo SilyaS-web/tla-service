@@ -16,8 +16,9 @@ const Themes = {
                 url: 'api/themes'
             })
             .then(response => {
-                localStorage.setItem('themes', JSON.stringify(response.data.themes))
-                resolve(response.data.themes);
+                var themes = response.data.themes || [];
+                localStorage.setItem('themes', JSON.stringify(themes))
+                resolve(themes);
             })
             .catch((errors) => {
                 console.log(errors);

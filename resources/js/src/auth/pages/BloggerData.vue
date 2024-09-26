@@ -58,9 +58,10 @@
                 </div>
                 <div
                     v-for="field in platformFields"
-                    :field="field"
-                    class="popup__form-row popup__form-stat form-stat">
-                    <div class="form-stat__title">
+                    :class="'popup__form-row popup__form-stat form-stat ' + (field.active ? 'active' : '')">
+                    <div
+                        @click="field.active = !field.active"
+                        class="form-stat__title">
                         {{ field.name }}
                     </div>
                     <div class="form-stat__content">
@@ -87,7 +88,7 @@
                 <div class="form-btns auth__form-btns" style="margin-top:32px">
                     <button
                         @click="sendToModeration"
-                        class="btn btn-primary next" type="submit">
+                        class="btn btn-primary">
                         Отправить на модерацию
                     </button>
                 </div>
@@ -126,28 +127,32 @@
                         key: 'Telegram',
                         prefix: 'tg',
                         platform_id: 1,
-                        link: null
+                        link: null,
+                        active: false
                     },
                     {
                         name: 'Ins',
                         key: 'Instagram',
                         prefix: 'inst',
                         platform_id: 3,
-                        link: null
+                        link: null,
+                        active: false
                     },
                     {
                         name: 'Ytube',
                         key: 'Youtube',
                         prefix: 'yt',
                         platform_id: 2,
-                        link: null
+                        link: null,
+                        active: false
                     },
                     {
                         name: 'Вконтакте',
                         key: 'VK',
                         prefix: 'vk',
                         platform_id: 4,
-                        link: null
+                        link: null,
+                        active: false
                     },
                 ]),
                 Themes
@@ -180,7 +185,7 @@
                 }
 
                 for (let i = 0; i < this.platformFields.length; i++){
-                    formdata.append(`platforms[${i}]`, this.platformFields[i])
+                    formdata.append(`platforms[${i}]`, JSON.stringify(this.platformFields[i]))
                 }
 
                 var image = $('.tab-content__profile-img-upload').find('input[type="file"]')[0];
@@ -194,7 +199,6 @@
                     data: formdata
                 })
                 .then((data) => {
-                    this.
                     this.$router.replace('/moderation')
                 })
                 .catch(() =>{

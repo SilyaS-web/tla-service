@@ -137,7 +137,7 @@
                         <div class="card__col">
                             <div class="card__row card__header">
                                 <div
-                                    :style="'background-image:url(' + work.blogger.image + ')'"
+                                    :style="'background-image:url(' + (work.blogger.user.image || '/img/profile-icon.svg') + ')'"
                                     class="card__img">
                                     <div v-if="work.blogger.is_achivement" class="card__achive">
                                         <img src="img/achive-icon.svg" alt="">
@@ -181,7 +181,7 @@
                                             <span>Подписчики</span>
                                         </div>
                                         <div class="card__stats-val">
-                                            <span>{{ work.blogger.summaryPlatform.subscribers }}</span>
+                                            <span>{{ work.blogger.summaryPlatform.subscriber_quantity }}</span>
                                         </div>
                                     </div>
                                     <div class="card__col card__stats-item">
@@ -298,7 +298,7 @@
                                             <span>Подписчики</span>
                                         </div>
                                         <div class="card__stats-val">
-                                            <span>{{ work.blogger.summaryPlatform.subscribers }}</span>
+                                            <span>{{ work.blogger.summaryPlatform.subscriber_quantity }}</span>
                                         </div>
                                     </div>
                                     <div class="card__col card__stats-item">

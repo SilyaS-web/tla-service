@@ -126,11 +126,11 @@
                 if (!this.isConfirmed) {
                     axios({
                         method: 'get',
-                        url: 'api/users/phone-confirmed?phone=' + this.user.phone,
+                        url: '/api/users/phone-confirmed?phone=' + this.user.phone,
                     })
                     .then((response) => {
                         if(response.data.is_confirmed){
-                            notify('error', {
+                            notify('info', {
                                 title: 'Успшено!',
                                 message: 'Ваш номер подтвержден.'
                             });
@@ -142,8 +142,6 @@
                         //     title: 'Внимание!',
                         //     message: 'В данный момент сервер не отвечает. Напишите в поддержку и попробуйте позже.'
                         // });
-
-                        console.log(errors)
                     })
                 }
             }, 1000)

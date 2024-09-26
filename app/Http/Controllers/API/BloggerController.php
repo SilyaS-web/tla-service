@@ -101,14 +101,12 @@ class BloggerController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'desc' => 'string|nullable',
+            'description' => 'string|nullable',
             'sex' => 'required|string',
             'city' => 'required|string',
-            'country' => 'required|numeric',
-            'image' => 'image|nullable|required',
+            'country_id' => 'required|numeric',
+            'image' => 'image|required',
             'platforms' => 'array|required',
-            'platforms.*.link' => 'string|nullable',
-            'platforms.*.platform_id' => 'numeric|exists:platforms,id',
             'themes' => 'required|array',
         ]);
 
@@ -120,8 +118,11 @@ class BloggerController extends Controller
         $validated = $validator->validated();
 
         $is_platform = false;
+
         foreach ($validated['platforms'] as $blogger_platform) {
-            if (isset($blogger_platform['link']) && !empty($blogger_platform['link'])) {
+            $platform = json_decode($blogger_platform, true);
+
+            if (isset($platform['link']) && !empty($platform['link'])) {
                 $is_platform = true;
                 break;
             }
@@ -134,17 +135,19 @@ class BloggerController extends Controller
         $blogger = Blogger::create([
             'user_id' => $user->id,
             'city' => $validated['city'],
-            'country_id' => $validated['country'],
-            'description' => $validated['desc'] ?? null,
+            'country_id' => $validated['country_id'],
+            'description' => $validated['description'] ?? null,
             'sex' => $validated['sex'],
         ]);
 
         foreach ($validated['platforms'] as $blogger_platform) {
-            if (isset($blogger_platform['link']) && !empty($blogger_platform['link'])) {
+            $platform = json_decode($blogger_platform, true);
+
+            if (isset($platform['link']) && !empty($platform['link'])) {
                 BloggerPlatform::create([
                     'blogger_id' => $blogger->id,
-                    'platform_id' => $blogger_platform['platform_id'],
-                    'link' => $blogger_platform['link'] ?? null,
+                    'platform_id' => $platform['platform_id'],
+                    'link' => $platform['link'],
                 ]);
             }
         }
@@ -163,7 +166,7 @@ class BloggerController extends Controller
             ]);
         }
 
-        TgService::sendModeration($user->name . ' оставил заявку на модерацию');
+//        TgService::sendModeration($user->name . ' оставил заявку на модерацию');
         return response()->json([])->setStatusCode(200);
     }
 

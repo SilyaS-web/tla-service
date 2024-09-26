@@ -52,8 +52,8 @@
                             </div>
                             <div class="form-group">
                                 <label for="password">Новый пароль</label>
-                                <input class="input" id="password" type="password" name="password" v-model="blogger.new_password">
-                                <span v-if = "errors.new_password" class="error">{{ errors.password }}</span>
+                                <input class="input" id="password" type="password" name="password" v-model="blogger.password">
+                                <span v-if = "errors.password" class="error">{{ errors.password }}</span>
                             </div>
                         </div>
                     </div>

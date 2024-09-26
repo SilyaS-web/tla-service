@@ -112,6 +112,18 @@
                             window.location.href = '/profile/admin'
                         }
 
+                        if(data.role == 'blogger'){
+                            if(data.status == 0){
+                                if(!data.blogger_id){
+                                    this.$router.replace('/blogger/registration')
+                                    return
+                                }
+
+                                this.$router.replace('/moderation')
+                                return
+                            }
+                        }
+
                         this.$router.replace('/profile')
                     },
                     err => {
