@@ -217,7 +217,7 @@ class ProjectController extends Controller
         $validated = $validator->validated();
         $product_images = request()->file('images');
         if (empty($product_images) && empty($validated['uploaded_images'])) {
-            return response()->json(['images' => 'Выберите хотя бы одно изображение для проекта'])->setStatusCode(400);
+            return response()->json(['images' => ['Выберите хотя бы одно изображение для проекта']])->setStatusCode(400);
         }
 
         foreach ($project->projectFiles as $file) {
