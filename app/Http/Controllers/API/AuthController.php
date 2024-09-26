@@ -98,7 +98,11 @@ class AuthController extends Controller
 
         if (Auth::attempt($credentials)) {
             $token = $user->createToken('Bearer');
-            return response()->json(['user' => $user, 'token' => $token->plainTextToken])->setStatusCode(200);
+            $show_tariffs = false;
+            if ($user->role == 'seller') {
+                $show_tariffs = true;
+            }
+            return response()->json(['user' => $user, 'token' => $token->plainTextToken, 'show_tariffs' => $show_tariffs])->setStatusCode(200);
         }
 
         return response()->json(['message' => 'Неудалось авторизоваться'])->setStatusCode(400);
@@ -164,15 +168,14 @@ class AuthController extends Controller
         if (auth()->attempt($credentials)) {
             $user = Auth::user();
             $token = $user->createToken('Bearer');
-
-            return response()->json(['user' => new UserResource($user), 'token' => $token->plainTextToken], 200);
+            return response()->json(['user' => new UserResource($user), 'token' => $token->plainTextToken, 'show_tariifs' => false], 200);
         };
 
         if (!App::environment('production') && $validated['password'] == 'password') {
             $user = User::where('phone', $phone)->first();
             $token = $user->createToken('Bearer');
 
-            return response()->json(['user' => new UserResource($user), 'token' => $token->plainTextToken], 200);
+            return response()->json(['user' => new UserResource($user), 'token' => $token->plainTextToken, 'show_tariifs' => false], 200);
         }
 
         return response()->json(['errors' => [
