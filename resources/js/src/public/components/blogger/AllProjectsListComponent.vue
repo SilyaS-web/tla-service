@@ -122,7 +122,6 @@ export default{
                 this.categories = response.data.categories
             })
             .catch(error => {
-                console.log(error)
             })
         },
         chooseCategory(category){

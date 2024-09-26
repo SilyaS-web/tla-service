@@ -1,7 +1,6 @@
 <script>
     const Tabs = {
         tabClick: (tab) => {
-            console.log(tab, $(`.tab[data-content="${tab}"]`))
             $('.tab').not(`.tab [data-content="${tab}"]`).removeClass('active');
             $('.tab-content').not(`#${tab}`).removeClass('active');
 

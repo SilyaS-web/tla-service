@@ -202,7 +202,6 @@
                     this.$router.replace('/moderation')
                 })
                 .catch(() =>{
-                    console.log('err')
                 })
             }
         }

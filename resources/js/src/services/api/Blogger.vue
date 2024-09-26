@@ -17,8 +17,6 @@ const Blogger = {
                     message: 'Невозможно получить информацию по блогеру, напишите в поддержку или попробуйте позже'
                 });
 
-                console.log(data)
-
                 resolve(false)
             })
         })
@@ -35,7 +33,7 @@ const Blogger = {
                     title: 'Успешно!',
                     message: 'Данные успешно изменены.'
                 });
-                console.log(123)
+
                 resolve(response.data)
             })
             .catch((errors) => {
@@ -91,7 +89,6 @@ const Blogger = {
             })
             .then(result => resolve(result.data.bloggers))
             .catch(error => {
-                console.log(error)
                 resolve([])
             })
         })

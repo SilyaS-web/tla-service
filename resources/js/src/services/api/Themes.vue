@@ -21,7 +21,6 @@ const Themes = {
                 resolve(themes);
             })
             .catch((errors) => {
-                console.log(errors);
                 // notify('error', {
                 //     title: 'Внимание!',
                 //     message: 'Не удалось загрузить проекты, попробуйте зайти позже или обратитесь в поддержку.'

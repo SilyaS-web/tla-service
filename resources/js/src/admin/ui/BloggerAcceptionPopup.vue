@@ -157,7 +157,6 @@
                     })
                     .then(result => resolve(result.data))
                     .catch(error => {
-                        console.log(error)
                         resolve([])
                     })
                 })
@@ -193,7 +192,6 @@
                     })
                     .then(result => resolve(result.data))
                     .catch(error => {
-                        console.log(error)
                         resolve([])
                     })
                 })

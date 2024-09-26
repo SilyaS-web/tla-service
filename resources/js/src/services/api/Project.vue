@@ -65,8 +65,6 @@ const Project = {
                     message: 'Что-то пошло не так. Ошибка на сервере, попробуйте позже.'
                 });
 
-                console.log(errors)
-
                 resolve(false)
             })
         })
@@ -94,9 +92,6 @@ const Project = {
                     title: 'Внимание!',
                     message: 'Что-то пошло не так. Ошибка на сервере, попробуйте позже.'
                 });
-
-                console.log(errors)
-
                 resolve(false)
             })
         })
@@ -124,8 +119,6 @@ const Project = {
                     title: 'Внимание!',
                     message: 'Что-то пошло не так. Ошибка на сервере, попробуйте позже.'
                 });
-
-                console.log(errors)
 
                 resolve(false)
             })
@@ -155,8 +148,6 @@ const Project = {
                     message: 'Что-то пошло не так. Ошибка на сервере, попробуйте позже.'
                 });
 
-                console.log(errors)
-
                 resolve(false)
             })
         })
@@ -173,8 +164,6 @@ const Project = {
                 resolve(response.data.projects);
             })
             .catch((errors) => {
-                console.log(errors);
-
                 notify('error', {
                     title: 'Внимание!',
                     message: 'Не удалось загрузить проекты, попробуйте зайти позже или обратитесь в поддержку.'
@@ -196,8 +185,6 @@ const Project = {
                 resolve(response.data.projects);
             })
             .catch((errors) => {
-                console.log(errors);
-
                 notify('error', {
                     title: 'Внимание!',
                     message: 'Не удалось загрузить проекты, попробуйте зайти позже или обратитесь в поддержку.'

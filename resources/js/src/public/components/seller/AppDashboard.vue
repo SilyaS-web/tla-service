@@ -12,7 +12,7 @@
                         class="dashboard__row dashboard__item--feedback feedback-dashboard">
                     <div
                         v-if="!dashboard.is_wb_api_key"
-                        class="dashboard__placeholder" style="z-index: 9998">
+                        class="dashboard__placeholder" style="z-index: 999">
                         <div class="dashboard__placeholder-text">
                             <router-link :to="{path: '/seller/edit-profile' }">Введите API ключ</router-link> в настройках профиля
                         </div>

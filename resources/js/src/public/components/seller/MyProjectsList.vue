@@ -447,7 +447,6 @@
                     this.quantities[`${w.type}_quantity`] = parseInt(w.quantity)
                 })
                 this.editingProjectFiles = this.editingProject.project_files;
-                console.log(this.editingProjectFiles)
             },
 
             modifyProject(){

@@ -52,10 +52,12 @@
                     }
 
                     let token = response.data.token,
-                        user = response.data.user;
+                        user = response.data.user,
+                        show_tariffs = response.data.show_tariffs;
 
                     localStorage.setItem('user', JSON.stringify(user));
                     localStorage.setItem('session_token', token);
+                    localStorage.setItem('show_tariffs', show_tariffs);
 
                     resolve(user)
                 })
@@ -126,7 +128,6 @@
                     resolve(response.data.works);
                 })
                 .catch((errors) => {
-                    console.log(errors);
 
                     notify('error', {
                         title: 'Внимание!',
@@ -148,8 +149,6 @@
                     resolve(response.data.messages);
                 })
                 .catch((errors) => {
-                    console.log(errors);
-
                     notify('error', {
                         title: 'Внимание!',
                         message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'

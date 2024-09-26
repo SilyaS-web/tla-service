@@ -17,13 +17,11 @@ const Platforms = {
                 url: 'api/platforms'
             })
             .then(response => {
-                console.log(platforms)
                 var platforms = response.data.platforms || [];
                 localStorage.setItem('platforms', JSON.stringify(platforms))
                 resolve(platforms);
             })
             .catch((errors) => {
-                console.log(errors);
                 // notify('error', {
                 //     title: 'Внимание!',
                 //     message: 'Не удалось загрузить проекты, попробуйте зайти позже или обратитесь в поддержку.'

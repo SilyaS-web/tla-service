@@ -45,7 +45,20 @@
             </div>
         </div>
     </section>
-
+    <div
+        v-if="isShowTariffs"
+        class="popup popup-tariffs" id="" style="">
+        <div class="popup__container _container">
+            <div class="popup__body popup__body--tariffs">
+                <Tariffs></Tariffs>
+            </div>
+            <div
+                @click="isShowTariffs = false"
+                class="close-popup">
+                <img src="/img/close-icon.svg" alt="">
+            </div>
+        </div>
+    </div>
     <Footer></Footer>
 </template>
 <script>
@@ -69,11 +82,12 @@ import Chat from '../../components/ChatIndex.vue'
 import Aside from '../../components/seller/AppAside.vue'
 import Header from '../../components/layout/AppHeader.vue'
 import Footer from '../../components/layout/AppFooter.vue'
+import Tariffs from '../../components/seller/TariffsComponent.vue'
 
 export default{
     components: {
         Aside, CreateProject, Dashboard, ProjectsList,
-        MyProjectsList, BloggersList, Chat, Header, Footer
+        MyProjectsList, BloggersList, Chat, Header, Footer, Tariffs
     },
     data(){
         return {
@@ -104,6 +118,8 @@ export default{
             currentItem: ref(null),
             newChatMessagesCount: ref(0),
 
+            isShowTariffs: ref(false),
+
             User, Seller, Blogger, Project,
             Loader, Tabs
         }
@@ -114,6 +130,12 @@ export default{
         this.user = this.User.getCurrent();
 
         this.dashboard = await this.getSellerStats(this.user.id);
+
+        this.isShowTariffs = localStorage.getItem('show_tariffs') ? JSON.parse(localStorage.getItem('show_tariffs')) : false;
+
+        if(this.isShowTariffs){
+            localStorage.setItem('show_tariffs', false)
+        }
 
         setTimeout(() => {
             this.Loader.loaderOff('#dashboard');
@@ -129,7 +151,7 @@ export default{
     methods:{
         async switchTab(tab, currentItem = false){
             this.Tabs.tabClick(tab)
-            console.log(currentItem)
+
             this.currentItem = null
 
             if(currentItem)
@@ -224,8 +246,6 @@ export default{
                     resolve(response.data);
                 })
                 .catch((errors) => {
-                    console.log(errors);
-
                     notify('error', {
                         title: 'Внимание!',
                         message: 'Не удалось загрузить статистику, попробуйте зайти позже или обратитесь в поддержку.'

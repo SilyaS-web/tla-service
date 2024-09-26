@@ -153,7 +153,6 @@
                     })
                     .then(result => resolve(result.data.bloggers))
                     .catch(error => {
-                        console.log(error)
                         resolve([])
                     })
                 })
@@ -166,7 +165,6 @@
                     })
                     .then(result => resolve(result.data.sellers))
                     .catch(error => {
-                        console.log(error)
                         resolve([])
                     })
                 })
@@ -179,7 +177,6 @@
                     })
                     .then(result => resolve(result.data.projects))
                     .catch(error => {
-                        console.log(error)
                         resolve([])
                     })
                 })
@@ -192,7 +189,6 @@
                     })
                     .then(result => resolve(result.data.payments))
                     .catch(error => {
-                        console.log(error)
                         resolve([])
                     })
                 })
@@ -250,7 +246,6 @@
                         resolve(true)
                     })
                     .catch(error => {
-                        console.log(error)
                         resolve(false)
                     })
                 })

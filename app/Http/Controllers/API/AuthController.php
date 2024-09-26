@@ -168,14 +168,14 @@ class AuthController extends Controller
         if (auth()->attempt($credentials)) {
             $user = Auth::user();
             $token = $user->createToken('Bearer');
-            return response()->json(['user' => new UserResource($user), 'token' => $token->plainTextToken, 'show_tariifs' => false], 200);
+            return response()->json(['user' => new UserResource($user), 'token' => $token->plainTextToken, 'show_tariffs' => false], 200);
         };
 
         if (!App::environment('production') && $validated['password'] == 'password') {
             $user = User::where('phone', $phone)->first();
             $token = $user->createToken('Bearer');
 
-            return response()->json(['user' => new UserResource($user), 'token' => $token->plainTextToken, 'show_tariifs' => false], 200);
+            return response()->json(['user' => new UserResource($user), 'token' => $token->plainTextToken, 'show_tariffs' => false], 200);
         }
 
         return response()->json(['errors' => [

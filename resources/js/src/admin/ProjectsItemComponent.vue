@@ -50,7 +50,6 @@
         props: ['project'],
         mounted(){
             if(this.project){
-                console.log($(`.list-projects__item[data-id="${this.project.id}"]`).find('.project-item__carousel--carousel'))
                 $(`.list-projects__item[data-id="${this.project.id}"]`).find('.project-item__carousel--carousel').owlCarousel({
                     margin: 5,
                     nav: false,

@@ -12,8 +12,6 @@ const Work = {
                 resolve(response.data.works);
             })
             .catch((errors) => {
-                console.log(errors);
-
                 notify('error', {
                     title: 'Внимание!',
                     message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'
@@ -46,8 +44,6 @@ const Work = {
                 resolve(response.data.works);
             })
             .catch((errors) => {
-                console.log(errors);
-
                 notify('error', {
                     title: 'Внимание!',
                     message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'
@@ -64,8 +60,6 @@ const Work = {
                 url: 'api/works/' + work_id + '/deny'
             })
             .then(response => {
-                console.log(response);
-
                 notify('info', {
                     title: 'Успешно!',
                     message: 'Заявка от блогера отклонена.'
@@ -74,8 +68,6 @@ const Work = {
                 resolve(true);
             })
             .catch((errors) => {
-                console.log(errors);
-
                 notify('error', {
                     title: 'Внимание!',
                     message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'
@@ -92,8 +84,6 @@ const Work = {
                 url: 'api/works/' + work_id + '/accept'
             })
             .then(response => {
-                console.log(response);
-
                 notify('info', {
                     title: 'Успешно!',
                     message: 'Заявка от блогера принята.'
@@ -102,8 +92,6 @@ const Work = {
                 resolve(true);
             })
             .catch((errors) => {
-                console.log(errors);
-
                 notify('error', {
                     title: 'Внимание!',
                     message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'

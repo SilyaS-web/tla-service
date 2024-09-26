@@ -334,13 +334,11 @@
                         this.notifications = response.data.notifications
                     })
                     .catch((error) => {
-                        console.log(error)
                     });
                 }
             },
 
             goToChat(work_id){
-                console.log(this.$router.currentRoute.value.name)
                 if(this.$router.currentRoute.value.name === 'Profile'){
                     this.$emit('switchTab', 'chat', {
                         item: 'chat',
@@ -366,7 +364,6 @@
                         title: 'Внимание!',
                         message: 'Что-то пошло не так, попробуйте позже.'
                     })
-                    console.log(error)
                 });
             }
         }

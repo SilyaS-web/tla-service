@@ -848,7 +848,7 @@ import {ref, shallowRef} from 'vue'
                 }
 
                 blogger.summaryPlatform = summaryPlatform;
-                console.log(blogger)
+
                 return blogger;
             },
             getProjectStatistics(){
@@ -874,7 +874,6 @@ import {ref, shallowRef} from 'vue'
                     resolve(result.data)
                 })
                 .catch(error => {
-                    console.log(error)
                     resolve([])
                 })
             },
@@ -1047,7 +1046,6 @@ import {ref, shallowRef} from 'vue'
                         Promise.all([
                             this.getBloggersLeads()
                         ]).then(() => {
-                            console.log('Loaded')
                         })
                     }
                 })
@@ -1059,7 +1057,6 @@ import {ref, shallowRef} from 'vue'
                         Promise.all([
                             this.getBloggersLeads()
                         ]).then(() => {
-                            console.log('Loaded')
                         })
                     }
                 })

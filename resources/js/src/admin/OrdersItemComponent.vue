@@ -14,7 +14,7 @@
         </div>
         <div class="payment-history__row-user">
             <span>Пользователь</span>
-            <strong><a v-bind:href="'/seller/' + order.seller_id" target="_blank">ID {{ order.seller_id || '-' }}</a></strong>
+            <strong><a v-bind:href="'/sellers/' + order.seller_id" target="_blank">ID {{ order.seller_id || '-' }}</a></strong>
         </div>
         <div class="payment-history__row-tariff">
             <span>Тариф</span>
