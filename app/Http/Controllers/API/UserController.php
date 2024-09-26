@@ -190,7 +190,7 @@ class UserController extends Controller
             $messages->orderBy('created_at', $validated['order_by']);
         }
 
-        Message::where('work_id', $work->id)->whereNull('viewed_at')->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
+        $work->messages()->whereNull('viewed_at')->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
 
         $data = [
             'messages' => MessageResource::collection($messages->get()),

@@ -44,7 +44,7 @@ class WorkResource extends JsonResource
             'last_message_at' => isset($this->last_message_at) ? $this->last_message_at->format('Y-m-d H:i') : null,
             'created_at' => isset($this->created_at) ? $this->created_at->format('Y-m-d H:i') : null,
             'statistics' => new FinishStatsResource($this->finishStats),
-            'new_messages_count' => $this->messages()->where('viewed_at', null)->count(),
+            'new_messages_count' => $this->messages()->where('viewed_at', null)->where('user_id', '<>', $user->id)->count(),
             'project_work' => new ProjectWorkResource($this->projectWork),
         ];
     }
