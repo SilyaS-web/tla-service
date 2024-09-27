@@ -485,6 +485,8 @@
                         this.quantities[k] = 0
                     }
 
+                    notify('info', {title: 'Успешно!', message: 'Данные успешно обновлены.'});
+
                     this.$emit('updateMyProjects');
                 })
                 .catch((err) => {

@@ -356,6 +356,9 @@
                 Project
             }
         },
+        mounted(){
+            var quest = new CreateProject('#create-project')
+        },
         methods: {
             async createProject(){
                 var images = $('.upload-files__body').find('input[type="file"]');

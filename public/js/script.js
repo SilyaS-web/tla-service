@@ -1839,8 +1839,6 @@ $(window).on('load', function(){
         e.stopPropagation()
     })
 
-    var quest = new CreateProject('#create-project');
-
     // burger menu
     $(document).on('click', '.burger-menu__close', function(){
         $('.burger-menu').removeClass('opened');

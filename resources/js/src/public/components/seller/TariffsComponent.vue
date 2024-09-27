@@ -71,7 +71,7 @@
                         <div class="tariff-card__btns">
                             <button
                                 @click="buyUnlimited"
-                                class="btn btn-primary btn-tariffs-payment" style="margin-top: 15px">Оплатить</button>
+                                class="btn btn-primary" style="margin-top: 15px">Оплатить</button>
                         </div>
                         <div class="tariff-card__count">
                             02
@@ -145,18 +145,18 @@ export default {
                 method: 'get',
                 url: '/api/payment/20/init'
             })
-                .then(data => {
-                    if(data){
-                        window.location.href = data
-                    }
-                })
-                .catch(data => {
+            .then(data => {
+                if(data){
+                    window.location.href = data.link
+                }
+            })
+            .catch(data => {
 
-                    notify('error', {
-                        title: 'Внимание!',
-                        message: 'Невозможно купить тариф, попробуйте позже или напишите в поддержку'
-                    });
-                })
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'Невозможно купить тариф, попробуйте позже или напишите в поддержку'
+                });
+            })
         },
     }
 }

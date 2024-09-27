@@ -30,7 +30,7 @@
                 <div
                     v-for="work in project.project_works"
                     class="card__tags-item" :data-id="work.id">
-                    <span>{{ work.name }} - {{ parseInt(work.quantity) - work.lost_quantity }}/{{ work.quantity }}</span>
+                    <span>{{ work.name }} - {{ work.lost_quantity }}/{{ work.quantity }}</span>
                 </div>
             </div>
             <div class="project-item__btns">
