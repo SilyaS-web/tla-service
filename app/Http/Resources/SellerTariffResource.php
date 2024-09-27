@@ -18,8 +18,8 @@ class SellerTariffResource extends JsonResource
             'tariff_id' => $this->tariff_id,
             'quantity' => $this->quantity,
             'type' => $this->type,
-            'finish_date' => isset($this->finish_date) ? $this->finish_date->format('d.m.Y H:i') : null,
-            'activation_date' => isset($this->activation_date) ? $this->activation_date->format('d.m.Y H:i') : null,
+            'finish_date' => isset($this->finish_date) ? $this->finish_date->toISOString() : null,
+            'activation_date' => isset($this->activation_date) ? $this->activation_date->toISOString() : null,
             'can_extend' => $this->canExtend(),
             'title' => $this->tariff->title,
         ];
