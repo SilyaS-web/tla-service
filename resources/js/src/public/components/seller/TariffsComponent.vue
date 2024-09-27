@@ -146,9 +146,10 @@ export default {
                 url: '/api/payment/20/init'
             })
             .then(data => {
-                if(data && data.link){
-                    window.location.href = data.link
-                }
+                console.log(data)
+                // if(data && data.link){
+                //     window.location.href = data.link
+                // }
             })
             .catch(data => {
                 notify('error', {
