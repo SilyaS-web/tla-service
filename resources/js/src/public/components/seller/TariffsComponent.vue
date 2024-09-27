@@ -145,11 +145,10 @@ export default {
                 method: 'get',
                 url: '/api/payment/20/init'
             })
-            .then(data => {
-                console.log(data)
-                // if(data && data.link){
-                //     window.location.href = data.link
-                // }
+            .then(response => {
+                if(response.data && response.data.link){
+                    window.location.href = data.link
+                }
             })
             .catch(data => {
                 notify('error', {
