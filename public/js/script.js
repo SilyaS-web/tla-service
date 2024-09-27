@@ -2119,6 +2119,7 @@ function notify(type, content){
 }
 
 $(window).on('load', function(){
+
     $(document).on('click', '.roles-cards__card', function(e) {
         var role = $(e.currentTarget).data('role');
 
