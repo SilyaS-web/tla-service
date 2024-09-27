@@ -126,18 +126,18 @@ export default {
                     url: '/api/feedback',
                     params: data
                 })
-                    .then(data => {
-                        notify('info', {
-                            title: 'Успешно!',
-                            message: 'Ваше обращение успешно доставлено'
-                        });
-                    })
-                    .catch(data => {
-                        notify('error', {
-                            title: 'Внимание!',
-                            message: 'Невозможно отправить обращение, попробуйте позже или напишите в поддержку'
-                        });
-                    })
+                .then(data => {
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Ваше обращение успешно доставлено'
+                    });
+                })
+                .catch(data => {
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'Невозможно отправить обращение, попробуйте позже или напишите в поддержку'
+                    });
+                })
             })
         },
         buyUnlimited(){
@@ -146,12 +146,11 @@ export default {
                 url: '/api/payment/20/init'
             })
             .then(data => {
-                if(data){
+                if(data && data.link){
                     window.location.href = data.link
                 }
             })
             .catch(data => {
-
                 notify('error', {
                     title: 'Внимание!',
                     message: 'Невозможно купить тариф, попробуйте позже или напишите в поддержку'

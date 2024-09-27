@@ -193,7 +193,7 @@
                                     v-for="project_work in project.project_works"
                                     :data-id="project_work.id"
                                     class="card__tags-item">
-                                    <span>{{ project_work.type }} - {{ project_work.lost_quantity) }}/{{ project_work.quantity }}</span>
+                                    <span>{{ project_work.type }} - {{ project_work.lost_quantity }}/{{ project_work.quantity }}</span>
                                 </div>
                             </div>
                             <div class="project-item__btns">
