@@ -371,7 +371,7 @@
                                             <input type="number" class="input" v-model="quantities.telegram_quantity" name="telegram-quantity">
                                         </div>
                                         <div
-                                            v-on:click="(function(e){ if(quantities.telegram_quantity > 0) quantities.telegram_quantity += 1})()"
+                                            v-on:click="(function(e){ if(quantities.telegram_quantity < 100) quantities.telegram_quantity += 1})()"
                                             class="quantity-plus">
                                             <img src="img/plus-icon.svg" alt="">
                                         </div>
