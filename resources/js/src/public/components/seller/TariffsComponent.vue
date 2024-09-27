@@ -147,7 +147,7 @@ export default {
             })
             .then(response => {
                 if(response.data && response.data.link){
-                    window.location.href = response.data
+                    window.location.href = response.data.link
                 }
             })
             .catch(data => {
