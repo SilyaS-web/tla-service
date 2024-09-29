@@ -7,12 +7,12 @@
                                     </div>`;
 
             $(document).find(node).append(loaderTemplate)
-            // $(document).find(node).css('height', '100vh')
-            // $(document).find(node).css('overflow', 'hidden')
+            $(document).find(node).css('height', '100vh')
+            $(document).find(node).css('overflow', 'hidden')
         },
         loaderOff: (node = '') => {
-            // $(document).find(node).css('height', '100%')
-            // $(document).find(node).css('overflow', 'unset')
+            $(document).find(node).css('height', '100%')
+            $(document).find(node).css('overflow', 'unset')
 
             node += ' .loader-wrap'
             $(document).find(node).remove()

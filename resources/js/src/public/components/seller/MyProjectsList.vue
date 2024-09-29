@@ -398,6 +398,8 @@
                                 <button @click="modifyProject" class="btn btn-primary">
                                     Сохранить
                                 </button>
+                                <button
+                                    class="btn btn-secondary" @click="resetEditData">Вернуться</button>
                             </div>
                         </div>
                     </div>
@@ -478,12 +480,7 @@
                     data: formData
                 })
                 .then((data) =>{
-                    this.editingProject = false;
-                    this.editingProjectFiles = [];
-
-                    for (let k in this.quantities){
-                        this.quantities[k] = 0
-                    }
+                    this.resetEditData()
 
                     notify('info', {title: 'Успешно!', message: 'Данные успешно обновлены.'});
 
@@ -493,6 +490,14 @@
                     notify('info', {title: 'Внимание!', message: 'Невозможно сохранить проект, перепроверьте все поля, данные не заполнены, либо заполнены некоректно.'});
                     this.errors = err.response.errors;
                 })
+            },
+            resetEditData(){
+                this.editingProject = false;
+                this.editingProjectFiles = [];
+
+                for (let k in this.quantities){
+                    this.quantities[k] = 0
+                }
             },
             deleteFile(file){
                 this.editingProjectFiles = this.editingProjectFiles.filter(_f => _f.link != file.link);
