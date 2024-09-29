@@ -290,7 +290,7 @@ class ProjectController extends Controller
         $user = Auth::user();
         foreach ($project->projectWorks as $project_work) {
             $seller_tariff = $user->getActiveTariffs($project_work->type);
-            if (!$seller_tariff || $seller_tariff->quantity < $project_work->quantity) {
+            if (!$seller_tariff || ($seller_tariff->quantity >= 0 && $seller_tariff->quantity < $project_work->quantity)) {
                 return response()->json(['message' => 'Тарифа недостаточно для того, чтобы опубликовать'])->setStatusCode(400);
             }
         }
