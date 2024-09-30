@@ -31,6 +31,7 @@ class ProjectController extends Controller
             'statuses' => 'array|nullable',
             'statuses.*' => 'string',
             'status' => 'string|nullable',
+            'is_blogger_access' => 'boolean|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -63,6 +64,10 @@ class ProjectController extends Controller
             $projects->orderBy('created_at', $validated['order_by_created_at']);
         } else {
             $projects->orderBy('created_at', 'desc');
+        }
+
+        if (isset($validated['is_blogger_access']) && !empty($validated['is_blogger_access'])) {
+            $projects->where('is_blogger_access', $validated['is_blogger_access']);
         }
 
         if (isset($validated['status']) && !empty($validated['status'])) {
