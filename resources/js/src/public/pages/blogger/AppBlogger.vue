@@ -100,7 +100,7 @@
 
                 switch (tab){
                     case 'all-projects':
-                        this.Project.getList().then(data => {
+                        this.Project.getList({is_blogger_access: 1, statuses: [0]}).then(data => {
                             this.allProjects = data || [];
 
                             setTimeout(()=>{
@@ -124,7 +124,7 @@
 
                     case 'avail-projects':
                         this.Work.getUserWorksList(this.user.id, -this.user.id, 0).then((data) =>{
-                            this.works = (data || []);
+                            this.works = data;
 
                             setTimeout(()=>{
                                 this.Loader.loaderOff(`#${tab}`);

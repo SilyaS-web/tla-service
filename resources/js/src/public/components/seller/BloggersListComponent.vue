@@ -349,7 +349,7 @@
 
                 this.Loader.loaderOn('#profile-blogers-list');
 
-                this.Project.getUsersProjectsList(this.user.id, {is_blogger_access: 1, status: 'active'}).then(data => {
+                this.Project.getUsersProjectsList(this.user.id, {is_blogger_access: 1, statuses: [0]}).then(data => {
                     this.projects = data || [];
                     setTimeout(()=>{
                         this.Loader.loaderOff('#profile-blogers-list');

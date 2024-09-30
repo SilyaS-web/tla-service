@@ -23153,12 +23153,6 @@ __webpack_require__.r(__webpack_exports__);
   props: ['works'],
   components: {
     ListItem: _SellersWorksListItemComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
-  },
-  data: function data() {
-    return {};
-  },
-  methods: {
-    goToChat: function goToChat() {}
   }
 });
 
@@ -23180,13 +23174,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ['project', 'work_id'],
+  props: ['work', 'work_id'],
   data: function data() {
     return {
       Work: _services_api_Work__WEBPACK_IMPORTED_MODULE_1__["default"],
       isActive: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(true)
     };
   },
+  updated: function updated() {},
   mounted: function mounted() {},
   methods: {
     acceptApplication: function acceptApplication() {
@@ -23620,7 +23615,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       this.Loader.loaderOn('#profile-blogers-list');
       this.Project.getUsersProjectsList(this.user.id, {
         is_blogger_access: 1,
-        status: 'active'
+        statuses: [0]
       }).then(function (data) {
         _this3.projects = data || [];
         setTimeout(function () {
@@ -24708,7 +24703,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               _context2.next = _context2.t0 === 'all-projects' ? 8 : _context2.t0 === 'my-projects' ? 10 : _context2.t0 === 'avail-projects' ? 12 : 14;
               break;
             case 8:
-              _this2.Project.getList().then(function (data) {
+              _this2.Project.getList({
+                is_blogger_access: 1,
+                statuses: [0]
+              }).then(function (data) {
                 _this2.allProjects = data || [];
                 setTimeout(function () {
                   _this2.Loader.loaderOff("#".concat(tab));
@@ -24725,7 +24723,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               return _context2.abrupt("break", 16);
             case 12:
               _this2.Work.getUserWorksList(_this2.user.id, -_this2.user.id, 0).then(function (data) {
-                _this2.works = data || [];
+                _this2.works = data;
                 setTimeout(function () {
                   _this2.Loader.loaderOff("#".concat(tab));
                 }, 300);
@@ -25151,7 +25149,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               });
               return _context2.abrupt("break", 22);
             case 18:
-              _this2.Project.getList().then(function (data) {
+              _this2.Project.getList({
+                is_blogger_access: 1,
+                statuses: [0, 1, 2]
+              }).then(function (data) {
                 _this2.projects = data || [];
                 setTimeout(function () {
                   _this2.Loader.loaderOff('#all-projects');
@@ -29907,9 +29908,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     key: 0
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.works, function (work) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ListItem, {
-      project: work.project,
+      work: work,
       work_id: work.id
-    }, null, 8 /* PROPS */, ["project", "work_id"]);
+    }, null, 8 /* PROPS */, ["work", "work_id"]);
   }), 256 /* UNKEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_5, "Проектов нет"))])]), _hoisted_6]);
 }
 
@@ -29978,23 +29979,23 @@ var _hoisted_14 = {
   "class": "project-item__btns"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return $props.project && $data.isActive ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.project.project_files, function (image) {
+  return $props.work.project && $data.isActive ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.work.project.project_files, function (image) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "project-item__img",
       style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)('background-image:url(' + image.link + ')')
     }, null, 4 /* STYLE */);
-  }), 256 /* UNKEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.project.status_name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.project.product_price), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("₽ ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }), 256 /* UNKEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.work.project.status_name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.work.project.product_price), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("₽ ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "project-item__subtitle",
-    title: $props.project.product_name
-  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.project.product_name), 9 /* TEXT, PROPS */, _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Осталось мест на интеграцию "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.project.project_works.map(function (_w) {
+    title: $props.work.project.product_name
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.work.project.product_name), 9 /* TEXT, PROPS */, _hoisted_8), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Осталось мест на интеграцию "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.work.project.project_works.map(function (_w) {
     return _w.lost_quantity;
   }).reduce(function (a, b) {
     return a + b;
-  }, 0)) + "/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.project.project_works.map(function (_w) {
+  }, 0)) + "/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.work.project.project_works.map(function (_w) {
     return parseInt(_w.quantity);
   }).reduce(function (a, b) {
     return a + b;
-  }, 0)), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.project.project_works, function (work) {
+  }, 0)), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.work.project.project_works, function (work) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": "card__tags-item",
       "data-id": work.id

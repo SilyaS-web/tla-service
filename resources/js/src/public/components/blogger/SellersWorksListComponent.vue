@@ -13,7 +13,7 @@
                 <ListItem
                     v-if="works.length > 0"
                     v-for="work in works"
-                    :project="work.project"
+                    :work="work"
                     :work_id="work.id"
                 ></ListItem>
                 <span v-else>Проектов нет</span>
@@ -69,13 +69,5 @@
     export default {
         props: ['works'],
         components: {ListItem},
-        data(){
-            return {}
-        },
-        methods:{
-            goToChat(){
-
-            }
-        }
     }
 </script>
