@@ -135,8 +135,8 @@ class PaymentController extends Controller
         $initRequest = new InitRequest($price, $payment->id . '_' . $tariff->id);
 
         $notification_url = url('/');
-        $success_url = url('/api/payment/' . $payment->id . '/success') .  ($from_landing ? 'from_landing=1' : '');
-        $fail_url = url('/api/payment/' . $payment->id . '/fail') .  ($from_landing ? 'from_landing=1' : '');
+        $success_url = url('/api/payment/' . $payment->id . '/success?') .  ($from_landing ? 'from_landing=1' : '');
+        $fail_url = url('/api/payment/' . $payment->id . '/fail?') .  ($from_landing ? 'from_landing=1' : '');
 
         // необязательные параметры
         $initRequest
