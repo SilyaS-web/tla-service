@@ -37,6 +37,7 @@
                         <!-- чат -->
                         <Chat
                             :currentItem=currentItem
+                            :isChatTab=isChatTab
                             v-on:switchTab="switchTab"
                             v-on:newMessages="newChatMessages"
                             v-on:updateCurrentItem="currentItem = $event"></Chat>
@@ -158,6 +159,8 @@ export default{
                 this.currentItem = currentItem;
 
             this.Loader.loaderOn('.wrapper #' + tab);
+
+            this.isChatTab = tab === 'chat';
 
             switch (tab){
                 case 'dashboard':

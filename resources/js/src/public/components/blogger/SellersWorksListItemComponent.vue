@@ -1,6 +1,7 @@
 <template>
     <div
-        v-if="work.project && isActive"
+        v-if="work.project"
+        :data-id="work.id"
         class="list-projects__item project-item">
         <div class="project-item__carousel">
             <div class="project-item__carousel--carousel owl-carousel">
@@ -46,22 +47,17 @@ import {ref} from 'vue'
 import Work from '../../../services/api/Work'
 
 export default{
-    props: ['work', 'work_id'],
+    props: ['work'],
     data(){
         return {
             Work,
-            isActive: ref(true),
         }
-    },
-    updated(){
-    },
-    mounted(){
     },
     methods: {
         acceptApplication(){
-            this.Work.accept(this.work_id).then(
+            this.Work.accept(this.work.id).then(
                 () => {
-                    this.isActive = false
+                    $(`#avail-projects .list-projects__item[data-id="${this.work.id}"]`).hide();
                 },
                 err => {
 
