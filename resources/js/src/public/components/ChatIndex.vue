@@ -144,7 +144,8 @@
                                     </div>
                                     <textarea
                                         v-model="currentMessage.message"
-                                        name="" id="" placeholder="Введите текст" class="messages-create__textarea textarea"></textarea>
+                                        @keyup.enter="sendMessage"
+                                        name="" placeholder="Введите текст" class="messages-create__textarea textarea"></textarea>
                                 </div>
                                 <div class="chat__btns" style="display: flex; flex-wrap: wrap; gap:8px;">
                                     <button
@@ -277,6 +278,7 @@ import {reactive, ref} from "vue";
                     message: null,
                     file: null
                 }),
+                isWorkCompleted: ref(false),
                 platforms: ref([]),
                 isLostIntegrationQuantityZero: ref(false),
                 currentChat: ref(null),
@@ -415,13 +417,18 @@ import {reactive, ref} from "vue";
             },
             sendMessage(){
                 return new Promise((resolve, reject) => {
-                    // if(!this.currentMessage || [null, undefined, ''].includes(this.currentMessage.message)) {
-                    //     resolve(false)
-                    // }
+                    if(!this.currentMessage) {
+                        resolve(false)
+                        return
+                    }
 
+                    if([null, undefined, ''].includes(this.currentMessage.message.trim()) && [null, undefined, ''].includes(this.currentMessage.file)){
+                        resolve(false)
+                        return
+                    }
                     var formData = new FormData;
 
-                    formData.append('message', this.currentMessage.message);
+                    formData.append('message', this.currentMessage.message.trim());
                     formData.append('img', this.currentMessage.file);
 
                     if(!this.currentChat){
@@ -430,7 +437,9 @@ import {reactive, ref} from "vue";
                             message: 'Не выбран чат.'
                         })
 
-                        resolve(false)
+                        resolve(false);
+
+                        return
                     }
 
                     axios({
