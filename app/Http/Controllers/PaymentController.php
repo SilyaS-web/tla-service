@@ -46,7 +46,7 @@ class PaymentController extends Controller
                 $seller_tariff->update(['quantity' => $seller_tariff->quantity + $tariff->quantity, 'finish_date' => $finish_date->addDays($tariff->period)]);
             } else {
                 SellerTariff::create([
-                    'user_id' => Auth::user()->id,
+                    'user_id' => $user->id,
                     'tariff_id' => $tariff->id,
                     'type' => $tariff->type,
                     'quantity' => $payment->quantity,
@@ -125,9 +125,9 @@ class PaymentController extends Controller
         $client = new TinkoffAcquiringAPIClient(config('tbank.terminal_key'), config('tbank.secret'));
         $initRequest = new InitRequest($price, $payment->id . '_' . $tariff->id);
 
-        $notification_url = url('/payment/' . $payment->id . '/notifications');
-        $success_url = url('/payment/' . $payment->id . '/success?') .  ($from_landing ? 'from_landing=1' : '');
-        $fail_url = url('/payment/' . $payment->id . '/fail?') .  ($from_landing ? 'from_landing=1' : '');
+        $notification_url = url('/api/payment/' . $payment->id . '/notifications');
+        $success_url = url('/api/payment/' . $payment->id . '/success?') .  ($from_landing ? 'from_landing=1' : '');
+        $fail_url = url('/api/payment/' . $payment->id . '/fail?') .  ($from_landing ? 'from_landing=1' : '');
 
         // необязательные параметры
         $initRequest
