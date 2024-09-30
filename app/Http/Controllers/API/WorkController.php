@@ -53,7 +53,7 @@ class WorkController extends Controller
 
         $project_work = ProjectWork::find($validated['project_work_id']);
         $project = $project_work->project;
-        if ($project) {
+        if (!$project) {
             return response()->json(['message' => 'Проект на который вы отправляете заявку удалён или заблокирован'])->setStatusCode(400);
         }
 
