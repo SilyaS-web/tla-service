@@ -55,7 +55,7 @@ class PaymentController extends Controller
                 $seller_tariff->update(['quantity' => $seller_tariff->quantity + $tariff->quantity, 'finish_date' => $finish_date->addDays($tariff->period)]);
             } else {
                 SellerTariff::create([
-                    'user_id' => Auth::user()->id,
+                    'user_id' => $user->id,
                     'tariff_id' => $tariff->id,
                     'type' => $tariff->type,
                     'quantity' => $tariff->quantity,
