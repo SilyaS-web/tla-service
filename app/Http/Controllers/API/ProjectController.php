@@ -59,9 +59,9 @@ class ProjectController extends Controller
         }
 
         if (isset($validated['order_by_created_at']) && !empty($validated['order_by_date'])) {
-            $projects->orderBy('order_by_created_at', $validated['order_by_created_at']);
+            $projects->orderBy('created_at', $validated['order_by_created_at']);
         } else {
-            $projects->orderBy('order_by_created_at', 'desc');
+            $projects->orderBy('created_at', 'desc');
         }
 
         $data = [
