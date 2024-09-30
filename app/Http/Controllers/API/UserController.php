@@ -71,6 +71,7 @@ class UserController extends Controller
             'statuses.*' => 'string',
             'is_blogger_access' => 'boolean|nullable',
             'order_by_created_at' => 'string|nullable',
+            'status' => 'string|nullable',
         ]);
 
         if ($validator->fails()) {
