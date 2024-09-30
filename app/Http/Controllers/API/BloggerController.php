@@ -22,8 +22,8 @@ class BloggerController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'string|nullable',
             'platform' => 'nullable',
-            'subscriber_quantity_min' => 'numeric',
-            'subscriber_quantity_max' => 'numeric',
+            'subscriber_quantity_min' => 'numeric|nullable',
+            'subscriber_quantity_max' => 'numeric|nullable',
             'city' => 'string|nullable',
             'country' => 'numeric|exists:countries,id|nullable',
             'sex' => 'array|nullable',
@@ -31,6 +31,7 @@ class BloggerController extends Controller
             'themes.*' => 'numeric',
             'statuses' => 'array|nullable',
             'statuses.*' => 'numeric',
+            'order_by_created_at' => 'string|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -88,6 +89,12 @@ class BloggerController extends Controller
 
         if (isset($validated['sex'])  && !empty($validated['sex'])) {
             $bloggers->whereIn('sex', $validated['sex']);
+        }
+
+        if (isset($validated['order_by_created_at']) && !empty($validated['order_by_date'])) {
+            $bloggers->orderBy('created_at', $validated['order_by_created_at']);
+        } else {
+            $bloggers->orderBy('created_at', 'desc');
         }
 
         $data = [
