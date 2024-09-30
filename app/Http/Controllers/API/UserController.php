@@ -282,8 +282,8 @@ class UserController extends Controller
     public function storeMessage(User $user, Work $work, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'message' => 'required|string',
-            'img' => '',
+            'message' => 'string|nullable',
+            'img' => 'nullable',
         ]);
 
         if ($validator->fails()) {
@@ -291,6 +291,14 @@ class UserController extends Controller
         }
 
         $validated = $validator->validated();
+
+        if (!isset($validated['img']) && !isset($validated['message'])) {
+            return response()->json(['message' => ['Введите сообщение или прикрепите файл']], 400);
+        }
+
+        if (isset($validated['img']) && !isset($validated['message'])) {
+            $validated['message'] = 'Прикреплён файл';
+        }
 
         $message = Message::create([
             'work_id' => $work->id,
