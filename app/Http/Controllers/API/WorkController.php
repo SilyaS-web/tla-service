@@ -52,6 +52,14 @@ class WorkController extends Controller
         $user = Auth::user();
 
         $project_work = ProjectWork::find($validated['project_work_id']);
+        $project = $project_work->project;
+        if ($project) {
+            return response()->json(['message' => 'Проект на который вы отправляете заявку удалён или заблокирован'])->setStatusCode(400);
+        }
+
+        if (!$project->is_blogger_access) {
+            return response()->json(['message' => 'Проект на который вы отправляете не опубликован'])->setStatusCode(400);
+        }
 
         if ($user->role == 'blogger') {
             if ($project_work->project->isSended()) {
