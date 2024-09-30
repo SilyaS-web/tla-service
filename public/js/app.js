@@ -22592,7 +22592,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           message: 'Статистика отправлена.'
         });
         _this3.isBloggerStatisticsPopupOpen = false;
-        _this3.getChatBtnData(_this3.currentChat);
+        _this3.currentChat.btnData = _this3.getChatBtnData(_this3.currentChat);
         for (var _k in _this3.bloggerStatistics) {
           _this3.bloggerStatistics[_k] = null;
         }
@@ -22806,6 +22806,11 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             title: 'Ожидаем ответа от ' + work.partner_user.name
           };
         } else if (this.user.role == 'seller' && work.confirmed_by_seller_at == null) {
+          return {
+            title: 'Завершить проект',
+            action: 'confirm'
+          };
+        } else if (this.user.role == 'blogger' && work.confirmed_by_blogger_at == null) {
           return {
             title: 'Завершить проект',
             action: 'confirm'
@@ -25105,19 +25110,20 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               _this2.currentItem = null;
               if (currentItem) _this2.currentItem = currentItem;
               _this2.Loader.loaderOn('.wrapper #' + tab);
+              _this2.isChatTab = tab === 'chat';
               _context2.t0 = tab;
-              _context2.next = _context2.t0 === 'dashboard' ? 8 : _context2.t0 === 'profile-projects' ? 13 : _context2.t0 === 'profile-blogers-list' ? 16 : _context2.t0 === 'all-projects' ? 18 : 20;
+              _context2.next = _context2.t0 === 'dashboard' ? 9 : _context2.t0 === 'profile-projects' ? 14 : _context2.t0 === 'profile-blogers-list' ? 17 : _context2.t0 === 'all-projects' ? 19 : 21;
               break;
-            case 8:
-              _context2.next = 10;
+            case 9:
+              _context2.next = 11;
               return _this2.getSellerStats(_this2.user.id);
-            case 10:
+            case 11:
               _this2.dashboard = _context2.sent;
               setTimeout(function () {
                 _this2.Loader.loaderOff('#dashboard');
               }, 300);
-              return _context2.abrupt("break", 22);
-            case 13:
+              return _context2.abrupt("break", 23);
+            case 14:
               _this2.myProjects = [];
               _this2.Project.getUsersProjectsList(_this2.user.id).then(function (data) {
                 var list = data || [];
@@ -25136,8 +25142,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   _this2.Loader.loaderOff('#profile-projects');
                 }, 300);
               });
-              return _context2.abrupt("break", 22);
-            case 16:
+              return _context2.abrupt("break", 23);
+            case 17:
               _this2.Blogger.getList().then(function (data) {
                 _this2.bloggers = (data || []).map(function (_b) {
                   return _this2.findBloggerBiggestPlatform(_b);
@@ -25146,8 +25152,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   _this2.Loader.loaderOff('#profile-blogers-list');
                 }, 300);
               });
-              return _context2.abrupt("break", 22);
-            case 18:
+              return _context2.abrupt("break", 23);
+            case 19:
               _this2.Project.getList({
                 is_blogger_access: 1,
                 statuses: [0, 1, 2]
@@ -25157,13 +25163,13 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   _this2.Loader.loaderOff('#all-projects');
                 }, 300);
               });
-              return _context2.abrupt("break", 22);
-            case 20:
+              return _context2.abrupt("break", 23);
+            case 21:
               setTimeout(function () {
                 _this2.Loader.loaderOff();
               }, 300);
-              return _context2.abrupt("break", 22);
-            case 22:
+              return _context2.abrupt("break", 23);
+            case 23:
             case "end":
               return _context2.stop();
           }
@@ -34386,12 +34392,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     user: $data.user
   }, null, 8 /* PROPS */, ["onApplyFilter", "bloggers", "user"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" чат "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Chat, {
     currentItem: $data.currentItem,
+    isChatTab: _ctx.isChatTab,
     onSwitchTab: $options.switchTab,
     onNewMessages: $options.newChatMessages,
     onUpdateCurrentItem: _cache[0] || (_cache[0] = function ($event) {
       return $data.currentItem = $event;
     })
-  }, null, 8 /* PROPS */, ["currentItem", "onSwitchTab", "onNewMessages"])])])])])]), $data.isShowTariffs ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Tariffs)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+  }, null, 8 /* PROPS */, ["currentItem", "isChatTab", "onSwitchTab", "onNewMessages"])])])])])]), $data.isShowTariffs ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Tariffs)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     onClick: _cache[1] || (_cache[1] = function ($event) {
       return $data.isShowTariffs = false;
     }),

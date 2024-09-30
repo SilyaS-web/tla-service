@@ -362,7 +362,7 @@ import {reactive, ref} from "vue";
                         message: 'Статистика отправлена.'
                     })
                     this.isBloggerStatisticsPopupOpen = false;
-                    this.getChatBtnData(this.currentChat);
+                    this.currentChat.btnData = this.getChatBtnData(this.currentChat);
 
                     for (let k in this.bloggerStatistics){
                         this.bloggerStatistics[k] = null;
@@ -608,6 +608,12 @@ import {reactive, ref} from "vue";
                         }
                     }
                     else if(this.user.role == 'seller' && work.confirmed_by_seller_at == null){
+                        return {
+                            title: 'Завершить проект',
+                            action: 'confirm'
+                        }
+                    }
+                    else if(this.user.role == 'blogger' && work.confirmed_by_blogger_at == null){
                         return {
                             title: 'Завершить проект',
                             action: 'confirm'
