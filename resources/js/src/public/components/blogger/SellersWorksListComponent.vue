@@ -14,7 +14,6 @@
                     v-if="works.length > 0"
                     v-for="work in works"
                     :work="work"
-                    :work_id="work.id"
                 ></ListItem>
                 <span v-else>Проектов нет</span>
             </div>

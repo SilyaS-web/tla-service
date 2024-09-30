@@ -124,7 +124,7 @@
 
                     case 'avail-projects':
                         this.Work.getUserWorksList(this.user.id, -this.user.id, 0).then((data) =>{
-                            this.works = data;
+                            this.works = (data || []).filter(w => w.project);
 
                             setTimeout(()=>{
                                 this.Loader.loaderOff(`#${tab}`);
