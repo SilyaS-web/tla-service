@@ -7,25 +7,25 @@
                     <div class="tariff__subtitle subtitle">Получайте отзывы на карточки и повышайте их рейтинг. Размещайте рекламу в обмен на товары  и анализируйте результаты интеграций у блогеров — все в одном сервисе.</div>
                 </div>
                 <div class="tariff__items" style="margin-bottom:40px;">
-                    <div class="tariff__col tariff-card">
-                        <div class="tariff-card__header">
-                            <div class="tariff-card__title">
-                                Индивидуальное сопровождение
-                            </div>
-                            <div class="tariff-card__subtitle">
-                                Действует по договоренности. <br>
-                                Наши менеджеры возьмут на себя заботу о вашем бренде и обеспечат ему профессиональное сопровождение.
-                            </div>
-                        </div>
-                        <div class="tariff-card__btns">
-                            <button
-                                @click="callUsPopup"
-                                class="btn btn-primary">Оставить заявку</button>
-                        </div>
-                        <div class="tariff-card__star">
-                            <img src="img/star-icon.svg" alt="">
-                        </div>
-                    </div>
+<!--                    <div class="tariff__col tariff-card">-->
+<!--                        <div class="tariff-card__header">-->
+<!--                            <div class="tariff-card__title">-->
+<!--                                Индивидуальное сопровождение-->
+<!--                            </div>-->
+<!--                            <div class="tariff-card__subtitle">-->
+<!--                                Действует по договоренности. <br>-->
+<!--                                Наши менеджеры возьмут на себя заботу о вашем бренде и обеспечат ему профессиональное сопровождение.-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <div class="tariff-card__btns">-->
+<!--                            <button-->
+<!--                                @click="callUsPopup"-->
+<!--                                class="btn btn-primary">Оставить заявку</button>-->
+<!--                        </div>-->
+<!--                        <div class="tariff-card__star">-->
+<!--                            <img src="img/star-icon.svg" alt="">-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <div class="tariff__col tariff-card tariff-card--start" data-id="16">
                         <div class="tariff-card__header">
                             <div class="tariff-card__title">
