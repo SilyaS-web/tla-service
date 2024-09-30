@@ -123,12 +123,13 @@
                         break;
 
                     case 'avail-projects':
+                        this.Work.getUserWorksList(this.user.id, -this.user.id, 0).then((data) =>{
+                            this.works = (data || []);
 
-                        this.works = await this.Work.getUserWorksList(this.user.id, -this.user.id, 0);
-
-                        setTimeout(()=>{
-                            this.Loader.loaderOff(`#${tab}`);
-                        }, 300)
+                            setTimeout(()=>{
+                                this.Loader.loaderOff(`#${tab}`);
+                            }, 300)
+                        })
 
                         break;
 

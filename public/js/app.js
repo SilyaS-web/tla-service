@@ -23618,7 +23618,10 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       var _this3 = this;
       this.isChooseProjectList = true;
       this.Loader.loaderOn('#profile-blogers-list');
-      this.Project.getUsersProjectsList(this.user.id).then(function (data) {
+      this.Project.getUsersProjectsList(this.user.id, {
+        is_blogger_access: 1,
+        status: 'active'
+      }).then(function (data) {
         _this3.projects = data || [];
         setTimeout(function () {
           _this3.Loader.loaderOff('#profile-blogers-list');
@@ -24702,7 +24705,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               if (currentItem) _this2.currentItem = currentItem;
               _this2.Loader.loaderOn('.wrapper #' + tab);
               _context2.t0 = tab;
-              _context2.next = _context2.t0 === 'all-projects' ? 8 : _context2.t0 === 'my-projects' ? 10 : _context2.t0 === 'avail-projects' ? 12 : 17;
+              _context2.next = _context2.t0 === 'all-projects' ? 8 : _context2.t0 === 'my-projects' ? 10 : _context2.t0 === 'avail-projects' ? 12 : 14;
               break;
             case 8:
               _this2.Project.getList().then(function (data) {
@@ -24711,7 +24714,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   _this2.Loader.loaderOff("#".concat(tab));
                 }, 300);
               });
-              return _context2.abrupt("break", 19);
+              return _context2.abrupt("break", 16);
             case 10:
               _this2.Work.getUserWorksList(_this2.user.id, false, 1).then(function (data) {
                 _this2.inWorkProjectsList = data;
@@ -24719,22 +24722,21 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   _this2.Loader.loaderOff("#".concat(tab));
                 }, 300);
               });
-              return _context2.abrupt("break", 19);
+              return _context2.abrupt("break", 16);
             case 12:
-              _context2.next = 14;
-              return _this2.Work.getUserWorksList(_this2.user.id, -_this2.user.id, 0);
+              _this2.Work.getUserWorksList(_this2.user.id, -_this2.user.id, 0).then(function (data) {
+                _this2.works = data || [];
+                setTimeout(function () {
+                  _this2.Loader.loaderOff("#".concat(tab));
+                }, 300);
+              });
+              return _context2.abrupt("break", 16);
             case 14:
-              _this2.works = _context2.sent;
-              setTimeout(function () {
-                _this2.Loader.loaderOff("#".concat(tab));
-              }, 300);
-              return _context2.abrupt("break", 19);
-            case 17:
               setTimeout(function () {
                 _this2.Loader.loaderOff();
               }, 300);
-              return _context2.abrupt("break", 19);
-            case 19:
+              return _context2.abrupt("break", 16);
+            case 16:
             case "end":
               return _context2.stop();
           }
@@ -31392,7 +31394,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
         "data-id": project_work.id,
         "class": "card__tags-item"
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project_work.type) + " - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project_work.lost_quantity) + "/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project_work.quantity), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_77);
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project_work.name) + " - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project_work.lost_quantity) + "/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(project_work.quantity), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_77);
     }), 256 /* UNKEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_78, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
       onClick: function onClick($event) {
         return $options.chooseProject(project);
