@@ -22812,7 +22812,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           };
         } else if (this.user.role == 'blogger' && work.confirmed_by_blogger_at == null) {
           return {
-            title: 'Завершить проект',
+            title: 'Ты пидор',
             action: 'confirm'
           };
         }

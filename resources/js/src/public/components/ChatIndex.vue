@@ -615,7 +615,7 @@ import {reactive, ref} from "vue";
                     }
                     else if(this.user.role == 'blogger' && work.confirmed_by_blogger_at == null){
                         return {
-                            title: 'Завершить проект',
+                            title: 'Ты пидор',
                             action: 'confirm'
                         }
                     }
