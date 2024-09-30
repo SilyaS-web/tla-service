@@ -43,8 +43,7 @@
                         </div>
                         <div class="chat__right">
                             <div
-                                v-if="isWorkCompleted"
-                                class="chat__overflow chat__overflow--completed" style="z-index: 1;">
+                                class="chat__overflow chat__overflow--completed" style="z-index: 1; display: none">
                                 <div class="chat__overflow-text">
                                     Проект завершен
                                 </div>
@@ -286,11 +285,10 @@ import {reactive, ref} from "vue";
                 chatsListIntervalId: ref(null),
                 user: ref(null),
                 isBloggerStatisticsPopupOpen: ref(false),
-                bloggerStatistics: ref({
-
-                }),
-                uploadStatisticsFileTitle: 'Прикрепить отчет по статистике',
-                uploadFileTitle: 'Прикрепите файл',
+                bloggerStatistics: ref({}),
+                uploadStatisticsFileTitle: ref('Прикрепить отчет по статистике'),
+                uploadFileTitle: ref('Прикрепите файл'),
+                isTablet: false,
                 User, Platforms
             }
         },
@@ -308,6 +306,8 @@ import {reactive, ref} from "vue";
                 }, 5000)
                 localStorage.setItem('chats_interval_id', this.chatsListIntervalId)
             }
+
+            this.isTablet = window.matchMedia('(max-width: 970px)').matches;
         },
         updated(){
             if(this.currentItem){ //если мы перешли с другого модуля
@@ -422,13 +422,13 @@ import {reactive, ref} from "vue";
                         return
                     }
 
-                    if([null, undefined, ''].includes(this.currentMessage.message.trim()) && [null, undefined, ''].includes(this.currentMessage.file)){
+                    if([null, undefined, ''].includes(this.currentMessage.message) && [null, undefined, ''].includes(this.currentMessage.file)){
                         resolve(false)
                         return
                     }
                     var formData = new FormData;
 
-                    formData.append('message', this.currentMessage.message.trim());
+                    formData.append('message', (this.currentMessage.message ? this.currentMessage.message.trim() : ''));
                     formData.append('img', this.currentMessage.file);
 
                     if(!this.currentChat){
@@ -497,7 +497,7 @@ import {reactive, ref} from "vue";
 
                 this.getMessages(work)
 
-                $('.chat__messages').animate({scrollTop: '100000px' }, 0);
+                $('.chat__messages').animate({ scrollTop: '100000px' }, 0);
             },
             getMessages(work){
                 return new Promise((resolve, reject) => {
