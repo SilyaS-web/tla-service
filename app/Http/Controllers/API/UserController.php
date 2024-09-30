@@ -69,7 +69,8 @@ class UserController extends Controller
             'product_name' => 'string|nullable',
             'statuses' => 'array|nullable',
             'statuses.*' => 'string',
-            'is_blogger_access' => 'boolean|nullable'
+            'is_blogger_access' => 'boolean|nullable',
+            'order_by_created_at' => 'string|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -96,6 +97,20 @@ class UserController extends Controller
             $projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
                 $query->where('type', $validated['project_type']);
             });
+        }
+
+        if (isset($validated['status']) && !empty($validated['status'])) {
+            if ($validated['status'] == 'active') {
+                $projects->where('status', '>=', 0);
+            } else {
+                $projects->where('status', '<', 0);
+            }
+        }
+
+        if (isset($validated['order_by_created_at']) && !empty($validated['order_by_date'])) {
+            $projects->orderBy('created_at', $validated['order_by_created_at']);
+        } else {
+            $projects->orderBy('created_at', 'desc');
         }
 
         $data = [
