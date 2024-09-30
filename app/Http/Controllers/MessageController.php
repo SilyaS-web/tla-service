@@ -124,8 +124,8 @@ class MessageController extends Controller
         $validator = Validator::make($request->all(), [
             'work_id' => 'required|exists:works,id',
             'user_id' => 'exists:users,id|nullable',
-            'message' => 'required|string',
-            'img' => '',
+            'message' => 'string|nullable',
+            'img' => 'image|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -138,6 +138,15 @@ class MessageController extends Controller
         }
 
         $validated = $validator->validated();
+
+        if (!isset($validated['img']) && !isset($validated['message'])) {
+            return response()->json(['message' => ['Введите сообщение или прикрепите файл']], 400);
+        }
+
+        if (isset($validated['img']) && !isset($validated['message'])) {
+            $validated['message'] = 'Прикреплён файл';
+        }
+
         $validated['user_id'] = $user->id;
 
         $message = Message::create($validated);
