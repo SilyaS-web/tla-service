@@ -67,14 +67,14 @@ class PaymentController extends Controller
                 return redirect('https://adswap.ru/#successful-payment');
             }
 
-            return redirect()->route('tariff')->with('success', 'Тариф успешно оплачен');
+            return redirect('/')->setStatusCode(200);
         }
 
         if ($from_landing) {
             return redirect('https://adswap.ru');
         }
 
-        return redirect()->route('tariff')->with('success', 'При получении платежа произошла ошибка');
+        return redirect('/')->setStatusCode(400);
     }
 
     public function failPayment(Payment $payment)
@@ -135,8 +135,8 @@ class PaymentController extends Controller
         $initRequest = new InitRequest($price, $payment->id . '_' . $tariff->id);
 
         $notification_url = url('/');
-        $success_url = url('/') .  ($from_landing ? 'from_landing=1' : '');
-        $fail_url = url('/') .  ($from_landing ? 'from_landing=1' : '');
+        $success_url = url('/api/payment/' . $payment->id . '/success') .  ($from_landing ? 'from_landing=1' : '');
+        $fail_url = url('/api/payment/' . $payment->id . '/fail') .  ($from_landing ? 'from_landing=1' : '');
 
         // необязательные параметры
         $initRequest
