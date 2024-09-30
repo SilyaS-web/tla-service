@@ -24,6 +24,7 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'order_by_created_at' => 'string|nullbale',
             'project_type' => [Rule::in(Project::TYPES), 'nullable'],
             'category' => 'string|nullable',
             'product_name' => 'string|nullable',
@@ -55,6 +56,12 @@ class ProjectController extends Controller
 
         if (isset($validated['category']) && !empty($validated['category'])) {
             $projects->where('marketplace_category', 'like', '%' . $validated['category'] . '%');
+        }
+
+        if (isset($validated['order_by_created_at']) && !empty($validated['order_by_date'])) {
+            $projects->orderBy('order_by_created_at', $validated['order_by_created_at']);
+        } else {
+            $projects->orderBy('order_by_created_at', 'desc');
         }
 
         $data = [
