@@ -30,6 +30,7 @@ class ProjectController extends Controller
             'product_name' => 'string|nullable',
             'statuses' => 'array|nullable',
             'statuses.*' => 'string',
+            'status' => 'string|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -62,6 +63,14 @@ class ProjectController extends Controller
             $projects->orderBy('created_at', $validated['order_by_created_at']);
         } else {
             $projects->orderBy('created_at', 'desc');
+        }
+
+        if (isset($validated['status']) && !empty($validated['status'])) {
+            if ($validated['status'] == 'active') {
+                $projects->where('status', '>=', 0);
+            } else {
+                $projects->where('status', '<', 0);
+            }
         }
 
         $data = [
