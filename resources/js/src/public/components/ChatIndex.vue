@@ -38,7 +38,10 @@
                                 </div>
                                 <p
                                     v-else
-                                    class="chat__chat-empty">Чат пустой, <span style="color:var(--primary); cursor:pointer" onclick="(function(){ $(document).find('.nav-menu__item.project-link').click() })();">создайте проект</span> и начните работу с блогерами</p>
+                                    class="chat__chat-empty">
+                                    <span v-if="user.role = 'seller'">Чат пустой,создайте проект и начните работу с блогерами</span>
+                                    <span v-else>Чат пустой, начните работу с селлерами</span>
+                                </p>
                             </div>
                         </div>
                         <div v-if="isMessagesMobile" class="chat__right">
@@ -336,7 +339,7 @@ import {reactive, ref} from "vue";
 
                     this.$emit('updateCurrentItem', null);
 
-                    var childOffset = $(document).find(`.item-chat[data-id="${this.currentItem.id}"]`).offset().top,
+                    var childOffset = ($(document).find(`.item-chat[data-id="${this.currentItem.id}"]`) ? $(document).find(`.item-chat[data-id="${this.currentItem.id}"]`).offset().top : 0),
                         wrapOffset = $(document).find('#chat .chat__chat-items').offset().top,
                         scrolledValue = $(document).find('#chat .chat__chat-items').scrollTop();
 
@@ -481,8 +484,10 @@ import {reactive, ref} from "vue";
                     this.currentMessage[k] = null
                 }
 
-                this.isMessagesMobile = true;
-                this.isChatsMobile = false;
+                if(this.isTablet) {
+                    this.isMessagesMobile = true;
+                    this.isChatsMobile = false;
+                }
 
                 this.uploadFileTitle = 'Прикрепите файл';
 
