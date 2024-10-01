@@ -81,7 +81,13 @@
 
             setTimeout(()=>{
                 this.Loader.loaderOff();
-            }, 300)
+                if(this.$router.currentRoute.value.params && this.$router.currentRoute.value.params.item && this.$router.currentRoute.value.params.id){
+                    this.switchTab('chat', {
+                        item: this.$router.currentRoute.value.params.item,
+                        id: this.$router.currentRoute.value.params.id
+                    })
+                }
+            }, 500)
         },
         methods: {
             newChatMessages(messagesCount){
