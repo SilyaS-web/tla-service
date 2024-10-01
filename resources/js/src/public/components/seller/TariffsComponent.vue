@@ -71,7 +71,7 @@
                         <div class="tariff-card__btns">
                             <button
                                 @click="buyUnlimited"
-                                class="btn btn-primary" style="margin-top: 15px">Оплатить</button>
+                                class="btn btn-primary" style="margin-top: 15px">{{ user && user.tariffs && user.tariffs.length > 0 ? "Продлить" : "Оплатить" }}</button>
                         </div>
                         <div class="tariff-card__count">
                             02
@@ -79,7 +79,7 @@
                     </div>
                 </div>
                 <div class="tariff__row">
-                    <p style="font-weight:500; font-size:18px; color:rgba(0,0,0,0.4)">Все тарифы действуют в течение 30 календарных дней после оплаты. Если вы не использовали свои отзывы и интеграции в течение оплаченного периода, они станут недоступными. Если вы общаетесь с блогерами в рамках открытых рекламных диалогов, то даже после окончания тарифа вы не потеряете доступ к сервису.</p>
+                    <p style="font-weight:500; font-size:18px; color:rgba(0,0,0,0.4)">Все тарифы действуют в течение 30 календарных дней после оплаты. Если вы общаетесь с блогерами в рамках открытых рекламных диалогов, то даже после окончания тарифа вы не потеряете доступ к сервису.</p>
                 </div>
             </div>
         </div>
@@ -112,6 +112,7 @@ export default {
     },
     mounted(){
         this.user = this.User.getCurrent();
+        console.log(this.user)
     },
     methods:{
         callUsPopup(){

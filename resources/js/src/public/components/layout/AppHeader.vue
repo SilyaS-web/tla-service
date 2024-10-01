@@ -50,6 +50,10 @@
                         </div>
                         <img src="/img/notif-icon.svg" alt="" class="">
                         <div class="header__notif-items notif-header" v-if="notifications && notifications.length > 0">
+                            <span
+                                v-if="notifications.length > 1"
+                                @click="hideAllNotifications"
+                                style="display:block; color:var(--primary); margin-bottom:10px; font-size:14px;">Скрыть все</span>
                             <div class="notif-header__items header-notif-container" >
                                 <div
                                     v-for="notif in notifications"
@@ -189,6 +193,10 @@
                         </div>
                         <img src="/img/notif-icon.svg" alt="" class="">
                         <div class="header__notif-items notif-header" v-if="notifications && notifications.length > 0">
+                            <span
+                                v-if="notifications.length > 1"
+                                @click="hideAllNotifications"
+                                style="display:block; color:var(--primary); margin-bottom:10px; font-size:14px;">Скрыть все</span>
                             <div class="notif-header__items header-notif-container" >
                                 <div
                                     v-for="notif in notifications"
@@ -358,6 +366,22 @@
                 })
                 .then(( response ) => {
                     this.getNotifications()
+                })
+                .catch((error) => {
+                    notify('info', {
+                        title: 'Внимание!',
+                        message: 'Что-то пошло не так, попробуйте позже.'
+                    })
+                });
+            },
+
+            hideAllNotifications(){
+                axios({
+                    method: 'get',
+                    url: 'api/users/' + this.user.id + '/notifications/view',
+                })
+                .then(( response ) => {
+                    this.notifications = [];
                 })
                 .catch((error) => {
                     notify('info', {

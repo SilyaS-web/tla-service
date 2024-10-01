@@ -1378,7 +1378,6 @@ class PopupBlogerProjectMoreInfo extends Popup{
             processData: false,
             contentType: false,
             success: (res)=>{
-                console.log(res);
                 var options = res.optioins,
                     images = res.images;
 
@@ -1871,13 +1870,9 @@ $(window).on('load', function(){
 
     $(document).on('click', '.projects-list__filter-btn', function(){
         $(this).closest('.tab-content').find('.projects-list__filter').toggleClass('opened')
-
-        // $(document).off('click', '.projects-list__filter-btn').on('click', document, function(e){
-        //     if(!$(e.target).closest('.projects-list__filter').length > 0 && !$(e.target).hasClass('projects-list__filter-btn')){
-        //         $('.projects-list__filter').removeClass('opened');
-        //         $(document).off('click', document)
-        //     }
-        // })
+    })
+    $(document).on('click', '.filter__btns .btn.hide', function(){
+        $(this).closest('.filter').removeClass('opened');
     })
 
 

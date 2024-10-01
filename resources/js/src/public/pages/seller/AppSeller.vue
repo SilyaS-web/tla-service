@@ -211,7 +211,7 @@ export default{
                     break;
 
                 case 'all-projects':
-                    this.Project.getList({is_blogger_access: 1, statuses: [0, 1, 2]}).then(data => {
+                    this.Project.getList({is_blogger_access: 1, statuses: [0]}).then(data => {
                         this.projects = data || [];
 
                         setTimeout(()=>{

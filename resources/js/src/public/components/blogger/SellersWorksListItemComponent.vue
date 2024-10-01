@@ -29,9 +29,14 @@
             </div>
             <div class="project-item__format-tags card__row card__tags">
                 <div
-                    v-for="work in work.project.project_works"
-                    class="card__tags-item" :data-id="work.id">
-                    <span>{{ work.name }} - {{ work.lost_quantity }}/{{ work.quantity }}</span>
+                    v-if="work.project.feedbackWork && work.project.feedbackWork.quantity > 0"
+                    class="card__tags-item">
+                    <span>Отзыв - {{ work.project.feedbackWork.lost_quantity }}/{{ work.project.feedbackWork.quantity }}</span>
+                </div>
+                <div
+                    v-if="work.project.integrationWork && work.project.integrationWork.quantity > 0"
+                    class="card__tags-item">
+                    <span>Интеграция - {{ work.project.integrationWork.lost_quantity }}/{{ work.project.integrationWork.quantity }}</span>
                 </div>
             </div>
             <div class="project-item__btns">
@@ -45,13 +50,30 @@
 <script>
 import {ref} from 'vue'
 import Work from '../../../services/api/Work'
+import Project from '../../../services/api/Project'
 
 export default{
     props: ['work'],
     data(){
         return {
-            Work,
+            Work, Project
         }
+    },
+    mounted(){
+        if(!this.work.project){
+            return
+        }
+
+        this.work.project.feedbackWork = this.Project.getFeedbackWork(this.work.project);
+        this.work.project.integrationWork = this.Project.getIntegrationWork(this.work.project);
+    },
+    updated(){
+        if(!this.work.project){
+            return
+        }
+
+        this.work.project.feedbackWork = this.Project.getFeedbackWork(this.work.project);
+        this.work.project.integrationWork = this.Project.getIntegrationWork(this.work.project);
     },
     methods: {
         acceptApplication(){

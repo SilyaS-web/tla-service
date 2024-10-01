@@ -197,6 +197,41 @@ const Project = {
     getProjectsList: () => {
 
     },
+    getFeedbackWork(project){
+        var feedbackWork = project.project_works ? project.project_works.filter(w => w.type == 'feedback') : {
+            lost_quantity: 0,
+            quantity: 0
+        };
+
+        if(!feedbackWork || feedbackWork.length == 0) {
+            feedbackWork = {
+                lost_quantity: 0,
+                quantity: 0
+            };
+        }
+        else{
+            feedbackWork = {
+                lost_quantity: feedbackWork[0].lost_quantity,
+                quantity: parseInt(feedbackWork[0].quantity)
+            }
+        }
+
+        return feedbackWork;
+    },
+    getIntegrationWork(project){
+        var integrationWorks = project.project_works ? project.project_works.filter(w => w.type != 'feedback') : null,
+            integrationWork = {
+                lost_quantity: 0,
+                quantity: 0
+            };
+
+        if(integrationWorks && integrationWorks.length > 0){
+            integrationWork.lost_quantity = integrationWorks.map(w => w.lost_quantity).reduce((a, b) => a + b, 0);
+            integrationWork.quantity = integrationWorks.map(w => parseInt(w.quantity)).reduce((a, b) => a + b, 0);
+        }
+
+        return integrationWork;
+    },
 };
 
 export default Project
