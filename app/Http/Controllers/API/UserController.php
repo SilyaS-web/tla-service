@@ -283,7 +283,7 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'message' => 'string|nullable',
-            'img' => 'file|size:51200|nullable',
+            'img' => 'exclude_if:img,null|file|max:51200',
         ]);
 
         if ($validator->fails()) {
