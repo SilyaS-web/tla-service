@@ -8,7 +8,7 @@
             <div class="profile-tabs__content-item">
                 <div class="tab-content__chat chat">
                     <div class="chat__body">
-                        <div class="chat__left">
+                        <div v-if="isChatsMobile" class="chat__left">
                             <div class="chat__chat-items">
                                 <div
                                     v-if="works.length > 0"
@@ -41,7 +41,7 @@
                                     class="chat__chat-empty">Чат пустой, <span style="color:var(--primary); cursor:pointer" onclick="(function(){ $(document).find('.nav-menu__item.project-link').click() })();">создайте проект</span> и начните работу с блогерами</p>
                             </div>
                         </div>
-                        <div class="chat__right">
+                        <div v-if="isMessagesMobile" class="chat__right">
                             <div
                                 class="chat__overflow chat__overflow--completed" style="z-index: 1; display: none">
                                 <div class="chat__overflow-text">
@@ -55,7 +55,9 @@
                                     Все доступные места на интеграцию заняты
                                 </div>
                             </div>
-                            <div class="chat__back">
+                            <div
+                                @click="isMessagesMobile = false; isChatsMobile = true;"
+                                class="chat__back">
                                 <img src="img/arrow-alt.svg" alt="">
                                 <span> Вернуться </span>
                             </div>
@@ -288,7 +290,11 @@ import {reactive, ref} from "vue";
                 bloggerStatistics: ref({}),
                 uploadStatisticsFileTitle: ref('Прикрепить отчет по статистике'),
                 uploadFileTitle: ref('Прикрепите файл'),
-                isTablet: false,
+
+                isTablet: ref(false),
+                isChatsMobile: ref(true),
+                isMessagesMobile: ref(true),
+
                 User, Platforms
             }
         },
@@ -308,6 +314,11 @@ import {reactive, ref} from "vue";
             }
 
             this.isTablet = window.matchMedia('(max-width: 970px)').matches;
+
+            if(this.isTablet){
+                this.isChatsMobile = true;
+                this.isMessagesMobile = false;
+            }
         },
         updated(){
             if(this.currentItem){ //если мы перешли с другого модуля
@@ -469,6 +480,9 @@ import {reactive, ref} from "vue";
                 for (let k in this.currentMessage){
                     this.currentMessage[k] = null
                 }
+
+                this.isMessagesMobile = true;
+                this.isChatsMobile = false;
 
                 this.uploadFileTitle = 'Прикрепите файл';
 

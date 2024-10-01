@@ -5133,7 +5133,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 @media(max-width:970px){
     .chat__right{
-        display: none;
+        /*display: none;*/
         width: 100%;
     }
     .chat__left{
