@@ -15,6 +15,7 @@ class FinishStatsResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'message_id' => $this->message_id,
             'subs' => $this->subs,
             'views' => $this->views,
             'reposts' => $this->reposts,
