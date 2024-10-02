@@ -200,7 +200,7 @@ export default{
                     break;
 
                 case 'profile-blogers-list':
-                    this.Blogger.getList().then(data => {
+                    this.Blogger.getList([1]).then(data => {
                         this.bloggers = (data || []).map(_b => this.findBloggerBiggestPlatform(_b));
 
                         setTimeout(()=>{

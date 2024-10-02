@@ -90,6 +90,8 @@ export default{
     data(){
         return {
             filter: ref({
+                is_blogger_access: 1,
+                statuses: [0],
                 project_type: '',
                 product_name: '',
                 project_category: '',

@@ -151,21 +151,37 @@
             async applyFilterProjects(filterData){
                 this.Loader.loaderOn('.wrapper .profile__content-inner');
 
-                this.allProjects = await this.Project.getList(filterData);
+                this.Project.getList(filterData).then(data => {
+                    this.allProjects = data || [];
 
-                setTimeout(()=>{
-                    this.Loader.loaderOff();
-                }, 300)
+                    setTimeout(()=>{
+                        this.Loader.loaderOff();
+                    }, 300)
+                })
             },
 
             async applyFilterAcceptedProjects(filterData){
                 this.Loader.loaderOn('.wrapper .profile__content-inner');
 
-                this.inWorkProjectsList = await this.Work.getUserWorksList(this.user.id, false, 1, filterData);
+                this.Work.getUserWorksList(this.user.id, false, 1, filterData).then(data => {
+                    this.inWorkProjectsList = data;
 
-                setTimeout(()=>{
-                    this.Loader.loaderOff();
-                }, 300)
+                    setTimeout(()=>{
+                        this.Loader.loaderOff();
+                    }, 300)
+                })
+            },
+
+            async applyFilterWorks(filterData){
+                this.Loader.loaderOn('.wrapper .profile__content-inner');
+
+                this.Work.getUserWorksList(this.user.id, -this.user.id, 0, filterData).then((data) =>{
+                    this.works = (data || []).filter(w => w.project);
+
+                    setTimeout(()=>{
+                        this.Loader.loaderOff();
+                    }, 300)
+                })
             }
         }
     }

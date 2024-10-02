@@ -4551,6 +4551,9 @@ input[type='range']::-webkit-slider-runnable-track{
     #seller .projects-list__filter .btn.hide{
         visibility: visible;
     }
+    #blogger .projects-list__filter .btn.hide{
+        visibility: visible;
+    }
 
     .profile-projects__body{
         width:100%;
