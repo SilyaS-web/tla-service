@@ -79,13 +79,12 @@
                                     </div>
                                     <div class="messages-chat__item-msg">
                                         <span v-if="message.sender_id == 1" v-html="message.message"></span>
-
                                         <div
-                                            v-else-if="message.finishStats"
+                                            v-if="currentChat.statistics && message.sender_id == 1"
                                             class="messages-chat__item-stats">
-                                            Просмотры: {{ message.finishStats.views }}
-                                            Репосты: {{ message.finishStats.reposts }}
-                                            Лайки: {{ message.finishStats.likes }}
+                                            Просмотры: {{ currentChat.statistics.views }}
+                                            Репосты: {{ currentChat.statistics.reposts }}
+                                            Лайки: {{ currentChat.statistics.likes }}
                                         </div>
                                         <span v-else v-html="message.message"></span>
                                         <div
@@ -543,6 +542,7 @@ import {reactive, ref} from "vue";
                         this.currentChat.accepted_by_blogger_at = work ? work.accepted_by_blogger_at : this.currentChat.accepted_by_blogger_at;
                         this.currentChat.confirmed_by_blogger_at = work ? work.confirmed_by_blogger_at : this.currentChat.confirmed_by_blogger_at;
                         this.currentChat.confirmed_by_seller_at = work ? work.confirmed_by_seller_at : this.currentChat.confirmed_by_seller_at;
+                        this.currentChat.statistics = work ? work.statistics : this.currentChat.statistics;
 
                         this.currentChat.btnData = this.getChatBtnData(this.currentChat)
                     }

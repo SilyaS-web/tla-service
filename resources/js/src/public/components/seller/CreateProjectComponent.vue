@@ -45,7 +45,7 @@
                             <label for="project-link">Ссылка на товар</label>
                             <input
                                 v-model="project.product_link"
-                                type="text" id="project-link" name="product_link" placeholder="Ссылка" class="input input--product_link">
+                                type="text" id="project-link" name="product_link" placeholder="Ссылка" class="input input--product_link input-field">
                             <span class="error" v-if="errors.product_link">{{ errors.product_link }}</span>
                         </div>
 
@@ -288,7 +288,7 @@
                                     <input type="number" class="input" v-model="project.telegram_quantity" name="telegram-quantity">
                                 </div>
                                 <div
-                                    v-on:click="(function(e){ if(project.telegram_quantity > 0) project.telegram_quantity += 1})()"
+                                    v-on:click="(function(e){ if(project.telegram_quantity < 100) project.telegram_quantity += 1})()"
                                     class="quantity-plus">
                                     <img src="img/plus-icon.svg" alt="">
                                 </div>
@@ -373,6 +373,24 @@
                         this.errors = data.errors;
                         return;
                     }
+
+                    this.project = {
+                        product_name: null,
+                        product_nm: null,
+                        product_price: null,
+                        product_link: null,
+                        feedback_quantity: 0,
+                        inst_quantity: 0,
+                        youtube_quantity: 0,
+                        vk_quantity: 0,
+                        telegram_quantity: 0,
+                        images: [],
+                    }
+
+                    $('#create-project').find('.input').val('');
+                    $('#create-project').find('.quest__step#step_1').addClass('current');
+                    $('#create-project').find('.quest__step#step_2').removeClass('current');
+                    $('.upload-files__body').find('.upload-files__item').remove();
 
                     this.$emit('switchTab', 'profile-projects')
                 })
