@@ -80,7 +80,7 @@
                                     <div class="messages-chat__item-msg">
                                         <span v-if="message.sender_id == 1" v-html="message.message"></span>
                                         <div
-                                            v-if="currentChat.statistics && currentChat.statistics.id == message.id"
+                                            v-if="currentChat.statistics && message.sender_id == 1"
                                             class="messages-chat__item-stats">
                                             Просмотры: {{ currentChat.statistics.views }}
                                             Репосты: {{ currentChat.statistics.reposts }}
