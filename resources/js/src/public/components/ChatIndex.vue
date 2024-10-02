@@ -39,7 +39,7 @@
                                 <p
                                     v-else
                                     class="chat__chat-empty">
-                                    <span v-if="user.role = 'seller'">Чат пустой,создайте проект и начните работу с блогерами</span>
+                                    <span v-if="user.role == 'seller'">Чат пустой,создайте проект и начните работу с блогерами</span>
                                     <span v-else>Чат пустой, начните работу с селлерами</span>
                                 </p>
                             </div>

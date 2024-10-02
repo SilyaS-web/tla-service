@@ -81,6 +81,7 @@
 
             setTimeout(()=>{
                 this.Loader.loaderOff();
+
                 if(this.$router.currentRoute.value.params && this.$router.currentRoute.value.params.item && this.$router.currentRoute.value.params.id){
                     this.switchTab('chat', {
                         item: this.$router.currentRoute.value.params.item,

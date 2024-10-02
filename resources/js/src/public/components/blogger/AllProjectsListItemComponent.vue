@@ -222,8 +222,14 @@
             }
 
             if(this.project){
-                this.project.feedbackWork = this.Project.getFeedbackWork(this.project);
-                this.project.integrationWork = this.Project.getIntegrationWork(this.project);
+                var feedbackWork = this.Project.getFeedbackWork(this.project),
+                    integrationWork = this.Project.getIntegrationWork(this.project);
+
+                if(!this.project.feedbackWork || this.project.feedbackWork.quantity != feedbackWork.quantity || this.project.feedbackWork.lost_quantity != feedbackWork.lost_quantity)
+                    this.project.feedbackWork = feedbackWork;
+
+                if(!this.project.integrationWork || this.project.integrationWork.quantity != integrationWork.quantity || this.project.integrationWork.lost_quantity != integrationWork.lost_quantity)
+                    this.project.integrationWork = integrationWork;
             }
         },
         methods:{
