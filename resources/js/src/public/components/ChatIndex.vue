@@ -81,11 +81,11 @@
                                         <span v-if="message.sender_id == 1" v-html="message.message"></span>
 
                                         <div
-                                            v-else-if="message.finishStats"
+                                            v-else-if="currentChat.statistics"
                                             class="messages-chat__item-stats">
-                                            Просмотры: {{ message.finishStats.views }}
-                                            Репосты: {{ message.finishStats.reposts }}
-                                            Лайки: {{ message.finishStats.likes }}
+                                            Просмотры: {{ currentChat.statistics.views }}
+                                            Репосты: {{ currentChat.statistics.reposts }}
+                                            Лайки: {{ currentChat.statistics.likes }}
                                         </div>
                                         <span v-else v-html="message.message"></span>
                                         <div

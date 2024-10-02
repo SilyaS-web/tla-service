@@ -388,6 +388,8 @@
                     }
 
                     $('#create-project').find('.input').val('');
+                    $('#create-project').find('.quest__step#step_1').addClass('current');
+                    $('#create-project').find('.quest__step#step_2').removeClass('current');
                     $('.upload-files__body').find('.upload-files__item').remove();
 
                     this.$emit('switchTab', 'profile-projects')
