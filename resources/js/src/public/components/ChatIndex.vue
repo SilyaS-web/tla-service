@@ -356,13 +356,14 @@ import {reactive, ref} from "vue";
                         formData.append(k, this.bloggerStatistics[k])
                 }
 
-                var image = $('.statistics-file'),
-                    files = images[0].files;
+                var image = $('#statistics-file'),
+                    files = image[0].files;
+                console.log(files)
 
-                files.forEach((i, v) => {
-                    if(v)
-                        formData.append('images[' + i + ']', v)
-                })
+                for(let i = 0; i < files.length; i++){
+                    if(files[0])
+                        formData.append('images[' + i + ']', files[0])
+                }
 
                 axios({
                     method: 'post',
