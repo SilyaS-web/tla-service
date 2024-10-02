@@ -17,7 +17,8 @@ const Project = {
             }
             for( var i = 0; i < data.images.length; i++ ){
                 let file = data.images[i][0];
-                formData.append('images[' + i + ']', file);
+
+                file && formData.append('images[' + i + ']', file);
             }
 
             axios({

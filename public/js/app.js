@@ -24009,6 +24009,19 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   _this.errors = data.errors;
                   return;
                 }
+                _this.project = {
+                  product_name: null,
+                  product_nm: null,
+                  product_price: null,
+                  product_link: null,
+                  feedback_quantity: 0,
+                  inst_quantity: 0,
+                  youtube_quantity: 0,
+                  vk_quantity: 0,
+                  telegram_quantity: 0,
+                  images: []
+                };
+                $('.upload-files__body').find('.upload-files__item').remove();
                 _this.$emit('switchTab', 'profile-projects');
               });
             case 3:
@@ -26099,7 +26112,7 @@ var Project = {
       }
       for (var i = 0; i < data.images.length; i++) {
         var file = data.images[i][0];
-        formData.append('images[' + i + ']', file);
+        file && formData.append('images[' + i + ']', file);
       }
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
         method: 'post',
@@ -32704,7 +32717,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.project.telegram_quantity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     onClick: _cache[18] || (_cache[18] = function ($event) {
       return function (e) {
-        if ($data.project.telegram_quantity > 0) $data.project.telegram_quantity += 1;
+        if ($data.project.telegram_quantity < 100) $data.project.telegram_quantity += 1;
       }();
     }),
     "class": "quantity-plus"

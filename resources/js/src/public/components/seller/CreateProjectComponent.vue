@@ -288,7 +288,7 @@
                                     <input type="number" class="input" v-model="project.telegram_quantity" name="telegram-quantity">
                                 </div>
                                 <div
-                                    v-on:click="(function(e){ if(project.telegram_quantity > 0) project.telegram_quantity += 1})()"
+                                    v-on:click="(function(e){ if(project.telegram_quantity < 100) project.telegram_quantity += 1})()"
                                     class="quantity-plus">
                                     <img src="img/plus-icon.svg" alt="">
                                 </div>
@@ -373,6 +373,21 @@
                         this.errors = data.errors;
                         return;
                     }
+
+                    this.project = {
+                        product_name: null,
+                        product_nm: null,
+                        product_price: null,
+                        product_link: null,
+                        feedback_quantity: 0,
+                        inst_quantity: 0,
+                        youtube_quantity: 0,
+                        vk_quantity: 0,
+                        telegram_quantity: 0,
+                        images: [],
+                    }
+
+                    $('.upload-files__body').find('.upload-files__item').remove();
 
                     this.$emit('switchTab', 'profile-projects')
                 })
