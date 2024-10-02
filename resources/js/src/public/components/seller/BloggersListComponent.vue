@@ -141,6 +141,9 @@
                         <button
                             @click="applyBloggersFilter"
                             class="btn btn-primary">Применить</button>
+                        <button
+                            @click=""
+                            class="btn btn-secondary hide">Скрыть</button>
                     </div>
                 </div>
             </div>
@@ -190,10 +193,14 @@
                             </div>
                             <div class="project-item__format-tags card__row card__tags">
                                 <div
-                                    v-for="project_work in project.project_works"
-                                    :data-id="project_work.id"
+                                    v-if="project.feedbackWork && project.feedbackWork.quantity > 0"
                                     class="card__tags-item">
-                                    <span>{{ project_work.name }} - {{ project_work.lost_quantity }}/{{ project_work.quantity }}</span>
+                                    <span>Отзыв - {{ project.feedbackWork.lost_quantity }}/{{ project.feedbackWork.quantity }}</span>
+                                </div>
+                                <div
+                                    v-if="project.integrationWork && project.integrationWork.quantity > 0"
+                                    class="card__tags-item">
+                                    <span>Интеграция - {{ project.integrationWork.lost_quantity }}/{{ project.integrationWork.quantity }}</span>
                                 </div>
                             </div>
                             <div class="project-item__btns">
@@ -239,10 +246,13 @@
                                 </select>
                             </div>
 
-                            <div class="filter__btns">
+                            <div class="filter__btns" >
                                 <button
                                     @click="applyProjectsFilter"
                                     class="btn btn-primary">Применить</button>
+                                <button
+                                    @click=""
+                                    class="btn btn-secondary hide">Скрыть</button>
                             </div>
                         </div>
                     </div>
@@ -350,7 +360,13 @@
                 this.Loader.loaderOn('#profile-blogers-list');
 
                 this.Project.getUsersProjectsList(this.user.id, {is_blogger_access: 1, statuses: [0]}).then(data => {
-                    this.projects = data || [];
+                    this.projects = (data || []).map(p => {
+                        p.feedbackWork = this.Project.getFeedbackWork(p);
+                        p.integrationWork = this.Project.getIntegrationWork(p);
+
+                        return p
+                    });
+
                     setTimeout(()=>{
                         this.Loader.loaderOff('#profile-blogers-list');
                     }, 300)

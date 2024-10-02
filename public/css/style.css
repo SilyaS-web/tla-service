@@ -536,7 +536,7 @@ input[type='range']::-webkit-slider-runnable-track{
     position: relative;
 }
 .header__col.header__notif.active .header__notif-items{
-    display: flex;
+    display: block;
 }
 .header__col .header__profile-notif{
     position: absolute;
@@ -557,7 +557,7 @@ input[type='range']::-webkit-slider-runnable-track{
     position: absolute;
     top:calc(100% + 10px);
     background-color: var(--pale);
-    padding:20px 10px;
+    padding:10px;
     width:320px;
     display: none;
     border-radius: 5px;
@@ -1548,6 +1548,16 @@ input[type='range']::-webkit-slider-runnable-track{
     justify-content: center;align-items: center;
 }
 
+.notfound__title{
+    font-size: 4vw;
+    min-font-size: 24px;
+    font-weight: 800;
+}
+.notfound__subtitle{
+    font-size: 16px;
+    font-weight: 500;
+}
+
 
 .create-project {
 }
@@ -1808,6 +1818,13 @@ input[type='range']::-webkit-slider-runnable-track{
 .filter__title {
     font-size: 18px;
     font-weight: 600;
+}
+.filter__btns{
+    display: flex;
+    gap: 10px;
+}
+.filter .btn.hide{
+    visibility: hidden;
 }
 .blogers-list__filter {
     flex:1 1 auto;
@@ -2371,7 +2388,6 @@ input[type='range']::-webkit-slider-runnable-track{
 .project-item__content {
     display: flex;
     flex-direction: column;
-    justify-content: end;
     flex: 1 1 auto;
     margin-top: 15px;
 }
@@ -4532,6 +4548,10 @@ input[type='range']::-webkit-slider-runnable-track{
     #seller .projects-list__filter-btn{
         visibility: visible;
     }
+    #seller .projects-list__filter .btn.hide{
+        visibility: visible;
+    }
+
     .profile-projects__body{
         width:100%;
         max-width: 1200px;

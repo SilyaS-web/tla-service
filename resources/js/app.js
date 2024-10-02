@@ -16,6 +16,7 @@ import BloggerEditProfile from './src/public/pages/blogger/EditProfile.vue'
 import Tariffs from './src/public/pages/seller/AppTariffs.vue'
 import Moderation from './src/public/pages/blogger/AppModeration.vue'
 import Banned from './src/public/pages/AppBanned.vue'
+import NotFound from './src/public/pages/404.vue'
 import User from './src/services/api/User.vue'
 
 const app = createApp();
@@ -30,6 +31,7 @@ const routes = [
     { path: '/tariffs', name: 'Tariffs', component: Tariffs },
     { path: '/moderation', name: 'Moderation', component: Moderation },
     { path: '/banned', name: 'Banned', component: Banned },
+    { path: '/not-found', name: '404', component: NotFound },
 ]
 
 const router = createRouter({
@@ -50,7 +52,7 @@ router.beforeEach(async (to, from) => {
     if(isAuthenticated){
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
     }
-
+    console.log(to)
     if (!['Register', 'Login'].includes(to.name) && !isAuthenticated) {
         return {
             name: 'Login'
@@ -77,9 +79,20 @@ router.beforeEach(async (to, from) => {
                 }
             }
         }
+        else if(user.role == 'admin'){
+            if(!window.location.href.toString().includes('/profile/admin'))
+                window.location.href = '/profile/admin'
+        }
 
         return {
             name: 'Profile'
+        }
+    }
+    else{
+        if (!to.matched.length) {
+            return {
+                name: '404'
+            }
         }
     }
 })

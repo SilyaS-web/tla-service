@@ -71,6 +71,9 @@
                             <button
                                 @click="applyFilter"
                                 class="btn btn-primary ">Применить</button>
+                            <button
+                                @click=""
+                                class="btn btn-secondary hide">Скрыть</button>
                         </div>
                     </div>
                 </div>

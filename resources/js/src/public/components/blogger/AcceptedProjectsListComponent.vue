@@ -13,7 +13,7 @@
                 <ListItem
                     v-if="works.length > 0"
                     v-for="work in works"
-                    :project="work.project"
+                    :work="work"
                 ></ListItem>
                 <span v-else>Проектов нет</span>
             </div>
@@ -71,6 +71,9 @@
                             <button
                                 @click="applyFilter"
                                 class="btn btn-primary ">Применить</button>
+                            <button
+                                @click=""
+                                class="btn btn-secondary hide">Скрыть</button>
                         </div>
                     </div>
                 </div>

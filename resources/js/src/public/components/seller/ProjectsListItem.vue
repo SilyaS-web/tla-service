@@ -25,23 +25,42 @@
             </div>
             <div class="project-item__format-tags card__row card__tags">
                 <div
-                    v-for="project_work in project.project_works"
-                    :data-id="project_work.id"
+                    v-if="project.feedbackWork && project.feedbackWork.quantity > 0"
                     class="card__tags-item">
-                    <span>{{ project_work.name }} - {{ project_work.lost_quantity }}/{{ project_work.quantity }}</span>
+                    <span>Отзыв - {{ project.feedbackWork.lost_quantity }}/{{ project.feedbackWork.quantity }}</span>
+                </div>
+                <div
+                    v-if="project.integrationWork && project.integrationWork.quantity > 0"
+                    class="card__tags-item">
+                    <span>Интеграция - {{ project.integrationWork.lost_quantity }}/{{ project.integrationWork.quantity }}</span>
                 </div>
             </div>
-<!--            <div class="project-item__btns">-->
-<!--                <a-->
-<!--                    :data-project-id="project.id"-->
-<!--                    :data-articul="project.product_nm"-->
-<!--                    href="#" class="btn btn-primary btn-choose-project">Выбрать</a>-->
-<!--            </div>-->
         </div>
     </div>
 </template>
 <script>
+    import Project from '../../../services/api/Project';
+
     export default {
-        props: ['project']
+        props: ['project'],
+        data(){
+            return{
+                Project
+            }
+        },
+        mounted() {
+            if (!this.project) {
+                return
+            }
+
+            this.project.feedbackWork = this.Project.getFeedbackWork(this.project);
+            this.project.integrationWork = this.Project.getIntegrationWork(this.project);
+        },
+        updated(){
+            if(this.project){
+                this.project.feedbackWork = this.Project.getFeedbackWork(this.project);
+                this.project.integrationWork = this.Project.getIntegrationWork(this.project);
+            }
+        },
     }
 </script>

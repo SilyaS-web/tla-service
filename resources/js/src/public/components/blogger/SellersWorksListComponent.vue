@@ -56,6 +56,9 @@
 
                         <div class="filter__btns">
                             <button class="btn btn-primary btn-filter-send">Применить</button>
+                            <button
+                                @click=""
+                                class="btn btn-secondary hide">Скрыть</button>
                         </div>
                     </div>
                 </div>
