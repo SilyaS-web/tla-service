@@ -78,15 +78,14 @@
                                         </div>
                                     </div>
                                     <div class="messages-chat__item-msg">
-                                        <span v-if="message.sender_id == 1" v-html="message.message"></span>
+                                        <span v-html="message.message"></span>
                                         <div
-                                            v-if="currentChat.statistics && message.sender_id == 1"
+                                            v-if="currentChat.statistics && message.sender_id == 1 && currentChat.statistics.message_id == message.id"
                                             class="messages-chat__item-stats">
                                             Просмотры: {{ currentChat.statistics.views }}
                                             Репосты: {{ currentChat.statistics.reposts }}
                                             Лайки: {{ currentChat.statistics.likes }}
                                         </div>
-                                        <span v-else v-html="message.message"></span>
                                         <div
                                             v-for = "file in message.files">
                                             <img
