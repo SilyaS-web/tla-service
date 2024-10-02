@@ -479,7 +479,7 @@ import {reactive, ref} from "vue";
                     })
                 })
             },
-            chooseChat(work){
+            async chooseChat(work){
                 for (let k in this.currentMessage){
                     this.currentMessage[k] = null
                 }
@@ -514,9 +514,9 @@ import {reactive, ref} from "vue";
                     localStorage.setItem('chats_messages_interval_id', this.currentChatIntervalId)
                 }
 
-                this.getMessages(work)
+                await this.getMessages(work)
 
-                $('.chat__messages').animate({ scrollTop: '100000px' }, 0);
+                $('.chat__messages').animate({ scrollTop: $('.chat__messages')[0].scrollHeight + 'px' }, 0);
             },
             getMessages(work){
                 return new Promise((resolve, reject) => {
