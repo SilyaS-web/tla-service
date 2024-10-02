@@ -290,6 +290,14 @@ class UserController extends Controller
             return response()->json($validator->errors())->setStatusCode(400);
         }
 
+        if (!isset($work->projec)) {
+            return response()->json(['message' => ['Проект удалён']], 400);
+        }
+
+        if ($work->status === Work::COMPLETED) {
+            return response()->json(['message' => ['Проект завершён']], 400);
+        }
+
         $validated = $validator->validated();
 
         if (!isset($validated['img']) && !isset($validated['message'])) {
