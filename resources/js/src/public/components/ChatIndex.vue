@@ -609,6 +609,7 @@ import {reactive, ref} from "vue";
                 }
                 else if(work && work.status == 'progress'){
                     if(work.project_work.type != 'feedback' && work.statistics == null){
+                        console.log(work, this.user.role)
                         if(this.user.role == 'blogger'){
                             return {
                                 title: 'Прикрепить статистику',
@@ -647,7 +648,7 @@ import {reactive, ref} from "vue";
                     }
                     else if(this.user.role == 'seller' && work.accepted_by_seller_at != null){
                         return {
-                            title: 'Ожидаем ответа от ' + work.partner_user.name,
+                            title: 'Ожидаем ответа от блогера',
                         }
                     }
                 }
