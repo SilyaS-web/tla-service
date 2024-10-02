@@ -41,7 +41,7 @@
         </div>
     </div>
     <div
-        v-if="projectInfo"
+        v-if="isProjectPopup"
         id="project-item-info" class="popup">
         <div class="popup__container _container">
             <div class="popup__body">
@@ -113,7 +113,7 @@
                     </div>
                 </div>
                 <div
-                    @click="projectInfo = false"
+                    @click="isProjectPopup = false"
                     class="close-popup">
                     <img src="img/close-icon.svg" alt="">
                 </div>
@@ -130,6 +130,7 @@
         data(){
             return{
                 projectInfo: ref(false),
+                isProjectPopup: ref(false),
                 Project
             }
         },
@@ -159,8 +160,14 @@
             }
 
             if(this.project){
-                this.project.feedbackWork = this.Project.getFeedbackWork(this.project);
-                this.project.integrationWork = this.Project.getIntegrationWork(this.project);
+                var feedbackWork = this.Project.getFeedbackWork(this.project),
+                    integrationWork = this.Project.getIntegrationWork(this.project);
+
+                if(!this.project.feedbackWork || this.project.feedbackWork.quantity != feedbackWork.quantity || this.project.feedbackWork.lost_quantity != feedbackWork.lost_quantity)
+                    this.project.feedbackWork = feedbackWork;
+
+                if(!this.project.integrationWork || this.project.integrationWork.quantity != integrationWork.quantity || this.project.integrationWork.lost_quantity != integrationWork.lost_quantity)
+                    this.project.integrationWork = integrationWork;
             }
         },
         methods:{
@@ -196,7 +203,7 @@
                     options: options,
                     worksInfo: worksInfo
                 }
-
+                this.isProjectPopup = true
                 console.log( this.projectInfo)
             }
         }
