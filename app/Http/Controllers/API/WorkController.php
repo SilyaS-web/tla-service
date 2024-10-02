@@ -233,6 +233,7 @@ class WorkController extends Controller
             ]);
             $work->status = Work::COMPLETED;
             $work->save();
+            $work->project->isCompleted();
             Notification::create([
                 'user_id' => $work->blogger->user->id,
                 'type' => 'Подтверждение',
