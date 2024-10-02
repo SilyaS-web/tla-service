@@ -39,7 +39,7 @@
                                 <p
                                     v-else
                                     class="chat__chat-empty">
-                                    <span v-if="user.role = 'seller'">Чат пустой,создайте проект и начните работу с блогерами</span>
+                                    <span v-if="user.role == 'seller'">Чат пустой,создайте проект и начните работу с блогерами</span>
                                     <span v-else>Чат пустой, начните работу с селлерами</span>
                                 </p>
                             </div>
@@ -479,7 +479,7 @@ import {reactive, ref} from "vue";
                     })
                 })
             },
-            chooseChat(work){
+            async chooseChat(work){
                 for (let k in this.currentMessage){
                     this.currentMessage[k] = null
                 }
@@ -514,9 +514,9 @@ import {reactive, ref} from "vue";
                     localStorage.setItem('chats_messages_interval_id', this.currentChatIntervalId)
                 }
 
-                this.getMessages(work)
+                await this.getMessages(work)
 
-                $('.chat__messages').animate({ scrollTop: '100000px' }, 0);
+                $('.chat__messages').animate({ scrollTop: $('.chat__messages')[0].scrollHeight + 'px' }, 0);
             },
             getMessages(work){
                 return new Promise((resolve, reject) => {
@@ -609,6 +609,7 @@ import {reactive, ref} from "vue";
                 }
                 else if(work && work.status == 'progress'){
                     if(work.project_work.type != 'feedback' && work.statistics == null){
+                        console.log(work, this.user.role)
                         if(this.user.role == 'blogger'){
                             return {
                                 title: 'Прикрепить статистику',
@@ -647,7 +648,7 @@ import {reactive, ref} from "vue";
                     }
                     else if(this.user.role == 'seller' && work.accepted_by_seller_at != null){
                         return {
-                            title: 'Ожидаем ответа от ' + work.partner_user.name,
+                            title: 'Ожидаем ответа от блогера',
                         }
                     }
                 }

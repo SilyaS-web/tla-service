@@ -69,8 +69,14 @@
                 return
             }
 
-            this.work.project.feedbackWork = this.Project.getFeedbackWork(this.work.project);
-            this.work.project.integrationWork = this.Project.getIntegrationWork(this.work.project);
+            var feedbackWork = this.Project.getFeedbackWork(this.work.project),
+                integrationWork = this.Project.getIntegrationWork(this.work.project);
+
+            if(!this.work.project.feedbackWork || this.work.project.feedbackWork.quantity != feedbackWork.quantity || this.work.project.feedbackWork.lost_quantity != feedbackWork.lost_quantity)
+                this.work.project.feedbackWork = feedbackWork;
+
+            if(!this.work.project.integrationWork || this.work.project.integrationWork.quantity != integrationWork.quantity || this.work.project.integrationWork.lost_quantity != integrationWork.lost_quantity)
+                this.work.project.integrationWork = integrationWork;
         },
         methods: {
             goToChat(){
