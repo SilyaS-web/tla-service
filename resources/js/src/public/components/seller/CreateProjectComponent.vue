@@ -45,7 +45,7 @@
                             <label for="project-link">Ссылка на товар</label>
                             <input
                                 v-model="project.product_link"
-                                type="text" id="project-link" name="product_link" placeholder="Ссылка" class="input input--product_link">
+                                type="text" id="project-link" name="product_link" placeholder="Ссылка" class="input input--product_link input-field">
                             <span class="error" v-if="errors.product_link">{{ errors.product_link }}</span>
                         </div>
 
@@ -387,6 +387,7 @@
                         images: [],
                     }
 
+                    $('#create-project').find('.input').val('');
                     $('.upload-files__body').find('.upload-files__item').remove();
 
                     this.$emit('switchTab', 'profile-projects')
