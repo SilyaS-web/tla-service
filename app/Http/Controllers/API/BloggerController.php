@@ -173,7 +173,7 @@ class BloggerController extends Controller
             ]);
         }
 
-//        TgService::sendModeration($user->name . ' оставил заявку на модерацию');
+        TgService::sendModeration($user->name . ' оставил заявку на модерацию');
         return response()->json([])->setStatusCode(200);
     }
 
