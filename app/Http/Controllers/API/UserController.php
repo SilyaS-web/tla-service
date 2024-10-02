@@ -290,7 +290,7 @@ class UserController extends Controller
             return response()->json($validator->errors())->setStatusCode(400);
         }
 
-        if (!isset($work->projec)) {
+        if (!isset($work->project)) {
             return response()->json(['message' => ['Проект удалён']], 400);
         }
 
