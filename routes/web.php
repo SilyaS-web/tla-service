@@ -24,6 +24,12 @@ use App\Http\Controllers\WorkController;
 |
 */
 
+Route::prefix('lnk')->group(function () {
+    Route::get('/create', [DeepLinkController::class, 'store']);
+    Route::get('/stats', [DeepLinkController::class, 'stats']);
+    Route::get('/{link}', [DeepLinkController::class, 'index']);
+});
+
 Route::get('/profile/admin', function () {
     return view('profile.admin');
 });
@@ -40,11 +46,6 @@ Route::get('/policy', function () {
     return view('policy');
 })->name('policy');
 
-Route::prefix('lnk')->group(function () {
-    Route::get('/create', [DeepLinkController::class, 'store']);
-    Route::get('/stats', [DeepLinkController::class, 'stats']);
-    Route::get('/{link}', [DeepLinkController::class, 'index']);
-});
 
 Route::prefix('apist')->group(function () {
     Route::post('/tg', [AuthController::class, 'setTGPhone']);
