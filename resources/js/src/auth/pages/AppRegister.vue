@@ -90,8 +90,8 @@
                     <button class="btn btn-primary next" type="submit" @click="registration">
                         Зарегистрироваться
                     </button>
-                    <router-link :to="{path: '/login'}" class="btn btn-secondary">
-                        Войти
+                    <router-link :to="{path: '/login'}" class="btn btn-white">
+                        У меня уже есть аккаунт
                     </router-link>
                 </div>
                 <p class="form-addit">

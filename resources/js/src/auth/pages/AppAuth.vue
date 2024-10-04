@@ -25,8 +25,8 @@
                         Войти
                     </button>
                     <router-link :to="{name: 'Register'}">
-                        <button class="btn btn-secondary"  style="cursor: pointer">
-                            Зарегистрируйтесь
+                        <button class="btn btn-white"  style="cursor: pointer">
+                            Нет аккаунта? Зарегистрируйтесь
                         </button>
                     </router-link>
                 </div>

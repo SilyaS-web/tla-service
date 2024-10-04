@@ -116,6 +116,10 @@ a.btn:hover{
     color: var(--primary);
     border:1px solid var(--primary)
 }
+.btn-white{
+    color: var(--primary);
+    border:1px solid rgba(0,0,0,0)
+}
 .btn.disabled{
     pointer-events: none;
     border-color:grey;
@@ -172,7 +176,7 @@ a.btn:hover{
 }
 
 .form{
-    max-width:580px;
+    max-width:620px;
     background-color: #fff;
     border-radius: 20px;
     padding:30px 40px 50px 40px;
