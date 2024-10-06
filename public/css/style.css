@@ -5780,6 +5780,13 @@ input[type='range']::-webkit-slider-runnable-track{
         left:0; right:0;
         margin:0 auto;
         max-width: 380px;
+        bottom: 65px;
+    }
+    .notification__title{
+        font-size: 18px;
+    }
+    .notification__text{
+        font-size: 15px;
     }
     ._container{
         padding:0 10px
