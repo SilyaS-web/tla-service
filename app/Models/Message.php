@@ -17,6 +17,12 @@ class Message extends Model
         'user_id'
     ];
 
+    protected $dates = [
+        'viewed_at',
+        'created_at',
+        'updated_at',
+    ];
+
     public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
@@ -27,7 +33,7 @@ class Message extends Model
         return $this->hasOne(Work::class, 'id', 'work_id');
     }
 
-    public function images()
+    public function messageFiles()
     {
         return $this->hasMany(MessageFile::class, 'source_id', 'id');
     }

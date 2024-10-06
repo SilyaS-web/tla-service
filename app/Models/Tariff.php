@@ -11,6 +11,26 @@ class Tariff extends Model
 {
     use HasFactory;
 
+    const MINIMAL_QUANTITY = [
+        Project::FEEDBACK => 10,
+        Project::INTEGRATIONS => 10,
+    ];
+
+    // Массив для расчета стоимости по тарифу
+    // Количество штук => Цена за штуку у тарифа с отзывами
+    const PRICE_CONDITIONS = [
+        Project::FEEDBACK => [
+            10 => 100,
+            20 => 90,
+            30 => 80,
+        ],
+        Project::INTEGRATIONS => [
+            10 => 200,
+            20 => 180,
+            30 => 160,
+        ],
+    ];
+
     protected $fillable = [
         'title',
         'description',

@@ -24,27 +24,30 @@ use App\Http\Controllers\WorkController;
 |
 */
 
-Route::get('/', function () {
-    if (Auth::check()) {
-        return redirect()->route('profile');
-    } else {
-        return redirect()->route('login');
-    }
-});
-
-Route::get('/policy', function () {
-    return view('policy');
-})->name('policy');
-
 Route::prefix('lnk')->group(function () {
     Route::get('/create', [DeepLinkController::class, 'store']);
     Route::get('/stats', [DeepLinkController::class, 'stats']);
     Route::get('/{link}', [DeepLinkController::class, 'index']);
 });
 
+Route::get('/profile/admin', function () {
+    return view('profile.admin');
+});
+
+Route::get('/bloggers/{blogger}', [BloggerController::class, 'show'])->name('blogger-page');
+Route::get('/sellers/{seller}', [SellerController::class, 'show'])->name('seller-page');
+
+Route::get('{any?}', function () {
+    return view('index');
+})->where('any', '.*');
+
+
+Route::get('/policy', function () {
+    return view('policy');
+})->name('policy');
+
+
 Route::prefix('apist')->group(function () {
-    Route::post('/password/reset', [AuthController::class, 'resetPassword']);
-    Route::post('/tg/confirmed', [AuthController::class, 'isTgConfirmed']);
     Route::post('/tg', [AuthController::class, 'setTGPhone']);
     Route::get('/check-tariffs', [SellerController::class, 'checkTariffs']);
     Route::get('/check-projects', [SellerController::class, 'checkProjectWorks']);
