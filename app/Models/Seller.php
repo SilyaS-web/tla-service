@@ -30,6 +30,11 @@ class Seller extends Model
         'ozon_client_id',
     ];
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+    ];
+
     public function user()
     {
         return $this->hasOne(User::class, 'id', 'user_id');
@@ -48,9 +53,22 @@ class Seller extends Model
     public function getActiveTariffs($type = null) {
         $tariffs = $this->sellerTariffs()->where('finish_date', '>', Carbon::now());
         if ($type) {
-            $tariffs->where('type', $type);
-            return $tariffs->first();
+            $tariff = null;
+            if (in_array($type, Project::BARTER_TYPES)) {
+                $tariff = $tariffs->where('type', Project::BARTER)->first();
+            }
+
+            if (!$tariff) {
+                $tariff = $tariffs->where('type', $type)->first();
+            }
+
+            if (!$tariff && in_array($type, Project::INTEGRATION_TYPES)) {
+                $tariff = $tariffs->where('type', Project::INTEGRATIONS)->first();
+            }
+
+            return $tariff;
         }
+
         return $tariffs->get();
     }
 
@@ -196,7 +214,7 @@ class Seller extends Model
         $feedbacks = $this->curlWBFeedbacks();
 
         if (empty($feedbacks)) {
-            return ['total' => 0, 'avg' => 0, 'low' => [], 'mid' => [], 'hig' => [], 'pr_low' => 0, 'pr_mid' => [], 'percent' => 0];
+            return ['total' => 0, 'avg' => 0, 'low' => [], 'mid' => [], 'hig' => [], 'pr_low' => [], 'pr_mid' => [], 'percent' => 0];
         }
 
         foreach ($feedbacks as $feedback) {

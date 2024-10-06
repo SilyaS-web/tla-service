@@ -51,13 +51,24 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast.
+     * The attributes that should be mutated to dates.
      *
-     * @var array<string, string>
+     * @var array
      */
-    protected $casts = [
-        'telegram_verified_at' => 'datetime',
+    protected $dates = [
+        'telegram_verified_at',
+        'created_at',
+        'updated_at',
     ];
+
+    public function works()
+    {
+        if ($this->role == self::SELLER && $this->seller) {
+            return $this->seller->works();
+        } else if ($this->role == self::BLOGGER && $this->blogger) {
+            return $this->blogger->works();
+        }
+    }
 
     public function payments()
     {
@@ -109,9 +120,22 @@ class User extends Authenticatable
     public function getActiveTariffs($type = null) {
         $tariffs = $this->sellerTariffs()->where('finish_date', '>', Carbon::now());
         if ($type) {
-            $tariffs->where('type', $type);
-            return $tariffs->first();
+            $tariff = null;
+            if (in_array($type, Project::BARTER_TYPES)) {
+                $tariff = $tariffs->where('type', Project::BARTER)->first();
+            }
+
+            if (!$tariff) {
+                $tariff = $tariffs->where('type', $type)->first();
+            }
+
+            if (!$tariff && in_array($type, Project::INTEGRATION_TYPES)) {
+                $tariff = $tariffs->where('type', Project::INTEGRATIONS)->first();
+            }
+
+            return $tariff;
         }
+
         return $tariffs->get();
     }
 

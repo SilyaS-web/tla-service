@@ -35,6 +35,21 @@ class Work extends Model
         'last_message_at'
     ];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+    protected $dates = [
+        'accepted_by_blogger_at',
+        'accepted_by_seller_at',
+        'confirmed_by_blogger_at',
+        'confirmed_by_seller_at',
+        'last_message_at',
+        'created_at',
+        'updated_at',
+    ];
+
     public function blogger()
     {
         return $this->hasOne(Blogger::class, 'user_id', 'blogger_id');
@@ -60,7 +75,7 @@ class Work extends Model
         return $this->hasOne(ProjectWork::class, 'id', 'project_work_id');
     }
 
-    public function FinishStats()
+    public function finishStats()
     {
         return $this->hasOne(FinishStats::class, 'work_id', 'id');
     }

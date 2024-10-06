@@ -27,7 +27,7 @@ class BloggerResource extends JsonResource
                 'id' => $this->country->id,
             ],
             'platforms' => BloggerPlatformResource::collection($this->platforms),
-            'themes' => ThemeResource::collection($this->themes),
+            'themes' => BloggerThemeResource::collection($this->themes),
             'user' => new UserResource($this->user),
         ];
     }

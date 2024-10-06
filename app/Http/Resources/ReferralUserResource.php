@@ -19,7 +19,7 @@ class ReferralUserResource extends JsonResource
             'name' => $this->user->name,
             'phone' => $this->user->phone,
             'role' => $this->user->role,
-            'created_at' => date_format($this->user->created_at, 'd.m.y H:i'),
+            'created_at' => isset($this->user->created_at) ? $this->user->created_at->format('d.m.Y H:i') : null,
             'received' => $this->user->payments()->where('status', TPayment::STATUS_CONFIRMED)->sum('price') / 100,
         ];
     }

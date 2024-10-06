@@ -2,18 +2,35 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Blogger;
-use App\Models\BloggerPlatform;
 use App\Models\User;
 use App\Services\TgService;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\MessageResource;
+use App\Http\Resources\NotificationResource;
+use App\Http\Resources\ProjectResource;
+use App\Http\Resources\UserResource;
+use App\Http\Resources\WorkResource;
 use App\Models\DbLog;
-use Illuminate\Http\Request;
+use App\Models\Message;
+use App\Models\MessageFile;
+use App\Models\Notification;
+use App\Models\Project;
+use App\Models\Work;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function show(User $user) {
+        $data = [
+            'user' => new UserResource($user),
+        ];
+
+        return  response()->json($data)->setStatusCode(200);
+    }
+
     public function ban(User $user)
     {
         $user->status = -1;
@@ -36,11 +53,303 @@ class UserController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function delete(User $user) {
+    public function delete(User $user)
+    {
         $log_message = 'Удалён пользователь ' . $user->name . ', роль ' . $user->role . ', телефон' . $user->phone . ', email' . $user->email;
         DbLog::create(['text' => $log_message]);
 
         $user->forceDelete();
+        return response()->json()->setStatusCode(200);
+    }
+
+    public function projects(User $user)
+    {
+        $validator = Validator::make(request()->all(), [
+            'project_type' => [Rule::in(Project::TYPES)],
+            'product_name' => 'string|nullable',
+            'statuses' => 'array|nullable',
+            'statuses.*' => 'string',
+            'is_blogger_access' => 'boolean|nullable',
+            'order_by_created_at' => 'string|nullable',
+            'status' => 'string|nullable',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors())->setStatusCode(400);
+        }
+
+        $projects = $user->projects();
+
+        $validated = $validator->validated();
+
+        if (isset($validated['statuses']) && !empty($validated['statuses'])) {
+            $projects->whereIn('status', $validated['statuses']);
+        }
+
+        if (isset($validated['is_blogger_access']) && !empty($validated['is_blogger_access'])) {
+            $projects->where('is_blogger_access', $validated['is_blogger_access']);
+        }
+
+        if (isset($validated['product_name']) && !empty($validated['product_name'])) {
+            $projects->where('product_name', 'like', '%' . $validated['product_name'] . '%');
+        }
+
+        if (isset($validated['project_type']) && !empty($validated['project_type'])) {
+            $projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
+                $query->where('type', $validated['project_type']);
+            });
+        }
+
+        if (isset($validated['status']) && !empty($validated['status'])) {
+            if ($validated['status'] == 'active') {
+                $projects->where('status', '>=', 0);
+            } else {
+                $projects->where('status', '<', 0);
+            }
+        }
+
+        if (isset($validated['order_by_created_at']) && !empty($validated['order_by_date'])) {
+            $projects->orderBy('created_at', $validated['order_by_created_at']);
+        } else {
+            $projects->orderBy('created_at', 'desc');
+        }
+
+        $data = [
+            'projects' => ProjectResource::collection($projects->get()),
+        ];
+
+        return response()->json($data)->setStatusCode(200);
+    }
+
+    public function works(User $user, Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'created_by' => 'numeric|nullable',
+            'is_active' => 'boolean|nullable',
+            'order_by_last_message' => 'string|nullable',
+            'project_type' => [Rule::in(Project::TYPES), 'nullable'],
+            'category' => 'string|nullable',
+            'product_name' => 'string|nullable',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+
+        $works = $user->works();
+
+        if (isset($validated['created_by']) && !empty($validated['created_by'])) {
+            if ($validated['created_by'] < 0) {
+                $works->where('created_by', '<>', $validated['created_by'] * -1);
+            } else {
+                $works->where('created_by', $validated['created_by']);
+            }
+        }
+
+        if (isset($validated['is_active'])) {
+            if ($validated['is_active']) {
+                $works->whereNotNull('status');
+            } else {
+                $works->where('status', null);
+            }
+        }
+
+        if (isset($validated['order_by_last_message']) && !empty($validated['order_by_last_message'])) {
+            $works->orderBy('last_message_at', $validated['order_by_last_message']);
+        } else {
+            $works->orderBy('last_message_at', 'desc');
+        }
+
+        if (isset($validated['project_type']) && !empty($validated['project_type'])) {
+            $project_ids = Project::whereHas('projectWorks', function (Builder $query) use ($validated, $user) {
+                $query->where('type', $validated['project_type']);
+            })->get('id')->pluck('id');
+
+            $works->whereIn('project_id', $project_ids);
+        }
+
+        if (isset($validated['product_name']) && !empty($validated['product_name'])) {
+            $works->whereHas('project', function (Builder $query) use ($validated) {
+                $query->where('product_name', 'like', '%' . $validated['product_name'] . '%');
+            });
+        }
+
+        if (isset($validated['category']) && !empty($validated['project_name'])) {
+            $works->whereHas('project', function (Builder $query) use ($validated) {
+                $query->where('marketplace_category', 'like', '%' . $validated['category'] . '%');
+            });
+        }
+
+        $data = [
+            'works' => WorkResource::collection($works->get()),
+        ];
+
+        return response()->json($data)->setStatusCode(200);
+    }
+
+    public function messages(User $user, Work $work, Request $request) {
+        $validator = Validator::make($request->all(), [
+            'order_by' => 'string|nullable'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+
+        $messages = $work->messages();
+
+        if (isset($validated['order_by']) && !empty($validated['order_by'])) {
+            $messages->orderBy('created_at', $validated['order_by']);
+        }
+
+        $work->messages()->whereNull('viewed_at')->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
+
+        $data = [
+            'messages' => MessageResource::collection($messages->get()),
+        ];
+
+        return response()->json($data)->setStatusCode(200);
+    }
+
+    public function notifications(User $user, Request $request) {
+        $validator = Validator::make($request->all(), [
+            'order_by' => 'string|nullable',
+            'viewed' => 'boolean|nullable',
+            'limit' => 'numeric|nullable',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+
+        $notifications = $user->notifications()->where('viewed_at', null);
+
+        if (isset($validated['order_by']) && !empty($validated['order_by'])) {
+            $notifications->orderBy('created_at', $validated['order_by']);
+        } else {
+            $notifications->orderBy('created_at', 'desc');
+        }
+
+        if (isset($validated['limit']) && !empty($validated['limit'])) {
+            $notifications->offset(0)->limit($validated['limit']);
+        }
+
+        if (isset($validated['viewed']) && !empty($validated['viewed'])) {
+            $notifications->whereNotNull('viewed_at');
+        }
+
+        $data = [
+            'notifications' => NotificationResource::collection($notifications->get()),
+        ];
+
+        return response()->json($data)->setStatusCode(200);
+    }
+
+    public function viewNotification(User $user, Notification $notification = null) {
+        if ($notification) {
+            $notification->viewed_at = date('Y-m-d H:i');
+            $notification->save();
+        } else {
+            $user->notifications()->update([
+                'viewed_at' => date('Y-m-d H:i'),
+            ]);
+        }
+
+        return response()->json()->setStatusCode(200);
+    }
+
+    public function brands(User $user)
+    {
+        if ($user->role != 'seller') {
+            return response()->json(['message' => 'У пользователя должна быть роль селлер'])->setStatusCode(400);
+        }
+
+        $brands = $user->projects()->distinct()->where('marketplace_brand', '<>', null)->get(['marketplace_brand'])->pluck('marketplace_brand');
+
+        $data = [
+            'brands' => $brands,
+        ];
+
+        return response()->json($data)->setStatusCode(200);
+    }
+
+    public function storeMessage(User $user, Work $work, Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'message' => 'string|nullable',
+            'img' => 'exclude_if:img,null|file|max:51200',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors())->setStatusCode(400);
+        }
+
+        // if (!isset($work->project)) {
+        //     return response()->json(['message' => ['Проект удалён']], 400);
+        // }
+
+        // if ($work->status === Work::COMPLETED) {
+        //     return response()->json(['message' => ['Проект завершён']], 400);
+        // }
+
+        $validated = $validator->validated();
+
+        if (!isset($validated['img']) && !isset($validated['message'])) {
+            return response()->json(['message' => ['Введите сообщение или прикрепите файл']], 400);
+        }
+
+        if (isset($validated['img']) && !isset($validated['message'])) {
+            $validated['message'] = 'Прикреплён файл';
+        }
+
+        $message = Message::create([
+            'work_id' => $work->id,
+            'user_id' => $user->id,
+            'message' => $validated['message'],
+        ]);
+
+        if ($request->file('img')) {
+            $product_image = $request->file('img');
+            $image_path = $product_image->store('messages', 'public');
+            MessageFile::create([
+                'source_id' => $message->id,
+                'type' => 0,
+                'link' => $image_path,
+            ]);
+        }
+
+        $work->update(['last_message_at' => date('Y-m-d H:i')]);
+        Notification::create([
+            'user_id' => $work->getPartnerUser($user->role)->id,
+            'work_id' => $work->id,
+            'type' => 'Новое сообщение',
+            'text' => 'Вам поступило новое сообщение от ' . $user->name,
+        ]);
+        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Вам поступило новое сообщение от ' . $user->name);
+
+        return response()->json()->setStatusCode(200);
+    }
+
+    public function sendFeedback() {
+        $validator = Validator::make(request()->all(), [
+            'phone' => 'string|required',
+            'name' => 'string|required',
+            'comment' => 'string|required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+        $message_text = "Форма обратной связи\n\nИмя: " . $validated['name'] ."\nТелефон: " . $validated['phone'] ."\nСообщение: " . $validated['comment'];
+        $result = TgService::sendForm($message_text);
         return response()->json()->setStatusCode(200);
     }
 }
