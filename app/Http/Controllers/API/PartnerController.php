@@ -39,6 +39,7 @@ class PartnerController extends Controller
             'description' => 'string|nullable',
             'image' => 'string|required',
             'code' => 'string|nullable',
+            'code_description' => 'string|nullable',
             'link' => 'string|nullable',
         ]);
 
@@ -78,6 +79,7 @@ class PartnerController extends Controller
             'description' => 'string|nullable',
             'image' => 'string|required',
             'code' => 'string|nullable',
+            'code_description' => 'string|nullable',
             'link' => 'string|nullable',
         ]);
 
