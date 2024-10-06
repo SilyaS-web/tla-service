@@ -18,7 +18,7 @@
                             id="product-name"
                             name="product_name"
                             placeholder="Введите наименование товара" class="input input--product_name">
-                        <span class="error" v-if="errors.product_name">{{ errors.product_name }}</span>
+                        <span class="error" v-if="errors && errors.product_name">{{ errors.product_name }}</span>
                     </div>
                     <div class="quest__step-row">
                         <div class="form-group">
@@ -29,7 +29,7 @@
                                 id="product-articul"
                                 name="product_nm"
                                 placeholder="Введите артикул" class="input input--product_price">
-                            <span class="error" v-if="errors.product_nm">{{ errors.product_nm }}</span>
+                            <span class="error" v-if="errors && errors.product_nm">{{ errors.product_nm }}</span>
                         </div>
                         <div class="form-group" style="flex:1 1">
                             <label for="" style="display:unset">Цена товара</label>
@@ -46,7 +46,7 @@
                             <input
                                 v-model="project.product_link"
                                 type="text" id="project-link" name="product_link" placeholder="Ссылка" class="input input--product_link input-field">
-                            <span class="error" v-if="errors.product_link">{{ errors.product_link }}</span>
+                            <span class="error" v-if="errors && errors.product_link">{{ errors.product_link }}</span>
                         </div>
 
                     </div>
@@ -59,7 +59,7 @@
 
                             </div>
                         </div>
-                        <span class="error" v-if="errors.images">{{ errors.images }}</span>
+                        <span class="error" v-if="errors && errors.images">{{ errors.images }}</span>
                     </div>
                     <div class="quest__btns">
                         <button class="btn btn-primary next" type="button">
@@ -73,7 +73,7 @@
                     </div>
                     <div class="form-group marketing-format">
                         <label for="format">Выберите формат рекламы</label>
-                        <span class="error" v-if="errors.project_type">{{ errors.project_type }}</span>
+                        <span class="error" v-if="errors && errors.project_type">{{ errors.project_type }}</span>
 
                         <div class="marketing-format__item input-checkbox-w">
                             <label for="product-feedback">Отзыв
@@ -368,32 +368,33 @@
                         this.project.images.push($(v)[0].files)
                 })
 
-                this.Project.create(this.project).then(data => {
-                    if(data.errors) {
-                        this.errors = data.errors;
-                        return;
+                this.Project.create(this.project).then(
+                    data => {
+                        this.project = {
+                            product_name: null,
+                            product_nm: null,
+                            product_price: null,
+                            product_link: null,
+                            feedback_quantity: 0,
+                            inst_quantity: 0,
+                            youtube_quantity: 0,
+                            vk_quantity: 0,
+                            telegram_quantity: 0,
+                            images: [],
+                        }
+
+                        $('#create-project').find('.input').val('');
+                        $('#create-project').find('.quest__step#step_1').addClass('current');
+                        $('#create-project').find('.quest__step#step_2').removeClass('current');
+                        $('.upload-files__body').find('.upload-files__item').remove();
+
+                        this.$emit('switchTab', 'profile-projects')
+                    },
+                    err => {
+                        this.errors = err.response.data
+                        console.log(this.errors)
                     }
-
-                    this.project = {
-                        product_name: null,
-                        product_nm: null,
-                        product_price: null,
-                        product_link: null,
-                        feedback_quantity: 0,
-                        inst_quantity: 0,
-                        youtube_quantity: 0,
-                        vk_quantity: 0,
-                        telegram_quantity: 0,
-                        images: [],
-                    }
-
-                    $('#create-project').find('.input').val('');
-                    $('#create-project').find('.quest__step#step_1').addClass('current');
-                    $('#create-project').find('.quest__step#step_2').removeClass('current');
-                    $('.upload-files__body').find('.upload-files__item').remove();
-
-                    this.$emit('switchTab', 'profile-projects')
-                })
+                )
             },
         }
     }
