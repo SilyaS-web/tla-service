@@ -23990,11 +23990,15 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         project_type: null,
         images: null
       }),
+      Quest: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null),
       Project: _services_api_Project_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
     };
   },
   mounted: function mounted() {
-    var quest = new CreateProject('#create-project');
+    this.Quest = new CreateProject('#create-project');
+  },
+  updated: function updated() {
+    if (!this.Quest) this.Quest = new CreateProject('#create-project');
   },
   methods: {
     createProject: function createProject() {
@@ -24025,10 +24029,11 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                 $('#create-project').find('.quest__step#step_1').addClass('current');
                 $('#create-project').find('.quest__step#step_2').removeClass('current');
                 $('.upload-files__body').find('.upload-files__item').remove();
+                _this.Quest.destroy();
+                _this.Quest = null;
                 _this.$emit('switchTab', 'profile-projects');
               }, function (err) {
                 _this.errors = err.response.data;
-                console.log(_this.errors);
               });
             case 3:
             case "end":
@@ -31238,7 +31243,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     style: {
       "margin-top": "30px",
-      "border": "1px solid var(--primary)"
+      "border": "1px solid var(--primary)",
+      "display": "none"
     },
     href: "#",
     "class": "nav-menu__item nav-menu__link tab partners-link",

@@ -93,6 +93,11 @@ class CreateProject extends Quest {
     sendData = ()=>{
 
     }
+
+    destroy = ()=>{
+        $(this.node).find('.input-file input').off('change')
+        $(this.node).find('.upload-files').find('.upload-files__plus').off('click')
+    }
 }
 
 class BlogersFilter {
