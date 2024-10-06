@@ -17,6 +17,7 @@ use Illuminate\Validation\Rule;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ProjectController extends Controller
@@ -309,17 +310,25 @@ class ProjectController extends Controller
     public function activate(Project $project)
     {
         $user = Auth::user();
-        foreach ($project->projectWorks as $project_work) {
-            $seller_tariff = $user->getActiveTariffs($project_work->type);
-            if (!$seller_tariff || ($seller_tariff->quantity >= 0 && $seller_tariff->quantity < $project_work->quantity)) {
-                return response()->json(['message' => 'Тарифа недостаточно для того, чтобы опубликовать'])->setStatusCode(400);
-            }
-        }
 
-        foreach ($project->projectWorks as $project_work) {
-            $seller_tariff = $user->getActiveTariffs($project_work->type);
-            $project_work->update(['finish_date' => $seller_tariff->finish_date]);
-            $seller_tariff->update(['quantity' => $seller_tariff->quantity - $project_work->quantity]);
+        try {
+            DB::transaction(function() use ($project, $user) {
+                foreach ($project->projectWorks as $project_work) {
+                    $seller_tariff = $user->getActiveTariffs($project_work->type);
+                    if (!$seller_tariff || ($seller_tariff->quantity < $project_work->quantity && $seller_tariff->quantity >= 0)) {
+                        throw new \Exception('Вашего тарифа недостаточно для того, чтобы опубликовать');
+                    }
+
+                    if ($seller_tariff->quantity > 0) {
+                        $new_quantity = $seller_tariff->quantity > $project_work->quantity ? $seller_tariff->quantity - $project_work->quantity : $seller_tariff->quantity;
+                        $seller_tariff->update(['quantity' => $new_quantity]);
+                    }
+
+                    $project_work->update(['finish_date' => $seller_tariff->finish_date]);
+                }
+            });
+        } catch (\Exception $exception) {
+            return response()->json(['message' => $exception->getMessage()])->setStatusCode(400);
         }
 
         $project->update(['is_blogger_access' => true]);
