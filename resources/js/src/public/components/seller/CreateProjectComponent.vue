@@ -353,11 +353,16 @@
                     project_type: null,
                     images: null,
                 }),
+                Quest: ref(null),
                 Project
             }
         },
         mounted(){
-            var quest = new CreateProject('#create-project')
+            this.Quest = new CreateProject('#create-project');
+        },
+        updated(){
+            if(!this.Quest)
+                this.Quest = new CreateProject('#create-project');
         },
         methods: {
             async createProject(){
@@ -388,11 +393,13 @@
                         $('#create-project').find('.quest__step#step_2').removeClass('current');
                         $('.upload-files__body').find('.upload-files__item').remove();
 
+                        this.Quest.destroy();
+                        this.Quest = null;
+
                         this.$emit('switchTab', 'profile-projects')
                     },
                     err => {
                         this.errors = err.response.data
-                        console.log(this.errors)
                     }
                 )
             },
