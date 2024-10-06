@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BloggerController;
 use App\Http\Controllers\API\DashboardController;
+use App\Http\Controllers\API\PartnerController;
 use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\PlatformController;
 use App\Http\Controllers\API\ProjectController;
@@ -96,5 +97,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/feedback', [UserController::class, 'sendFeedback']);
 
     Route::get('payment/{tariff}/init', [PaymentController::class, 'init']);
+
+    Route::post('/partners', [PartnerController::class, 'store']);
+    Route::get('/partners', [PartnerController::class, 'index']);
+    Route::get('/partners/{partner}', [PartnerController::class, 'show']);
+    Route::post('/partners/{partner}', [PartnerController::class, 'update']);
+    Route::delete('/partners/{partner}', [PartnerController::class, 'destroy']);
 });
 
