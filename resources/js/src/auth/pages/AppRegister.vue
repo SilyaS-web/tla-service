@@ -7,28 +7,38 @@
             <div class="form auth__form">
                 <div class="form-group">
                     <label for="name">Ваше имя</label>
-                    <input type="text" v-model="user.name" id="name" name="name" placeholder="Введите ваше имя" class="input input--name" value="{{ old('name') }}">
-                    <span class="error"></span>
+                    <input type="text" v-model="user.name" id="name" name="name" placeholder="Введите ваше имя" class="input input--name">
+                    <span
+                        v-if="errors && errors.name"
+                        class="error">{{ errors.name[0] }}</span>
                 </div>
                 <div class="form-group">
                     <label for="email">Ваш E-mail</label>
-                    <input type="email" v-model="user.email" id="email" name="email" placeholder="Введите почту" class="input input--email" value="{{ old('email') }}">
-                    <span class="error"></span>
+                    <input type="email" v-model="user.email" id="email" name="email" placeholder="Введите почту" class="input input--email">
+                    <span
+                        v-if="errors && errors.email"
+                        class="error">{{ errors.email[0] }}</span>
                 </div>
                 <div class="form-group">
                     <label for="phone">Номер телефона</label>
                     <InputPhone v-model="user.phone"></InputPhone>
-                    <span class="error"></span>
+                    <span
+                        v-if="errors && errors.phone"
+                        class="error">{{ errors.phone[0] }}</span>
                 </div>
                 <div class="form-group">
                     <label for="pass">Пароль</label>
                     <input type="password" v-model="user.password" id="pass" name="password" placeholder="Введите ваш пароль" class="input input--password">
-                    <span class="error"></span>
+                    <span
+                        v-if="errors && errors.password"
+                        class="error">{{ errors.password[0] }}</span>
                 </div>
                 <div class="form-group">
                     <label for="repeat-pass">Повторите пароль</label>
                     <input type="password" v-model="user.repeatPassword" id="repeat-pass" name="password_confirmation" placeholder="Повторите пароль" class="input input--password">
-                    <span class="error"></span>
+                    <span
+                        v-if="errors && errors.password"
+                        class="error">{{ errors.password[0] }}</span>
                 </div>
                 <div class="form-group">
                     <label for="role">Выберите роль</label>
@@ -58,7 +68,9 @@
                         </div>
                         <input type="hidden" name="role" value="">
                     </div>
-                    <span class="error"></span>
+                    <span
+                        v-if="errors && errors.role"
+                        class="error">{{ errors.role[0] }}</span>
                 </div>
                 <div class="form-group tg-confirmation">
                     <div class="tg-confirmation__row" id="tg-confirmation" v-if="!isConfirmed">
@@ -104,7 +116,7 @@
 <script>
     import InputPhone from '../ui/InputPhone.vue'
     import User from '../../services/api/User.vue'
-    import {reactive} from 'vue'
+    import {ref} from 'vue'
 
     export default{
         components:{
@@ -112,12 +124,12 @@
         },
         data(){
             return {
-                user: reactive({}),
-                errors: reactive({
+                user: ref({}),
+                errors: ref({
                     phone: null,
                     password: null
                 }),
-                isConfirmed: reactive(false),
+                isConfirmed: ref(false),
                 User
             }
         },
@@ -178,6 +190,7 @@
                    },
                    err => {
                        this.errors = err.response.data;
+                       console.log(this.errors, this.errors.email, this.errors.email[0])
                    }
                )
             },
