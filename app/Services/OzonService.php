@@ -220,9 +220,12 @@ class OzonService
         $response = curl_exec($curl);
         curl_close($curl);
 
-        $attributes = json_decode($response)->result[0]->attributes;
+        $decoded_response = json_decode($response);
+        if (isset($decoded_response->result[0]->attributes)) {
+            return $decoded_response->result[0]->attributes;
+        }
 
-        return $attributes;
+        return [];
     }
 
     public static function getAttributestInfo(int $description_category_id, int $type_id, int $client_id, string $api_key)
@@ -253,9 +256,12 @@ class OzonService
         $response = curl_exec($curl);
 
         curl_close($curl);
-        $attributes = json_decode($response)->result;
+        $decoded_response = json_decode($response);
+        if (isset($decoded_response->result)) {
+            return $decoded_response->result;
+        }
 
-        return $attributes;
+        return [];
     }
 
     public static function getProductDescription(int $product_nm, int $client_id, string $api_key)
@@ -284,8 +290,11 @@ class OzonService
 
         $response = curl_exec($curl);
         curl_close($curl);
+        $decoded_response = json_decode($response);
+        if (isset($decoded_response->description)) {
+            return $decoded_response->description;
+        }
 
-        $description = json_decode($response)->result->description;
-        return $description;
+        return null;
     }
 }
