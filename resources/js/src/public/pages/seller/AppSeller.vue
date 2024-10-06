@@ -41,6 +41,8 @@
                             v-on:switchTab="switchTab"
                             v-on:newMessages="newChatMessages"
                             v-on:updateCurrentItem="currentItem = $event"></Chat>
+
+                        <Partners></Partners>
                     </div>
                 </div>
             </div>
@@ -84,11 +86,12 @@ import Aside from '../../components/seller/AppAside.vue'
 import Header from '../../components/layout/AppHeader.vue'
 import Footer from '../../components/layout/AppFooter.vue'
 import Tariffs from '../../components/seller/TariffsComponent.vue'
+import Partners from '../../components/seller/PartnersComponent.vue'
 
 export default{
     components: {
         Aside, CreateProject, Dashboard, ProjectsList,
-        MyProjectsList, BloggersList, Chat, Header, Footer, Tariffs
+        MyProjectsList, BloggersList, Chat, Header, Footer, Tariffs, Partners
     },
     data(){
         return {
