@@ -19,6 +19,7 @@ class CreatePartnersTable extends Migration
             $table->text('description')->nullable();
             $table->string('image');
             $table->string('code')->nullable();
+            $table->string('code_description')->nullable();
             $table->string('link')->nullable();
             $table->timestamps();
             $table->softDeletes();

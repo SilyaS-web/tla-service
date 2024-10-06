@@ -13,6 +13,7 @@ class Partner extends Model
         'title',
         'description',
         'code',
+        'code_description',
         'link',
         'image'
     ];
