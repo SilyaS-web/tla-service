@@ -130,6 +130,8 @@ class UserController extends Controller
             'project_type' => [Rule::in(Project::TYPES), 'nullable'],
             'category' => 'string|nullable',
             'product_name' => 'string|nullable',
+            'with' => 'array|nullable',
+            'with.*' => 'string'
         ]);
 
         if ($validator->fails()) {

@@ -11,12 +11,6 @@ class WorkResource extends JsonResource
 {
     private $with_array;
 
-    public function __construct(Work $resource, $with_array = [])
-    {
-        parent::__construct($resource);
-        $this->with_array = $with_array;
-    }
-
     /**
      * Transform the resource into an array.
      *
@@ -26,8 +20,15 @@ class WorkResource extends JsonResource
     {
         $user = Auth::user();
         $project = null;
-        if ($this->project) {
+        if (isset($user) && $user->role == User::BLOGGER && $this->project) {
             $project = new ProjectResource($this->project);
+
+        } else if (in_array('project', request()->input('with')) && $this->project) {
+            $project = [
+                'product_name' => $this->project->product_name,
+                'product_nm' => $this->project->product_nm,
+                'project_files' => ProjectFileResource::collection($this->project->projectFiles),
+            ];
         }
 
         return [
