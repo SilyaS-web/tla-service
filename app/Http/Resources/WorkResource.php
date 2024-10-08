@@ -3,11 +3,20 @@
 namespace App\Http\Resources;
 
 use App\Models\User;
+use App\Models\Work;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
 class WorkResource extends JsonResource
 {
+    private $with_array;
+
+    public function __construct(Work $resource, $with_array = [])
+    {
+        parent::__construct($resource);
+        $this->with_array = $with_array;
+    }
+
     /**
      * Transform the resource into an array.
      *
@@ -17,7 +26,7 @@ class WorkResource extends JsonResource
     {
         $user = Auth::user();
         $project = null;
-        if (isset($user) && $user->role == User::BLOGGER && $this->project) {
+        if ($this->project) {
             $project = new ProjectResource($this->project);
         }
 
