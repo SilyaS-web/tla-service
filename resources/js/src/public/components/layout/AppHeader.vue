@@ -95,7 +95,7 @@
                             v-if="user.tariffs && user.tariffs.length > 0"
                             v-for="tariff in user.tariffs"
                             class="tarrif-header__item tarrif-header__adv">
-                            {{ tariff.title }} - <b><span class="counter">{{ tariff.quantity }}</span> шт.</b>
+                            {{ tariff.title }} - <b><span class="counter">{{ tariff.quantity < 0 ? '∞' : tariff.quantity}}</span> шт.</b>
                             <div class="tarrif-header__date">
                                 Действует до {{ format_date(tariff.finish_date) }}
                             </div>
