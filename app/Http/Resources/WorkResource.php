@@ -28,6 +28,7 @@ class WorkResource extends JsonResource
                 'product_name' => $this->project->product_name,
                 'product_nm' => $this->project->product_nm,
                 'project_files' => ProjectFileResource::collection($this->project->projectFiles),
+                'product_price' => $this->product_price,
             ];
         }
 
