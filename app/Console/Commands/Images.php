@@ -46,10 +46,11 @@ class Images extends Command
         foreach ($users as $user) {
             $this->info('Обрабатываем пользователя: ' . $user->name . ', id: ' . $user->id);
             if (!$user->image) {
+                $this->info('Нет изображения');
                 continue;
             }
 
-            $image = Storage::get($user->image);
+            $image = Storage::get('public/' . $user->image);
             $urls = ImageService::makeCompressedCopiesFromFile($image, 'profile/'.$user->id.'/');
             $user->image = $urls[1];
             $user->save();
