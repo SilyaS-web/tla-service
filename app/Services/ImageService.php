@@ -26,8 +26,8 @@ class ImageService
     {
         $imageName = time() . '.' . 'webp';
         $image_path = $folder . $imageName;
-       dd( $image_path);
-        Storage::put($folder . $imageName, $image->encode());
+        Storage::put($folder . $imageName, $image->encode(), 'public');
+
         return $image_path;
     }
 
