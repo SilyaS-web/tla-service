@@ -600,7 +600,6 @@
                 </div>
                 <div class="profile-projects__opts">
                     <a
-                        v-if="project.works_count == 0 && !project.is_bloggers_access"
                         @click="editProject(project)"
                         class="profile-projects__opts-item">
                         <img src="img/pencil-icon.svg" alt="">
