@@ -25,7 +25,7 @@ class ImageService
     public static function saveCompressedImage(\Intervention\Image\Image $image, $folder = ''): string
     {
         $imageName = time() . '.' . 'webp';
-        $image_path = storage_path($folder) . $imageName;
+        $image_path = $folder . $imageName;
 
         Storage::put($folder . $imageName, $image->encode());
         return $image_path;
