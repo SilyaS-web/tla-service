@@ -24,7 +24,8 @@ class ImageService
     public static function saveCompressedImage(\Intervention\Image\Image $image, $folder = ''): string
     {
         $imageName = time() . '.' . 'webp';
-        $image_path = public_path($folder . $imageName);
+        $image_path = 'public/' . $folder . $imageName;
+
         if (!file_exists($image_path)) {
             mkdir($image_path, 666, true);
         }
