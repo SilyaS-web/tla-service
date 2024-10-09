@@ -24,9 +24,9 @@ class ImageService
     {
         $root = $_SERVER["DOCUMENT_ROOT"];
         $imageName = time() . '.' . 'webp';
-        $image_path = storage_path($folder . $imageName);
+        $image_path = public_path($folder . $imageName);
 
-        if (!file_exists($root . '/' . $image_path)) {
+        if (!file_exists($image_path)) {
             mkdir($root . '/' . $image_path, 666, true);
         }
 
