@@ -81,7 +81,7 @@ class SellerController extends Controller
             }
 
             $seller_image = $request->file('image');
-            $urls = ImageService::makeCompressedCopies($seller_image, 'profile/'.$user->id);
+            $urls = ImageService::makeCompressedCopies($seller_image, 'profile/'.$user->id.'/');
 
             $user->image = $urls[1];
         }
