@@ -33,8 +33,8 @@ class ImageService
         $imageName = time() . '.' . 'webp';
         $image_path = $folder . $imageName;
 
-        return Container::getInstance()->make(FilesystemFactory::class)->disk('public')->putFileAs(
-            $folder, $image->encode(), $imageName, []
+        return Container::getInstance()->make(FilesystemFactory::class)->disk('public')->put(
+            $image_path, $image->encode(), []
         );
     }
 
