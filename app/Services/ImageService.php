@@ -24,6 +24,11 @@ class ImageService
     {
         $imageName = time() . '.' . 'webp';
         $image_path = storage_path($folder . $imageName);
+
+        if (!file_exists($image_path)) {
+            mkdir($image_path, 666, true);
+        }
+
         $image->save($image_path);
         return $image_path;
     }
