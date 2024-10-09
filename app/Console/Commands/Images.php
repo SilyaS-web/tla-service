@@ -46,6 +46,11 @@ class Images extends Command
         foreach ($users as $user) {
             $this->info('Обрабатываем пользователя: ' . $user->name . ', id: ' . $user->id);
             if (!$user->image) {
+                $this->info('Поле изображение не заполнено');
+                continue;
+            }
+
+            if (!Storage::exists('public/' . $user->image)) {
                 $this->info('Нет изображения');
                 continue;
             }
@@ -61,6 +66,16 @@ class Images extends Command
 
         foreach ($project_files as $project_file) {
             $this->info('Обрабатываем картинку проекта: ' . $project_file->id . ' проект: ' . $project_file->source_id);
+            if (!$project_file->link) {
+                $this->info('Поле изображение не заполнено');
+                continue;
+            }
+
+            if (!Storage::exists('public/' . $project_file->link)) {
+                $this->info('Нет изображения');
+                continue;
+            }
+
             $image = Storage::get($project_file->link);
             $urls = ImageService::makeCompressedCopiesFromFile($image, 'projects/' .  $project_file->source_id . '/');
             $project_file->link = $urls[1];
