@@ -178,11 +178,6 @@
                                         </div>
                                     </label>
                                     <div class="quantity-w" data-max="100">
-                                        <div
-                                            v-on:click="(function(e){ if(quantities.feedback_quantity > 0) quantities.feedback_quantity -= 1})()"
-                                            class="quantity-minus">
-                                            <img src="img/minus-icon.svg" alt="">
-                                        </div>
                                         <div class="quantity-input">
                                             <input type="number" v-model="quantities.feedback_quantity" class="input" name="feedback-quantity" id="feedback-quantity">
                                         </div>
@@ -225,11 +220,6 @@
                                         </div>
                                     </label>
                                     <div class="quantity-w" data-max="100">
-                                        <div
-                                            v-on:click="(function(e){ if(quantities.inst_quantity > 0) quantities.inst_quantity -= 1})()"
-                                            class="quantity-minus">
-                                            <img src="img/minus-icon.svg" alt="">
-                                        </div>
                                         <div class="quantity-input">
                                             <input type="number" v-model="quantities.inst_quantity" class="input" name="inst-quantity" id="inst-quantity">
                                         </div>
@@ -272,11 +262,6 @@
                                         </div>
                                     </label>
                                     <div class="quantity-w" data-max="100">
-                                        <div
-                                            v-on:click="(function(e){ if(quantities.youtube_quantity > 0) quantities.youtube_quantity -= 1})()"
-                                            class="quantity-minus">
-                                            <img src="img/minus-icon.svg" alt="">
-                                        </div>
                                         <div class="quantity-input">
                                             <input type="number" v-model="quantities.youtube_quantity" class="input" name="youtube-quantity">
                                         </div>
@@ -318,11 +303,6 @@
                                         </div>
                                     </label>
                                     <div class="quantity-w" data-max="100">
-                                        <div
-                                            v-on:click="(function(e){ if(quantities.vk_quantity > 0) quantities.vk_quantity -= 1})()"
-                                            class="quantity-minus">
-                                            <img src="img/minus-icon.svg" alt="">
-                                        </div>
                                         <div class="quantity-input">
                                             <input type="number" class="input" v-model="quantities.vk_quantity" name="vk-quantity">
                                         </div>
@@ -365,11 +345,6 @@
                                         </div>
                                     </label>
                                     <div class="quantity-w" data-max="100">
-                                        <div
-                                            v-on:click="(function(e){ if(quantities.telegram_quantity > 0) quantities.telegram_quantity -= 1})()"
-                                            class="quantity-minus">
-                                            <img src="img/minus-icon.svg" alt="">
-                                        </div>
                                         <div class="quantity-input">
                                             <input type="number" class="input" v-model="quantities.telegram_quantity" name="telegram-quantity">
                                         </div>
