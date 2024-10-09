@@ -275,7 +275,7 @@ class ProjectController extends Controller
                     ]);
                 }
             } else if (isset($validated[$type . '_quantity']) && $validated[$type . '_quantity'] > 0) {
-                ProjectWork->create([
+                ProjectWork::create([
                     'type' => $type,
                     'quantity' => $validated[$type . '_quantity'],
                     'project_id' => $project->id,
