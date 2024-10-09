@@ -6,6 +6,7 @@ use App\Models\ProjectFile;
 use App\Models\User;
 use App\Services\ImageService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class Images extends Command
@@ -41,7 +42,8 @@ class Images extends Command
      */
     public function handle()
     {
-        $users = User::all();
+        ini_set('memory_limit', '-1');
+        $users = User::where('id', '>', 95)->get();
 
         foreach ($users as $user) {
             $this->info('Обрабатываем пользователя: ' . $user->name . ', id: ' . $user->id);
