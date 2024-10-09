@@ -10,6 +10,19 @@ use Intervention\Image\Facades\Image;
 
 class ImageService
 {
+    public static function makeCompressedCopiesFromFile($image, $folder = '', $format = 'webp') {
+        $urls = [];
+
+        $image_1x = Image::make($image);
+        $image_1x->encode($format);
+        $urls[] = self::saveImage($image_1x, $folder . '1x/');
+
+        $image_2x = self::compressImage($image_1x, -1, 540, $format);
+        $urls[] = self::saveImage($image_2x, $folder . '2x/');
+
+        return $urls;
+    }
+
     public static function makeCompressedCopies(UploadedFile $image, $folder = '', $format = 'webp') {
         $urls = [];
 
@@ -17,12 +30,11 @@ class ImageService
         $image_1x->encode($format);
         $urls[] = self::saveImage($image_1x, $folder . '1x/');
 
-        $image_2x = self::compressImage($image, -1, 540, $format);
+        $image_2x = self::compressImage($image_1x, -1, 540, $format);
         $urls[] = self::saveImage($image_2x, $folder . '2x/');
 
         return $urls;
     }
-
 
     public static function saveImage(\Intervention\Image\Image $image, $folder = ''): string
     {
@@ -31,10 +43,8 @@ class ImageService
         return $folder . $imageName;
     }
 
-    public static function compressImage(UploadedFile $image, int $height = 400, int $width = 400, string $format = 'webp'): \Intervention\Image\Image
+    public static function compressImage($img, int $height = 400, int $width = 400, string $format = 'webp'): \Intervention\Image\Image
     {
-        $img = Image::make($image->getRealPath());
-
         $old_height = $img->height();
         $old_width = $img->width();
 
