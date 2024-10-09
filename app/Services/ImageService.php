@@ -35,7 +35,7 @@ class ImageService
 
         return Container::getInstance()->make(FilesystemFactory::class)->disk('public')->putFileAs(
             $folder, $image->encode(), $imageName, []
-        );;
+        );
     }
 
     public static function compressImage(UploadedFile $image, int $height = 400, int $width = 400, string $format = 'webp'): \Intervention\Image\Image
