@@ -20,9 +20,10 @@ class ImageService
     }
 
 
-    public static function saveCompressedImage(\Intervention\Image\Image $image, $folder = '') {
+    public static function saveCompressedImage(\Intervention\Image\Image $image, $folder = ''): string
+    {
         $imageName = time() . '.' . 'webp';
-        $image_path = public_path($folder . $imageName);
+        $image_path = storage_path($folder . $imageName);
         $image->save($image_path);
         return $image_path;
     }
