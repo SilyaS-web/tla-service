@@ -270,12 +270,12 @@ class ProjectController extends Controller
             $project_work = $project->projectWorks()->where('type', $type)->first();
             if ($project_work) {
                 if (isset($validated[$type . '_quantity']) && $validated[$type . '_quantity'] >= $project_work->quantity) {
-                    $project_work::query()->update([
+                    $project_work->update([
                         'quantity' => $validated[$type . '_quantity'],
                     ]);
                 }
             } else if (isset($validated[$type . '_quantity']) && $validated[$type . '_quantity'] > 0) {
-                ProjectWork::query()->create([
+                ProjectWork->create([
                     'type' => $type,
                     'quantity' => $validated[$type . '_quantity'],
                     'project_id' => $project->id,
