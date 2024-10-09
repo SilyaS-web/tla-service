@@ -163,7 +163,7 @@ class BloggerController extends Controller
 
         if ($request->file('image')) {
             $blogger_image = $request->file('image');
-            $urls = ImageService::makeCompressedCopies($blogger_image, 'profile/');
+            $urls = ImageService::makeCompressedCopies($blogger_image, 'profile/'.$user->id.'/');
 
             $user->image = $urls[1];
             $user->save();
@@ -326,7 +326,7 @@ class BloggerController extends Controller
             }
 
             $blogger_image = $request->file('image');
-            $urls = ImageService::makeCompressedCopies($blogger_image, 'profile/');
+            $urls = ImageService::makeCompressedCopies($blogger_image, 'profile/'.$user->id.'/');
 
             $user->image = $urls[1];
         }

@@ -186,7 +186,7 @@ class ProjectController extends Controller
 
         $product_images = $request->file('images');
         foreach ($product_images as $product_image) {
-            $urls = ImageService::makeCompressedCopies($product_image, 'projects/');
+            $urls = ImageService::makeCompressedCopies($product_image, 'projects/' .  $project->id . '/');
 
             ProjectFile::create([
                 'source_id' => $project->id,
@@ -257,7 +257,7 @@ class ProjectController extends Controller
 
         if (!empty($product_images)) {
             foreach ($product_images as $product_image) {
-                $urls = ImageService::makeCompressedCopies($product_image, 'projects/');
+                $urls = ImageService::makeCompressedCopies($product_image, 'projects/' .  $project->id . '/');
 
                 ProjectFile::create([
                     'source_id' => $project->id,
