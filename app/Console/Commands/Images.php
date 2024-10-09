@@ -41,6 +41,7 @@ class Images extends Command
      */
     public function handle()
     {
+        ini_set('memory_limit', '-1');
         $users = User::all();
 
         foreach ($users as $user) {
