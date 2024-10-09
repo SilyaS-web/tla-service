@@ -269,7 +269,7 @@ class WorkController extends Controller
         $message = Message::create([
             'work_id' => $work->id,
             'user_id' => 1,
-            'message' => 'Блогер прикрепил статистику к проекту ' . $work->project->product_name
+            'message' => 'Блогер прикрепил статистику к проекту ' . ($work->project->product_name ?? 'Проект удалён')
         ]);
 
         FinishStats::create([
@@ -285,11 +285,11 @@ class WorkController extends Controller
         Notification::create([
             'user_id' => $work->seller->user->id,
             'type' => 'Статистика по проекту',
-            'text' => $user->name . ' прикрепил статистику к проекту ' . $work->project->product_name,
+            'text' => $user->name . ' прикрепил статистику к проекту ' . ($work->project->product_name ?? 'Проект удалён'),
             'work_id' => $work->id,
             'from_user_id' => $user->id,
         ]);
-        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' прикрепил статистику к проекту ' . $work->project->product_name);
+        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' прикрепил статистику к проекту ' . ($work->project->product_name ?? 'Проект удалён'));
 
         if ($request->file('images')) {
             foreach ($request->file('images') as $image) {
