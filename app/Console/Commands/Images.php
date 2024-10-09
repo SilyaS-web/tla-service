@@ -76,7 +76,7 @@ class Images extends Command
                 continue;
             }
 
-            $image = Storage::get($project_file->link);
+            $image = Storage::get('public/' . $project_file->link);
             $urls = ImageService::makeCompressedCopiesFromFile($image, 'projects/' .  $project_file->source_id . '/');
             $project_file->link = $urls[1];
             $project_file->save();
