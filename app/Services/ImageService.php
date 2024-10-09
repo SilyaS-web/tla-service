@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Services;
+use Illuminate\Container\Container;
+use Illuminate\Contracts\Container\BindingResolutionException;
+use Illuminate\Contracts\Filesystem\Factory as FilesystemFactory;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -22,13 +25,17 @@ class ImageService
     }
 
 
+    /**
+     * @throws BindingResolutionException
+     */
     public static function saveCompressedImage(\Intervention\Image\Image $image, $folder = ''): string
     {
         $imageName = time() . '.' . 'webp';
         $image_path = $folder . $imageName;
-        Storage::put($folder, $image->encode(), 'public');
 
-        return $image_path;
+        return Container::getInstance()->make(FilesystemFactory::class)->disk('public')->putFileAs(
+            $folder, $image->encode(), $imageName, []
+        );;
     }
 
     public static function compressImage(UploadedFile $image, int $height = 400, int $width = 400, string $format = 'webp'): \Intervention\Image\Image
