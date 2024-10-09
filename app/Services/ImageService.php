@@ -28,7 +28,7 @@ class ImageService
         $image_path = storage_path($folder) . $imageName;
 
         if (!file_exists($image_path)) {
-            Storage::disk('local')->makeDirectory(storage_path($image_path));
+            Storage::disk('local')->makeDirectory($image_path);
         }
 
         $image->save($image_path);
