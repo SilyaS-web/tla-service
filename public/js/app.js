@@ -33220,7 +33220,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     "class": "input",
     name: "feedback-quantity",
-    id: "feedback-quantity"
+    id: "feedback-quantity",
+    disabled: ""
   }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.quantities.feedback_quantity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     onClick: _cache[14] || (_cache[14] = function ($event) {
       return function (e) {
@@ -33235,7 +33236,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     "class": "input",
     name: "inst-quantity",
-    id: "inst-quantity"
+    id: "inst-quantity",
+    disabled: ""
   }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.quantities.inst_quantity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     onClick: _cache[16] || (_cache[16] = function ($event) {
       return function (e) {
@@ -33249,7 +33251,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $data.quantities.youtube_quantity = $event;
     }),
     "class": "input",
-    name: "youtube-quantity"
+    name: "youtube-quantity",
+    disabled: ""
   }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.quantities.youtube_quantity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     onClick: _cache[18] || (_cache[18] = function ($event) {
       return function (e) {
@@ -33263,7 +33266,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[19] || (_cache[19] = function ($event) {
       return $data.quantities.vk_quantity = $event;
     }),
-    name: "vk-quantity"
+    name: "vk-quantity",
+    disabled: ""
   }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.quantities.vk_quantity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     onClick: _cache[20] || (_cache[20] = function ($event) {
       return function (e) {
@@ -33277,7 +33281,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "onUpdate:modelValue": _cache[21] || (_cache[21] = function ($event) {
       return $data.quantities.telegram_quantity = $event;
     }),
-    name: "telegram-quantity"
+    name: "telegram-quantity",
+    disabled: ""
   }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.quantities.telegram_quantity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     onClick: _cache[22] || (_cache[22] = function ($event) {
       return function (e) {

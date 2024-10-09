@@ -179,7 +179,7 @@
                                     </label>
                                     <div class="quantity-w" data-max="100">
                                         <div class="quantity-input">
-                                            <input type="number" v-model="quantities.feedback_quantity" class="input" name="feedback-quantity" id="feedback-quantity">
+                                            <input type="number" v-model="quantities.feedback_quantity" class="input" name="feedback-quantity" id="feedback-quantity" disabled>
                                         </div>
                                         <div
                                             v-on:click="(function(e){ if(quantities.feedback_quantity < 100) quantities.feedback_quantity += 1})()"
@@ -221,7 +221,7 @@
                                     </label>
                                     <div class="quantity-w" data-max="100">
                                         <div class="quantity-input">
-                                            <input type="number" v-model="quantities.inst_quantity" class="input" name="inst-quantity" id="inst-quantity">
+                                            <input type="number" v-model="quantities.inst_quantity" class="input" name="inst-quantity" id="inst-quantity" disabled>
                                         </div>
                                         <div  v-on:click="(function(e){ if(quantities.inst_quantity < 100) quantities.inst_quantity += 1})()"
                                               class="quantity-plus">
@@ -263,7 +263,7 @@
                                     </label>
                                     <div class="quantity-w" data-max="100">
                                         <div class="quantity-input">
-                                            <input type="number" v-model="quantities.youtube_quantity" class="input" name="youtube-quantity">
+                                            <input type="number" v-model="quantities.youtube_quantity" class="input" name="youtube-quantity" disabled>
                                         </div>
                                         <div v-on:click="(function(e){ if(quantities.youtube_quantity < 100) quantities.youtube_quantity += 1})()" class="quantity-plus">
                                             <img src="img/plus-icon.svg" alt="">
@@ -304,7 +304,7 @@
                                     </label>
                                     <div class="quantity-w" data-max="100">
                                         <div class="quantity-input">
-                                            <input type="number" class="input" v-model="quantities.vk_quantity" name="vk-quantity">
+                                            <input type="number" class="input" v-model="quantities.vk_quantity" name="vk-quantity" disabled>
                                         </div>
                                         <div
                                             v-on:click="(function(e){ if(quantities.vk_quantity < 100) quantities.vk_quantity += 1})()"
@@ -346,7 +346,7 @@
                                     </label>
                                     <div class="quantity-w" data-max="100">
                                         <div class="quantity-input">
-                                            <input type="number" class="input" v-model="quantities.telegram_quantity" name="telegram-quantity">
+                                            <input type="number" class="input" v-model="quantities.telegram_quantity" name="telegram-quantity" disabled>
                                         </div>
                                         <div
                                             v-on:click="(function(e){ if(quantities.telegram_quantity < 100) quantities.telegram_quantity += 1})()"
