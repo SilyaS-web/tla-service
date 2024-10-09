@@ -11,6 +11,7 @@ use App\Models\Project;
 use App\Models\ProjectFile;
 use App\Models\ProjectWork;
 use App\Models\Work;
+use App\Services\ImageService;
 use App\Services\OzonService;
 use App\Services\WbService;
 use Carbon\Carbon;
@@ -185,11 +186,12 @@ class ProjectController extends Controller
 
         $product_images = $request->file('images');
         foreach ($product_images as $product_image) {
-            $image_path = $product_image->store('projects', 'public');
+            $urls = ImageService::makeCompressedCopies($product_image, 'projects/');
+
             ProjectFile::create([
                 'source_id' => $project->id,
                 'type' => 0,
-                'link' => $image_path,
+                'link' => $urls[1],
             ]);
         }
 
@@ -255,11 +257,12 @@ class ProjectController extends Controller
 
         if (!empty($product_images)) {
             foreach ($product_images as $product_image) {
-                $image_path = $product_image->store('projects', 'public');
+                $urls = ImageService::makeCompressedCopies($product_image, 'projects/');
+
                 ProjectFile::create([
                     'source_id' => $project->id,
                     'type' => 0,
-                    'link' => $image_path,
+                    'link' => $urls[1],
                 ]);
             }
         }

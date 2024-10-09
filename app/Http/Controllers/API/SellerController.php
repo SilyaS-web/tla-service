@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Models\Seller;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SellerResource;
+use App\Services\ImageService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
@@ -79,9 +80,10 @@ class SellerController extends Controller
                 Storage::delete($user->getImageURL());
             }
 
-            $product_image = $request->file('image');
-            $image_path = $product_image->store('profile', 'public');
-            $user->image = $image_path;
+            $seller_image = $request->file('image');
+            $urls = ImageService::makeCompressedCopies($seller_image, 'profile/');
+
+            $user->image = $urls[1];
         }
 
         $user->save();

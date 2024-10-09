@@ -7,6 +7,8 @@ use App\Models\BloggerPlatform;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BloggerResource;
 use App\Models\BloggerTheme;
+use App\Models\ProjectFile;
+use App\Services\ImageService;
 use App\Services\TgService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -160,9 +162,10 @@ class BloggerController extends Controller
         }
 
         if ($request->file('image')) {
-            $product_image = $request->file('image');
-            $image_path = $product_image->store('profile', 'public');
-            $user->image = $image_path;
+            $blogger_image = $request->file('image');
+            $urls = ImageService::makeCompressedCopies($blogger_image, 'profile/');
+
+            $user->image = $urls[1];
             $user->save();
         }
 
@@ -322,9 +325,10 @@ class BloggerController extends Controller
                 Storage::delete($user->getImageURL());
             }
 
-            $product_image = $request->file('image');
-            $image_path = $product_image->store('profile', 'public');
-            $user->image = $image_path;
+            $blogger_image = $request->file('image');
+            $urls = ImageService::makeCompressedCopies($blogger_image, 'profile/');
+
+            $user->image = $urls[1];
         }
         $user->save();
 
