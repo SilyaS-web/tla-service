@@ -2,8 +2,9 @@
 
 namespace App\Services;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
-use function Symfony\Component\String\s;
+
 
 class ImageService
 {
@@ -26,9 +27,9 @@ class ImageService
         $imageName = time() . '.' . 'webp';
         $image_path = storage_path($folder) . $imageName;
 
-//        if (!file_exists($image_path)) {
-//            mkdir($image_path, 666, true);
-//        }
+        if (!file_exists($image_path)) {
+            Storage::disk('local')->makeDirectory(storage_path($folder));
+        }
 
         $image->save($image_path);
         return $image_path;
