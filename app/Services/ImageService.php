@@ -27,11 +27,7 @@ class ImageService
         $imageName = time() . '.' . 'webp';
         $image_path = public_path($folder) . $imageName;
 
-        if (!file_exists($image_path)) {
-            Storage::disk('local')->makeDirectory($image_path);
-        }
-
-        $image->save($image_path);
+        Storage::putFile($folder . '/' . $imageName, $image->encode());
         return $image_path;
     }
 
