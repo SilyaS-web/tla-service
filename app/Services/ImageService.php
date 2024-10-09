@@ -41,9 +41,9 @@ class ImageService
         $k = $old_height / $old_width;
 
         if ($height === -1) {
-            $height = $width * $k;
+            $height = $width / $k;
         } else if ($width === -1) {
-            $width = $height / $k;
+            $width = $height * $k;
         }
 
         $img->resize($height, $width);
