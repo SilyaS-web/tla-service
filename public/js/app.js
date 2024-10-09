@@ -32958,20 +32958,15 @@ var _hoisted_60 = {
   "class": "quantity-w",
   "data-max": "100"
 };
-var _hoisted_61 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "img/minus-icon.svg",
-  alt: ""
-}, null, -1 /* HOISTED */);
-var _hoisted_62 = [_hoisted_61];
-var _hoisted_63 = {
+var _hoisted_61 = {
   "class": "quantity-input"
 };
-var _hoisted_64 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_62 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "img/plus-icon.svg",
   alt: ""
 }, null, -1 /* HOISTED */);
-var _hoisted_65 = [_hoisted_64];
-var _hoisted_66 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_63 = [_hoisted_62];
+var _hoisted_64 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "format-tooltip",
   "data-hint": "feedback"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -32982,28 +32977,23 @@ var _hoisted_66 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 }, " Отзыв "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "format-hint__body"
 }, " Улучшайте рейтинг вашей ĸарточĸи, публиĸуя положительные отзывы. Это поможет переĸрыть негативные отзывы и повысить доверие поĸупателей. Получите выĸупы не опасаясь санĸций от марĸетплейса. ")])], -1 /* HOISTED */);
-var _hoisted_67 = {
+var _hoisted_65 = {
   "class": "marketing-format__item input-checkbox-w"
 };
-var _hoisted_68 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-inst\"> Интеграция Ins <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-inst\"> ? <div class=\"format-hint format-hint--text\" id=\"product-inst\"><div class=\"format-hint__title\"> Интеграция Ins </div><div class=\"format-hint__body\"> Увеличивайте продажи с помощью reels. Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции в Ins с лидерами мнений. </div></div></div></label>", 1);
-var _hoisted_69 = {
+var _hoisted_66 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-inst\"> Интеграция Ins <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-inst\"> ? <div class=\"format-hint format-hint--text\" id=\"product-inst\"><div class=\"format-hint__title\"> Интеграция Ins </div><div class=\"format-hint__body\"> Увеличивайте продажи с помощью reels. Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции в Ins с лидерами мнений. </div></div></div></label>", 1);
+var _hoisted_67 = {
   "class": "quantity-w",
   "data-max": "100"
 };
-var _hoisted_70 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "img/minus-icon.svg",
-  alt: ""
-}, null, -1 /* HOISTED */);
-var _hoisted_71 = [_hoisted_70];
-var _hoisted_72 = {
+var _hoisted_68 = {
   "class": "quantity-input"
 };
-var _hoisted_73 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_69 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "img/plus-icon.svg",
   alt: ""
 }, null, -1 /* HOISTED */);
-var _hoisted_74 = [_hoisted_73];
-var _hoisted_75 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_70 = [_hoisted_69];
+var _hoisted_71 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "format-tooltip",
   "data-hint": "inst"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -33014,28 +33004,23 @@ var _hoisted_75 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 }, " Интеграция Ins "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "format-hint__body"
 }, " Увеличивайте продажи с помощью reels. Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции в Ins с лидерами мнений. ")])], -1 /* HOISTED */);
-var _hoisted_76 = {
+var _hoisted_72 = {
   "class": "marketing-format__item input-checkbox-w"
 };
-var _hoisted_77 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-youtube\"> Интеграция YTube <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-youtube\"> ? <div class=\"format-hint format-hint--text\" id=\"product-youtube\"><div class=\"format-hint__title\"> Интеграция YTube </div><div class=\"format-hint__body\"> Увеличивайте продажи с помощью нативных обзоров на товар и shorts. Повышайте охваты, ĸачайте seo, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции в YTube с лидерами мнений. </div></div></div></label>", 1);
-var _hoisted_78 = {
+var _hoisted_73 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-youtube\"> Интеграция YTube <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-youtube\"> ? <div class=\"format-hint format-hint--text\" id=\"product-youtube\"><div class=\"format-hint__title\"> Интеграция YTube </div><div class=\"format-hint__body\"> Увеличивайте продажи с помощью нативных обзоров на товар и shorts. Повышайте охваты, ĸачайте seo, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции в YTube с лидерами мнений. </div></div></div></label>", 1);
+var _hoisted_74 = {
   "class": "quantity-w",
   "data-max": "100"
 };
-var _hoisted_79 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "img/minus-icon.svg",
-  alt: ""
-}, null, -1 /* HOISTED */);
-var _hoisted_80 = [_hoisted_79];
-var _hoisted_81 = {
+var _hoisted_75 = {
   "class": "quantity-input"
 };
-var _hoisted_82 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_76 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "img/plus-icon.svg",
   alt: ""
 }, null, -1 /* HOISTED */);
-var _hoisted_83 = [_hoisted_82];
-var _hoisted_84 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_77 = [_hoisted_76];
+var _hoisted_78 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "format-tooltip",
   "data-hint": "youtube"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -33046,28 +33031,23 @@ var _hoisted_84 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 }, " Интеграция YTube "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "format-hint__body"
 }, " Увеличивайте продажи с помощью нативных обзоров на товар и shorts. Повышайте охваты, ĸачайте seo, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции в YTube с лидерами мнений. ")])], -1 /* HOISTED */);
-var _hoisted_85 = {
+var _hoisted_79 = {
   "class": "marketing-format__item input-checkbox-w"
 };
-var _hoisted_86 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-vk\"> Интеграция VK <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-vk\"> ? <div class=\"format-hint format-hint--text\" id=\"product-vk\"><div class=\"format-hint__title\"> Интеграция VK </div><div class=\"format-hint__body\"> Увеличивайте продажи с помощью публиĸаций в ВК по вашей ЦА. Получите узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции ВК в целевых паблиĸах. </div></div></div></label>", 1);
-var _hoisted_87 = {
+var _hoisted_80 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-vk\"> Интеграция VK <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-vk\"> ? <div class=\"format-hint format-hint--text\" id=\"product-vk\"><div class=\"format-hint__title\"> Интеграция VK </div><div class=\"format-hint__body\"> Увеличивайте продажи с помощью публиĸаций в ВК по вашей ЦА. Получите узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции ВК в целевых паблиĸах. </div></div></div></label>", 1);
+var _hoisted_81 = {
   "class": "quantity-w",
   "data-max": "100"
 };
-var _hoisted_88 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "img/minus-icon.svg",
-  alt: ""
-}, null, -1 /* HOISTED */);
-var _hoisted_89 = [_hoisted_88];
-var _hoisted_90 = {
+var _hoisted_82 = {
   "class": "quantity-input"
 };
-var _hoisted_91 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_83 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "img/plus-icon.svg",
   alt: ""
 }, null, -1 /* HOISTED */);
-var _hoisted_92 = [_hoisted_91];
-var _hoisted_93 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_84 = [_hoisted_83];
+var _hoisted_85 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "format-tooltip",
   "data-hint": "vk"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -33078,28 +33058,23 @@ var _hoisted_93 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElement
 }, " Интеграция VK "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "format-hint__body"
 }, " Увеличивайте продажи с помощью публиĸаций в ВК по вашей ЦА. Получите узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции ВК в целевых паблиĸах. ")])], -1 /* HOISTED */);
-var _hoisted_94 = {
+var _hoisted_86 = {
   "class": "marketing-format__item input-checkbox-w"
 };
-var _hoisted_95 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-tg\"> Интеграция Telegram <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-tg\"> ? <div class=\"format-hint format-hint--text\" id=\"product-tg\"><div class=\"format-hint__title\"> Интеграция Telegram </div><div class=\"format-hint__body\"> Увеличивайте продажи с помощью публиĸаций в Телеграм по вашей ЦА. Получите охват по узĸой ЦА, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции Телеграм в целевых паблиĸах. </div></div></div></label>", 1);
-var _hoisted_96 = {
+var _hoisted_87 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-tg\"> Интеграция Telegram <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-tg\"> ? <div class=\"format-hint format-hint--text\" id=\"product-tg\"><div class=\"format-hint__title\"> Интеграция Telegram </div><div class=\"format-hint__body\"> Увеличивайте продажи с помощью публиĸаций в Телеграм по вашей ЦА. Получите охват по узĸой ЦА, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции Телеграм в целевых паблиĸах. </div></div></div></label>", 1);
+var _hoisted_88 = {
   "class": "quantity-w",
   "data-max": "100"
 };
-var _hoisted_97 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "img/minus-icon.svg",
-  alt: ""
-}, null, -1 /* HOISTED */);
-var _hoisted_98 = [_hoisted_97];
-var _hoisted_99 = {
+var _hoisted_89 = {
   "class": "quantity-input"
 };
-var _hoisted_100 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_90 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "img/plus-icon.svg",
   alt: ""
 }, null, -1 /* HOISTED */);
-var _hoisted_101 = [_hoisted_100];
-var _hoisted_102 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_91 = [_hoisted_90];
+var _hoisted_92 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "format-tooltip",
   "data-hint": "tg"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
@@ -33110,10 +33085,10 @@ var _hoisted_102 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElemen
 }, " Интеграция Telegram "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "format-hint__body"
 }, " Увеличивайте продажи с помощью публиĸаций в Телеграм по вашей ЦА. Получите охват по узĸой ЦА, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции Телеграм в целевых паблиĸах. ")])], -1 /* HOISTED */);
-var _hoisted_103 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+var _hoisted_93 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
   "class": "error error-format"
 }, null, -1 /* HOISTED */);
-var _hoisted_104 = {
+var _hoisted_94 = {
   "class": "quest__btns"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -33238,121 +33213,86 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.triggerUpload && $options.triggerUpload.apply($options, arguments);
     }),
     "class": "upload-files__plus"
-  })]), $data.errors.images ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.images), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [_hoisted_56, $data.errors.project_type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_57, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.project_type), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [_hoisted_59, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[13] || (_cache[13] = function ($event) {
-      return function (e) {
-        if ($data.quantities.feedback_quantity > 0) $data.quantities.feedback_quantity -= 1;
-      }();
-    }),
-    "class": "quantity-minus"
-  }, [].concat(_hoisted_62)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  })]), $data.errors.images ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.images), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [_hoisted_56, $data.errors.project_type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_57, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.project_type), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [_hoisted_59, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "number",
-    "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
+    "onUpdate:modelValue": _cache[13] || (_cache[13] = function ($event) {
       return $data.quantities.feedback_quantity = $event;
     }),
     "class": "input",
     name: "feedback-quantity",
     id: "feedback-quantity"
   }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.quantities.feedback_quantity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[15] || (_cache[15] = function ($event) {
+    onClick: _cache[14] || (_cache[14] = function ($event) {
       return function (e) {
         if ($data.quantities.feedback_quantity < 100) $data.quantities.feedback_quantity += 1;
       }();
     }),
     "class": "quantity-plus"
-  }, [].concat(_hoisted_65))]), _hoisted_66]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, [_hoisted_68, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_69, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[16] || (_cache[16] = function ($event) {
-      return function (e) {
-        if ($data.quantities.inst_quantity > 0) $data.quantities.inst_quantity -= 1;
-      }();
-    }),
-    "class": "quantity-minus"
-  }, [].concat(_hoisted_71)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, [].concat(_hoisted_63))]), _hoisted_64]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [_hoisted_66, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "number",
-    "onUpdate:modelValue": _cache[17] || (_cache[17] = function ($event) {
+    "onUpdate:modelValue": _cache[15] || (_cache[15] = function ($event) {
       return $data.quantities.inst_quantity = $event;
     }),
     "class": "input",
     name: "inst-quantity",
     id: "inst-quantity"
   }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.quantities.inst_quantity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[18] || (_cache[18] = function ($event) {
+    onClick: _cache[16] || (_cache[16] = function ($event) {
       return function (e) {
         if ($data.quantities.inst_quantity < 100) $data.quantities.inst_quantity += 1;
       }();
     }),
     "class": "quantity-plus"
-  }, [].concat(_hoisted_74))]), _hoisted_75]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_76, [_hoisted_77, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_78, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[19] || (_cache[19] = function ($event) {
-      return function (e) {
-        if ($data.quantities.youtube_quantity > 0) $data.quantities.youtube_quantity -= 1;
-      }();
-    }),
-    "class": "quantity-minus"
-  }, [].concat(_hoisted_80)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_81, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, [].concat(_hoisted_70))]), _hoisted_71]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [_hoisted_73, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_75, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "number",
-    "onUpdate:modelValue": _cache[20] || (_cache[20] = function ($event) {
+    "onUpdate:modelValue": _cache[17] || (_cache[17] = function ($event) {
       return $data.quantities.youtube_quantity = $event;
     }),
     "class": "input",
     name: "youtube-quantity"
   }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.quantities.youtube_quantity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[21] || (_cache[21] = function ($event) {
+    onClick: _cache[18] || (_cache[18] = function ($event) {
       return function (e) {
         if ($data.quantities.youtube_quantity < 100) $data.quantities.youtube_quantity += 1;
       }();
     }),
     "class": "quantity-plus"
-  }, [].concat(_hoisted_83))]), _hoisted_84]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_85, [_hoisted_86, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_87, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[22] || (_cache[22] = function ($event) {
-      return function (e) {
-        if ($data.quantities.vk_quantity > 0) $data.quantities.vk_quantity -= 1;
-      }();
-    }),
-    "class": "quantity-minus"
-  }, [].concat(_hoisted_89)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_90, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, [].concat(_hoisted_77))]), _hoisted_78]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_79, [_hoisted_80, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_81, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_82, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "number",
     "class": "input",
-    "onUpdate:modelValue": _cache[23] || (_cache[23] = function ($event) {
+    "onUpdate:modelValue": _cache[19] || (_cache[19] = function ($event) {
       return $data.quantities.vk_quantity = $event;
     }),
     name: "vk-quantity"
   }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.quantities.vk_quantity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[24] || (_cache[24] = function ($event) {
+    onClick: _cache[20] || (_cache[20] = function ($event) {
       return function (e) {
         if ($data.quantities.vk_quantity < 100) $data.quantities.vk_quantity += 1;
       }();
     }),
     "class": "quantity-plus"
-  }, [].concat(_hoisted_92))]), _hoisted_93]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_94, [_hoisted_95, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_96, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[25] || (_cache[25] = function ($event) {
-      return function (e) {
-        if ($data.quantities.telegram_quantity > 0) $data.quantities.telegram_quantity -= 1;
-      }();
-    }),
-    "class": "quantity-minus"
-  }, [].concat(_hoisted_98)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_99, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, [].concat(_hoisted_84))]), _hoisted_85]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_86, [_hoisted_87, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_88, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_89, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "number",
     "class": "input",
-    "onUpdate:modelValue": _cache[26] || (_cache[26] = function ($event) {
+    "onUpdate:modelValue": _cache[21] || (_cache[21] = function ($event) {
       return $data.quantities.telegram_quantity = $event;
     }),
     name: "telegram-quantity"
   }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.quantities.telegram_quantity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[27] || (_cache[27] = function ($event) {
+    onClick: _cache[22] || (_cache[22] = function ($event) {
       return function (e) {
         if ($data.quantities.telegram_quantity < 100) $data.quantities.telegram_quantity += 1;
       }();
     }),
     "class": "quantity-plus"
-  }, [].concat(_hoisted_101))]), _hoisted_102]), _hoisted_103]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_104, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    onClick: _cache[28] || (_cache[28] = function () {
+  }, [].concat(_hoisted_91))]), _hoisted_92]), _hoisted_93]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_94, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[23] || (_cache[23] = function () {
       return $options.modifyProject && $options.modifyProject.apply($options, arguments);
     }),
     "class": "btn btn-primary"
   }, " Сохранить "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-secondary",
-    onClick: _cache[29] || (_cache[29] = function () {
+    onClick: _cache[24] || (_cache[24] = function () {
       return $options.resetEditData && $options.resetEditData.apply($options, arguments);
     })
   }, "Вернуться")])])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
