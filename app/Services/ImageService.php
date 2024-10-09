@@ -23,12 +23,10 @@ class ImageService
 
     public static function saveCompressedImage(\Intervention\Image\Image $image, $folder = ''): string
     {
-        $root = $_SERVER["DOCUMENT_ROOT"];
         $imageName = time() . '.' . 'webp';
         $image_path = public_path($folder . $imageName);
-        dd(['root' => $root, 'image_path' => $image_path]);
         if (!file_exists($image_path)) {
-            mkdir($root . '/' . $image_path, 666, true);
+            mkdir($image_path, 666, true);
         }
 
         $image->save($image_path);
