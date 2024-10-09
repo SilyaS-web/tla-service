@@ -13,6 +13,7 @@ use App\Models\ProjectWork;
 use App\Models\Work;
 use App\Services\OzonService;
 use App\Services\WbService;
+use Carbon\Carbon;
 use Illuminate\Validation\Rule;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -216,6 +217,10 @@ class ProjectController extends Controller
 
     public function update(Project $project)
     {
+        if (!Auth::user()->sellerTariffs()->where('finish_date', '>', Carbon::now())->where('tariff_id', 20)->first()) {
+            return response()->json(['message' => 'Приобретите подписку чтобы редактировать проект'])->setStatusCode(400);
+        }
+
         $validator = Validator::make(request()->all(), [
             'product_name' => 'required|min:3|max:250',
             'product_nm' => 'required|min:3|numeric',
@@ -264,24 +269,20 @@ class ProjectController extends Controller
         foreach (Project::TYPES as $type) {
             $project_work = $project->projectWorks()->where('type', $type)->first();
             if ($project_work) {
-                if (!isset($validated[$type . '_quantity']) || $validated[$type . '_quantity'] == 0) {
-                    $project_work->delete();
-                } else {
-                    $project_work->update([
+                if (isset($validated[$type . '_quantity']) && $validated[$type . '_quantity'] >= $project_work->quantity) {
+                    $project_work::query()->update([
                         'quantity' => $validated[$type . '_quantity'],
                     ]);
                 }
-            } else {
-                if (isset($validated[$type . '_quantity']) && $validated[$type . '_quantity'] > 0) {
-                    ProjectWork::create([
-                        'type' => $type,
-                        'quantity' => $validated[$type . '_quantity'],
-                        'project_id' => $project->id,
-                    ]);
-                }
+            } else if (isset($validated[$type . '_quantity']) && $validated[$type . '_quantity'] > 0) {
+                ProjectWork::query()->create([
+                    'type' => $type,
+                    'quantity' => $validated[$type . '_quantity'],
+                    'project_id' => $project->id,
+                ]);
             }
         }
-        return response()->json('ты молодец')->setStatusCode(200);
+        return response()->json([])->setStatusCode(200);
     }
 
     public function delete(Project $project)
@@ -312,7 +313,7 @@ class ProjectController extends Controller
         $user = Auth::user();
 
         try {
-            DB::transaction(function() use ($project, $user) {
+            DB::transaction(function () use ($project, $user) {
                 foreach ($project->projectWorks as $project_work) {
                     $seller_tariff = $user->getActiveTariffs($project_work->type);
                     if (!$seller_tariff || ($seller_tariff->quantity < $project_work->quantity && $seller_tariff->quantity >= 0)) {
@@ -418,7 +419,7 @@ class ProjectController extends Controller
             'total_quantity' => $total_quantity,
             'lost_quantity' => $lost_quantity,
             'product_code' => $project->product_nm,
-            'price' =>  $project->product_price,
+            'price' => $project->product_price,
             'images' => $project->getImageURL(),
             'optioins' => $project->marketplace_options != 'null' ? $project->marketplace_options : NULL,
             'link' => $project->product_link,
@@ -438,7 +439,8 @@ class ProjectController extends Controller
         return $application_count_by_projects;
     }
 
-    public function categories(Request $request) {
+    public function categories(Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'category' => 'string|nullable',
         ]);
@@ -459,7 +461,8 @@ class ProjectController extends Controller
         return response()->json(['categories' => $categories])->setStatusCode(200);
     }
 
-    public function statistics(Project $project) {
+    public function statistics(Project $project)
+    {
         $data = [
             'statistics' => new ProjectStatisticsResource($project),
         ];
