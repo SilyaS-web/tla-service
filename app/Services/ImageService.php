@@ -3,6 +3,7 @@
 namespace App\Services;
 use Illuminate\Http\UploadedFile;
 use Intervention\Image\Facades\Image;
+use function Symfony\Component\String\s;
 
 class ImageService
 {
@@ -25,7 +26,7 @@ class ImageService
         $root = $_SERVER["DOCUMENT_ROOT"];
         $imageName = time() . '.' . 'webp';
         $image_path = public_path($folder . $imageName);
-
+        dd(['root' => $root, 'image_path' => $image_path]);
         if (!file_exists($image_path)) {
             mkdir($root . '/' . $image_path, 666, true);
         }
