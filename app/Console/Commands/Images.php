@@ -8,7 +8,7 @@ use App\Services\ImageService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 
-class images extends Command
+class Images extends Command
 {
     /**
      * The name and signature of the console command.
@@ -45,6 +45,7 @@ class images extends Command
 
         foreach ($users as $user) {
             $this->info('Обрабатываем пользователя: ' . $user->name . ', id: ' . $user->id);
+            dd($user->image);
             $image = Storage::get($user->image);
             $urls = ImageService::makeCompressedCopiesFromFile($image, 'profile/'.$user->id.'/');
             $user->image = $urls[1];
