@@ -21,7 +21,7 @@ class AuthController extends Controller
     public function setTGPhone()
     {
         $validator = Validator::make(request()->all(), [
-            'phone' => 'required|numeric|unique:tg_phones,phone',
+            'phone' => 'required|numeric',
             'chat_id' => 'required|numeric',
         ]);
 
@@ -31,6 +31,11 @@ class AuthController extends Controller
 
         $validated = $validator->validated();
         $validated['phone'] = PhoneService::format($validated['phone']);
+
+        if (TgPhone::where('phone', $validated['phone'])->exists()) {
+            return response()->json(['message' => 'Пользователь с таким номером уже существует'], 400);
+        }
+
         TgPhone::create($validated);
         return response()->json('success', 200);
     }

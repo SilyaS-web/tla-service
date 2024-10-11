@@ -55,38 +55,4 @@ class SellerController extends Controller
             }
         }
     }
-
-    public function projects(Request $request)
-    {
-        $validator = Validator::make(request()->all(), [
-            'project_name' => 'string|nullable',
-            'project_type' => 'string|nullable',
-            'category' => 'string|nullable',
-            'type' => 'string|nullable'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 400);
-        }
-
-        $validated = $validator->validated();
-        $all_projects = Project::where('status', '<>', Project::BANNED)->where('created_at', '<', Carbon::now()->subMinutes(5))->where('is_blogger_access', true);
-
-        if (isset($validated['project_type']) && !empty($validated['project_type'])) {
-            $all_projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
-                $query->where('type', $validated['project_type']);
-            });
-        }
-
-        if (isset($validated['project_name']) && !empty($validated['project_name'])) {
-            $all_projects->where('product_name', 'like', '%' . $validated['project_name'] . '%');
-        }
-
-        if (isset($validated['category']) && !empty($validated['category'])) {
-            $all_projects->where('marketplace_category', 'like', '%' . $validated['category'] . '%');
-        }
-
-        $all_projects = $all_projects->get();
-        return view('project.all-seller-list', compact('all_projects'));
-    }
 }
