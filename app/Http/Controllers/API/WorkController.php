@@ -307,9 +307,9 @@ class WorkController extends Controller
 
     public function deny(Work $work)
     {
-        if ($work->status != null && $work->status == Work::PENDING) {
-            return response()->json(['message' => 'Из этого статуса нельзя отклонить заявку'])->setStatusCode(400);
-        }
+//        if ($work->status != null && $work->status == Work::PENDING) {
+//            return response()->json(['message' => 'Из этого статуса нельзя отклонить заявку'])->setStatusCode(400);
+//        }
 
         $work->delete();
         $user = Auth::user();

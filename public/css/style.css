@@ -92,7 +92,7 @@ a.btn:hover{
 }
 
 .btn{
-    padding:15px 30px;
+    padding:12px 30px;
     border-radius: 10px;
     font-size: 16px;
     background-color: var(--pale);
@@ -126,6 +126,39 @@ a.btn:hover{
     background-color:grey;
     box-shadow: none;
     color:#fff;
+}
+.btn-loading{
+    pointer-events: none;
+    position: relative;
+}
+.btn-loading::before{
+    content:"";
+    display: block;
+    position: absolute;
+    left:0;right:0;bottom:0;top:0;
+    margin:auto;
+    width:20px; height:20px;
+    border-right:2px solid #000;
+    border-radius: 50%;
+    animation: rotate 1s linear infinite reverse;
+}
+.btn-loading.btn-white{
+    color:#fff;
+}
+.btn-loading.btn-white::before{
+    border-color:var(--primary);
+}
+.btn-loading.btn-primary{
+    color:var(--primary);
+}
+.btn-loading.btn-primary::before{
+    border-color:#fff;
+}
+.btn-loading.btn-secondary{
+    color:#fff;
+}
+.btn-loading.btn-secondary::before{
+    border-color:var(--primary);
 }
 
 .loader-wrap{
@@ -3386,7 +3419,7 @@ input[type='range']::-webkit-slider-runnable-track{
     display: flex;
     flex-direction: column;
     gap: 8px;
-    height: 580px;
+    height: 640px;
     overflow: scroll;
     border: 1px solid rgba(0, 0, 0, .05);
     padding: 10px;
@@ -3409,6 +3442,59 @@ input[type='range']::-webkit-slider-runnable-track{
     background-color: #7A7674;    /* цвет плашки */
     border-radius: 20px;       /* закругления плашки */
     border: 3px solid #fff;  /* padding вокруг плашки */
+}
+.chat__header{
+    display:flex;
+    padding:10px 0;
+}
+.chat__header .current-project{
+    align-items: flex-start;
+    padding: 0;
+    margin: 0;
+    background-color: unset;
+}
+.chat__header .current-project__img{
+    width: 55px;
+    height: 55px;
+}
+.chat__opts{
+    margin-left: auto;
+    position: relative;
+    z-index: 1;
+}
+.chat__opts img{
+    height: 20px;
+}
+.chat__opts-items{
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    background-color: #fff;
+    border-radius: 10px;
+    position: absolute;
+    top:50%; right:0;
+    padding:10px;
+    width: 250px;
+    box-shadow:0px 0px 10px 6px rgba(0,0,0,.05);
+}
+.chat__opts.active .chat__opts-items{
+    display: flex;
+}
+.chat__opts-item{
+    padding:6px;
+    border-radius: 5px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    width:fit-content;
+}
+.chat__opts-item--disabled{
+    color:rgba(0,0,0,.4);
+    pointer-events: none;
+}
+.chat__opts-item--cancel{
+    color:#FD6567;
+    background-color: rgba(253,101,103, .08);
 }
 .item-chat {
     display: flex;
@@ -3438,7 +3524,6 @@ input[type='range']::-webkit-slider-runnable-track{
     background-size: cover;
     background-repeat: no-repeat;
     border-radius: 10px;
-    margin-top: 10px;
 }
 .item-chat__img img {
 }
@@ -3469,12 +3554,9 @@ input[type='range']::-webkit-slider-runnable-track{
     padding: 0 0 5px 5px;
 }
 .chat__back{
-    border:1px solid var(--primary);
-    border-radius: 10px;
-    padding:15px;
+    padding:0 10px;
     align-items: center;
     gap: 8px;
-    font-size: 14px;
     font-weight: 500;
     color:var(--primary);
     width: fit-content;
@@ -3485,7 +3567,7 @@ input[type='range']::-webkit-slider-runnable-track{
 .chat__back img{
     filter: brightness(0) saturate(100%) invert(50%) sepia(74%) saturate(4903%) hue-rotate(2deg) brightness(104%) contrast(105%);
     transform: rotate(90deg);
-    width: 12px; height: 12px;
+    width: 20px; height: 20px;
 }
 .chat__overflow{
     position: absolute;
@@ -3516,7 +3598,6 @@ input[type='range']::-webkit-slider-runnable-track{
     border-radius: 10px 10px 0 0;
     border: 1px solid rgba(0, 0, 0, .05);
     gap: 20px;
-    height:345px;
     overflow: scroll;
     position: relative;
 }
@@ -3547,6 +3628,7 @@ input[type='range']::-webkit-slider-runnable-track{
     border-radius: 5px;
     gap: 10px;
     width: 100%;
+    background-color: #F5F3F1;
 }
 .messages-chat__item--author {
     background-color: var(--pale);
@@ -3557,6 +3639,7 @@ input[type='range']::-webkit-slider-runnable-track{
     text-align: center;
     max-width:70%;
     width: unset;
+    background-color: unset;
 }
 .messages-chat__item--system .messages-chat__item-msg {
     font-size: 18px;
@@ -3564,6 +3647,20 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .messages-chat__item--system img{
     margin:0 auto;
+}
+.messages-chat__item-status{
+    position: absolute;
+    margin: 0 auto;
+    top: 10px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 6px;
+    width: 125px;
+    border-radius: 5px;
+    font-size: 12px;
+    color:#fff;
+    font-weight: 300;
 }
 .chat-file{
     display: flex;
@@ -3594,7 +3691,7 @@ input[type='range']::-webkit-slider-runnable-track{
     display: flex;
     align-items: center;
     gap: 12px;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
 }
 .messages-chat__item--system .messages-chat__item-header {
     justify-content: space-between;
@@ -3625,6 +3722,10 @@ input[type='range']::-webkit-slider-runnable-track{
 .messages-create {
     border-radius: 0 0 10px 10px;
 }
+.messages-create__icon{
+    width:18px;
+    /*filter: invert(83%) sepia(5%) saturate(63%) hue-rotate(71deg) brightness(87%) contrast(91%)*/
+}
 .textarea-upload{
     display: flex;
     gap: 6px;
@@ -3637,8 +3738,31 @@ input[type='range']::-webkit-slider-runnable-track{
     border-radius: 5px;
     width:fit-content;
 }
+.textarea-upload__text{
+    max-width:180px;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    text-wrap:nowrap
+}
 .textarea-upload:hover{
     background-color: var(--pale);
+}
+.textarea-upload.uploaded{
+    color:var(--primary);
+}
+.textarea-upload.uploaded img{
+    filter: invert(50%) sepia(82%) saturate(4187%) hue-rotate(0deg) brightness(101%) contrast(110%)
+}
+.textarea-upload__cancel{
+    margin-left: 10px;
+    display: flex;
+    cursor:pointer;
+    align-items: center;
+    justify-content: center;
+}
+.textarea-upload__cancel img{
+    width:12px;
+    height:12px;
 }
 .textarea{
     background-color:var(--pale);
@@ -3652,9 +3776,13 @@ input[type='range']::-webkit-slider-runnable-track{
 .messages-create__textarea {
     margin-bottom: 20px;
     border-radius: 0 0 10px 10px;
+    height: auto;
+    min-height:60px;
+    max-height:160px;
+    border:none;
+    outline: none;
 }
 .messages-create__textarea:focus{
-    border:none;
     box-shadow: 0px 0px 10px 6px rgba(254,94,0,.2);
     outline: none;
 }
@@ -4958,6 +5086,21 @@ input[type='range']::-webkit-slider-runnable-track{
     .profile-projects__body{
         max-width:700px
     }
+
+    .chat__header .current-project__img{
+        width: 50px;
+        height: 50px;
+    }
+    .chat__header .current-project__title .name{
+        font-size: 13px;
+        max-width: 240px;
+    }
+    .chat__header .current-project__title .articul{
+        font-size: 12px;
+    }
+    .chat__header .current-project__title{
+        gap: 6px;
+    }
 }
 @media(max-width:945px){
     .nav__link:not(:last-child){
@@ -5250,7 +5393,10 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .chat__back{
         display: flex;
-        margin-bottom: 12px;
+    }
+
+    .messages-chat{
+        height:355px;
     }
 }
 @media(max-width:700px){
@@ -5406,7 +5552,7 @@ input[type='range']::-webkit-slider-runnable-track{
         width: fit-content;
     }
     .profile__content{
-        width:calc(100% - 80px);
+        width:100%;
     }
     #profile-projects .profile-projects__body{
         max-width:400px
@@ -5456,6 +5602,7 @@ input[type='range']::-webkit-slider-runnable-track{
     .footer__body{
         flex-direction: column;
         align-items: center;
+        padding-bottom: 70px;
     }
 
     .wrapper{
@@ -5537,6 +5684,10 @@ input[type='range']::-webkit-slider-runnable-track{
     .partners__item-promo > *:not(:last-child){
         margin-bottom: 7px;
     }
+
+    .chat__header .current-project{
+        flex-wrap: nowrap;
+    }
 }
 @media(max-width:495px){
     #profile-projects .profile-projects__body{
@@ -5547,6 +5698,13 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .profile-projects__item{
         padding:10px;
+    }
+
+    .chat__header .current-project__img{
+        display: none;
+    }
+    .chat__header .current-project{
+        gap: 10px;
     }
 }
 @media(max-width:475px){
@@ -5754,6 +5912,16 @@ input[type='range']::-webkit-slider-runnable-track{
         font-size: 14px;
     }
 
+
+    .chat__header .current-project__title .name{
+        font-size: 12px;
+    }
+    .chat__header .current-project__title .articul{
+        font-size: 10px;
+    }
+    .chat__back{
+        padding: 0 5px;
+    }
 }
 @media(max-width:400px){
     .nav-menu{
