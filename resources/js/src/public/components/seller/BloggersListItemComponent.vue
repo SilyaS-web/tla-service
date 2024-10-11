@@ -20,6 +20,7 @@
                             v-for="platform in blogger.platforms"
                             v-bind:class="'card__platform ' +  (platform.title ? platform.title.toLowerCase() : '')"
                             :href="platform.link"
+                            target="_blank"
                         >
                             <img v-bind:src="platform.image || ''" alt="">
                         </a>
