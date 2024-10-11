@@ -16,12 +16,13 @@
                         </p>
                     </div>
                     <div class="card__platforms">
-                        <div
+                        <a
                             v-for="platform in blogger.platforms"
                             v-bind:class="'card__platform ' +  (platform.title ? platform.title.toLowerCase() : '')"
+                            :href="platform.link"
                         >
                             <img v-bind:src="platform.image || ''" alt="">
-                        </div>
+                        </a>
                     </div>
                 </div>
                 <div class="card__row card__tags">
