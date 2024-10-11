@@ -3593,7 +3593,7 @@ input[type='range']::-webkit-slider-runnable-track{
 .messages-chat {
     display: flex;
     flex-direction: column;
-    flex: 1 1 auto;
+    flex: 1 1 150px;
     padding:10px;
     border-radius: 10px 10px 0 0;
     border: 1px solid rgba(0, 0, 0, .05);
@@ -5396,7 +5396,7 @@ input[type='range']::-webkit-slider-runnable-track{
     }
 
     .messages-chat{
-        height:355px;
+        flex: 1 1 355px;
     }
 }
 @media(max-width:700px){

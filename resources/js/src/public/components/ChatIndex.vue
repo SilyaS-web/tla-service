@@ -476,8 +476,11 @@ import {reactive, ref} from "vue";
 
                         if(action == 'deny'){
                             this.currentChat = null;
-                            this.isMessagesMobile = false;
-                            this.isChatsMobile = true;
+
+                            if(this.isTablet){
+                                this.isChatsMobile = true;
+                                this.isMessagesMobile = false;
+                            }
                         }
 
                         this.getChats();
@@ -766,12 +769,13 @@ import {reactive, ref} from "vue";
                 }
             },
             getStatusColor(){
-                return this.statusColors[this.currentChat.status] || null
+                return this.statusColors[this.currentChat.status] || ''
             },
             getStatusName(){
-                return this.statusNames[this.currentChat.status] || null
+                return this.statusNames[this.currentChat.status] || ''
             },
             changeTextareaHeight(){
+                $('.messages-create__textarea').css('height',  'auto')
                 $('.messages-create__textarea').css('height',  $('.messages-create__textarea')[0].scrollHeight + 'px')
             }
         }
