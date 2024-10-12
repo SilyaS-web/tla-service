@@ -1,10 +1,10 @@
 <template>
     <div class="profile-chat tab-content" id="chat">
         <div class="profile-chat__body" v-if="user">
-            <div class="profile-projects__title title">
-                <span v-if="user.role == 'blogger'"> Чат с селлерами </span>
-                <span v-else> Чат с блогерами </span>
-            </div>
+<!--            <div class="profile-projects__title title">-->
+<!--                <span v-if="user.role == 'blogger'"> Чат с селлерами </span>-->
+<!--                <span v-else> Чат с блогерами </span>-->
+<!--            </div>-->
             <div class="profile-tabs__content-item">
                 <div class="tab-content__chat chat">
                     <div class="chat__body">
@@ -40,14 +40,14 @@
                         </div>
                         <div v-if="isMessagesMobile" class="chat__right">
                             <div
-                                class="chat__overflow chat__overflow--completed" style="z-index: 1; display: none">
+                                class="chat__overflow chat__overflow--completed" style="z-index: 2; display: none">
                                 <div class="chat__overflow-text">
                                     Проект завершен
                                 </div>
                             </div>
                             <div
                                 v-if="isLostIntegrationQuantityZero"
-                                class="chat__overflow chat__overflow--tariff" style="z-index: 1;">
+                                class="chat__overflow chat__overflow--tariff" style="z-index: 2;">
                                 <div class="chat__overflow-text">
                                     Все доступные места на интеграцию заняты
                                 </div>
@@ -139,8 +139,7 @@
                                     </div>
                                     <div
                                         v-if="currentChat && currentChat.status"
-                                        :style="'background-color:' + getStatusColor(currentChat.status)"
-                                        class="messages-chat__item-status">
+                                        :class="'messages-chat__item-status ' + currentChat.status">
                                         {{ getStatusName(currentChat.status) }}
                                     </div>
                                 </div>
@@ -340,11 +339,6 @@ import {reactive, ref} from "vue";
 
                 isChatOptsOpen: ref(false),
 
-                statusColors: {
-                    'completed': 'rgba(74, 163, 38, .1)',
-                    'pending': 'rgba(75, 146, 190, .4)',
-                    'progress': 'rgba(255, 150, 75, .1)',
-                },
                 statusNames: {
                     'completed': 'Проект завершен',
                     'pending': 'В ожидании',
@@ -564,6 +558,7 @@ import {reactive, ref} from "vue";
                     })
                     .then(response => {
                         this.currentMessage.message = null;
+                        this.currentMessage.file = null;
 
                         $('#chat-upload').val(null)
                         $(document).find('.btn--send-message').removeClass('btn-loading');
@@ -767,9 +762,6 @@ import {reactive, ref} from "vue";
                     title: 'Начать работу',
                     action: 'start'
                 }
-            },
-            getStatusColor(){
-                return this.statusColors[this.currentChat.status] || ''
             },
             getStatusName(){
                 return this.statusNames[this.currentChat.status] || ''

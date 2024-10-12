@@ -601,6 +601,7 @@ input[type='range']::-webkit-slider-runnable-track{
     z-index: 9999;
     max-height:420px;
     overflow-y: auto;
+    box-shadow:0px 0px 10px 6px rgba(0,0,0,.05);
 }
 .header__notif-items::-webkit-scrollbar {
     width: 12px;               /* ширина scrollbar */
@@ -1165,6 +1166,7 @@ input[type='range']::-webkit-slider-runnable-track{
     display: none;
     border-radius: 5px;
     z-index: 9999;
+    box-shadow:0px 0px 10px 6px rgba(0,0,0,.05);
 }
 .header__profile-settings>a{
     padding:10px 5px;
@@ -1210,6 +1212,7 @@ input[type='range']::-webkit-slider-runnable-track{
     gap: 5px;
     border-radius: 5px;
     z-index: 9999;
+    box-shadow:0px 0px 10px 6px rgba(0,0,0,.05);
 }
 .tarrif-header__item{
     padding:10px 5px;
@@ -2400,10 +2403,11 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .project-item__status {
     position: absolute;
-    right:10px;bottom: 20px;
+    right: 10px;
+    bottom: 20px;
     background-color: #fff;
     border-radius: 5px;
-    padding:5px;
+    padding: 5px;
     font-size: 14px;
     z-index: 1;
 }
@@ -3662,6 +3666,16 @@ input[type='range']::-webkit-slider-runnable-track{
     color:#fff;
     font-weight: 300;
 }
+.messages-chat__item-status.completed {
+    background-color: rgba(74, 163, 38, 1) !important;
+}
+.messages-chat__item-status.pending {
+    background-color: rgba(23, 108, 153, 1) !important;
+}
+.messages-chat__item-status.progress {
+    background-color: rgba(255, 150, 75, 1) !important;
+}
+
 .chat-file{
     display: flex;
     flex-direction: row;
@@ -3785,6 +3799,17 @@ input[type='range']::-webkit-slider-runnable-track{
 .messages-create__textarea:focus{
     box-shadow: 0px 0px 10px 6px rgba(254,94,0,.2);
     outline: none;
+}
+.messages-create__textarea::-webkit-scrollbar {
+    width: 12px;
+}
+.messages-create__textarea::-webkit-scrollbar-track {
+    background: #fff;
+}
+.messages-create__textarea::-webkit-scrollbar-thumb {
+    background-color: #7A7674;
+    border-radius: 20px;
+    border: 3px solid #fff;
 }
 .chat-img__w{
     position: relative;
