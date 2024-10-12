@@ -195,7 +195,9 @@
                                             @keyup.enter="sendMessage"
                                             @input="changeTextareaHeight"
                                             name="" placeholder="Введите текст" class="messages-create__textarea textarea"></textarea>
-                                        <div class="messages-create__create mobile">
+                                        <div
+                                            @click="sendMessage"
+                                            class="messages-create__create mobile">
                                             <img src="/img/send-message-icon.svg" alt="">
                                         </div>
                                     </div>
