@@ -7,6 +7,7 @@ use App\Models\SellerTariff;
 use App\Models\Tariff;
 use App\Models\TgPhone;
 use App\Services\TgService;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Services\PhoneService;
@@ -53,7 +54,7 @@ class AuthController extends Controller
             $is_agent = 1;
         }
 
-        $validated['status'] = $validated['role'] == 'seller' ? 1 :0;
+        $validated['status'] = $validated['role'] == 'seller' ? 1 : 0;
 
         $user = User::create([
             'name' => $validated['name'],
@@ -76,8 +77,8 @@ class AuthController extends Controller
                 'tariff_id' => $tariff->id,
                 'type' => $tariff->type,
                 'quantity' => $tariff->quantity,
-                'finish_date' => \Carbon\Carbon::now()->addDays($tariff->period),
-                'activation_date' => \Carbon\Carbon::now(),
+                'finish_date' => Carbon::now()->addDays($tariff->period),
+                'activation_date' => Carbon::now(),
             ]);
             $user->update(['status' => 1]);
         }
@@ -139,13 +140,14 @@ class AuthController extends Controller
         $validated = $validator->validated();
 
         $phone = PhoneService::format($validated['phone']);
-        $tgPhone = TgPhone::where([['phone', '=',  $phone]])->first();
+        $tgPhone = TgPhone::where([['phone', '=', $phone]])->first();
         if (!$tgPhone) {
             return response()->json('unconfirmed', 401);
         }
 
         return response()->json('success', 200);
     }
+
     public function authenticate()
     {
         $validated = request()->validate([
@@ -159,7 +161,7 @@ class AuthController extends Controller
             'password' => $validated['password'],
         ];
 
-        if (!User::where('phone',  $phone)->first()) {
+        if (!User::where('phone', $phone)->first()) {
             return response()->json(['errors' => [
                 'phone' => 'Пользователь с указанным номером не найден'
             ]])->setStatusCode(400);
@@ -205,7 +207,7 @@ class AuthController extends Controller
         $validated = $validator->validated();
 
         $phone = PhoneService::format($validated['phone']);
-        $tg_phone = TgPhone::where([['phone', '=',  $phone]])->first();
+        $tg_phone = TgPhone::where([['phone', '=', $phone]])->first();
         if (!$tg_phone) {
             return response()->json('error', 401);
         }

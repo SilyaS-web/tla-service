@@ -23,12 +23,13 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function show(User $user) {
+     public function show(User $user)
+    {
         $data = [
             'user' => new UserResource($user),
         ];
 
-        return  response()->json($data)->setStatusCode(200);
+        return response()->json($data)->setStatusCode(200);
     }
 
     public function ban(User $user)
@@ -189,7 +190,8 @@ class UserController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function messages(User $user, Work $work, Request $request) {
+    public function messages(User $user, Work $work, Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'order_by' => 'string|nullable'
         ]);
@@ -215,7 +217,8 @@ class UserController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function notifications(User $user, Request $request) {
+    public function notifications(User $user, Request $request)
+    {
         $validator = Validator::make($request->all(), [
             'order_by' => 'string|nullable',
             'viewed' => 'boolean|nullable',
@@ -251,7 +254,8 @@ class UserController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function viewNotification(User $user, Notification $notification = null) {
+    public function viewNotification(User $user, Notification $notification = null)
+    {
         if ($notification) {
             $notification->viewed_at = date('Y-m-d H:i');
             $notification->save();
@@ -336,7 +340,8 @@ class UserController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function sendFeedback() {
+    public function sendFeedback()
+    {
         $validator = Validator::make(request()->all(), [
             'phone' => 'string|required',
             'name' => 'string|required',
@@ -348,7 +353,7 @@ class UserController extends Controller
         }
 
         $validated = $validator->validated();
-        $message_text = "Форма обратной связи\n\nИмя: " . $validated['name'] ."\nТелефон: " . $validated['phone'] ."\nСообщение: " . $validated['comment'];
+        $message_text = "Форма обратной связи\n\nИмя: " . $validated['name'] . "\nТелефон: " . $validated['phone'] . "\nСообщение: " . $validated['comment'];
         $result = TgService::sendForm($message_text);
         return response()->json()->setStatusCode(200);
     }
