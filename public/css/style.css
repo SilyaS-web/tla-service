@@ -3599,7 +3599,7 @@ input[type='range']::-webkit-slider-runnable-track{
     flex-direction: column;
     flex: 1 1 150px;
     padding:10px;
-    border-radius: 10px 10px 0 0;
+    border-radius: 10px;
     border: 1px solid rgba(0, 0, 0, .05);
     gap: 20px;
     overflow: scroll;
@@ -3789,7 +3789,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .messages-create__textarea {
     margin-bottom: 20px;
-    border-radius: 0 0 10px 10px;
+    border-radius: 10px;
     height: auto;
     min-height:60px;
     max-height:160px;
