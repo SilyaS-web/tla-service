@@ -189,11 +189,16 @@
                                             <img src="/img/close-icon.svg" alt="">
                                         </div>
                                     </div>
-                                    <textarea
-                                        v-model="currentMessage.message"
-                                        @keyup.enter="sendMessage"
-                                        @input="changeTextareaHeight"
-                                        name="" placeholder="Введите текст" class="messages-create__textarea textarea"></textarea>
+                                    <div class="messages-create__row">
+                                        <textarea
+                                            v-model="currentMessage.message"
+                                            @keyup.enter="sendMessage"
+                                            @input="changeTextareaHeight"
+                                            name="" placeholder="Введите текст" class="messages-create__textarea textarea"></textarea>
+                                        <div class="messages-create__create mobile">
+                                            <img src="/img/send-message-icon.svg" alt="">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="chat__btns" style="display: flex; flex-wrap: wrap; gap:8px;">
                                     <button

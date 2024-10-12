@@ -3811,6 +3811,26 @@ input[type='range']::-webkit-slider-runnable-track{
     border-radius: 20px;
     border: 3px solid #fff;
 }
+.messages-create__row{
+    display: flex;
+    gap: 8px;
+}
+.messages-create__create{
+    display: none;
+    border-radius: 10px;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--primary);
+    max-width: 45px;
+    height: 45px;
+    width: 100%;
+}
+.messages-create__create img{
+    width:22px;
+    height: 22px;
+    transform: rotate();
+    filter: invert(100%) sepia(0%) saturate(2%) hue-rotate(310deg) brightness(107%) contrast(101%)
+}
 .chat-img__w{
     position: relative;
     padding-top:95%;
@@ -5665,6 +5685,13 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .messages-create__textarea{
         margin-bottom: 10px;
+    }
+
+    .chat__btns{
+        display:none!important;
+    }
+    .messages-create__create.mobile{
+        display:flex;
     }
 }
 @media (orientation: landscape) and (max-width: 675px) {
