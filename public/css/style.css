@@ -5656,6 +5656,16 @@ input[type='range']::-webkit-slider-runnable-track{
         gap: 4px;
         text-wrap: nowrap;
     }
+
+    .profile__container{
+        margin:30px auto;
+    }
+    .title{
+        font-size: 30px;
+    }
+    .messages-create__textarea{
+        margin-bottom: 10px;
+    }
 }
 @media (orientation: landscape) and (max-width: 675px) {
     .view-project__props-col .dashboard__placeholder{
