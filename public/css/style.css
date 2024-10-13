@@ -2367,7 +2367,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .project-item__status {
     position: absolute;
-    right:10px;bottom: 20px;
+    right:10px;bottom: 10px;
     background-color: #fff;
     border-radius: 5px;
     padding:5px;
@@ -5656,6 +5656,7 @@ input[type='range']::-webkit-slider-runnable-track{
 
     .btn{
         padding:15px 20px;
+        font-size: 14px;
     }
 
     .messages-chat__item-date{
@@ -5748,6 +5749,7 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .project-item__img{
         padding-top: 180px;
+        margin-bottom: 0;
     }
 }
 @media(max-width:447px){
