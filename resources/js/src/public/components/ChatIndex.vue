@@ -54,7 +54,7 @@
                             </div>
                             <div class="chat__header">
                                 <div
-                                    @click="isMessagesMobile = false; isChatsMobile = true;"
+                                    @click="backToChats"
                                     class="chat__back">
                                     <img src="img/arrow-alt.svg" alt="">
                                 </div>
@@ -83,11 +83,17 @@
                                     <img src="img/dots-icon.svg" alt="">
                                     <div class="chat__opts-items">
                                         <div
+                                            v-if="currentChat"
+                                            class="chat__opts-item chat__opts-item--partner">
+                                            <span>{{ (currentChat.partner_user.role == 'blogger' ? 'Блогер' : 'Селлер') }}: {{ currentChat.partner_user.name }}</span>
+                                        </div>
+                                        <div
                                             v-if="currentChat && currentChat.btnData && currentChat.btnData.action"
                                             @click="btnAction(currentChat.btnData.action)"
                                             href=""
                                             :class="'chat__opts-item ' + (currentChat.btnData.action ? '' : 'chat__opts-item--disabled')">{{ currentChat.btnData.title }}</div>
                                         <div
+                                            v-if="currentChat"
                                             @click="btnAction('deny')"
                                             class="chat__opts-item chat__opts-item--cancel">
                                             Отменить работу
@@ -404,6 +410,20 @@ import {reactive, ref} from "vue";
                     $('.chat__chat-items').animate({
                         scrollTop: (childOffset - wrapOffset + scrolledValue) - 20
                     }, 1000);
+                }
+            }
+
+            if(this.isTablet){
+                if(this.isChatsMobile && this.currentChat && this.backBtnPressed){
+                    var childOffset = ($(document).find(`.item-chat[data-id="${this.currentChat.id}"]`) ? $(document).find(`.item-chat[data-id="${this.currentChat.id}"]`).offset().top : 0),
+                        wrapOffset = $(document).find('#chat .chat__chat-items').offset().top,
+                        scrolledValue = $(document).find('#chat .chat__chat-items').scrollTop();
+
+                    $('.chat__chat-items').animate({
+                        scrollTop: (childOffset - wrapOffset + scrolledValue) - 20
+                    }, 0);
+
+                    this.backBtnPressed = false;
                 }
             }
 
@@ -776,6 +796,11 @@ import {reactive, ref} from "vue";
             changeTextareaHeight(){
                 $('.messages-create__textarea').css('height',  'auto')
                 $('.messages-create__textarea').css('height',  $('.messages-create__textarea')[0].scrollHeight + 'px')
+            },
+            backToChats(){
+                this.isMessagesMobile = false;
+                this.isChatsMobile = true;
+                this.backBtnPressed = true;
             }
         }
     }

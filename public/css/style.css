@@ -3491,6 +3491,13 @@ input[type='range']::-webkit-slider-runnable-track{
     font-weight: 500;
     cursor: pointer;
     width:fit-content;
+    background-color: rgba(254,94,0, .08);
+}
+.chat__opts-item--partner{
+    font-size: 14px;
+    margin-bottom: 3px;
+    font-weight: 600;
+    background-color:transparent;
 }
 .chat__opts-item--disabled{
     color:rgba(0,0,0,.4);
@@ -5692,6 +5699,14 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .messages-create__create.mobile{
         display:flex;
+    }
+
+    .chat__chat-items{
+        height:630px;
+    }
+
+    .notification{
+        bottom: 67px;
     }
 }
 @media (orientation: landscape) and (max-width: 675px) {
