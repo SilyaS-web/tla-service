@@ -63,7 +63,7 @@ const Blogger = {
                     message: 'Невозможно обновить данные.'
                 });
 
-                resolve(response.data)
+                reject(response.data.errors)
             })
         })
     },

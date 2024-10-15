@@ -22443,13 +22443,22 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       }
       var image = $('.tab-content__profile-img-upload').find('input[type="file"]')[0];
       if (image && image.files[0]) formdata.append('image', image.files[0]);
-      axios__WEBPACK_IMPORTED_MODULE_4___default()({
-        method: 'post',
-        url: '/api/bloggers',
-        data: formdata
-      }).then(function (data) {
-        _this2.$router.replace('/moderation');
-      })["catch"](function () {});
+      this.Blogger.update(formdata).then(function (data) {
+        return _this2.$router.replace('/moderation');
+      }, function (err) {
+        _this2.errors = err;
+      });
+
+      // axios({
+      //     method: 'post',
+      //     url: '/api/bloggers',
+      //     data: formdata
+      // })
+      // .then((data) => {
+      //     this.$router.replace('/moderation')
+      // })
+      // .catch(() =>{
+      // })
     }
   }
 });
@@ -26041,7 +26050,7 @@ var Blogger = {
           title: 'Внимание!',
           message: 'Невозможно обновить данные.'
         });
-        resolve(response.data);
+        reject(response.data.errors);
       });
     });
   },

@@ -209,16 +209,21 @@
                 if(image && image.files[0])
                     formdata.append('image', image.files[0]);
 
-                axios({
-                    method: 'post',
-                    url: '/api/bloggers',
-                    data: formdata
-                })
-                .then((data) => {
-                    this.$router.replace('/moderation')
-                })
-                .catch(() =>{
-                })
+                this.Blogger.update(formdata).then(
+                    data => this.$router.replace('/moderation'),
+                    err => {this.errors = err}
+                )
+
+                // axios({
+                //     method: 'post',
+                //     url: '/api/bloggers',
+                //     data: formdata
+                // })
+                // .then((data) => {
+                //     this.$router.replace('/moderation')
+                // })
+                // .catch(() =>{
+                // })
             }
         }
     }
