@@ -72,7 +72,7 @@
                                     :id = "field.prefix + '_link'"
                                     :name = "field.prefix + '-link'"
                                     v-model = "field.link"
-                                    :value="blogger.platforms.find(p => p.title == field.key)"
+                                    :value="blogger && blogger.platforms.find(p => p.title == field.key)"
                                     type="text"
                                     class="input" style="width:100%; max-width:100%">
                             </div>
