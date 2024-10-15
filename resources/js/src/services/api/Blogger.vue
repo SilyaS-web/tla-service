@@ -47,11 +47,11 @@ const Blogger = {
         })
     },
 
-    update: (data) => {
+    update: (id, data) => {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'post',
-                url: '/api/bloggers/' + data.id + '/update/',
+                url: '/api/bloggers/' + id + '/update/',
                 data: data
             })
             .then((response) => {

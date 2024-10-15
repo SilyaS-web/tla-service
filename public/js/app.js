@@ -22443,7 +22443,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       }
       var image = $('.tab-content__profile-img-upload').find('input[type="file"]')[0];
       if (image && image.files[0]) formdata.append('image', image.files[0]);
-      this.Blogger.update(formdata).then(function (data) {
+      this.Blogger.update(this.blogger.id, formdata).then(function (data) {
         return _this2.$router.replace('/moderation');
       }, function (err) {
         _this2.errors = err;
@@ -26037,11 +26037,11 @@ var Blogger = {
       });
     });
   },
-  update: function update(data) {
+  update: function update(id, data) {
     return new Promise(function (resolve, reject) {
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
         method: 'post',
-        url: '/api/bloggers/' + data.id + '/update/',
+        url: '/api/bloggers/' + id + '/update/',
         data: data
       }).then(function (response) {
         resolve(response.data);
