@@ -29066,7 +29066,7 @@ var _hoisted_32 = {
   }
 };
 var _hoisted_33 = ["for"];
-var _hoisted_34 = ["id", "name", "onUpdate:modelValue"];
+var _hoisted_34 = ["id", "name", "onUpdate:modelValue", "value"];
 var _hoisted_35 = {
   key: 0,
   "class": "error"
@@ -29157,6 +29157,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return field.link = $event;
       },
+      value: $data.blogger.platforms.find(function (p) {
+        return p.title == field.key;
+      }),
       type: "text",
       "class": "input",
       style: {
@@ -94534,7 +94537,6 @@ router.beforeEach( /*#__PURE__*/function () {
         case 0:
           tgToken = findGetParameter('token');
           isAuthenticated = localStorage.getItem('session_token');
-          console.log(tgToken);
           if (tgToken) {
             isAuthenticated = tgToken;
           }
@@ -94542,81 +94544,81 @@ router.beforeEach( /*#__PURE__*/function () {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + isAuthenticated;
           }
           if (!(!['Register', 'Login'].includes(to.name) && !isAuthenticated)) {
-            _context.next = 9;
+            _context.next = 8;
             break;
           }
           return _context.abrupt("return", {
             name: 'Login'
           });
-        case 9:
+        case 8:
           if (!(!to.name && isAuthenticated)) {
-            _context.next = 33;
+            _context.next = 32;
             break;
           }
           if (tgToken) {
-            _context.next = 16;
+            _context.next = 15;
             break;
           }
-          _context.next = 13;
+          _context.next = 12;
           return _src_services_api_User_vue__WEBPACK_IMPORTED_MODULE_12__["default"].getUser();
-        case 13:
+        case 12:
           _context.t0 = _context.sent;
-          _context.next = 19;
-          break;
-        case 16:
           _context.next = 18;
+          break;
+        case 15:
+          _context.next = 17;
           return _src_services_api_User_vue__WEBPACK_IMPORTED_MODULE_12__["default"].getCurrentUser();
-        case 18:
+        case 17:
           _context.t0 = _context.sent;
-        case 19:
+        case 18:
           user = _context.t0;
           if (!(user.status == -1)) {
-            _context.next = 22;
+            _context.next = 21;
             break;
           }
           return _context.abrupt("return", {
             name: 'Banned'
           });
-        case 22:
+        case 21:
           if (!(user.role == 'blogger')) {
-            _context.next = 29;
+            _context.next = 28;
             break;
           }
           if (user.is_blogger_on_moderation) {
-            _context.next = 25;
+            _context.next = 24;
             break;
           }
           return _context.abrupt("return", {
             name: 'BloggerRegister'
           });
-        case 25:
+        case 24:
           if (!(user.status == 0)) {
-            _context.next = 27;
+            _context.next = 26;
             break;
           }
           return _context.abrupt("return", {
             name: 'Moderation'
           });
-        case 27:
-          _context.next = 30;
+        case 26:
+          _context.next = 29;
           break;
-        case 29:
+        case 28:
           if (user.role == 'admin') {
             if (!window.location.href.toString().includes('/profile/admin')) window.location.href = '/profile/admin';
           }
-        case 30:
+        case 29:
           return _context.abrupt("return", {
             name: 'Profile'
           });
-        case 33:
+        case 32:
           if (to.matched.length) {
-            _context.next = 35;
+            _context.next = 34;
             break;
           }
           return _context.abrupt("return", {
             name: '404'
           });
-        case 35:
+        case 34:
         case "end":
           return _context.stop();
       }
