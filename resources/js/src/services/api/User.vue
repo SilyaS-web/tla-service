@@ -36,6 +36,18 @@
                 })
             })
         },
+        getCurrentUser(){
+            return new Promise((resolve, reject) => {
+                axios({
+                    method:'get',
+                    url: '/api/users/current'
+                })
+                .then((response) => {
+                    localStorage.setItem('user', JSON.stringify(response.data.user))
+                    resolve(response.data.user)
+                })
+            })
+        },
         auth: (data) => {
             return new Promise((resolve, reject) => {
                 axios({

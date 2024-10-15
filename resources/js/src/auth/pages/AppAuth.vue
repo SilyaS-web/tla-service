@@ -24,7 +24,7 @@
                     <button class="btn btn-primary" type="submit" v-on:click="login">
                         Войти
                     </button>
-                    <a href="https://t.me/adswap_bot" class="btn btn-white">
+                    <a href="https://t.me/adswap_dev_bot" class="btn btn-white">
                         Нет аккаунта? Зарегистрируйтесь
                     </a>
                 </div>
@@ -99,6 +99,7 @@
             }
         },
         created(){
+
         },
         methods:{
             login(){
