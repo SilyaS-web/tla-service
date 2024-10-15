@@ -52,7 +52,7 @@ router.beforeEach(async (to, from) => {
     if(isAuthenticated){
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
     }
-    console.log(to)
+
     if (!['Register', 'Login'].includes(to.name) && !isAuthenticated) {
         return {
             name: 'Login'
@@ -68,7 +68,7 @@ router.beforeEach(async (to, from) => {
         }
 
         if(user.role == 'blogger'){
-            if(!user.blogger_id){
+            if(!user.is_blogger_on_moderation){
                 return {
                     name: 'BloggerRegister'
                 }
