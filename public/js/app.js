@@ -26041,7 +26041,7 @@ var Blogger = {
     return new Promise(function (resolve, reject) {
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
         method: 'post',
-        url: '/api/bloggers/' + id + '/update/',
+        url: '/api/bloggers/' + id + '/',
         data: data
       }).then(function (response) {
         resolve(response.data);

@@ -51,7 +51,7 @@ const Blogger = {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'post',
-                url: '/api/bloggers/' + id + '/update/',
+                url: '/api/bloggers/' + id + '/',
                 data: data
             })
             .then((response) => {
