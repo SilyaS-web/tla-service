@@ -82,10 +82,20 @@
                                     :class="'chat__opts ' + (isChatOptsOpen ? 'active' : '')">
                                     <img src="img/dots-icon.svg" alt="">
                                     <div class="chat__opts-items">
-                                        <div
-                                            v-if="currentChat"
-                                            class="chat__opts-item chat__opts-item--partner">
-                                            <span>{{ (currentChat.partner_user.role == 'blogger' ? 'Блогер' : 'Селлер') }}: {{ currentChat.partner_user.name }}</span>
+                                        <div class="chat__opts-partner">
+                                            <div
+                                                v-if="currentChat"
+                                                class="chat__opts-partner__row">
+                                                <div
+                                                    :style="'background-image:url(' + ((currentChat.partner_user && currentChat.partner_user.image) ? currentChat.partner_user.image : '/img/profile-icon.svg') + ')'"
+                                                    class="chat__opts-partner__img">
+                                                </div>
+                                                <div
+                                                    class="chat__opts-partner__col">
+                                                    <span class = "chat__opts-partner__role">{{ currentChat.partner_user.name }}</span>
+                                                    <span class = "chat__opts-partner__name">{{ (currentChat.partner_user.role == 'blogger' ? 'Блогер' : 'Селлер') }}</span>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div
                                             v-if="currentChat && currentChat.btnData && currentChat.btnData.action"
