@@ -13,7 +13,7 @@ class BloggerFielsNotRequired extends Migration
      */
     public function up()
     {
-        Schema::table('users', function($table) {
+        Schema::table('bloggers', function($table) {
             $table->string('name')->nullable()->change();
             $table->string('sex')->nullable()->change();
         });
