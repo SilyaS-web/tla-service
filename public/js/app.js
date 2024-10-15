@@ -26486,6 +26486,17 @@ var User = {
       });
     });
   },
+  getCurrentUser: function getCurrentUser() {
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default()({
+        method: 'get',
+        url: '/api/users/current'
+      }).then(function (response) {
+        localStorage.setItem('user', JSON.stringify(response.data.user));
+        resolve(response.data.user);
+      });
+    });
+  },
   auth: function auth(data) {
     return new Promise(function (resolve, reject) {
       axios__WEBPACK_IMPORTED_MODULE_0___default()({
@@ -94517,78 +94528,94 @@ var router = (0,vue_router__WEBPACK_IMPORTED_MODULE_13__.createRouter)({
 });
 router.beforeEach( /*#__PURE__*/function () {
   var _ref = _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee(to, from) {
-    var isAuthenticated, user;
+    var tgToken, isAuthenticated, user;
     return _regeneratorRuntime().wrap(function _callee$(_context) {
       while (1) switch (_context.prev = _context.next) {
         case 0:
-          console.log(to);
+          tgToken = findGetParameter('token');
           isAuthenticated = localStorage.getItem('session_token');
+          if (tgToken) {
+            isAuthenticated = tgToken;
+          }
           if (isAuthenticated) {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
           }
           if (!(!['Register', 'Login'].includes(to.name) && !isAuthenticated)) {
-            _context.next = 7;
+            _context.next = 8;
             break;
           }
           return _context.abrupt("return", {
             name: 'Login'
           });
-        case 7:
+        case 8:
           if (!(!to.name && isAuthenticated)) {
-            _context.next = 24;
+            _context.next = 32;
             break;
           }
-          _context.next = 10;
+          if (tgToken) {
+            _context.next = 15;
+            break;
+          }
+          _context.next = 12;
           return _src_services_api_User_vue__WEBPACK_IMPORTED_MODULE_12__["default"].getUser();
-        case 10:
-          user = _context.sent;
+        case 12:
+          _context.t0 = _context.sent;
+          _context.next = 18;
+          break;
+        case 15:
+          _context.next = 17;
+          return _src_services_api_User_vue__WEBPACK_IMPORTED_MODULE_12__["default"].getCurrentUser();
+        case 17:
+          _context.t0 = _context.sent;
+        case 18:
+          user = _context.t0;
           if (!(user.status == -1)) {
-            _context.next = 13;
+            _context.next = 21;
             break;
           }
           return _context.abrupt("return", {
             name: 'Banned'
           });
-        case 13:
+        case 21:
           if (!(user.role == 'blogger')) {
-            _context.next = 20;
+            _context.next = 28;
             break;
           }
           if (user.is_blogger_on_moderation) {
-            _context.next = 16;
+            _context.next = 24;
             break;
           }
           return _context.abrupt("return", {
             name: 'BloggerRegister'
           });
-        case 16:
+        case 24:
           if (!(user.status == 0)) {
-            _context.next = 18;
+            _context.next = 26;
             break;
           }
           return _context.abrupt("return", {
             name: 'Moderation'
           });
-        case 18:
-          _context.next = 21;
+        case 26:
+          _context.next = 29;
           break;
-        case 20:
+        case 28:
           if (user.role == 'admin') {
             if (!window.location.href.toString().includes('/profile/admin')) window.location.href = '/profile/admin';
           }
-        case 21:
+        case 29:
           return _context.abrupt("return", {
             name: 'Profile'
           });
-        case 24:
+        case 32:
           if (to.matched.length) {
-            _context.next = 26;
+            _context.next = 34;
             break;
           }
           return _context.abrupt("return", {
             name: '404'
           });
-        case 26:
+        case 34:
         case "end":
           return _context.stop();
       }
@@ -94598,6 +94625,15 @@ router.beforeEach( /*#__PURE__*/function () {
     return _ref.apply(this, arguments);
   };
 }());
+function findGetParameter(parameterName) {
+  var result = null,
+    tmp = [];
+  location.search.substr(1).split("&").forEach(function (item) {
+    tmp = item.split("=");
+    if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+  });
+  return result;
+}
 localStorage.setItem('notifications_interval_id', '');
 localStorage.setItem('chats_interval_id', '');
 localStorage.setItem('chats_messages_interval_id', '');
