@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Blogger;
+use App\Models\BloggerPlatform;
 use App\Models\Seller;
 use App\Models\SellerTariff;
 use App\Models\Tariff;
 use App\Models\TgPhone;
 use App\Services\TgService;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Services\PhoneService;
@@ -29,7 +32,8 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email',
             'phone' => 'required|unique:users,phone',
             'role' => ['required', Rule::in(User::TYPES)],
-            'password' => 'required|min:8'
+            'password' => 'required|min:8',
+            'platforms' => 'array',
         ]);
 
         if ($validator->fails()) {
@@ -81,6 +85,8 @@ class AuthController extends Controller
                 'activation_date' => Carbon::now(),
             ]);
             $user->update(['status' => 1]);
+        } else if ($validated['role'] == 'blogger') {
+            $this->storeBlogger($user, $validated['platforms']);
         }
 
         if (session()->has('ref_code')) {
@@ -109,10 +115,27 @@ class AuthController extends Controller
         return response()->json(['message' => 'Неудалось авторизоваться'])->setStatusCode(400);
     }
 
-    public function setTGPhone()
+    public function storeBlogger(User $user, array $platforms)
+    {
+        $blogger = Blogger::create([
+            'user_id' => $user->id,
+        ]);
+
+        foreach ($platforms as $blogger_platform) {
+            if (!empty($blogger_platform['link'])) {
+                BloggerPlatform::create([
+                    'blogger_id' => $blogger->id,
+                    'platform_id' => $blogger_platform['platform_id'],
+                    'link' => $blogger_platform['link'],
+                ]);
+            }
+        }
+    }
+
+    public function setTGPhone(): JsonResponse
     {
         $validator = Validator::make(request()->all(), [
-            'phone' => 'required|numeric|unique:tg_phones,phone',
+            'phone' => 'required|numeric',
             'chat_id' => 'required|numeric',
         ]);
 
@@ -122,8 +145,12 @@ class AuthController extends Controller
 
         $validated = $validator->validated();
         $validated['phone'] = PhoneService::format($validated['phone']);
-        TgPhone::create($validated);
 
+        if (TgPhone::where('phone', $validated['phone'])->exists()) {
+            return response()->json(['message' => 'Пользователь с таким номером уже существует'], 400);
+        }
+
+        TgPhone::create($validated);
         return response()->json('success', 200);
     }
 

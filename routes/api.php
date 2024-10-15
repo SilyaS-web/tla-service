@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [AuthController::class, 'authenticate']);
 Route::get('/users/reset-password', [AuthController::class, 'resetPassword']);
 Route::get('/users/phone-confirmed', [AuthController::class, 'isTgConfirmed']);
+Route::post('/phones', [AuthController::class, 'setTGPhone']);
 Route::get('/platforms', [PlatformController::class, 'index']);
 Route::get('/themes', [ThemeController::class, 'index']);
 Route::post('/users', [AuthController::class, 'store']);
