@@ -22443,10 +22443,11 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       }
       var image = $('.tab-content__profile-img-upload').find('input[type="file"]')[0];
       if (image && image.files[0]) formdata.append('image', image.files[0]);
+      for (var _k in this.user) formdata.append(_k, this.user[_k]);
       this.Blogger.update(this.blogger.id, formdata).then(function (data) {
         return _this2.$router.replace('/moderation');
       }, function (err) {
-        _this2.errors = err;
+        return _this2.errors = err;
       });
 
       // axios({

@@ -209,9 +209,12 @@
                 if(image && image.files[0])
                     formdata.append('image', image.files[0]);
 
+                for(let k in this.user)
+                    formdata.append(k, this.user[k]);
+
                 this.Blogger.update(this.blogger.id, formdata).then(
                     data => this.$router.replace('/moderation'),
-                    err => {this.errors = err}
+                    err => this.errors = err
                 )
 
                 // axios({
