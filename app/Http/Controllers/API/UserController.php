@@ -16,6 +16,7 @@ use App\Models\MessageFile;
 use App\Models\Notification;
 use App\Models\Project;
 use App\Models\Work;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
@@ -23,6 +24,15 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    public function currentUser()
+    {
+        $data = [
+            'user' => new UserResource(Auth::user()),
+        ];
+
+        return response()->json($data)->setStatusCode(200);
+    }
+
      public function show(User $user)
     {
         $data = [

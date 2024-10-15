@@ -43,6 +43,7 @@ Route::prefix('payment')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/users/{user}', [UserController::class, 'delete']);
+    Route::get('/users/current', [UserController::class, 'currentUser']);
     Route::get('/users/{user}', [UserController::class, 'show']);
     Route::get('/users/{user}/dashboard', [DashboardController::class, 'index']);
     Route::get('/users/{user}/ban', [UserController::class, 'ban']);
