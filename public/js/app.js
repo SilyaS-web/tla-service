@@ -94534,6 +94534,7 @@ router.beforeEach( /*#__PURE__*/function () {
         case 0:
           tgToken = findGetParameter('token');
           isAuthenticated = localStorage.getItem('session_token');
+          console.log(tgToken);
           if (tgToken) {
             isAuthenticated = tgToken;
           }
@@ -94541,81 +94542,81 @@ router.beforeEach( /*#__PURE__*/function () {
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
           }
           if (!(!['Register', 'Login'].includes(to.name) && !isAuthenticated)) {
-            _context.next = 8;
+            _context.next = 9;
             break;
           }
           return _context.abrupt("return", {
             name: 'Login'
           });
-        case 8:
+        case 9:
           if (!(!to.name && isAuthenticated)) {
-            _context.next = 32;
+            _context.next = 33;
             break;
           }
           if (tgToken) {
-            _context.next = 15;
+            _context.next = 16;
             break;
           }
-          _context.next = 12;
+          _context.next = 13;
           return _src_services_api_User_vue__WEBPACK_IMPORTED_MODULE_12__["default"].getUser();
-        case 12:
+        case 13:
           _context.t0 = _context.sent;
-          _context.next = 18;
+          _context.next = 19;
           break;
-        case 15:
-          _context.next = 17;
+        case 16:
+          _context.next = 18;
           return _src_services_api_User_vue__WEBPACK_IMPORTED_MODULE_12__["default"].getCurrentUser();
-        case 17:
-          _context.t0 = _context.sent;
         case 18:
+          _context.t0 = _context.sent;
+        case 19:
           user = _context.t0;
           if (!(user.status == -1)) {
-            _context.next = 21;
+            _context.next = 22;
             break;
           }
           return _context.abrupt("return", {
             name: 'Banned'
           });
-        case 21:
+        case 22:
           if (!(user.role == 'blogger')) {
-            _context.next = 28;
+            _context.next = 29;
             break;
           }
           if (user.is_blogger_on_moderation) {
-            _context.next = 24;
+            _context.next = 25;
             break;
           }
           return _context.abrupt("return", {
             name: 'BloggerRegister'
           });
-        case 24:
+        case 25:
           if (!(user.status == 0)) {
-            _context.next = 26;
+            _context.next = 27;
             break;
           }
           return _context.abrupt("return", {
             name: 'Moderation'
           });
-        case 26:
-          _context.next = 29;
+        case 27:
+          _context.next = 30;
           break;
-        case 28:
+        case 29:
           if (user.role == 'admin') {
             if (!window.location.href.toString().includes('/profile/admin')) window.location.href = '/profile/admin';
           }
-        case 29:
+        case 30:
           return _context.abrupt("return", {
             name: 'Profile'
           });
-        case 32:
+        case 33:
           if (to.matched.length) {
-            _context.next = 34;
+            _context.next = 35;
             break;
           }
           return _context.abrupt("return", {
             name: '404'
           });
-        case 34:
+        case 35:
         case "end":
           return _context.stop();
       }

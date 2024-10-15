@@ -49,7 +49,7 @@ const router = createRouter({
 router.beforeEach(async (to, from) => {
     const tgToken = findGetParameter('token');
     let isAuthenticated = localStorage.getItem('session_token');
-
+    console.log(tgToken)
     if(tgToken){
         isAuthenticated = tgToken;
     }
