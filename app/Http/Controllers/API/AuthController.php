@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Models\Blogger;
 use App\Models\BloggerPlatform;
+use App\Models\Platform;
 use App\Models\Seller;
 use App\Models\SellerTariff;
 use App\Models\Tariff;
@@ -125,7 +126,7 @@ class AuthController extends Controller
             if (!empty($blogger_platform['link'])) {
                 BloggerPlatform::create([
                     'blogger_id' => $blogger->id,
-                    'platform_id' => $blogger_platform['platform_id'],
+                    'platform_id' => Platform::where('title', $blogger_platform['name'])->first()->id,
                     'link' => $blogger_platform['link'],
                 ]);
             }
