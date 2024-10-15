@@ -94539,7 +94539,7 @@ router.beforeEach( /*#__PURE__*/function () {
             isAuthenticated = tgToken;
           }
           if (isAuthenticated) {
-            axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
+            axios.defaults.headers.common['Authorization'] = 'Bearer ' + isAuthenticated;
           }
           if (!(!['Register', 'Login'].includes(to.name) && !isAuthenticated)) {
             _context.next = 9;
