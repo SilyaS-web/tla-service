@@ -29159,9 +29159,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       "onUpdate:modelValue": function onUpdateModelValue($event) {
         return field.link = $event;
       },
-      value: $data.blogger && $data.blogger.platforms.find(function (p) {
+      value: $data.blogger && ($data.blogger.platforms.find(function (p) {
         return p.title == field.key;
-      }),
+      }) ? $data.blogger.platforms.find(function (p) {
+        return p.title == field.key;
+      }).link : ''),
       type: "text",
       "class": "input",
       style: {
