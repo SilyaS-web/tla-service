@@ -116,7 +116,9 @@
         data(){
             return {
                 user:ref({}),
-                blogger:ref({}),
+                blogger:ref({
+                    platforms: []
+                }),
                 errors: ref({}),
                 themes: ref({}),
                 countries: [

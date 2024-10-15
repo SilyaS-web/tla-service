@@ -22348,7 +22348,9 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
   data: function data() {
     return {
       user: (0,vue__WEBPACK_IMPORTED_MODULE_5__.ref)({}),
-      blogger: (0,vue__WEBPACK_IMPORTED_MODULE_5__.ref)({}),
+      blogger: (0,vue__WEBPACK_IMPORTED_MODULE_5__.ref)({
+        platforms: []
+      }),
       errors: (0,vue__WEBPACK_IMPORTED_MODULE_5__.ref)({}),
       themes: (0,vue__WEBPACK_IMPORTED_MODULE_5__.ref)({}),
       countries: [{
