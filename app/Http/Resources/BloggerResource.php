@@ -13,6 +13,7 @@ class BloggerResource extends JsonResource
      */
     public function toArray($request)
     {
+        $country = $this->country ?? null;
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -22,10 +23,7 @@ class BloggerResource extends JsonResource
             'gender_ratio' => $this->gender_ratio,
             'status' => $this->status,
             'city' => $this->city,
-            'country' => [
-                'name' => $this->country->name,
-                'id' => $this->country->id,
-            ] ?? null,
+            'country' => $country,
             'platforms' => BloggerPlatformResource::collection($this->platforms),
             'themes' => BloggerThemeResource::collection($this->themes),
             'user' => new UserResource($this->user),
