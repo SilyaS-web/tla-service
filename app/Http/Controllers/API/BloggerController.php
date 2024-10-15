@@ -291,7 +291,10 @@ class BloggerController extends Controller
             'old_password' => 'min:8|nullable',
             'password' => 'min:8|nullable',
             'country_id' => 'required|exists:countries,id',
+            'description' => 'string|nullable',
+            'sex' => 'required|string',
             'city' => 'required|string',
+            'themes' => 'array|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -334,6 +337,19 @@ class BloggerController extends Controller
 
         $blogger->country_id = $validated['country_id'];
         $blogger->city = $validated['city'];
+        $blogger->description = $validated['description'] ?? null;
+        $blogger->sex = $validated['sex'];
+
+        if (!empty($validated['themes'])) {
+            $blogger->themes()->delete();
+            foreach ($validated['themes'] as $theme_id) {
+                BloggerTheme::create([
+                    'blogger_id' => $blogger->id,
+                    'theme_id' => (int) $theme_id,
+                ]);
+            }
+        }
+
 
         $blogger->save();
 
