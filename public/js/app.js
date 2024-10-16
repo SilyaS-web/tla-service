@@ -28624,7 +28624,7 @@ var _hoisted_12 = {
   "class": "form-btns auth__form-btns"
 };
 var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-  href: "https://t.me/adswap_dev_bot",
+  href: "https://t.me/adswap_bot",
   "class": "btn btn-white"
 }, " Нет аккаунта? Зарегистрируйтесь ", -1 /* HOISTED */);
 var _hoisted_14 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
