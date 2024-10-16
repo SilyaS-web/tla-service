@@ -72,6 +72,7 @@
                                     :id = "field.prefix + '_link'"
                                     :name = "field.prefix + '-link'"
                                     v-model = "field.link"
+                                    :value="blogger && (blogger.platforms.find(p => p.title == field.key) ? blogger.platforms.find(p => p.title == field.key).link : '')"
                                     type="text"
                                     class="input" style="width:100%; max-width:100%">
                             </div>
@@ -115,7 +116,9 @@
         data(){
             return {
                 user:ref({}),
-                blogger:ref({}),
+                blogger:ref({
+                    platforms: []
+                }),
                 errors: ref({}),
                 themes: ref({}),
                 countries: [
@@ -206,16 +209,24 @@
                 if(image && image.files[0])
                     formdata.append('image', image.files[0]);
 
-                axios({
-                    method: 'post',
-                    url: '/api/bloggers',
-                    data: formdata
-                })
-                .then((data) => {
-                    this.$router.replace('/moderation')
-                })
-                .catch(() =>{
-                })
+                for(let k in this.user)
+                    formdata.append(k, this.user[k]);
+
+                this.Blogger.update(this.blogger.id, formdata).then(
+                    data => this.$router.replace('/moderation'),
+                    err => this.errors = err
+                )
+
+                // axios({
+                //     method: 'post',
+                //     url: '/api/bloggers',
+                //     data: formdata
+                // })
+                // .then((data) => {
+                //     this.$router.replace('/moderation')
+                // })
+                // .catch(() =>{
+                // })
             }
         }
     }

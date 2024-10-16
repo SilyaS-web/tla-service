@@ -47,11 +47,11 @@ const Blogger = {
         })
     },
 
-    update: (data) => {
+    update: (id, data) => {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'post',
-                url: '/api/bloggers/' + data.id + '/update/',
+                url: '/api/bloggers/' + id + '/',
                 data: data
             })
             .then((response) => {
@@ -63,7 +63,7 @@ const Blogger = {
                     message: 'Невозможно обновить данные.'
                 });
 
-                resolve(response.data)
+                reject(response.data.errors)
             })
         })
     },
