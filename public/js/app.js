@@ -94585,7 +94585,7 @@ router.beforeEach( /*#__PURE__*/function () {
             _context.next = 29;
             break;
           }
-          if (user.is_blogger_on_moderation) {
+          if (!user.is_blogger_on_moderation) {
             _context.next = 25;
             break;
           }
