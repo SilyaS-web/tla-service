@@ -24,11 +24,9 @@
                     <button class="btn btn-primary" type="submit" v-on:click="login">
                         Войти
                     </button>
-                    <router-link :to="{name: 'Register'}">
-                        <button class="btn btn-white"  style="cursor: pointer">
-                            Нет аккаунта? Зарегистрируйтесь
-                        </button>
-                    </router-link>
+                    <a href="https://t.me/adswap_dev_bot" class="btn btn-white">
+                        Нет аккаунта? Зарегистрируйтесь
+                    </a>
                 </div>
                 <p class="form-addit">Авторизуясь, вы даёте на это согласие и принимаете условия <a href="https://adswap.ru/privacy" target="_blank">Политики конфиденциальности.</a> </p>
             </div>
@@ -101,6 +99,7 @@
             }
         },
         created(){
+
         },
         methods:{
             login(){

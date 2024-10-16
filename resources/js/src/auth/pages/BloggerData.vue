@@ -103,7 +103,9 @@
 <script>
     import InputFile from "../../ui/forms/InputFile";
 
+    import Blogger from "../../services/api/Blogger";
     import Themes from "../../services/api/Themes";
+    import User from "../../services/api/User";
 
     import axios from 'axios';
     import {ref} from "vue";
@@ -112,8 +114,9 @@
         components:{InputFile},
         data(){
             return {
-                blogger:{},
-                errors: {},
+                user:ref({}),
+                blogger:ref({}),
+                errors: ref({}),
                 themes: ref({}),
                 countries: [
                     {
@@ -155,11 +158,21 @@
                         active: false
                     },
                 ]),
-                Themes
+                Themes, Blogger, User
             }
         },
         async mounted() {
+            this.user = this.User.getCurrent();
             this.themes = await this.Themes.getList();
+
+            if(this.user.blogger_id) {
+                this.blogger = await this.Blogger.getItem(this.user.blogger_id);
+
+                // for (let k in this.platformFields){
+                //     var platform =
+                //     if(this.platformFields[k].platform_id)
+                // }
+            }
         },
         methods: {
             chooseTheme(e){

@@ -47,19 +47,24 @@ const router = createRouter({
 })
 
 router.beforeEach(async (to, from) => {
-    const isAuthenticated = localStorage.getItem('session_token');
+    const tgToken = findGetParameter('token');
+    let isAuthenticated = localStorage.getItem('session_token');
+    console.log(tgToken)
+    if(tgToken){
+        isAuthenticated = tgToken;
+    }
 
     if(isAuthenticated){
-        axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
+        axios.defaults.headers.common['Authorization'] = 'Bearer ' + isAuthenticated;
     }
-    console.log(to)
+
     if (!['Register', 'Login'].includes(to.name) && !isAuthenticated) {
         return {
             name: 'Login'
         }
     }
     else if(!to.name && isAuthenticated){
-        var user = await User.getUser();
+        var user = !tgToken ? await User.getUser() : await User.getCurrentUser();
 
         if(user.status == -1){
             return {
@@ -68,7 +73,7 @@ router.beforeEach(async (to, from) => {
         }
 
         if(user.role == 'blogger'){
-            if(!user.blogger_id){
+            if(!user.is_blogger_on_moderation){
                 return {
                     name: 'BloggerRegister'
                 }
@@ -96,6 +101,20 @@ router.beforeEach(async (to, from) => {
         }
     }
 })
+
+function findGetParameter(parameterName) {
+    var result = null,
+        tmp = [];
+
+    location.search
+        .substr(1)
+        .split("&")
+        .forEach(function (item) {
+            tmp = item.split("=");
+            if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+        });
+    return result;
+}
 
 localStorage.setItem('notifications_interval_id', '')
 localStorage.setItem('chats_interval_id', '')

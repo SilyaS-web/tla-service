@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [AuthController::class, 'authenticate']);
 Route::get('/users/reset-password', [AuthController::class, 'resetPassword']);
 Route::get('/users/phone-confirmed', [AuthController::class, 'isTgConfirmed']);
+Route::post('/phones', [AuthController::class, 'setTGPhone']);
 Route::get('/platforms', [PlatformController::class, 'index']);
 Route::get('/themes', [ThemeController::class, 'index']);
 Route::post('/users', [AuthController::class, 'store']);
@@ -42,6 +43,7 @@ Route::prefix('payment')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/users/{user}', [UserController::class, 'delete']);
+    Route::get('/users/current', [UserController::class, 'currentUser']);
     Route::get('/users/{user}', [UserController::class, 'show']);
     Route::get('/users/{user}/dashboard', [DashboardController::class, 'index']);
     Route::get('/users/{user}/ban', [UserController::class, 'ban']);

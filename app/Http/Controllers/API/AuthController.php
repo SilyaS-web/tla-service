@@ -2,11 +2,16 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Blogger;
+use App\Models\BloggerPlatform;
+use App\Models\Platform;
 use App\Models\Seller;
 use App\Models\SellerTariff;
 use App\Models\Tariff;
 use App\Models\TgPhone;
 use App\Services\TgService;
+use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Services\PhoneService;
@@ -28,7 +33,8 @@ class AuthController extends Controller
             'email' => 'required|email|unique:users,email',
             'phone' => 'required|unique:users,phone',
             'role' => ['required', Rule::in(User::TYPES)],
-            'password' => 'required|min:8'
+            'password' => 'required|min:8',
+            'platforms' => 'array',
         ]);
 
         if ($validator->fails()) {
@@ -53,7 +59,7 @@ class AuthController extends Controller
             $is_agent = 1;
         }
 
-        $validated['status'] = $validated['role'] == 'seller' ? 1 :0;
+        $validated['status'] = $validated['role'] == 'seller' ? 1 : 0;
 
         $user = User::create([
             'name' => $validated['name'],
@@ -76,10 +82,12 @@ class AuthController extends Controller
                 'tariff_id' => $tariff->id,
                 'type' => $tariff->type,
                 'quantity' => $tariff->quantity,
-                'finish_date' => \Carbon\Carbon::now()->addDays($tariff->period),
-                'activation_date' => \Carbon\Carbon::now(),
+                'finish_date' => Carbon::now()->addDays($tariff->period),
+                'activation_date' => Carbon::now(),
             ]);
             $user->update(['status' => 1]);
+        } else if ($validated['role'] == 'blogger') {
+            $this->storeBlogger($user, $validated['platforms']);
         }
 
         if (session()->has('ref_code')) {
@@ -108,10 +116,27 @@ class AuthController extends Controller
         return response()->json(['message' => 'Неудалось авторизоваться'])->setStatusCode(400);
     }
 
-    public function setTGPhone()
+    public function storeBlogger(User $user, array $platforms)
+    {
+        $blogger = Blogger::create([
+            'user_id' => $user->id,
+        ]);
+
+        foreach ($platforms as $blogger_platform) {
+            if (!empty($blogger_platform['link'])) {
+                BloggerPlatform::create([
+                    'blogger_id' => $blogger->id,
+                    'platform_id' => Platform::where('title', $blogger_platform['name'])->first()->id,
+                    'link' => $blogger_platform['link'],
+                ]);
+            }
+        }
+    }
+
+    public function setTGPhone(): JsonResponse
     {
         $validator = Validator::make(request()->all(), [
-            'phone' => 'required|numeric|unique:tg_phones,phone',
+            'phone' => 'required|numeric',
             'chat_id' => 'required|numeric',
         ]);
 
@@ -121,8 +146,12 @@ class AuthController extends Controller
 
         $validated = $validator->validated();
         $validated['phone'] = PhoneService::format($validated['phone']);
-        TgPhone::create($validated);
 
+        if (TgPhone::where('phone', $validated['phone'])->exists()) {
+            return response()->json(['message' => 'Пользователь с таким номером уже существует'], 400);
+        }
+
+        TgPhone::create($validated);
         return response()->json('success', 200);
     }
 
@@ -139,13 +168,14 @@ class AuthController extends Controller
         $validated = $validator->validated();
 
         $phone = PhoneService::format($validated['phone']);
-        $tgPhone = TgPhone::where([['phone', '=',  $phone]])->first();
+        $tgPhone = TgPhone::where([['phone', '=', $phone]])->first();
         if (!$tgPhone) {
             return response()->json('unconfirmed', 401);
         }
 
         return response()->json('success', 200);
     }
+
     public function authenticate()
     {
         $validated = request()->validate([
@@ -159,7 +189,7 @@ class AuthController extends Controller
             'password' => $validated['password'],
         ];
 
-        if (!User::where('phone',  $phone)->first()) {
+        if (!User::where('phone', $phone)->first()) {
             return response()->json(['errors' => [
                 'phone' => 'Пользователь с указанным номером не найден'
             ]])->setStatusCode(400);
@@ -205,7 +235,7 @@ class AuthController extends Controller
         $validated = $validator->validated();
 
         $phone = PhoneService::format($validated['phone']);
-        $tg_phone = TgPhone::where([['phone', '=',  $phone]])->first();
+        $tg_phone = TgPhone::where([['phone', '=', $phone]])->first();
         if (!$tg_phone) {
             return response()->json('error', 401);
         }
