@@ -73,7 +73,7 @@ router.beforeEach(async (to, from) => {
         }
 
         if(user.role == 'blogger'){
-            if(!user.is_blogger_on_moderation){
+            if(user.is_blogger_on_moderation){
                 return {
                     name: 'BloggerRegister'
                 }
