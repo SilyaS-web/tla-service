@@ -271,12 +271,7 @@ class BloggerController extends Controller
         $user->password = bcrypt($password);
         $user->save();
 
-        if (auth()->attempt([
-            'phone' => $user->phone,
-            'password' => $password,
-        ])) {
-            $token = $user->createToken('Bearer');
-        };
+        $token = $user->createToken('Bearer');
 
         TgService::sendModerationMessage($user->status, $user->phone, $password, $token, $user->tgPhone->chat_id);
         return response()->json('success', 200);
