@@ -52,34 +52,6 @@
                     </div>
                     <span class="error" v-if="errors.themes">{{ errors.themes }}</span>
                 </div>
-                <div class="form-group">
-                    <label for="" class="form-group__title">Социальные сети</label>
-                    <label for="" class="form-group__subtitle">Ниже предоставьте ссылки на соц. сети вашего канала</label>
-                </div>
-                <div
-                    v-for="field in platformFields"
-                    :class="'popup__form-row popup__form-stat form-stat ' + (field.active ? 'active' : '')">
-                    <div
-                        @click="field.active = !field.active"
-                        class="form-stat__title">
-                        {{ field.name }}
-                    </div>
-                    <div class="form-stat__content">
-                        <div class="form-stat__row">
-                            <div class="form-group" style="width:100%; max-width:100%">
-                                <label :for="field.prefix + '_link'">Ссылка</label>
-                                <input
-                                    :id = "field.prefix + '_link'"
-                                    :name = "field.prefix + '-link'"
-                                    v-model = "field.link"
-                                    type="text"
-                                    class="input" style="width:100%; max-width:100%">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <span class="error" v-if="errors.platforms">{{ errors.platforms }}</span>
 
                 <div class="form-group form-group--file">
                     <InputFile v-model:image="blogger.image"></InputFile>
@@ -187,7 +159,7 @@
                 var formdata = new FormData;
 
                 for(let k in this.blogger){
-                    if(!['platforms', 'themes'].includes(k))
+                    if(!['themes'].includes(k))
                         formdata.append(k, this.blogger[k])
                 }
 
@@ -195,10 +167,6 @@
 
                 for (let i = 0; i < themes.length; i++){
                     formdata.append(`themes[${i}]`, $(themes[i]).val())
-                }
-
-                for (let i = 0; i < this.platformFields.length; i++){
-                    formdata.append(`platforms[${i}]`, JSON.stringify(this.platformFields[i]))
                 }
 
                 var image = $('.tab-content__profile-img-upload').find('input[type="file"]')[0];
