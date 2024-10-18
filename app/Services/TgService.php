@@ -75,7 +75,8 @@ class TgService
         return $httpcode == 200 ? true : false;
     }
 
-    public static function sendForm($message_text) {
+    public static function sendForm($message_text)
+    {
         if (!App::environment('production')) {
             Log::info("[sendForm] message_text " . $message_text);
             return true;
@@ -111,7 +112,8 @@ class TgService
         return $httpcode == 200 ? "success" : false;
     }
 
-    public static function sendPayment($message_text) {
+    public static function sendPayment($message_text)
+    {
         if (!App::environment('production')) {
             Log::info("[sendPayment] message_text " . $message_text);
             return true;
@@ -147,7 +149,8 @@ class TgService
         return $httpcode == 200 ? "success" : false;
     }
 
-    public static function sendModeration($message_text) {
+    public static function sendModeration($message_text)
+    {
         if (!App::environment('production')) {
             Log::info("[sendModeration] message_text " . $message_text);
             return true;
@@ -160,6 +163,71 @@ class TgService
             'chat_id' => $chat_id,
             'text' => $message_text
         ];
+        $curl = curl_init();
+        $url = 'https://api.telegram.org/bot' . $api_key . '/sendMessage';
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($data),
+            CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+        ));
+
+        $response = curl_exec($curl);
+        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        return $httpcode == 200 ? "success" : false;
+    }
+
+    public static function sendModerationMessage($status, $phone, $password, $token, $chat_id)
+    {
+        if (!App::environment('production')) {
+            Log::info("[sendModerationMessage] status " . $status);
+            return true;
+        }
+
+        $api_key = config('telegram.main_bot_api_key');
+
+        $message_text = "🔑 Данные для доступа к сервису
+
+Ссылка для входа: https://lk\\.adswap\\.ru/
+Логин: \`$phone\`
+Пароль: \`$password\`
+
+Авторизуйтесь в сервисе и посмотрите раздел [инструкции](https://adswap.ru/instructions)\\.
+Если у вас остались вопросы, напишите нам в чат поддержки по [ссылке](@adswap_admin)\\.";
+
+        if ($status) {
+            $data = [
+                'chat_id' => $chat_id,
+                'text' => $message_text,
+                'parse_mode' => 'MarkdownV2',
+                'disable_web_page_preview' => true,
+                'reply_markup' => [
+                    'inline_keyboard' => [
+                        [
+                            [
+                                'text' => "Перейти на сайт",
+                                'url' => 'https://lk.adswap?token=' . $token
+                            ],
+                        ]
+                    ]
+                ]
+            ];
+        } else {
+            $data = [
+                'chat_id' => $chat_id,
+                'text' => 'Ваш аккаунт не прошел модерацию',
+            ];
+        }
+
         $curl = curl_init();
         $url = 'https://api.telegram.org/bot' . $api_key . '/sendMessage';
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\UserResource;
 use App\Models\Blogger;
 use App\Models\BloggerPlatform;
 use App\Http\Controllers\Controller;
@@ -15,6 +16,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class BloggerController extends Controller
 {
@@ -193,13 +195,8 @@ class BloggerController extends Controller
     public function accept(Blogger $blogger, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'description' => 'string|nullable',
             'is_achievement' => 'boolean|nullable',
-            'country' => 'array',
-            'country.id' => 'required|exists:countries,id',
-            'city' => 'string|nullable',
             'gender_ratio' => 'required|numeric',
-            'sex' => 'required|string',
             'platforms' => 'array|required',
             'platforms.*.link' => 'string|nullable',
             'platforms.*.subscriber_quantity' => 'numeric|nullable',
@@ -230,12 +227,8 @@ class BloggerController extends Controller
         }
 
         $blogger->update([
-            'description' => $validated['description'] ?? null,
             'is_achievement' => isset($validated['is_achievement']) ? $validated['is_achievement'] : false,
-            'country_id' => $validated['country']['id'],
-            'city' => isset($validated['city']),
             'gender_ratio' => $validated['gender_ratio'],
-            'sex' => $validated['sex'],
         ]);
 
         foreach ($validated['platforms'] as $blogger_platform) {
@@ -274,11 +267,18 @@ class BloggerController extends Controller
         }
 
         $user = $blogger->user;
-        $user->status = 1;
+        $password = Str::random(15);
+        $user->password = bcrypt($password);
         $user->save();
 
-        TgService::notify($blogger->user->tgPhone->chat_id, 'Вы успешно прошли модерацию');
+        if (auth()->attempt([
+            'phone' => $user->phone,
+            'password' => $password,
+        ])) {
+            $token = $user->createToken('Bearer');
+        };
 
+        TgService::sendModerationMessage($user->status, $user->phone, $password, $token, $user->tgPhone->chat_id);
         return response()->json('success', 200);
     }
 
@@ -295,6 +295,7 @@ class BloggerController extends Controller
             'sex' => 'required|string',
             'city' => 'required|string',
             'themes' => 'array|nullable',
+            'from_moderation' => 'boolean|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -323,6 +324,10 @@ class BloggerController extends Controller
             $user->email = $validated['email'];
         }
 
+        if (isset($validated['from_moderation']) && $validated['from_moderation']) {
+            $user->status = 1;
+        }
+
         if ($request->file('image')) {
             if (Storage::exists($user->getImageURL())) {
                 Storage::delete($user->getImageURL());
@@ -349,7 +354,6 @@ class BloggerController extends Controller
                 ]);
             }
         }
-
 
         $blogger->save();
 
