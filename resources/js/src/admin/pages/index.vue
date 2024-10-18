@@ -133,7 +133,7 @@
             this.Loader.loaderOn('.wrapper');
 
             this.getBloggers([0]).then(list => {
-                this.unverifiedBloggers = (list || []).filter(b => b.is_blogger_on_moderation).map(_b => this.findBiggestPlatform(_b));
+                this.unverifiedBloggers = (list || []).filter(b => b.user && b.user.is_blogger_on_moderation).map(_b => this.findBiggestPlatform(_b));
 
                 setTimeout(()=>{
                     this.Loader.loaderOff();
@@ -270,7 +270,7 @@
                         this.bloggers = (list || []).map(_b => this.findBiggestPlatform(_b));
                     }),
                     this.getBloggers([0]).then(list => {
-                        this.unverifiedBloggers = (list || []).filter(b => b.is_blogger_on_moderation).map(_b => this.findBiggestPlatform(_b));;
+                        this.unverifiedBloggers = (list || []).filter(b => b.user && b.user.is_blogger_on_moderation).map(_b => this.findBiggestPlatform(_b));;
                     })
                 ])
             },
@@ -299,7 +299,7 @@
                     case 'moderation':
                         this.Loader.loaderOn('#moderation')
                         this.getBloggers([0]).then(list => {
-                            this.unverifiedBloggers = (list || []).filter(b => b.is_blogger_on_moderation).map(_b => this.findBiggestPlatform(_b));
+                            this.unverifiedBloggers = (list || []).filter(b => b.user && b.user.is_blogger_on_moderation).map(_b => this.findBiggestPlatform(_b));
                             setTimeout(()=>{
                                 this.Loader.loaderOff()
                             }, 500)
