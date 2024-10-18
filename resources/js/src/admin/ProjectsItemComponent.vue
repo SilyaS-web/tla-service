@@ -71,7 +71,7 @@
 
                 axios({
                     method: 'get',
-                    url: '/api/projects/' + id + '/unban/',
+                    url: '/api/projects/' + id + '/unban',
                 })
                 .then((response) => {
                     notify('info', {
@@ -86,7 +86,7 @@
 
                 axios({
                     method: 'get',
-                    url: '/api/projects/' + id + '/ban/',
+                    url: '/api/projects/' + id + '/ban',
                 })
                 .then((response) => {
                     notify('info', {
