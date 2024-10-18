@@ -182,7 +182,7 @@
                     data: formdata
                 })
                 .then((data) => {
-                    this.$router.replace('/moderation')
+                    this.$router.replace('/profile')
                 })
                 .catch(() =>{
                 })
