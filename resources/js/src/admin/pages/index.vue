@@ -299,7 +299,7 @@
                     case 'moderation':
                         this.Loader.loaderOn('#moderation')
                         this.getBloggers([0]).then(list => {
-                            this.unverifiedBloggers = (list || []).map(_b => this.findBiggestPlatform(_b));
+                            this.unverifiedBloggers = (list || []).filter(b => b.is_blogger_on_moderation).map(_b => this.findBiggestPlatform(_b));
                             setTimeout(()=>{
                                 this.Loader.loaderOff()
                             }, 500)
