@@ -72,7 +72,7 @@
                 if(id){
                     axios({
                         method: 'get',
-                        url: '/api/users/' + id + '/ban/',
+                        url: '/api/users/' + id + '/ban',
                     })
                     .then((response) => {
                         notify('info', {
