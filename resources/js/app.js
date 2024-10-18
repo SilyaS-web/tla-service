@@ -79,13 +79,8 @@ router.beforeEach(async (to, from) => {
                 }
             }
             if(user.status == 0){
-                if(!user.is_blogger_on_moderation){
-                    return {
-                        name: 'BloggerRegister'
-                    }
-                }
                 return {
-                    name: 'Moderation'
+                    name: 'BloggerRegister'
                 }
             }
         }

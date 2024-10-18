@@ -174,9 +174,11 @@
                 if(image && image.files[0])
                     formdata.append('image', image.files[0]);
 
+                formdata.append('from_moderation', 1);
+
                 axios({
                     method: 'post',
-                    url: '/api/bloggers/' + this.user.blogger_id + '/update/' ,
+                    url: '/api/bloggers/' + this.user.blogger_id + '/update' ,
                     data: formdata
                 })
                 .then((data) => {
