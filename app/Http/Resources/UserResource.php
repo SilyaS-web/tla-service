@@ -33,7 +33,7 @@ class UserResource extends JsonResource
             'role' => $this->role,
             'seller_id' => $this->seller->id ?? false,
             'blogger_id' => $this->blogger->id ?? false,
-            'is_blogger_on_moderation' => $this->status == 0 && isset($this->blogger) && !empty($this->blogger->gender_ration),
+            'is_blogger_on_moderation' => $this->status == 0 && isset($this->blogger) && empty($this->blogger->gender_ration),
             'organization_name' => $organization_name,
             'channel_name' => $channel_name,
             'created_at' => isset($this->created_at) ? $this->created_at->format('d.m.Y H:i') : null,
