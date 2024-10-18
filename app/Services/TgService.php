@@ -188,10 +188,10 @@ class TgService
 
     public static function sendModerationMessage($status, $phone, $password, $token, $chat_id)
     {
-        if (!App::environment('production')) {
-            Log::info("[sendModerationMessage] status " . $status);
-            return true;
-        }
+//        if (!App::environment('production')) {
+//            Log::info("[sendModerationMessage] status " . $status);
+//            return true;
+//        }
 
         $api_key = config('telegram.main_bot_api_key');
 
