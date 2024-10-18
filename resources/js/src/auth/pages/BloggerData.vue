@@ -52,35 +52,6 @@
                     </div>
                     <span class="error" v-if="errors.themes">{{ errors.themes }}</span>
                 </div>
-                <div class="form-group">
-                    <label for="" class="form-group__title">Социальные сети</label>
-                    <label for="" class="form-group__subtitle">Ниже предоставьте ссылки на соц. сети вашего канала</label>
-                </div>
-                <div
-                    v-for="field in platformFields"
-                    :class="'popup__form-row popup__form-stat form-stat ' + (field.active ? 'active' : '')">
-                    <div
-                        @click="field.active = !field.active"
-                        class="form-stat__title">
-                        {{ field.name }}
-                    </div>
-                    <div class="form-stat__content">
-                        <div class="form-stat__row">
-                            <div class="form-group" style="width:100%; max-width:100%">
-                                <label :for="field.prefix + '_link'">Ссылка</label>
-                                <input
-                                    :id = "field.prefix + '_link'"
-                                    :name = "field.prefix + '-link'"
-                                    v-model = "field.link"
-                                    :value="blogger && (blogger.platforms.find(p => p.title == field.key) ? blogger.platforms.find(p => p.title == field.key).link : '')"
-                                    type="text"
-                                    class="input" style="width:100%; max-width:100%">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <span class="error" v-if="errors.platforms">{{ errors.platforms }}</span>
 
                 <div class="form-group form-group--file">
                     <InputFile v-model:image="blogger.image"></InputFile>
@@ -127,40 +98,6 @@
                         name: 'Россия'
                     },
                 ],
-                platformFields: ref([
-                    {
-                        name: 'Telegram',
-                        key: 'Telegram',
-                        prefix: 'tg',
-                        platform_id: 1,
-                        link: null,
-                        active: false
-                    },
-                    {
-                        name: 'Ins',
-                        key: 'Instagram',
-                        prefix: 'inst',
-                        platform_id: 3,
-                        link: null,
-                        active: false
-                    },
-                    {
-                        name: 'Ytube',
-                        key: 'Youtube',
-                        prefix: 'yt',
-                        platform_id: 2,
-                        link: null,
-                        active: false
-                    },
-                    {
-                        name: 'Вконтакте',
-                        key: 'VK',
-                        prefix: 'vk',
-                        platform_id: 4,
-                        link: null,
-                        active: false
-                    },
-                ]),
                 Themes, Blogger, User
             }
         },
@@ -170,11 +107,6 @@
 
             if(this.user.blogger_id) {
                 this.blogger = await this.Blogger.getItem(this.user.blogger_id);
-
-                // for (let k in this.platformFields){
-                //     var platform =
-                //     if(this.platformFields[k].platform_id)
-                // }
             }
         },
         methods: {
@@ -198,10 +130,6 @@
 
                 for (let i = 0; i < themes.length; i++){
                     formdata.append(`themes[${i}]`, $(themes[i]).val())
-                }
-
-                for (let i = 0; i < this.platformFields.length; i++){
-                    formdata.append(`platforms[${i}]`, JSON.stringify(this.platformFields[i]))
                 }
 
                 var image = $('.tab-content__profile-img-upload').find('input[type="file"]')[0];
