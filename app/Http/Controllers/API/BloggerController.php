@@ -281,7 +281,7 @@ class BloggerController extends Controller
     {
         $validator = Validator::make(request()->all(), [
             'name' => 'required|min:3',
-            'email' => 'required|email',
+            'email' => 'email|nullable',
             'image' => 'image|nullable',
             'old_password' => 'min:8|nullable',
             'password' => 'min:8|nullable',
@@ -315,7 +315,7 @@ class BloggerController extends Controller
 
         $user->name = $validated['name'];
 
-        if ($user->email != $validated['email']) {
+        if (isset($validated['email']) && $user->email != $validated['email']) {
             $user->email = $validated['email'];
         }
 
