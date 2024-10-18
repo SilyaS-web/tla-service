@@ -61,7 +61,7 @@
                     <button
                         @click="sendToModeration"
                         class="btn btn-primary">
-                        Отправить на модерацию
+                        Сохранить
                     </button>
                 </div>
                 <p class="form-addit">
