@@ -307,10 +307,6 @@ class WorkController extends Controller
 
     public function deny(Work $work)
     {
-//        if ($work->status != null && $work->status == Work::PENDING) {
-//            return response()->json(['message' => 'Из этого статуса нельзя отклонить заявку'])->setStatusCode(400);
-//        }
-
         $work->delete();
         $user = Auth::user();
 
@@ -324,6 +320,46 @@ class WorkController extends Controller
         TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' отклонил вашу заявку на проект' . $work->project->product_name);
 
         return response()->json()->setStatusCode(200);
+    }
+
+    public function cancel(Work $work)
+    {
+        $user = Auth::user();
+        $role = $user->role;
+        $work->update(['canceled_by_' . $role . '_at' => date('Y-m-d H:i')]);
+
+        Message::create([
+            'work_id' => $work->id,
+            'user_id' => 1,
+            'message' => $user->name . ' запросил отмену',
+        ]);
+
+        Notification::create([
+            'user_id' => $work->getPartnerUser($user->role)->id,
+            'type' => 'Отмена',
+            'text' => $user->name . ' хочет отменить работы по проекту' . $work->project->product_name,
+            'work_id' => $work->id,
+            'from_user_id' => $user->id,
+        ]);
+        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' хочет отменить работы по проекту' . $work->project->product_name);
+
+        if (!empty($work->canceled_by_blogger_at) && !empty($work->canceled_by_seller_at)) {
+            $work->update(['status' => Work::CANCELED]);
+            $message_text = 'Статус работы изменён на: <span style="color: var(--primary)">отменена</span>';
+            Message::create([
+                'work_id' => $work->id,
+                'user_id' => 1,
+                'message' => $message_text,
+            ]);
+            Notification::create([
+                'user_id' => $work->getPartnerUser($user->role)->id,
+                'type' => 'Отмена',
+                'text' => 'Работы по проекту' . $work->project->product_name . ' отменены',
+                'work_id' => $work->id,
+                'from_user_id' => $user->id,
+            ]);
+            TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' отклонил вашу заявку на проект' . $work->project->product_name);
+        }
     }
 
     public function viewChat(Work $work)
