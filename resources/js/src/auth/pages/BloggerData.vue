@@ -19,7 +19,7 @@
                             {{ country.name }}
                         </option>
                     </select>
-                    <span class="error">{{ errors.country }}</span>
+                    <span v-if="errors.country_id" class="error">{{ errors.country_id }}</span>
                 </div>
                 <div class="form-group">
                     <label for="sex">Ваш пол</label>
@@ -186,7 +186,7 @@
                 })
                 .catch((err) =>{
                     this.errors = err.response.data;
-                    notify('info', {title: 'Ошибка', message: 'Не удалось сохранить данные, проверьте все поля, если все в порядке напишите в поддержку.'});
+                    notify('error', {title: 'Ошибка', message: 'Не удалось сохранить данные, проверьте все поля, если все в порядке напишите в поддержку.'});
                 })
             }
         }
