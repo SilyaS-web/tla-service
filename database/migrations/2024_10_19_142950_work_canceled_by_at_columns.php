@@ -13,7 +13,7 @@ class WorkCanceledByAtColumns extends Migration
      */
     public function up()
     {
-        Schema::table('wokrs', function (Blueprint $table) {
+        Schema::table('works', function (Blueprint $table) {
             $table->timestamp('canceled_by_blogger_at')->nullable();
             $table->timestamp('canceled_by_seller_at')->nullable();
         });
@@ -26,7 +26,7 @@ class WorkCanceledByAtColumns extends Migration
      */
     public function down()
     {
-        Schema::table('payments', function (Blueprint $table) {
+        Schema::table('works', function (Blueprint $table) {
             $table->dropColumn('canceled_by_blogger_at');
             $table->dropColumn('canceled_by_seller_at');
         });
