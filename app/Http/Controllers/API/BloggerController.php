@@ -273,7 +273,7 @@ class BloggerController extends Controller
 
         $token = $user->createToken('Bearer');
 
-        TgService::sendModerationMessage($user->status, $user->phone, $password, $token, $user->tgPhone->chat_id);
+        TgService::sendModerationMessage($user->status, $user->phone, $password, $token->plainTextToken, $user->tgPhone->chat_id);
         return response()->json('success', 200);
     }
 
