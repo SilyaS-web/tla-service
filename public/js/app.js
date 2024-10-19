@@ -22017,11 +22017,13 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         return (0,vue__WEBPACK_IMPORTED_MODULE_3__.toRaw)(newBloggerPlatforms);
       });
       this.accept().then(function () {
+        _this3.errors = {};
         _this3.$refs.popup.close();
         _this3.resolvePromise(true);
       });
     },
     _cancel: function _cancel() {
+      this.errors = {};
       this.$refs.popup.close();
       this.resolvePromise(false);
     }
@@ -22458,7 +22460,13 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         data: formdata
       }).then(function (data) {
         _this2.$router.replace('/profile');
-      })["catch"](function () {});
+      })["catch"](function () {
+        _this2.errors = err.response.data;
+        notify('info', {
+          title: 'Ошибка',
+          message: 'Не удалось сохранить данные, проверьте все поля, если все в порядке напишите в поддержку.'
+        });
+      });
     }
   }
 });

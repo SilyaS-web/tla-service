@@ -195,12 +195,14 @@
                     return toRaw(newBloggerPlatforms)
                 })
                 this.accept().then(()=>{
+                    this.errors = {}
                     this.$refs.popup.close()
                     this.resolvePromise(true)
                 })
             },
 
             _cancel() {
+                this.errors = {}
                 this.$refs.popup.close()
                 this.resolvePromise(false)
             },
