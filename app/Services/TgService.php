@@ -220,6 +220,7 @@ class TgService
                     ]
                 ]
             ];
+            Log::info("[sendModerationMessage] data " . json_encode($data));
         } else {
             $data = [
                 'chat_id' => $chat_id,
@@ -244,7 +245,7 @@ class TgService
         ));
 
         $response = curl_exec($curl);
-        Log::info("[sendModerationMessage] status " . $response);
+        Log::info("[sendModerationMessage] response " . $response);
 
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
