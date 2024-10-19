@@ -131,6 +131,8 @@ class AuthController extends Controller
                 ]);
             }
         }
+
+        TgService::sendModeration($user->name . ' оставил заявку на модерацию');
     }
 
     public function setTGPhone(): JsonResponse
