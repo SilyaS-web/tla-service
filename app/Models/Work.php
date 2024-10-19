@@ -49,6 +49,8 @@ class Work extends Model
         'accepted_by_seller_at',
         'confirmed_by_blogger_at',
         'confirmed_by_seller_at',
+        'canceled_by_blogger_at',
+        'canceled_by_seller_at',
         'last_message_at',
         'created_at',
         'updated_at',
