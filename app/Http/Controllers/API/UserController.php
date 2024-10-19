@@ -45,7 +45,7 @@ class UserController extends Controller
     public function ban(User $user)
     {
         if ($user->status == 0 && $user->role == User::BLOGGER) {
-            TgService::notify($user->tgPhone->chat_id, 'Ваша заявка на регистрацию была отклонена модератором.
+            TgService::sendMessage($user->tgPhone->chat_id, 'Ваша заявка на регистрацию была отклонена модератором.
 
 Это связано с недостаточной статистикой вашего блога.
 Попробуйте подать заявку снова, когда ваш блог станет более активным!');
@@ -53,7 +53,7 @@ class UserController extends Controller
             $text = 'Ваш аккаунт был заблокирован\\.
 
 Если у вас есть вопросы, вы можете с нами связаться в данном чате: [@adswap_admin](https://t.me/adswap_admin)';
-            TgService::notify($user->tgPhone->chat_id, $text, [
+            TgService::sendMessage($user->tgPhone->chat_id, $text, [
                     'disable_web_page_preview' => true,
                     'parse_mode' => 'MarkdownV2',
                 ]);
