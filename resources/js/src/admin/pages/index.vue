@@ -308,6 +308,7 @@
 
                     case 'blogers-list':
                         this.Loader.loaderOn('#blogers-list')
+
                         this.getBloggers([1, -1]).then(list => {
                             this.bloggers = (list || []).map(_b => this.findBiggestPlatform(_b));
                             setTimeout(()=>{

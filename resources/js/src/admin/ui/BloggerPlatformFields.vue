@@ -1,5 +1,5 @@
 <template>
-    <div class="popup__form-row popup__form-stat form-stat">
+    <div :class="'popup__form-row popup__form-stat form-stat ' + ((platform.blogger_platform && platform.blogger_platform.link ? 'active' : '') )">
         <div class="form-stat__title" v-on:click="slideCard">
             {{ platform.name }}
         </div>
