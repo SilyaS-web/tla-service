@@ -1448,9 +1448,6 @@ input[type='range']::-webkit-slider-runnable-track{
     border-radius: 10px;
     margin-bottom: 15px;
 }
-.form-stat.fill{
-    border: 1px solid var(--primary);
-}
 .form-stat__title{
     font-size: 16px;
     font-weight: 500;
