@@ -184,7 +184,7 @@
                 .then((data) => {
                     this.$router.replace('/profile')
                 })
-                .catch(() =>{
+                .catch((err) =>{
                     this.errors = err.response.data;
                     notify('info', {title: 'Ошибка', message: 'Не удалось сохранить данные, проверьте все поля, если все в порядке напишите в поддержку.'});
                 })

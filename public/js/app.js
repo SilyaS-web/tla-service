@@ -22460,7 +22460,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         data: formdata
       }).then(function (data) {
         _this2.$router.replace('/profile');
-      })["catch"](function () {
+      })["catch"](function (err) {
         _this2.errors = err.response.data;
         notify('info', {
           title: 'Ошибка',
