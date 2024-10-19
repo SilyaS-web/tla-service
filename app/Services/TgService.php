@@ -214,7 +214,7 @@ class TgService
                         [
                             [
                                 'text' => "Перейти на сайт",
-                                'url' => 'https://lk.adswap?token=' . $token
+                                'url' => config('app.url') . '?token=' . $token
                             ],
                         ]
                     ]
