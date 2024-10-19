@@ -48,7 +48,7 @@ class UserController extends Controller
         if ($user->status == 0 && $user->role == User::BLOGGER) {
             TgService::notify($user->tgPhone->chat_id, 'Ваша заявка на регистрацию была отклонена модератором.
 
-Это связано с недостаточной статистикой твоего блога.
+Это связано с недостаточной статистикой вашего блога.
 Попробуйте подать заявку снова, когда ваш блог станет более активным!');
         } else {
             TgService::notify($user->tgPhone->chat_id, 'Вы были забанены');
