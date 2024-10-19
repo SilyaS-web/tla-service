@@ -293,8 +293,12 @@ class BloggerController extends Controller
             'from_moderation' => 'boolean|nullable',
         ]);
 
+        if (isset($validated['from_moderation']) && $validated['from_moderation'] && !$request->file('image')) {
+            return response()->json(['image' => 'Необходимо загрузить изображение'])->setStatusCode(400);
+        }
+
         if ($validator->fails()) {
-            return  response()->json($validator->errors())->setStatusCode(400);
+            return response()->json($validator->errors())->setStatusCode(400);
         }
 
         $validated = $validator->validated();
@@ -326,14 +330,6 @@ class BloggerController extends Controller
         }
 
         if ($request->file('image')) {
-            $blogger_image = $request->file('image');
-            $urls = ImageService::makeCompressedCopies($blogger_image, 'profile/'.$user->id.'/');
-
-            $user->image = $urls[1];
-            $user->save();
-        }
-
-        if ($request->file('image')) {
             if (Storage::exists($user->getImageURL())) {
                 Storage::delete($user->getImageURL());
             }
@@ -343,6 +339,7 @@ class BloggerController extends Controller
 
             $user->image = $urls[1];
         }
+
         $user->save();
 
         $blogger->country_id = $validated['country_id'];
