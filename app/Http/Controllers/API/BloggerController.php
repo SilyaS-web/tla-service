@@ -297,11 +297,11 @@ class BloggerController extends Controller
             return response()->json($validator->errors())->setStatusCode(400);
         }
 
+        $validated = $validator->validated();
+
         if (isset($validated['from_moderation']) && $validated['from_moderation'] && empty($validated['image'])) {
             return response()->json(['image' => 'Необходимо загрузить изображение'])->setStatusCode(400);
         }
-
-        $validated = $validator->validated();
 
         $user = $blogger->user;
         if (isset($validated['password'])) {
