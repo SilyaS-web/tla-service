@@ -52,9 +52,8 @@ class UserController extends Controller
         } else {
             $text = 'Ваш аккаунт был заблокирован\\.
 
-Если у вас есть вопросы, вы можете с нами связаться в данном чате: [@adswap_admin](https://t.me/adswap_admin)';
+Если у вас есть вопросы, вы можете с нами связаться в данном чате: @adswap_admin';
             TgService::sendMessage($user->tgPhone->chat_id, $text, [
-                    'disable_web_page_preview' => true,
                     'parse_mode' => 'MarkdownV2',
                 ]);
         }
