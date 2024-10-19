@@ -44,14 +44,18 @@ class UserController extends Controller
 
     public function ban(User $user)
     {
-        $user->status = -1;
-        $user->save();
+
         if ($user->status == 0 && $user->role == User::BLOGGER) {
-            TgService::notify($user->tgPhone->chat_id, 'Вы не прошли модерацию');
+            TgService::notify($user->tgPhone->chat_id, 'Ваша заявка на регистрацию была отклонена модератором.
+
+Это связано с недостаточной статистикой твоего блога.
+Попробуйте подать заявку снова, когда ваш блог станет более активным!');
         } else {
             TgService::notify($user->tgPhone->chat_id, 'Вы были забанены');
         }
 
+        $user->status = -1;
+        $user->save();
         return response()->json()->setStatusCode(200);
     }
 
