@@ -44,7 +44,6 @@ class UserController extends Controller
 
     public function ban(User $user)
     {
-
         if ($user->status == 0 && $user->role == User::BLOGGER) {
             TgService::notify($user->tgPhone->chat_id, 'Ваша заявка на регистрацию была отклонена модератором.
 

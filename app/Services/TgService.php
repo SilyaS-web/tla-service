@@ -58,6 +58,7 @@ class TgService
         if (!empty($params)) {
             $data = array_merge($data, $params);
         }
+        Log::info("[sendModerationMessage] data " . json_encode($data));
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => '195.24.67.70/notify',
