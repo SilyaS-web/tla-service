@@ -21995,7 +21995,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           return resolve(result.data);
         })["catch"](function (err) {
           _this2.errors = err.response.data.errors;
-          console.log(_this2.errors);
+          console.log(err.response.data);
           notify('info', {
             title: 'Внимание',
             message: 'Не удалось принять блогера'
