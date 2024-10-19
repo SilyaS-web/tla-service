@@ -194,12 +194,12 @@ class TgService
 //        }
 
         $api_key = config('telegram.main_bot_api_key');
-
+        $new_phone = str_replace("+", "\\+", $phone);
         if ($status >= 0) {
             $message_text = "🔑 Данные для доступа к сервису
 
 Ссылка для входа: https://lk\\.adswap\\.ru/
-Логин: \`$phone\`
+Логин: \`$new_phone\`
 Пароль: \`$password\`
 
 Авторизуйтесь в сервисе и посмотрите раздел [инструкции](https://adswap.ru/instructions)\\.
