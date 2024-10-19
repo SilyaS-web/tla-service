@@ -88,6 +88,7 @@ class TgService
         if (!empty($params)) {
             $data = array_merge($data, $params);
         }
+        Log::info("[sendMessage] data " . json_encode($data));
 
         $curl = curl_init();
         $url = 'https://api.telegram.org/bot' . $api_key . '/sendMessage';
@@ -108,6 +109,7 @@ class TgService
         $response = curl_exec($curl);
         $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
+        Log::info("[sendMessage] response " . $response);
 
         return $http_code == 200 ? "success" : false;
     }
