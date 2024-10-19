@@ -293,12 +293,12 @@ class BloggerController extends Controller
             'from_moderation' => 'boolean|nullable',
         ]);
 
-        if (isset($validated['from_moderation']) && $validated['from_moderation'] && !$request->file('image')) {
-            return response()->json(['image' => 'Необходимо загрузить изображение'])->setStatusCode(400);
-        }
-
         if ($validator->fails()) {
             return response()->json($validator->errors())->setStatusCode(400);
+        }
+
+        if (isset($validated['from_moderation']) && $validated['from_moderation'] && empty($validated['image'])) {
+            return response()->json(['image' => 'Необходимо загрузить изображение'])->setStatusCode(400);
         }
 
         $validated = $validator->validated();
