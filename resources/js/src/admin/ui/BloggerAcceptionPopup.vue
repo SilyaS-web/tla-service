@@ -171,9 +171,8 @@
                         data: toRaw(this.blogger)
                     })
                     .then(result => resolve(result.data))
-                    .catch(response => {
-                        console.log(response)
-                        this.errors = response.data.errors;
+                    .catch(err => {
+                        this.errors = err.response.data.errors;
                         notify('info', {title: 'Внимание', message: 'Не удалось принять блогера'});
                         reject()
                     })

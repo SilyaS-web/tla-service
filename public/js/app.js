@@ -21993,9 +21993,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           data: (0,vue__WEBPACK_IMPORTED_MODULE_3__.toRaw)(_this2.blogger)
         }).then(function (result) {
           return resolve(result.data);
-        })["catch"](function (response) {
-          console.log(response);
-          _this2.errors = response.data.errors;
+        })["catch"](function (err) {
+          _this2.errors = err.response.data.errors;
           notify('info', {
             title: 'Внимание',
             message: 'Не удалось принять блогера'
