@@ -3482,15 +3482,15 @@ input[type='range']::-webkit-slider-runnable-track{
     box-shadow:0px 0px 10px 6px rgba(0,0,0,.05);
 }
 .chat__opts-partner{
-
+    margin-bottom:15px;
 }
 .chat__opts-partner__row{
     display:flex;
 }
 .chat__opts-partner__img{
     width: 100%;
-    max-width:30px;
-    height:30px;
+    max-width:40px;
+    height:40px;
     margin-right: 8px;
     background-position: center;
     background-size: cover;
@@ -3709,6 +3709,9 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .messages-chat__item-status.progress {
     background-color: rgba(255, 150, 75, 1) !important;
+}
+.messages-chat__item-status.canceled {
+    background-color: rgba(253,101,103, 1) !important;
 }
 
 .chat-file{

@@ -103,8 +103,8 @@
                                             href=""
                                             :class="'chat__opts-item ' + (currentChat.btnData.action ? '' : 'chat__opts-item--disabled')">{{ currentChat.btnData.title }}</div>
                                         <div
-                                            v-if="currentChat"
-                                            @click="btnAction('deny')"
+                                            v-if="currentChat && !(currentChat.canceled_by_seller_at && currentChat.canceled_by_blogger_at)"
+                                            @click="btnAction('cancel')"
                                             class="chat__opts-item chat__opts-item--cancel">
                                             Отменить работу
                                         </div>
@@ -366,6 +366,7 @@ import {reactive, ref} from "vue";
                     'completed': 'Проект завершен',
                     'pending': 'В ожидании',
                     'progress': 'В работе',
+                    'canceled': 'Проект отменен',
                 },
 
                 isTablet: ref(false),
@@ -505,14 +506,16 @@ import {reactive, ref} from "vue";
 
                         $(document).find('.btn--chat-action').removeClass('btn-loading');
 
-                        if(action == 'deny'){
-                            this.currentChat = null;
-
-                            if(this.isTablet){
-                                this.isChatsMobile = true;
-                                this.isMessagesMobile = false;
-                            }
-                        }
+                        // if(action == 'cancel'){
+                        //     if(this.currentChat.canceled_by_seller_at || this.currentChat.canceled_by_blogger_at){
+                        //         this.currentChat = null;
+                        //
+                        //         if(this.isTablet){
+                        //             this.isChatsMobile = true;
+                        //             this.isMessagesMobile = false;
+                        //         }
+                        //     }
+                        // }
 
                         this.getChats();
                         this.currentChat && this.getMessages(this.currentChat);
@@ -749,9 +752,13 @@ import {reactive, ref} from "vue";
                         title: 'Проект завершен',
                     }
                 }
+                else if(work && work.status == 'canceled'){
+                    return {
+                        title: 'Проект отменен',
+                    }
+                }
                 else if(work && work.status == 'progress'){
                     if(work.project_work.type != 'feedback' && work.statistics == null){
-                        console.log(work, this.user.role)
                         if(this.user.role == 'blogger'){
                             return {
                                 title: 'Прикрепить статистику',
