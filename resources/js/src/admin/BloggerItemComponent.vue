@@ -6,7 +6,7 @@
                     <div class="card__img" v-bind:style="'background-image:url(' + (!blogger.user.image ? '/img/profile-icon.svg' : `${blogger.user.image}`) + ')'">
                     </div>
                     <div class="card__achive" title="Проверенный блогер" v-if="blogger.is_achievement">
-                        <img src="img/achive-icon.svg" alt="">
+                        <img src="/img/achive-icon.svg" alt="">
                     </div>
                     <div class="card__name">
                         <p class="card__name-name" title="">
