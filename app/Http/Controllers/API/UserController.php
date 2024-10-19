@@ -45,14 +45,14 @@ class UserController extends Controller
     public function ban(User $user)
     {
         if ($user->status == 0 && $user->role == User::BLOGGER) {
-            TgService::sendMessage($user->tgPhone->chat_id, 'Ваша заявка на регистрацию была отклонена модератором.
+            TgService::sendMessage($user->tgPhone->chat_id, "Ваша заявка на регистрацию была отклонена модератором.
 
 Это связано с недостаточной статистикой вашего блога.
-Попробуйте подать заявку снова, когда ваш блог станет более активным!');
+Попробуйте подать заявку снова, когда ваш блог станет более активным!");
         } else {
-            $text = 'Ваш аккаунт был заблокирован\\.
+            $text = "Ваш аккаунт был заблокирован\\.
 
-Если у вас есть вопросы, вы можете с нами связаться в [чате](https://t.me/adswap_admin)';
+Если у вас есть вопросы, вы можете с нами связаться в [чате](https://t.me/adswap_admin)";
             TgService::sendMessage($user->tgPhone->chat_id, $text, [
                     'disable_web_page_preview' => true,
                     'parse_mode' => 'MarkdownV2',
