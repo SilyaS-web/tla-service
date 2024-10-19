@@ -16,6 +16,7 @@
                         class="input"
                         max="100"
                         value = "50">
+                    <span class="error" v-if="errors.gender_ratio">{{ errors.gender_ratio }}</span>
                 </div>
                 <div class="form-group">
                     <label for="gender_ratio_f">Женщины, %</label>
@@ -28,6 +29,7 @@
                         v-on:input="calculateGender">
                 </div>
             </div>
+
             <div class="form-row filter__item">
                 <label for="">Статистика по блогеру</label>
                 <platforms
@@ -35,7 +37,7 @@
                     :platform="platform"
                     :platformAdditFields="platformAdditFields">
                 </platforms>
-
+                <span class="error" v-if="errors.platforms">{{ errors.platforms }}</span>
                 <div class="form-group">
                     <div class="input-checkbox-w">
                         <input name="is_achievement" type="checkbox" class="checkbox" id="is_achievement" v-model="blogger.is_achievement">
@@ -65,6 +67,7 @@
         name: 'AcceptBloggerPopup',
         components: { PopupModal, Platforms },
         data: () => ({
+            errors: ref({}),
             countries: [
                 {
                     id: 1,
@@ -113,6 +116,10 @@
                 let requestData = await this.getBlogger(opts.id);
 
                 this.blogger = requestData.blogger;
+
+                if(this.blogger && !this.blogger.gender_ratio)
+                    this.blogger.gender_ratio = 50;
+
                 this.platformAdditFields = requestData.platform_fields;
                 this.platformFields.forEach(_f => _f.blogger_platform = this.extractBloggersPlatformById(_f.id));
 
@@ -164,7 +171,8 @@
                         data: toRaw(this.blogger)
                     })
                     .then(result => resolve(result.data))
-                    .catch(error => {
+                    .catch(response => {
+                        this.errors = response.data.errors;
                         resolve([])
                     })
                 })
