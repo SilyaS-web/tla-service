@@ -2366,7 +2366,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .project-item__status {
     position: absolute;
-    right:10px;bottom: 10px;
+    right:10px;bottom: 20px;
     background-color: #fff;
     border-radius: 5px;
     padding:5px;
@@ -2404,7 +2404,6 @@ input[type='range']::-webkit-slider-runnable-track{
     display: block;
     max-height: 270px;
     overflow: hidden;
-    margin-bottom: 15px;
 }
 .project-item__carousel--carousel.owl-loaded {
     overflow: unset;
@@ -5490,6 +5489,9 @@ input[type='range']::-webkit-slider-runnable-track{
         text-wrap: nowrap;
     }
 
+    .project-item__status {
+        bottom: 10px;
+    }
 
     .notification{
         bottom:70px;
