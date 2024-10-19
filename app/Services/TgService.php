@@ -244,7 +244,7 @@ class TgService
         ));
 
         $response = curl_exec($curl);
-        Log::log(30, "[sendModerationMessage] status ", json_decode($response, true));
+        Log::info("[sendModerationMessage] status " . $response);
 
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
         curl_close($curl);
