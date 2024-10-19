@@ -51,7 +51,13 @@ class UserController extends Controller
 Это связано с недостаточной статистикой вашего блога.
 Попробуйте подать заявку снова, когда ваш блог станет более активным!');
         } else {
-            TgService::notify($user->tgPhone->chat_id, 'Вы были забанены');
+            $text = 'Ваш аккаунт был заблокирован\\.
+
+Если у вас есть вопросы, вы можете с нами связаться в данном чате: [@adswap_admin](https://t.me/adswap_admin)';
+            TgService::notify($user->tgPhone->chat_id, $text, [
+                    'disable_web_page_preview' => true,
+                    'parse_mode' => 'MarkdownV2',
+                ]);
         }
 
         $user->status = -1;

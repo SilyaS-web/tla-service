@@ -41,7 +41,7 @@ class TgService
         return $httpcode == 200 ? true : false;
     }
 
-    public static function notify($chat_id, $text)
+    public static function notify($chat_id, $text, $params = [])
     {
         if (!App::environment('production')) {
             Log::info("[notify] chat_id " . $chat_id . " text " . $text);
@@ -49,6 +49,15 @@ class TgService
         }
 
         $curl = curl_init();
+
+        $data = [
+            'chat_id' => $chat_id,
+            'text' => $text
+        ];
+
+        if (!empty($params)) {
+            $data = array_merge($data, $params);
+        }
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => '195.24.67.70/notify',
@@ -59,10 +68,7 @@ class TgService
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => '{
-            "chatId": ' . $chat_id . ',
-            "text": "' . $text . '"
-        }',
+            CURLOPT_POSTFIELDS => json_encode($data),
             CURLOPT_HTTPHEADER => array(
                 'Content-Type: application/json'
             ),
@@ -203,7 +209,7 @@ class TgService
 Пароль: \`$password\`
 
 Авторизуйтесь в сервисе и посмотрите раздел [инструкции](https://adswap.ru/instructions)\\.
-Если у вас остались вопросы, напишите нам в чат поддержки по [ссылке](@adswap_admin)\\.";
+Если у вас остались вопросы, напишите нам в чат поддержки по [ссылке](https://t.me/adswap_admin)\\.";
             $data = [
                 'chat_id' => $chat_id,
                 'text' => $message_text,
