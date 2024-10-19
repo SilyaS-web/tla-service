@@ -249,6 +249,9 @@ label{
     border-radius: 10px;
     margin-bottom: 15px;
 }
+.form-stat.fill{
+    box-shadow:0px 0px 10px 6px rgba(254,94,0,.2);
+}
 .form-stat__title{
     font-size: 16px;
     font-weight: 500;
