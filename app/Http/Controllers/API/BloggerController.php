@@ -313,7 +313,9 @@ class BloggerController extends Controller
             }
         }
 
-        $user->name = $validated['name'];
+        if (isset($validated['name']) && $user->name != $validated['name']) {
+            $user->name = $validated['name'];
+        }
 
         if (isset($validated['email']) && $user->email != $validated['email']) {
             $user->email = $validated['email'];
@@ -321,6 +323,14 @@ class BloggerController extends Controller
 
         if (isset($validated['from_moderation']) && $validated['from_moderation']) {
             $user->status = 1;
+        }
+
+        if ($request->file('image')) {
+            $blogger_image = $request->file('image');
+            $urls = ImageService::makeCompressedCopies($blogger_image, 'profile/'.$user->id.'/');
+
+            $user->image = $urls[1];
+            $user->save();
         }
 
         if ($request->file('image')) {
