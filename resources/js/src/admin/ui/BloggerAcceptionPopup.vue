@@ -172,8 +172,7 @@
                     })
                     .then(result => resolve(result.data))
                     .catch(err => {
-                        this.errors = err.response.data.errors;
-                        console.log(err.response.data)
+                        this.errors = err.response.data;
                         notify('info', {title: 'Внимание', message: 'Не удалось принять блогера'});
                         reject()
                     })

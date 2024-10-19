@@ -21994,8 +21994,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         }).then(function (result) {
           return resolve(result.data);
         })["catch"](function (err) {
-          _this2.errors = err.response.data.errors;
-          console.log(err.response.data);
+          _this2.errors = err.response.data;
           notify('info', {
             title: 'Внимание',
             message: 'Не удалось принять блогера'
