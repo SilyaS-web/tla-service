@@ -76,6 +76,7 @@ class TgService
 
         $response = curl_exec($curl);
         $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        Log::info("[sendModerationMessage] notify " . $response);
 
         curl_close($curl);
         return $httpcode == 200 ? true : false;
