@@ -23,7 +23,7 @@ class WorkResource extends JsonResource
         if (isset($user) && $user->role == User::BLOGGER && $this->project) {
             $project = new ProjectResource($this->project);
 
-        } else if (in_array('project', request()->input('with')) && $this->project) {
+        } else if (request()->input('with') && in_array('project', request()->input('with')) && $this->project) {
             $project = [
                 'product_name' => $this->project->product_name,
                 'product_nm' => $this->project->product_nm,
