@@ -16,11 +16,6 @@ class ProjectWork extends Model
         'finish_date'
     ];
 
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
     protected $casts = [
         'finish_date' => 'datetime',
         'created_at' => 'datetime',

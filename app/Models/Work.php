@@ -35,11 +35,6 @@ class Work extends Model
         'last_message_at'
     ];
 
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
     protected $casts = [
         'accepted_by_blogger_at' => 'datetime',
         'accepted_by_seller_at' => 'datetime',

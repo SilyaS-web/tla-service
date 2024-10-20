@@ -22,11 +22,6 @@ class Payment extends Model
         'quantity',
     ];
 
-    /**
-     * The attributes that should be mutated to dates.
-     *
-     * @var array
-     */
     protected $casts = [
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
