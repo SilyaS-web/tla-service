@@ -21,12 +21,15 @@ const Work = {
             })
         })
     },
-    getUserWorksList: (user_id, created_by = false, is_active = 0, filterData = false) => {
+    getUserWorksList: (user_id, created_by = false, is_active = 0, filterData = false, _with = ['project']) => {
         return new Promise((resolve, reject) => {
             var params = {is_active: is_active};
 
             if(created_by)
                 params.created_by = created_by;
+
+            if(_with)
+                params.with = _with;
 
             if(filterData){
                 for(let k in filterData){
