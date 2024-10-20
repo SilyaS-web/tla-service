@@ -80,6 +80,30 @@ const Work = {
             })
         })
     },
+    cancel(work_id){
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'get',
+                url: 'api/works/' + work_id + '/cancel'
+            })
+            .then(response => {
+                notify('info', {
+                    title: 'Успешно!',
+                    message: 'Статус работы поменялся.'
+                })
+
+                resolve(true);
+            })
+            .catch((errors) => {
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'
+                })
+
+                resolve(false)
+            })
+        })
+    },
     accept(work_id){
         return new Promise((resolve, reject) => {
             axios({
