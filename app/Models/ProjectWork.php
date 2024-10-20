@@ -21,10 +21,10 @@ class ProjectWork extends Model
      *
      * @var array
      */
-    protected $dates = [
-        'finish_date',
-        'created_at',
-        'updated_at',
+    protected $casts = [
+        'finish_date' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function project() {

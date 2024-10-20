@@ -20,11 +20,11 @@ class SellerTariff extends Model
         'user_id',
     ];
 
-    protected $dates = [
-        'finish_date',
-        'activation_date',
-        'created_at',
-        'updated_at',
+    protected $casts = [
+        'finish_date' => 'datetime',
+        'activation_date' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function tariff()

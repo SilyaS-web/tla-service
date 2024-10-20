@@ -55,10 +55,10 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $dates = [
-        'telegram_verified_at',
-        'created_at',
-        'updated_at',
+    protected $casts = [
+        'telegram_verified_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function works()

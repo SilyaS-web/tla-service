@@ -40,14 +40,14 @@ class Work extends Model
      *
      * @var array
      */
-    protected $dates = [
-        'accepted_by_blogger_at',
-        'accepted_by_seller_at',
-        'confirmed_by_blogger_at',
-        'confirmed_by_seller_at',
-        'last_message_at',
-        'created_at',
-        'updated_at',
+    protected $casts = [
+        'accepted_by_blogger_at' => 'datetime',
+        'accepted_by_seller_at' => 'datetime',
+        'confirmed_by_blogger_at' => 'datetime',
+        'confirmed_by_seller_at' => 'datetime',
+        'last_message_at' => 'datetime',
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
     ];
 
     public function blogger()
