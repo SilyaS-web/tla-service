@@ -2366,7 +2366,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .project-item__status {
     position: absolute;
-    right:10px;bottom: 10px;
+    right:10px;bottom: 20px;
     background-color: #fff;
     border-radius: 5px;
     padding:5px;
@@ -2404,7 +2404,6 @@ input[type='range']::-webkit-slider-runnable-track{
     display: block;
     max-height: 270px;
     overflow: hidden;
-    margin-bottom: 15px;
 }
 .project-item__carousel--carousel.owl-loaded {
     overflow: unset;
@@ -5410,7 +5409,7 @@ input[type='range']::-webkit-slider-runnable-track{
         width: fit-content;
     }
     .profile__content{
-        width:calc(100% - 80px);
+        width:100%;
     }
     #profile-projects .profile-projects__body{
         max-width:400px
@@ -5456,6 +5455,7 @@ input[type='range']::-webkit-slider-runnable-track{
 
     .footer__container{
         padding:30px 15px;
+        padding-bottom: 75px;
     }
     .footer__body{
         flex-direction: column;
@@ -5489,6 +5489,13 @@ input[type='range']::-webkit-slider-runnable-track{
         text-wrap: nowrap;
     }
 
+    .project-item__status {
+        bottom: 10px;
+    }
+
+    .notification{
+        bottom:70px;
+    }
 }
 @media (orientation: landscape) and (max-width: 675px) {
     .view-project__props-col .dashboard__placeholder{
@@ -5654,8 +5661,8 @@ input[type='range']::-webkit-slider-runnable-track{
     }
 
     .btn{
-        padding:15px 20px;
-        font-size: 14px;
+        padding:10px 14px;
+        font-size: 13px;
     }
 
     .messages-chat__item-date{
@@ -5703,9 +5710,6 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .auth__container{
         padding:30px 10px;
-    }
-    .footer__container{
-        padding:30px 15px;
     }
 
     .profile-projects__statistics .view-project__props-graph>*{
@@ -5828,6 +5832,7 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .footer__container{
         padding:15px 10px;
+        padding-bottom: 75px;
     }
     .profile-projects__info{
         min-width: unset;
