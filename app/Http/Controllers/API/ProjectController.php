@@ -324,7 +324,7 @@ class ProjectController extends Controller
                     }
 
                     if ($seller_tariff->quantity >= 0) {
-                        $new_quantity = $seller_tariff->quantity > $project_work->quantity ? $seller_tariff->quantity - $project_work->quantity : $seller_tariff->quantity;
+                        $new_quantity = $seller_tariff->quantity > $project_work->quantity ? $seller_tariff->quantity - $project_work->quantity : 0;
                         $seller_tariff->update(['quantity' => $new_quantity]);
                     }
 
