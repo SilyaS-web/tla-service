@@ -326,6 +326,8 @@ class ProjectController extends Controller
                     if ($seller_tariff->quantity > 0) {
                         $new_quantity = $seller_tariff->quantity > $project_work->quantity ? $seller_tariff->quantity - $project_work->quantity : $seller_tariff->quantity;
                         $seller_tariff->update(['quantity' => $new_quantity]);
+                    } else if ($seller_tariff->quantity = 0) {
+                        throw new \Exception('Вашего тарифа недостаточно для того, чтобы опубликовать');
                     }
 
                     $project_work->update(['finish_date' => $seller_tariff->finish_date]);
