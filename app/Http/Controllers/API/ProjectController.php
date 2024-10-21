@@ -323,7 +323,7 @@ class ProjectController extends Controller
                         throw new \Exception('Вашего тарифа недостаточно для того, чтобы опубликовать');
                     }
 
-                    if ($seller_tariff->quantity > 0) {
+                    if ($seller_tariff->quantity >= 0) {
                         $new_quantity = $seller_tariff->quantity > $project_work->quantity ? $seller_tariff->quantity - $project_work->quantity : $seller_tariff->quantity;
                         $seller_tariff->update(['quantity' => $new_quantity]);
                     }
