@@ -10,11 +10,13 @@ class Work extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public const CANCELED = 'canceled';
     public const PENDING = 'pending';
     public const IN_PROGRESS = 'progress';
     public const COMPLETED = 'completed';
 
     public const STATUSES = [
+        self::CANCELED,
         self::PENDING,
         self::IN_PROGRESS,
         self::COMPLETED,
@@ -29,6 +31,8 @@ class Work extends Model
         'accepted_by_seller_at',
         'confirmed_by_blogger_at',
         'confirmed_by_seller_at',
+        'canceled_by_blogger_at',
+        'canceled_by_seller_at',
         'status',
         'created_by',
         'project_work_id',
@@ -41,6 +45,8 @@ class Work extends Model
         'confirmed_by_blogger_at' => 'datetime',
         'confirmed_by_seller_at' => 'datetime',
         'last_message_at' => 'datetime',
+        'canceled_by_blogger_at' => 'datetime',
+        'canceled_by_seller_at' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

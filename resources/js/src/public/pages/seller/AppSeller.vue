@@ -165,6 +165,8 @@ export default{
 
             this.isChatTab = tab === 'chat';
 
+            $('.wrapper').toggleClass('footer_disabled', this.isChatTab)
+
             switch (tab){
                 case 'dashboard':
                     this.dashboard = await this.getSellerStats(this.user.id)

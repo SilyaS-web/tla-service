@@ -3,11 +3,14 @@
 namespace App\Http\Resources;
 
 use App\Models\User;
+use App\Models\Work;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
 class WorkResource extends JsonResource
 {
+    private $with_array;
+
     /**
      * Transform the resource into an array.
      *
@@ -19,6 +22,14 @@ class WorkResource extends JsonResource
         $project = null;
         if (isset($user) && $user->role == User::BLOGGER && $this->project) {
             $project = new ProjectResource($this->project);
+
+        } else if (request()->input('with') && in_array('project', request()->input('with')) && $this->project) {
+            $project = [
+                'product_name' => $this->project->product_name,
+                'product_nm' => $this->project->product_nm,
+                'project_files' => ProjectFileResource::collection($this->project->projectFiles),
+                'product_price' => $this->product_price,
+            ];
         }
 
         return [
@@ -37,6 +48,8 @@ class WorkResource extends JsonResource
             'accepted_by_seller_at' => isset($this->accepted_by_seller_at) ? $this->accepted_by_seller_at->format('Y-m-d H:i') : null,
             'confirmed_by_blogger_at' => isset($this->confirmed_by_blogger_at) ? $this->confirmed_by_blogger_at->format('Y-m-d H:i') : null,
             'confirmed_by_seller_at' => isset($this->confirmed_by_seller_at) ? $this->confirmed_by_seller_at->format('Y-m-d H:i') : null,
+            'canceled_by_blogger_at' => isset($this->canceled_by_blogger_at) ? $this->canceled_by_blogger_at->format('Y-m-d H:i') : null,
+            'canceled_by_seller_at' => isset($this->canceled_by_seller_at) ? $this->canceled_by_seller_at->format('Y-m-d H:i') : null,
             'status' => $this->status,
             'status_name' => $this->getStatus(),
             'created_by' => $this->created_by,

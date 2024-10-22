@@ -130,11 +130,20 @@
             return user && user.role == 'seller'
         },
 
-        getWorks(user_id, orderBy = 'desc', is_active = 1){
+        getWorks(user_id, orderBy = 'desc', is_active = 1, _with = ['project']){
             return new Promise((resolve, reject) => {
+                var params = {is_active: is_active};
+
+                if(orderBy)
+                    params.order_by_last_message = orderBy;
+
+                if(_with)
+                    params.with = _with;
+
                 axios({
                     method: 'get',
-                    url: 'api/users/' + user_id + '/works?order_by_last_message=' + orderBy + '&is_active=' + is_active
+                    url: 'api/users/' + user_id + '/works',
+                    params: params
                 })
                 .then(response => {
                     resolve(response.data.works);

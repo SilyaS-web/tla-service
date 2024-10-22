@@ -21,12 +21,15 @@ const Work = {
             })
         })
     },
-    getUserWorksList: (user_id, created_by = false, is_active = 0, filterData = false) => {
+    getUserWorksList: (user_id, created_by = false, is_active = 0, filterData = false, _with = ['project']) => {
         return new Promise((resolve, reject) => {
             var params = {is_active: is_active};
 
             if(created_by)
                 params.created_by = created_by;
+
+            if(_with)
+                params.with = _with;
 
             if(filterData){
                 for(let k in filterData){
@@ -63,6 +66,30 @@ const Work = {
                 notify('info', {
                     title: 'Успешно!',
                     message: 'Заявка от блогера отклонена.'
+                })
+
+                resolve(true);
+            })
+            .catch((errors) => {
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'
+                })
+
+                resolve(false)
+            })
+        })
+    },
+    cancel(work_id){
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'get',
+                url: 'api/works/' + work_id + '/cancel'
+            })
+            .then(response => {
+                notify('info', {
+                    title: 'Успешно!',
+                    message: 'Статус работы поменялся.'
                 })
 
                 resolve(true);
