@@ -5412,6 +5412,9 @@ input[type='range']::-webkit-slider-runnable-track{
     .profile__content{
         width:100%;
     }
+    .project-item{
+        padding: 0;
+    }
     #profile-projects .profile-projects__body{
         max-width:400px
     }
