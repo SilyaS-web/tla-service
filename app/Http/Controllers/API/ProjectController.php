@@ -361,7 +361,7 @@ class ProjectController extends Controller
 
             if ($validated['status'] == 'active') {
                 $works = $project->works()->where(function (Builder $query) use ($seller_id) {
-                    $query->where('created_by', $seller_id)->orWhere('status', '<>', null);
+                    $query->where('created_by', $seller_id)->where('status', '<>', Work::CANCELED)->orWhere('status', '<>', null);
                 });
             } else {
                 $works = $project->works()->where('created_by', '<>', $seller_id)->where('status', null);
