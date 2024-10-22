@@ -25534,19 +25534,20 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               if (currentItem) _this2.currentItem = currentItem;
               _this2.Loader.loaderOn('.wrapper #' + tab);
               _this2.isChatTab = tab === 'chat';
+              $('.wrapper').toggleClass('footer_disabled', _this2.isChatTab);
               _context2.t0 = tab;
-              _context2.next = _context2.t0 === 'dashboard' ? 9 : _context2.t0 === 'profile-projects' ? 14 : _context2.t0 === 'profile-blogers-list' ? 17 : _context2.t0 === 'all-projects' ? 19 : 21;
+              _context2.next = _context2.t0 === 'dashboard' ? 10 : _context2.t0 === 'profile-projects' ? 15 : _context2.t0 === 'profile-blogers-list' ? 18 : _context2.t0 === 'all-projects' ? 20 : 22;
               break;
-            case 9:
-              _context2.next = 11;
+            case 10:
+              _context2.next = 12;
               return _this2.getSellerStats(_this2.user.id);
-            case 11:
+            case 12:
               _this2.dashboard = _context2.sent;
               setTimeout(function () {
                 _this2.Loader.loaderOff('#dashboard');
               }, 300);
-              return _context2.abrupt("break", 23);
-            case 14:
+              return _context2.abrupt("break", 24);
+            case 15:
               _this2.myProjects = [];
               _this2.Project.getUsersProjectsList(_this2.user.id).then(function (data) {
                 var list = data || [];
@@ -25565,8 +25566,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   _this2.Loader.loaderOff('#profile-projects');
                 }, 300);
               });
-              return _context2.abrupt("break", 23);
-            case 17:
+              return _context2.abrupt("break", 24);
+            case 18:
               _this2.Blogger.getList([1]).then(function (data) {
                 _this2.bloggers = (data || []).map(function (_b) {
                   return _this2.findBloggerBiggestPlatform(_b);
@@ -25575,8 +25576,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   _this2.Loader.loaderOff('#profile-blogers-list');
                 }, 300);
               });
-              return _context2.abrupt("break", 23);
-            case 19:
+              return _context2.abrupt("break", 24);
+            case 20:
               _this2.Project.getList({
                 is_blogger_access: 1,
                 statuses: [0]
@@ -25586,13 +25587,13 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
                   _this2.Loader.loaderOff('#all-projects');
                 }, 300);
               });
-              return _context2.abrupt("break", 23);
-            case 21:
+              return _context2.abrupt("break", 24);
+            case 22:
               setTimeout(function () {
                 _this2.Loader.loaderOff();
               }, 300);
-              return _context2.abrupt("break", 23);
-            case 23:
+              return _context2.abrupt("break", 24);
+            case 24:
             case "end":
               return _context2.stop();
           }
