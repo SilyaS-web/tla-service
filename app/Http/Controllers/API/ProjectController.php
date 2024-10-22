@@ -341,14 +341,22 @@ class ProjectController extends Controller
 
     public function stop(Project $project)
     {
-        $project->update(['status' => Project::STOPPED]);
-        return response()->json()->setStatusCode(200);
+        if ($project->status === Project::ACTIVE) {
+            $project->update(['status' => Project::STOPPED]);
+            return response()->json()->setStatusCode(200);
+        }
+
+        return response()->json(['message' => 'Нельзя изменить статус проекта из текущего статуса '])->setStatusCode(400);
     }
 
     public function start(Project $project)
     {
-        $project->update(['status' => Project::ACTIVE]);
-        return response()->json()->setStatusCode(200);
+        if ($project->status == Project::STOPPED) {
+            $project->update(['status' => Project::ACTIVE]);
+            return response()->json()->setStatusCode(200);
+        }
+
+        return response()->json(['message' => 'Нельзя изменить статус проекта из текущего статуса '])->setStatusCode(400);
     }
 
     public function works(Project $project, Request $request)
