@@ -5410,7 +5410,7 @@ input[type='range']::-webkit-slider-runnable-track{
         width: fit-content;
     }
     .profile__content{
-        width:calc(100% - 80px);
+        width:100%;
     }
     #profile-projects .profile-projects__body{
         max-width:400px
