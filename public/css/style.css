@@ -3581,6 +3581,8 @@ input[type='range']::-webkit-slider-runnable-track{
     max-width: 160px;
     width: 100%;
     font-weight: 600;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 .item-chat__project-link{
     margin-top: 10px;
