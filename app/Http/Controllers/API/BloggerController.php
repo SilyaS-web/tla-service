@@ -344,8 +344,11 @@ class BloggerController extends Controller
 
         $blogger->country_id = $validated['country_id'];
         $blogger->city = $validated['city'];
-        $blogger->description = $validated['description'] ?? null;
         $blogger->sex = $validated['sex'];
+
+        if (!empty($validated['description'])) {
+            $blogger->description = $validated['description'];
+        }
 
         if (!empty($validated['themes'])) {
             $blogger->themes()->delete();
