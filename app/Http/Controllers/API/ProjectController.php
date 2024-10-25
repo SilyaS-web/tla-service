@@ -213,7 +213,7 @@ class ProjectController extends Controller
 
     public function unban(Project $project)
     {
-        $project->update(['status' => Project::PENDING]);
+        $project->update(['status' => Project::STOPPED]);
         return response()->json()->setStatusCode(200);
     }
 
