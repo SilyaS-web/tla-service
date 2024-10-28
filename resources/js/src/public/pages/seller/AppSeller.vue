@@ -320,7 +320,8 @@ export default{
 
         async applyFilterProjects(filterData){
             this.Loader.loaderOn('.wrapper .profile__content-inner');
-            this.projects = await this.Project.getList(filterData);
+
+            this.projects = await this.Project.getList(Object.assign(filterData, {is_blogger_access: 1, statuses: [0]}));
 
             setTimeout(()=>{
                 this.Loader.loaderOff();

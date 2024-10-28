@@ -44,6 +44,8 @@
     <noscript><div><img src="https://mc.yandex.ru/watch/98729942" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
     <!-- /Yandex.Metrika counter -->
 
+    <script async src="https://script.click-chat.ru/chat.js?wid=f12436e7-a36d-437d-8783-ec27bf222c55"></script>
+
     <title>@yield('title')</title>
 </head>
 <body>
@@ -54,6 +56,6 @@
 </div>
 @include('shared.success-message')
 </body>
-<script src="{{ asset("js/app.js") }}"></script>
+<script src="{{ asset("js/app.js?v=c298c7f8233d") }}"></script>
 {{--@yield('scripts')--}}
 </html>
