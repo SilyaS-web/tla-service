@@ -57,10 +57,16 @@ class BloggerController extends Controller
             });
         }
 
-        if (isset($validated['subscriber_quantity_min']) && !empty($validated['subscriber_quantity_min'])) {
-            $bloggers->whereHas('platforms', function (Builder $query) use ($validated) {
-                $query->where('subscriber_quantity', '>=', $validated['subscriber_quantity_min']);
-            });
+        if (Auth::user()->role !== 'admin') {
+            if (isset($validated['subscriber_quantity_min']) && !empty($validated['subscriber_quantity_min'])) {
+                $bloggers->whereHas('platforms', function (Builder $query) use ($validated) {
+                    $query->where('subscriber_quantity', '>=', $validated['subscriber_quantity_min']);
+                });
+            } else {
+                $bloggers->whereHas('platforms', function (Builder $query) use ($validated) {
+                    $query->where('subscriber_quantity', '>=', 2000);
+                });
+            }
         }
 
         if (isset($validated['subscriber_quantity_max']) && !empty($validated['subscriber_quantity_max'])) {
