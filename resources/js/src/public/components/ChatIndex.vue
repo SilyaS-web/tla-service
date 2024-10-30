@@ -527,7 +527,8 @@
                         this.getChats();
                         this.currentChat && this.getMessages(this.currentChat);
                     })
-                    .catch(() => {
+                    .catch((err) => {
+                        var message = err.response.data.message ? err.response.data.message : 'Не удалось изменить статус проекта, попробуйте позже.';
                         notify('error', {
                             title: 'Внимание!',
                             message: 'Не удалось изменить статус проекта, попробуйте позже.'

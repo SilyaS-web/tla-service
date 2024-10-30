@@ -465,7 +465,9 @@
                     this.$emit('updateMyProjects');
                 })
                 .catch((err) => {
-                    notify('info', {title: 'Внимание!', message: 'Невозможно сохранить проект, перепроверьте все поля, данные не заполнены, либо заполнены некоректно.'});
+                    let message =  err.response.message ? err.response.message : 'Невозможно сохранить проект, перепроверьте все поля, данные не заполнены, либо заполнены некоректно.';
+
+                    notify('info', {title: 'Внимание!', message: message});
                     this.errors = err.response.errors;
                 })
             },
