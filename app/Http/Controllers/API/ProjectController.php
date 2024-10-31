@@ -52,11 +52,19 @@ class ProjectController extends Controller
         if (isset($validated['product_name']) && !empty($validated['product_name'])) {
             $projects->where('product_name', 'like', '%' . $validated['product_name'] . '%');
         }
-
-        if (isset($validated['project_type']) && !empty($validated['project_type'])) {
-            $projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
-                $query->where('type', $validated['project_type']);
-            });
+        $user = Auth()->user();;
+        if ($user->role === 'blogger') {
+            if ($user->blogger->platforms()->max('coverage') < 2000) {
+                $projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
+                    $query->where('type', Project::FEEDBACK);
+                });
+            }
+        } else {
+            if (isset($validated['project_type']) && !empty($validated['project_type'])) {
+                $projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
+                    $query->where('type', $validated['project_type']);
+                });
+            }
         }
 
         if (isset($validated['category']) && !empty($validated['category'])) {
@@ -186,7 +194,7 @@ class ProjectController extends Controller
 
         $product_images = $request->file('images');
         foreach ($product_images as $product_image) {
-            $urls = ImageService::makeCompressedCopies($product_image, 'projects/' .  $project->id . '/');
+            $urls = ImageService::makeCompressedCopies($product_image, 'projects/' . $project->id . '/');
 
             ProjectFile::create([
                 'source_id' => $project->id,
@@ -257,7 +265,7 @@ class ProjectController extends Controller
 
         if (!empty($product_images)) {
             foreach ($product_images as $product_image) {
-                $urls = ImageService::makeCompressedCopies($product_image, 'projects/' .  $project->id . '/');
+                $urls = ImageService::makeCompressedCopies($product_image, 'projects/' . $project->id . '/');
 
                 ProjectFile::create([
                     'source_id' => $project->id,
