@@ -35329,7 +35329,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
           "class": "checkbox"
         }, null, 8 /* PROPS */, _hoisted_7), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
           "for": 'format_' + work.id
-        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.name) + " - " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.lost_quantity) + "/" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.quantity), 9 /* TEXT, PROPS */, _hoisted_8)]);
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.name), 9 /* TEXT, PROPS */, _hoisted_8)]);
       }), 256 /* UNKEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
         onClick: _cache[0] || (_cache[0] = function () {
           return $options._confirm && $options._confirm.apply($options, arguments);

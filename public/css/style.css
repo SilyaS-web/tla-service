@@ -1773,10 +1773,11 @@ input[type='range']::-webkit-slider-runnable-track{
     margin-bottom: 0;
     display: block;
 }
+.checkbox{
+    margin-right: 5px;
+}
 .marketing-format__item .checkbox{
     margin-right: 20px;
-}
-.checkbox{
 }
 .checkbox__checkbox{
     display: none;
