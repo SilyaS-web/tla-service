@@ -19,23 +19,16 @@
             <div class="project-item__subtitle" :title="project.product_name">
                 {{ project.product_name }}
             </div>
-            <div class="project-item__left" style="margin-bottom: 12px;">
-                <div class="line">
-                    <div class="line__val" style="'width:' +
-                    (project.works.map(_w => _w.lost_quantity).reduce((a, b) => a + b, 0) / project.works.map(_w => _w.quantity).reduce((a, b) => a + b, 0)) * 100 + '%'"></div>
-                </div>
-                Осталось мест на интеграцию <span style="font-weight: 700;">{{ project.project_works.map(_w => _w.lost_quantity).reduce((a, b) => a + b, 0) }}/{{ project.project_works.map(_w => parseInt(_w.quantity)).reduce((a, b) => a + b, 0) }}</span>
-            </div>
             <div class="project-item__format-tags card__row card__tags">
                 <div
-                    v-if="project.feedbackWork && project.feedbackWork.quantity > 0"
+                    v-if="project.project_works && project.project_works.find(w => w.type == 'feedback')"
                     class="card__tags-item">
-                    <span>Отзыв - {{ project.feedbackWork.lost_quantity }}/{{ project.feedbackWork.quantity }}</span>
+                    <span>Отзыв</span>
                 </div>
                 <div
-                    v-if="project.integrationWork && project.integrationWork.quantity > 0"
+                    v-if="project.project_works && project.project_works.find(w => w.type == 'integration')"
                     class="card__tags-item">
-                    <span>Интеграция - {{ project.integrationWork.lost_quantity }}/{{ project.integrationWork.quantity }}</span>
+                    <span>Интеграция</span>
                 </div>
             </div>
             <div class="project-item__btns">
@@ -102,14 +95,6 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="project-item__left" style="margin-bottom: 18px;">
-                                <div class="line">
-                                    <div
-                                        :style="((projectInfo.worksInfo.lostQuantity * 100) / projectInfo.worksInfo.totalQuantity) + '%'"
-                                        class="line__val"></div>
-                                </div>
-                                Осталось мест на интеграцию <span style="font-weight: 700;">{{ projectInfo.worksInfo.lostQuantity + '/' + projectInfo.worksInfo.totalQuantity }}</span>
                             </div>
                             <div class="project-item__btns">
                                 <button
@@ -195,13 +180,6 @@
         },
         mounted() {
             this.user = this.User.getCurrent();
-
-            if (!this.project) {
-                return
-            }
-
-            this.project.feedbackWork = this.Project.getFeedbackWork(this.project);
-            this.project.integrationWork = this.Project.getIntegrationWork(this.project);
         },
         updated(){
             if(this.projectInfo){
@@ -218,17 +196,6 @@
                         }
                     }
                 })
-            }
-
-            if(this.project){
-                var feedbackWork = this.Project.getFeedbackWork(this.project),
-                    integrationWork = this.Project.getIntegrationWork(this.project);
-
-                if(!this.project.feedbackWork || this.project.feedbackWork.quantity != feedbackWork.quantity || this.project.feedbackWork.lost_quantity != feedbackWork.lost_quantity)
-                    this.project.feedbackWork = feedbackWork;
-
-                if(!this.project.integrationWork || this.project.integrationWork.quantity != integrationWork.quantity || this.project.integrationWork.lost_quantity != integrationWork.lost_quantity)
-                    this.project.integrationWork = integrationWork;
             }
         },
         methods:{
