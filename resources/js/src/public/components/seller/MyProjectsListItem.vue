@@ -30,7 +30,7 @@
                         <div
                             v-for="format in project.project_works"
                             class="profile-projects__format">
-                            {{ format.name }} — {{ format.lost_quantity }}/{{ parseInt(format.quantity) }}
+                            {{ format.name }}
                         </div>
                     </div>
                 </div>
