@@ -24244,6 +24244,12 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     editProject: function editProject(project) {
       this.editingProject = project;
+      this.editingProject.feedback = project.project.project_works.find(function (w) {
+        return w.type == 'feedback';
+      }) != 'undefined';
+      this.editingProject.integration = project.project.project_works.find(function (w) {
+        return w.type == 'integration';
+      }) != 'undefined';
       this.editingProjectFiles = this.editingProject.project_files;
     },
     modifyProject: function modifyProject() {
