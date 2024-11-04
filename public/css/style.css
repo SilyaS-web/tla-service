@@ -1783,14 +1783,13 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .checkbox__checkbox + label{
     position: relative;
-    padding-left: 30px;
     cursor: pointer;
     user-select: none;
     display:flex;
 }
 .checkbox__checkbox + label:before {
     content: '';
-    position: absolute;
+    position: relative;
     left: 0;
     top: 0;
     width: 24px;
