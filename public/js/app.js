@@ -32541,38 +32541,36 @@ var _hoisted_20 = {
 var _hoisted_21 = {
   "class": "checkbox"
 };
-var _hoisted_22 = ["change"];
-var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_22 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "feedback"
 }, null, -1 /* HOISTED */);
-var _hoisted_24 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-feedback\">Отзыв <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-feedback\"> ? <div class=\"format-hint format-hint--text\" id=\"product-feedback\"><div class=\"format-hint__title\"> Рекламный пост </div><div class=\"format-hint__body\"> Улучшайте рейтинг вашей ĸарточĸи, публиĸуя положительные отзывы. Это поможет переĸрыть негативные отзывы и повысить доверие поĸупателей. Получите выĸупы не опасаясь санĸций от марĸетплейса. </div></div></div></label><div class=\"format-tooltip\" data-hint=\"feedback\"> ? <div class=\"format-hint format-hint--text\" id=\"feedback\"><div class=\"format-hint__title\"> Отзыв </div><div class=\"format-hint__body\"> Улучшайте рейтинг вашей ĸарточĸи, публиĸуя положительные отзывы. Это поможет переĸрыть негативные отзывы и повысить доверие поĸупателей. Получите выĸупы не опасаясь санĸций от марĸетплейса. </div></div></div>", 2);
-var _hoisted_26 = {
+var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-feedback\">Отзыв <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-feedback\"> ? <div class=\"format-hint format-hint--text\" id=\"product-feedback\"><div class=\"format-hint__title\"> Рекламный пост </div><div class=\"format-hint__body\"> Улучшайте рейтинг вашей ĸарточĸи, публиĸуя положительные отзывы. Это поможет переĸрыть негативные отзывы и повысить доверие поĸупателей. Получите выĸупы не опасаясь санĸций от марĸетплейса. </div></div></div></label><div class=\"format-tooltip\" data-hint=\"feedback\"> ? <div class=\"format-hint format-hint--text\" id=\"feedback\"><div class=\"format-hint__title\"> Отзыв </div><div class=\"format-hint__body\"> Улучшайте рейтинг вашей ĸарточĸи, публиĸуя положительные отзывы. Это поможет переĸрыть негативные отзывы и повысить доверие поĸупателей. Получите выĸупы не опасаясь санĸций от марĸетплейса. </div></div></div>", 2);
+var _hoisted_25 = {
   "class": "marketing-format__item input-checkbox-w"
 };
-var _hoisted_27 = {
+var _hoisted_26 = {
   "class": "checkbox"
 };
-var _hoisted_28 = ["change"];
-var _hoisted_29 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_27 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "integration"
 }, null, -1 /* HOISTED */);
-var _hoisted_30 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-inst\"> Интеграция <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-inst\"> ? <div class=\"format-hint format-hint--text\" id=\"product-inst\"><div class=\"format-hint__title\"> Интеграция </div><div class=\"format-hint__body\"> Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции с лидерами мнений. </div></div></div></label><div class=\"format-tooltip\" data-hint=\"inst\"> ? <div class=\"format-hint format-hint--text\" id=\"inst\"><div class=\"format-hint__title\"> Интеграция </div><div class=\"format-hint__body\"> Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции с лидерами мнений. </div></div></div>", 2);
-var _hoisted_32 = {
+var _hoisted_28 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-inst\"> Интеграция <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-inst\"> ? <div class=\"format-hint format-hint--text\" id=\"product-inst\"><div class=\"format-hint__title\"> Интеграция </div><div class=\"format-hint__body\"> Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции с лидерами мнений. </div></div></div></label><div class=\"format-tooltip\" data-hint=\"inst\"> ? <div class=\"format-hint format-hint--text\" id=\"inst\"><div class=\"format-hint__title\"> Интеграция </div><div class=\"format-hint__body\"> Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции с лидерами мнений. </div></div></div>", 2);
+var _hoisted_30 = {
   "class": "form-group form-group--file create-project__files upload-files"
 };
-var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "upload-files__title"
 }, " Загрузите изображения товара ", -1 /* HOISTED */);
-var _hoisted_34 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_32 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "upload-files__body"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "upload-files__plus"
 })], -1 /* HOISTED */);
-var _hoisted_35 = {
+var _hoisted_33 = {
   key: 0,
   "class": "error"
 };
-var _hoisted_36 = {
+var _hoisted_34 = {
   "class": "quest__btns"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -32606,20 +32604,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "checkbox",
     id: "feedback",
     "class": "checkbox__checkbox",
-    change: $options.feedbackCheckbox,
-    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+    onChange: _cache[3] || (_cache[3] = function () {
+      return $options.feedbackCheckbox && $options.feedbackCheckbox.apply($options, arguments);
+    }),
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
       return $data.project.feedback = $event;
     })
-  }, null, 8 /* PROPS */, _hoisted_22), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.project.feedback]]), _hoisted_23]), _hoisted_24]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.project.feedback]]), _hoisted_22]), _hoisted_23]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "checkbox",
     id: "integration",
     "class": "checkbox__checkbox",
-    change: $options.integrationCheckbox,
-    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+    onChange: _cache[5] || (_cache[5] = function () {
+      return $options.integrationCheckbox && $options.integrationCheckbox.apply($options, arguments);
+    }),
+    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
       return $data.project.integration = $event;
     })
-  }, null, 8 /* PROPS */, _hoisted_28), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.project.integration]]), _hoisted_29]), _hoisted_30])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [_hoisted_33, _hoisted_34, $data.errors && $data.errors.images ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_35, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.images), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    onClick: _cache[5] || (_cache[5] = function () {
+  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.project.integration]]), _hoisted_27]), _hoisted_28])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [_hoisted_31, _hoisted_32, $data.errors && $data.errors.images ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.images), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[7] || (_cache[7] = function () {
       return $options.createProject && $options.createProject.apply($options, arguments);
     }),
     "class": "btn btn-primary"
