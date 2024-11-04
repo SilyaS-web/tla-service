@@ -37,22 +37,15 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group form-group--file create-project__files upload-files">
-                            <div class="upload-files__title">
-                                Загрузите изображения товара
-                            </div>
-                            <div class="upload-files__body">
-                                <div class="upload-files__plus">
-
-                                </div>
-                            </div>
-                            <span class="error" v-if="errors && errors.images">{{ errors.images }}</span>
-                        </div>
                         <div class="form-group marketing-format">
                             <label for="format">Выберите формат рекламы</label>
                             <span class="error" v-if="errors && errors.project_type">{{ errors.project_type }}</span>
 
                             <div class="marketing-format__item input-checkbox-w">
+                                <div class="checkbox">
+                                    <input type="checkbox" class="checkbox__checkbox">
+                                    <label for=""></label>
+                                </div>
                                 <label for="product-feedback">Отзыв
                                     <div class="format-tooltip format-tooltip--mobile" data-hint="product-feedback">
                                         ?
@@ -83,6 +76,10 @@
                                 </div>
                             </div>
                             <div class="marketing-format__item input-checkbox-w">
+                                <div class="checkbox">
+                                    <input type="checkbox" class="checkbox__checkbox">
+                                    <label for=""></label>
+                                </div>
                                 <label for="product-inst">
                                     Интеграция
                                     <div class="format-tooltip format-tooltip--mobile" data-hint="product-inst">
@@ -112,6 +109,17 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="form-group form-group--file create-project__files upload-files">
+                            <div class="upload-files__title">
+                                Загрузите изображения товара
+                            </div>
+                            <div class="upload-files__body">
+                                <div class="upload-files__plus">
+
+                                </div>
+                            </div>
+                            <span class="error" v-if="errors && errors.images">{{ errors.images }}</span>
+                        </div>
                         <div class="quest__btns">
                             <button @click="createProject" class="btn btn-primary">
                                 Сохранить
@@ -136,11 +144,8 @@
                     product_nm: null,
                     product_price: null,
                     product_link: null,
-                    feedback_quantity: 0,
-                    inst_quantity: 0,
-                    youtube_quantity: 0,
-                    vk_quantity: 0,
-                    telegram_quantity: 0,
+                    feedback: false,
+                    integration: false,
                     images: [],
                 }),
                 errors: ref({

@@ -1773,11 +1773,49 @@ input[type='range']::-webkit-slider-runnable-track{
     margin-bottom: 0;
     display: block;
 }
-.checkbox {
-    width: 15px;
-    height: 15px;
-    margin-right: 15px;
+.marketing-format__item .checkbox{
+    margin-right: 20px;
 }
+.checkbox{
+}
+.checkbox__checkbox{
+    display: none;
+}
+.checkbox__checkbox + label{
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+    user-select: none;
+    display:flex;
+}
+.checkbox__checkbox + label:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    border: 1px solid #000;
+    background-color: rgba(0,0,0,0);
+    border-radius: 8px;
+}
+.checkbox__checkbox:checked + label::before {
+    background-image: url('../img/checkbox-icon.svg');
+    background-size: 15px 12px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.checkbox.alt .checkbox__checkbox + label{
+    padding-left: 32px;
+}
+.checkbox.alt .checkbox__checkbox + label:before{
+    width: 20px;
+    height: 20px;
+    border-radius:4px;
+    top:-1px;
+}
+
 .format-tooltip {
     margin-left: 15px;
     color: #fff;
