@@ -207,13 +207,11 @@
                 )
             },
             feedbackCheckbox(event){
-                console.log(event)
                 if($(event.target).is(':checked')){
                     this.project.integration = false;
                 }
             },
             integrationCheckbox(event){
-                console.log(event)
                 if($(event.target).is(':checked')){
                     this.project.feedback = false;
                 }

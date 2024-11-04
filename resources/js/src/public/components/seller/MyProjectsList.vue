@@ -159,9 +159,13 @@
                         <div id="step_2" class="quest__step step current">
                             <div class="form-group marketing-format">
                                 <label for="format">Выберите формат рекламы</label>
-                                <span class="error" v-if="errors.project_type">{{ errors.project_type }}</span>
+                                <span class="error" v-if="errors && errors.project_type">{{ errors.project_type }}</span>
 
                                 <div class="marketing-format__item input-checkbox-w">
+                                    <div class="checkbox">
+                                        <input type="checkbox" id="feedback" class="checkbox__checkbox" v-on:change="feedbackCheckbox" v-model="editingProject.feedback">
+                                        <label for="feedback"></label>
+                                    </div>
                                     <label for="product-feedback">Отзыв
                                         <div class="format-tooltip format-tooltip--mobile" data-hint="product-feedback">
                                             ?
@@ -177,16 +181,6 @@
                                             </div>
                                         </div>
                                     </label>
-                                    <div class="quantity-w" data-max="100">
-                                        <div class="quantity-input">
-                                            <input type="number" v-model="quantities.feedback_quantity" class="input" name="feedback-quantity" id="feedback-quantity" disabled>
-                                        </div>
-                                        <div
-                                            v-on:click="(function(e){ if(quantities.feedback_quantity < 100) quantities.feedback_quantity += 1})()"
-                                            class="quantity-plus">
-                                            <img src="img/plus-icon.svg" alt="">
-                                        </div>
-                                    </div>
                                     <div class="format-tooltip" data-hint="feedback">
                                         ?
                                         <div class="format-hint format-hint--text" id="feedback">
@@ -200,177 +194,40 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="marketing-format__item input-checkbox-w">
+                                    <div class="checkbox">
+                                        <input type="checkbox" id="integration" class="checkbox__checkbox" v-on:change="integrationCheckbox" v-model="editingProject.integration">
+                                        <label for="integration"></label>
+                                    </div>
                                     <label for="product-inst">
-                                        Интеграция Ins
+                                        Интеграция
                                         <div class="format-tooltip format-tooltip--mobile" data-hint="product-inst">
                                             ?
                                             <div class="format-hint format-hint--text" id="product-inst">
                                                 <div class="format-hint__title">
-                                                    Интеграция Ins
+                                                    Интеграция
                                                 </div>
                                                 <div class="format-hint__body">
-                                                    Увеличивайте продажи с помощью reels. Повышайте охваты,
-                                                    узнаваемость и доверие ĸ вашему бренду и товару, используя
-                                                    интеграции в Ins с лидерами мнений.
+                                                    Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя
+                                                    интеграции с лидерами мнений.
                                                 </div>
                                             </div>
                                         </div>
                                     </label>
-                                    <div class="quantity-w" data-max="100">
-                                        <div class="quantity-input">
-                                            <input type="number" v-model="quantities.inst_quantity" class="input" name="inst-quantity" id="inst-quantity" disabled>
-                                        </div>
-                                        <div  v-on:click="(function(e){ if(quantities.inst_quantity < 100) quantities.inst_quantity += 1})()"
-                                              class="quantity-plus">
-                                            <img src="img/plus-icon.svg" alt="">
-                                        </div>
-                                    </div>
                                     <div class="format-tooltip" data-hint="inst">
                                         ?
                                         <div class="format-hint format-hint--text" id="inst">
                                             <div class="format-hint__title">
-                                                Интеграция Ins
+                                                Интеграция
                                             </div>
                                             <div class="format-hint__body">
-                                                Увеличивайте продажи с помощью reels. Повышайте охваты,
-                                                узнаваемость и доверие ĸ вашему бренду и товару, используя
-                                                интеграции в Ins с лидерами мнений.
+                                                Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя
+                                                интеграции с лидерами мнений.
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
-                                <div class="marketing-format__item input-checkbox-w">
-                                    <label for="product-youtube">
-                                        Интеграция YTube
-                                        <div class="format-tooltip format-tooltip--mobile" data-hint="product-youtube">
-                                            ?
-                                            <div class="format-hint format-hint--text" id="product-youtube">
-                                                <div class="format-hint__title">
-                                                    Интеграция YTube
-                                                </div>
-                                                <div class="format-hint__body">
-                                                    Увеличивайте продажи с помощью нативных обзоров на товар и
-                                                    shorts. Повышайте охваты, ĸачайте seo, узнаваемость и доверие ĸ
-                                                    вашему бренду и товару, используя интеграции в YTube с лидерами
-                                                    мнений.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </label>
-                                    <div class="quantity-w" data-max="100">
-                                        <div class="quantity-input">
-                                            <input type="number" v-model="quantities.youtube_quantity" class="input" name="youtube-quantity" disabled>
-                                        </div>
-                                        <div v-on:click="(function(e){ if(quantities.youtube_quantity < 100) quantities.youtube_quantity += 1})()" class="quantity-plus">
-                                            <img src="img/plus-icon.svg" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="format-tooltip" data-hint="youtube">
-                                        ?
-                                        <div class="format-hint format-hint--text" id="youtube">
-                                            <div class="format-hint__title">
-                                                Интеграция YTube
-                                            </div>
-                                            <div class="format-hint__body">
-                                                Увеличивайте продажи с помощью нативных обзоров на товар и
-                                                shorts. Повышайте охваты, ĸачайте seo, узнаваемость и доверие ĸ
-                                                вашему бренду и товару, используя интеграции в YTube с лидерами
-                                                мнений.
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="marketing-format__item input-checkbox-w">
-                                    <label for="product-vk">
-                                        Интеграция VK
-                                        <div class="format-tooltip format-tooltip--mobile " data-hint="product-vk">
-                                            ?
-                                            <div class="format-hint format-hint--text" id="product-vk">
-                                                <div class="format-hint__title">
-                                                    Интеграция VK
-                                                </div>
-                                                <div class="format-hint__body">
-                                                    Увеличивайте продажи с помощью публиĸаций в ВК по вашей ЦА.
-                                                    Получите узнаваемость и доверие ĸ вашему бренду и товару,
-                                                    используя интеграции ВК в целевых паблиĸах.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </label>
-                                    <div class="quantity-w" data-max="100">
-                                        <div class="quantity-input">
-                                            <input type="number" class="input" v-model="quantities.vk_quantity" name="vk-quantity" disabled>
-                                        </div>
-                                        <div
-                                            v-on:click="(function(e){ if(quantities.vk_quantity < 100) quantities.vk_quantity += 1})()"
-                                            class="quantity-plus">
-                                            <img src="img/plus-icon.svg" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="format-tooltip" data-hint="vk">
-                                        ?
-                                        <div class="format-hint format-hint--text" id="vk">
-                                            <div class="format-hint__title">
-                                                Интеграция VK
-                                            </div>
-                                            <div class="format-hint__body">
-                                                Увеличивайте продажи с помощью публиĸаций в ВК по вашей ЦА.
-                                                Получите узнаваемость и доверие ĸ вашему бренду и товару,
-                                                используя интеграции ВК в целевых паблиĸах.
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="marketing-format__item input-checkbox-w">
-                                    <label for="product-tg">
-                                        Интеграция Telegram
-                                        <div class="format-tooltip format-tooltip--mobile" data-hint="product-tg">
-                                            ?
-                                            <div class="format-hint format-hint--text" id="product-tg">
-                                                <div class="format-hint__title">
-                                                    Интеграция Telegram
-                                                </div>
-                                                <div class="format-hint__body">
-                                                    Увеличивайте продажи с помощью публиĸаций в Телеграм по вашей
-                                                    ЦА. Получите охват по узĸой ЦА, узнаваемость и доверие ĸ вашему
-                                                    бренду и товару, используя интеграции Телеграм в целевых паблиĸах.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </label>
-                                    <div class="quantity-w" data-max="100">
-                                        <div class="quantity-input">
-                                            <input type="number" class="input" v-model="quantities.telegram_quantity" name="telegram-quantity" disabled>
-                                        </div>
-                                        <div
-                                            v-on:click="(function(e){ if(quantities.telegram_quantity < 100) quantities.telegram_quantity += 1})()"
-                                            class="quantity-plus">
-                                            <img src="img/plus-icon.svg" alt="">
-                                        </div>
-                                    </div>
-                                    <div class="format-tooltip" data-hint="tg">
-                                        ?
-                                        <div class="format-hint format-hint--text" id="tg">
-                                            <div class="format-hint__title">
-                                                Интеграция Telegram
-                                            </div>
-                                            <div class="format-hint__body">
-                                                Увеличивайте продажи с помощью публиĸаций в Телеграм по вашей
-                                                ЦА. Получите охват по узĸой ЦА, узнаваемость и доверие ĸ вашему
-                                                бренду и товару, используя интеграции Телеграм в целевых паблиĸах.
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <span class="error error-format"></span>
                             </div>
                             <div class="quest__btns">
                                 <button @click="modifyProject" class="btn btn-primary">
@@ -404,13 +261,6 @@
                 }),
                 editingProject: ref(false),
                 editingProjectFiles: ref([]),
-                quantities: ref({
-                    feedback_quantity: 0,
-                    inst_quantity: 0,
-                    youtube_quantity: 0,
-                    vk_quantity: 0,
-                    telegram_quantity: 0,
-                }),
                 errors: ref({}),
                 Project
             }
@@ -423,9 +273,6 @@
         methods:{
             editProject(project){
                 this.editingProject = project;
-                this.editingProject.project_works.forEach(w => {
-                    this.quantities[`${w.type}_quantity`] = parseInt(w.quantity)
-                })
                 this.editingProjectFiles = this.editingProject.project_files;
             },
 
@@ -439,10 +286,9 @@
                 formData.append('product_nm', this.editingProject.product_nm);
                 formData.append('product_link', this.editingProject.product_link);
                 formData.append('product_price', this.editingProject.product_price);
+                formData.append('feedback', this.editingProject.feedback);
+                formData.append('integration', this.editingProject.integration);
 
-                for (let k in this.quantities){
-                    formData.append(k, this.quantities[k])
-                }
                 for (let i = 0; i < this.editingProject.images.length; i++){
                     if(this.editingProject.images[i])
                         formData.append('images[' + i + ']', this.editingProject.images[i])
@@ -474,10 +320,6 @@
             resetEditData(){
                 this.editingProject = false;
                 this.editingProjectFiles = [];
-
-                for (let k in this.quantities){
-                    this.quantities[k] = 0
-                }
             },
             deleteFile(file){
                 this.editingProjectFiles = this.editingProjectFiles.filter(_f => _f.link != file.link);
@@ -532,7 +374,17 @@
                     project_type: '',
                 }
                 this.$emit('applyFilter', false);
-            }
+            },
+            feedbackCheckbox(event){
+                if($(event.target).is(':checked')){
+                    this.editingProject.integration = false;
+                }
+            },
+            integrationCheckbox(event){
+                if($(event.target).is(':checked')){
+                    this.editingProject.feedback = false;
+                }
+            },
         }
     }
 </script>

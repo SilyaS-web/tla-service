@@ -24185,13 +24185,11 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       }))();
     },
     feedbackCheckbox: function feedbackCheckbox(event) {
-      console.log(event);
       if ($(event.target).is(':checked')) {
         this.project.integration = false;
       }
     },
     integrationCheckbox: function integrationCheckbox(event) {
-      console.log(event);
       if ($(event.target).is(':checked')) {
         this.project.feedback = false;
       }
@@ -24232,13 +24230,6 @@ __webpack_require__.r(__webpack_exports__);
       }),
       editingProject: (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)(false),
       editingProjectFiles: (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)([]),
-      quantities: (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({
-        feedback_quantity: 0,
-        inst_quantity: 0,
-        youtube_quantity: 0,
-        vk_quantity: 0,
-        telegram_quantity: 0
-      }),
       errors: (0,vue__WEBPACK_IMPORTED_MODULE_1__.ref)({}),
       Project: _services_api_Project__WEBPACK_IMPORTED_MODULE_0__["default"]
     };
@@ -24252,15 +24243,11 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     editProject: function editProject(project) {
-      var _this = this;
       this.editingProject = project;
-      this.editingProject.project_works.forEach(function (w) {
-        _this.quantities["".concat(w.type, "_quantity")] = parseInt(w.quantity);
-      });
       this.editingProjectFiles = this.editingProject.project_files;
     },
     modifyProject: function modifyProject() {
-      var _this2 = this;
+      var _this = this;
       this.editingProject.images = this.editingProjectFiles.filter(function (f) {
         return f.file;
       }).map(function (f) {
@@ -24276,9 +24263,8 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('product_nm', this.editingProject.product_nm);
       formData.append('product_link', this.editingProject.product_link);
       formData.append('product_price', this.editingProject.product_price);
-      for (var k in this.quantities) {
-        formData.append(k, this.quantities[k]);
-      }
+      formData.append('feedback', this.editingProject.feedback);
+      formData.append('integration', this.editingProject.integration);
       for (var i = 0; i < this.editingProject.images.length; i++) {
         if (this.editingProject.images[i]) formData.append('images[' + i + ']', this.editingProject.images[i]);
       }
@@ -24290,27 +24276,24 @@ __webpack_require__.r(__webpack_exports__);
         url: '/api/projects/' + this.editingProject.id,
         data: formData
       }).then(function (data) {
-        _this2.resetEditData();
+        _this.resetEditData();
         notify('info', {
           title: 'Успешно!',
           message: 'Данные успешно обновлены.'
         });
-        _this2.$emit('updateMyProjects');
+        _this.$emit('updateMyProjects');
       })["catch"](function (err) {
         var message = err.response.message ? err.response.message : 'Невозможно сохранить проект, перепроверьте все поля, данные не заполнены, либо заполнены некоректно.';
         notify('info', {
           title: 'Внимание!',
           message: message
         });
-        _this2.errors = err.response.errors;
+        _this.errors = err.response.errors;
       });
     },
     resetEditData: function resetEditData() {
       this.editingProject = false;
       this.editingProjectFiles = [];
-      for (var k in this.quantities) {
-        this.quantities[k] = 0;
-      }
     },
     deleteFile: function deleteFile(file) {
       this.editingProjectFiles = this.editingProjectFiles.filter(function (_f) {
@@ -24375,6 +24358,16 @@ __webpack_require__.r(__webpack_exports__);
         project_type: ''
       };
       this.$emit('applyFilter', false);
+    },
+    feedbackCheckbox: function feedbackCheckbox(event) {
+      if ($(event.target).is(':checked')) {
+        this.editingProject.integration = false;
+      }
+    },
+    integrationCheckbox: function integrationCheckbox(event) {
+      if ($(event.target).is(':checked')) {
+        this.editingProject.feedback = false;
+      }
     }
   }
 });
@@ -32828,142 +32821,24 @@ var _hoisted_57 = {
 var _hoisted_58 = {
   "class": "marketing-format__item input-checkbox-w"
 };
-var _hoisted_59 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-feedback\">Отзыв <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-feedback\"> ? <div class=\"format-hint format-hint--text\" id=\"product-feedback\"><div class=\"format-hint__title\"> Рекламный пост </div><div class=\"format-hint__body\"> Улучшайте рейтинг вашей ĸарточĸи, публиĸуя положительные отзывы. Это поможет переĸрыть негативные отзывы и повысить доверие поĸупателей. Получите выĸупы не опасаясь санĸций от марĸетплейса. </div></div></div></label>", 1);
-var _hoisted_60 = {
-  "class": "quantity-w",
-  "data-max": "100"
+var _hoisted_59 = {
+  "class": "checkbox"
 };
-var _hoisted_61 = {
-  "class": "quantity-input"
-};
-var _hoisted_62 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "img/plus-icon.svg",
-  alt: ""
+var _hoisted_60 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "feedback"
 }, null, -1 /* HOISTED */);
-var _hoisted_63 = [_hoisted_62];
-var _hoisted_64 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-tooltip",
-  "data-hint": "feedback"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-hint format-hint--text",
-  id: "feedback"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-hint__title"
-}, " Отзыв "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-hint__body"
-}, " Улучшайте рейтинг вашей ĸарточĸи, публиĸуя положительные отзывы. Это поможет переĸрыть негативные отзывы и повысить доверие поĸупателей. Получите выĸупы не опасаясь санĸций от марĸетплейса. ")])], -1 /* HOISTED */);
-var _hoisted_65 = {
+var _hoisted_61 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-feedback\">Отзыв <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-feedback\"> ? <div class=\"format-hint format-hint--text\" id=\"product-feedback\"><div class=\"format-hint__title\"> Рекламный пост </div><div class=\"format-hint__body\"> Улучшайте рейтинг вашей ĸарточĸи, публиĸуя положительные отзывы. Это поможет переĸрыть негативные отзывы и повысить доверие поĸупателей. Получите выĸупы не опасаясь санĸций от марĸетплейса. </div></div></div></label><div class=\"format-tooltip\" data-hint=\"feedback\"> ? <div class=\"format-hint format-hint--text\" id=\"feedback\"><div class=\"format-hint__title\"> Отзыв </div><div class=\"format-hint__body\"> Улучшайте рейтинг вашей ĸарточĸи, публиĸуя положительные отзывы. Это поможет переĸрыть негативные отзывы и повысить доверие поĸупателей. Получите выĸупы не опасаясь санĸций от марĸетплейса. </div></div></div>", 2);
+var _hoisted_63 = {
   "class": "marketing-format__item input-checkbox-w"
 };
-var _hoisted_66 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-inst\"> Интеграция Ins <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-inst\"> ? <div class=\"format-hint format-hint--text\" id=\"product-inst\"><div class=\"format-hint__title\"> Интеграция Ins </div><div class=\"format-hint__body\"> Увеличивайте продажи с помощью reels. Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции в Ins с лидерами мнений. </div></div></div></label>", 1);
-var _hoisted_67 = {
-  "class": "quantity-w",
-  "data-max": "100"
+var _hoisted_64 = {
+  "class": "checkbox"
 };
+var _hoisted_65 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "for": "integration"
+}, null, -1 /* HOISTED */);
+var _hoisted_66 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-inst\"> Интеграция <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-inst\"> ? <div class=\"format-hint format-hint--text\" id=\"product-inst\"><div class=\"format-hint__title\"> Интеграция </div><div class=\"format-hint__body\"> Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции с лидерами мнений. </div></div></div></label><div class=\"format-tooltip\" data-hint=\"inst\"> ? <div class=\"format-hint format-hint--text\" id=\"inst\"><div class=\"format-hint__title\"> Интеграция </div><div class=\"format-hint__body\"> Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции с лидерами мнений. </div></div></div>", 2);
 var _hoisted_68 = {
-  "class": "quantity-input"
-};
-var _hoisted_69 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "img/plus-icon.svg",
-  alt: ""
-}, null, -1 /* HOISTED */);
-var _hoisted_70 = [_hoisted_69];
-var _hoisted_71 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-tooltip",
-  "data-hint": "inst"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-hint format-hint--text",
-  id: "inst"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-hint__title"
-}, " Интеграция Ins "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-hint__body"
-}, " Увеличивайте продажи с помощью reels. Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции в Ins с лидерами мнений. ")])], -1 /* HOISTED */);
-var _hoisted_72 = {
-  "class": "marketing-format__item input-checkbox-w"
-};
-var _hoisted_73 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-youtube\"> Интеграция YTube <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-youtube\"> ? <div class=\"format-hint format-hint--text\" id=\"product-youtube\"><div class=\"format-hint__title\"> Интеграция YTube </div><div class=\"format-hint__body\"> Увеличивайте продажи с помощью нативных обзоров на товар и shorts. Повышайте охваты, ĸачайте seo, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции в YTube с лидерами мнений. </div></div></div></label>", 1);
-var _hoisted_74 = {
-  "class": "quantity-w",
-  "data-max": "100"
-};
-var _hoisted_75 = {
-  "class": "quantity-input"
-};
-var _hoisted_76 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "img/plus-icon.svg",
-  alt: ""
-}, null, -1 /* HOISTED */);
-var _hoisted_77 = [_hoisted_76];
-var _hoisted_78 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-tooltip",
-  "data-hint": "youtube"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-hint format-hint--text",
-  id: "youtube"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-hint__title"
-}, " Интеграция YTube "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-hint__body"
-}, " Увеличивайте продажи с помощью нативных обзоров на товар и shorts. Повышайте охваты, ĸачайте seo, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции в YTube с лидерами мнений. ")])], -1 /* HOISTED */);
-var _hoisted_79 = {
-  "class": "marketing-format__item input-checkbox-w"
-};
-var _hoisted_80 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-vk\"> Интеграция VK <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-vk\"> ? <div class=\"format-hint format-hint--text\" id=\"product-vk\"><div class=\"format-hint__title\"> Интеграция VK </div><div class=\"format-hint__body\"> Увеличивайте продажи с помощью публиĸаций в ВК по вашей ЦА. Получите узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции ВК в целевых паблиĸах. </div></div></div></label>", 1);
-var _hoisted_81 = {
-  "class": "quantity-w",
-  "data-max": "100"
-};
-var _hoisted_82 = {
-  "class": "quantity-input"
-};
-var _hoisted_83 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "img/plus-icon.svg",
-  alt: ""
-}, null, -1 /* HOISTED */);
-var _hoisted_84 = [_hoisted_83];
-var _hoisted_85 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-tooltip",
-  "data-hint": "vk"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-hint format-hint--text",
-  id: "vk"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-hint__title"
-}, " Интеграция VK "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-hint__body"
-}, " Увеличивайте продажи с помощью публиĸаций в ВК по вашей ЦА. Получите узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции ВК в целевых паблиĸах. ")])], -1 /* HOISTED */);
-var _hoisted_86 = {
-  "class": "marketing-format__item input-checkbox-w"
-};
-var _hoisted_87 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<label for=\"product-tg\"> Интеграция Telegram <div class=\"format-tooltip format-tooltip--mobile\" data-hint=\"product-tg\"> ? <div class=\"format-hint format-hint--text\" id=\"product-tg\"><div class=\"format-hint__title\"> Интеграция Telegram </div><div class=\"format-hint__body\"> Увеличивайте продажи с помощью публиĸаций в Телеграм по вашей ЦА. Получите охват по узĸой ЦА, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции Телеграм в целевых паблиĸах. </div></div></div></label>", 1);
-var _hoisted_88 = {
-  "class": "quantity-w",
-  "data-max": "100"
-};
-var _hoisted_89 = {
-  "class": "quantity-input"
-};
-var _hoisted_90 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
-  src: "img/plus-icon.svg",
-  alt: ""
-}, null, -1 /* HOISTED */);
-var _hoisted_91 = [_hoisted_90];
-var _hoisted_92 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-tooltip",
-  "data-hint": "tg"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" ? "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-hint format-hint--text",
-  id: "tg"
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-hint__title"
-}, " Интеграция Telegram "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "format-hint__body"
-}, " Увеличивайте продажи с помощью публиĸаций в Телеграм по вашей ЦА. Получите охват по узĸой ЦА, узнаваемость и доверие ĸ вашему бренду и товару, используя интеграции Телеграм в целевых паблиĸах. ")])], -1 /* HOISTED */);
-var _hoisted_93 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
-  "class": "error error-format"
-}, null, -1 /* HOISTED */);
-var _hoisted_94 = {
   "class": "quest__btns"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -33088,91 +32963,34 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return $options.triggerUpload && $options.triggerUpload.apply($options, arguments);
     }),
     "class": "upload-files__plus"
-  })]), $data.errors.images ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.images), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [_hoisted_56, $data.errors.project_type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_57, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.project_type), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [_hoisted_59, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_60, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    type: "number",
-    "onUpdate:modelValue": _cache[13] || (_cache[13] = function ($event) {
-      return $data.quantities.feedback_quantity = $event;
+  })]), $data.errors.images ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_53, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.images), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [_hoisted_56, $data.errors && $data.errors.project_type ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_57, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.project_type), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_59, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "checkbox",
+    id: "feedback",
+    "class": "checkbox__checkbox",
+    onChange: _cache[13] || (_cache[13] = function () {
+      return $options.feedbackCheckbox && $options.feedbackCheckbox.apply($options, arguments);
     }),
-    "class": "input",
-    name: "feedback-quantity",
-    id: "feedback-quantity",
-    disabled: ""
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.quantities.feedback_quantity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[14] || (_cache[14] = function ($event) {
-      return function (e) {
-        if ($data.quantities.feedback_quantity < 100) $data.quantities.feedback_quantity += 1;
-      }();
+    "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
+      return $data.editingProject.feedback = $event;
+    })
+  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.editingProject.feedback]]), _hoisted_60]), _hoisted_61]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "checkbox",
+    id: "integration",
+    "class": "checkbox__checkbox",
+    onChange: _cache[15] || (_cache[15] = function () {
+      return $options.integrationCheckbox && $options.integrationCheckbox.apply($options, arguments);
     }),
-    "class": "quantity-plus"
-  }, [].concat(_hoisted_63))]), _hoisted_64]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_65, [_hoisted_66, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    type: "number",
-    "onUpdate:modelValue": _cache[15] || (_cache[15] = function ($event) {
-      return $data.quantities.inst_quantity = $event;
-    }),
-    "class": "input",
-    name: "inst-quantity",
-    id: "inst-quantity",
-    disabled: ""
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.quantities.inst_quantity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[16] || (_cache[16] = function ($event) {
-      return function (e) {
-        if ($data.quantities.inst_quantity < 100) $data.quantities.inst_quantity += 1;
-      }();
-    }),
-    "class": "quantity-plus"
-  }, [].concat(_hoisted_70))]), _hoisted_71]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_72, [_hoisted_73, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_75, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    type: "number",
-    "onUpdate:modelValue": _cache[17] || (_cache[17] = function ($event) {
-      return $data.quantities.youtube_quantity = $event;
-    }),
-    "class": "input",
-    name: "youtube-quantity",
-    disabled: ""
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.quantities.youtube_quantity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[18] || (_cache[18] = function ($event) {
-      return function (e) {
-        if ($data.quantities.youtube_quantity < 100) $data.quantities.youtube_quantity += 1;
-      }();
-    }),
-    "class": "quantity-plus"
-  }, [].concat(_hoisted_77))]), _hoisted_78]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_79, [_hoisted_80, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_81, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_82, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    type: "number",
-    "class": "input",
-    "onUpdate:modelValue": _cache[19] || (_cache[19] = function ($event) {
-      return $data.quantities.vk_quantity = $event;
-    }),
-    name: "vk-quantity",
-    disabled: ""
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.quantities.vk_quantity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[20] || (_cache[20] = function ($event) {
-      return function (e) {
-        if ($data.quantities.vk_quantity < 100) $data.quantities.vk_quantity += 1;
-      }();
-    }),
-    "class": "quantity-plus"
-  }, [].concat(_hoisted_84))]), _hoisted_85]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_86, [_hoisted_87, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_88, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_89, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    type: "number",
-    "class": "input",
-    "onUpdate:modelValue": _cache[21] || (_cache[21] = function ($event) {
-      return $data.quantities.telegram_quantity = $event;
-    }),
-    name: "telegram-quantity",
-    disabled: ""
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.quantities.telegram_quantity]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[22] || (_cache[22] = function ($event) {
-      return function (e) {
-        if ($data.quantities.telegram_quantity < 100) $data.quantities.telegram_quantity += 1;
-      }();
-    }),
-    "class": "quantity-plus"
-  }, [].concat(_hoisted_91))]), _hoisted_92]), _hoisted_93]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_94, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    onClick: _cache[23] || (_cache[23] = function () {
+    "onUpdate:modelValue": _cache[16] || (_cache[16] = function ($event) {
+      return $data.editingProject.integration = $event;
+    })
+  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.editingProject.integration]]), _hoisted_65]), _hoisted_66])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[17] || (_cache[17] = function () {
       return $options.modifyProject && $options.modifyProject.apply($options, arguments);
     }),
     "class": "btn btn-primary"
   }, " Сохранить "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-secondary",
-    onClick: _cache[24] || (_cache[24] = function () {
+    onClick: _cache[18] || (_cache[18] = function () {
       return $options.resetEditData && $options.resetEditData.apply($options, arguments);
     })
   }, "Вернуться")])])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
