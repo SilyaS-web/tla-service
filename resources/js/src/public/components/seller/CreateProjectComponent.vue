@@ -43,8 +43,8 @@
 
                             <div class="marketing-format__item input-checkbox-w">
                                 <div class="checkbox">
-                                    <input type="checkbox" class="checkbox__checkbox">
-                                    <label for=""></label>
+                                    <input type="checkbox" id="feedback" class="checkbox__checkbox" v-model="project.feedback">
+                                    <label for="feedback"></label>
                                 </div>
                                 <label for="product-feedback">Отзыв
                                     <div class="format-tooltip format-tooltip--mobile" data-hint="product-feedback">
@@ -77,8 +77,8 @@
                             </div>
                             <div class="marketing-format__item input-checkbox-w">
                                 <div class="checkbox">
-                                    <input type="checkbox" class="checkbox__checkbox">
-                                    <label for=""></label>
+                                    <input type="checkbox" id="integration" class="checkbox__checkbox" v-model="project.integration">
+                                    <label for="integration"></label>
                                 </div>
                                 <label for="product-inst">
                                     Интеграция
