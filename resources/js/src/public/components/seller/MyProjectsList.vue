@@ -273,8 +273,9 @@
         methods:{
             editProject(project){
                 this.editingProject = project;
-                this.editingProject.feedback = project.project.project_works.find(w => w.type == 'feedback') != 'undefined'
-                this.editingProject.integration = project.project.project_works.find(w => w.type == 'integration') != 'undefined'
+                this.editingProject.feedback = project.project.project_works.find(w => w.type == 'feedback') != 'undefined';
+                this.editingProject.integration = project.project.project_works.find(w => w.type == 'integration') != 'undefined';
+                console.log(this.editingProject)
                 this.editingProjectFiles = this.editingProject.project_files;
             },
 
