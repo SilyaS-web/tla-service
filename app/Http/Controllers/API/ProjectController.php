@@ -124,13 +124,15 @@ class ProjectController extends Controller
 
         if (strlen($validated['product_nm']) > 9) {
             $validated['product_link'] = 'https://www.ozon.ru/product/' . $validated['product_nm'];
-            $info = OzonService::getProductInfo($validated['product_nm'], $user->seller->ozon_client_id, $user->seller->ozon_api_key);
-            if ($info) {
-                $validated['marketplace_category'] = $info['category'] ?? null;
-                $validated['marketplace_brand'] = $info['brand'] ?? null;
-                $validated['marketplace_product_name'] = $info['name'] ?? null;
-                $validated['marketplace_description'] = $info['description'] ?? null;
-                $validated['marketplace_options'] = json_encode($info['options'] ?? null);
+            if ($user->seller->ozon_client_id && $user->seller->ozon_api_key) {
+                $info = OzonService::getProductInfo($validated['product_nm'], $user->seller->ozon_client_id, $user->seller->ozon_api_key);
+                if ($info) {
+                    $validated['marketplace_category'] = $info['category'] ?? null;
+                    $validated['marketplace_brand'] = $info['brand'] ?? null;
+                    $validated['marketplace_product_name'] = $info['name'] ?? null;
+                    $validated['marketplace_description'] = $info['description'] ?? null;
+                    $validated['marketplace_options'] = json_encode($info['options'] ?? null);
+                }
             }
         } else {
             $validated['product_link'] = 'https://www.wildberries.ru/catalog/' . $validated['product_nm'] . '/detail.aspx';
