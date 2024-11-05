@@ -24233,8 +24233,8 @@ __webpack_require__.r(__webpack_exports__);
       formData.append('product_nm', this.editingProject.product_nm);
       formData.append('product_link', this.editingProject.product_link);
       formData.append('product_price', this.editingProject.product_price);
-      formData.append('feedback', this.editingProject.feedback);
-      formData.append('integration', this.editingProject.integration);
+      formData.append('feedback', this.editingProject.feedback ? 1 : 0);
+      formData.append('integration', this.editingProject.integration ? 1 : 0);
       for (var i = 0; i < this.editingProject.images.length; i++) {
         if (this.editingProject.images[i]) formData.append('images[' + i + ']', this.editingProject.images[i]);
       }
