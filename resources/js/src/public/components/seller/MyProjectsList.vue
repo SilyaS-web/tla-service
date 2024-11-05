@@ -163,7 +163,7 @@
 
                                 <div class="marketing-format__item input-checkbox-w">
                                     <div class="checkbox">
-                                        <input type="checkbox" id="feedback__format" class="checkbox__checkbox" v-on:change="feedbackCheckbox" v-model="editingProject.feedback">
+                                        <input type="checkbox" id="feedback__format" class="checkbox__checkbox" v-model="editingProject.feedback">
                                         <label for="feedback__format"></label>
                                     </div>
                                     <label for="product-feedback">Отзыв
@@ -197,7 +197,7 @@
                                 </div>
                                 <div class="marketing-format__item input-checkbox-w">
                                     <div class="checkbox">
-                                        <input type="checkbox" id="integration__format" class="checkbox__checkbox" v-on:change="integrationCheckbox" v-model="editingProject.integration">
+                                        <input type="checkbox" id="integration__format" class="checkbox__checkbox" v-model="editingProject.integration">
                                         <label for="integration__format"></label>
                                     </div>
                                     <label for="product-inst">
@@ -275,7 +275,7 @@
                 this.editingProject = project;
                 this.editingProject.feedback = (project.project_works.find(w => w.type == 'feedback') != undefined);
                 this.editingProject.integration = (project.project_works.find(w => w.type == 'integration') != undefined);
-                console.log(this.editingProject)
+
                 this.editingProjectFiles = this.editingProject.project_files;
             },
 
@@ -377,16 +377,6 @@
                     project_type: '',
                 }
                 this.$emit('applyFilter', false);
-            },
-            feedbackCheckbox(event){
-                if($(event.target).is(':checked')){
-                    this.editingProject.integration = false;
-                }
-            },
-            integrationCheckbox(event){
-                if($(event.target).is(':checked')){
-                    this.editingProject.feedback = false;
-                }
             },
         }
     }

@@ -24213,7 +24213,6 @@ __webpack_require__.r(__webpack_exports__);
       this.editingProject.integration = project.project_works.find(function (w) {
         return w.type == 'integration';
       }) != undefined;
-      console.log(this.editingProject);
       this.editingProjectFiles = this.editingProject.project_files;
     },
     modifyProject: function modifyProject() {
@@ -24328,16 +24327,6 @@ __webpack_require__.r(__webpack_exports__);
         project_type: ''
       };
       this.$emit('applyFilter', false);
-    },
-    feedbackCheckbox: function feedbackCheckbox(event) {
-      if ($(event.target).is(':checked')) {
-        this.editingProject.integration = false;
-      }
-    },
-    integrationCheckbox: function integrationCheckbox(event) {
-      if ($(event.target).is(':checked')) {
-        this.editingProject.feedback = false;
-      }
     }
   }
 });
@@ -32466,24 +32455,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "checkbox",
     id: "feedback",
     "class": "checkbox__checkbox",
-    onChange: _cache[3] || (_cache[3] = function () {
-      return $options.feedbackCheckbox && $options.feedbackCheckbox.apply($options, arguments);
-    }),
-    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+    "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
       return $data.project.feedback = $event;
     })
-  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.project.feedback]]), _hoisted_22]), _hoisted_23]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.project.feedback]]), _hoisted_22]), _hoisted_23]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "checkbox",
     id: "integration",
     "class": "checkbox__checkbox",
-    onChange: _cache[5] || (_cache[5] = function () {
-      return $options.integrationCheckbox && $options.integrationCheckbox.apply($options, arguments);
-    }),
-    "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
+    "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
       return $data.project.integration = $event;
     })
-  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.project.integration]]), _hoisted_27]), _hoisted_28])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [_hoisted_31, _hoisted_32, $data.errors && $data.errors.images ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.images), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    onClick: _cache[7] || (_cache[7] = function () {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.project.integration]]), _hoisted_27]), _hoisted_28])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [_hoisted_31, _hoisted_32, $data.errors && $data.errors.images ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.errors.images), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[5] || (_cache[5] = function () {
       return $options.createProject && $options.createProject.apply($options, arguments);
     }),
     "class": "btn btn-primary"
@@ -32836,30 +32819,24 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     type: "checkbox",
     id: "feedback__format",
     "class": "checkbox__checkbox",
-    onChange: _cache[13] || (_cache[13] = function () {
-      return $options.feedbackCheckbox && $options.feedbackCheckbox.apply($options, arguments);
-    }),
-    "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
+    "onUpdate:modelValue": _cache[13] || (_cache[13] = function ($event) {
       return $data.editingProject.feedback = $event;
     })
-  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.editingProject.feedback]]), _hoisted_60]), _hoisted_61]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.editingProject.feedback]]), _hoisted_60]), _hoisted_61]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
     type: "checkbox",
     id: "integration__format",
     "class": "checkbox__checkbox",
-    onChange: _cache[15] || (_cache[15] = function () {
-      return $options.integrationCheckbox && $options.integrationCheckbox.apply($options, arguments);
-    }),
-    "onUpdate:modelValue": _cache[16] || (_cache[16] = function ($event) {
+    "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
       return $data.editingProject.integration = $event;
     })
-  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.editingProject.integration]]), _hoisted_65]), _hoisted_66])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    onClick: _cache[17] || (_cache[17] = function () {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelCheckbox, $data.editingProject.integration]]), _hoisted_65]), _hoisted_66])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_68, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[15] || (_cache[15] = function () {
       return $options.modifyProject && $options.modifyProject.apply($options, arguments);
     }),
     "class": "btn btn-primary"
   }, " Сохранить "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     "class": "btn btn-secondary",
-    onClick: _cache[18] || (_cache[18] = function () {
+    onClick: _cache[16] || (_cache[16] = function () {
       return $options.resetEditData && $options.resetEditData.apply($options, arguments);
     })
   }, "Вернуться")])])])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
