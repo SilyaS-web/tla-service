@@ -23,7 +23,7 @@ class Project extends Model
     public const BARTER = 'barter';
 
     public const TYPE_NAMES = [
-        self::FEEDBACK => 'Отзыв',
+        self::FEEDBACK => 'Выкуп + Отзыв',
         self::INSTAGRAM => 'Интеграция Inst',
         self::YOUTUBE => 'Интеграция YouTube',
         self::VK => 'Интеграция VK',
