@@ -122,7 +122,7 @@ class ProjectController extends Controller
         $user = $request->user();
         $validated['seller_id'] = $user->id;
 
-        if ($validated['product_nm'] <= 9) {
+        if (strlen($validated['product_nm']) <= 9) {
             $validated['product_link'] = 'https://www.wildberries.ru/catalog/' . $validated['product_nm'] . '/detail.aspx';
             $info = OzonService::getProductInfo($validated['product_nm'], $user->seller->ozon_client_id, $user->seller->ozon_api_key);
             if ($info) {
