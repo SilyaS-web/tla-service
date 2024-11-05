@@ -24209,10 +24209,10 @@ __webpack_require__.r(__webpack_exports__);
       this.editingProject = project;
       this.editingProject.feedback = project.project_works.find(function (w) {
         return w.type == 'feedback';
-      }) != 'undefined';
+      }) != undefined;
       this.editingProject.integration = project.project_works.find(function (w) {
         return w.type == 'integration';
-      }) != 'undefined';
+      }) != undefined;
       console.log(this.editingProject);
       this.editingProjectFiles = this.editingProject.project_files;
     },
