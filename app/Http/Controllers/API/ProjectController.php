@@ -157,7 +157,7 @@ class ProjectController extends Controller
 
         if (isset($validated['integration']) && $validated['integration'] > 0) {
             ProjectWork::create([
-                'type' => Project::INTEGRATIONS,
+                'type' => Project::INTEGRATION,
                 'quantity' => -1,
                 'project_id' => $project->id,
             ]);
@@ -211,11 +211,8 @@ class ProjectController extends Controller
             'uploaded_images.*' => 'numeric',
             'images' => 'array',
             'images.*' => 'image|max:10240',
-            'feedback_quantity' => 'numeric|nullable',
-            'inst_quantity' => 'numeric|nullable',
-            'youtube_quantity' => 'numeric|nullable',
-            'vk_quantity' => 'numeric|nullable',
-            'telegram_quantity' => 'numeric|nullable',
+            'feedback' => 'boolean|nullable',
+            'integration' => 'boolean|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -223,6 +220,11 @@ class ProjectController extends Controller
         }
 
         $validated = $validator->validated();
+
+        if (empty($validated['feedback']) && empty($validated['integration'])) {
+            return response()->json(['message' => 'Количество видов рекламы не было выбрано'])->setStatusCode(400);
+        }
+
         $product_images = request()->file('images');
         if (empty($product_images) && empty($validated['uploaded_images'])) {
             return response()->json(['images' => ['Выберите хотя бы одно изображение для проекта']])->setStatusCode(400);
@@ -251,15 +253,15 @@ class ProjectController extends Controller
         foreach (Project::TYPES as $type) {
             $project_work = $project->projectWorks()->where('type', $type)->first();
             if ($project_work) {
-                if (isset($validated[$type . '_quantity']) && $validated[$type . '_quantity'] >= $project_work->quantity) {
+                if (isset($validated[$type]) && $validated[$type] >= $project_work->quantity) {
                     $project_work->update([
-                        'quantity' => $validated[$type . '_quantity'],
+                        'quantity' => -1,
                     ]);
                 }
-            } else if (isset($validated[$type . '_quantity']) && $validated[$type . '_quantity'] > 0) {
+            } else if (isset($validated[$type]) && $validated[$type] > 0) {
                 ProjectWork::create([
                     'type' => $type,
-                    'quantity' => $validated[$type . '_quantity'],
+                    'quantity' => -1,
                     'project_id' => $project->id,
                 ]);
             }
@@ -292,28 +294,6 @@ class ProjectController extends Controller
 
     public function activate(Project $project)
     {
-        $user = Auth::user();
-
-        try {
-            DB::transaction(function () use ($project, $user) {
-                foreach ($project->projectWorks as $project_work) {
-                    $seller_tariff = $user->getActiveTariffs($project_work->type);
-                    if (!$seller_tariff || ($seller_tariff->quantity < $project_work->quantity && $seller_tariff->quantity >= 0)) {
-                        throw new \Exception('Вашего тарифа недостаточно для того, чтобы опубликовать');
-                    }
-
-                    if ($seller_tariff->quantity >= 0) {
-                        $new_quantity = $seller_tariff->quantity > $project_work->quantity ? $seller_tariff->quantity - $project_work->quantity : 0;
-                        $seller_tariff->update(['quantity' => $new_quantity]);
-                    }
-
-                    $project_work->update(['finish_date' => $seller_tariff->finish_date]);
-                }
-            });
-        } catch (\Exception $exception) {
-            return response()->json(['message' => $exception->getMessage()])->setStatusCode(400);
-        }
-
         $project->update(['is_blogger_access' => true]);
         return response()->json()->setStatusCode(200);
     }

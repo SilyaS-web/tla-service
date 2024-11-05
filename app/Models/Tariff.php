@@ -13,7 +13,7 @@ class Tariff extends Model
 
     const MINIMAL_QUANTITY = [
         Project::FEEDBACK => 10,
-        Project::INTEGRATIONS => 10,
+        Project::INTEGRATION => 10,
     ];
 
     // Массив для расчета стоимости по тарифу
@@ -24,7 +24,7 @@ class Tariff extends Model
             20 => 90,
             30 => 80,
         ],
-        Project::INTEGRATIONS => [
+        Project::INTEGRATION => [
             10 => 200,
             20 => 180,
             30 => 160,
