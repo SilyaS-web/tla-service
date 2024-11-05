@@ -28,8 +28,8 @@ class Project extends Model
         self::YOUTUBE => 'Интеграция YouTube',
         self::VK => 'Интеграция VK',
         self::TELEGRAM => 'Интеграция Telegram',
-        self::INTEGRATIONS => 'Все интеграции',
-        self::BARTER => 'Безлемит',
+        self::INTEGRATIONS => 'Интеграции',
+        self::BARTER => 'Безлимит',
     ];
 
     public const TYPES = [
@@ -98,6 +98,7 @@ class Project extends Model
     {
         return $this->hasMany(ProjectFile::class, 'source_id', 'id');
     }
+
     public function projectWorks()
     {
         return $this->hasMany(ProjectWork::class, 'project_id', 'id');
