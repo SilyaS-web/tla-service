@@ -165,7 +165,7 @@ export default{
 
             this.isChatTab = tab === 'chat';
 
-            $('.wrapper').toggleClass('footer_disabled', this.isChatTab)
+            $('.wrapper').toggleClass('footer_disabled', this.isChatTab || tab === 'create_project')
 
             switch (tab){
                 case 'dashboard':
