@@ -147,7 +147,7 @@ class ProjectController extends Controller
         $validated['status'] = Project::ACTIVE;
         $project = Project::create($validated);
 
-        if (isset($validated['feedback']) && $validated['feedback'] > 0) {
+        if (!empty($validated['feedback'])) {
             ProjectWork::create([
                 'type' => Project::FEEDBACK,
                 'quantity' => -1,
@@ -155,7 +155,7 @@ class ProjectController extends Controller
             ]);
         }
 
-        if (isset($validated['integration']) && $validated['integration'] > 0) {
+        if (!empty($validated['integration'])) {
             ProjectWork::create([
                 'type' => Project::INTEGRATION,
                 'quantity' => -1,
