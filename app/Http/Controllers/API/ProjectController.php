@@ -116,7 +116,7 @@ class ProjectController extends Controller
         $validated = $validator->validated();
 
         if (empty($validated['feedback']) && empty($validated['integration'])) {
-            return response()->json(['message' => 'Количество видов рекламы не было выбрано'])->setStatusCode(400);
+            return response()->json(['message' => 'Вы не выбрали формат рекламы'])->setStatusCode(400);
         }
 
         $user = $request->user();
