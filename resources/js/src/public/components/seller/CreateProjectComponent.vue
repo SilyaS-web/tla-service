@@ -176,6 +176,9 @@
                         this.project.images.push($(v)[0].files)
                 })
 
+                this.project.feedback = this.project.feedback ? 1 : 0;
+                this.project.integration = this.project.integration ? 1 : 0;
+
                 this.Project.create(this.project).then(
                     data => {
                         this.project = {

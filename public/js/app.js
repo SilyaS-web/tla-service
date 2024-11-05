@@ -24115,6 +24115,8 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               images.each(function (i, v) {
                 if ($(v)[0].files) _this.project.images.push($(v)[0].files);
               });
+              _this.project.feedback = _this.project.feedback ? 1 : 0;
+              _this.project.integration = _this.project.integration ? 1 : 0;
               _this.Project.create(_this.project).then(function (data) {
                 _this.project = {
                   product_name: null,
@@ -24138,7 +24140,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
               }, function (err) {
                 _this.errors = err.response.data;
               });
-            case 3:
+            case 5:
             case "end":
               return _context.stop();
           }
