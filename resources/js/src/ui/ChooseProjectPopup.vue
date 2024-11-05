@@ -19,7 +19,7 @@
                         @click="choose(work)"
                         :checked="work.id === (choosedWork && choosedWork.id)"
                         type="radio" class="checkbox">
-                    <label :for="'format_' + work.id">{{ work.name }} - {{ work.lost_quantity }}/{{ work.quantity }}</label>
+                    <label :for="'format_' + work.id">{{ work.name }}</label>
                 </div>
             </div>
             <div class="popup__form-btns">

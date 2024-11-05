@@ -125,7 +125,7 @@ class User extends Authenticatable
             }
 
             if (!$tariff && in_array($type, Project::INTEGRATION_TYPES)) {
-                $tariff = $tariffs->where('type', Project::INTEGRATIONS)->first();
+                $tariff = $tariffs->where('type', Project::INTEGRATION)->first();
             }
 
             return $tariff;
