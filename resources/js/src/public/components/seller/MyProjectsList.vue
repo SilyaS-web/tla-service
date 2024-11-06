@@ -82,7 +82,7 @@
         </div>
         <div
             v-if="editingProject"
-            class="profile-create-project edit-project__quest" id="">
+            class="profile-create-project edit-project__quest" id="" style="width:100%; margin:0 auto;">
             <div class="create-project__body">
                 <div class="create-project__title title">
                     Редактировать проект
@@ -157,78 +157,78 @@
                             </div>
                         </div>
                         <div id="step_2" class="quest__step step current">
-                            <div class="form-group marketing-format">
-                                <label for="format">Выберите формат рекламы</label>
-                                <span class="error" v-if="errors && errors.project_type">{{ errors.project_type }}</span>
+<!--                            <div class="form-group marketing-format">-->
+<!--                                <label for="format">Выберите формат рекламы</label>-->
+<!--                                <span class="error" v-if="errors && errors.project_type">{{ errors.project_type }}</span>-->
 
-                                <div class="marketing-format__item input-checkbox-w">
-                                    <div class="checkbox">
-                                        <input type="checkbox" id="feedback__format" class="checkbox__checkbox" v-on:change="feedbackCheckbox" v-model="editingProject.feedback">
-                                        <label for="feedback__format"></label>
-                                    </div>
-                                    <label for="product-feedback">Отзыв
-                                        <div class="format-tooltip format-tooltip--mobile" data-hint="product-feedback">
-                                            ?
-                                            <div class="format-hint format-hint--text" id="product-feedback">
-                                                <div class="format-hint__title">
-                                                    Рекламный пост
-                                                </div>
-                                                <div class="format-hint__body">
-                                                    Улучшайте рейтинг вашей ĸарточĸи, публиĸуя положительные отзывы.
-                                                    Это поможет переĸрыть негативные отзывы и повысить доверие
-                                                    поĸупателей. Получите выĸупы не опасаясь санĸций от марĸетплейса.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </label>
-                                    <div class="format-tooltip" data-hint="feedback">
-                                        ?
-                                        <div class="format-hint format-hint--text" id="feedback">
-                                            <div class="format-hint__title">
-                                                Отзыв
-                                            </div>
-                                            <div class="format-hint__body">
-                                                Улучшайте рейтинг вашей ĸарточĸи, публиĸуя положительные отзывы.
-                                                Это поможет переĸрыть негативные отзывы и повысить доверие
-                                                поĸупателей. Получите выĸупы не опасаясь санĸций от марĸетплейса.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="marketing-format__item input-checkbox-w">
-                                    <div class="checkbox">
-                                        <input type="checkbox" id="integration__format" class="checkbox__checkbox" v-on:change="integrationCheckbox" v-model="editingProject.integration">
-                                        <label for="integration__format"></label>
-                                    </div>
-                                    <label for="product-inst">
-                                        Интеграция
-                                        <div class="format-tooltip format-tooltip--mobile" data-hint="product-inst">
-                                            ?
-                                            <div class="format-hint format-hint--text" id="product-inst">
-                                                <div class="format-hint__title">
-                                                    Интеграция
-                                                </div>
-                                                <div class="format-hint__body">
-                                                    Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя
-                                                    интеграции с лидерами мнений.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </label>
-                                    <div class="format-tooltip" data-hint="inst">
-                                        ?
-                                        <div class="format-hint format-hint--text" id="inst">
-                                            <div class="format-hint__title">
-                                                Интеграция
-                                            </div>
-                                            <div class="format-hint__body">
-                                                Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя
-                                                интеграции с лидерами мнений.
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+<!--                                <div class="marketing-format__item input-checkbox-w">-->
+<!--                                    <div class="checkbox">-->
+<!--                                        <input type="checkbox" id="feedback__format" class="checkbox__checkbox" v-model="editingProject.feedback">-->
+<!--                                        <label for="feedback__format"></label>-->
+<!--                                    </div>-->
+<!--                                    <label for="product-feedback">Отзыв-->
+<!--                                        <div class="format-tooltip format-tooltip&#45;&#45;mobile" data-hint="product-feedback">-->
+<!--                                            ?-->
+<!--                                            <div class="format-hint format-hint&#45;&#45;text" id="product-feedback">-->
+<!--                                                <div class="format-hint__title">-->
+<!--                                                    Рекламный пост-->
+<!--                                                </div>-->
+<!--                                                <div class="format-hint__body">-->
+<!--                                                    Улучшайте рейтинг вашей ĸарточĸи, публиĸуя положительные отзывы.-->
+<!--                                                    Это поможет переĸрыть негативные отзывы и повысить доверие-->
+<!--                                                    поĸупателей. Получите выĸупы не опасаясь санĸций от марĸетплейса.-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </label>-->
+<!--                                    <div class="format-tooltip" data-hint="feedback">-->
+<!--                                        ?-->
+<!--                                        <div class="format-hint format-hint&#45;&#45;text" id="feedback">-->
+<!--                                            <div class="format-hint__title">-->
+<!--                                                Отзыв-->
+<!--                                            </div>-->
+<!--                                            <div class="format-hint__body">-->
+<!--                                                Улучшайте рейтинг вашей ĸарточĸи, публиĸуя положительные отзывы.-->
+<!--                                                Это поможет переĸрыть негативные отзывы и повысить доверие-->
+<!--                                                поĸупателей. Получите выĸупы не опасаясь санĸций от марĸетплейса.-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="marketing-format__item input-checkbox-w">-->
+<!--                                    <div class="checkbox">-->
+<!--                                        <input type="checkbox" id="integration__format" class="checkbox__checkbox" v-model="editingProject.integration">-->
+<!--                                        <label for="integration__format"></label>-->
+<!--                                    </div>-->
+<!--                                    <label for="product-inst">-->
+<!--                                        Интеграция-->
+<!--                                        <div class="format-tooltip format-tooltip&#45;&#45;mobile" data-hint="product-inst">-->
+<!--                                            ?-->
+<!--                                            <div class="format-hint format-hint&#45;&#45;text" id="product-inst">-->
+<!--                                                <div class="format-hint__title">-->
+<!--                                                    Интеграция-->
+<!--                                                </div>-->
+<!--                                                <div class="format-hint__body">-->
+<!--                                                    Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя-->
+<!--                                                    интеграции с лидерами мнений.-->
+<!--                                                </div>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </label>-->
+<!--                                    <div class="format-tooltip" data-hint="inst">-->
+<!--                                        ?-->
+<!--                                        <div class="format-hint format-hint&#45;&#45;text" id="inst">-->
+<!--                                            <div class="format-hint__title">-->
+<!--                                                Интеграция-->
+<!--                                            </div>-->
+<!--                                            <div class="format-hint__body">-->
+<!--                                                Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя-->
+<!--                                                интеграции с лидерами мнений.-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
                             <div class="quest__btns">
                                 <button @click="modifyProject" class="btn btn-primary">
                                     Сохранить
@@ -275,7 +275,7 @@
                 this.editingProject = project;
                 this.editingProject.feedback = (project.project_works.find(w => w.type == 'feedback') != undefined);
                 this.editingProject.integration = (project.project_works.find(w => w.type == 'integration') != undefined);
-                console.log(this.editingProject)
+
                 this.editingProjectFiles = this.editingProject.project_files;
             },
 
@@ -377,16 +377,6 @@
                     project_type: '',
                 }
                 this.$emit('applyFilter', false);
-            },
-            feedbackCheckbox(event){
-                if($(event.target).is(':checked')){
-                    this.editingProject.integration = false;
-                }
-            },
-            integrationCheckbox(event){
-                if($(event.target).is(':checked')){
-                    this.editingProject.feedback = false;
-                }
             },
         }
     }

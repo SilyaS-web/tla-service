@@ -8,9 +8,6 @@
                 :style="'background-image: url(' + project.project_files[0].link + ')'"
                 class="project-item__img">
             </div>
-            <div class="project-item__status active">
-                {{ project.status_name }}
-            </div>
         </div>
         <div class="project-item__content">
             <div class="project-item__title">

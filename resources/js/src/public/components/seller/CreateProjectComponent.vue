@@ -43,7 +43,7 @@
 
                             <div class="marketing-format__item input-checkbox-w">
                                 <div class="checkbox">
-                                    <input type="checkbox" id="feedback" class="checkbox__checkbox" v-on:change="feedbackCheckbox" v-model="project.feedback">
+                                    <input type="checkbox" id="feedback" class="checkbox__checkbox" v-model="project.feedback">
                                     <label for="feedback"></label>
                                 </div>
                                 <label for="product-feedback">Отзыв
@@ -77,7 +77,7 @@
                             </div>
                             <div class="marketing-format__item input-checkbox-w">
                                 <div class="checkbox">
-                                    <input type="checkbox" id="integration" class="checkbox__checkbox" v-on:change="integrationCheckbox" v-model="project.integration">
+                                    <input type="checkbox" id="integration" class="checkbox__checkbox" v-model="project.integration">
                                     <label for="integration"></label>
                                 </div>
                                 <label for="product-inst">
