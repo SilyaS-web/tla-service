@@ -360,6 +360,12 @@ class WorkController extends Controller
         TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' хочет отменить работы по проекту' . $work->project->product_name);
 
         if (!empty($work->canceled_by_blogger_at) && !empty($work->canceled_by_seller_at)) {
+            $project_work = $work->projectWork;
+            $seller_tariff = $user->getActiveTariffs($project_work->type);
+            if ($seller_tariff && $seller_tariff->quantity >= 0) {
+                $seller_tariff->update(['quantity' => $seller_tariff->quantity + 1]);
+            }
+
             $work->update(['status' => Work::CANCELED]);
             $message_text = 'Статус работы изменён на: <span style="color: var(--primary)">отменена</span>';
             Message::create([
