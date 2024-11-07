@@ -56,6 +56,6 @@
 </div>
 @include('shared.success-message')
 </body>
-<script src="{{ asset("js/app.js?v=c298c7f8233d") }}"></script>
+<script src="{{ asset("js/app.js?v=c298c7f8233d1") }}"></script>
 {{--@yield('scripts')--}}
 </html>

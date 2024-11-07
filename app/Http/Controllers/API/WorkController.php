@@ -15,6 +15,7 @@ use App\Models\User;
 use App\Services\TgService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -91,7 +92,7 @@ class WorkController extends Controller
             'from_user_id' => $user->id,
         ]);
 
-        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Вам поступила новая заявка от ' . $user->name  . ' на проект ' . $project_work->project->product_name);
+        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Вам поступила новая заявка от ' . $user->name . ' на проект ' . $project_work->project->product_name);
         return response()->json(['id' => $work->id])->setStatusCode(200);
     }
 
@@ -107,9 +108,20 @@ class WorkController extends Controller
             return response()->json(['message' => 'Заявка уже принята или отклонена'])->setStatusCode(400);
         }
 
-        $work->status = Work::PENDING;
-        $work->last_message_at = date('Y-m-d H:i');
-        $work->save();
+        $project_work = $work->projectWork;
+        $seller_tariff = $user->getActiveTariffs($project_work->type);
+        if ($seller_tariff && $seller_tariff->quantity !== 0) {
+            $project_work->update(['finish_date' => $seller_tariff->finish_date]);
+            if ($seller_tariff->quantity > 0) {
+                $seller_tariff->update(['quantity' => $seller_tariff->quantity - 1]);
+            }
+        } else {
+            if ($user->role == 'seller') {
+                return response()->json(['message' => 'Вашего тарифа недостаточно для того, чтобы принять заявку'])->setStatusCode(400);
+            } else {
+                return response()->json(['message' => 'По данному проекту закончились места'])->setStatusCode(400);
+            }
+        }
 
         Notification::create([
             'user_id' => $work->getPartnerUser($user->role)->id,
@@ -118,6 +130,10 @@ class WorkController extends Controller
             'work_id' => $work->id,
             'from_user_id' => $user->id,
         ]);
+
+        $work->status = Work::PENDING;
+        $work->last_message_at = date('Y-m-d H:i');
+        $work->save();
 
         TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' принял вашу заявку' . ' на проект ' . $work->project->product_name);
         return response()->json('success')->setStatusCode(200);
@@ -344,6 +360,12 @@ class WorkController extends Controller
         TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' хочет отменить работы по проекту' . $work->project->product_name);
 
         if (!empty($work->canceled_by_blogger_at) && !empty($work->canceled_by_seller_at)) {
+            $project_work = $work->projectWork;
+            $seller_tariff = $user->getActiveTariffs($project_work->type);
+            if ($seller_tariff && $seller_tariff->quantity >= 0) {
+                $seller_tariff->update(['quantity' => $seller_tariff->quantity + 1]);
+            }
+
             $work->update(['status' => Work::CANCELED]);
             $message_text = 'Статус работы изменён на: <span style="color: var(--primary)">отменена</span>';
             Message::create([

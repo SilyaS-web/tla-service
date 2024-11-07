@@ -116,24 +116,26 @@ class ProjectController extends Controller
         $validated = $validator->validated();
 
         if (empty($validated['feedback']) && empty($validated['integration'])) {
-            return response()->json(['message' => 'Количество видов рекламы не было выбрано'])->setStatusCode(400);
+            return response()->json(['message' => 'Вы не выбрали формат рекламы'])->setStatusCode(400);
         }
 
         $user = $request->user();
         $validated['seller_id'] = $user->id;
 
-        if ($validated['product_nm'] <= 9) {
-            $validated['product_link'] = 'https://www.wildberries.ru/catalog/' . $validated['product_nm'] . '/detail.aspx';
-            $info = OzonService::getProductInfo($validated['product_nm'], $user->seller->ozon_client_id, $user->seller->ozon_api_key);
-            if ($info) {
-                $validated['marketplace_category'] = $info['category'] ?? null;
-                $validated['marketplace_brand'] = $info['brand'] ?? null;
-                $validated['marketplace_product_name'] = $info['name'] ?? null;
-                $validated['marketplace_description'] = $info['description'] ?? null;
-                $validated['marketplace_options'] = json_encode($info['options'] ?? null);
+        if (strlen($validated['product_nm']) > 9) {
+            $validated['product_link'] = 'https://www.ozon.ru/product/' . $validated['product_nm'];
+            if ($user->seller->ozon_client_id && $user->seller->ozon_api_key) {
+                $info = OzonService::getProductInfo($validated['product_nm'], $user->seller->ozon_client_id, $user->seller->ozon_api_key);
+                if ($info) {
+                    $validated['marketplace_category'] = $info['category'] ?? null;
+                    $validated['marketplace_brand'] = $info['brand'] ?? null;
+                    $validated['marketplace_product_name'] = $info['name'] ?? null;
+                    $validated['marketplace_description'] = $info['description'] ?? null;
+                    $validated['marketplace_options'] = json_encode($info['options'] ?? null);
+                }
             }
         } else {
-            $validated['product_link'] = 'https://www.ozon.ru/product/' . $validated['product_nm'];
+            $validated['product_link'] = 'https://www.wildberries.ru/catalog/' . $validated['product_nm'] . '/detail.aspx';
             $card = WbService::getProductInfo($validated['product_nm']);
             if (isset($card->imt_name)) {
                 $validated['marketplace_category'] = $card->subj_name ?? null;
@@ -147,7 +149,7 @@ class ProjectController extends Controller
         $validated['status'] = Project::ACTIVE;
         $project = Project::create($validated);
 
-        if (isset($validated['feedback']) && $validated['feedback'] > 0) {
+        if (!empty($validated['feedback'])) {
             ProjectWork::create([
                 'type' => Project::FEEDBACK,
                 'quantity' => -1,
@@ -155,9 +157,9 @@ class ProjectController extends Controller
             ]);
         }
 
-        if (isset($validated['integration']) && $validated['integration'] > 0) {
+        if (!empty($validated['integration'])) {
             ProjectWork::create([
-                'type' => Project::INTEGRATIONS,
+                'type' => Project::INTEGRATION,
                 'quantity' => -1,
                 'project_id' => $project->id,
             ]);
@@ -211,11 +213,8 @@ class ProjectController extends Controller
             'uploaded_images.*' => 'numeric',
             'images' => 'array',
             'images.*' => 'image|max:10240',
-            'feedback_quantity' => 'numeric|nullable',
-            'inst_quantity' => 'numeric|nullable',
-            'youtube_quantity' => 'numeric|nullable',
-            'vk_quantity' => 'numeric|nullable',
-            'telegram_quantity' => 'numeric|nullable',
+            'feedback' => 'boolean|nullable',
+            'integration' => 'boolean|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -223,6 +222,11 @@ class ProjectController extends Controller
         }
 
         $validated = $validator->validated();
+
+        if (empty($validated['feedback']) && empty($validated['integration'])) {
+            return response()->json(['message' => 'Количество видов рекламы не было выбрано'])->setStatusCode(400);
+        }
+
         $product_images = request()->file('images');
         if (empty($product_images) && empty($validated['uploaded_images'])) {
             return response()->json(['images' => ['Выберите хотя бы одно изображение для проекта']])->setStatusCode(400);
@@ -251,15 +255,15 @@ class ProjectController extends Controller
         foreach (Project::TYPES as $type) {
             $project_work = $project->projectWorks()->where('type', $type)->first();
             if ($project_work) {
-                if (isset($validated[$type . '_quantity']) && $validated[$type . '_quantity'] >= $project_work->quantity) {
+                if (isset($validated[$type]) && $validated[$type] >= $project_work->quantity) {
                     $project_work->update([
-                        'quantity' => $validated[$type . '_quantity'],
+                        'quantity' => -1,
                     ]);
                 }
-            } else if (isset($validated[$type . '_quantity']) && $validated[$type . '_quantity'] > 0) {
+            } else if (isset($validated[$type]) && $validated[$type] > 0) {
                 ProjectWork::create([
                     'type' => $type,
-                    'quantity' => $validated[$type . '_quantity'],
+                    'quantity' => -1,
                     'project_id' => $project->id,
                 ]);
             }
@@ -292,28 +296,6 @@ class ProjectController extends Controller
 
     public function activate(Project $project)
     {
-        $user = Auth::user();
-
-        try {
-            DB::transaction(function () use ($project, $user) {
-                foreach ($project->projectWorks as $project_work) {
-                    $seller_tariff = $user->getActiveTariffs($project_work->type);
-                    if (!$seller_tariff || ($seller_tariff->quantity < $project_work->quantity && $seller_tariff->quantity >= 0)) {
-                        throw new \Exception('Вашего тарифа недостаточно для того, чтобы опубликовать');
-                    }
-
-                    if ($seller_tariff->quantity >= 0) {
-                        $new_quantity = $seller_tariff->quantity > $project_work->quantity ? $seller_tariff->quantity - $project_work->quantity : 0;
-                        $seller_tariff->update(['quantity' => $new_quantity]);
-                    }
-
-                    $project_work->update(['finish_date' => $seller_tariff->finish_date]);
-                }
-            });
-        } catch (\Exception $exception) {
-            return response()->json(['message' => $exception->getMessage()])->setStatusCode(400);
-        }
-
         $project->update(['is_blogger_access' => true]);
         return response()->json()->setStatusCode(200);
     }

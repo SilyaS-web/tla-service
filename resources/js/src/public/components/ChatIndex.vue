@@ -45,13 +45,6 @@
                                     Проект завершен
                                 </div>
                             </div>
-                            <div
-                                v-if="isLostIntegrationQuantityZero"
-                                class="chat__overflow chat__overflow--tariff" style="z-index: 2;">
-                                <div class="chat__overflow-text">
-                                    Все доступные места на интеграцию заняты
-                                </div>
-                            </div>
                             <div class="chat__header">
                                 <div
                                     @click="backToChats"
@@ -527,7 +520,8 @@
                         this.getChats();
                         this.currentChat && this.getMessages(this.currentChat);
                     })
-                    .catch(() => {
+                    .catch((err) => {
+                        var message = err.response.data.message ? err.response.data.message : 'Не удалось изменить статус проекта, попробуйте позже.';
                         notify('error', {
                             title: 'Внимание!',
                             message: 'Не удалось изменить статус проекта, попробуйте позже.'

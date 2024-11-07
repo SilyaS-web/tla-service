@@ -21,11 +21,15 @@
                 {{ project.product_name  }}
             </div>
             <div class="project-item__format-tags card__row card__tags">
-               <div
-                v-for="work in project.project_works"
-                class="card__tags-item"
-                v-bind:data-id="work.id">
-                    <span>{{ work.name }} {{ work.lost_quantity + '/' + work.quantity }}</span>
+                <div
+                    v-if="project.project_works && project.project_works.find(w => w.type == 'feedback')"
+                    class="card__tags-item">
+                    <span>Отзыв</span>
+                </div>
+                <div
+                    v-if="project.project_works && project.project_works.find(w => w.type == 'integration')"
+                    class="card__tags-item">
+                    <span>Интеграция</span>
                 </div>
             </div>
             <div class="project-item__btns">

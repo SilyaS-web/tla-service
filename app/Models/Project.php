@@ -19,25 +19,22 @@ class Project extends Model
     public const YOUTUBE = 'youtube';
     public const VK = 'vk';
     public const TELEGRAM = 'telegram';
-    public const INTEGRATIONS = 'integrations';
+    public const INTEGRATION = 'integration';
     public const BARTER = 'barter';
 
     public const TYPE_NAMES = [
-        self::FEEDBACK => 'Отзыв',
+        self::FEEDBACK => 'Выкуп + Отзыв',
         self::INSTAGRAM => 'Интеграция Inst',
         self::YOUTUBE => 'Интеграция YouTube',
         self::VK => 'Интеграция VK',
         self::TELEGRAM => 'Интеграция Telegram',
-        self::INTEGRATIONS => 'Интеграции',
+        self::INTEGRATION => 'Интеграции',
         self::BARTER => 'Безлимит',
     ];
 
     public const TYPES = [
+        self::INTEGRATION,
         self::FEEDBACK,
-        self::INSTAGRAM,
-        self::YOUTUBE,
-        self::VK,
-        self::TELEGRAM,
     ];
 
     public const INTEGRATION_TYPES = [
@@ -48,6 +45,7 @@ class Project extends Model
     ];
 
     public const BARTER_TYPES = [
+        self::INTEGRATION,
         self::FEEDBACK,
         self::INSTAGRAM,
         self::YOUTUBE,

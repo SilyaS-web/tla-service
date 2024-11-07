@@ -50,28 +50,6 @@ class Seller extends Model
         return $this->hasMany(SellerTariff::class, 'user_id', 'user_id');
     }
 
-    public function getActiveTariffs($type = null) {
-        $tariffs = $this->sellerTariffs()->where('finish_date', '>', Carbon::now());
-        if ($type) {
-            $tariff = null;
-            if (in_array($type, Project::BARTER_TYPES)) {
-                $tariff = $tariffs->where('type', Project::BARTER)->first();
-            }
-
-            if (!$tariff) {
-                $tariff = $tariffs->where('type', $type)->first();
-            }
-
-            if (!$tariff && in_array($type, Project::INTEGRATION_TYPES)) {
-                $tariff = $tariffs->where('type', Project::INTEGRATIONS)->first();
-            }
-
-            return $tariff;
-        }
-
-        return $tariffs->get();
-    }
-
     public function projects()
     {
         return $this->hasMany(Project::class, 'seller_id', 'user_id');

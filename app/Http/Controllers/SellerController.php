@@ -48,7 +48,8 @@ class SellerController extends Controller
 
         foreach ($project_works as $project_work) {
             $seller = $project_work->project->seller;
-            $active_tariff = $seller->getActiveTariffs($project_work->type);
+            $user = $seller->user;
+            $active_tariff = $user->getActiveTariffs($project_work->type);
             $works_count = Work::where('project_work_id', $project_work->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
             if (!$active_tariff) {
                 $project_work->update(['quantity' => $works_count]);
