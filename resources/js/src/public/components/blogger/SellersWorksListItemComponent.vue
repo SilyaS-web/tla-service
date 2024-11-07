@@ -44,7 +44,7 @@
                     @click="acceptApplication"
                     class="btn btn-primary">Принять</button>
                 <button
-                    @click="dentApplication"
+                    @click="denyApplication"
                     class="btn btn-secondary">Отклонить</button>
             </div>
         </div>

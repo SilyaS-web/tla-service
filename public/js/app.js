@@ -30790,7 +30790,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "btn btn-primary"
   }, "Принять"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
     onClick: _cache[1] || (_cache[1] = function () {
-      return _ctx.dentApplication && _ctx.dentApplication.apply(_ctx, arguments);
+      return $options.denyApplication && $options.denyApplication.apply($options, arguments);
     }),
     "class": "btn btn-secondary"
   }, "Отклонить")])])], 8 /* PROPS */, _hoisted_1)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
