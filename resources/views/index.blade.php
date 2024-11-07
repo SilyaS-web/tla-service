@@ -56,6 +56,6 @@
 </div>
 @include('shared.success-message')
 </body>
-<script src="{{ asset("js/app.js?v=c298c7f8233d1") }}"></script>
+<script src="{{ asset("js/app.js?v=" . rand(100000, 9999999) . ") }}"></script>
 {{--@yield('scripts')--}}
 </html>
