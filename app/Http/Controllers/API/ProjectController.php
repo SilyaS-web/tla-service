@@ -52,11 +52,19 @@ class ProjectController extends Controller
         if (isset($validated['product_name']) && !empty($validated['product_name'])) {
             $projects->where('product_name', 'like', '%' . $validated['product_name'] . '%');
         }
-
-        if (isset($validated['project_type']) && !empty($validated['project_type'])) {
-            $projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
-                $query->where('type', $validated['project_type']);
-            });
+        $user = Auth()->user();;
+        if ($user->role === 'blogger') {
+            if ($user->blogger->platforms()->max('coverage') < 2000) {
+                $projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
+                    $query->where('type', Project::FEEDBACK);
+                });
+            }
+        } else {
+            if (isset($validated['project_type']) && !empty($validated['project_type'])) {
+                $projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
+                    $query->where('type', $validated['project_type']);
+                });
+            }
         }
 
         if (isset($validated['category']) && !empty($validated['category'])) {
@@ -91,11 +99,8 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'feedback_quantity' => 'numeric|nullable',
-            'inst_quantity' => 'numeric|nullable',
-            'youtube_quantity' => 'numeric|nullable',
-            'vk_quantity' => 'numeric|nullable',
-            'telegram_quantity' => 'numeric|nullable',
+            'feedback' => 'boolean|nullable',
+            'integration' => 'boolean|nullable',
             'product_name' => 'required|min:3|max:250',
             'product_nm' => 'required|numeric|digits_between:1,14',
             'product_link' => 'required|min:3|max:1000',
@@ -109,19 +114,16 @@ class ProjectController extends Controller
         }
 
         $validated = $validator->validated();
-        if (
-            (!isset($validated['feedback_quantity']) || $validated['feedback_quantity'] < 1) &&
-            (!isset($validated['inst_quantity']) || $validated['inst_quantity'] < 1) &&
-            (!isset($validated['youtube_quantity']) || $validated['youtube_quantity'] < 1) &&
-            (!isset($validated['vk_quantity']) || $validated['vk_quantity'] < 1) &&
-            (!isset($validated['telegram_quantity']) || $validated['telegram_quantity'] < 1)
-        ) {
 
+        if (empty($validated['feedback']) && empty($validated['integration'])) {
             return response()->json(['message' => 'Количество видов рекламы не было выбрано'])->setStatusCode(400);
         }
+
         $user = $request->user();
         $validated['seller_id'] = $user->id;
-        if (strripos($validated['product_link'], 'ozon') !== false && !empty($user->seller->ozon_client_id) && !empty($user->seller->ozon_api_key)) {
+
+        if ($validated['product_nm'] <= 9) {
+            $validated['product_link'] = 'https://www.wildberries.ru/catalog/' . $validated['product_nm'] . '/detail.aspx';
             $info = OzonService::getProductInfo($validated['product_nm'], $user->seller->ozon_client_id, $user->seller->ozon_api_key);
             if ($info) {
                 $validated['marketplace_category'] = $info['category'] ?? null;
@@ -130,7 +132,8 @@ class ProjectController extends Controller
                 $validated['marketplace_description'] = $info['description'] ?? null;
                 $validated['marketplace_options'] = json_encode($info['options'] ?? null);
             }
-        } else if (strripos($validated['product_link'], 'wb') !== false || strripos($validated['product_link'], 'wildberries') !== false) {
+        } else {
+            $validated['product_link'] = 'https://www.ozon.ru/product/' . $validated['product_nm'];
             $card = WbService::getProductInfo($validated['product_nm']);
             if (isset($card->imt_name)) {
                 $validated['marketplace_category'] = $card->subj_name ?? null;
@@ -144,49 +147,25 @@ class ProjectController extends Controller
         $validated['status'] = Project::ACTIVE;
         $project = Project::create($validated);
 
-        if (isset($validated['feedback_quantity']) && $validated['feedback_quantity'] > 0) {
+        if (isset($validated['feedback']) && $validated['feedback'] > 0) {
             ProjectWork::create([
                 'type' => Project::FEEDBACK,
-                'quantity' => $validated['feedback_quantity'],
+                'quantity' => -1,
                 'project_id' => $project->id,
             ]);
         }
 
-        if (isset($validated['inst_quantity']) && $validated['inst_quantity'] > 0) {
+        if (isset($validated['integration']) && $validated['integration'] > 0) {
             ProjectWork::create([
-                'type' => Project::INSTAGRAM,
-                'quantity' => $validated['inst_quantity'],
-                'project_id' => $project->id,
-            ]);
-        }
-
-        if (isset($validated['youtube_quantity']) && $validated['youtube_quantity'] > 0) {
-            ProjectWork::create([
-                'type' => Project::YOUTUBE,
-                'quantity' => $validated['youtube_quantity'],
-                'project_id' => $project->id,
-            ]);
-        }
-
-        if (isset($validated['vk_quantity']) && $validated['vk_quantity'] > 0) {
-            ProjectWork::create([
-                'type' => Project::VK,
-                'quantity' => $validated['vk_quantity'],
-                'project_id' => $project->id,
-            ]);
-        }
-
-        if (isset($validated['telegram_quantity']) && $validated['telegram_quantity'] > 0) {
-            ProjectWork::create([
-                'type' => Project::TELEGRAM,
-                'quantity' => $validated['telegram_quantity'],
+                'type' => Project::INTEGRATIONS,
+                'quantity' => -1,
                 'project_id' => $project->id,
             ]);
         }
 
         $product_images = $request->file('images');
         foreach ($product_images as $product_image) {
-            $urls = ImageService::makeCompressedCopies($product_image, 'projects/' .  $project->id . '/');
+            $urls = ImageService::makeCompressedCopies($product_image, 'projects/' . $project->id . '/');
 
             ProjectFile::create([
                 'source_id' => $project->id,
@@ -213,7 +192,7 @@ class ProjectController extends Controller
 
     public function unban(Project $project)
     {
-        $project->update(['status' => Project::PENDING]);
+        $project->update(['status' => Project::STOPPED]);
         return response()->json()->setStatusCode(200);
     }
 
@@ -257,7 +236,7 @@ class ProjectController extends Controller
 
         if (!empty($product_images)) {
             foreach ($product_images as $product_image) {
-                $urls = ImageService::makeCompressedCopies($product_image, 'projects/' .  $project->id . '/');
+                $urls = ImageService::makeCompressedCopies($product_image, 'projects/' . $project->id . '/');
 
                 ProjectFile::create([
                     'source_id' => $project->id,
@@ -323,8 +302,8 @@ class ProjectController extends Controller
                         throw new \Exception('Вашего тарифа недостаточно для того, чтобы опубликовать');
                     }
 
-                    if ($seller_tariff->quantity > 0) {
-                        $new_quantity = $seller_tariff->quantity > $project_work->quantity ? $seller_tariff->quantity - $project_work->quantity : $seller_tariff->quantity;
+                    if ($seller_tariff->quantity >= 0) {
+                        $new_quantity = $seller_tariff->quantity > $project_work->quantity ? $seller_tariff->quantity - $project_work->quantity : 0;
                         $seller_tariff->update(['quantity' => $new_quantity]);
                     }
 
@@ -341,14 +320,22 @@ class ProjectController extends Controller
 
     public function stop(Project $project)
     {
-        $project->update(['status' => Project::STOPPED]);
-        return response()->json()->setStatusCode(200);
+        if ($project->status === Project::ACTIVE) {
+            $project->update(['status' => Project::STOPPED]);
+            return response()->json()->setStatusCode(200);
+        }
+
+        return response()->json(['message' => 'Нельзя изменить статус проекта из текущего статуса '])->setStatusCode(400);
     }
 
     public function start(Project $project)
     {
-        $project->update(['status' => Project::ACTIVE]);
-        return response()->json()->setStatusCode(200);
+        if ($project->status == Project::STOPPED) {
+            $project->update(['status' => Project::ACTIVE]);
+            return response()->json()->setStatusCode(200);
+        }
+
+        return response()->json(['message' => 'Нельзя изменить статус проекта из текущего статуса '])->setStatusCode(400);
     }
 
     public function works(Project $project, Request $request)
@@ -374,7 +361,7 @@ class ProjectController extends Controller
 
             if ($validated['status'] == 'active') {
                 $works = $project->works()->where(function (Builder $query) use ($seller_id) {
-                    $query->where('created_by', $seller_id)->orWhere('status', '<>', null);
+                    $query->where('created_by', $seller_id)->where('status', '<>', Work::CANCELED)->orWhere('status', '<>', null);
                 });
             } else {
                 $works = $project->works()->where('created_by', '<>', $seller_id)->where('status', null);

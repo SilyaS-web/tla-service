@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Project;
 use App\Models\Work;
 use App\Services\WbService;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -18,6 +19,14 @@ class ProjectResource extends JsonResource
         $statCount = WbService::getFeedbackCounters($this->product_nm);
         $clicks_count = $this->getClicksCount();
 
+        $user = Auth()->user();
+
+        if ($user->role === 'blogger' && $user->blogger->platforms()->max('coverage') < 2000) {
+            $project_works = $this->projectWorks()->where('type', Project::FEEDBACK)->get();
+        } else {
+            $project_works = $this->projectWorks;
+        }
+
         return [
             'id' => $this->id,
             'user_id' => $this->seller_id,
@@ -27,7 +36,7 @@ class ProjectResource extends JsonResource
             'product_price' => $this->product_price,
             'status' => $this->status,
             'status_name' => $this->getStatusName(),
-            'project_works' => ProjectWorkResource::collection($this->projectWorks),
+            'project_works' => ProjectWorkResource::collection($project_works),
             'project_files' => ProjectFileResource::collection($this->projectFiles),
             'marketplace_brand' => $this->marketplace_brand,
             'marketplace_category' => $this->marketplace_category,

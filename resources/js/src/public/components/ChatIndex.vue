@@ -323,17 +323,20 @@
             </div>
         </div>
     </div>
+    <confirm-popup ref="confirmPopup"></confirm-popup>
 </template>
 <script>
-import {reactive, ref} from "vue";
+    import {reactive, ref} from "vue";
 
     import User from '../../services/api/User.vue'
     import Platforms from '../../services/api/Platforms.vue'
     import moment from "moment";
     import axios from "axios";
+    import ConfirmPopup from "../../ui/ConfirmationPopup";
 
     export default{
         props:['currentItem'],
+        components: {ConfirmPopup},
         data(){
             return {
                 imageIsOpen: false,
@@ -486,8 +489,23 @@ import {reactive, ref} from "vue";
                     })
                 })
             },
-            btnAction(action){
+            async btnAction(action){
                 if(!action){
+                    return
+                }
+
+                let isConfirmed = true;
+
+                if(action == 'cancel'){
+                    isConfirmed = await this.$refs.confirmPopup.show({
+                        title: 'Подтвердите действие',
+                        subtitle: 'После подтверждения работу нельзя будет восстановить',
+                        okButton: 'Подтвердить',
+                        cancelButton: 'Отмена',
+                    });
+                }
+
+                if(!isConfirmed){
                     return
                 }
 
@@ -505,17 +523,6 @@ import {reactive, ref} from "vue";
                         })
 
                         $(document).find('.btn--chat-action').removeClass('btn-loading');
-
-                        // if(action == 'cancel'){
-                        //     if(this.currentChat.canceled_by_seller_at || this.currentChat.canceled_by_blogger_at){
-                        //         this.currentChat = null;
-                        //
-                        //         if(this.isTablet){
-                        //             this.isChatsMobile = true;
-                        //             this.isMessagesMobile = false;
-                        //         }
-                        //     }
-                        // }
 
                         this.getChats();
                         this.currentChat && this.getMessages(this.currentChat);

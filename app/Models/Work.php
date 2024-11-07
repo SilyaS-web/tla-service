@@ -47,6 +47,8 @@ class Work extends Model
         'canceled_by_blogger_at' => 'datetime',
         'canceled_by_seller_at' => 'datetime',
         'last_message_at' => 'datetime',
+        'canceled_by_blogger_at' => 'datetime',
+        'canceled_by_seller_at' => 'datetime',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];

@@ -26,6 +26,26 @@
     <script src="{{ asset('libs/owl/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
 
+    <!-- Yandex.Metrika counter -->
+    <script type="text/javascript" >
+        (function(m,e,t,r,i,k,a){m[i]=m[i]function(){(m[i].a=m[i].a[]).push(arguments)};
+            m[i].l=1*new Date();
+            for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+            k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+        (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+        ym(98729942, "init", {
+            clickmap:true,
+            trackLinks:true,
+            accurateTrackBounce:true,
+            webvisor:true
+        });
+    </script>
+    <noscript><div><img src="https://mc.yandex.ru/watch/98729942" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+    <!-- /Yandex.Metrika counter -->
+
+    <script async src="https://script.click-chat.ru/chat.js?wid=f12436e7-a36d-437d-8783-ec27bf222c55"></script>
+
     <title>@yield('title')</title>
 </head>
 <body>
@@ -36,6 +56,6 @@
 </div>
 @include('shared.success-message')
 </body>
-<script src="{{ asset("js/app.js") }}"></script>
+<script src="{{ asset("js/app.js?v=c298c7f8233d") }}"></script>
 {{--@yield('scripts')--}}
 </html>

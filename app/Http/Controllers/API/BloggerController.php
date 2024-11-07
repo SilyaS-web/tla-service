@@ -57,6 +57,12 @@ class BloggerController extends Controller
             });
         }
 
+        if (Auth::user()->role !== 'admin') {
+            $bloggers->whereHas('platforms', function (Builder $query) use ($validated) {
+                $query->where('coverage', '>=', 2000);
+            });
+        }
+
         if (isset($validated['subscriber_quantity_min']) && !empty($validated['subscriber_quantity_min'])) {
             $bloggers->whereHas('platforms', function (Builder $query) use ($validated) {
                 $query->where('subscriber_quantity', '>=', $validated['subscriber_quantity_min']);
@@ -75,23 +81,23 @@ class BloggerController extends Controller
             });
         }
 
-        if (isset($validated['platform'])  && !empty($validated['platform'])) {
+        if (isset($validated['platform']) && !empty($validated['platform'])) {
             $bloggers->whereHas('platforms', function (Builder $query) use ($validated) {
                 $query->where('platform_id', $validated['platform']);
             });
         }
 
-        if (isset($validated['city'])  && !empty($validated['city'])) {
+        if (isset($validated['city']) && !empty($validated['city'])) {
             $bloggers->where('city', $validated['city']);
         }
 
-        if (isset($validated['country'])  && !empty($validated['country'])) {
+        if (isset($validated['country']) && !empty($validated['country'])) {
             $bloggers->whereHas('country', function (Builder $query) use ($validated) {
                 $query->where('id', $validated['country']);
             });
         }
 
-        if (isset($validated['sex'])  && !empty($validated['sex'])) {
+        if (isset($validated['sex']) && !empty($validated['sex'])) {
             $bloggers->whereIn('sex', $validated['sex']);
         }
 
@@ -165,7 +171,7 @@ class BloggerController extends Controller
 
         if ($request->file('image')) {
             $blogger_image = $request->file('image');
-            $urls = ImageService::makeCompressedCopies($blogger_image, 'profile/'.$user->id.'/');
+            $urls = ImageService::makeCompressedCopies($blogger_image, 'profile/' . $user->id . '/');
 
             $user->image = $urls[1];
             $user->save();
@@ -174,7 +180,7 @@ class BloggerController extends Controller
         foreach ($validated['themes'] as $theme_id) {
             BloggerTheme::create([
                 'blogger_id' => $blogger->id,
-                'theme_id' => (int) $theme_id,
+                'theme_id' => (int)$theme_id,
             ]);
         }
 
@@ -189,7 +195,7 @@ class BloggerController extends Controller
             'platform_fields' => BloggerPlatform::getFields(),
         ];
 
-        return  response()->json($data)->setStatusCode(200);
+        return response()->json($data)->setStatusCode(200);
     }
 
     public function accept(Blogger $blogger, Request $request)
@@ -313,7 +319,7 @@ class BloggerController extends Controller
                 $user->password = bcrypt($validated['password']);
                 $user->save();
             } else {
-                return  response()->json(['old_password' => 'Введён неверный пароль'])->setStatusCode(400);
+                return response()->json(['old_password' => 'Введён неверный пароль'])->setStatusCode(400);
             }
         }
 
@@ -335,7 +341,7 @@ class BloggerController extends Controller
             }
 
             $blogger_image = $request->file('image');
-            $urls = ImageService::makeCompressedCopies($blogger_image, 'profile/'.$user->id.'/');
+            $urls = ImageService::makeCompressedCopies($blogger_image, 'profile/' . $user->id . '/');
 
             $user->image = $urls[1];
         }
@@ -344,15 +350,18 @@ class BloggerController extends Controller
 
         $blogger->country_id = $validated['country_id'];
         $blogger->city = $validated['city'];
-        $blogger->description = $validated['description'] ?? null;
         $blogger->sex = $validated['sex'];
+
+        if (!empty($validated['description'])) {
+            $blogger->description = $validated['description'];
+        }
 
         if (!empty($validated['themes'])) {
             $blogger->themes()->delete();
             foreach ($validated['themes'] as $theme_id) {
                 BloggerTheme::create([
                     'blogger_id' => $blogger->id,
-                    'theme_id' => (int) $theme_id,
+                    'theme_id' => (int)$theme_id,
                 ]);
             }
         }
@@ -365,7 +374,7 @@ class BloggerController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Blogger  $blogger
+     * @param \App\Models\Blogger $blogger
      * @return \Illuminate\Http\Response
      */
     public function destroy(Blogger $blogger)
