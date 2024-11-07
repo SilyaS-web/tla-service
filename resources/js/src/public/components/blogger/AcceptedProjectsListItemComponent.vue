@@ -5,7 +5,7 @@
         <div class="project-item__carousel">
             <div class="project-item__carousel--carousel owl-carousel">
                 <div
-                    v-for="file in work.project.project_files[0]"
+                    v-for="file in work.project.project_files"
                     class="project-item__img" :style="'background-image:url(' + file.link + ')'"></div>
             </div>
             <div class="project-item__status active">
