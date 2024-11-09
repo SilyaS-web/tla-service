@@ -6,7 +6,8 @@
         <div class="project-item__carousel">
             <div class="project-item__carousel--carousel owl-carousel">
                 <div
-                    class="project-item__img" :style="'background-image:url(' + work.project.project_files[0].link + ')'"></div>
+                    v-for="file in work.project.project_files"
+                    class="project-item__img" :style="'background-image:url(' + file.link + ')'"></div>
             </div>
             <div class="project-item__status active">
                 {{ work.project.status_name }}
@@ -34,7 +35,10 @@
             <div class="project-item__btns">
                 <button
                     @click="acceptApplication"
-                    class="btn btn-primary" style="width:100%">Принять заявку</button>
+                    class="btn btn-primary">Принять</button>
+                <button
+                    @click="denyApplication"
+                    class="btn btn-secondary">Отклонить</button>
             </div>
         </div>
     </div>
@@ -58,6 +62,16 @@ export default{
     methods: {
         acceptApplication(){
             this.Work.accept(this.work.id).then(
+                () => {
+                    $(`#avail-projects .list-projects__item[data-id="${this.work.id}"]`).hide();
+                },
+                err => {
+
+                }
+            )
+        },
+        denyApplication(){
+            this.Work.deny(this.work.id).then(
                 () => {
                     $(`#avail-projects .list-projects__item[data-id="${this.work.id}"]`).hide();
                 },
