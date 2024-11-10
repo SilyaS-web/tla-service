@@ -21,7 +21,7 @@ class LogAction
         if (Auth::check()) {
             $name = Route::currentRouteName();
             $action = Route::currentRouteAction();
-            if ($action !== '@notifications' && $action !== '@works') {
+            if ($action !== 'App\Http\Controllers\API\UserController@works' && $action !== 'App\Http\Controllers\API\UserController@notifications') {
                 DbLog::query()->create([
                     'user_id' => Auth::id(),
                     'text' => $name . '|' . $action . '|' . json_encode($request->all()),
