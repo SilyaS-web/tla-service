@@ -143,7 +143,7 @@ import axios from "axios";
                 }
 
                 axios({
-                    url: '/api/works',
+                    url: 'api/works',
                     method: 'post',
                     data: {
                         blogger_id: this.blogger.id,

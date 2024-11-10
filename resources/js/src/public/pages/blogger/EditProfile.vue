@@ -3,22 +3,21 @@
     <section class="edit-profile">
         <div class="edit-profile__container _container">
             <div class="edit-profile__body">
-                <div class="edit-profile__title title">
-                    Редактировать данные
-                </div>
                 <div class="edit-profile__content" >
-                    <div class="tab-content__profile-img">
-                        <img :src="blogger.user && blogger.user.image ? blogger.user.image : '/img/profile-icon.svg'  " alt="">
-                        <div class="tab-content__profile-img-text">
-                            <p>Фото профиля</p>
-                            <div class="form-group form-group--file">
-                                <label class="tab-content__profile-img-upload input-file" for="profile-img">
-                                    <span>{{ imgSectionTitle }}</span>
-                                    <input
-                                        @change="imgSectionTitle = 'Изображение загружено'"
-                                        type="file" name="image" class="" id="profile-img">
-                                </label>
-                                <span v-if="errors && errors['user.image']" class="error">{{ errors['user.image'][0] }}</span>
+                    <div class="tab-content__profile-img tab-content__form tab-content__form--accent">
+                        <label for="" class="tab-content__form--title" style="text-align: center">Аватар профиля</label>
+                        <div class="tab-content__profile-img-row">
+                            <img :src="blogger.user && blogger.user.image ? blogger.user.image : '/img/profile-icon.svg'  " alt="">
+                            <div class="tab-content__profile-img-text">
+                                <div class="form-group form-group--file">
+                                    <label class="tab-content__profile-img-upload input-file" for="profile-img">
+                                        <span>{{ imgSectionTitle }}</span>
+                                        <input
+                                            @change="imgSectionTitle = 'Изображение загружено'"
+                                            type="file" name="image" class="" id="profile-img">
+                                    </label>
+                                    <span v-if="errors['image']" class="error">{{ errors['image'] }}</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -44,7 +43,7 @@
                     </div>
                     <div class="tab-content__form tab-content__form--accent" style="flex-direction:column;">
                         <label for="" class="tab-content__form--title">Изменить пароль</label>
-                        <div class="tab-content__form-row" style="">
+                        <div class="tab-content__form-form" style="">
                             <div class="form-group">
                                 <label for="old_password">Старый пароль</label>
                                 <input class="input" id="old_password" type="password" name="old_password" v-model="blogger.old_password">
@@ -60,7 +59,7 @@
 
                     <button
                         @click="saveBlogger"
-                        class="btn btn-primary">Сохранить</button>
+                        class="btn btn-primary">Сохранить изменения</button>
                 </div>
             </div>
         </div>

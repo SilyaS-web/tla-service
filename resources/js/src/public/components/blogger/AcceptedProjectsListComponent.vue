@@ -126,7 +126,7 @@
 
                 axios({
                     method: 'get',
-                    url: '/api/projects/categories',
+                    url: 'api/projects/categories',
                     params:{
                         category: value
                     }

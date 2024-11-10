@@ -28,7 +28,7 @@
 
                 axios({
                     method:'get',
-                    url: '/api/users/' + user.id
+                    url: 'api/users/' + user.id
                 })
                 .then((response) => {
                     localStorage.setItem('user', JSON.stringify(response.data.user))
@@ -40,7 +40,7 @@
             return new Promise((resolve, reject) => {
                 axios({
                     method:'get',
-                    url: '/api/users/current'
+                    url: 'api/users/current'
                 })
                 .then((response) => {
                     localStorage.setItem('user', JSON.stringify(response.data.user))
@@ -52,7 +52,7 @@
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'post',
-                    url: '/api/login',
+                    url: 'api/login',
                     data: data
                 })
                 .then((response) => {
@@ -88,7 +88,7 @@
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'post',
-                    url: '/api/users',
+                    url: 'api/users',
                     data: data
                 })
                 .then((response) => {

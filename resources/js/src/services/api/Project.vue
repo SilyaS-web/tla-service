@@ -23,7 +23,7 @@ const Project = {
 
             axios({
                 method: 'post',
-                url: '/api/projects',
+                url: 'api/projects',
                 data: formData,
                 headers: {
                     "Content-Type": "multipart/form-data",
@@ -60,7 +60,7 @@ const Project = {
 
             axios({
                 method: 'delete',
-                url: '/api/projects/' + project_id,
+                url: 'api/projects/' + project_id,
             })
             .then((response) => {
                 resolve(true)
@@ -88,7 +88,7 @@ const Project = {
 
             axios({
                 method: 'get',
-                url: '/api/projects/' + project_id + '/stop',
+                url: 'api/projects/' + project_id + '/stop',
             })
             .then((response) => {
                 resolve(true)
@@ -115,7 +115,7 @@ const Project = {
 
             axios({
                 method: 'get',
-                url: '/api/projects/' + project_id + '/start',
+                url: 'api/projects/' + project_id + '/start',
             })
             .then((response) => {
                 resolve(true)
@@ -143,7 +143,7 @@ const Project = {
 
             axios({
                 method: 'get',
-                url: '/api/projects/' + project_id + '/activate',
+                url: 'api/projects/' + project_id + '/activate',
             })
             .then((response) => {
                 resolve(true)

@@ -133,7 +133,7 @@
                 return new Promise((resolve, reject) => {
                     axios({
                         method: 'get',
-                        url: '/api/bloggers/' + id,
+                        url: 'api/bloggers/' + id,
                     })
                     .then(result => resolve(result.data))
                     .catch(error => {
@@ -167,7 +167,7 @@
                 return new Promise((resolve, reject) => {
                     axios({
                         method: 'post',
-                        url: '/api/bloggers/' + this.blogger.id + '/accept',
+                        url: 'api/bloggers/' + this.blogger.id + '/accept',
                         data: toRaw(this.blogger)
                     })
                     .then(result => resolve(result.data))

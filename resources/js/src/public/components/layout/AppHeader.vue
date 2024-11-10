@@ -336,7 +336,7 @@
                 if(this.user && this.user.id){
                     axios({
                         method: 'get',
-                        url: '/api/users/' + this.user.id + '/notifications?viewed=0',
+                        url: 'api/users/' + this.user.id + '/notifications?viewed=0',
                     })
                     .then(( response ) => {
                         this.notifications = response.data.notifications

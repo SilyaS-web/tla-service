@@ -457,7 +457,7 @@
 
                 axios({
                     method: 'post',
-                    url: '/api/works/' + this.currentChat.id + '/stats',
+                    url: 'api/works/' + this.currentChat.id + '/stats',
                     data: formData
                 })
                 .then(() => {
@@ -507,7 +507,7 @@
 
                     axios({
                         method: 'get',
-                        url: '/api/works/' + this.currentChat.id + '/' + action,
+                        url: 'api/works/' + this.currentChat.id + '/' + action,
                     })
                     .then(() => {
                         notify('info', {

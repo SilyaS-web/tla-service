@@ -170,11 +170,9 @@
                         class="list-projects__item project-item">
                         <div class="owl-carousel project-item__carousel">
                             <div
-                                :style="'background-image: url(' + project.project_files[0].link + ')'"
+                                v-for="file in project.project_files"
+                                :style="'background-image: url(' + file.link + ')'"
                                 class="project-item__img">
-                            </div>
-                            <div class="project-item__status active">
-                                {{ project.status_name }}
                             </div>
                         </div>
                         <div class="project-item__content">
@@ -314,6 +312,23 @@
             this.themes = await this.Themes.getList();
             this.platforms = await this.Platforms.getList();
         },
+        updated(){
+            if(this.isChooseProjectList){
+                $('.project-item').find('.project-item__carousel').owlCarousel({
+                    margin: 5,
+                    nav: false,
+                    dots: true,
+                    responsive: {
+                        0:{
+                            items: 1
+                        },
+                        1180: {
+                            items:1
+                        }
+                    }
+                });
+            }
+        },
         methods:{
             setBloggersFilterSex(e, value){
                 if($(e.target).prop('checked')){
@@ -353,12 +368,7 @@
                 this.Loader.loaderOn('#profile-blogers-list');
 
                 this.Project.getUsersProjectsList(this.user.id, {is_blogger_access: 1, statuses: [0]}).then(data => {
-                    this.projects = (data || []).map(p => {
-                        p.feedbackWork = this.Project.getFeedbackWork(p);
-                        p.integrationWork = this.Project.getIntegrationWork(p);
-
-                        return p
-                    });
+                    this.projects = data || [];
 
                     setTimeout(()=>{
                         this.Loader.loaderOff('#profile-blogers-list');
