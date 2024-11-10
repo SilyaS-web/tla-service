@@ -181,6 +181,20 @@
         },
         mounted() {
             this.user = this.User.getCurrent();
+
+            $('.project-item').find('.project-item__carousel--carousel').owlCarousel({
+                margin: 5,
+                nav: false,
+                dots: true,
+                responsive: {
+                    0:{
+                        items: 1
+                    },
+                    1180: {
+                        items:1
+                    }
+                }
+            });
         },
         updated(){
             if(this.projectInfo){

@@ -146,7 +146,7 @@
                 return new Promise((resolve, reject) => {
                     axios({
                         method: 'get',
-                        url: '/api/bloggers',
+                        url: 'api/bloggers',
                         params: {
                             statuses: status || []
                         }
@@ -161,7 +161,7 @@
                 return new Promise((resolve, reject) => {
                     axios({
                         method: 'get',
-                        url: '/api/sellers',
+                        url: 'api/sellers',
                     })
                     .then(result => resolve(result.data.sellers))
                     .catch(error => {
@@ -173,7 +173,7 @@
                 return new Promise((resolve, reject) => {
                     axios({
                         method: 'get',
-                        url: '/api/projects',
+                        url: 'api/projects',
                     })
                     .then(result => resolve(result.data.projects))
                     .catch(error => {
@@ -185,7 +185,7 @@
                 return new Promise((resolve, reject) => {
                     axios({
                         method: 'get',
-                        url: '/api/payments',
+                        url: 'api/payments',
                     })
                     .then(result => resolve(result.data.payments))
                     .catch(error => {
@@ -197,7 +197,7 @@
                 return new Promise((resolve, reject) => {
                     axios({
                         method: 'get',
-                        url: '/api/referrals',
+                        url: 'api/referrals',
                     })
                     .then(result => {
                         var data = result.data.referral_codes || [],

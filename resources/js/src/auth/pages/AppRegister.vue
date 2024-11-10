@@ -138,7 +138,7 @@
                 if (!this.isConfirmed) {
                     axios({
                         method: 'get',
-                        url: '/api/users/phone-confirmed?phone=' + this.user.phone,
+                        url: 'api/users/phone-confirmed?phone=' + this.user.phone,
                     })
                     .then((response) => {
                         if(response.data.is_confirmed){

@@ -57,7 +57,7 @@
                                 Безлимит
                             </div>
                             <div class="tariff-card__subtitle">
-                                Действует 30 дней
+                                Действует <span style="text-decoration: line-through; color:rgba(0,0,0,.4)">30</span> 60 дней
                             </div>
                         </div>
                         <div class="tariff-card__prices">
@@ -124,7 +124,7 @@ export default {
             }).then((data) => {
                 axios({
                     method: 'get',
-                    url: '/api/feedback',
+                    url: 'api/feedback',
                     params: data
                 })
                 .then(data => {
@@ -144,7 +144,7 @@ export default {
         buyUnlimited(){
             axios({
                 method: 'get',
-                url: '/api/payment/20/init'
+                url: 'api/payment/20/init'
             })
             .then(response => {
                 if(response.data && response.data.link){
