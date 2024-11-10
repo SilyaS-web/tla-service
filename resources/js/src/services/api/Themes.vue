@@ -13,7 +13,7 @@ const Themes = {
 
             axios({
                 method: 'get',
-                url: 'api/themes'
+                url: '/api/themes'
             })
             .then(response => {
                 var themes = response.data.themes || [];

@@ -139,7 +139,7 @@
                 }
                 axios({
                     method: 'get',
-                    url:'api/users/reset-password?phone=' + this.resetPasswordData.phone,
+                    url:'/api/users/reset-password?phone=' + this.resetPasswordData.phone,
                 })
                 .then(data => {
                     notify('info', {

@@ -59,7 +59,7 @@
                 if(id){
                     axios({
                         method: 'get',
-                        url: 'api/users/' + id + '/ban',
+                        url: '/api/users/' + id + '/ban',
                     })
                     .then((response) => {
                         notify('info', {
@@ -75,7 +75,7 @@
                 if(id){
                     axios({
                         method: 'get',
-                        url: 'api/users/' + id + '/unban',
+                        url: '/api/users/' + id + '/unban',
                     })
                     .then((response) => {
                         notify('info', {
@@ -91,7 +91,7 @@
                 if(id){
                     axios({
                         method: 'delete',
-                        url: 'api/users/' + id,
+                        url: '/api/users/' + id,
                     })
                     .then((response) => {
                         notify('info', {

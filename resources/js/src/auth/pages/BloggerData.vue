@@ -178,7 +178,7 @@
 
                 axios({
                     method: 'post',
-                    url: 'api/bloggers/' + this.user.blogger_id,
+                    url: '/api/bloggers/' + this.user.blogger_id,
                     data: formdata
                 })
                 .then((data) => {

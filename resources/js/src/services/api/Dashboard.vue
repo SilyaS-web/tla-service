@@ -18,7 +18,7 @@ const User = {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'post',
-                url: 'api/login',
+                url: '/api/login',
                 data: data
             })
                 .then((response) => {

@@ -99,7 +99,6 @@ class Seller extends Model
         foreach ($result as $product_card) {
             $nm[] = $product_card->nmID;
         }
-        dd($result);
         return $nm;
     }
 

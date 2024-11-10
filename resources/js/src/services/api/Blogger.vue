@@ -6,7 +6,7 @@ const Blogger = {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'get',
-                url: 'api/bloggers/' + id,
+                url: '/api/bloggers/' + id,
             })
             .then((response) => {
                 resolve(response.data.blogger)
@@ -25,7 +25,7 @@ const Blogger = {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'post',
-                url: 'api/bloggers/' + id,
+                url: '/api/bloggers/' + id,
                 data: formData
             })
             .then((response) => {
@@ -51,7 +51,7 @@ const Blogger = {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'post',
-                url: 'api/bloggers/' + data.id + '/update/',
+                url: '/api/bloggers/' + data.id + '/update/',
                 data: data
             })
             .then((response) => {
@@ -84,7 +84,7 @@ const Blogger = {
 
             axios({
                 method: 'get',
-                url: 'api/bloggers',
+                url: '/api/bloggers',
                 params: params
             })
             .then(result => resolve(result.data.bloggers))
