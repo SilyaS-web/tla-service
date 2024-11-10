@@ -19,12 +19,11 @@ class LogAction
     public function handle(Request $request, Closure $next): Response
     {
         if (Auth::check()) {
-            $name = Route::currentRouteName();
             $action = Route::currentRouteAction();
-            if ($action !== 'App\Http\Controllers\API\UserController@works' && $action !== 'App\Http\Controllers\API\UserController@notifications') {
+            if ($action !== 'App\Http\Controllers\API\UserController@works' && $action !== 'App\Http\Controllers\API\UserController@notifications' && $action !== 'App\Http\Controllers\API\UserController@messages') {
                 DbLog::query()->create([
                     'user_id' => Auth::id(),
-                    'text' => $name . '|' . $action . '|' . json_encode($request->all()),
+                    'text' =>  $action . '|' . json_encode($request->all()),
                 ]);
             }
         }
