@@ -29,15 +29,7 @@ class UserController extends Controller
 {
     public function currentUser()
     {
-        $data = [
-            'user' => new UserResource(Auth::user()),
-        ];
-
-        return response()->json($data)->setStatusCode(200);
-    }
-
-     public function show(User $user)
-    {
+        $user = Auth::user();
         if ($user->role == 'seller' && $user->status == 1) {
             if(!$user->projects()->exists()) {
                 $tariffs = $user->getActiveTariffs();
@@ -55,6 +47,15 @@ class UserController extends Controller
             }
         }
 
+        $data = [
+            'user' => new UserResource($user),
+        ];
+
+        return response()->json($data)->setStatusCode(200);
+    }
+
+     public function show(User $user)
+    {
         $data = [
             'user' => new UserResource($user),
         ];
