@@ -5982,6 +5982,9 @@ input[type='range']::-webkit-slider-runnable-track{
     .project-item{
         min-width:unset
     }
+    .project-item .project-item__content{
+        padding: 0 10px;
+    }
     .project-item__title{
         font-size: 20px;
     }
