@@ -5948,6 +5948,9 @@ input[type='range']::-webkit-slider-runnable-track{
     .banner{
         bottom: 67px;
     }
+    .banner.disabled{
+        bottom:-100%;
+    }
 }
 @media (orientation: landscape) and (max-width: 675px) {
     .view-project__props-col .dashboard__placeholder{
