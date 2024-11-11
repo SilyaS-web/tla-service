@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="{{ asset('libs/meter/style.css')  }}">
 
     <link rel="stylesheet" href="{{ asset('libs/range-slider/style.css')  }}">
-    @php($style = 'css/style.css?v=' . rand(100000, 9999999));
+    @php($style = 'css/style.css?v=' . rand(100000, 9999999))
     <link rel="stylesheet" href="{{ asset($style)  }}">
     <link rel="stylesheet" href="{{ asset('css/loader.css')  }}">
 
