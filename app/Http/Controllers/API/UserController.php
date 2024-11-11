@@ -33,8 +33,8 @@ class UserController extends Controller
         if ($user->role == 'seller' && $user->status == 1) {
             if(count($user->projects) === 0) {
                 $tariffs = $user->getActiveTariffs();
-                dd($tariffs);
-                if(empty($tariffs)) {
+                dd(empty($tariffs));
+                if(count($tariffs) == 0) {
                     $tariff = Tariff::find(19);
                     SellerTariff::create([
                         'user_id' => $user->id,
