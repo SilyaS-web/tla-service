@@ -9,7 +9,7 @@ const Seller = {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'get',
-                url: 'api/sellers/' + id,
+                url: '/api/sellers/' + id,
             })
             .then((response) => {
                 resolve(response.data.seller)
@@ -28,7 +28,7 @@ const Seller = {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'post',
-                url: 'api/sellers/' + id,
+                url: '/api/sellers/' + id,
                 data: formData
             })
             .then((response) => {

@@ -336,7 +336,7 @@
                 if(this.user && this.user.id){
                     axios({
                         method: 'get',
-                        url: 'api/users/' + this.user.id + '/notifications?viewed=0',
+                        url: '/api/users/' + this.user.id + '/notifications?viewed=0',
                     })
                     .then(( response ) => {
                         this.notifications = response.data.notifications
@@ -362,7 +362,7 @@
             hideNotification(notification){
                 axios({
                     method: 'get',
-                    url: 'api/users/' + this.user.id + '/notifications/' + notification.id + '/view',
+                    url: '/api/users/' + this.user.id + '/notifications/' + notification.id + '/view',
                 })
                 .then(( response ) => {
                     this.getNotifications()
@@ -378,7 +378,7 @@
             hideAllNotifications(){
                 axios({
                     method: 'get',
-                    url: 'api/users/' + this.user.id + '/notifications/view',
+                    url: '/api/users/' + this.user.id + '/notifications/view',
                 })
                 .then(( response ) => {
                     this.notifications = [];

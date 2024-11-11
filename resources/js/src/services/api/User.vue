@@ -28,7 +28,7 @@
 
                 axios({
                     method:'get',
-                    url: 'api/users/' + user.id
+                    url: '/api/users/' + user.id
                 })
                 .then((response) => {
                     localStorage.setItem('user', JSON.stringify(response.data.user))
@@ -40,7 +40,7 @@
             return new Promise((resolve, reject) => {
                 axios({
                     method:'get',
-                    url: 'api/users/current'
+                    url: '/api/users/current'
                 })
                 .then((response) => {
                     localStorage.setItem('user', JSON.stringify(response.data.user))
@@ -52,7 +52,7 @@
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'post',
-                    url: 'api/login',
+                    url: '/api/login',
                     data: data
                 })
                 .then((response) => {
@@ -88,7 +88,7 @@
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'post',
-                    url: 'api/users',
+                    url: '/api/users',
                     data: data
                 })
                 .then((response) => {
@@ -142,7 +142,7 @@
 
                 axios({
                     method: 'get',
-                    url: 'api/users/' + user_id + '/works',
+                    url: '/api/users/' + user_id + '/works',
                     params: params
                 })
                 .then(response => {
@@ -164,7 +164,7 @@
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'get',
-                    url: 'api/users/' + user_id + '/works/' + work_id + '/messages'
+                    url: '/api/users/' + user_id + '/works/' + work_id + '/messages'
                 })
                 .then(response => {
                     resolve(response.data.messages);

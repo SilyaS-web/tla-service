@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\SellerTariff;
+use App\Models\Tariff;
 use App\Models\User;
 use App\Services\TgService;
 use App\Http\Controllers\Controller;
@@ -16,6 +18,7 @@ use App\Models\MessageFile;
 use App\Models\Notification;
 use App\Models\Project;
 use App\Models\Work;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
@@ -26,8 +29,26 @@ class UserController extends Controller
 {
     public function currentUser()
     {
+        $user = Auth::user();
+        if ($user->role == 'seller' && $user->status == 1) {
+            if(count($user->projects) === 0) {
+                $tariffs = $user->getActiveTariffs();
+                if(count($tariffs) == 0) {
+                    $tariff = Tariff::find(19);
+                    SellerTariff::create([
+                        'user_id' => $user->id,
+                        'tariff_id' => $tariff->id,
+                        'type' => $tariff->type,
+                        'quantity' => $tariff->quantity,
+                        'finish_date' => Carbon::now()->addDays($tariff->period),
+                        'activation_date' => Carbon::now(),
+                    ]);
+                }
+            }
+        }
+
         $data = [
-            'user' => new UserResource(Auth::user()),
+            'user' => new UserResource($user),
         ];
 
         return response()->json($data)->setStatusCode(200);
