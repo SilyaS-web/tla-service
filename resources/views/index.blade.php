@@ -57,7 +57,7 @@
 </div>
 @include('shared.success-message')
 </body>
-@php($script = "js/app.js?v=" . rand(100000, 9999999));
+@php($script = "js/app.js?v=" . rand(100000, 9999999))
 <script src="{{ asset($script) }}"></script>
 {{--@yield('scripts')--}}
 </html>
