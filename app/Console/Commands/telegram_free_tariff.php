@@ -30,7 +30,7 @@ class telegram_free_tariff extends Command
     {
         $users_without_projects = User::where('role', 'seller')->where('status', 1)->doesntHave('projects')->get();
         foreach ($users_without_projects as $user) {
-            $tg_phone = TgPhone::query()->where('user_id', $user->id)->first();
+            $tg_phone = $user->tgPhone;
             $token = $user->createToken('Bearer');
             $plain_text_token = $token->plainTextToken;
 
