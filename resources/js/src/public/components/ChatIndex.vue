@@ -9,10 +9,13 @@
                 <div class="tab-content__chat chat">
                     <div class="chat__body">
                         <div v-if="isChatsMobile" class="chat__left">
+                            <div class="chat__search" style="width:100%">
+                                <input type="text" style="width:100%" class="input chat__search-input" v-model="chatSearchString" placeholder="Введите ID проекта, Имя или Название проекта">
+                            </div>
                             <div class="chat__chat-items">
                                 <div
-                                    v-if="works.length > 0"
-                                    v-for="work in works"
+                                    v-if="works"
+                                    v-for="work in (chatSearchString ? works.filter(work => isWorkSatisfying(work)) : works)"
                                     :data-id="work.id"
                                     @click="chooseChat(work)"
                                     :class="'chat__chat-item item-chat ' + (work.currentWork ? 'current' : (currentChat && currentChat.id == work.id ? 'current' : ''))"
@@ -368,6 +371,8 @@
                 isTablet: ref(false),
                 isChatsMobile: ref(true),
                 isMessagesMobile: ref(true),
+
+                chatSearchString: ref(null),
 
                 User, Platforms
             }
@@ -819,6 +824,11 @@
                 this.isMessagesMobile = false;
                 this.isChatsMobile = true;
                 this.backBtnPressed = true;
+            },
+            isWorkSatisfying(work){
+                return (String(work.id).indexOf(this.chatSearchString) !== -1 ||
+                            (work.project ? String(work.project.product_name).indexOf(this.chatSearchString) !== -1 : false) ||
+                                String(work.partner_user.name).indexOf(this.chatSearchString) !== -1);
             }
         }
     }
