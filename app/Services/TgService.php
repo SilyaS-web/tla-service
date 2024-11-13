@@ -286,4 +286,37 @@ class TgService
 
         return $httpcode == 200 ? "success" : false;
     }
+
+    public static function sendToDevBot($error_message)
+    {
+        $api_key = config('telegram.main_bot_api_key');
+        $group_id = config('telegram.errors_group_id');
+
+        $data = [
+            'chat_id' => $group_id,
+            'text' => $error_message,
+        ];
+
+        $curl = curl_init();
+        $url = 'https://api.telegram.org/bot' . $api_key . '/sendMessage';
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($data),
+            CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+        ));
+
+        curl_exec($curl);
+        $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+
+        return $http_code == 200 ? "success" : false;
+    }
 }
