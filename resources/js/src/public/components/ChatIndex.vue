@@ -827,8 +827,8 @@
             },
             isWorkSatisfying(work){
                 return (String(work.id).indexOf(this.chatSearchString) !== -1 ||
-                            (work.project ? String(work.project.product_name).indexOf(this.chatSearchString) !== -1 : false) ||
-                                String(work.partner_user.name).indexOf(this.chatSearchString) !== -1);
+                            (work.project ? String(work.project.product_name).toLowerCase().indexOf(this.chatSearchString.toLowerCase()) !== -1 : false) ||
+                                String(work.partner_user.name).toLowerCase().indexOf(this.chatSearchString.toLowerCase()) !== -1);
             }
         }
     }
