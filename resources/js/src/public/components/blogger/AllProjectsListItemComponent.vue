@@ -9,9 +9,6 @@
                     v-for="file in project.project_files"
                     class="project-item__img" :style="'background-image:url(' + file.link + ')'"></div>
             </div>
-            <div class="project-item__status active">
-                {{ project.status_name }}
-            </div>
         </div>
         <div class="project-item__content">
             <div class="project-item__title">
