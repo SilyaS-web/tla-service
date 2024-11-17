@@ -46,7 +46,7 @@
                                     <input type="checkbox" id="feedback" class="checkbox__checkbox" v-model="project.feedback">
                                     <label for="feedback"></label>
                                 </div>
-                                <label for="product-feedback">Отзыв
+                                <label for="product-feedback">Выкуп + отзыв
                                     <div class="format-tooltip format-tooltip--mobile" data-hint="product-feedback">
                                         ?
                                         <div class="format-hint format-hint--text" id="product-feedback">
@@ -65,12 +65,10 @@
                                     ?
                                     <div class="format-hint format-hint--text" id="feedback">
                                         <div class="format-hint__title">
-                                            Отзыв
+                                            Выкуп + отзыв
                                         </div>
                                         <div class="format-hint__body">
-                                            Улучшайте рейтинг вашей ĸарточĸи, публиĸуя положительные отзывы.
-                                            Это поможет переĸрыть негативные отзывы и повысить доверие
-                                            поĸупателей. Получите выĸупы не опасаясь санĸций от марĸетплейса.
+                                            Выкуп товара предполагает его приобретение блогером на маркетплейсе, после чего он публикует подробный отзыв, сопровождаемый фото или видео материалами.
                                         </div>
                                     </div>
                                 </div>
@@ -89,8 +87,7 @@
                                                 Интеграция
                                             </div>
                                             <div class="format-hint__body">
-                                                Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя
-                                                интеграции с лидерами мнений.
+                                                Интеграция подразумевает публикации блогером контента в социальной сети, с прикреплением ссылки либо упоминание артикула вашего товара.
                                             </div>
                                         </div>
                                     </div>
