@@ -23238,6 +23238,19 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
   },
   mounted: function mounted() {
     this.user = this.User.getCurrent();
+    $('.list-projects__item').find('.project-item__carousel--carousel').owlCarousel({
+      margin: 5,
+      nav: false,
+      dots: true,
+      responsive: {
+        0: {
+          items: 1
+        },
+        1180: {
+          items: 1
+        }
+      }
+    });
   },
   updated: function updated() {
     if (this.projectInfo) {
