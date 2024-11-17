@@ -1137,7 +1137,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .banner.disabled{
     opacity: 0;
-    bottom:-100px;
+    bottom:-100%;
 }
 .banner.inactive{
     box-shadow: 0px 0px 20px 12px rgba(254,94,0,.05);
@@ -5947,9 +5947,6 @@ input[type='range']::-webkit-slider-runnable-track{
 
     .banner{
         bottom: 67px;
-    }
-    .banner.disabled{
-        bottom:-100%;
     }
 }
 @media (orientation: landscape) and (max-width: 675px) {

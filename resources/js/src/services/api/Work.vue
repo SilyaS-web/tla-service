@@ -119,12 +119,17 @@ const Work = {
                 resolve(true);
             })
             .catch((errors) => {
+                let text = 'Невозможно создать проект. Проверьте все поля, если все в порядке, напишите в поддержку.';
+
+                if(errors.response.data.message)
+                    text = errors.response.data.message;
+
                 notify('error', {
                     title: 'Внимание!',
-                    message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'
-                })
+                    message: text
+                });
 
-                reject(false)
+                reject(errors)
             })
         })
     },

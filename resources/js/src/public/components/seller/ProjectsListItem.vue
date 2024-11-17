@@ -19,14 +19,9 @@
             </div>
             <div class="project-item__format-tags card__row card__tags">
                 <div
-                    v-if="project.project_works && project.project_works.find(w => w.type == 'feedback')"
+                    v-for="work in project.project_works"
                     class="card__tags-item">
-                    <span>Отзыв</span>
-                </div>
-                <div
-                    v-if="project.project_works && project.project_works.find(w => w.type == 'integration')"
-                    class="card__tags-item">
-                    <span>Интеграция</span>
+                    <span>{{ work.name }}</span>
                 </div>
             </div>
         </div>

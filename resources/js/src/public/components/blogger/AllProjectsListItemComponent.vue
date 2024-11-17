@@ -9,9 +9,6 @@
                     v-for="file in project.project_files"
                     class="project-item__img" :style="'background-image:url(' + file.link + ')'"></div>
             </div>
-            <div class="project-item__status active">
-                {{ project.status_name }}
-            </div>
         </div>
         <div class="project-item__content">
             <div class="project-item__title">
@@ -22,14 +19,9 @@
             </div>
             <div class="project-item__format-tags card__row card__tags">
                 <div
-                    v-if="project.project_works && project.project_works.find(w => w.type == 'feedback')"
+                    v-for="work in project.project_works"
                     class="card__tags-item">
-                    <span>Отзыв</span>
-                </div>
-                <div
-                    v-if="project.project_works && project.project_works.find(w => w.type == 'integration')"
-                    class="card__tags-item">
-                    <span>Интеграция</span>
+                    <span>{{ work.name }}</span>
                 </div>
             </div>
             <div class="project-item__btns">
