@@ -9,14 +9,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="img/adswap_1_2.svg" type="image/x-icon">
 
-    <link rel="stylesheet" href="/libs/owl/owl.carousel.min.css">
-    <link rel="stylesheet" href="/libs/owl/owl.theme.default.css">
+    <link rel="stylesheet" href="{{ asset('libs/owl/owl.carousel.min.css')  }}">
+    <link rel="stylesheet" href="{{ asset('libs/owl/owl.theme.default.css')  }}">
 
-    <link rel="stylesheet" href="/libs/meter/style.css">
+    <link rel="stylesheet" href="{{ asset('libs/meter/style.css')  }}">
 
-    <link rel="stylesheet" href="/libs/range-slider/style.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/loader.css">
+    <link rel="stylesheet" href="{{ asset('libs/range-slider/style.css')  }}">
+    @php($style = 'css/style.css?v=' . rand(100000, 9999999))
+    <link rel="stylesheet" href="{{ asset($style)  }}">
+    <link rel="stylesheet" href="{{ asset('css/loader.css')  }}">
 
     <script src="{{ asset('libs/jquery/jquery-3.7.1.min.js') }}" crossorigin="anonymous"></script>
     <script src="{{ asset('libs/jquery/jquery.maskedinput.min.js') }}"></script>
@@ -56,7 +57,7 @@
 </div>
 @include('shared.success-message')
 </body>
-@php($script = "js/app.js?v=" . rand(100000, 9999999));
+@php($script = "js/app.js?v=" . rand(100000, 9999999))
 <script src="{{ asset($script) }}"></script>
 {{--@yield('scripts')--}}
 </html>

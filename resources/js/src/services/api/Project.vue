@@ -163,7 +163,7 @@ const Project = {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'get',
-                url: 'api/projects',
+                url: '/api/projects',
                 params: filterData
             })
             .then(response => {
@@ -184,7 +184,7 @@ const Project = {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'get',
-                url: 'api/users/' + user_id + '/projects',
+                url: '/api/users/' + user_id + '/projects',
                 params: filterData
             })
             .then(response => {

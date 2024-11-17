@@ -5,7 +5,8 @@
         class="list-projects__item project-item" :data-id="project.id">
         <div class="owl-carousel project-item__carousel">
             <div
-                :style="'background-image: url(' + project.project_files[0].link + ')'"
+                v-for="file in project.project_files"
+                :style="'background-image: url(' + file.link + ')'"
                 class="project-item__img">
             </div>
         </div>
@@ -18,14 +19,9 @@
             </div>
             <div class="project-item__format-tags card__row card__tags">
                 <div
-                    v-if="project.project_works && project.project_works.find(w => w.type == 'feedback')"
+                    v-for="work in project.project_works"
                     class="card__tags-item">
-                    <span>Отзыв</span>
-                </div>
-                <div
-                    v-if="project.project_works && project.project_works.find(w => w.type == 'integration')"
-                    class="card__tags-item">
-                    <span>Интеграция</span>
+                    <span>{{ work.name }}</span>
                 </div>
             </div>
         </div>
@@ -120,6 +116,20 @@
             if (!this.project) {
                 return
             }
+
+            $('.project-item[data-id="' + this.project.id + '"]').find('.project-item__carousel').owlCarousel({
+                margin: 5,
+                nav: false,
+                dots: true,
+                responsive: {
+                    0:{
+                        items: 1
+                    },
+                    1180: {
+                        items:1
+                    }
+                }
+            });
         },
         updated(){
             if(this.projectInfo){

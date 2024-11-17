@@ -6,7 +6,7 @@ const Work = {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'get',
-                url: 'api/projects/' + project.id +  '/works' + (status ? '?status=' + status : '')
+                url: '/api/projects/' + project.id +  '/works' + (status ? '?status=' + status : '')
             })
             .then(response => {
                 resolve(response.data.works);
@@ -40,7 +40,7 @@ const Work = {
 
             axios({
                 method: 'get',
-                url: 'api/users/' + user_id +  '/works',
+                url: '/api/users/' + user_id +  '/works',
                 params: params
             })
             .then(response => {
@@ -60,7 +60,7 @@ const Work = {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'get',
-                url: 'api/works/' + work_id + '/deny'
+                url: '/api/works/' + work_id + '/deny'
             })
             .then(response => {
                 notify('info', {
@@ -84,7 +84,7 @@ const Work = {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'get',
-                url: 'api/works/' + work_id + '/cancel'
+                url: '/api/works/' + work_id + '/cancel'
             })
             .then(response => {
                 notify('info', {
@@ -108,7 +108,7 @@ const Work = {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'get',
-                url: 'api/works/' + work_id + '/accept'
+                url: '/api/works/' + work_id + '/accept'
             })
             .then(response => {
                 notify('info', {
@@ -119,12 +119,17 @@ const Work = {
                 resolve(true);
             })
             .catch((errors) => {
+                let text = 'Невозможно создать проект. Проверьте все поля, если все в порядке, напишите в поддержку.';
+
+                if(errors.response.data.message)
+                    text = errors.response.data.message;
+
                 notify('error', {
                     title: 'Внимание!',
-                    message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'
-                })
+                    message: text
+                });
 
-                reject(false)
+                reject(errors)
             })
         })
     },

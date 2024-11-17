@@ -142,7 +142,7 @@
 
                 axios({
                     method: 'get',
-                    url: 'api/users/' + user_id + '/works',
+                    url: '/api/users/' + user_id + '/works',
                     params: params
                 })
                 .then(response => {
@@ -164,7 +164,7 @@
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'get',
-                    url: 'api/users/' + user_id + '/works/' + work_id + '/messages'
+                    url: '/api/users/' + user_id + '/works/' + work_id + '/messages'
                 })
                 .then(response => {
                     resolve(response.data.messages);

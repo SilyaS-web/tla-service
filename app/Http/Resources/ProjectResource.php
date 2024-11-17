@@ -56,7 +56,7 @@ class ProjectResource extends JsonResource
             'created_at' => isset($this->created_at) ? $this->created_at->format('d.m.Y') : null,
             'works_count' => $this->works()->count(),
             'is_blogger_works' => $this->when($request->user()->role == 'blogger', function () use ($request) {
-                return Work::where('blogger_id', $request->user()->id)->where('project_id', $this->id)->first() ? true : false;
+                return Work::withTrashed()->where('blogger_id', $request->user()->id)->where('project_id', $this->id)->first() ? true : false;
             }),
         ];
     }

@@ -37,7 +37,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group marketing-format">
+                        <div class="form-group marketing-format" style="z-index: 3;" >
                             <label for="format">Выберите формат рекламы</label>
                             <span class="error" v-if="errors && errors.project_type">{{ errors.project_type }}</span>
 

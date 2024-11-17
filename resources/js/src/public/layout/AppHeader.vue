@@ -6,7 +6,7 @@
                     <div href="#" class="header__profile-w header__profile-header header__profile-item--js">
                         <a href="/">
                             <img
-                                :src="user.image ? user.image : '/img/profile-icon.svg'"
+                                :src="user.image ? user.image : 'img/profile-icon.svg'"
                                 alt="" class="header__profile">
                         </a>
                         <div class="header__profile-col">

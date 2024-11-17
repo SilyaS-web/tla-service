@@ -3,92 +3,83 @@
     <section class="edit-profile">
         <div class="edit-profile__container _container">
             <div class="edit-profile__body">
-                <div class="edit-profile__title title">
-                    Редактировать данные
-                </div>
                 <div class="edit-profile__content" >
-                    <div class="tab-content__profile-img">
-                        <img :src="seller.user && seller.user.image ? seller.user.image : '/img/profile-icon.svg'  " alt="">
-                        <div class="tab-content__profile-img-text">
-                            <p>Фото профиля</p>
-                            <div class="form-group form-group--file">
-                                <label class="tab-content__profile-img-upload input-file" for="profile-img">
-                                    <span>{{ imgSectionTitle }}</span>
-                                    <input
-                                        @change="imgSectionTitle = 'Изображение загружено'"
-                                        type="file" name="image" class="" id="profile-img">
-                                </label>
-                                <span v-if="errors['image']" class="error">{{ errors['image'] }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-content__form tab-content__form--accent" style="flex-direction:column;">
-                        <label for="" class="tab-content__form--title">Личные данные</label>
-                        <div class="tab-content__form-row">
-                            <div class="tab-content__form-right">
-                                <div class="form-group">
-                                    <label for="">Имя</label>
-                                    <input type="text" class="input" name="name" id="name" v-model="seller.user.name">
-                                    <span v-if = "errors['name']" class="error">{{ errors['name'] }}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">E-mail</label>
-                                    <input type="email" class="input" id="email" name="email" v-model="seller.user.email">
-                                    <span v-if = "errors['email']" class="error">{{ errors['email'] }}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="phone">Номер телефона</label>
-                                    <input type="phone" id="phone" placeholder="" name="phone" class="input input--phone" v-model="seller.user.phone" disabled>
-                                    <span v-if = "errors['phone']" class="error">{{ errors['phone'] }}</span>
-                                </div>
-                            </div>
-                            <div class="tab-content__form-left">
-                                <div class="form-group" style="">
-                                    <label for="">Тип организации</label>
-                                    <select class="input" id="type" name="organization_type" v-model="seller.organization_type">
-                                        <option value="">Не выбрано</option>
-                                        <option value="ООО">ООО</option>
-                                        <option value="ИП">ИП</option>
-                                        <option value="ОАО">ОАО</option>
-                                    </select>
-                                    <span v-if = "errors['organization_type']" class="error">{{ errors['organization_type'] }}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="organization_name">Название организации</label>
-                                    <input type="text" class="input" id="organization_name" name="organization_name" v-model="seller.organization_name">
-                                    <span v-if = "errors['organization_name']" class="error">{{ errors['organization_name'] }}</span>
-                                </div>
-                                <div class="form-group">
-                                    <label for="">ИНН</label>
-                                    <input type="text" class="input" id="inn" name="inn" v-model="seller.inn">
-                                    <span v-if = "errors['inn']" class="error">{{ errors['inn'] }}</span>
+                    <div class="tab-content__profile-img tab-content__form tab-content__form--accent">
+                        <label for="" class="tab-content__form--title" style="text-align: center">Аватар профиля</label>
+                        <div class="tab-content__profile-img-row">
+                            <img :src="seller.user && seller.user.image ? seller.user.image : '/img/profile-icon.svg'  " alt="">
+                            <div class="tab-content__profile-img-text">
+                                <div class="form-group form-group--file">
+                                    <label class="tab-content__profile-img-upload input-file" for="profile-img">
+                                        <span>{{ imgSectionTitle }}</span>
+                                        <input
+                                            @change="imgSectionTitle = 'Изображение загружено'"
+                                            type="file" name="image" class="" id="profile-img">
+                                    </label>
+                                    <span v-if="errors['image']" class="error">{{ errors['image'] }}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="tab-content__form tab-content__form--accent" style="flex-direction:column;">
-                        <label for="" class="tab-content__form--title">Изменить пароль</label>
-                        <div class="tab-content__form-row" style="">
-                            <div class="tab-content__form-right">
-                                <div class="form-group">
-                                    <label for="old_password">Старый пароль</label>
-                                    <input class="input" id="old_password" type="password" name="old_password" v-model="seller.old_password">
-                                    <span v-if = "errors['old_password']" class="error">{{ errors['old_password'] }}</span>
-                                </div>
+                        <label for="" class="tab-content__form--title" style="text-align: center">Личные данные</label>
+                        <div class="tab-content__form-form">
+                            <div class="form-group">
+                                <label for="">Имя</label>
+                                <input type="text" class="input" name="name" id="name" v-model="seller.user.name">
+                                <span v-if = "errors['name']" class="error">{{ errors['name'] }}</span>
                             </div>
-                            <div class="tab-content__form-left">
-                                <div class="form-group">
-                                    <label for="password">Новый пароль</label>
-                                    <input class="input" id="password" type="password" name="password" v-model="seller.password">
-                                    <span v-if = "errors['password']" class="error">{{ errors['password'] }}</span>
-                                </div>
+                            <div class="form-group">
+                                <label for="">E-mail</label>
+                                <input type="email" class="input" id="email" name="email" v-model="seller.user.email">
+                                <span v-if = "errors['email']" class="error">{{ errors['email'] }}</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Номер телефона</label>
+                                <input type="phone" id="phone" placeholder="" name="phone" class="input input--phone" v-model="seller.user.phone" disabled>
+                                <span v-if = "errors['phone']" class="error">{{ errors['phone'] }}</span>
+                            </div>
+                            <div class="form-group" style="">
+                                <label for="">Тип организации</label>
+                                <select class="input" id="type" name="organization_type" v-model="seller.organization_type">
+                                    <option value="">Не выбрано</option>
+                                    <option value="ООО">ООО</option>
+                                    <option value="ИП">ИП</option>
+                                    <option value="ОАО">ОАО</option>
+                                </select>
+                                <span v-if = "errors['organization_type']" class="error">{{ errors['organization_type'] }}</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="organization_name">Название организации</label>
+                                <input type="text" class="input" id="organization_name" name="organization_name" v-model="seller.organization_name">
+                                <span v-if = "errors['organization_name']" class="error">{{ errors['organization_name'] }}</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="">ИНН</label>
+                                <input type="text" class="input" id="inn" name="inn" v-model="seller.inn">
+                                <span v-if = "errors['inn']" class="error">{{ errors['inn'] }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tab-content__form tab-content__form--accent" style="flex-direction:column;">
+                        <label for="" class="tab-content__form--title" style="text-align: center">Управление паролем</label>
+                        <div class="tab-content__form-form" style="">
+                            <div class="form-group">
+                                <label for="old_password">Старый пароль</label>
+                                <input class="input" id="old_password" type="password" name="old_password" v-model="seller.old_password">
+                                <span v-if = "errors['old_password']" class="error">{{ errors['old_password'] }}</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Новый пароль</label>
+                                <input class="input" id="password" type="password" name="password" v-model="seller.password">
+                                <span v-if = "errors['password']" class="error">{{ errors['password'] }}</span>
                             </div>
                         </div>
                     </div>
                     <div class="tab-content__form tab-content__form--accent tab-content__form--api" style="flex-direction:column;">
-                        <label for="" class="tab-content__form--title">Работа с API</label>
-                        <div class="tab-content__form-row" style="">
-                            <div class="tab-content__form-right tab-content__form-right--wb">
+                        <label for="" class="tab-content__form--title" style="text-align: center">Статистика и работа с API</label>
+                        <div class="tab-content__form-form" style="">
+                            <div class="tab-content__form-right--wb">
                                 <div class="form-group">
                                     <label for="">Ссылка на магазин WB</label>
                                     <input type="text" class="input" id="marketplace" name="wb_link" v-model="seller.wb_link">
@@ -99,8 +90,9 @@
                                     <input type="text" class="input" id="wb_api_key" name="wb_api_key" v-model="seller.wb_api_key">
                                     <span v-if = "errors['wb_api_key']" class="error">{{ errors['wb_api_key'][0] }}</span>
                                 </div>
+                                <img src="img/wildberries.svg" alt="" class="tab-content__form-wb-icon">
                             </div>
-                            <div class="tab-content__form-left tab-content__form-left--ozon">
+                            <div class="tab-content__form-left--ozon">
                                 <div class="form-group">
                                     <label for="ozon_link">Ссылка на магазин OZON</label>
                                     <input type="text" class="input" id="ozon_link" name="ozon_link" v-model="seller.ozon_link">
@@ -116,13 +108,14 @@
                                     <input type="text" class="input" id="ozon_api_key" name="ozon_api_key" v-model="seller.ozon_api_key">
                                     <span v-if = "errors['ozon_api_key']" class="error">{{ errors['ozon_api_key'][0] }}</span>
                                 </div>
+                                <img src="img/ozon_.svg" alt="" class="tab-content__form-ozon-icon">
                             </div>
                         </div>
                     </div>
 
                     <button
                         @click="saveSeller"
-                        class="btn btn-primary">Сохранить</button>
+                        class="btn btn-primary">Сохранить изменения</button>
                 </div>
             </div>
         </div>

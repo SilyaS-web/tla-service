@@ -14,7 +14,7 @@ const Platforms = {
 
             axios({
                 method: 'get',
-                url: 'api/platforms'
+                url: '/api/platforms'
             })
             .then(response => {
                 var platforms = response.data.platforms || [];

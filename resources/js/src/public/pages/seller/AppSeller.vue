@@ -47,6 +47,7 @@
                 </div>
             </div>
         </div>
+        <Banner></Banner>
     </section>
     <div
         v-if="isShowTariffs"
@@ -87,11 +88,13 @@ import Header from '../../components/layout/AppHeader.vue'
 import Footer from '../../components/layout/AppFooter.vue'
 import Tariffs from '../../components/seller/TariffsComponent.vue'
 import Partners from '../../components/seller/PartnersComponent.vue'
+import Banner from '../../components/layout/AppBanner.vue'
 
 export default{
     components: {
         Aside, CreateProject, Dashboard, ProjectsList,
-        MyProjectsList, BloggersList, Chat, Header, Footer, Tariffs, Partners
+        MyProjectsList, BloggersList, Chat, Header, Footer, Tariffs, Partners,
+        Banner
     },
     data(){
         return {
@@ -248,7 +251,7 @@ export default{
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'get',
-                    url: 'api/users/' + this.User.getCurrent().id + '/dashboard'
+                    url: '/api/users/' + this.User.getCurrent().id + '/dashboard'
                 })
                 .then(response => {
                     resolve(response.data);

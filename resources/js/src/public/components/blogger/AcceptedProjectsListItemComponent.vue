@@ -21,14 +21,9 @@
             </div>
             <div class="project-item__format-tags card__row card__tags">
                 <div
-                    v-if="work.project.feedbackWork && work.project.feedbackWork.quantity > 0"
+                    v-for="work in work.project.feedbackWork"
                     class="card__tags-item">
-                    <span>Отзыв</span>
-                </div>
-                <div
-                    v-if="work.project.integrationWork && work.project.integrationWork.quantity > 0"
-                    class="card__tags-item">
-                    <span>Интеграция</span>
+                    <span>{{ work.name }}</span>
                 </div>
             </div>
             <div class="project-item__btns">
@@ -50,6 +45,19 @@
             }
         },
         mounted(){
+            $('.project-item').find('.project-item__carousel--carousel').owlCarousel({
+                margin: 5,
+                nav: false,
+                dots: true,
+                responsive: {
+                    0:{
+                        items: 1
+                    },
+                    1180: {
+                        items:1
+                    }
+                }
+            });
         },
         updated(){
         },
