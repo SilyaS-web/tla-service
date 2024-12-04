@@ -47,7 +47,7 @@
                 </div>
             </div>
         </div>
-        <Banner></Banner>
+<!--        <Banner></Banner>-->
     </section>
     <div
         v-if="isShowTariffs"

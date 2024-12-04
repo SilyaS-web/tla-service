@@ -1,5 +1,5 @@
 <template>
-    <div class="dashboard tab-content active" v-if="dashboard" id="dashboard">
+    <div class="dashboard tab-content" v-if="dashboard" id="dashboard">
         <div class="dashboard__body">
             <div class="dashboard__title title">
                 Статистика

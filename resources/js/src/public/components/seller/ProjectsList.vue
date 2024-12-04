@@ -1,5 +1,5 @@
 <template>
-    <div class="profile-projects tab-content" id="all-projects">
+    <div class="profile-projects tab-content active" id="all-projects">
         <div class="profile-projects__body">
             <div class="projects-list__header">
                 <div class="list-projects__title title">
