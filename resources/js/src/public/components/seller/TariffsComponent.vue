@@ -57,7 +57,7 @@
                                 Безлимит
                             </div>
                             <div class="tariff-card__subtitle">
-                                Действует <span style="text-decoration: line-through; color:rgba(0,0,0,.4)">30</span> 60 дней
+                                Действует 30 дней
                             </div>
                         </div>
                         <div class="tariff-card__prices">

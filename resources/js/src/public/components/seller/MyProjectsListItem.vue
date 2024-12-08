@@ -870,10 +870,9 @@ import {ref, shallowRef} from 'vue'
                     this.updateProductStatistics()
 
                     this.Loader.loaderOff()
-                    resolve(result.data)
                 })
                 .catch(error => {
-                    resolve([])
+                    this.Loader.loaderOff()
                 })
             },
             updateProductStatistics(){

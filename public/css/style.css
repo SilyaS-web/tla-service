@@ -4,7 +4,7 @@
     --primary: #B54CDB;
     --text: #000;
     --secondary: #70E256;
-    --pale: #EBF0FF;
+    --pale: #F5FCFF;
     --baseColor: #656c7c;
     --baseSize: 16px;
     --baseLineHeight: 1.5;
@@ -186,11 +186,11 @@ a.btn:hover{
     position: absolute;
     inset: 0px;
     border-radius: 50%;
-    border: 5px solid #222222;
+    border: 5px solid #3E424D;
     animation: prixClipFix 2.4s linear infinite ;
 }
 .loader::after{
-    border-color: #FF3D00;
+    border-color: var(--primary);
     animation: prixClipFix 2.4s linear infinite , rotate 0.8s linear infinite reverse;
     inset: 6px;
 }
@@ -367,6 +367,7 @@ input[type='range']::-webkit-slider-runnable-track{
     max-width: 30px;
     height: 30px;
     background-image: url("../img/download-icon.svg");
+    filter: invert(41%) sepia(98%) saturate(2849%) hue-rotate(259deg) brightness(91%) contrast(87%);
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
@@ -375,7 +376,7 @@ input[type='range']::-webkit-slider-runnable-track{
 .input-file.uploaded::before{
     max-width: 30px; height:30px;
     background-image: url("../img/approved-aproved-confirm-2-svgrepo-com.svg");
-    filter: brightness(0) saturate(100%) invert(58%) sepia(65%) saturate(7106%) hue-rotate(6deg) brightness(105%) contrast(101%);
+    filter: invert(41%) sepia(98%) saturate(2849%) hue-rotate(259deg) brightness(91%) contrast(87%)
 }
 .input-file input{
     display: none;
@@ -703,7 +704,7 @@ input[type='range']::-webkit-slider-runnable-track{
     text-decoration: none;
 }
 .profile-projects__opts-item:hover img{
-    filter: brightness(0) saturate(100%) invert(44%) sepia(97%) saturate(2930%) hue-rotate(360deg) brightness(100%) contrast(107%);
+    filter: invert(43%) sepia(36%) saturate(1994%) hue-rotate(251deg) brightness(87%) contrast(96%);
     opacity: 1;
 }
 .profile-projects__opts-item img{
@@ -1729,6 +1730,7 @@ input[type='range']::-webkit-slider-runnable-track{
     width: 25px;
     height: 25px;
     background-image: url("../img/arrow-right.svg");
+    filter: invert(41%) sepia(98%) saturate(2849%) hue-rotate(259deg) brightness(91%) contrast(87%);
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center;
@@ -1826,7 +1828,7 @@ input[type='range']::-webkit-slider-runnable-track{
     height: 12px;
     cursor: pointer;
     width:100%;
-    filter: brightness(0) saturate(100%) invert(38%) sepia(90%) saturate(2507%) hue-rotate(3deg) brightness(106%) contrast(105%);
+    filter: invert(41%) sepia(98%) saturate(2849%) hue-rotate(259deg) brightness(91%) contrast(87%)
 }
 .upload-files__path {
     font-size: 15px;
@@ -1844,6 +1846,7 @@ input[type='range']::-webkit-slider-runnable-track{
     width: 48px;
     height: 48px;
     cursor: pointer;
+    filter: invert(41%) sepia(98%) saturate(2849%) hue-rotate(259deg) brightness(91%) contrast(87%)
 }
 .input-checkbox-w {
     background-color: var(--pale);
@@ -2312,7 +2315,7 @@ input[type='range']::-webkit-slider-runnable-track{
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    filter: brightness(0) saturate(100%) invert(48%) sepia(81%) saturate(4313%) hue-rotate(2deg) brightness(103%) contrast(104%);
+    filter: invert(41%) sepia(98%) saturate(2849%) hue-rotate(259deg) brightness(91%) contrast(87%)
 }
 .card__stats-val.card__stats-val--feedback::before{
     content:"";
@@ -2322,7 +2325,7 @@ input[type='range']::-webkit-slider-runnable-track{
     background-position: center;
     background-size: contain;
     background-repeat: no-repeat;
-    filter: brightness(0) saturate(100%) invert(48%) sepia(81%) saturate(4313%) hue-rotate(2deg) brightness(103%) contrast(104%);
+    filter: invert(41%) sepia(98%) saturate(2849%) hue-rotate(259deg) brightness(91%) contrast(87%)
 }
 .card__stats-val{
     position: relative;
@@ -3985,7 +3988,7 @@ input[type='range']::-webkit-slider-runnable-track{
     color:var(--primary);
 }
 .textarea-upload.uploaded img{
-    filter: invert(50%) sepia(82%) saturate(4187%) hue-rotate(0deg) brightness(101%) contrast(110%)
+    filter: invert(43%) sepia(36%) saturate(1994%) hue-rotate(251deg) brightness(87%) contrast(96%)
 }
 .textarea-upload__cancel{
     margin-left: 10px;
@@ -3997,6 +4000,7 @@ input[type='range']::-webkit-slider-runnable-track{
 .textarea-upload__cancel img{
     width:12px;
     height:12px;
+    filter: invert(43%) sepia(36%) saturate(1994%) hue-rotate(251deg) brightness(87%) contrast(96%)
 }
 .textarea{
     background-color:var(--pale);
@@ -4191,6 +4195,7 @@ input[type='range']::-webkit-slider-runnable-track{
     width: 30px;
     height: 30px;
     background-image: url(../img/star-icon.svg);
+    filter: invert(43%) sepia(36%) saturate(1994%) hue-rotate(251deg) brightness(87%) contrast(96%);
     display: block;
     right: 20px;
     top: -12px;
