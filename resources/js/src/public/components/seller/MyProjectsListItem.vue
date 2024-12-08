@@ -226,7 +226,7 @@
                                 </div>
                             </div>
                             <div class="card__row" style="text-align: center;">
-                                <a :href="'/bloggers/' + work.blogger.id" class="" style="width: 100%; color: #FE5E00; font-size:16px; font-weight:500; text-decoration:underline; margin-top: -10px;">Подробнее</a>
+                                <a :href="'/bloggers/' + work.blogger.id" class="" style="width: 100%; color: var(--primary); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -10px;">Подробнее</a>
                             </div>
                             <div class="card__row bloger-item--btns" style="gap:12px; width:100%; flex-wrap: wrap; justify-content: center">
                                 <button class="btn btn-primary" @click="acceptWork(work)">

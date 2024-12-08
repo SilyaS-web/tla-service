@@ -210,7 +210,7 @@
                                     </div>
                                 </div>
                                 <div class="card__row" style="text-align: center;">
-                                    <a href="{{ route('blogger-page', $blogger->id) . '?tab=profile-projects' }}" class="" style="width: 100%; color: #FE5E00; font-size:16px; font-weight:500; text-decoration:underline; margin-top: -10px;">Подробнее</a>
+                                    <a href="{{ route('blogger-page', $blogger->id) . '?tab=profile-projects' }}" class="" style="width: 100%; color: #B54CDB; font-size:16px; font-weight:500; text-decoration:underline; margin-top: -10px;">Подробнее</a>
                                 </div>
                                 <div class="card__row bloger-item--btns" style="gap:12px; width:100%; flex-wrap: wrap; justify-content: center">
                                     <button class="btn btn-primary" onclick="acceptWork(this, {{ $work_application->id }}, {{ $project->id}})" data-work-id="{{ $work_application->id }}">

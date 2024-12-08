@@ -132,11 +132,13 @@ export default{
         }
     },
     async mounted(){
-        this.Loader.loaderOn('.wrapper #dashboard');
+        this.Loader.loaderOn('.wrapper #all-projects');
 
         this.user = this.User.getCurrent();
 
-        this.dashboard = await this.getSellerStats(this.user.id);
+        // this.dashboard = await this.getSellerStats(this.user.id);
+
+        this.projects = await this.Project.getList({is_blogger_access: 1, statuses: [0]});
 
         this.isShowTariffs = localStorage.getItem('show_tariffs') ? JSON.parse(localStorage.getItem('show_tariffs')) : false;
 
@@ -145,7 +147,7 @@ export default{
         }
 
         setTimeout(() => {
-            this.Loader.loaderOff('#dashboard');
+            this.Loader.loaderOff('#all-projects');
         }, 300)
 
         if(this.$router.currentRoute.value.params && this.$router.currentRoute.value.params.item && this.$router.currentRoute.value.params.id){

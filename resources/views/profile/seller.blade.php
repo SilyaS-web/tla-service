@@ -1251,7 +1251,7 @@
         , datasets: [{
             label: "ER %"
             , data: [10, 32, 45, 9, 55, 89, 123, 15, 102, 11, 15, 245]
-            , borderColor: "#FE5E00"
+            , borderColor: "#B54CDB"
             , backgroundColor: "#FAF5EF"
         , }, ]
     };
@@ -1276,7 +1276,7 @@
         , datasets: [{
             label: "CPM"
             , data: [144, 12, 555, 9, 55, 123, 123, 15, 102, 11, 51, 245]
-            , borderColor: "#FE5E00"
+            , borderColor: "#B54CDB"
             , backgroundColor: "#FAF5EF"
         , }, ]
     };
@@ -1299,7 +1299,7 @@
         , datasets: [{
             label: "Интеграции"
             , data: [126, 120]
-            , backgroundColor: ["#98CBED", "#FE5E00"]
+            , backgroundColor: ["#98CBED", "#B54CDB"]
         , }]
     };
 
