@@ -11,9 +11,9 @@
                 <a href="#" v-on:click="switchTab('all-projects')" class="nav-menu__item nav-menu__link active tab all-projects-list-link" data-content="all-projects">
                     Все проекты
                 </a>
-                <a href="#" v-on:click="switchTab('dashboard')" class="nav-menu__item nav-menu__link tab dashboard-link" data-content="dashboard">
-                    Дашборд
-                </a>
+<!--                <a href="#" v-on:click="switchTab('dashboard')" class="nav-menu__item nav-menu__link tab dashboard-link" data-content="dashboard">-->
+<!--                    Дашборд-->
+<!--                </a>-->
                 <a href="#" v-on:click="switchTab('profile-blogers-list')" class="nav-menu__item nav-menu__link tab blogers-list-link" data-content="profile-blogers-list">
                     Каталог блогеров
                 </a>
