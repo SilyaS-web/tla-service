@@ -678,6 +678,9 @@ input[type='range']::-webkit-slider-runnable-track{
 .profile-blogers__body{
     width: 100%;
 }
+.profile-blogers.not-paid .profile-blogers__body{
+    pointer-events: none;
+}
 .profile-projects__title {
 }
 .title {
