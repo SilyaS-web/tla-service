@@ -597,6 +597,7 @@
                     }
 
                     $(document).find('.messages-create__create').addClass('btn-loading');
+                    $(document).find('.btn--send-message').addClass('btn-loading');
 
                     this.currentMessage.message = null;
                     this.currentMessage.file = null;
@@ -619,13 +620,12 @@
                             message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'
                         })
 
-                        $(document).find('.btn--send-message').removeClass('btn-loading');
-
                         resolve(false)
                     })
                     .finally(() => {
                         $('#chat-upload').val(null)
                         $(document).find('.messages-create__create').removeClass('btn-loading');
+                        $(document).find('.btn--send-message').removeClass('btn-loading');
                     })
                 })
             },
