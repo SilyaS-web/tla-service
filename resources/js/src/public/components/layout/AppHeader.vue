@@ -115,7 +115,7 @@
             </div>
             <div class="burger-menu__nav nav-burger">
                 <router-link :to="{path: '/profile'}" class="nav-burger__link nav__link">
-                    {{ user.role == 'seller' ? 'Дашборд' : 'Главная' }}
+                    Главная
                 </router-link>
                 <a href="https://adswap.ru/instructions" class="nav-burger__link nav__link">Инструкции</a>
                 <a href="https://adswap.ru/files" class="nav-burger__link nav__link">Файлы</a>
@@ -146,7 +146,7 @@
                     class="nav header__nav">
                     <div class="nav__items">
                         <router-link :to="{ path: '/profile' }" class="nav__link">
-                            {{ user.role == 'seller' ? 'Дашборд' : 'Главная' }}
+                            Главная
                         </router-link>
                         <a href="https://adswap.ru/instructions" class="nav__link">Инструкции</a>
                         <a href="https://adswap.ru/files" class="nav__link">Файлы</a>
