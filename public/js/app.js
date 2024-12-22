@@ -22487,6 +22487,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_3__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _ui_ConfirmationPopup__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../ui/ConfirmationPopup */ "./resources/js/src/ui/ConfirmationPopup.vue");
 function _typeof(o) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (o) { return typeof o; } : function (o) { return o && "function" == typeof Symbol && o.constructor === Symbol && o !== Symbol.prototype ? "symbol" : typeof o; }, _typeof(o); }
 function _regeneratorRuntime() { "use strict"; /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */ _regeneratorRuntime = function _regeneratorRuntime() { return e; }; var t, e = {}, r = Object.prototype, n = r.hasOwnProperty, o = Object.defineProperty || function (t, e, r) { t[e] = r.value; }, i = "function" == typeof Symbol ? Symbol : {}, a = i.iterator || "@@iterator", c = i.asyncIterator || "@@asyncIterator", u = i.toStringTag || "@@toStringTag"; function define(t, e, r) { return Object.defineProperty(t, e, { value: r, enumerable: !0, configurable: !0, writable: !0 }), t[e]; } try { define({}, ""); } catch (t) { define = function define(t, e, r) { return t[e] = r; }; } function wrap(t, e, r, n) { var i = e && e.prototype instanceof Generator ? e : Generator, a = Object.create(i.prototype), c = new Context(n || []); return o(a, "_invoke", { value: makeInvokeMethod(t, r, c) }), a; } function tryCatch(t, e, r) { try { return { type: "normal", arg: t.call(e, r) }; } catch (t) { return { type: "throw", arg: t }; } } e.wrap = wrap; var h = "suspendedStart", l = "suspendedYield", f = "executing", s = "completed", y = {}; function Generator() {} function GeneratorFunction() {} function GeneratorFunctionPrototype() {} var p = {}; define(p, a, function () { return this; }); var d = Object.getPrototypeOf, v = d && d(d(values([]))); v && v !== r && n.call(v, a) && (p = v); var g = GeneratorFunctionPrototype.prototype = Generator.prototype = Object.create(p); function defineIteratorMethods(t) { ["next", "throw", "return"].forEach(function (e) { define(t, e, function (t) { return this._invoke(e, t); }); }); } function AsyncIterator(t, e) { function invoke(r, o, i, a) { var c = tryCatch(t[r], t, o); if ("throw" !== c.type) { var u = c.arg, h = u.value; return h && "object" == _typeof(h) && n.call(h, "__await") ? e.resolve(h.__await).then(function (t) { invoke("next", t, i, a); }, function (t) { invoke("throw", t, i, a); }) : e.resolve(h).then(function (t) { u.value = t, i(u); }, function (t) { return invoke("throw", t, i, a); }); } a(c.arg); } var r; o(this, "_invoke", { value: function value(t, n) { function callInvokeWithMethodAndArg() { return new e(function (e, r) { invoke(t, n, e, r); }); } return r = r ? r.then(callInvokeWithMethodAndArg, callInvokeWithMethodAndArg) : callInvokeWithMethodAndArg(); } }); } function makeInvokeMethod(e, r, n) { var o = h; return function (i, a) { if (o === f) throw Error("Generator is already running"); if (o === s) { if ("throw" === i) throw a; return { value: t, done: !0 }; } for (n.method = i, n.arg = a;;) { var c = n.delegate; if (c) { var u = maybeInvokeDelegate(c, n); if (u) { if (u === y) continue; return u; } } if ("next" === n.method) n.sent = n._sent = n.arg;else if ("throw" === n.method) { if (o === h) throw o = s, n.arg; n.dispatchException(n.arg); } else "return" === n.method && n.abrupt("return", n.arg); o = f; var p = tryCatch(e, r, n); if ("normal" === p.type) { if (o = n.done ? s : l, p.arg === y) continue; return { value: p.arg, done: n.done }; } "throw" === p.type && (o = s, n.method = "throw", n.arg = p.arg); } }; } function maybeInvokeDelegate(e, r) { var n = r.method, o = e.iterator[n]; if (o === t) return r.delegate = null, "throw" === n && e.iterator["return"] && (r.method = "return", r.arg = t, maybeInvokeDelegate(e, r), "throw" === r.method) || "return" !== n && (r.method = "throw", r.arg = new TypeError("The iterator does not provide a '" + n + "' method")), y; var i = tryCatch(o, e.iterator, r.arg); if ("throw" === i.type) return r.method = "throw", r.arg = i.arg, r.delegate = null, y; var a = i.arg; return a ? a.done ? (r[e.resultName] = a.value, r.next = e.nextLoc, "return" !== r.method && (r.method = "next", r.arg = t), r.delegate = null, y) : a : (r.method = "throw", r.arg = new TypeError("iterator result is not an object"), r.delegate = null, y); } function pushTryEntry(t) { var e = { tryLoc: t[0] }; 1 in t && (e.catchLoc = t[1]), 2 in t && (e.finallyLoc = t[2], e.afterLoc = t[3]), this.tryEntries.push(e); } function resetTryEntry(t) { var e = t.completion || {}; e.type = "normal", delete e.arg, t.completion = e; } function Context(t) { this.tryEntries = [{ tryLoc: "root" }], t.forEach(pushTryEntry, this), this.reset(!0); } function values(e) { if (e || "" === e) { var r = e[a]; if (r) return r.call(e); if ("function" == typeof e.next) return e; if (!isNaN(e.length)) { var o = -1, i = function next() { for (; ++o < e.length;) if (n.call(e, o)) return next.value = e[o], next.done = !1, next; return next.value = t, next.done = !0, next; }; return i.next = i; } } throw new TypeError(_typeof(e) + " is not iterable"); } return GeneratorFunction.prototype = GeneratorFunctionPrototype, o(g, "constructor", { value: GeneratorFunctionPrototype, configurable: !0 }), o(GeneratorFunctionPrototype, "constructor", { value: GeneratorFunction, configurable: !0 }), GeneratorFunction.displayName = define(GeneratorFunctionPrototype, u, "GeneratorFunction"), e.isGeneratorFunction = function (t) { var e = "function" == typeof t && t.constructor; return !!e && (e === GeneratorFunction || "GeneratorFunction" === (e.displayName || e.name)); }, e.mark = function (t) { return Object.setPrototypeOf ? Object.setPrototypeOf(t, GeneratorFunctionPrototype) : (t.__proto__ = GeneratorFunctionPrototype, define(t, u, "GeneratorFunction")), t.prototype = Object.create(g), t; }, e.awrap = function (t) { return { __await: t }; }, defineIteratorMethods(AsyncIterator.prototype), define(AsyncIterator.prototype, c, function () { return this; }), e.AsyncIterator = AsyncIterator, e.async = function (t, r, n, o, i) { void 0 === i && (i = Promise); var a = new AsyncIterator(wrap(t, r, n, o), i); return e.isGeneratorFunction(r) ? a : a.next().then(function (t) { return t.done ? t.value : a.next(); }); }, defineIteratorMethods(g), define(g, u, "Generator"), define(g, a, function () { return this; }), define(g, "toString", function () { return "[object Generator]"; }), e.keys = function (t) { var e = Object(t), r = []; for (var n in e) r.push(n); return r.reverse(), function next() { for (; r.length;) { var t = r.pop(); if (t in e) return next.value = t, next.done = !1, next; } return next.done = !0, next; }; }, e.values = values, Context.prototype = { constructor: Context, reset: function reset(e) { if (this.prev = 0, this.next = 0, this.sent = this._sent = t, this.done = !1, this.delegate = null, this.method = "next", this.arg = t, this.tryEntries.forEach(resetTryEntry), !e) for (var r in this) "t" === r.charAt(0) && n.call(this, r) && !isNaN(+r.slice(1)) && (this[r] = t); }, stop: function stop() { this.done = !0; var t = this.tryEntries[0].completion; if ("throw" === t.type) throw t.arg; return this.rval; }, dispatchException: function dispatchException(e) { if (this.done) throw e; var r = this; function handle(n, o) { return a.type = "throw", a.arg = e, r.next = n, o && (r.method = "next", r.arg = t), !!o; } for (var o = this.tryEntries.length - 1; o >= 0; --o) { var i = this.tryEntries[o], a = i.completion; if ("root" === i.tryLoc) return handle("end"); if (i.tryLoc <= this.prev) { var c = n.call(i, "catchLoc"), u = n.call(i, "finallyLoc"); if (c && u) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } else if (c) { if (this.prev < i.catchLoc) return handle(i.catchLoc, !0); } else { if (!u) throw Error("try statement without catch or finally"); if (this.prev < i.finallyLoc) return handle(i.finallyLoc); } } } }, abrupt: function abrupt(t, e) { for (var r = this.tryEntries.length - 1; r >= 0; --r) { var o = this.tryEntries[r]; if (o.tryLoc <= this.prev && n.call(o, "finallyLoc") && this.prev < o.finallyLoc) { var i = o; break; } } i && ("break" === t || "continue" === t) && i.tryLoc <= e && e <= i.finallyLoc && (i = null); var a = i ? i.completion : {}; return a.type = t, a.arg = e, i ? (this.method = "next", this.next = i.finallyLoc, y) : this.complete(a); }, complete: function complete(t, e) { if ("throw" === t.type) throw t.arg; return "break" === t.type || "continue" === t.type ? this.next = t.arg : "return" === t.type ? (this.rval = this.arg = t.arg, this.method = "return", this.next = "end") : "normal" === t.type && e && (this.next = e), y; }, finish: function finish(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.finallyLoc === t) return this.complete(r.completion, r.afterLoc), resetTryEntry(r), y; } }, "catch": function _catch(t) { for (var e = this.tryEntries.length - 1; e >= 0; --e) { var r = this.tryEntries[e]; if (r.tryLoc === t) { var n = r.completion; if ("throw" === n.type) { var o = n.arg; resetTryEntry(r); } return o; } } throw Error("illegal catch attempt"); }, delegateYield: function delegateYield(e, r, n) { return this.delegate = { iterator: values(e), resultName: r, nextLoc: n }, "next" === this.method && (this.arg = t), y; } }, e; }
 function asyncGeneratorStep(n, t, e, r, o, a, c) { try { var i = n[a](c), u = i.value; } catch (n) { return void e(n); } i.done ? t(u) : Promise.resolve(u).then(r, o); }
@@ -22496,8 +22497,12 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
 
 
 
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ['currentItem'],
+  components: {
+    ConfirmPopup: _ui_ConfirmationPopup__WEBPACK_IMPORTED_MODULE_5__["default"]
+  },
   data: function data() {
     return {
       imageIsOpen: false,
@@ -22518,10 +22523,22 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       isBloggerStatisticsPopupOpen: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false),
       bloggerStatistics: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({}),
       uploadStatisticsFileTitle: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('Прикрепить отчет по статистике'),
-      uploadFileTitle: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)('Прикрепите файл'),
+      uploadFileObject: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)({
+        title: 'Прикрепите файл',
+        icon: '/img/papperclip-icon.svg',
+        "class": ''
+      }),
+      isChatOptsOpen: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false),
+      statusNames: {
+        'completed': 'Проект завершен',
+        'pending': 'В ожидании',
+        'progress': 'В работе',
+        'canceled': 'Проект отменен'
+      },
       isTablet: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(false),
       isChatsMobile: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(true),
       isMessagesMobile: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(true),
+      chatSearchString: (0,vue__WEBPACK_IMPORTED_MODULE_0__.ref)(null),
       User: _services_api_User_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
       Platforms: _services_api_Platforms_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
     };
@@ -22579,6 +22596,20 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         }, 1000);
       }
     }
+    if (this.isTablet) {
+      if (this.isChatsMobile && this.currentChat && this.backBtnPressed) {
+        var childOffset = $(document).find(".item-chat[data-id=\"".concat(this.currentChat.id, "\"]")) ? $(document).find(".item-chat[data-id=\"".concat(this.currentChat.id, "\"]")).offset().top : 0,
+          wrapOffset = $(document).find('#chat .chat__chat-items').offset().top,
+          scrolledValue = $(document).find('#chat .chat__chat-items').scrollTop();
+        $('.chat__chat-items').animate({
+          scrollTop: childOffset - wrapOffset + scrolledValue - 20
+        }, 0);
+        this.backBtnPressed = false;
+      }
+    }
+    $('.messages-chat').off('scroll').on('scroll', function (e) {
+      $('.messages-chat__item-status').css('top', $(document).find('.messages-chat').scrollTop() + 10 + 'px');
+    });
   },
   methods: {
     sendStatistics: function sendStatistics() {
@@ -22589,7 +22620,6 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       }
       var image = $('#statistics-file'),
         files = image[0].files;
-      console.log(files);
       for (var i = 0; i < files.length; i++) {
         if (files[0]) formData.append('images[' + i + ']', files[0]);
       }
@@ -22617,49 +22647,107 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       });
     },
     btnAction: function btnAction(action) {
-      if (!action) {
-        return;
-      }
-      if (action != 'stats') {
-        axios__WEBPACK_IMPORTED_MODULE_4___default()({
-          method: 'get',
-          url: '/api/works/' + this.currentChat.id + '/' + action
-        }).then(function () {
-          notify('info', {
-            title: 'Успешно!',
-            message: 'Статус проекта успешо изменен.'
-          });
-        })["catch"](function () {
-          notify('error', {
-            title: 'Внимание!',
-            message: 'Не удалось изменить статус проекта, попробуйте позже.'
-          });
-        });
-      } else {
-        this.isBloggerStatisticsPopupOpen = true;
-      }
+      var _this4 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+        var isConfirmed;
+        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
+          while (1) switch (_context2.prev = _context2.next) {
+            case 0:
+              if (action) {
+                _context2.next = 2;
+                break;
+              }
+              return _context2.abrupt("return");
+            case 2:
+              isConfirmed = true;
+              if (!(action == 'cancel')) {
+                _context2.next = 7;
+                break;
+              }
+              _context2.next = 6;
+              return _this4.$refs.confirmPopup.show({
+                title: 'Подтвердите действие',
+                subtitle: 'После подтверждения работу нельзя будет восстановить',
+                okButton: 'Подтвердить',
+                cancelButton: 'Отмена'
+              });
+            case 6:
+              isConfirmed = _context2.sent;
+            case 7:
+              if (isConfirmed) {
+                _context2.next = 9;
+                break;
+              }
+              return _context2.abrupt("return");
+            case 9:
+              if (action != 'stats') {
+                $(document).find('.btn--chat-action').addClass('btn-loading');
+                axios__WEBPACK_IMPORTED_MODULE_4___default()({
+                  method: 'get',
+                  url: '/api/works/' + _this4.currentChat.id + '/' + action
+                }).then(function () {
+                  notify('info', {
+                    title: 'Успешно!',
+                    message: 'Статус проекта успешо изменен.'
+                  });
+                  $(document).find('.btn--chat-action').removeClass('btn-loading');
+                  _this4.getChats();
+                  _this4.currentChat && _this4.getMessages(_this4.currentChat);
+                })["catch"](function (err) {
+                  var message = err.response.data.message ? err.response.data.message : 'Не удалось изменить статус проекта, попробуйте позже.';
+                  notify('error', {
+                    title: 'Внимание!',
+                    message: 'Не удалось изменить статус проекта, попробуйте позже.'
+                  });
+                  $(document).find('.btn--chat-action').removeClass('btn-loading');
+                });
+              } else {
+                _this4.isBloggerStatisticsPopupOpen = true;
+              }
+            case 10:
+            case "end":
+              return _context2.stop();
+          }
+        }, _callee2);
+      }))();
     },
     onFileChange: function onFileChange(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
-      this.uploadFileTitle = 'Файл прикреплен';
+      if (files[0].size > 52428800) {
+        notify('error', {
+          title: 'Внимание!',
+          message: 'Нельзя загружать файлы больше 50мб.'
+        });
+        $(e.target).val(null);
+        return;
+      }
+      this.uploadFileObject.title = files[0].name;
+      this.uploadFileObject.icon = '/img/approved-aproved-confirm-2-svgrepo-com.svg';
+      this.uploadFileObject["class"] = 'uploaded';
       this.currentMessage.file = files[0];
     },
+    cancelUploadedFile: function cancelUploadedFile() {
+      this.currentMessage.file = null;
+      this.uploadFileObject.title = 'Прикрепите файл';
+      this.uploadFileObject.icon = '/img/papperclip-icon.svg';
+      this.uploadFileObject["class"] = '';
+    },
     sendMessage: function sendMessage() {
-      var _this4 = this;
+      var _this5 = this;
       return new Promise(function (resolve, reject) {
-        if (!_this4.currentMessage) {
+        if (!_this5.currentMessage) {
           resolve(false);
           return;
         }
-        if ([null, undefined, ''].includes(_this4.currentMessage.message) && [null, undefined, ''].includes(_this4.currentMessage.file)) {
+        if ([null, undefined, ''].includes(_this5.currentMessage.message) && [null, undefined, ''].includes(_this5.currentMessage.file)) {
           resolve(false);
           return;
         }
         var formData = new FormData();
-        formData.append('message', _this4.currentMessage.message ? _this4.currentMessage.message.trim() : '');
-        formData.append('img', _this4.currentMessage.file);
-        if (!_this4.currentChat) {
+        formData.append('message', _this5.currentMessage.message ? _this5.currentMessage.message.trim() : '');
+        formData.append('img', _this5.currentMessage.file);
+        if (!_this5.currentChat) {
           notify('error', {
             title: 'Внимание!',
             message: 'Не выбран чат.'
@@ -22667,14 +22755,18 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
           resolve(false);
           return;
         }
+        $(document).find('.messages-create__create').addClass('btn-loading');
+        $(document).find('.btn--send-message').addClass('btn-loading');
+        _this5.currentMessage.message = null;
+        _this5.currentMessage.file = null;
         axios__WEBPACK_IMPORTED_MODULE_4___default()({
           method: 'post',
-          url: 'api/users/' + _this4.user.id + '/works/' + _this4.currentChat.id + '/messages',
+          url: '/api/users/' + _this5.user.id + '/works/' + _this5.currentChat.id + '/messages',
           data: formData
         }).then(function (response) {
-          _this4.currentMessage.message = null;
-          $('#chat-upload').val(null);
-          $('#chat-upload').closest('.textarea-upload').find('.textarea-upload__text').text('Прикрепите файл');
+          _this5.uploadFileObject.title = 'Прикрепите файл';
+          _this5.uploadFileObject.icon = '/img/papperclip-icon.svg';
+          _this5.uploadFileObject["class"] = '';
           resolve(true);
         })["catch"](function (errors) {
           notify('error', {
@@ -22682,88 +22774,94 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
             message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'
           });
           resolve(false);
+        })["finally"](function () {
+          $('#chat-upload').val(null);
+          $(document).find('.messages-create__create').removeClass('btn-loading');
+          $(document).find('.btn--send-message').removeClass('btn-loading');
         });
       });
     },
     chooseChat: function chooseChat(work) {
-      var _this5 = this;
-      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee2() {
+      var _this6 = this;
+      return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
         var k;
-        return _regeneratorRuntime().wrap(function _callee2$(_context2) {
-          while (1) switch (_context2.prev = _context2.next) {
+        return _regeneratorRuntime().wrap(function _callee3$(_context3) {
+          while (1) switch (_context3.prev = _context3.next) {
             case 0:
-              for (k in _this5.currentMessage) {
-                _this5.currentMessage[k] = null;
+              for (k in _this6.currentMessage) {
+                _this6.currentMessage[k] = null;
               }
-              if (_this5.isTablet) {
-                _this5.isMessagesMobile = true;
-                _this5.isChatsMobile = false;
+              if (_this6.isTablet) {
+                _this6.isMessagesMobile = true;
+                _this6.isChatsMobile = false;
               }
-              _this5.uploadFileTitle = 'Прикрепите файл';
-              _this5.works = _this5.works.map(function (_w) {
+              _this6.uploadFileObject.title = 'Прикрепите файл';
+              _this6.uploadFileObject.icon = '/img/papperclip-icon.svg';
+              _this6.uploadFileObject["class"] = '';
+              _this6.works = _this6.works.map(function (_w) {
                 if (_w.id == work.id) {
                   _w.new_messages_count = 0;
                 }
                 return _w;
               });
-              _this5.isLostIntegrationQuantityZero = false;
-              _this5.isWorkCompleted = false;
-              work.btnData = _this5.getChatBtnData(work);
-              _this5.currentChatIntervalId = localStorage.getItem('chats_messages_interval_id');
-              if (!_this5.currentChatIntervalId) {
-                _this5.currentChatIntervalId = setInterval(function () {
-                  _this5.getMessages(_this5.currentChat);
+              _this6.isLostIntegrationQuantityZero = false;
+              _this6.isWorkCompleted = false;
+              work.btnData = _this6.getChatBtnData(work);
+              _this6.currentChatIntervalId = localStorage.getItem('chats_messages_interval_id');
+              if (!_this6.currentChatIntervalId) {
+                _this6.currentChatIntervalId = setInterval(function () {
+                  _this6.getMessages(_this6.currentChat);
                 }, 5000);
-                localStorage.setItem('chats_messages_interval_id', _this5.currentChatIntervalId);
+                localStorage.setItem('chats_messages_interval_id', _this6.currentChatIntervalId);
               }
-              _context2.next = 11;
-              return _this5.getMessages(work);
-            case 11:
+              _context3.next = 13;
+              return _this6.getMessages(work);
+            case 13:
               $('.chat__messages').animate({
                 scrollTop: $('.chat__messages')[0].scrollHeight + 'px'
               }, 0);
-            case 12:
+            case 14:
             case "end":
-              return _context2.stop();
+              return _context3.stop();
           }
-        }, _callee2);
+        }, _callee3);
       }))();
     },
     getMessages: function getMessages(work) {
-      var _this6 = this;
+      var _this7 = this;
       return new Promise(function (resolve, reject) {
-        _this6.currentChat = work;
-        _this6.User.getMessages(work.id, _this6.user.id).then(function (data) {
-          _this6.messages = data || [];
+        _this7.currentChat = work;
+        _this7.User.getMessages(work.id, _this7.user.id).then(function (data) {
+          _this7.messages = data || [];
           resolve(data);
         });
       });
     },
     getChats: function getChats() {
-      var _this7 = this;
+      var _this8 = this;
       this.User.getWorks(this.user.id).then(function (data) {
-        _this7.works = data || [];
-        var newMessages = _this7.works.filter(function (w) {
+        _this8.works = data || [];
+        var newMessages = _this8.works.filter(function (w) {
           return w.new_messages_count;
         }).map(function (w) {
           return w.new_messages_count;
         }).reduce(function (a, b) {
           return a + b;
         }, 0);
-        if (_this7.currentChat) {
-          var work = _this7.works.find(function (w) {
-            return w.id == _this7.currentChat.id;
+        if (_this8.currentChat) {
+          var work = _this8.works.find(function (w) {
+            return w.id == _this8.currentChat.id;
           });
-          _this7.currentChat.status = work ? work.status : _this7.currentChat.status;
-          _this7.currentChat.accepted_by_seller_at = work ? work.accepted_by_seller_at : _this7.currentChat.accepted_by_seller_at;
-          _this7.currentChat.accepted_by_blogger_at = work ? work.accepted_by_blogger_at : _this7.currentChat.accepted_by_blogger_at;
-          _this7.currentChat.confirmed_by_blogger_at = work ? work.confirmed_by_blogger_at : _this7.currentChat.confirmed_by_blogger_at;
-          _this7.currentChat.confirmed_by_seller_at = work ? work.confirmed_by_seller_at : _this7.currentChat.confirmed_by_seller_at;
-          _this7.currentChat.statistics = work ? work.statistics : _this7.currentChat.statistics;
-          _this7.currentChat.btnData = _this7.getChatBtnData(_this7.currentChat);
+          _this8.currentChat.status = work ? work.status : _this8.currentChat.status;
+          _this8.currentChat.accepted_by_seller_at = work ? work.accepted_by_seller_at : _this8.currentChat.accepted_by_seller_at;
+          _this8.currentChat.accepted_by_blogger_at = work ? work.accepted_by_blogger_at : _this8.currentChat.accepted_by_blogger_at;
+          _this8.currentChat.confirmed_by_blogger_at = work ? work.confirmed_by_blogger_at : _this8.currentChat.confirmed_by_blogger_at;
+          _this8.currentChat.confirmed_by_seller_at = work ? work.confirmed_by_seller_at : _this8.currentChat.confirmed_by_seller_at;
+          _this8.currentChat.statistics = work ? work.statistics : _this8.currentChat.statistics;
+          _this8.currentChat.btnData = _this8.getChatBtnData(_this8.currentChat);
         }
         if (newMessages && newMessages > 0) {
-          _this7.$emit('newMessages', newMessages);
+          _this8.$emit('newMessages', newMessages);
         }
       });
     },
@@ -22783,7 +22881,7 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
       if (message.sender_id === this.user.id) {
         return this.user.name;
       }
-      return this.currentChat.partner_user.name;
+      return this.currentChat ? this.currentChat.partner_user.name : '';
     },
     goToProjects: function goToProjects(project_id) {
       this.$emit('switchTab', 'profile-projects', {
@@ -22818,9 +22916,12 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         return {
           title: 'Проект завершен'
         };
+      } else if (work && work.status == 'canceled') {
+        return {
+          title: 'Проект отменен'
+        };
       } else if (work && work.status == 'progress') {
         if (work.project_work.type != 'feedback' && work.statistics == null) {
-          console.log(work, this.user.role);
           if (this.user.role == 'blogger') {
             return {
               title: 'Прикрепить статистику',
@@ -22861,6 +22962,21 @@ function _asyncToGenerator(n) { return function () { var t = this, e = arguments
         title: 'Начать работу',
         action: 'start'
       };
+    },
+    getStatusName: function getStatusName() {
+      return this.statusNames[this.currentChat.status] || '';
+    },
+    changeTextareaHeight: function changeTextareaHeight() {
+      $('.messages-create__textarea').css('height', 'auto');
+      $('.messages-create__textarea').css('height', $('.messages-create__textarea')[0].scrollHeight + 'px');
+    },
+    backToChats: function backToChats() {
+      this.isMessagesMobile = false;
+      this.isChatsMobile = true;
+      this.backBtnPressed = true;
+    },
+    isWorkSatisfying: function isWorkSatisfying(work) {
+      return String(work.id).indexOf(this.chatSearchString) !== -1 || (work.project ? String(work.project.product_name).toLowerCase().indexOf(this.chatSearchString.toLowerCase()) !== -1 : false) || String(work.partner_user.name).toLowerCase().indexOf(this.chatSearchString.toLowerCase()) !== -1;
     }
   }
 });
@@ -29225,150 +29341,194 @@ var _hoisted_2 = {
   "class": "profile-chat__body"
 };
 var _hoisted_3 = {
-  "class": "profile-projects__title title"
-};
-var _hoisted_4 = {
-  key: 0
-};
-var _hoisted_5 = {
-  key: 1
-};
-var _hoisted_6 = {
   "class": "profile-tabs__content-item"
 };
-var _hoisted_7 = {
+var _hoisted_4 = {
   "class": "tab-content__chat chat"
 };
-var _hoisted_8 = {
+var _hoisted_5 = {
   "class": "chat__body"
 };
-var _hoisted_9 = {
+var _hoisted_6 = {
   key: 0,
   "class": "chat__left"
 };
-var _hoisted_10 = {
+var _hoisted_7 = {
+  "class": "chat__search",
+  style: {
+    "width": "100%"
+  }
+};
+var _hoisted_8 = {
   "class": "chat__chat-items"
 };
-var _hoisted_11 = ["data-id", "onClick"];
-var _hoisted_12 = {
+var _hoisted_9 = ["data-id", "onClick"];
+var _hoisted_10 = {
   "class": "item-chat__text"
 };
-var _hoisted_13 = {
+var _hoisted_11 = {
   "class": "item-chat__title"
 };
-var _hoisted_14 = {
+var _hoisted_12 = {
   "class": "item-chat__last-msg"
 };
-var _hoisted_15 = ["data-project-id", "onClick"];
-var _hoisted_16 = {
+var _hoisted_13 = {
   key: 0,
   "class": "nav-menu__item-notifs notifs",
   style: {}
 };
-var _hoisted_17 = {
+var _hoisted_14 = {
   key: 1,
   "class": "chat__chat-empty"
 };
-var _hoisted_18 = {
+var _hoisted_15 = {
   key: 0
 };
-var _hoisted_19 = {
+var _hoisted_16 = {
   key: 1
 };
-var _hoisted_20 = {
+var _hoisted_17 = {
   key: 1,
   "class": "chat__right"
 };
-var _hoisted_21 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_18 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "chat__overflow chat__overflow--completed",
   style: {
-    "z-index": "1",
+    "z-index": "2",
     "display": "none"
   }
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "chat__overflow-text"
 }, " Проект завершен ")], -1 /* HOISTED */);
-var _hoisted_22 = {
-  key: 0,
-  "class": "chat__overflow chat__overflow--tariff",
-  style: {
-    "z-index": "1"
-  }
+var _hoisted_19 = {
+  "class": "chat__header"
 };
-var _hoisted_23 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-  "class": "chat__overflow-text"
-}, " Все доступные места на интеграцию заняты ", -1 /* HOISTED */);
-var _hoisted_24 = [_hoisted_23];
-var _hoisted_25 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_20 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "img/arrow-alt.svg",
   alt: ""
 }, null, -1 /* HOISTED */);
-var _hoisted_26 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, " Вернуться ", -1 /* HOISTED */);
-var _hoisted_27 = [_hoisted_25, _hoisted_26];
+var _hoisted_21 = [_hoisted_20];
+var _hoisted_22 = {
+  key: 0,
+  "class": "projects-list__row projects-list__current-project current-project"
+};
+var _hoisted_23 = {
+  "class": "current-project__main"
+};
+var _hoisted_24 = {
+  "class": "current-project__row"
+};
+var _hoisted_25 = {
+  "class": "current-project__title"
+};
+var _hoisted_26 = {
+  "class": "name"
+};
+var _hoisted_27 = {
+  "class": "articul"
+};
 var _hoisted_28 = {
-  "class": "chat__messages messages-chat"
+  "class": ""
 };
 var _hoisted_29 = {
-  "class": "messages-chat__item-header"
+  "class": "current-project__col"
 };
 var _hoisted_30 = {
+  "class": "current-project__title"
+};
+var _hoisted_31 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", {
+  "class": "name"
+}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, "Формат рекламы")], -1 /* HOISTED */);
+var _hoisted_32 = {
+  "class": "articul"
+};
+var _hoisted_33 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  src: "img/dots-icon.svg",
+  alt: ""
+}, null, -1 /* HOISTED */);
+var _hoisted_34 = {
+  "class": "chat__opts-items"
+};
+var _hoisted_35 = {
+  "class": "chat__opts-partner"
+};
+var _hoisted_36 = {
+  key: 0,
+  "class": "chat__opts-partner__row"
+};
+var _hoisted_37 = {
+  "class": "chat__opts-partner__col"
+};
+var _hoisted_38 = {
+  "class": "chat__opts-partner__role"
+};
+var _hoisted_39 = {
+  "class": "chat__opts-partner__name"
+};
+var _hoisted_40 = {
+  "class": "chat__messages messages-chat"
+};
+var _hoisted_41 = {
+  "class": "messages-chat__item-header"
+};
+var _hoisted_42 = {
   "class": "messages-chat__item-title"
 };
-var _hoisted_31 = {
+var _hoisted_43 = {
   "class": "messages-chat__item-date"
 };
-var _hoisted_32 = {
+var _hoisted_44 = {
   "class": "messages-chat__item-msg"
 };
-var _hoisted_33 = ["innerHTML"];
-var _hoisted_34 = {
+var _hoisted_45 = ["innerHTML"];
+var _hoisted_46 = {
   key: 0,
   "class": "messages-chat__item-stats"
 };
-var _hoisted_35 = ["src", "onClick"];
-var _hoisted_36 = ["href"];
-var _hoisted_37 = {
+var _hoisted_47 = ["src", "onClick"];
+var _hoisted_48 = ["href"];
+var _hoisted_49 = {
   "class": "chat-file__icon"
 };
-var _hoisted_38 = {
+var _hoisted_50 = {
   "class": "chat-file__text"
 };
-var _hoisted_39 = {
+var _hoisted_51 = {
   key: 1,
   "class": "messages-chat__item messages-chat__item--system"
 };
-var _hoisted_40 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_52 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "messages-chat__item-msg"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, " Перед началом общения и обсуждения условий обмена товарами на рекламу, пожалуйста, учитывайте следующие важные моменты: "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, " Бартерные сделки: Наш сервис предполагает исключительно обмен товарами на рекламу и отзывы по бартерной основе. Мы не рекомендуем обмениваться товарами с доплатой или платить за рекламу. В случае обмена денежными средствами мы не несем ответственности за такие переводы. "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, " Вежливость и уважение: Будьте вежливыми и уважительными при общении. Соблюдайте правила сайта и общение должно быть конструктивным и профессиональным. "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, " Ясные условия: Четко обсуждайте условия обмена, чтобы избежать недоразумений. Убедитесь, что обе стороны согласны с условиями сделки перед отправкой товаров или публикацией рекламы. ")], -1 /* HOISTED */);
-var _hoisted_41 = [_hoisted_40];
-var _hoisted_42 = {
+var _hoisted_53 = [_hoisted_52];
+var _hoisted_54 = {
   "class": "chat__messages messages-create"
 };
-var _hoisted_43 = {
+var _hoisted_55 = {
   "class": "textarea-w"
 };
-var _hoisted_44 = {
-  "class": "textarea-upload"
+var _hoisted_56 = {
+  "class": "messages-create__icon"
 };
-var _hoisted_45 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("svg", {
-  fill: "none",
-  height: "20",
-  viewBox: "0 0 20 20",
-  width: "20",
-  xmlns: "http://www.w3.org/2000/svg",
-  "class": "base-0-2-1",
-  "ie-style": ""
-}, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("path", {
-  "clip-rule": "evenodd",
-  d: "m14.9502 3.80108c-1.0653-1.06811-2.7917-1.06811-3.857 0l-5.53401 5.54845c-1.74559 1.75017-1.74559 4.58847 0 6.33867 1.7445 1.7491 4.57211 1.7491 6.31661 0l.0025-.0026 2.8799-2.8595c.294-.2918.7688-.2901 1.0607.0038.2918.2939.2901.7688-.0038 1.0606l-2.8773 2.857-.0013.0013c-2.3307 2.3354-6.1092 2.3349-8.43936-.0013-2.32952-2.3356-2.32952-6.1216 0-8.45724l5.53396-5.54845c1.6514-1.65575 4.3297-1.65575 5.9811 0 1.6504 1.65465 1.6504 4.33657 0 5.99123l-5.5339 5.54846c-.97226.9748-2.54938.9748-3.52162 0-.97115-.9737-.97115-2.5516 0-3.5253l.0024-.0024 3.10232-3.08243c.2939-.29195.7688-.29042 1.0607.00341.292.29383.2904.7687-.0034 1.06065l-3.09997 3.08007-.00102.001c-.38619.3883-.38586 1.0178.00102 1.4057.38613.3872 1.01136.3872 1.3975 0l5.53397-5.54844c1.0664-1.06918 1.0664-2.80349 0-3.87268z",
-  fill: "currentColor",
-  "fill-rule": "evenodd"
-})], -1 /* HOISTED */);
-var _hoisted_46 = {
+var _hoisted_57 = ["src"];
+var _hoisted_58 = {
   "for": "chat-upload",
   "class": "textarea-upload__text"
 };
-var _hoisted_47 = {
+var _hoisted_59 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  src: "/img/close-icon.svg",
+  alt: ""
+}, null, -1 /* HOISTED */);
+var _hoisted_60 = [_hoisted_59];
+var _hoisted_61 = {
+  "class": "messages-create__row"
+};
+var _hoisted_62 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  src: "/img/send-message-icon.svg",
+  alt: ""
+}, null, -1 /* HOISTED */);
+var _hoisted_63 = [_hoisted_62];
+var _hoisted_64 = {
   "class": "chat__btns",
   style: {
     "display": "flex",
@@ -29376,119 +29536,132 @@ var _hoisted_47 = {
     "gap": "8px"
   }
 };
-var _hoisted_48 = {
-  key: 1,
+var _hoisted_65 = {
+  key: 0,
   "class": "chat__overflow"
 };
-var _hoisted_49 = {
+var _hoisted_66 = {
   key: 0,
   "class": "chat__overflow-text"
 };
-var _hoisted_50 = {
+var _hoisted_67 = {
   key: 0
 };
-var _hoisted_51 = {
+var _hoisted_68 = {
   key: 1
 };
-var _hoisted_52 = {
+var _hoisted_69 = {
   key: 1,
   "class": "chat__overflow-text"
 };
-var _hoisted_53 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Выберите чат, чтобы начать переписку", -1 /* HOISTED */);
-var _hoisted_54 = [_hoisted_53];
-var _hoisted_55 = {
+var _hoisted_70 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "Выберите чат, чтобы начать переписку", -1 /* HOISTED */);
+var _hoisted_71 = [_hoisted_70];
+var _hoisted_72 = {
   key: 0,
   "class": "popup",
   id: "chat-img",
   style: {}
 };
-var _hoisted_56 = {
+var _hoisted_73 = {
   "class": "popup__container _container"
 };
-var _hoisted_57 = {
+var _hoisted_74 = {
   "class": "popup__body",
   style: {
     "max-width": "790px"
   }
 };
-var _hoisted_58 = {
+var _hoisted_75 = {
   "class": "chat-img__w"
 };
-var _hoisted_59 = ["src"];
-var _hoisted_60 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_76 = ["src"];
+var _hoisted_77 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "img/close-icon.svg",
   alt: ""
 }, null, -1 /* HOISTED */);
-var _hoisted_61 = [_hoisted_60];
-var _hoisted_62 = {
+var _hoisted_78 = [_hoisted_77];
+var _hoisted_79 = {
   key: 1,
   "class": "popup",
   id: "",
   style: {}
 };
-var _hoisted_63 = {
+var _hoisted_80 = {
   "class": "popup__container _container"
 };
-var _hoisted_64 = {
+var _hoisted_81 = {
   "class": "popup__body"
 };
-var _hoisted_65 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+var _hoisted_82 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "popup__header"
 }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "popup__title title"
 }, " Заполните статистику "), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
   "class": "popup__subtitle"
 }, " После того, как вы прикрепите статистику по интеграции, проект будет завершен ")], -1 /* HOISTED */);
-var _hoisted_66 = {
+var _hoisted_83 = {
   "class": "popup__form"
 };
-var _hoisted_67 = {
+var _hoisted_84 = {
   "class": "form-group"
 };
-var _hoisted_68 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_85 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "views"
 }, "Просмотры", -1 /* HOISTED */);
-var _hoisted_69 = {
+var _hoisted_86 = {
   "class": "form-group"
 };
-var _hoisted_70 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_87 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "likes"
 }, "Лайки", -1 /* HOISTED */);
-var _hoisted_71 = {
+var _hoisted_88 = {
   "class": "form-group"
 };
-var _hoisted_72 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_89 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "reposts"
 }, "Репосты", -1 /* HOISTED */);
-var _hoisted_73 = {
+var _hoisted_90 = {
   "class": "form-group"
 };
-var _hoisted_74 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+var _hoisted_91 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
   "for": "platform"
 }, "Площадка", -1 /* HOISTED */);
-var _hoisted_75 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
+var _hoisted_92 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
   value: ""
 }, "Не выбрано", -1 /* HOISTED */);
-var _hoisted_76 = ["value"];
-var _hoisted_77 = {
+var _hoisted_93 = ["value"];
+var _hoisted_94 = {
   "class": "input-file input-file--stat tab-content__profile-img-upload",
   style: {
     "padding-left": "0",
     "margin-bottom": "20px"
   }
 };
-var _hoisted_78 = {
+var _hoisted_95 = {
   "for": "statistics-file"
 };
-var _hoisted_79 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+var _hoisted_96 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
   src: "img/close-icon.svg",
   alt: ""
 }, null, -1 /* HOISTED */);
-var _hoisted_80 = [_hoisted_79];
+var _hoisted_97 = [_hoisted_96];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [$data.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [$data.user.role == 'blogger' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_4, " Чат с селлерами ")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_5, " Чат с блогерами "))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [$data.isChatsMobile ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [$data.works.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+  var _component_confirm_popup = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("confirm-popup");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [$data.user ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            <div class=\"profile-projects__title title\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                <span v-if=\"user.role == 'blogger'\"> Чат с селлерами </span>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                <span v-else> Чат с блогерами </span>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("            </div>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [$data.isChatsMobile ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    type: "text",
+    style: {
+      "width": "100%"
+    },
+    "class": "input chat__search-input",
+    "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
+      return $data.chatSearchString = $event;
+    }),
+    placeholder: "Введите ID проекта, Имя или Название проекта"
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.chatSearchString]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [$data.works ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     key: 0
-  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.works, function (work) {
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.chatSearchString ? $data.works.filter(function (work) {
+    return $options.isWorkSatisfying(work);
+  }) : $data.works, function (work) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "data-id": work.id,
       onClick: function onClick($event) {
@@ -29501,28 +29674,44 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
       "class": "item-chat__img",
       style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)('background-image: url(' + work.partner_user.image + ')')
-    }, null, 4 /* STYLE */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.product_name || 'Проект удалён'), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.user.role == 'blogger' ? 'Селлер' : 'Блогер') + ": " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.partner_user.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "ID проекта: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.id), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-      href: "#",
-      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('item-chat__project-link ' + ($data.user.role == 'seller' ? 'item-chat__project-link--seller' : 'item-chat__project-link--blogger')),
-      "data-project-id": work.project_id,
-      onClick: function onClick($event) {
-        return $options.goToProjects(work.project_id);
-      }
-    }, " Перейти к проекту ", 10 /* CLASS, PROPS */, _hoisted_15)]), work.new_messages_count > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.new_messages_count), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 10 /* CLASS, PROPS */, _hoisted_11);
-  }), 256 /* UNKEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_17, [$data.user.role == 'seller' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_18, "Чат пустой,создайте проект и начните работу с блогерами")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_19, "Чат пустой, начните работу с селлерами"))]))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.isMessagesMobile ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_20, [_hoisted_21, $data.isLostIntegrationQuantityZero ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_22, [].concat(_hoisted_24))) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[0] || (_cache[0] = function ($event) {
-      $data.isMessagesMobile = false;
-      $data.isChatsMobile = true;
+    }, null, 4 /* STYLE */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.product_name || 'Проект удалён'), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.user.role == 'blogger' ? 'Селлер' : 'Блогер') + ": " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.partner_user.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "ID проекта: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.id), 1 /* TEXT */)])]), work.new_messages_count > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_13, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(work.new_messages_count), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 10 /* CLASS, PROPS */, _hoisted_9);
+  }), 256 /* UNKEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("p", _hoisted_14, [$data.user.role == 'seller' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_15, "Чат пустой,создайте проект и начните работу с блогерами")) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_16, "Чат пустой, начните работу с селлерами"))]))])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.isMessagesMobile ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_17, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[1] || (_cache[1] = function () {
+      return $options.backToChats && $options.backToChats.apply($options, arguments);
     }),
     "class": "chat__back"
-  }, [].concat(_hoisted_27)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_28, [$data.messages && $data.messages.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
+  }, [].concat(_hoisted_21)), $data.currentChat && $data.currentChat.project ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_22, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_24, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "current-project__img",
+    style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)('background-image: url(' + ($data.currentChat.project.project_files && $data.currentChat.project.project_files[0] ? $data.currentChat.project.project_files[0].link : '/img/profile-icon.svg') + ')')
+  }, null, 4 /* STYLE */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_26, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("b", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentChat.project.product_name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_27, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("Артикул товара: "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_28, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentChat.project.product_nm), 1 /* TEXT */)])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, [_hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", _hoisted_32, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentChat.project_work.name), 1 /* TEXT */)])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[4] || (_cache[4] = function ($event) {
+      return $data.isChatOptsOpen = !$data.isChatOptsOpen;
+    }),
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('chat__opts ' + ($data.isChatOptsOpen ? 'active' : ''))
+  }, [_hoisted_33, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_34, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_35, [$data.currentChat ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_36, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    style: (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeStyle)('background-image:url(' + ($data.currentChat.partner_user && $data.currentChat.partner_user.image ? $data.currentChat.partner_user.image : '/img/profile-icon.svg') + ')'),
+    "class": "chat__opts-partner__img"
+  }, null, 4 /* STYLE */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentChat.partner_user.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", _hoisted_39, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentChat.partner_user.role == 'blogger' ? 'Блогер' : 'Селлер'), 1 /* TEXT */)])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), $data.currentChat && $data.currentChat.btnData && $data.currentChat.btnData.action ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+    key: 0,
+    onClick: _cache[2] || (_cache[2] = function ($event) {
+      return $options.btnAction($data.currentChat.btnData.action);
+    }),
+    href: "",
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('chat__opts-item ' + ($data.currentChat.btnData.action ? '' : 'chat__opts-item--disabled'))
+  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentChat.btnData.title), 3 /* TEXT, CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.currentChat && !($data.currentChat.canceled_by_seller_at && $data.currentChat.canceled_by_blogger_at) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+    key: 1,
+    onClick: _cache[3] || (_cache[3] = function ($event) {
+      return $options.btnAction('cancel');
+    }),
+    "class": "chat__opts-item chat__opts-item--cancel"
+  }, " Отменить работу ")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])], 2 /* CLASS */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_40, [$data.messages && $data.messages.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
     key: 0
   }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.messages, function (message) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
       "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('messages-chat__item ' + $options.getMessageClass(message))
-    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_29, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_30, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getSenderName(message)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_31, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.format_date(message.created_at, 'd.m.y H:i')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_32, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_41, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getSenderName(message)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.format_date(message.created_at, 'd.m.y H:i')), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", {
       innerHTML: message.message
-    }, null, 8 /* PROPS */, _hoisted_33), $data.currentChat.statistics && message.sender_id == 1 && $data.currentChat.statistics.message_id == message.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_34, " Просмотры: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentChat.statistics.views) + " Репосты: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentChat.statistics.reposts) + " Лайки: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentChat.statistics.likes), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(message.files, function (file) {
+    }, null, 8 /* PROPS */, _hoisted_45), $data.currentChat && $data.currentChat.statistics && message.sender_id == 1 && $data.currentChat.statistics.message_id == message.id ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_46, " Просмотры: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentChat.statistics.views) + " Репосты: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentChat.statistics.reposts) + " Лайки: " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentChat.statistics.likes), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)(message.files, function (file) {
       return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", null, [$options.isImg(file.link) ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", {
         key: 0,
         src: file.link,
@@ -29531,91 +29720,106 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         },
         alt: "",
         "class": "chat-img-popup"
-      }, null, 8 /* PROPS */, _hoisted_35)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
+      }, null, 8 /* PROPS */, _hoisted_47)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
         key: 1,
         href: file.link,
         download: "",
         "class": "chat-file"
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_37, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getFileType(file.link)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_38, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(file.link), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_36))]);
-    }), 256 /* UNKEYED_FRAGMENT */))])], 2 /* CLASS */);
-  }), 256 /* UNKEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_39, [].concat(_hoisted_41)))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_42, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_43, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_44, [_hoisted_45, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_46, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.uploadFileTitle), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    onChange: _cache[1] || (_cache[1] = function () {
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_49, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getFileType(file.link)), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_50, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(file.link), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_48))]);
+    }), 256 /* UNKEYED_FRAGMENT */))]), $data.currentChat && $data.currentChat.status ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+      key: 0,
+      "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('messages-chat__item-status ' + $data.currentChat.status)
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.getStatusName($data.currentChat.status)), 3 /* TEXT, CLASS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2 /* CLASS */);
+  }), 256 /* UNKEYED_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_51, [].concat(_hoisted_53)))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_54, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)('textarea-upload ' + $data.uploadFileObject["class"])
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    src: $data.uploadFileObject.icon,
+    alt: ""
+  }, null, 8 /* PROPS */, _hoisted_57)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_58, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.uploadFileObject.title), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    onChange: _cache[5] || (_cache[5] = function () {
       return $options.onFileChange && $options.onFileChange.apply($options, arguments);
     }),
     type: "file",
     id: "chat-upload",
     hidden: ""
-  }, null, 32 /* NEED_HYDRATION */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
-    "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
+  }, null, 32 /* NEED_HYDRATION */), $data.currentMessage && $data.currentMessage.file ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+    key: 0,
+    onClick: _cache[6] || (_cache[6] = function () {
+      return $options.cancelUploadedFile && $options.cancelUploadedFile.apply($options, arguments);
+    }),
+    "class": "textarea-upload__cancel"
+  }, [].concat(_hoisted_60))) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 2 /* CLASS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_61, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("textarea", {
+    "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
       return $data.currentMessage.message = $event;
     }),
-    onKeyup: _cache[3] || (_cache[3] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)(function () {
+    onKeyup: _cache[8] || (_cache[8] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withKeys)(function () {
       return $options.sendMessage && $options.sendMessage.apply($options, arguments);
     }, ["enter"])),
+    onInput: _cache[9] || (_cache[9] = function () {
+      return $options.changeTextareaHeight && $options.changeTextareaHeight.apply($options, arguments);
+    }),
     name: "",
     placeholder: "Введите текст",
     "class": "messages-create__textarea textarea"
-  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.currentMessage.message]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_47, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    onClick: _cache[4] || (_cache[4] = function () {
+  }, null, 544 /* NEED_HYDRATION, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.currentMessage.message]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[10] || (_cache[10] = function () {
       return $options.sendMessage && $options.sendMessage.apply($options, arguments);
     }),
-    "class": "btn btn-primary"
-  }, "Отправить"), $data.currentChat && $data.currentChat.btnData ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("button", {
-    key: 0,
-    onClick: _cache[5] || (_cache[5] = function ($event) {
-      return $options.btnAction($data.currentChat.btnData.action);
+    "class": "messages-create__create mobile"
+  }, [].concat(_hoisted_63))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
+    onClick: _cache[11] || (_cache[11] = function () {
+      return $options.sendMessage && $options.sendMessage.apply($options, arguments);
     }),
-    href: "",
-    "class": "btn btn-secondary"
-  }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.currentChat.btnData.title), 1 /* TEXT */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]), !$data.currentChat ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_48, [$data.works.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_49, [$data.user.role == 'seller' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_50, "Сейчас у вас нет возможности переписываться с блогерами. Чтобы отправлять сообщения создайте проект.")) : $data.user.role == 'blogger' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_51, " Сейчас у вас нет возможности общаться с другими пользователями. Чтобы начать переписку, начните сотрудничество с селлерами.")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_52, [].concat(_hoisted_54)))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), $data.imageIsOpen ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_55, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_56, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_57, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_58, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+    "class": "btn btn-primary btn--send-message"
+  }, "Отправить")])]), !$data.currentChat ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_65, [$data.works.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_66, [$data.user.role == 'seller' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_67, "Сейчас у вас нет возможности переписываться с блогерами. Чтобы отправлять сообщения создайте проект.")) : $data.user.role == 'blogger' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("span", _hoisted_68, " Сейчас у вас нет возможности общаться с другими пользователями. Чтобы начать переписку, начните сотрудничество с селлерами.")) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_69, [].concat(_hoisted_71)))])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]), $data.imageIsOpen ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_72, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_73, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_74, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_75, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: $data.openedImageUrl,
     alt: "",
     "class": "chat-img",
     style: {
       "width": "100%"
     }
-  }, null, 8 /* PROPS */, _hoisted_59)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[6] || (_cache[6] = function ($event) {
+  }, null, 8 /* PROPS */, _hoisted_76)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    onClick: _cache[12] || (_cache[12] = function ($event) {
       return $data.imageIsOpen = false;
     }),
     "class": "close-popup"
-  }, [].concat(_hoisted_61))])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.isBloggerStatisticsPopupOpen ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_62, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_63, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_64, [_hoisted_65, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_66, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_67, [_hoisted_68, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "onUpdate:modelValue": _cache[7] || (_cache[7] = function ($event) {
+  }, [].concat(_hoisted_78))])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.isBloggerStatisticsPopupOpen ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_79, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_80, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_81, [_hoisted_82, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_83, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_84, [_hoisted_85, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[13] || (_cache[13] = function ($event) {
       return $data.bloggerStatistics.views = $event;
     }),
     id: "views",
     name: "views",
     type: "views",
     "class": "input"
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.bloggerStatistics.views]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_69, [_hoisted_70, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "onUpdate:modelValue": _cache[8] || (_cache[8] = function ($event) {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.bloggerStatistics.views]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_86, [_hoisted_87, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[14] || (_cache[14] = function ($event) {
       return $data.bloggerStatistics.likes = $event;
     }),
     id: "likes",
     name: "likes",
     type: "likes",
     "class": "input"
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.bloggerStatistics.likes]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_71, [_hoisted_72, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    "onUpdate:modelValue": _cache[9] || (_cache[9] = function ($event) {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.bloggerStatistics.likes]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_88, [_hoisted_89, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    "onUpdate:modelValue": _cache[15] || (_cache[15] = function ($event) {
       return $data.bloggerStatistics.reposts = $event;
     }),
     id: "reposts",
     name: "reposts",
     type: "reposts",
     "class": "input"
-  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.bloggerStatistics.reposts]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_73, [_hoisted_74, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
-    "onUpdate:modelValue": _cache[10] || (_cache[10] = function ($event) {
+  }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.bloggerStatistics.reposts]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_90, [_hoisted_91, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+    "onUpdate:modelValue": _cache[16] || (_cache[16] = function ($event) {
       return $data.bloggerStatistics.platform_id = $event;
     }),
     id: "platform",
     name: "platform",
     "class": "input"
-  }, [_hoisted_75, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.platforms, function (platform) {
+  }, [_hoisted_92, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.platforms, function (platform) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
       value: platform.id
-    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(platform.title), 9 /* TEXT, PROPS */, _hoisted_76);
-  }), 256 /* UNKEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.bloggerStatistics.platform_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_77, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_78, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.uploadStatisticsFileTitle), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
-    onChange: _cache[11] || (_cache[11] = function ($event) {
+    }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(platform.title), 9 /* TEXT, PROPS */, _hoisted_93);
+  }), 256 /* UNKEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.bloggerStatistics.platform_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_94, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", _hoisted_95, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.uploadStatisticsFileTitle), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+    onChange: _cache[17] || (_cache[17] = function ($event) {
       return $data.uploadStatisticsFileTitle = 'Файлы загружены';
     }),
     id: "statistics-file",
@@ -29623,16 +29827,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     multiple: "",
     hidden: ""
   }, null, 32 /* NEED_HYDRATION */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", {
-    onClick: _cache[12] || (_cache[12] = function () {
+    onClick: _cache[18] || (_cache[18] = function () {
       return $options.sendStatistics && $options.sendStatistics.apply($options, arguments);
     }),
     "class": "btn btn-primary"
   }, " Отправить ")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    onClick: _cache[13] || (_cache[13] = function ($event) {
+    onClick: _cache[19] || (_cache[19] = function ($event) {
       return $data.isBloggerStatisticsPopupOpen = false;
     }),
     "class": "close-popup"
-  }, [].concat(_hoisted_80))])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
+  }, [].concat(_hoisted_97))])])])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_confirm_popup, {
+    ref: "confirmPopup"
+  }, null, 512 /* NEED_PATCH */)], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),

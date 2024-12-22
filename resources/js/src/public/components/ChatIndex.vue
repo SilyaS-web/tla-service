@@ -1,18 +1,21 @@
 <template>
     <div class="profile-chat tab-content" id="chat">
         <div class="profile-chat__body" v-if="user">
-            <div class="profile-projects__title title">
-                <span v-if="user.role == 'blogger'"> Чат с селлерами </span>
-                <span v-else> Чат с блогерами </span>
-            </div>
+<!--            <div class="profile-projects__title title">-->
+<!--                <span v-if="user.role == 'blogger'"> Чат с селлерами </span>-->
+<!--                <span v-else> Чат с блогерами </span>-->
+<!--            </div>-->
             <div class="profile-tabs__content-item">
                 <div class="tab-content__chat chat">
                     <div class="chat__body">
                         <div v-if="isChatsMobile" class="chat__left">
+                            <div class="chat__search" style="width:100%">
+                                <input type="text" style="width:100%" class="input chat__search-input" v-model="chatSearchString" placeholder="Введите ID проекта, Имя или Название проекта">
+                            </div>
                             <div class="chat__chat-items">
                                 <div
-                                    v-if="works.length > 0"
-                                    v-for="work in works"
+                                    v-if="works"
+                                    v-for="work in (chatSearchString ? works.filter(work => isWorkSatisfying(work)) : works)"
                                     :data-id="work.id"
                                     @click="chooseChat(work)"
                                     :class="'chat__chat-item item-chat ' + (work.currentWork ? 'current' : (currentChat && currentChat.id == work.id ? 'current' : ''))"
@@ -25,12 +28,6 @@
                                             <p>{{ user.role == 'blogger' ? 'Селлер' : 'Блогер' }}: {{ work.partner_user.name }}</p>
                                             <p>ID проекта: {{ work.id }}</p>
                                         </div>
-                                        <a href="#"
-                                           :class="'item-chat__project-link ' + (user.role == 'seller' ? 'item-chat__project-link--seller' : 'item-chat__project-link--blogger')"
-                                           :data-project-id = "work.project_id"
-                                            @click="goToProjects(work.project_id)">
-                                            Перейти к проекту
-                                        </a>
                                     </div>
                                     <div
                                         v-if="work.new_messages_count > 0"
@@ -46,23 +43,69 @@
                         </div>
                         <div v-if="isMessagesMobile" class="chat__right">
                             <div
-                                class="chat__overflow chat__overflow--completed" style="z-index: 1; display: none">
+                                class="chat__overflow chat__overflow--completed" style="z-index: 2; display: none">
                                 <div class="chat__overflow-text">
                                     Проект завершен
                                 </div>
                             </div>
-                            <div
-                                v-if="isLostIntegrationQuantityZero"
-                                class="chat__overflow chat__overflow--tariff" style="z-index: 1;">
-                                <div class="chat__overflow-text">
-                                    Все доступные места на интеграцию заняты
+                            <div class="chat__header">
+                                <div
+                                    @click="backToChats"
+                                    class="chat__back">
+                                    <img src="img/arrow-alt.svg" alt="">
                                 </div>
-                            </div>
-                            <div
-                                @click="isMessagesMobile = false; isChatsMobile = true;"
-                                class="chat__back">
-                                <img src="img/arrow-alt.svg" alt="">
-                                <span> Вернуться </span>
+                                <div
+                                    v-if="currentChat && currentChat.project"
+                                    class="projects-list__row projects-list__current-project current-project">
+                                    <div class="current-project__main">
+                                        <div class="current-project__row">
+                                            <div class="current-project__img" :style="'background-image: url(' + (currentChat.project.project_files && currentChat.project.project_files[0] ? currentChat.project.project_files[0].link : '/img/profile-icon.svg') + ')'"></div>
+                                        </div>
+                                        <div class="current-project__title">
+                                            <p class="name"><b>{{ currentChat.project.product_name }}</b></p>
+                                            <p class="articul">Артикул товара: <span class="">{{ currentChat.project.product_nm }}</span></p>
+                                        </div>
+                                    </div>
+                                    <div class="current-project__col">
+                                        <div class="current-project__title">
+                                            <p class="name"><b>Формат рекламы</b></p>
+                                            <p class="articul"> {{ currentChat.project_work.name }} </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div
+                                    @click="isChatOptsOpen = !isChatOptsOpen"
+                                    :class="'chat__opts ' + (isChatOptsOpen ? 'active' : '')">
+                                    <img src="img/dots-icon.svg" alt="">
+                                    <div class="chat__opts-items">
+                                        <div class="chat__opts-partner">
+                                            <div
+                                                v-if="currentChat"
+                                                class="chat__opts-partner__row">
+                                                <div
+                                                    :style="'background-image:url(' + ((currentChat.partner_user && currentChat.partner_user.image) ? currentChat.partner_user.image : '/img/profile-icon.svg') + ')'"
+                                                    class="chat__opts-partner__img">
+                                                </div>
+                                                <div
+                                                    class="chat__opts-partner__col">
+                                                    <span class = "chat__opts-partner__role">{{ currentChat.partner_user.name }}</span>
+                                                    <span class = "chat__opts-partner__name">{{ (currentChat.partner_user.role == 'blogger' ? 'Блогер' : 'Селлер') }}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div
+                                            v-if="currentChat && currentChat.btnData && currentChat.btnData.action"
+                                            @click="btnAction(currentChat.btnData.action)"
+                                            href=""
+                                            :class="'chat__opts-item ' + (currentChat.btnData.action ? '' : 'chat__opts-item--disabled')">{{ currentChat.btnData.title }}</div>
+                                        <div
+                                            v-if="currentChat && !(currentChat.canceled_by_seller_at && currentChat.canceled_by_blogger_at)"
+                                            @click="btnAction('cancel')"
+                                            class="chat__opts-item chat__opts-item--cancel">
+                                            Отменить работу
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="chat__messages messages-chat">
                                 <div
@@ -80,7 +123,7 @@
                                     <div class="messages-chat__item-msg">
                                         <span v-html="message.message"></span>
                                         <div
-                                            v-if="currentChat.statistics && message.sender_id == 1 && currentChat.statistics.message_id == message.id"
+                                            v-if="currentChat && currentChat.statistics && message.sender_id == 1 && currentChat.statistics.message_id == message.id"
                                             class="messages-chat__item-stats">
                                             Просмотры: {{ currentChat.statistics.views }}
                                             Репосты: {{ currentChat.statistics.reposts }}
@@ -105,6 +148,11 @@
 
                                             </a>
                                         </div>
+                                    </div>
+                                    <div
+                                        v-if="currentChat && currentChat.status"
+                                        :class="'messages-chat__item-status ' + currentChat.status">
+                                        {{ getStatusName(currentChat.status) }}
                                     </div>
                                 </div>
 
@@ -133,31 +181,43 @@
 
                             <div class="chat__messages messages-create">
                                 <div class="textarea-w">
-                                    <div class="textarea-upload">
-                                        <svg fill="none" height="20" viewBox="0 0 20 20" width="20" xmlns="http://www.w3.org/2000/svg" class="base-0-2-1" ie-style="">
-                                            <path clip-rule="evenodd" d="m14.9502 3.80108c-1.0653-1.06811-2.7917-1.06811-3.857 0l-5.53401 5.54845c-1.74559 1.75017-1.74559 4.58847 0 6.33867 1.7445 1.7491 4.57211 1.7491 6.31661 0l.0025-.0026 2.8799-2.8595c.294-.2918.7688-.2901 1.0607.0038.2918.2939.2901.7688-.0038 1.0606l-2.8773 2.857-.0013.0013c-2.3307 2.3354-6.1092 2.3349-8.43936-.0013-2.32952-2.3356-2.32952-6.1216 0-8.45724l5.53396-5.54845c1.6514-1.65575 4.3297-1.65575 5.9811 0 1.6504 1.65465 1.6504 4.33657 0 5.99123l-5.5339 5.54846c-.97226.9748-2.54938.9748-3.52162 0-.97115-.9737-.97115-2.5516 0-3.5253l.0024-.0024 3.10232-3.08243c.2939-.29195.7688-.29042 1.0607.00341.292.29383.2904.7687-.0034 1.06065l-3.09997 3.08007-.00102.001c-.38619.3883-.38586 1.0178.00102 1.4057.38613.3872 1.01136.3872 1.3975 0l5.53397-5.54844c1.0664-1.06918 1.0664-2.80349 0-3.87268z" fill="currentColor" fill-rule="evenodd"></path>
-                                        </svg>
-                                        <label for = "chat-upload" class="textarea-upload__text">
-                                            {{ uploadFileTitle }}
+                                    <div
+                                        :class="'textarea-upload ' + uploadFileObject.class">
+                                        <div class="messages-create__icon">
+                                            <img
+                                                :src="uploadFileObject.icon"
+                                                alt="">
+                                        </div>
+                                        <label for="chat-upload" class="textarea-upload__text">
+                                            {{ uploadFileObject.title }}
                                         </label>
                                         <input
                                             @change="onFileChange"
                                             type="file" id = "chat-upload" hidden>
+                                        <div
+                                            v-if="currentMessage && currentMessage.file"
+                                            @click="cancelUploadedFile"
+                                            class="textarea-upload__cancel">
+                                            <img src="/img/close-icon.svg" alt="">
+                                        </div>
                                     </div>
-                                    <textarea
-                                        v-model="currentMessage.message"
-                                        @keyup.enter="sendMessage"
-                                        name="" placeholder="Введите текст" class="messages-create__textarea textarea"></textarea>
+                                    <div class="messages-create__row">
+                                        <textarea
+                                            v-model="currentMessage.message"
+                                            @keyup.enter="sendMessage"
+                                            @input="changeTextareaHeight"
+                                            name="" placeholder="Введите текст" class="messages-create__textarea textarea"></textarea>
+                                        <div
+                                            @click="sendMessage"
+                                            class="messages-create__create mobile">
+                                            <img src="/img/send-message-icon.svg" alt="">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="chat__btns" style="display: flex; flex-wrap: wrap; gap:8px;">
                                     <button
                                         @click="sendMessage"
-                                        class="btn btn-primary">Отправить</button>
-                                    <button
-                                        v-if="currentChat && currentChat.btnData"
-                                        @click="btnAction(currentChat.btnData.action)"
-                                        href=""
-                                        class="btn btn-secondary">{{ currentChat.btnData.title }}</button>
+                                        class="btn btn-primary btn--send-message">Отправить</button>
                                 </div>
                             </div>
 
@@ -259,17 +319,20 @@
             </div>
         </div>
     </div>
+    <confirm-popup ref="confirmPopup"></confirm-popup>
 </template>
 <script>
-import {reactive, ref} from "vue";
+    import {reactive, ref} from "vue";
 
     import User from '../../services/api/User.vue'
     import Platforms from '../../services/api/Platforms.vue'
     import moment from "moment";
     import axios from "axios";
+    import ConfirmPopup from "../../ui/ConfirmationPopup";
 
     export default{
         props:['currentItem'],
+        components: {ConfirmPopup},
         data(){
             return {
                 imageIsOpen: false,
@@ -290,11 +353,26 @@ import {reactive, ref} from "vue";
                 isBloggerStatisticsPopupOpen: ref(false),
                 bloggerStatistics: ref({}),
                 uploadStatisticsFileTitle: ref('Прикрепить отчет по статистике'),
-                uploadFileTitle: ref('Прикрепите файл'),
+                uploadFileObject: ref({
+                    title: 'Прикрепите файл',
+                    icon: '/img/papperclip-icon.svg',
+                    class: '',
+                }),
+
+                isChatOptsOpen: ref(false),
+
+                statusNames: {
+                    'completed': 'Проект завершен',
+                    'pending': 'В ожидании',
+                    'progress': 'В работе',
+                    'canceled': 'Проект отменен',
+                },
 
                 isTablet: ref(false),
                 isChatsMobile: ref(true),
                 isMessagesMobile: ref(true),
+
+                chatSearchString: ref(null),
 
                 User, Platforms
             }
@@ -346,6 +424,24 @@ import {reactive, ref} from "vue";
                     }, 1000);
                 }
             }
+
+            if(this.isTablet){
+                if(this.isChatsMobile && this.currentChat && this.backBtnPressed){
+                    var childOffset = ($(document).find(`.item-chat[data-id="${this.currentChat.id}"]`) ? $(document).find(`.item-chat[data-id="${this.currentChat.id}"]`).offset().top : 0),
+                        wrapOffset = $(document).find('#chat .chat__chat-items').offset().top,
+                        scrolledValue = $(document).find('#chat .chat__chat-items').scrollTop();
+
+                    $('.chat__chat-items').animate({
+                        scrollTop: (childOffset - wrapOffset + scrolledValue) - 20
+                    }, 0);
+
+                    this.backBtnPressed = false;
+                }
+            }
+
+            $('.messages-chat').off('scroll').on('scroll', function(e){
+                $('.messages-chat__item-status').css('top', $(document).find('.messages-chat').scrollTop() + 10 +'px')
+            })
         },
         methods: {
             sendStatistics(){
@@ -358,7 +454,6 @@ import {reactive, ref} from "vue";
 
                 var image = $('#statistics-file'),
                     files = image[0].files;
-                console.log(files)
 
                 for(let i = 0; i < files.length; i++){
                     if(files[0])
@@ -392,12 +487,29 @@ import {reactive, ref} from "vue";
                     })
                 })
             },
-            btnAction(action){
+            async btnAction(action){
                 if(!action){
                     return
                 }
 
+                let isConfirmed = true;
+
+                if(action == 'cancel'){
+                    isConfirmed = await this.$refs.confirmPopup.show({
+                        title: 'Подтвердите действие',
+                        subtitle: 'После подтверждения работу нельзя будет восстановить',
+                        okButton: 'Подтвердить',
+                        cancelButton: 'Отмена',
+                    });
+                }
+
+                if(!isConfirmed){
+                    return
+                }
+
                 if(action != 'stats'){
+                    $(document).find('.btn--chat-action').addClass('btn-loading');
+
                     axios({
                         method: 'get',
                         url: '/api/works/' + this.currentChat.id + '/' + action,
@@ -407,12 +519,20 @@ import {reactive, ref} from "vue";
                             title: 'Успешно!',
                             message: 'Статус проекта успешо изменен.'
                         })
+
+                        $(document).find('.btn--chat-action').removeClass('btn-loading');
+
+                        this.getChats();
+                        this.currentChat && this.getMessages(this.currentChat);
                     })
-                    .catch(() => {
+                    .catch((err) => {
+                        var message = err.response.data.message ? err.response.data.message : 'Не удалось изменить статус проекта, попробуйте позже.';
                         notify('error', {
                             title: 'Внимание!',
                             message: 'Не удалось изменить статус проекта, попробуйте позже.'
                         })
+
+                        $(document).find('.btn--chat-action').removeClass('btn-loading');
                     })
                 }
                 else{
@@ -425,9 +545,28 @@ import {reactive, ref} from "vue";
                 if (!files.length)
                     return;
 
-                this.uploadFileTitle = 'Файл прикреплен';
+                if(files[0].size > 52428800){
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'Нельзя загружать файлы больше 50мб.'
+                    })
+
+                    $(e.target).val(null);
+
+                    return;
+                }
+
+                this.uploadFileObject.title = files[0].name;
+                this.uploadFileObject.icon = '/img/approved-aproved-confirm-2-svgrepo-com.svg';
+                this.uploadFileObject.class = 'uploaded';
 
                 this.currentMessage.file = files[0];
+            },
+            cancelUploadedFile(){
+                this.currentMessage.file = null;
+                this.uploadFileObject.title = 'Прикрепите файл';
+                this.uploadFileObject.icon = '/img/papperclip-icon.svg';
+                this.uploadFileObject.class = '';
             },
             sendMessage(){
                 return new Promise((resolve, reject) => {
@@ -440,6 +579,7 @@ import {reactive, ref} from "vue";
                         resolve(false)
                         return
                     }
+
                     var formData = new FormData;
 
                     formData.append('message', (this.currentMessage.message ? this.currentMessage.message.trim() : ''));
@@ -456,16 +596,21 @@ import {reactive, ref} from "vue";
                         return
                     }
 
+                    $(document).find('.messages-create__create').addClass('btn-loading');
+                    $(document).find('.btn--send-message').addClass('btn-loading');
+
+                    this.currentMessage.message = null;
+                    this.currentMessage.file = null;
+
                     axios({
                         method: 'post',
-                        url: 'api/users/' + this.user.id + '/works/' + this.currentChat.id + '/messages',
+                        url: '/api/users/' + this.user.id + '/works/' + this.currentChat.id + '/messages',
                         data: formData
                     })
                     .then(response => {
-                        this.currentMessage.message = null;
-
-                        $('#chat-upload').val(null)
-                        $('#chat-upload').closest('.textarea-upload').find('.textarea-upload__text').text('Прикрепите файл')
+                        this.uploadFileObject.title = 'Прикрепите файл';
+                        this.uploadFileObject.icon = '/img/papperclip-icon.svg';
+                        this.uploadFileObject.class = '';
 
                         resolve(true);
                     })
@@ -476,6 +621,11 @@ import {reactive, ref} from "vue";
                         })
 
                         resolve(false)
+                    })
+                    .finally(() => {
+                        $('#chat-upload').val(null)
+                        $(document).find('.messages-create__create').removeClass('btn-loading');
+                        $(document).find('.btn--send-message').removeClass('btn-loading');
                     })
                 })
             },
@@ -489,7 +639,9 @@ import {reactive, ref} from "vue";
                     this.isChatsMobile = false;
                 }
 
-                this.uploadFileTitle = 'Прикрепите файл';
+                this.uploadFileObject.title = 'Прикрепите файл';
+                this.uploadFileObject.icon = '/img/papperclip-icon.svg';
+                this.uploadFileObject.class = '';
 
                 this.works = this.works.map(_w => {
                     if(_w.id == work.id){
@@ -570,7 +722,7 @@ import {reactive, ref} from "vue";
                     return this.user.name
                 }
 
-                return this.currentChat.partner_user.name;
+                return this.currentChat ? this.currentChat.partner_user.name : '';
             },
             goToProjects(project_id){
                 this.$emit('switchTab', 'profile-projects', {
@@ -608,9 +760,13 @@ import {reactive, ref} from "vue";
                         title: 'Проект завершен',
                     }
                 }
+                else if(work && work.status == 'canceled'){
+                    return {
+                        title: 'Проект отменен',
+                    }
+                }
                 else if(work && work.status == 'progress'){
                     if(work.project_work.type != 'feedback' && work.statistics == null){
-                        console.log(work, this.user.role)
                         if(this.user.role == 'blogger'){
                             return {
                                 title: 'Прикрепить статистику',
@@ -658,6 +814,23 @@ import {reactive, ref} from "vue";
                     title: 'Начать работу',
                     action: 'start'
                 }
+            },
+            getStatusName(){
+                return this.statusNames[this.currentChat.status] || ''
+            },
+            changeTextareaHeight(){
+                $('.messages-create__textarea').css('height',  'auto')
+                $('.messages-create__textarea').css('height',  $('.messages-create__textarea')[0].scrollHeight + 'px')
+            },
+            backToChats(){
+                this.isMessagesMobile = false;
+                this.isChatsMobile = true;
+                this.backBtnPressed = true;
+            },
+            isWorkSatisfying(work){
+                return (String(work.id).indexOf(this.chatSearchString) !== -1 ||
+                            (work.project ? String(work.project.product_name).toLowerCase().indexOf(this.chatSearchString.toLowerCase()) !== -1 : false) ||
+                                String(work.partner_user.name).toLowerCase().indexOf(this.chatSearchString.toLowerCase()) !== -1);
             }
         }
     }
