@@ -183,7 +183,6 @@
                     worksInfo: worksInfo
                 }
                 this.isProjectPopup = true
-                console.log( this.projectInfo)
             }
         }
     }
