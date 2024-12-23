@@ -5135,13 +5135,16 @@ input[type='range']::-webkit-slider-runnable-track{
         color:transparent;
         font-size: 0;
         width: 50px;
-
+    }
+    .nav-menu__item[data-content="partners"]{
+        margin-top: 0!important;
     }
     .nav-menu__item::before{
         width: 100%;
         max-width: 20px;
         margin-right: 0;
     }
+
     .nav-menu{
         min-width: unset;
     }
