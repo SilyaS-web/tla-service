@@ -4851,7 +4851,7 @@ input[type='range']::-webkit-slider-runnable-track{
     display: none;
 }
 .footer_disabled .chat__chat-items {
-    height: calc(100vh - 155px);
+    height: calc(100vh - 260px);
 }
 
 .current-tariff{
@@ -5769,6 +5769,9 @@ input[type='range']::-webkit-slider-runnable-track{
     .auth__form{
         padding: 20px 25px 35px 25px;
     }
+    #seller .projects-list__filter{
+        padding-bottom: 115px;
+    }
     .footer__nav .nav__link:not(:last-child){
         margin-right: 10px;
     }
@@ -5839,6 +5842,11 @@ input[type='range']::-webkit-slider-runnable-track{
         font-size: 20px;
     }
 
+    .wrapper:not(:has(.profile__navigation)) .footer__body{
+        padding-bottom: 0;
+    }
+
+
     .nav-menu{
         padding: 0;
         position: fixed;
@@ -5859,7 +5867,7 @@ input[type='range']::-webkit-slider-runnable-track{
         padding-top: 5px;
     }
     .nav-menu__item{
-        width: calc(100% / 5 - 5px);
+        width: calc(100% / 6 - 5px);
         height: calc(100vw / 5 - 5px);
         justify-content: center;
         font-size: 10px;
@@ -6033,6 +6041,10 @@ input[type='range']::-webkit-slider-runnable-track{
 
     .banner{
         bottom: 67px;
+    }
+
+    .footer_disabled .chat__chat-items {
+        height: calc(100vh - 215px);
     }
 }
 @media (orientation: landscape) and (max-width: 675px) {
@@ -6425,6 +6437,10 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .project-item__left{
         font-size: 12px;
+    }
+
+    .nav-menu__item{
+        font-size: 9px;
     }
 }
 @media(max-width:330px){
