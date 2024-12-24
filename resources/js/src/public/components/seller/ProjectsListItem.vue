@@ -133,7 +133,7 @@
         },
         updated(){
             if(this.projectInfo){
-                $('.project-item[data-id="' + this.project.id + '"]').find('.popup-project__carousel').owlCarousel({
+                $('#project-item-info').find('.popup-project__carousel').owlCarousel({
                     margin: 5,
                     nav: false,
                     dots: true,
@@ -147,6 +147,20 @@
                     }
                 })
             }
+
+            $('.project-item[data-id="' + this.project.id + '"]').find('.project-item__carousel').owlCarousel({
+                margin: 5,
+                nav: false,
+                dots: true,
+                responsive: {
+                    0:{
+                        items: 1
+                    },
+                    1180: {
+                        items:1
+                    }
+                }
+            });
 
         },
         methods:{
