@@ -133,7 +133,7 @@
         },
         updated(){
             if(this.projectInfo){
-                $('#project-item-info').find('.popup-project__carousel').owlCarousel({
+                $('.project-item[data-id="' + this.project.id + '"]').find('.popup-project__carousel').owlCarousel({
                     margin: 5,
                     nav: false,
                     dots: true,
