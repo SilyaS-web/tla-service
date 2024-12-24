@@ -71,7 +71,11 @@
                                         'telegram' => 'tg',
                                         'instagram' => 'inst',
                                         'vk' => 'vk',
-                                        'youtube' => 'yt'
+                                        'youtube' => 'yt',
+                                        'dzen' => 'dzen',
+                                        'ok' => 'ok',
+                                        'yappy' => 'yappy',
+                                        'rutube' => 'rutube',
                                 ])
                                 @foreach (($user->blogger->platforms ?? []) as $blogger_platform )
                                     @if(!$blogger_platform->subscriber_quantity)
