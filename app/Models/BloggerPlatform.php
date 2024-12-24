@@ -49,6 +49,18 @@ class BloggerPlatform extends Model
             'Instagram' => [
                 'coverage' => 'Просмотры reels',
             ],
+            'Dzen' => [
+                'coverage' => 'Просмотры Дзен',
+            ],
+            'OK' => [
+                'coverage' => 'Просмотры Одноклассники',
+            ],
+            'Rutube' => [
+                'coverage' => 'Просмотры Rutube',
+            ],
+            'Yappy' => [
+                'coverage' => 'Просмотры Yappy',
+            ],
         ];
     }
 }

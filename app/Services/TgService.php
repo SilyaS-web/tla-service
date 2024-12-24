@@ -13,32 +13,8 @@ class TgService
             Log::info("[sendResetPassword] chat_id " . $chat_id . " password " . $password);
             return true;
         }
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => '195.24.67.70/reset-password',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => '{
-            "chatId": ' . $chat_id . ',
-            "newPassword": "' . $password . '"
-        }',
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json'
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        $httpcode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-        curl_close($curl);
-        return $httpcode == 200 ? true : false;
+        $text = "Запрос на смену пароля\nЕсли это были не вы, обратитесь в службу поддержки\n\nНовый пароль: ||$password||\n\nПароль можно сменить в найстроках профиля";
+        return (bool) self::sendMessage($chat_id, $text);
     }
 
     public static function notify($chat_id, $text)
@@ -48,33 +24,7 @@ class TgService
             return true;
         }
 
-        $curl = curl_init();
-
-        $data = [
-            'chatId' => $chat_id,
-            'text' => $text
-        ];
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => '195.24.67.70/notify',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode($data),
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json'
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-
-        curl_close($curl);
-        return $http_code == 200 ? true : false;
+        return (bool) self::sendMessage($chat_id, $text);
     }
 
     public static function sendMessage($chat_id, $text, $params = [])
