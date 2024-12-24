@@ -1497,8 +1497,17 @@ input[type='range']::-webkit-slider-runnable-track{
 .item-platforms__title.item-platforms__title--inst::before{
     background-image: url(../img/inst-icon.svg);
 }
-.item-platforms__title.item-platforms__title--vk::before{
-    background-image: url(../img/vk-icon.svg);
+.item-platforms__title.item-platforms__title--rutube::before{
+    background-image: url(../img/rutube-icon.svg);
+}
+.item-platforms__title.item-platforms__title--dzen::before{
+    background-image: url(../img/ya-dzen-icon.svg);
+}
+.item-platforms__title.item-platforms__title--ok::before{
+    background-image: url(../img/ok-icon.svg);
+}
+.item-platforms__title.item-platforms__title--yappy::before{
+    background-image: url(../img/yappy-icon.svg);
 }
 .item-platforms__stats{
     display: flex;
