@@ -677,7 +677,7 @@ import {ref, shallowRef} from 'vue'
                 .matchMedia('(orientation: portrait)')
                 .addListener(function (m) {
                     if (!m.matches) {
-                        this.prodsStatisticsChart.resize()
+                        //this.prodsStatisticsChart.resize()
                     }
                 })
 
