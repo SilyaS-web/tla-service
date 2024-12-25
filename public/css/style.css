@@ -2612,6 +2612,24 @@ input[type='range']::-webkit-slider-runnable-track{
     flex: 1 1 auto;
     margin-top: 15px;
 }
+.project-item .owl-carousel .owl-dot>span{
+    display: none!important;
+}
+.project-item .owl-carousel{
+    display: flex!important;
+    gap: 0 3px;
+}
+.project-item .owl-carousel .owl-dots{
+    position: absolute;
+    left:0;right:0;
+    margin:auto;
+    top:calc(100% - 10px);
+}
+@media(max-width:675px){
+    .project-item .owl-carousel .owl-dots{
+        top:calc(100% - 3px);
+    }
+}
 .project-item__carousel{
     display: flex;
     /* flex: 1 1 auto; */
@@ -5635,7 +5653,7 @@ input[type='range']::-webkit-slider-runnable-track{
         max-width:500px
     }
     .profile-projects__body{
-        max-width:500px;
+        max-width:100%;
     }
 
     #seller .view-project__props-col .card__stats-stats{
