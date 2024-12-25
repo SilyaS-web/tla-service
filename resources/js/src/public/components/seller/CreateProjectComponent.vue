@@ -38,7 +38,7 @@
                             </div>
                         </div>
                         <div class="form-group marketing-format" style="z-index: 3;" >
-                            <label for="format">Выберите формат рекламы</label>
+                            <label for="format">Выберите формат</label>
                             <span class="error" v-if="errors && errors.project_type">{{ errors.project_type }}</span>
 
                             <div class="marketing-format__item input-checkbox-w">

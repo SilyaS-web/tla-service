@@ -19,6 +19,10 @@ class Project extends Model
     public const YOUTUBE = 'youtube';
     public const VK = 'vk';
     public const TELEGRAM = 'telegram';
+    public const OK = 'ok';
+    public const DZEN = 'dzen';
+    public const YAPPY = 'yappy';
+    public const RUTUBE = 'rutube';
     public const INTEGRATION = 'integration';
     public const BARTER = 'barter';
 
@@ -28,6 +32,10 @@ class Project extends Model
         self::YOUTUBE => 'Интеграция YouTube',
         self::VK => 'Интеграция VK',
         self::TELEGRAM => 'Интеграция Telegram',
+        self::OK => 'Интеграция Одноклассники',
+        self::DZEN => 'Интеграция Дзен',
+        self::YAPPY => 'Интеграция Yappy',
+        self::RUTUBE => 'Интеграция Rutube',
         self::INTEGRATION => 'Интеграции',
         self::BARTER => 'Безлимит',
     ];
@@ -42,6 +50,10 @@ class Project extends Model
         self::YOUTUBE,
         self::VK,
         self::TELEGRAM,
+        self::OK,
+        self::DZEN,
+        self::YAPPY,
+        self::RUTUBE,
     ];
 
     public const BARTER_TYPES = [
@@ -49,8 +61,12 @@ class Project extends Model
         self::FEEDBACK,
         self::INSTAGRAM,
         self::YOUTUBE,
-        self::VK,
         self::TELEGRAM,
+        self::VK,
+        self::OK,
+        self::DZEN,
+        self::YAPPY,
+        self::RUTUBE,
     ];
 
     public const STOPPED = -3;
@@ -92,6 +108,7 @@ class Project extends Model
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
+
     public function projectFiles()
     {
         return $this->hasMany(ProjectFile::class, 'source_id', 'id');

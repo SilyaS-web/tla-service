@@ -58,11 +58,8 @@
                             <label for="">Формат рекламы</label>
                             <select name="filter-format" id="filter-format" class = "input" v-model="filter.project_type">
                                 <option value="" class="">Выберите формат</option>
-                                <option value="feedback" class="">Отзыв на товар</option>
-                                <option value="inst" class="">Интеграция Ins</option>
-                                <option value="youtube" class="">Интеграция YTube</option>
-                                <option value="vk" class="">Интеграция VK</option>
-                                <option value="telegram" class="">Интеграция Telegram</option>
+                                <option value="integration" class="">Интеграция</option>
+                                <option value="feedback" class="">Выкуп + отзыв</option>
                             </select>
                         </div>
                         <div class="filter__btns">

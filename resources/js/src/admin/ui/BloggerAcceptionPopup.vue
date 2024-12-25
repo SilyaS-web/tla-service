@@ -98,10 +98,28 @@
                     id: 2
                 },
                 {
-                    name: 'Вконтакте',
-                    key: 'VK',
-                    prefix: 'vk',
-                    id: 4
+                    name: 'Одноклассники',
+                    key: 'OK',
+                    prefix: 'ok',
+                    id: 7
+                },
+                {
+                    name: 'Дзен',
+                    key: 'Dzen',
+                    prefix: 'dzen',
+                    id: 6
+                },
+                {
+                    name: 'Rutube',
+                    key: 'Rutube',
+                    prefix: 'rutube',
+                    id: 8
+                },
+                {
+                    name: 'Yappy',
+                    key: 'Yappy',
+                    prefix: 'yappy',
+                    id: 5
                 },
             ]),
             blogger: ref(null),

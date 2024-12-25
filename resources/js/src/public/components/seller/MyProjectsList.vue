@@ -59,12 +59,9 @@
                         <div class="form-group filter__item">
                             <label for="">Формат рекламы</label>
                             <select name="project_type" id="filter-format" class="input" v-model="filter.project_type">
-                                <option value="" class="" >Выберите формат</option>
-                                <option value="feedback" class="">Отзыв на товар</option>
-                                <option value="inst" class="">Интеграция Ins</option>
-                                <option value="youtube" class="">Интеграция YTube</option>
-                                <option value="vk" class="">Интеграция VK</option>
-                                <option value="telegram" class="">Интеграция Telegram</option>
+                                <option value="" class="">Выберите формат</option>
+                                <option value="integration" class="">Интеграция</option>
+                                <option value="feedback" class="">Выкуп + отзыв</option>
                             </select>
                         </div>
 
@@ -158,7 +155,7 @@
                         </div>
                         <div id="step_2" class="quest__step step current">
 <!--                            <div class="form-group marketing-format">-->
-<!--                                <label for="format">Выберите формат рекламы</label>-->
+<!--                                <label for="format">Выберите формат</label>-->
 <!--                                <span class="error" v-if="errors && errors.project_type">{{ errors.project_type }}</span>-->
 
 <!--                                <div class="marketing-format__item input-checkbox-w">-->
@@ -314,7 +311,9 @@
                     this.$emit('updateMyProjects');
                 })
                 .catch((err) => {
-                    let message =  err.response.message ? err.response.message : 'Невозможно сохранить проект, перепроверьте все поля, данные не заполнены, либо заполнены некоректно.';
+                    let message =  (err.response.data && err.response.data.message) ?
+                        err.response.data.message :
+                        'Невозможно сохранить проект, перепроверьте все поля, данные не заполнены, либо заполнены некоректно.';
 
                     notify('info', {title: 'Внимание!', message: message});
                     this.errors = err.response.errors;

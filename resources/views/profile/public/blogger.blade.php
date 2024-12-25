@@ -71,7 +71,11 @@
                                         'telegram' => 'tg',
                                         'instagram' => 'inst',
                                         'vk' => 'vk',
-                                        'youtube' => 'yt'
+                                        'youtube' => 'yt',
+                                        'dzen' => 'dzen',
+                                        'ok' => 'ok',
+                                        'yappy' => 'yappy',
+                                        'rutube' => 'rutube',
                                 ])
                                 @foreach (($user->blogger->platforms ?? []) as $blogger_platform )
                                     @if(!$blogger_platform->subscriber_quantity)
@@ -250,6 +254,41 @@
                                             @break
 
                                             @case('telegram')
+                                                @if(($blogger_platform->coverage && $blogger_platform->coverage > 0))
+                                                    <div class="item-platforms__stats">
+                                                        <div class = "item-platforms__stats-row">
+                                                            <div class="item-platforms__stat">
+                                                                <div class="item-platforms__stat-title">
+                                                                    Подписчики
+                                                                </div>
+                                                                <div class="item-platforms__stat-value">
+                                                                    {{ $blogger_platform->subscriber_quantity ?? 0 }}
+                                                                </div>
+                                                            </div>
+                                                            <div class="item-platforms__stat">
+                                                                <div class="item-platforms__stat-title">
+                                                                    Просмотры
+                                                                </div>
+                                                                <div class="item-platforms__stat-value">
+                                                                    {{ $blogger_platform->coverage ?? 0 }}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class = "item-platforms__stats-row">
+                                                            <div class="item-platforms__stat er">
+                                                                <div class="item-platforms__stat-title">
+                                                                    ER %
+                                                                </div>
+                                                                <div class="item-platforms__stat-value">
+                                                                    {{ $blogger_platform->engagement_rate ?? 0 }}
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endif
+                                            @break
+
+                                            @default
                                                 @if(($blogger_platform->coverage && $blogger_platform->coverage > 0))
                                                     <div class="item-platforms__stats">
                                                         <div class = "item-platforms__stats-row">

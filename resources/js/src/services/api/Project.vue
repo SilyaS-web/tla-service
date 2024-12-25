@@ -33,6 +33,7 @@ const Project = {
                 resolve(response.data)
             })
             .catch((errors) => {
+                console.log(errors.response)
                 let text = 'Невозможно создать проект. Проверьте все поля, если все в порядке, напишите в поддержку.';
 
                 if(errors.response.data.message)
@@ -199,9 +200,6 @@ const Project = {
                 resolve([])
             })
         })
-    },
-    getProjectsList: () => {
-
     },
     getFeedbackWork(project){
         var feedbackWork = project.project_works ? project.project_works.filter(w => w.type == 'feedback') : {

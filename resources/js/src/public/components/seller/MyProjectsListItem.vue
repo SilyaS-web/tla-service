@@ -676,14 +676,12 @@ import {ref, shallowRef} from 'vue'
             window
                 .matchMedia('(orientation: portrait)')
                 .addListener(function (m) {
-                    if (m.matches) {
-                    }
-                    else {
-                        prodsStatistics.resize()
+                    if (!m.matches) {
+                        this.prodsStatisticsChart.resize()
                     }
                 })
 
-            var imgsCurousel = $(`.profile-projects__item[data-id="${this.project.id}"]`).find('.profile-projects--carousel').owlCarousel({
+            var imgsCarousel = $(`.profile-projects__item[data-id="${this.project.id}"]`).find('.profile-projects--carousel').owlCarousel({
                 margin: 5,
                 nav: false,
                 dots: true,
