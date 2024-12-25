@@ -123,7 +123,7 @@
         components: { carousel },
         data(){
             return{
-                projectImgs: ref([]),
+                projectImgs: [],
                 projectInfo: ref(false),
                 isProjectPopup: ref(false),
                 Project
@@ -147,9 +147,6 @@
             // });
         },
         updated(){
-            this.projectImgs = [];
-            this.projectImgs = this.project.project_files;
-
             if(this.projectInfo){
                 $('#project-item-info').find('.popup-project__carousel').owlCarousel({
                     margin: 5,

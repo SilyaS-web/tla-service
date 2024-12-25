@@ -33,7 +33,7 @@
                     </div>
                     <div class="filter__items">
                         <div class="form-group filter__item">
-                            <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию" v-model="filter.project_name">
+                            <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию" v-model="filter.product_name">
                         </div>
                         <div class="form-group filter__item">
                             <label for="filter-category">Категория</label>
@@ -87,7 +87,7 @@
                 filter: ref({
                     project_type: '',
                     product_name: '',
-                    project_category: '',
+                    category: '',
                 }),
                 currentCategory: ref(''),
                 categories: ref([]),
@@ -102,7 +102,7 @@
                 this.filter = {
                     product_name: '',
                     project_type: '',
-                    project_category: '',
+                    category: '',
                 }
                 this.currentCategory = ''
             },
@@ -123,7 +123,7 @@
                 })
             },
             chooseCategory(category){
-                this.filter.project_category = category.theme;
+                this.filter.category = category.theme;
                 this.currentCategory = category.theme
             },
             clearCategories(){
