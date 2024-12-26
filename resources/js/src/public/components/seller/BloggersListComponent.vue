@@ -332,7 +332,15 @@
 
             let user = this.User.getCurrent();
 
-            this.isBlocked = !(user && (user.tariffs && user.tariffs.length > 0))
+            this.isBlocked = true;
+
+            if(user){
+                if(user.tariffs){
+                    if(user.tariffs.length > 0 && !user.tariffs[0].find(t => !t.can_extend)){
+                        this.isBlocked = false;
+                    }
+                }
+            }
         },
 
         updated(){
