@@ -1,5 +1,5 @@
 <template>
-    <div :class="'profile-blogers tab-content ' + (isBlocked ? 'not-paid' : '')" id="profile-blogers-list">
+    <div :class="'profile-blogers tab-content'" id="profile-blogers-list">
         <!-- каталог блогеров-->
         <div v-if="!isChooseProjectList" class="profile-blogers__body">
             <div class="projects-list__header">
@@ -252,19 +252,19 @@
         </div>
 
         <!-- плашка об оплате тарифа-->
-        <div class="not_paid-alert">
-            <div class="not_paid-alert__body">
-                <div class="not_paid-alert__title">
-                    Каталог блогеров недоступен
-                </div>
-                <div class="not_paid-alert__text">
-                    Необходимо оплатить тариф, чтобы иметь возможность просматривать<br> каталог блогеров и начать работу с ними
-                </div>
-            </div>
-            <div class="not_paid-alert__footer">
-                <router-link :to="{ path: '/tariffs' }" class="not_paid-alert__btn btn btn-primary">Разблокировать каталог</router-link>
-            </div>
-        </div>
+<!--        <div class="not_paid-alert">-->
+<!--            <div class="not_paid-alert__body">-->
+<!--                <div class="not_paid-alert__title">-->
+<!--                    Каталог блогеров недоступен-->
+<!--                </div>-->
+<!--                <div class="not_paid-alert__text">-->
+<!--                    Необходимо оплатить тариф, чтобы иметь возможность просматривать<br> каталог блогеров и начать работу с ними-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <div class="not_paid-alert__footer">-->
+<!--                <router-link :to="{ path: '/tariffs' }" class="not_paid-alert__btn btn btn-primary">Разблокировать каталог</router-link>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
     <choose-project-popup ref="chooseProjectPopup"></choose-project-popup>
 </template>
@@ -336,7 +336,7 @@
 
             if(user){
                 if(user.tariffs){
-                    if(user.tariffs.length > 0 && !user.tariffs[0].find(t => !t.can_extend)){
+                    if(user.tariffs.length > 0 && !user.tariffs.find(t => !t.can_extend)){
                         this.isBlocked = false;
                     }
                 }
