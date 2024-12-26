@@ -3,9 +3,6 @@ require('./bootstrap');
 import { createApp } from 'vue'
 import { createMemoryHistory, createRouter } from 'vue-router'
 
-// admin imports
-import AdminIndex from './src/admin/pages/index.vue'
-
 // user imports
 import Auth from './src/auth/pages/AppAuth.vue'
 import Register from './src/auth/pages/AppRegister.vue'
@@ -119,8 +116,6 @@ function findGetParameter(parameterName) {
 localStorage.setItem('notifications_interval_id', '')
 localStorage.setItem('chats_interval_id', '')
 localStorage.setItem('chats_messages_interval_id', '')
-
-app.component('admin-index', AdminIndex)
 
 app.use(router)
 app.mount('#app')
