@@ -173,24 +173,13 @@
                         v-if="projects.length > 0"
                         v-for="project in projects"
                         class="list-projects__item project-item">
-<!--                        <div class="owl-carousel project-item__carousel">-->
-<!--                            <div-->
-<!--                                v-for="file in project.project_files"-->
-<!--                                :style="'background-image: url(' + file.link + ')'"-->
-<!--                                class="project-item__img">-->
-<!--                            </div>-->
-<!--                        </div>-->
-                        <carousel
-                            :nav="false"
-                            :dots="true"
-                            :items="1"
-                            :responsive="{ 0:{ items: 1 }, 1180: { items:1 } }">
+                        <div class="owl-carousel project-item__carousel">
                             <div
                                 v-for="file in project.project_files"
                                 :style="'background-image: url(' + file.link + ')'"
                                 class="project-item__img">
                             </div>
-                        </carousel>
+                        </div>
                         <div class="project-item__content">
                             <div class="project-item__title">
                                 <span class="project-item__price">{{ project.product_price }}</span>₽
@@ -280,7 +269,6 @@
     <choose-project-popup ref="chooseProjectPopup"></choose-project-popup>
 </template>
 <script>
-    import carousel from 'vue-owl-carousel/src/Carousel'
     import {ref} from "vue";
 
     import Slider from '@vueform/slider'
@@ -301,7 +289,7 @@
         props:['bloggers', 'user'],
         components:{
             ProjectsList, BloggersListItem, ProjectsListItem,
-            ChooseProjectPopup, Slider, carousel
+            ChooseProjectPopup, Slider
         },
         data(){
             return {

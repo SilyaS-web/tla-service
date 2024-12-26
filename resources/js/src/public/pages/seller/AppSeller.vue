@@ -221,8 +221,10 @@ export default{
                     break;
 
                 case 'all-projects':
+                    this.projects = [];
+
                     this.Project.getList({is_blogger_access: 1, statuses: [0]}).then(data => {
-                        this.projects = data || [];
+                        this.projects = data;
 
                         setTimeout(()=>{
                             this.Loader.loaderOff('#all-projects');
