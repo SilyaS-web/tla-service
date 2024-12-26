@@ -90,7 +90,7 @@
                 filter: ref({
                     project_type: '',
                     product_name: '',
-                    project_category: '',
+                    category: '',
                 }),
                 currentCategory: ref(''),
                 categories: ref([]),
@@ -114,7 +114,7 @@
                 this.filter = {
                     product_name: '',
                     project_type: '',
-                    project_category: '',
+                    category: '',
                 }
                 this.currentCategory = ''
             },
@@ -135,7 +135,7 @@
                 })
             },
             chooseCategory(category){
-                this.filter.project_category = category.theme;
+                this.filter.category = category.theme;
                 this.currentCategory = category.theme
             },
             clearCategories(){

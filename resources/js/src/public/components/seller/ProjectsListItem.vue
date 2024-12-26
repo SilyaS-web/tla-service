@@ -1,15 +1,28 @@
 <template>
     <div
-        v-if="project"
         @click="openMoreInfo"
         class="list-projects__item project-item" :data-id="project.id">
-        <div class="owl-carousel project-item__carousel">
+
+        <carousel
+            v-if="projectImgs && projectImgs.length > 0"
+            :nav="false"
+            :dots="true"
+            :items="1"
+            :responsive="{ 0:{ items: 1 }, 1180: { items:1 } }">
             <div
-                v-for="file in project.project_files"
+                v-for="file in projectImgs"
                 :style="'background-image: url(' + file.link + ')'"
                 class="project-item__img">
             </div>
-        </div>
+        </carousel>
+
+<!--        <div class="owl-carousel project-item__carousel">-->
+<!--            <div-->
+<!--                v-for="file in project.project_files"-->
+<!--                :style="'background-image: url(' + file.link + ')'"-->
+<!--                class="project-item__img">-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="project-item__content">
             <div class="project-item__title">
                 <span class="project-item__price">{{ project.product_price }}</span>₽
@@ -100,36 +113,38 @@
     </div>
 </template>
 <script>
+    import carousel from 'vue-owl-carousel/src/Carousel'
+
     import Project from '../../../services/api/Project';
     import {ref} from "vue";
 
     export default {
         props: ['project'],
+        components: { carousel },
         data(){
             return{
+                projectImgs: [],
                 projectInfo: ref(false),
                 isProjectPopup: ref(false),
                 Project
             }
         },
         mounted() {
-            if (!this.project) {
-                return
-            }
+            this.projectImgs = this.project.project_files;
 
-            $('.project-item[data-id="' + this.project.id + '"]').find('.project-item__carousel').owlCarousel({
-                margin: 5,
-                nav: false,
-                dots: true,
-                responsive: {
-                    0:{
-                        items: 1
-                    },
-                    1180: {
-                        items:1
-                    }
-                }
-            });
+            // $('.project-item[data-id="' + this.project.id + '"]').find('.project-item__carousel').owlCarousel({
+            //     margin: 5,
+            //     nav: false,
+            //     dots: true,
+            //     responsive: {
+            //         0:{
+            //             items: 1
+            //         },
+            //         1180: {
+            //             items:1
+            //         }
+            //     }
+            // });
         },
         updated(){
             if(this.projectInfo){
@@ -148,7 +163,9 @@
                 })
             }
 
+            // $('.project-item[data-id="' + this.project.id + '"]').find('.project-item__carousel').trigger('refresh.owl.carousel')
         },
+
         methods:{
             openMoreInfo(){
                 var options = this.project.marketplace_options ? JSON.parse(this.project.marketplace_options) : null,

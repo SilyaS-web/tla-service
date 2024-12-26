@@ -776,8 +776,7 @@ input[type='range']::-webkit-slider-runnable-track{
     max-width: 300px;
 }
 .profile-projects__img{
-    width: 100%;
-    width: 200px;
+    width: 200px!important;
     height:200px;
     border-radius: 5px;
     /* overflow: hidden; */
@@ -994,6 +993,9 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .owl-carousel .owl-nav button.owl-next:hover, .owl-carousel .owl-nav button.owl-prev:hover{
     opacity: 1;
+}
+#profile-projects .profile-projects__item .owl-carousel{
+
 }
 .profile-create-project .create-project__body{
     width: 100%;
@@ -1497,8 +1499,17 @@ input[type='range']::-webkit-slider-runnable-track{
 .item-platforms__title.item-platforms__title--inst::before{
     background-image: url(../img/inst-icon.svg);
 }
-.item-platforms__title.item-platforms__title--vk::before{
-    background-image: url(../img/vk-icon.svg);
+.item-platforms__title.item-platforms__title--rutube::before{
+    background-image: url(../img/rutube-icon.svg);
+}
+.item-platforms__title.item-platforms__title--dzen::before{
+    background-image: url(../img/ya-dzen-icon.svg);
+}
+.item-platforms__title.item-platforms__title--ok::before{
+    background-image: url(../img/ok-icon.svg);
+}
+.item-platforms__title.item-platforms__title--yappy::before{
+    background-image: url(../img/yappy-icon.svg);
 }
 .item-platforms__stats{
     display: flex;
@@ -2602,6 +2613,24 @@ input[type='range']::-webkit-slider-runnable-track{
     flex-direction: column;
     flex: 1 1 auto;
     margin-top: 15px;
+}
+.project-item .owl-carousel .owl-dot > span{
+    display: none!important;
+}
+.project-item .owl-carousel{
+    display: flex!important;
+    gap: 0 3px;
+}
+.project-item .owl-carousel .owl-dots{
+    position: absolute;
+    left:0;right:0;
+    margin:auto;
+    top:calc(100% - 10px);
+}
+@media(max-width:675px){
+    .project-item .owl-carousel .owl-dots{
+        top:calc(100% - 3px);
+    }
 }
 .project-item__carousel{
     display: flex;
@@ -5475,7 +5504,7 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .profile-projects__img{
         margin-bottom: 16px;
-        width: 280px;
+        width: 280px!important;
         height: 280px;
     }
     .profile-projects__img .project-item__img{
@@ -5626,7 +5655,7 @@ input[type='range']::-webkit-slider-runnable-track{
         max-width:500px
     }
     .profile-projects__body{
-        max-width:500px;
+        max-width:100%;
     }
 
     #seller .view-project__props-col .card__stats-stats{
