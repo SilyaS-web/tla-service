@@ -14,7 +14,7 @@ class TgService
             return true;
         }
         $text = "Запрос на смену пароля\nЕсли это были не вы, обратитесь в службу поддержки\n\nНовый пароль: ||$password||\n\nПароль можно сменить в найстроках профиля";
-        return (bool) self::sendMessage($chat_id, $text);
+        return (bool) self::sendMessage($chat_id, $text, ['parse_mode' => 'MarkdownV2',]);
     }
 
     public static function notify($chat_id, $text)
