@@ -53,7 +53,7 @@
     <title>@yield('title')</title>
 </head>
 <body>
-<div class="wrapper" style="background-color: #fff;">
+<div class="wrapper dark">
     <section id="app">
         <router-view />
     </section>

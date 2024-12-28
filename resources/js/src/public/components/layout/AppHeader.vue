@@ -139,7 +139,10 @@
         <div class="header__container _container">
             <div class="header__body">
                 <router-link :to="{path: '/profile'}" class="logo header__logo-w">
-                    <img src="/img/logo.svg" alt="" class="logo__logo header__logo">
+                    <img
+                        :src="user && user.theme == 'dark' ? '/img/logo-white.svg' : '/img/logo.svg'"
+                        alt=""
+                        class="logo__logo header__logo">
                 </router-link>
                 <nav
                     v-if="user"
