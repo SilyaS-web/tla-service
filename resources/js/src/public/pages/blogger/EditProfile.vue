@@ -57,6 +57,22 @@
                         </div>
                     </div>
 
+                    <div class="tab-content__form tab-content__form--accent">
+                        <label for="" class="tab-content__form--title" style="text-align: center">Настройки темы</label>
+                        <div class="tab-content__form-form">
+                            <div class="form-group">
+                                <input
+                                    type="checkbox"
+                                    name="toggle"
+                                    id="toggle"
+                                    class="toggle"
+                                    v-model="user.theme === 'dark'"
+                                    :change="changeTheme">
+                                <label for="toggle"><span>{{ getCurrentThemeTitle() }}</span></label>
+                            </div>
+                        </div>
+                    </div>
+
                     <button
                         @click="saveBlogger"
                         class="btn btn-primary">Сохранить изменения</button>
@@ -163,7 +179,19 @@ export default {
                     return
                 }
             )
+        },
+        changeTheme(){
+            let theme = this.user.theme === 'dark' ? 'light' : 'dark';
+
+            this.User.changeTheme(theme)
+                .then((user) => {
+                    this.user = user;
+                })
+                .catch((err) => {})
         }
+    },
+    computed:{
+        getCurrentThemeTitle(){ return this.user.theme === 'dark' ? 'Темная' : 'Светлая' }
     }
 }
 </script>

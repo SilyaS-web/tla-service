@@ -179,6 +179,40 @@
                 })
             })
         },
+
+        changeTheme(theme){
+            new Promise((resolve, reject) => {
+                let user = this.getCurrent();
+
+                axios({
+                    method: 'patch',
+                    url: '/api/user?theme=' . theme,
+                })
+                .then((data) => {
+                    $(document).find('wrapper').removeClass(user.theme);
+                    $(document).find('wrapper').addClass(theme);
+
+                    user.theme = theme;
+
+                    localStorage.setItem(JSON.stringify(user));
+
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Тема изменена.'
+                    });
+
+                    resolve(user);
+                })
+                .catch((err) => {
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'В данный момент невозможно поменять тему, попробуйте позже'
+                    });
+
+                    reject(false)
+                })
+            })
+        }
     };
 
     export default User
