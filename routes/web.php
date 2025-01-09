@@ -1,18 +1,12 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\SellerController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\BloggerController;
 use App\Http\Controllers\DeepLinkController;
-use App\Http\Controllers\MessageController;
-use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\WorkController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
