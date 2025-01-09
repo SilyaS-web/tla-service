@@ -7,10 +7,10 @@ use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
-
 class ImageService
 {
     public static function makeCompressedCopiesFromFile($image, $folder = '', $format = 'webp') {
+        ini_set('memory_limit', '256M');
         $urls = [];
 
         $image_1x = Image::make($image);
@@ -24,6 +24,7 @@ class ImageService
     }
 
     public static function makeCompressedCopies(UploadedFile $image, $folder = '', $format = 'webp') {
+        ini_set('memory_limit', '256M');
         $urls = [];
 
         $image_1x = Image::make($image->getRealPath());
@@ -45,6 +46,7 @@ class ImageService
 
     public static function compressImage($img, int $height = 400, int $width = 400, string $format = 'webp'): \Intervention\Image\Image
     {
+        ini_set('memory_limit', '256M');
         $old_height = $img->height();
         $old_width = $img->width();
 
