@@ -5026,6 +5026,16 @@ input[type='range']::-webkit-slider-runnable-track{
     text-decoration: line-through;
     color:rgba(0,0,0,.5)
 }
+.tariff-card__total--discount{
+    background-color: #DA3947;
+    color:#fff;
+    padding: 3px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 400;
+    width: fit-content;
+    margin-bottom: 5px;
+}
 .tariff-card__single {
     font-size: 15px;
     font-weight: 600;
