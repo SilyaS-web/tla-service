@@ -4,17 +4,17 @@ import { createApp } from 'vue'
 import { createMemoryHistory, createRouter } from 'vue-router'
 
 // user imports
-import Auth from './src/auth/pages/AppAuth.vue'
-import Register from './src/auth/pages/AppRegister.vue'
-import BloggerRegister from './src/auth/pages/BloggerData.vue'
-import Profile from './src/public/pages/index.vue'
-import SellerEditProfile from './src/public/pages/seller/EditProfile.vue'
-import BloggerEditProfile from './src/public/pages/blogger/EditProfile.vue'
-import Tariffs from './src/public/pages/seller/AppTariffs.vue'
-import Moderation from './src/public/pages/blogger/AppModeration.vue'
-import Banned from './src/public/pages/AppBanned.vue'
-import NotFound from './src/public/pages/404.vue'
-import User from './src/services/api/User.vue'
+import Auth from './src1/auth/pages/AppAuth.vue'
+import Register from './src1/auth/pages/AppRegister.vue'
+import BloggerRegister from './src1/auth/pages/BloggerData.vue'
+import Profile from './src1/public/pages/index.vue'
+import SellerEditProfile from './src1/public/pages/seller/EditProfile.vue'
+import BloggerEditProfile from './src1/public/pages/blogger/EditProfile.vue'
+import Tariffs from './src1/public/pages/seller/AppTariffs.vue'
+import Moderation from './src1/public/pages/blogger/AppModeration.vue'
+import Banned from './src1/public/pages/AppBanned.vue'
+import NotFound from './src1/public/pages/404.vue'
+import User from './src1/services/api/User.vue'
 
 const app = createApp();
 

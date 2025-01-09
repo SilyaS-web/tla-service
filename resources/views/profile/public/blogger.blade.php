@@ -34,7 +34,7 @@
         <div class="user-view__container _container">
             <div class="user-view__body">
 {{--                <a href={{url('/profile/?switch-tab=' . request()->get("tab"))}} class="user-view__back">--}}
-{{--                    <img src="{{asset('img/arrow-alt.svg')}}" alt="">--}}
+{{--                    <img src1="{{asset('img/arrow-alt.svg')}}" alt="">--}}
 {{--                    <span> Вернуться </span>--}}
 {{--                </a>--}}
                 <div class="user-view__info info-profile">

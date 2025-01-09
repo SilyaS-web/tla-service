@@ -27,13 +27,11 @@
         name: 'ConfirmPopup',
         components: { PopupModal },
         data: () => ({
-            // Parameters that change depending on the type of dialogue
             title: 'Подтвердите действие',
-            subtitle: 'После действие нельзя будет отменить', // Main text content
-            okButton: 'Подтвердить', // Text for confirm button; leave it empty because we don't know what we're using it for
-            cancelButton: 'Отмена', // text for cancel button
+            subtitle: 'После действие нельзя будет отменить',
+            okButton: 'Подтвердить',
+            cancelButton: 'Отмена',
 
-            // Private variables
             resolvePromise: undefined,
             rejectPromise: undefined,
         }),

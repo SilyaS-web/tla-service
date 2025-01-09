@@ -24,19 +24,14 @@
         </div>
     </div>
     <confirm-popup ref="confirmPopup"></confirm-popup>
-    <!-- <accept-popup ref="acceptPopup"></accept-popup> -->
 </template>
 <script>
     import BloggerItem from '../BloggerItemComponent.vue';
     import ConfirmPopup from '../ui/ConfirmationPopup.vue';
-    // import AcceptPopup from '../ui/BloggerAcceptionPopup.vue';
 
     export default{
         props: ['bloggers'],
         components: {BloggerItem, ConfirmPopup},
-        // mounted(){
-        //     this.acceptionForm(2)
-        // },
         methods:{
             async deletionConfirmation(id) {
                 const isConfirmed = await this.$refs.confirmPopup.show({

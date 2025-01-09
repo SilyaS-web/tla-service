@@ -4,7 +4,7 @@ import { createApp } from 'vue'
 import { createMemoryHistory, createRouter } from 'vue-router'
 
 // admin imports
-import AdminIndex from './src/admin/pages/index.vue'
+import AdminIndex from './src1/admin/pages/index.vue'
 
 const app = createApp();
 

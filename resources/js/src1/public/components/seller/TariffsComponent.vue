@@ -23,7 +23,7 @@
 <!--                                class="btn btn-primary">Оставить заявку</button>-->
 <!--                        </div>-->
 <!--                        <div class="tariff-card__star">-->
-<!--                            <img src="img/star-icon.svg" alt="">-->
+<!--                            <img src1="img/star-icon.svg" alt="">-->
 <!--                        </div>-->
 <!--                    </div>-->
                     <div class="tariff__col tariff-card tariff-card--start" data-id="16">

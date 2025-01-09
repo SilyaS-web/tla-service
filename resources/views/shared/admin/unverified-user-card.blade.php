@@ -4,7 +4,7 @@
         <div class="card__col">
             <div class="card__row card__header">
                 <div class="card__img" style="background-image: url('{{ $unverified_user->getImageURL() }}')">
-                    {{-- <img src="{{ $unverified_user->getImageURL() }}" alt=""> --}}
+                    {{-- <img src1="{{ $unverified_user->getImageURL() }}" alt=""> --}}
                 </div>
                 <div class="card__name">
                     <p class="card__name-name">
