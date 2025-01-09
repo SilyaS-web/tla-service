@@ -239,7 +239,7 @@ class TgService
 
     public static function sendToDevBot($error_message)
     {
-        $api_key = config('telegram.main_bot_api_key');
+        $api_key = config('telegram.dev_bot_api_key');
         $group_id = config('telegram.errors_group_id');
 
         $data = [
