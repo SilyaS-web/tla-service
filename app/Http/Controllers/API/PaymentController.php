@@ -204,7 +204,7 @@ class PaymentController extends Controller
             return redirect()->route('login')->with('success', 'Аккаунт с таким номером телефона не найден')->withInput();
         }
 
-        $redirect_url = $this->init($tariff, $validated['quantity'], true, $user->id);
+        $redirect_url = $this->init($tariff, $validated['quantity'] ?? null, true, $user->id);
         return redirect($redirect_url);
     }
 
