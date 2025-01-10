@@ -51,7 +51,7 @@ class BloggerController extends Controller
             });
         }
 
-        if (!empty($validated['name']) && !empty($validated['name'])) {
+        if (!empty($validated['name'])) {
             $bloggers = $bloggers->whereHas('user', function (Builder $query) use ($validated) {
                 $query->where('name', 'like', '%' . $validated['name'] . '%');
             });
@@ -63,41 +63,41 @@ class BloggerController extends Controller
             });
         }
 
-        if (isset($validated['subscriber_quantity_min']) && !empty($validated['subscriber_quantity_min'])) {
+        if (!empty($validated['subscriber_quantity_min'])) {
             $bloggers->whereHas('platforms', function (Builder $query) use ($validated) {
                 $query->where('subscriber_quantity', '>=', $validated['subscriber_quantity_min']);
             });
         }
 
-        if (isset($validated['subscriber_quantity_max']) && !empty($validated['subscriber_quantity_max'])) {
+        if (!empty($validated['subscriber_quantity_max'])) {
             $bloggers->whereHas('platforms', function (Builder $query) use ($validated) {
                 $query->where('subscriber_quantity', '<=', $validated['subscriber_quantity_max']);
             });
         }
 
-        if (isset($validated['themes']) && !empty($validated['themes'])) {
+        if (!empty($validated['themes'])) {
             $bloggers->whereHas('themes', function (Builder $query) use ($validated) {
                 $query->whereIn('theme_id', $validated['themes']);
             });
         }
 
-        if (isset($validated['platform']) && !empty($validated['platform'])) {
+        if (!empty($validated['platform'])) {
             $bloggers->whereHas('platforms', function (Builder $query) use ($validated) {
                 $query->where('platform_id', $validated['platform']);
             });
         }
 
-        if (isset($validated['city']) && !empty($validated['city'])) {
+        if (!empty($validated['city'])) {
             $bloggers->where('city', $validated['city']);
         }
 
-        if (isset($validated['country']) && !empty($validated['country'])) {
+        if (!empty($validated['country'])) {
             $bloggers->whereHas('country', function (Builder $query) use ($validated) {
                 $query->where('id', $validated['country']);
             });
         }
 
-        if (isset($validated['sex']) && !empty($validated['sex'])) {
+        if (!empty($validated['sex'])) {
             $bloggers->whereIn('sex', $validated['sex']);
         }
 
@@ -160,7 +160,7 @@ class BloggerController extends Controller
         foreach ($validated['platforms'] as $blogger_platform) {
             $platform = json_decode($blogger_platform, true);
 
-            if (isset($platform['link']) && !empty($platform['link'])) {
+            if (!empty($platform['link'])) {
                 BloggerPlatform::create([
                     'blogger_id' => $blogger->id,
                     'platform_id' => $platform['platform_id'],
@@ -369,16 +369,5 @@ class BloggerController extends Controller
         $blogger->save();
 
         return response()->json(isset($image_path) ? ['image' => 'storage/' . $image_path] : '')->setStatusCode(200);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Blogger $blogger
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Blogger $blogger)
-    {
-        //
     }
 }
