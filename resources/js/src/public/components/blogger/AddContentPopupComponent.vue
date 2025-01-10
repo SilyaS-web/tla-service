@@ -82,16 +82,17 @@
                 </div>
                 <div class="blogger-popup__upload-content blogger-content">
                     <div
-                        :class="'blogger-content__card ' + (getCardClass(cardsVideoContent[0]))">
+                        :class="'blogger-content__card ' + (getCardClass(cardsVideoContent[0]))"
+                        @click="uploadCardContent(cardsVideoContent[0], $event)">
                         <img src="/img/plus-icon.svg" alt="" class="blogger-content__plus">
                         <div class="blogger-content__progress-bar">
                             <div class="blogger-content__progress-progress">
                             </div>
                         </div>
                         <video src="" class="blogger-content__video" loop autoplay muted>
-                            <source src="" type="video/mp4" />
+                            <source src="{{ cardsVideoContent[0].src }}" type="video/mp4" />
                         </video>
-                        <input type="file" hidden>
+                        <input type="file" hidden @change="saveCardContent(0, $event)">
                     </div>
                     <div
                         :class="'blogger-content__card ' + (getCardClass(cardsVideoContent[0]))">
@@ -162,9 +163,12 @@
 </template>
 <script>
 import { ref } from 'vue'
+import axios from "axios";
+import User from "../../../services/api/User";
 
 export default {
     name: 'AddBloggerContentPopup',
+    components: {User},
     data(){
         return {
             title: 'Загрузите примеры контента',
@@ -218,6 +222,38 @@ export default {
             if(videoContent.progress !== null) return 'in-progress';
 
             return 'empty'
+        },
+
+        uploadCardContent(cardContent, event){
+            if(cardContent.src !== null) return;
+
+            $(event.target).closest('.blogger-content__card').find('input[type="file"]').click()
+        },
+
+        saveCardContent(cardContentIndex, event){
+            let file = $(event.target)[0],
+                formdata = new FormData,
+                user = this.User.getCurrent();
+
+            if(file && file.files[0])
+                formdata.append('vides[0]', file.files[0]);
+
+            axios({
+                method: 'post',
+                url: '/api/bloggers/' + user.blogger_id + '/content',
+                data: formdata
+            })
+            .then((data) => {
+
+            })
+            .catch((err) =>{
+                let message = err.response.data.message ? err.response.data.message : 'Не удалось изменить статус проекта, попробуйте позже.';
+
+                notify('error', {
+                    title: 'Внимание!',
+                    message: message
+                })
+            })
         },
 
         _confirm() {
