@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\BloggerContentResource;
 use App\Http\Resources\UserResource;
 use App\Models\Blogger;
 use App\Models\BloggerContent;
@@ -390,17 +391,15 @@ class BloggerController extends Controller
         $user_id = Auth::user()->id;
 
         $product_images = request()->file('videos');
-        $urls = [];
+        $blogger_content = [];
         foreach ($product_images as $key => $product_image) {
-            $urls[$key] = VideoService::save($product_image, 'profile/' . $user_id . '/content');
-
-            BloggerContent::create([
+            $blogger_content[] = BloggerContent::create([
                 'user_id' => $user_id,
-                'path' => $urls[$key],
+                'path' => VideoService::save($product_image, 'profile/' . $user_id . '/content'),
             ]);
         }
 
-        return response()->json(['urls' => $urls])->setStatusCode(200);
+        return response()->json(BloggerContentResource::collection($blogger_content))->setStatusCode(200);
     }
 
     /**
