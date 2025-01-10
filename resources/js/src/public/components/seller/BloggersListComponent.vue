@@ -1,5 +1,5 @@
 <template>
-    <div :class="'profile-blogers tab-content ' + (isBlocked ? 'not-paid' : '')" id="profile-blogers-list">
+    <div :class="'profile-blogers tab-content'" id="profile-blogers-list">
         <!-- каталог блогеров-->
         <div v-if="!isChooseProjectList" class="profile-blogers__body">
             <div class="projects-list__header">
@@ -173,24 +173,13 @@
                         v-if="projects.length > 0"
                         v-for="project in projects"
                         class="list-projects__item project-item">
-<!--                        <div class="owl-carousel project-item__carousel">-->
-<!--                            <div-->
-<!--                                v-for="file in project.project_files"-->
-<!--                                :style="'background-image: url(' + file.link + ')'"-->
-<!--                                class="project-item__img">-->
-<!--                            </div>-->
-<!--                        </div>-->
-                        <carousel
-                            :nav="false"
-                            :dots="true"
-                            :items="1"
-                            :responsive="{ 0:{ items: 1 }, 1180: { items:1 } }">
+                        <div class="owl-carousel project-item__carousel">
                             <div
                                 v-for="file in project.project_files"
                                 :style="'background-image: url(' + file.link + ')'"
                                 class="project-item__img">
                             </div>
-                        </carousel>
+                        </div>
                         <div class="project-item__content">
                             <div class="project-item__title">
                                 <span class="project-item__price">{{ project.product_price }}</span>₽
@@ -263,24 +252,24 @@
         </div>
 
         <!-- плашка об оплате тарифа-->
-        <div class="not_paid-alert">
-            <div class="not_paid-alert__body">
-                <div class="not_paid-alert__title">
-                    Каталог блогеров недоступен
-                </div>
-                <div class="not_paid-alert__text">
-                    Необходимо оплатить тариф, чтобы иметь возможность просматривать<br> каталог блогеров и начать работу с ними
-                </div>
-            </div>
-            <div class="not_paid-alert__footer">
-                <router-link :to="{ path: '/tariffs' }" class="not_paid-alert__btn btn btn-primary">Разблокировать каталог</router-link>
-            </div>
-        </div>
+<!--        <div class="not_paid-alert">-->
+<!--            <div class="not_paid-alert__body">-->
+<!--                <div class="not_paid-alert__title">-->
+<!--                    Каталог блогеров недоступен-->
+<!--                </div>-->
+<!--                <div class="not_paid-alert__text">-->
+<!--        Для просмотра каталога блогеров и начала работы с ними необходимо оплатить тариф "Безлимит". <br>Это обеспечит вам полноценный доступ к функционалу платформы.-->
+<!--
+             </div>-->
+<!--            </div>-->
+<!--            <div class="not_paid-alert__footer">-->
+<!--                <router-link :to="{ path: '/tariffs' }" class="not_paid-alert__btn btn btn-primary">Разблокировать каталог</router-link>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
     <choose-project-popup ref="chooseProjectPopup"></choose-project-popup>
 </template>
 <script>
-    import carousel from 'vue-owl-carousel/src/Carousel'
     import {ref} from "vue";
 
     import Slider from '@vueform/slider'
@@ -301,7 +290,7 @@
         props:['bloggers', 'user'],
         components:{
             ProjectsList, BloggersListItem, ProjectsListItem,
-            ChooseProjectPopup, Slider, carousel
+            ChooseProjectPopup, Slider
         },
         data(){
             return {
@@ -344,7 +333,15 @@
 
             let user = this.User.getCurrent();
 
-            this.isBlocked = !(user && (user.tariffs && user.tariffs.length > 0))
+            this.isBlocked = true;
+
+            if(user){
+                if(user.tariffs){
+                    if(user.tariffs.length > 0 && !user.tariffs.find(t => !t.can_extend)){
+                        this.isBlocked = false;
+                    }
+                }
+            }
         },
 
         updated(){

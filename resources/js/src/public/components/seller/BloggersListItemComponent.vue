@@ -76,7 +76,7 @@
                                 <span>CPM</span>
                             </div>
                             <div class="card__stats-val">
-                                <span>{{ blogger.summaryPlatform.cost_per_mille || '-' }}₽</span>
+                                <span>{{ countCPM(blogger.summaryPlatform.coverage) || '-' }}₽</span>
                             </div>
                         </div>
                     </div>
@@ -167,6 +167,15 @@ import axios from "axios";
                 else val = Math.ceil(val);
 
                 return val;
+            },
+            countCPM(cover){
+                if(!cover) return '-';
+
+                if(!this.currentProject || !this.currentProject.product_price) return '-';
+
+                let result = (this.currentProject.product_price / cover) * 1000;
+
+                return Math.round(result) === 0 ? (result).toFixed(3) : Math.round(result);
             }
         }
     }

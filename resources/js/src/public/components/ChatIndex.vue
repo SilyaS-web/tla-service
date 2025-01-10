@@ -14,7 +14,7 @@
                             </div>
                             <div class="chat__chat-items">
                                 <div
-                                    v-if="works"
+                                    v-if="works && works.length > 0"
                                     v-for="work in (chatSearchString ? works.filter(work => isWorkSatisfying(work)) : works)"
                                     :data-id="work.id"
                                     @click="chooseChat(work)"

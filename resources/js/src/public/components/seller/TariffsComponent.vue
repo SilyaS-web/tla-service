@@ -62,7 +62,13 @@
                         </div>
                         <div class="tariff-card__prices">
                             <div class="tariff-card__total" style="text-wrap:nowrap">
-                                4990 руб
+                                <div class="tariff-card__total--discount" style="text-wrap:nowrap">
+                                    -50%
+                                </div>
+                                2490 руб
+                                <div class="tariff-card__total--old" style="text-wrap:nowrap">
+                                    4990 руб
+                                </div>
                             </div>
                             <div class="tariff-card__single">
                                 неограниченное количество бартеров

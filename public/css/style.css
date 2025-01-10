@@ -2615,29 +2615,21 @@ input[type='range']::-webkit-slider-runnable-track{
     flex: 1 1 auto;
     margin-top: 15px;
 }
-.project-item .owl-carousel .owl-dot > span{
-    display: none!important;
-}
-.project-item .owl-carousel{
-    display: flex!important;
-    gap: 0 3px;
-}
-.project-item .owl-carousel .owl-dots{
-    position: absolute;
-    left:0;right:0;
-    margin:auto;
-    top:calc(100% - 10px);
-}
 @media(max-width:675px){
     .project-item .owl-carousel .owl-dots{
         top:calc(100% - 3px);
     }
 }
 .project-item__carousel{
-    display: flex;
+    /*display: flex;*/
     /* flex: 1 1 auto; */
     position: relative;
 }
+/*.project-item__carousel .owl-stage{*/
+/*    overflow:hidden;*/
+/*    display: flex;*/
+/*}*/
+
 .project-item__carousel--carousel{
     flex: 1 1 auto;
     display: block;
@@ -5254,6 +5246,16 @@ input[type='range']::-webkit-slider-runnable-track{
     font-weight: 500;
     text-decoration: line-through;
     color:rgba(0,0,0,.5)
+}
+.tariff-card__total--discount{
+    background-color: #DA3947;
+    color:#fff;
+    padding: 3px 5px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 400;
+    width: fit-content;
+    margin-bottom: 5px;
 }
 .tariff-card__single {
     font-size: 15px;

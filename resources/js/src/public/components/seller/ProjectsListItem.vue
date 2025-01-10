@@ -3,26 +3,20 @@
         @click="openMoreInfo"
         class="list-projects__item project-item" :data-id="project.id">
 
-        <carousel
-            v-if="projectImgs && projectImgs.length > 0"
-            :nav="false"
-            :dots="true"
-            :items="1"
-            :responsive="{ 0:{ items: 1 }, 1180: { items:1 } }">
-            <div
-                v-for="file in projectImgs"
-                :style="'background-image: url(' + file.link + ')'"
-                class="project-item__img">
-            </div>
-        </carousel>
-
-<!--        <div class="owl-carousel project-item__carousel">-->
+<!--        <carousel-->
+<!--            :nav="false"-->
+<!--            :dots="true"-->
+<!--            :items="1"-->
+<!--            :responsive="{ 0:{ items: 1 }, 1180: { items:1 } }">-->
 <!--            <div-->
 <!--                v-for="file in project.project_files"-->
 <!--                :style="'background-image: url(' + file.link + ')'"-->
 <!--                class="project-item__img">-->
 <!--            </div>-->
-<!--        </div>-->
+<!--        </carousel>-->
+
+        <div class="owl-carousel project-item__carousel">
+        </div>
         <div class="project-item__content">
             <div class="project-item__title">
                 <span class="project-item__price">{{ project.product_price }}</span>₽
@@ -113,14 +107,13 @@
     </div>
 </template>
 <script>
-    import carousel from 'vue-owl-carousel/src/Carousel'
+    // import carousel from 'vue-owl-carousel/src/Carousel'
 
     import Project from '../../../services/api/Project';
     import {ref} from "vue";
 
     export default {
         props: ['project'],
-        components: { carousel },
         data(){
             return{
                 projectImgs: [],
@@ -130,23 +123,52 @@
             }
         },
         mounted() {
-            this.projectImgs = this.project.project_files;
+            this.project.project_files.forEach(file => {
+                $('.project-item[data-id="' + this.project.id + '"]')
+                    .find('.project-item__carousel')
+                    .append(`<div class="project-item__img" style="background-image: url(${file.link});"></div>`)
+            })
 
-            // $('.project-item[data-id="' + this.project.id + '"]').find('.project-item__carousel').owlCarousel({
-            //     margin: 5,
-            //     nav: false,
-            //     dots: true,
-            //     responsive: {
-            //         0:{
-            //             items: 1
-            //         },
-            //         1180: {
-            //             items:1
-            //         }
-            //     }
-            // });
+            $('.project-item[data-id="' + this.project.id + '"]').find('.project-item__carousel').owlCarousel({
+                margin: 5,
+                nav: false,
+                dots: true,
+                responsive: {
+                    0:{
+                        items: 1
+                    },
+                    1180: {
+                        items:1
+                    }
+                }
+            });
+        },
+        beforeUpdate() {
         },
         updated(){
+            $('.project-item[data-id="' + this.project.id + '"]').find('.project-item__carousel').empty();
+            $('.project-item[data-id="' + this.project.id + '"]').find('.project-item__carousel').trigger('destroy.owl.carousel').removeClass('owl-loaded');
+
+            this.project.project_files.forEach(file => {
+                $('.project-item[data-id="' + this.project.id + '"]')
+                    .find('.project-item__carousel')
+                    .append(`<div class="project-item__img" style="background-image: url(${file.link});"></div>`)
+            })
+
+            $('.project-item[data-id="' + this.project.id + '"]').find('.project-item__carousel').owlCarousel({
+                margin: 5,
+                nav: false,
+                dots: true,
+                responsive: {
+                    0:{
+                        items: 1
+                    },
+                    1180: {
+                        items:1
+                    }
+                }
+            });
+
             if(this.projectInfo){
                 $('#project-item-info').find('.popup-project__carousel').owlCarousel({
                     margin: 5,
