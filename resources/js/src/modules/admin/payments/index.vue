@@ -23,7 +23,7 @@
     </div>
 </template>
 <script>
-import OrdersItem from '../OrdersItemComponent.vue'
+import OrdersItem from './PaymentCard.vue'
 
 export default{
     props: ['orders'],

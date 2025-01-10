@@ -21,7 +21,7 @@
     </div>
 </template>
 <script>
-import ProjectsItem from '/ProjectsCard'
+import ProjectsItem from './ProjectCard'
 
 export default{
     props: ['projects'],

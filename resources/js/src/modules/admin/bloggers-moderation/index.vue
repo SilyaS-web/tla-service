@@ -28,9 +28,9 @@
     <accept-popup ref="acceptPopup"></accept-popup>
 </template>
 <script>
-import BloggerItem from '/BloggerCard';
+import BloggerItem from './BloggerCard';
 import ConfirmPopup from '../../../core/components/popups/ConfirmationPopup';
-import AcceptPopup from '../../../core/components/popups/BloggerAcceptPopup';
+import AcceptPopup from '../../../core/components/popups/blogger-moderation/BloggerAcceptPopup';
 
 export default{
     props: ['bloggers'],

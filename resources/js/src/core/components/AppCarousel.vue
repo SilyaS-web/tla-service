@@ -1,9 +1,10 @@
 <template>
-    <div :class="(getWrapClassList()) + 'owl-carousel'">
+    <div :class="(getWrapClassList()) + ' owl-carousel'" ref="Carousel">
         <div
             v-for="image in itemsList"
-            :class="getItemClassList"
-            :style="'background-image:url(' + (!image.link ? '/img/placeholder.webp' : `/${image.link}`) + ')'"></div>
+            :class="(getItemClassList())"
+            :style="'background-image:url(' + (!image.link ? '/img/placeholder.webp' : `/${image.link}`) + ')'">
+        </div>
     </div>
 </template>
 <script>
@@ -11,16 +12,20 @@ export default {
     props:['itemsList', 'listClassList', 'itemsClassList', 'props'],
     mounted(){
         if(this.itemsList && this.itemsList.length > 0){
-            this.$el.querySelector(".owl-carousel").owlCarousel(this.props);
+            $('.owl-carousel').owlCarousel(this.props);
         }
     },
-    computed:{
+    methods:{
         getWrapClassList(){
             return this.listClassList.join(' ')
         },
         getItemClassList(){
+            console.log(this.itemsClassList)
             return this.itemsClassList.join(' ')
         }
+    },
+    computed:{
+
     }
 }
 </script>

@@ -58,7 +58,7 @@
     </popup-modal>
 </template>
 <script>
-import PopupModal from '../../services/AppPopup.vue';
+import PopupModal from '../AppPopup.vue';
 import Platforms from './BloggerPlatformFields.vue';
 import axios from 'axios';
 import {ref, toRaw} from 'vue';

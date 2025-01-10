@@ -26,7 +26,7 @@
     <confirm-popup ref="confirmPopup"></confirm-popup>
 </template>
 <script>
-import BloggerItem from '/BloggerCard';
+import BloggerItem from './BloggerCard';
 import ConfirmPopup from '../../../core/components/popups/ConfirmationPopup';
 
 export default{

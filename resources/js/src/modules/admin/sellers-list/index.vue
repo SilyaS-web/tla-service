@@ -25,7 +25,7 @@
     <confirm-popup ref="confirmPopup"></confirm-popup>
 </template>
 <script>
-import SellerItem from '/SellerCard'
+import SellerItem from './SellerCard'
 import ConfirmPopup from '../../../core/components/popups/ConfirmationPopup';
 
 export default{

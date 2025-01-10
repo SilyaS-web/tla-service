@@ -1,12 +1,11 @@
 require('./bootstrap');
 
 import { createApp } from 'vue'
-import { createMemoryHistory, createRouter } from 'vue-router'
 
 // admin imports
-import AdminIndex from './src1/admin/pages/index.vue'
+import AdminIndex from './src/modules/admin/index.vue'
 
-const app = createApp();
+// const app = createApp();
 
-app.component('admin-index', AdminIndex)
-app.mount('#app')
+// app.component('admin-index', AdminIndex)
+// app.mount('#app')

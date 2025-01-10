@@ -35,7 +35,7 @@
     </aside>
 </template>
 <script>
-import Tabs from '../../services/AppTabs.vue'
+import Tabs from '../../AppTabs.vue'
 
 export default{
     props:['isAdmin'],

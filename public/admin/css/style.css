@@ -293,7 +293,51 @@ label{
 .form-stat.active .form-stat__title::after{
     transform: rotate(180deg);
 }
-
+.owl-dots{
+    margin: 10px auto;
+    display: flex;
+    justify-content: center;
+}
+.owl-dots>*{
+    background-color: var(--primary)!important;
+    opacity: .6;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+}
+.owl-dots>*.active{
+    opacity: 1;
+}
+.owl-dots>*:not(:last-child){
+    margin-right: 6px;
+}
+.owl-nav{
+    position: absolute;
+    width:100%;
+    top:calc(50% - 22.5px);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.owl-nav.disabled{
+    display: none;
+}
+.owl-carousel .owl-nav button.owl-next, .owl-carousel .owl-nav button.owl-prev{
+    border-radius: 50%;
+    background-color: var(--primary);
+    font-size: 27px;
+    color:#fff;
+    width: 45px;
+    height:45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    line-height: .65;
+    opacity: .45;
+}
+.owl-carousel .owl-nav button.owl-next:hover, .owl-carousel .owl-nav button.owl-prev:hover{
+    opacity: 1;
+}
 
 .header {
     border-bottom: 1px solid rgba(0, 0, 0, .12);

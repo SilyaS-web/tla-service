@@ -4,22 +4,22 @@
         class="list-projects__item project-item" :data-id="project.id">
         <div class="project-item__carousel">
             <Carousel
-                :listClassList="['project-item__carousel--carousel', 'owl-carousel']"
+                :listClassList="['project-item__carousel--carousel']"
                 :itemsClassList="['project-item__img']"
-                :itemsList="'project-item__img'"
+                :itemsList="project.project_files"
                 :props="{
-                margin: 5,
-                nav: false,
-                dots: true,
-                responsive: {
-                    0:{
-                        items: 1
-                    },
-                    1180: {
-                        items:1
+                    margin: 5,
+                    nav: false,
+                    dots: true,
+                    responsive: {
+                        0:{
+                            items: 1
+                        },
+                        1180: {
+                            items:1
+                        }
                     }
-                }
-            }"
+                }"
             >
             </Carousel>
 <!--            <div class="project-item__carousel&#45;&#45;carousel owl-carousel">-->
@@ -68,9 +68,11 @@
 </template>
 <script>
 import axios from 'axios'
+import Carousel from '../../../core/components/AppCarousel'
 
 export default{
     props: ['project'],
+    components: { Carousel },
     mounted(){
         if(this.project){
             $(`.list-projects__item[data-id="${this.project.id}"]`).find('.project-item__carousel--carousel').owlCarousel({

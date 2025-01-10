@@ -21,7 +21,7 @@
     </popup-modal>
 </template>
 <script>
-import PopupModal from '../../services/AppPopup.vue';
+import PopupModal from './AppPopup.vue';
 
 export default {
     name: 'ConfirmPopup',
