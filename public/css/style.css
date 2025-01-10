@@ -100,6 +100,7 @@ a.btn:hover{
     border:1px solid rgba(0, 0, 0, 0);
     display: block;
     width: fit-content;
+    transition: all .2s linear;
 }
 .btn-primary{
     background-color: var(--primary);
@@ -4482,7 +4483,7 @@ input[type='range']::-webkit-slider-runnable-track{
     width:100%;
     height:100%;
     background-color: rgba(0, 0, 0, .4);
-    z-index: 1000;
+    z-index: 9999;
     overflow-y: auto;
     flex-direction: column;
     align-items: center;
@@ -4534,10 +4535,14 @@ input[type='range']::-webkit-slider-runnable-track{
 .popup__body {
     position: relative;
     background-color: #fff;
-    border-radius: 20px;
+    border-radius: 16px;
     padding:40px 30px;
     max-width: 680px;
     width: 100%;
+}
+.popup#add-content .popup__body{
+    width: calc(100% - 200px);
+    max-width:1400px;
 }
 .popup__header{
     margin-bottom: 20px;
@@ -4622,7 +4627,224 @@ input[type='range']::-webkit-slider-runnable-track{
     gap: 10px;
     margin-top: 20px;
 }
+.blogger-popup{
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+    gap: 5px;
+}
+.blogger-popup__header{
+    margin-bottom: 32px;
+}
+.blogger-popup__title{
+    font-weight: 600;
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+.blogger-popup__subtitle{
+    font-weight: 500;
+    font-size: 17px;
+}
+.blogger-content{
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.blogger-content__card{
+    border: 1px solid var(--primary);
+    border-radius: 6px;
+    padding: 15% 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 180px;
+    cursor: pointer;
+    transition: all .2s linear;
+    position: relative;
+}
+.blogger-content__card:hover{
+    background-color: rgba(0,0,0, .1);
+}
+.blogger-content__plus{
+    width: 24px;
+    height: 24px;
+    filter: invert(54%) sepia(90%) saturate(4926%) hue-rotate(259deg) brightness(92%) contrast(86%);
+    display: none;
+}
+.blogger-content__progress-bar{
+    background-color: rgba(62,66,77, .4);
+    padding: 2px;
+    width: calc(100% - 30px);
+    height: 6px;
+    display: none;
+    border-radius: 3px;
+}
+.blogger-content__progress-progress{
+    background-color: var(--primary);
+    height: 3px;
+}
+.blogger-content__video{
+    display: none;
+    object-fit: cover;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+.blogger-content__card.empty .blogger-content__plus{
+    display: block;
+}
+.blogger-content__card.in-progress .blogger-content__progress-bar{
+    display: block;
+}
+.blogger-content__card.loaded .blogger-content__video{
+    display: block;
+}
+.blogger-content__card.loaded::after{
+    content:"";
+    width: 32px;
+    height: 32px;
+    background-image: url("/img/close-icon.svg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 14px 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    right: 5px;
+    top:-5px;
+    opacity: 0;
+    transition: all .2s linear;
+    z-index: 2;
+}
+.blogger-content__card.loaded:hover::after{
+    top:10px;
+    opacity: 1;
+}
+.blogger-popup__body{
+    margin-bottom: 32px;
+}
+.blogger-comparison{
+    display: flex;
+    position: relative;
+    width: 490px;
+    border-radius: 12px;
+}
+.blogger-comparison__item{
+    position: relative;
+    width: 0;
+    transition: all .1s linear;
+    overflow: hidden;
+    height: 0;
+}
+.blogger-comparison__item img{
+    width: 490px;
+    border-radius: 12px;
+}
+.blogger-comparison__img{
+    transition: all .1s linear;
+    overflow: hidden;
+    border-radius: 12px;
+    height: 590px;
+    width: 490px;
+}
+.blogger-comparison__item-active--js{
+    width: 100%;
+    height: fit-content;
+}
+.blogger-comparison__title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color:#fff;
+    border-radius: 6px;
+    position: absolute;
+    top:12px;left:0;right:0;
+    margin: auto;
+    padding: 6px;
+    width: fit-content;
+}
+.blogger-comparison__item--bad .blogger-comparison__title{
+    background-color: #DA3947;
+}
+.blogger-comparison__item--good .blogger-comparison__title{
+    background-color: #50C878;
+}
+.blogger-comparison__more{
+    padding: 6px;
+    font-size: 14px;
+    background-color: #fff;
+    width: 490px;
+}
+.blogger-comparison__more-title{
+    font-size: 18px;
+    cursor: pointer;
+    color:var(--primary);
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+.blogger-comparison__more-text{
+    height: 0;
+    font-size: 16px;
+    font-weight: 500;
+    overflow: hidden;
+    transition: all .1s linear;
+    opacity: 0;
+}
+.blogger-comparison__item.with-more-text--js .blogger-comparison__more-text{
+    height: 120px;
+    font-size: 16px;
+    font-weight: 500;
+    opacity: 1;
+}
+.blogger-comparison__item.with-more-text--js .blogger-comparison__img{
+    height: 490px;
+}
+.blogger-comparison__switch{
+    position: absolute;
+    right:-21px;
+    top: calc(50% - 21px);
+    padding: 6px;
+    border-radius: 6px;
+    background-color: var(--primary);
+    width: 42px;
+    height: 42px;
+    cursor: pointer;
+    transition: all .1s linear;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.blogger-comparison__switch::after{
+    content:'';
+    display: block;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 28px 28px;
+    filter: brightness(0) invert(1);
+    width: 28px;
+    height: 28px;
+}
+.blogger-comparison:has(.blogger-comparison__item--bad.blogger-comparison__item-active--js) .blogger-comparison__switch{
+    background-color: #50C878;
+}
+.blogger-comparison:has(.blogger-comparison__item--bad.blogger-comparison__item-active--js) .blogger-comparison__switch::after{
+    background-image: url('/img/approved-aproved-confirm-2-svgrepo-com.svg');
+}
+.blogger-comparison:has(.blogger-comparison__item--good.blogger-comparison__item-active--js) .blogger-comparison__switch{
+    background-color: #DA3947;
+    right: unset;
+    left:-21px;
+}
+.blogger-comparison:has(.blogger-comparison__item--good.blogger-comparison__item-active--js) .blogger-comparison__switch::after{
+    background-image: url('/img/bordered-close-icon.svg');
+}
 
+.blogger-popup__body .card__col{
+    width:80%;
+}
 
 #project-item-info .popup__body{
     max-width: 975px;
@@ -4756,7 +4978,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .close-popup {
     position: absolute;
-    right:15px;top:15px;
+    right:20px;top:15px;
     cursor: pointer;
     z-index: 1;
     border-radius: 50%;
@@ -4764,8 +4986,12 @@ input[type='range']::-webkit-slider-runnable-track{
     padding: 5px;
     width: 30px; height: 30px;
     display: flex;
-    align-self: center;
+    align-items: center;
     justify-content: center;
+}
+.close-popup img{
+    width: 14px;
+    height: 14px;
 }
 .popup__form .btn{
     margin-top: 15px;
@@ -5274,6 +5500,27 @@ input[type='range']::-webkit-slider-runnable-track{
         font-size: 20px;
     }
 }
+@media(max-width:1175px){
+    .blogger-content__card{
+        width: 120px;
+    }
+    .blogger-comparison{
+        width: 414px;
+    }
+    .blogger-comparison__img{
+        height: 543px;
+        width: 414px;
+    }
+    .blogger-comparison__item img{
+        width: 414px;
+    }
+    .blogger-comparison__item.with-more-text--js .blogger-comparison__img{
+        height: 414px;
+    }
+    .blogger-comparison__more{
+        width: 414px;
+    }
+}
 @media(max-width:1150px){
     .tab-content__notifs-item{
         width: calc(100% / 3 - 20px);
@@ -5388,6 +5635,50 @@ input[type='range']::-webkit-slider-runnable-track{
 
     .partners__item{
         width: 100%;
+    }
+
+    .blogger-popup__right{
+        display: none;
+    }
+    .blogger-content__card{
+        width: 160px;
+    }
+    .blogger-comparison{
+        width: 100%;
+    }
+    .blogger-comparison__img{
+        height: fit-content;
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    .blogger-comparison__item img{
+        width: 100%;
+    }
+    .blogger-comparison__item{
+        height: fit-content;
+        width: calc(50% - 10px);
+    }
+    .blogger-comparison__item.with-more-text--js .blogger-comparison__img{
+        height: fit-content;
+    }
+    .blogger-comparison__more{
+        width: 100%;
+    }
+    .blogger-comparison--tablet{
+        display: flex;
+        width: 100%;
+        gap: 20px;
+        margin-bottom: 32px;
+    }
+    .blogger-comparison__more-text{
+        height: 100%;
+        opacity: 1;
+    }
+    .blogger-comparison__more-title{
+        display: none;
+    }
+    .blogger-comparison__switch{
+        display: none;
     }
 }
 @media(max-width:960px){
@@ -5527,6 +5818,11 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .tab-content__form-row>*{
         width: calc(100% / 2 - 25px);
+    }
+}
+@media(max-width:814px){
+    .popup#add-content .popup__body{
+        width: 100%;
     }
 }
 @media(max-width:880px){
@@ -5915,6 +6211,9 @@ input[type='range']::-webkit-slider-runnable-track{
     .nav-menu__item.active::before{
         opacity: 1;
     }
+    .popup{
+        padding-bottom: 60px;
+    }
     .partners-link{
         margin-top: 0!important;
     }
@@ -6082,6 +6381,14 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .dashboard__item--cover .dashboard__placeholder{
         display: none;
+    }
+}
+@media(max-width:590px){
+    .blogger-comparison__item{
+        width: 100%;
+    }
+    .blogger-comparison--tablet{
+        flex-direction: column;
     }
 }
 @media(max-width:545px){
@@ -6357,6 +6664,11 @@ input[type='range']::-webkit-slider-runnable-track{
         padding-top: 180px;
         margin-bottom: 0;
     }
+
+    .blogger-content__card{
+        width: calc(100% / 3 - 8px);
+        min-width: 120px;
+    }
 }
 @media(max-width:447px){
     .quest{
@@ -6470,6 +6782,12 @@ input[type='range']::-webkit-slider-runnable-track{
 
     .nav-menu__item{
         font-size: 9px;
+    }
+
+    .blogger-content__card {
+        width: calc(100% / 3 - 8px);
+        min-width: 108px;
+        padding: 26% 12px;
     }
 }
 @media(max-width:330px){
