@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Resources\UserResource;
 use App\Models\Blogger;
+use App\Models\BloggerContent;
 use App\Models\BloggerPlatform;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BloggerResource;
@@ -11,12 +12,16 @@ use App\Models\BloggerTheme;
 use App\Models\ProjectFile;
 use App\Services\ImageService;
 use App\Services\TgService;
+use App\Services\VideoService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
+use const http\Client\Curl\AUTH_ANY;
 
 class BloggerController extends Controller
 {
@@ -369,5 +374,59 @@ class BloggerController extends Controller
         $blogger->save();
 
         return response()->json(isset($image_path) ? ['image' => 'storage/' . $image_path] : '')->setStatusCode(200);
+    }
+
+    public function setContent(): JsonResponse
+    {
+        $validator = Validator::make(request()->all(), [
+            'videos' => 'array|required',
+            'videos.*' => 'mimes:mpeg,ogg,mp4,webm,3gp,mov,flv,avi,wmv,ts|max:100040|required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors())->setStatusCode(400);
+        }
+
+        $user_id = Auth::user()->id;
+
+        $product_images = request()->file('videos');
+        $urls = [];
+        foreach ($product_images as $key => $product_image) {
+            $urls[$key] = VideoService::save($product_image, 'profile/' . $user_id . '/content');
+
+            BloggerContent::create([
+                'user_id' => $user_id,
+                'path' => $urls[$key],
+            ]);
+        }
+
+        return response()->json(['urls' => $urls])->setStatusCode(200);
+    }
+
+    /**
+     * @throws ValidationException
+     */
+    public function deleteContent(): JsonResponse
+    {
+        $validator = Validator::make(request()->all(), [
+            'videos' => 'array|required',
+            'videos.*' => 'numeric|required|exists:blogger_contents,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors())->setStatusCode(400);
+        }
+
+        $validated = $validator->validated();
+
+        foreach ($validated['videos'] as $video_id) {
+            $content = BloggerContent::find($video_id);
+            if (Storage::exists('public/' . $content->path)) {
+                Storage::delete('public/' . $content->path);
+            }
+            $content->delete();
+        }
+
+        return response()->json()->setStatusCode(200);
     }
 }
