@@ -22,6 +22,11 @@
                         </div>
                     </div>
                     <div class="tab-content__form tab-content__form--accent" style="flex-direction:column;">
+                        <label for="" class="tab-content__form--title" style="text-align: center">Управление контентом</label>
+                        <button
+                            class="btn btn-primary" style="width: fit-content">Перейти к управлению контентом</button>
+                    </div>
+                    <div class="tab-content__form tab-content__form--accent" style="flex-direction:column;">
                         <label for="" class="tab-content__form--title">Личные данные</label>
                         <div class="tab-content__form-col">
                             <div class="form-group">

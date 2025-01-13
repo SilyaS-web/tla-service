@@ -4630,7 +4630,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .blogger-popup__title{
     font-weight: 600;
-    font-size: 24px;
+    font-size: 21px;
     margin-bottom: 12px;
 }
 .blogger-popup__subtitle{
@@ -4645,11 +4645,11 @@ input[type='range']::-webkit-slider-runnable-track{
 .blogger-content__card{
     border: 1px solid var(--primary);
     border-radius: 6px;
-    padding: 15% 12px;
+    padding: 20% 12px;
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 180px;
+    width: 120px;
     cursor: pointer;
     transition: all .2s linear;
     position: relative;
@@ -4662,6 +4662,7 @@ input[type='range']::-webkit-slider-runnable-track{
     height: 24px;
     filter: invert(54%) sepia(90%) saturate(4926%) hue-rotate(259deg) brightness(92%) contrast(86%);
     display: none;
+    position: absolute;
 }
 .blogger-content__progress-bar{
     background-color: rgba(62,66,77, .4);
@@ -4692,15 +4693,10 @@ input[type='range']::-webkit-slider-runnable-track{
 .blogger-content__card.loaded .blogger-content__video{
     display: block;
 }
-.blogger-content__card.loaded::after{
-    content:"";
-    width: 32px;
-    height: 32px;
-    background-image: url("/img/close-icon.svg");
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 14px 14px;
-    display: flex;
+.blogger-content__video-remove{
+    display: none;
+    width: 24px;
+    height: 24px;
     justify-content: center;
     align-items: center;
     position: absolute;
@@ -4709,43 +4705,85 @@ input[type='range']::-webkit-slider-runnable-track{
     opacity: 0;
     transition: all .2s linear;
     z-index: 2;
+    background-color: #DA3947;
+    border-radius: 3px;
 }
-.blogger-content__card.loaded:hover::after{
+.blogger-content__video-remove img{
+    filter: brightness(0) invert(1);
+    width: 12px;
+    height: 12px;
+}
+.blogger-content__card.loaded:hover .blogger-content__video-remove{
     top:10px;
     opacity: 1;
 }
+.blogger-content__card.loaded .blogger-content__video-remove{
+    display: flex;
+}
 .blogger-popup__body{
-    margin-bottom: 32px;
+    margin-bottom: 40px;
 }
 .blogger-comparison{
     display: flex;
     position: relative;
-    width: 490px;
     border-radius: 12px;
+    width: 678px;
+    gap: 20px;
 }
 .blogger-comparison--tablet{
-    display:none;
+    display: none;
 }
 .blogger-comparison__item{
     position: relative;
-    width: 0;
     transition: all .1s linear;
     overflow: hidden;
-    height: 0;
+    width: calc(50% - 10px);
+    height: 100%;
 }
 .blogger-comparison__item img{
-    width: 490px;
     border-radius: 12px;
 }
 .blogger-comparison__img{
-    transition: all .1s linear;
+    transition: all .2s linear;
     overflow: hidden;
     border-radius: 12px;
-    height: 590px;
-    width: 490px;
 }
-.blogger-comparison__item-active--js{
+.blogger-comparison__img video{
+    object-fit: cover;
     width: 100%;
+    height: 100%;
+    border-radius: 12px;
+}
+.blogger-comparison__more{
+    padding: 6px;
+    font-size: 14px;
+    background-color: #fff;
+}
+.blogger-comparison__more-title{
+    font-size: 18px;
+    cursor: pointer;
+    color:var(--primary);
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+.blogger-comparison__more-text{
+    height: 0;
+    font-size: 16px;
+    font-weight: 500;
+    overflow: hidden;
+    transition: opacity,height .2s linear;
+    opacity: 0;
+    position: absolute;
+}
+.blogger-comparison__item.with-more-text--js .blogger-comparison__more-text{
+    height: 200px;
+    opacity: 1;
+    position: relative;
+}
+/*.blogger-comparison__item.with-more-text--js .blogger-comparison__img{*/
+/*    height: 394px;*/
+/*}*/
+.blogger-comparison__item-active--js{
     height: fit-content;
 }
 .blogger-comparison__title{
@@ -4766,75 +4804,6 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .blogger-comparison__item--good .blogger-comparison__title{
     background-color: #50C878;
-}
-.blogger-comparison__more{
-    padding: 6px;
-    font-size: 14px;
-    background-color: #fff;
-    width: 490px;
-}
-.blogger-comparison__more-title{
-    font-size: 18px;
-    cursor: pointer;
-    color:var(--primary);
-    margin-top: 12px;
-    margin-bottom: 8px;
-}
-.blogger-comparison__more-text{
-    height: 0;
-    font-size: 16px;
-    font-weight: 500;
-    overflow: hidden;
-    transition: all .1s linear;
-    opacity: 0;
-}
-.blogger-comparison__item.with-more-text--js .blogger-comparison__more-text{
-    height: 120px;
-    font-size: 16px;
-    font-weight: 500;
-    opacity: 1;
-}
-.blogger-comparison__item.with-more-text--js .blogger-comparison__img{
-    height: 490px;
-}
-.blogger-comparison__switch{
-    position: absolute;
-    right:-21px;
-    top: calc(50% - 21px);
-    padding: 6px;
-    border-radius: 6px;
-    background-color: var(--primary);
-    width: 42px;
-    height: 42px;
-    cursor: pointer;
-    transition: all .1s linear;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.blogger-comparison__switch::after{
-    content:'';
-    display: block;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 28px 28px;
-    filter: brightness(0) invert(1);
-    width: 28px;
-    height: 28px;
-}
-.blogger-comparison:has(.blogger-comparison__item--bad.blogger-comparison__item-active--js) .blogger-comparison__switch{
-    background-color: #50C878;
-}
-.blogger-comparison:has(.blogger-comparison__item--bad.blogger-comparison__item-active--js) .blogger-comparison__switch::after{
-    background-image: url('/img/approved-aproved-confirm-2-svgrepo-com.svg');
-}
-.blogger-comparison:has(.blogger-comparison__item--good.blogger-comparison__item-active--js) .blogger-comparison__switch{
-    background-color: #DA3947;
-    right: unset;
-    left:-21px;
-}
-.blogger-comparison:has(.blogger-comparison__item--good.blogger-comparison__item-active--js) .blogger-comparison__switch::after{
-    background-image: url('/img/bordered-close-icon.svg');
 }
 
 .blogger-popup__body .card__col{
@@ -5420,6 +5389,10 @@ input[type='range']::-webkit-slider-runnable-track{
     .partners__item-promo{
         font-size: 15px;
     }
+
+    .blogger-comparison{
+        width: 541px;
+    }
 }
 @media(max-width:1280px){
     .projects-list__filter{
@@ -5506,24 +5479,18 @@ input[type='range']::-webkit-slider-runnable-track{
     }
 }
 @media(max-width:1175px){
-    .blogger-content__card{
-        width: 120px;
-    }
     .blogger-comparison{
-        width: 414px;
+        display:none
     }
-    .blogger-comparison__img{
-        height: 543px;
-        width: 414px;
+    .blogger-comparison--tablet{
+        display: flex;
+        width: 100%;
     }
-    .blogger-comparison__item img{
-        width: 414px;
+    .blogger-content__card{
+        width: 175px;
     }
-    .blogger-comparison__item.with-more-text--js .blogger-comparison__img{
-        height: 414px;
-    }
-    .blogger-comparison__more{
-        width: 414px;
+    .blogger-comparison__item.with-more-text--js .blogger-comparison__more-text{
+        height: 100%;
     }
 }
 @media(max-width:1150px){
@@ -5642,49 +5609,7 @@ input[type='range']::-webkit-slider-runnable-track{
         width: 100%;
     }
 
-    .blogger-popup__right{
-        display: none;
-    }
-    .blogger-content__card{
-        width: 160px;
-    }
-    .blogger-comparison{
-        width: 100%;
-    }
-    .blogger-comparison__img{
-        height: fit-content;
-        width: 100%;
-        margin-bottom: 20px;
-    }
-    .blogger-comparison__item img{
-        width: 100%;
-    }
-    .blogger-comparison__item{
-        height: fit-content;
-        width: calc(50% - 10px);
-    }
-    .blogger-comparison__item.with-more-text--js .blogger-comparison__img{
-        height: fit-content;
-    }
-    .blogger-comparison__more{
-        width: 100%;
-    }
-    .blogger-comparison--tablet{
-        display: flex;
-        width: 100%;
-        gap: 20px;
-        margin-bottom: 32px;
-    }
-    .blogger-comparison__more-text{
-        height: 100%;
-        opacity: 1;
-    }
-    .blogger-comparison__more-title{
-        display: none;
-    }
-    .blogger-comparison__switch{
-        display: none;
-    }
+
 }
 @media(max-width:960px){
     .profile-tabs__content{
@@ -6389,12 +6314,21 @@ input[type='range']::-webkit-slider-runnable-track{
     }
 }
 @media(max-width:590px){
+    .blogger-comparison{
+        gap: 10px;
+    }
+    .blogger-comparison__more-title{
+        font-size: 16px;
+    }
+    .blogger-comparison__more-text{
+        font-size: 14px;
+    }
     .blogger-comparison__item{
-        width: 100%;
+        width: calc(50% - 5px);
     }
-    .blogger-comparison--tablet{
-        flex-direction: column;
-    }
+    /*.blogger-comparison__item.with-more-text--js .blogger-comparison__img{*/
+    /*    height: 397.4px;*/
+    /*}*/
 }
 @media(max-width:545px){
     .title{
@@ -6487,6 +6421,9 @@ input[type='range']::-webkit-slider-runnable-track{
     }
 }
 @media(max-width:475px){
+    .popup__body{
+        padding: 30px 20px;
+    }
     .title{
         font-size: 24px;
     }
@@ -6674,6 +6611,21 @@ input[type='range']::-webkit-slider-runnable-track{
         width: calc(100% / 3 - 8px);
         min-width: 120px;
     }
+
+
+    .blogger-comparison__title{
+        font-size: 12px;
+    }
+    .blogger-comparison__more-title{
+        font-size: 14px;
+        margin-top: 0;
+    }
+    .blogger-comparison__more-text{
+        font-size: 12px;
+    }
+    .blogger-comparison__item.with-more-text--js .blogger-comparison__more-text{
+        height: 225px;
+    }
 }
 @media(max-width:447px){
     .quest{
@@ -6729,6 +6681,21 @@ input[type='range']::-webkit-slider-runnable-track{
         left: 0;
         right: 0;
         margin: 0 auto;
+    }
+}
+@media(max-width:440px){
+    .blogger-comparison--tablet{
+        flex-direction: column;
+        gap: 20px;
+    }
+    .blogger-comparison__item{
+        width: 100%;
+    }
+    .blogger-comparison__img{
+        height: 100% !important;
+    }
+    .blogger-comparison__item.with-more-text--js .blogger-comparison__more-text{
+        height: 100%;
     }
 }
 @media(max-width:400px){
@@ -6812,5 +6779,12 @@ input[type='range']::-webkit-slider-runnable-track{
     .nav-menu__item::before{
         height: 20px;
         max-width: 20px;
+    }
+
+    .blogger-popup__title{
+        font-size: 18px;
+    }
+    .blogger-popup__subtitle{
+        font-size: 15px;
     }
 }

@@ -12,31 +12,34 @@
             <div class="blogger-popup__comparison blogger-comparison blogger-comparison--tablet">
                 <div
                     :class="'blogger-comparison__item blogger-comparison__item--bad ' +
-                        (currentExample === 'blogger-comparison__item--bad' ? 'blogger-comparison__item-active--js' : '') +
                             (moreTextVisibilitiesArr['bad'] ? ' with-more-text--js' : '')">
                     <div class="blogger-comparison__img">
-                        <img src="/img/project-view/6.webp" alt="">
+                        <video src="/img/showreel1.mp4" loop autoplay muted>
+                        </video>
                     </div>
                     <div class="blogger-comparison__title">
                         Плохое оформление
                     </div>
                     <div class="blogger-comparison__more">
                         <div
-                            @click="toggleMoreText('bad')"
+                            @click="toggleMoreText('bad', $event)"
                             class="blogger-comparison__more-title">
                             {{ moreTextTitlesArr['bad'] }}
                         </div>
                         <div class="blogger-comparison__more-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, aut autem beatae consequatur cumque dolorum esse et ex excepturi exercitationem explicabo laudantium perferendis quo quod recusandae rerum suscipit veniam voluptates.
+                            1. Загружены случайные видео, не отражающие ваш стиль контента.<br>
+                            2. Размытая картинка, плохое освещение, звук с шумами.<br>
+                            3. Блогер отсутствует в кадре, голос неразборчивый или отсутствует.<br>
+                            4. Товар почти не показан или взаимодействие с ним поверхностное.<br>
                         </div>
                     </div>
                 </div>
                 <div
-                    :class="'blogger-comparison__item blogger-comparison__item--good' +
-                        (currentExample === 'blogger-comparison__item--good' ? ' blogger-comparison__item-active--js' : '') +
-                            (moreTextVisibilitiesArr['good'] ? ' with-more-text--js' : '')">
+                    :class="'blogger-comparison__item blogger-comparison__item--good ' +
+                        (moreTextVisibilitiesArr['good'] ? ' with-more-text--js' : '')">
                     <div class="blogger-comparison__img">
-                        <img src="/img/project-view/6.webp" alt="">
+                        <video src="/img/showreel2.mp4" loop autoplay muted>
+                        </video>
                     </div>
                     <div class="blogger-comparison__title">
                         Хорошее оформление
@@ -48,13 +51,13 @@
                             {{ moreTextTitlesArr['good'] }}
                         </div>
                         <div class="blogger-comparison__more-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, aut autem beatae consequatur cumque dolorum esse et ex excepturi exercitationem explicabo laudantium perferendis quo quod recusandae rerum suscipit veniam voluptates.
+                            1. Выберите свои лучшие работы<br>
+                            2. Видео четкое, звук чистый<br>
+                            3. Вы в кадре, или слышно ваш закадровый голос<br>
+                            4. Презентуете или взаимодействуете с товаром<br>
+                            5. Каждое из трех загруженных видео разной подачи (юмор, обзор, рекомендация, нативный формат, или опыт использования до/после)
                         </div>
                     </div>
-                </div>
-                <div
-                    @click="switchExample"
-                    class="blogger-comparison__switch">
                 </div>
             </div>
             <div class="blogger-popup__body">
@@ -90,16 +93,44 @@
                             </div>
                         </div>
                         <video src="" class="blogger-content__video" loop autoplay muted>
-                            <source src="{{ cardsVideoContent[0].src }}" type="video/mp4" />
+                            <source src="" type="video/mp4" />
                         </video>
+                        <div class="blogger-content__video-remove" @click="removeCardContent(cardsVideoContent[0], 0, $event)">
+                            <img src="/img/close-icon.svg" alt="">
+                        </div>
                         <input type="file" hidden @change="saveCardContent(0, $event)">
                     </div>
                     <div
-                        :class="'blogger-content__card ' + (getCardClass(cardsVideoContent[0]))">
+                        :class="'blogger-content__card ' + (getCardClass(cardsVideoContent[1]))"
+                        @click="uploadCardContent(cardsVideoContent[1], $event)">
                         <img src="/img/plus-icon.svg" alt="" class="blogger-content__plus">
+                        <div class="blogger-content__progress-bar">
+                            <div class="blogger-content__progress-progress">
+                            </div>
+                        </div>
+                        <video src="" class="blogger-content__video" loop autoplay muted>
+                            <source src="" type="video/mp4" />
+                        </video>
+                        <div class="blogger-content__video-remove" @click="removeCardContent(cardsVideoContent[1], 1, $event)">
+                            <img src="/img/close-icon.svg" alt="">
+                        </div>
+                        <input type="file" hidden @change="saveCardContent(1, $event)">
                     </div>
-                    <div :class="'blogger-content__card ' + (getCardClass(cardsVideoContent[0]))">
+                    <div
+                        :class="'blogger-content__card ' + (getCardClass(cardsVideoContent[2]))"
+                        @click="uploadCardContent(cardsVideoContent[2], $event)">
                         <img src="/img/plus-icon.svg" alt="" class="blogger-content__plus">
+                        <div class="blogger-content__progress-bar">
+                            <div class="blogger-content__progress-progress">
+                            </div>
+                        </div>
+                        <video src="" class="blogger-content__video" loop autoplay muted>
+                            <source src="" type="video/mp4" />
+                        </video>
+                        <div class="blogger-content__video-remove" @click="removeCardContent(cardsVideoContent[2], 2, $event)">
+                            <img src="/img/close-icon.svg" alt="">
+                        </div>
+                        <input type="file" hidden @change="saveCardContent(2, $event)">
                     </div>
                 </div>
             </div>
@@ -113,31 +144,34 @@
             <div class="blogger-popup__comparison blogger-comparison">
                 <div
                     :class="'blogger-comparison__item blogger-comparison__item--bad ' +
-                        (currentExample === 'blogger-comparison__item--bad' ? 'blogger-comparison__item-active--js' : '') +
                             (moreTextVisibilitiesArr['bad'] ? ' with-more-text--js' : '')">
                     <div class="blogger-comparison__img">
-                        <img src="/img/project-view/6.webp" alt="">
+                        <video src="/img/showreel1.mp4" loop autoplay muted>
+                        </video>
                     </div>
                     <div class="blogger-comparison__title">
                         Плохое оформление
                     </div>
                     <div class="blogger-comparison__more">
                         <div
-                            @click="toggleMoreText('bad')"
+                            @click="toggleMoreText('bad', $event)"
                             class="blogger-comparison__more-title">
                             {{ moreTextTitlesArr['bad'] }}
                         </div>
                         <div class="blogger-comparison__more-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, aut autem beatae consequatur cumque dolorum esse et ex excepturi exercitationem explicabo laudantium perferendis quo quod recusandae rerum suscipit veniam voluptates.
+                            1. Загружены случайные видео, не отражающие ваш стиль контента.<br>
+                            2. Размытая картинка, плохое освещение, звук с шумами.<br>
+                            3. Блогер отсутствует в кадре, голос неразборчивый или отсутствует.<br>
+                            4. Товар почти не показан или взаимодействие с ним поверхностное.<br>
                         </div>
                     </div>
                 </div>
                 <div
-                    :class="'blogger-comparison__item blogger-comparison__item--good' +
-                        (currentExample === 'blogger-comparison__item--good' ? ' blogger-comparison__item-active--js' : '') +
-                            (moreTextVisibilitiesArr['good'] ? ' with-more-text--js' : '')">
+                    :class="'blogger-comparison__item blogger-comparison__item--good ' +
+                        (moreTextVisibilitiesArr['good'] ? ' with-more-text--js' : '')">
                     <div class="blogger-comparison__img">
-                        <img src="/img/project-view/6.webp" alt="">
+                        <video src="/img/showreel2.mp4" loop autoplay muted>
+                        </video>
                     </div>
                     <div class="blogger-comparison__title">
                         Хорошее оформление
@@ -149,13 +183,13 @@
                             {{ moreTextTitlesArr['good'] }}
                         </div>
                         <div class="blogger-comparison__more-text">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur, aut autem beatae consequatur cumque dolorum esse et ex excepturi exercitationem explicabo laudantium perferendis quo quod recusandae rerum suscipit veniam voluptates.
+                            1. Выберите свои лучшие работы<br>
+                            2. Видео четкое, звук чистый<br>
+                            3. Вы в кадре, или слышно ваш закадровый голос<br>
+                            4. Презентуете или взаимодействуете с товаром<br>
+                            5. Каждое из трех загруженных видео разной подачи (юмор, обзор, рекомендация, нативный формат, или опыт использования до/после)
                         </div>
                     </div>
-                </div>
-                <div
-                    @click="switchExample"
-                    class="blogger-comparison__switch">
                 </div>
             </div>
         </div>
@@ -168,34 +202,34 @@ import User from "../../../services/api/User";
 
 export default {
     name: 'AddBloggerContentPopup',
-    components: {User},
     data(){
         return {
             title: 'Загрузите примеры контента',
             subtitle: 'Наше дело не так однозначно, как может показаться: экономическая повестка сегодняшнего дня однозначно определяет',
 
-            currentExample: ref('blogger-comparison__item--bad'),
-
             moreTextVisibilitiesArr: ref({
                 'good': false,
-                'bad': true
+                'bad': false
             }),
 
             moreTextTitlesArr: ref({
                 'good': 'Посмотреть подробнее',
-                'bad': 'Скрыть'
+                'bad': 'Посмотреть подробнее'
             }),
 
             cardsVideoContent: ref({
                 0: {
+                    'id': null,
                     'src': null,
                     'progress': null
                 },
                 1: {
+                    'id': null,
                     'src': null,
                     'progress': null
                 },
                 2: {
+                    'id': null,
                     'src': null,
                     'progress': null
                 },
@@ -203,17 +237,26 @@ export default {
 
             resolvePromise: undefined,
             rejectPromise: undefined,
+
+            User
         }
     },
     methods: {
-        switchExample(){
-            if(this.currentExample === 'blogger-comparison__item--bad') this.currentExample = 'blogger-comparison__item--good';
-            else this.currentExample = 'blogger-comparison__item--bad'
-        },
-
-        toggleMoreText(key){
+        toggleMoreText(key, event){
             this.moreTextVisibilitiesArr[key] = !this.moreTextVisibilitiesArr[key]
             this.moreTextTitlesArr[key] = (this.moreTextTitlesArr[key] === 'Скрыть' ? 'Посмотреть подробнее' : 'Скрыть')
+
+            let wrap = $(event.target).closest('.blogger-comparison__item'),
+                text = wrap.find('.blogger-comparison__more-text'),
+                img = wrap.find('.blogger-comparison__img');
+
+            if(this.moreTextVisibilitiesArr[key]){
+                img.css('height', `${img.height() / 2}px`)
+            }
+            else{
+                img.css('height', `${img.height() * 2}px`)
+            }
+
         },
 
         getCardClass(videoContent){
@@ -236,18 +279,58 @@ export default {
                 user = this.User.getCurrent();
 
             if(file && file.files[0])
-                formdata.append('vides[0]', file.files[0]);
+                formdata.append('videos[0]', file.files[0]);
 
             axios({
                 method: 'post',
                 url: '/api/bloggers/' + user.blogger_id + '/content',
                 data: formdata
             })
-            .then((data) => {
+            .then((result) => {
+                this.cardsVideoContent[cardContentIndex].src = result.data[0].path
+                this.cardsVideoContent[cardContentIndex].id = result.data[0].id
 
+                $(event.target).closest('.blogger-content__card').find('video')[0].src = 'http://localhost/' + result.data[0].path;
+                $(event.target).closest('.blogger-content__card').find('video')[0].load();
             })
             .catch((err) =>{
-                let message = err.response.data.message ? err.response.data.message : 'Не удалось изменить статус проекта, попробуйте позже.';
+                let message = (err.response && err.response.data && err.response.data.message) ?
+                    err.response.data.message :
+                    'Невозможно загрузить контент, попробуйте позже в личном кабинете';
+
+                notify('error', {
+                    title: 'Внимание!',
+                    message: message
+                })
+            })
+        },
+
+        removeCardContent(cardContent, cardContentIndex, event){
+            let videoId = this.cardsVideoContent[cardContentIndex].id,
+                user = this.User.getCurrent();
+
+            if(!videoId) return
+
+            axios({
+                method: 'delete',
+                url: '/api/bloggers/' + user.blogger_id + '/content',
+                data: {
+                    videos: [videoId]
+                }
+            })
+            .then((result) => {
+                this.cardsVideoContent[cardContentIndex] = {
+                    'id': null,
+                    'src': null,
+                    'progress': null
+                };
+
+                $(event.target).closest('.blogger-content__card').find('input[type="file"]').val('');
+            })
+            .catch((err) =>{
+                let message = (err.response && err.response.data && err.response.data.message) ?
+                    err.response.data.message :
+                    'Невозможно почистить контент, попробуйте позже в личном кабинете';
 
                 notify('error', {
                     title: 'Внимание!',
