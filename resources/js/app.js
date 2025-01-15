@@ -7,7 +7,7 @@ import { createMemoryHistory, createRouter } from 'vue-router'
 import AdminIndex from './src/modules/admin/index.vue'
 
 // user imports
-import Auth from './src1/auth/pages/AppAuth.vue'
+import Auth from './src/modules/auth/login/index.vue'
 import Register from './src1/auth/pages/AppRegister.vue'
 import BloggerRegister from './src1/auth/pages/BloggerData.vue'
 import Profile from './src1/public/pages/index.vue'

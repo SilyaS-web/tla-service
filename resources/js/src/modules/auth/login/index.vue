@@ -1,0 +1,168 @@
+<template>
+    <div class="auth__container _container">
+        <div class="auth__body">
+            <div class="auth__title title">
+                Авторизуйтесь
+            </div>
+            <div class="form auth__form">
+                <Input
+                    v-model="user.phone"
+                    :label="'Номер телефона'"
+                    :inputType="'phone'"
+                    :inputPlaceholder="'+79000000000'"
+                    :inputClassList="['input--phone']"
+                    :inputID="'phone'"
+                    :error="(errors && errors.phone ? errors.phone : '')"
+                ></Input>
+                <Input
+                    v-model="user.password"
+                    :label="'Пароль'"
+                    :inputType="'password'"
+                    :inputPlaceholder="'Введите ваш пароль'"
+                    :inputClassList="['input--password']"
+                    :inputID="'pass'"
+                    :error="(errors && errors.password ? errors.password : '')"
+                ></Input>
+                <p class="form-addit">
+                    <a
+                        @click="resetPasswordPopup = true"
+                        href="#" id="change-password-btn">Восстановить пароль</a>
+                </p>
+                <div class="form-btns auth__form-btns">
+                    <button class="btn btn-primary" type="submit" v-on:click="login">
+                        Войти
+                    </button>
+                    <a href="https://t.me/adswap_bot" class="btn btn-white">
+                        Нет аккаунта? Зарегистрируйтесь
+                    </a>
+                </div>
+                <p class="form-addit">Авторизуясь, вы даёте на это согласие и принимаете условия <a href="https://adswap.ru/privacy" target="_blank">Политики конфиденциальности.</a> </p>
+            </div>
+        </div>
+    </div>
+    <div
+        v-if="resetPasswordPopup"
+        class="popup" id="change-password">
+        <div class="popup__container _container">
+            <div class="popup__body">
+                <div class="popup__header">
+                    <div class="popup__title title">
+                        Введите номер
+                    </div>
+                    <div class="popup__subtitle">
+                        Отправьте нам свой номер и наш телеграм-бот пришлёт вам новый пароль, который потом можно поменять в настройках профиля
+                    </div>
+                </div>
+                <div class="popup__form">
+                    <div class="form-group">
+                        <label for="phone">Ваш номер</label>
+                        <input
+                            v-model="resetPasswordData.phone"
+                            id="phone" name="phone" type="phone" class="input">
+                    </div>
+                    <p class="form-addit">
+                        Оставляя свои данные, вы даёте на это согласие <br>
+                        и принимаете условия <a href="https://adswap.ru/privacy">Политики конфиденциальности.</a>
+                    </p>
+                    <button
+                        @click="resetPassword"
+                        class="btn btn-primary">
+                        Отправить
+                    </button>
+                </div>
+                <div
+                    @click="resetPasswordPopup=false"
+                    class="close-popup">
+                    <img src="img/close-icon.svg" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+import Input from '../../../core/components/form/InputBlockComponent'
+import User from '../../../core/services/api/User.vue'
+
+import {ref} from 'vue'
+
+export default{
+    components:{
+        Input
+    },
+    data(){
+        return {
+            user: ref({
+                phone: null,
+                password: null
+            }),
+            errors: ref({
+                phone: null,
+                password: null
+            }),
+            resetPasswordData: ref({
+                phone: null
+            }),
+            resetPasswordPopup: false,
+            User,
+        }
+    },
+    created(){
+    },
+    methods:{
+        login(){
+            this.User.auth(this.user).then(
+                data => {
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
+
+                    if(data.role == 'admin'){
+                        window.location.href = '/profile/admin'
+                    }
+
+                    if(data.role == 'blogger'){
+                        if(data.status == 0){
+                            if(!data.blogger_id){
+                                this.$router.replace('/blogger/registration')
+                                return
+                            }
+
+                            this.$router.replace('/moderation')
+                            return
+                        }
+                    }
+
+                    this.$router.replace('/profile')
+                },
+                err => {
+                    this.errors = err.response.data.errors
+                }
+            )
+        },
+        resetPassword(){
+            if(!this.resetPasswordData.phone){
+                notify('error', {
+                    title: 'Ошибка!',
+                    message: 'Введите номер'
+                });
+            }
+            axios({
+                method: 'get',
+                url:'/api/users/reset-password?phone=' + this.resetPasswordData.phone,
+            })
+                .then(data => {
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Зайдите в ваш телеграм и введите новый пароль в форму авторизации'
+                    });
+
+                    this.resetPasswordData.phone = null
+                })
+                .catch(data=>{
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'Невозможно поменять пароль, попробуйте позже или обратитесь в поддержку'
+                    });
+                })
+        }
+    }
+}
+</script>
