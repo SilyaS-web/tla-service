@@ -70,6 +70,7 @@
         </div>
     </section>
     <Footer></Footer>
+    <ContentPopup></ContentPopup>
 </template>
 <script>
 import {ref} from "vue";
@@ -79,10 +80,12 @@ import Header from '../../components/layout/AppHeader.vue'
 import Footer from '../../components/layout/AppFooter.vue'
 import Blogger from "../../../services/api/Blogger";
 
+import ContentPopup from "../../components/blogger/AddContentPopupComponent";
+
 import Loader from "../../../services/AppLoader";
 
 export default {
-    components:{ Header, Footer },
+    components:{ Header, Footer, ContentPopup },
     data(){
         return{
             user: ref(null),

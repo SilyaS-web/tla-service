@@ -379,7 +379,7 @@ class BloggerController extends Controller
 
     public function getContent(Blogger $blogger): JsonResponse
     {
-        return response()->json(BloggerContentResource::collection($blogger->content))->setStatusCode(400);
+        return response()->json(BloggerContentResource::collection($blogger->content))->setStatusCode(200);
     }
 
     public function setContent(): JsonResponse

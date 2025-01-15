@@ -36,20 +36,7 @@
             </div>
         </div>
     </section>
-    <div
-        v-if="isShowAddContent"
-        class="popup" id="add-content" style="">
-        <div class="popup__container _container">
-            <div class="popup__body">
-                <AddBloggerContentPopup></AddBloggerContentPopup>
-            </div>
-            <div
-                @click="isShowAddContent = false"
-                class="close-popup">
-                <img src="/img/close-icon.svg" alt="">
-            </div>
-        </div>
-    </div>
+    <AddBloggerContentPopup ref="contentPopup"></AddBloggerContentPopup>
     <Footer></Footer>
 </template>
 <script>
@@ -99,6 +86,10 @@
             this.inWorkProjectsList = await this.Work.getUserWorksList(this.user.id, false, 1);
 
             this.isShowAddContent = true
+
+            if(this.isShowAddContent){
+                this.$refs.contentPopup.show();
+            }
 
             setTimeout(()=>{
                 this.Loader.loaderOff();

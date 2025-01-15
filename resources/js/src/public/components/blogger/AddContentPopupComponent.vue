@@ -1,5 +1,6 @@
 <template>
-    <div class="popup__blogger-content blogger-popup">
+    <popup-modal ref="popup">
+        <div class="popup__blogger-content blogger-popup">
         <div class="blogger-popup__left">
             <div class="blogger-popup__header">
                 <div class="blogger-popup__title">
@@ -135,7 +136,9 @@
                 </div>
             </div>
             <div class="blogger-popup__footer">
-                <div class="btn btn-primary blogger-content__btn">
+                <div
+                    @click="closePopup"
+                    class="btn btn-primary blogger-content__btn">
                     Отправить
                 </div>
             </div>
@@ -150,7 +153,7 @@
                         </video>
                     </div>
                     <div class="blogger-comparison__title">
-                        Плохое оформление
+                        Не рекомендуем
                     </div>
                     <div class="blogger-comparison__more">
                         <div
@@ -174,7 +177,7 @@
                         </video>
                     </div>
                     <div class="blogger-comparison__title">
-                        Хорошее оформление
+                        Рекомендуем
                     </div>
                     <div class="blogger-comparison__more">
                         <div
@@ -194,14 +197,17 @@
             </div>
         </div>
     </div>
+    </popup-modal>
 </template>
 <script>
 import { ref } from 'vue'
 import axios from "axios";
 import User from "../../../services/api/User";
+import PopupModal from '../../../services/AppPopup.vue';
 
 export default {
     name: 'AddBloggerContentPopup',
+    components: { PopupModal },
     data(){
         return {
             title: 'Загрузите примеры контента',
@@ -217,23 +223,23 @@ export default {
                 'bad': 'Посмотреть подробнее'
             }),
 
-            cardsVideoContent: ref({
-                0: {
+            cardsVideoContent: ref([
+                {
                     'id': null,
                     'src': null,
                     'progress': null
                 },
-                1: {
+                {
                     'id': null,
                     'src': null,
                     'progress': null
                 },
-                2: {
+                {
                     'id': null,
                     'src': null,
                     'progress': null
                 },
-            }),
+            ]),
 
             resolvePromise: undefined,
             rejectPromise: undefined,
@@ -241,7 +247,50 @@ export default {
             User
         }
     },
+    mounted(){
+    },
     methods: {
+        show(opts = {}){
+            this.$refs.popup.open()
+
+            let user = this.User.getCurrent();
+
+            axios({
+                method: 'get',
+                url: '/api/bloggers/' + user.blogger_id + '/content',
+            })
+            .then((result) => {
+                let contentList = result.data,
+                    videosNodeList = $(document).find('.blogger-content__card video');
+
+                this.cardsVideoContent = this.cardsVideoContent.map((item, index) => {
+                    videosNodeList[index].src = 'http://localhost/' + contentList[index].path;
+                    videosNodeList[index].load();
+
+                    return {
+                        'id': contentList[index].id,
+                        'src': contentList[index].path,
+                        'progress': 100
+                    }
+                })
+            })
+            .catch((err) => {
+                let message = (err.response && err.response.data && err.response.data.message) ?
+                    err.response.data.message :
+                    'Невозможно загрузить контент, попробуйте позже в личном кабинете';
+
+                notify('error', {
+                    title: 'Внимание!',
+                    message: message
+                })
+            })
+
+            return new Promise((resolve, reject) => {
+                this.resolvePromise = resolve
+                this.rejectPromise = reject
+            })
+        },
+
         toggleMoreText(key, event){
             this.moreTextVisibilitiesArr[key] = !this.moreTextVisibilitiesArr[key]
             this.moreTextTitlesArr[key] = (this.moreTextTitlesArr[key] === 'Скрыть' ? 'Посмотреть подробнее' : 'Скрыть')
@@ -339,11 +388,18 @@ export default {
             })
         },
 
+        closePopup(){
+            this.$refs.popup.close()
+            this.resolvePromise(false)
+        },
+
         _confirm() {
-            this.resolvePromise(this.choosedWork)
+            this.$refs.popup.close()
+            this.resolvePromise(true)
         },
 
         _cancel() {
+            this.$refs.popup.close()
             this.resolvePromise(false)
         },
     },
