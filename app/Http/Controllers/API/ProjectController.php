@@ -28,7 +28,6 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'numeric|exists:users,id',
             'order_by_created_at' => 'string|nullbale',
             'project_type' => [Rule::in(Project::TYPES), 'nullable'],
             'category' => 'string|nullable',
