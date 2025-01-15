@@ -377,6 +377,11 @@ class BloggerController extends Controller
         return response()->json(isset($image_path) ? ['image' => 'storage/' . $image_path] : '')->setStatusCode(200);
     }
 
+    public function getContent(Blogger $blogger): JsonResponse
+    {
+        return response()->json(BloggerContentResource::collection($blogger->content))->setStatusCode(400);
+    }
+
     public function setContent(): JsonResponse
     {
         $validator = Validator::make(request()->all(), [
