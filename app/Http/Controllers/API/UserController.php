@@ -110,6 +110,8 @@ class UserController extends Controller
             'product_name' => 'string|nullable',
             'statuses' => 'array|nullable',
             'statuses.*' => 'string',
+            'work_statuses' => 'array|nullable',
+            'work_statuses.*' => 'string',
             'is_blogger_access' => 'boolean|nullable',
             'order_by_created_at' => 'string|nullable',
             'status' => 'string|nullable',
@@ -123,25 +125,31 @@ class UserController extends Controller
 
         $validated = $validator->validated();
 
-        if (isset($validated['statuses']) && !empty($validated['statuses'])) {
+        if (!empty($validated['statuses'])) {
             $projects->whereIn('status', $validated['statuses']);
         }
 
-        if (isset($validated['is_blogger_access']) && !empty($validated['is_blogger_access'])) {
+        if (!empty($validated['is_blogger_access'])) {
             $projects->where('is_blogger_access', $validated['is_blogger_access']);
         }
 
-        if (isset($validated['product_name']) && !empty($validated['product_name'])) {
+        if (!empty($validated['product_name'])) {
             $projects->where('product_name', 'like', '%' . $validated['product_name'] . '%');
         }
 
-        if (isset($validated['project_type']) && !empty($validated['project_type'])) {
+        if (!empty($validated['project_type'])) {
             $projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
                 $query->where('type', $validated['project_type']);
             });
         }
 
-        if (isset($validated['status']) && !empty($validated['status'])) {
+        if (!empty($validated['work_statuses'])) {
+            $projects->whereHas('works', function (Builder $query) use ($validated) {
+                $query->whereIn('status', $validated['work_statuses']);
+            });
+        }
+
+        if (!empty($validated['status'])) {
             if ($validated['status'] == 'active') {
                 $projects->where('status', '>=', 0);
             } else {
