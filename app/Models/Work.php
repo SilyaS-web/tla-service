@@ -44,8 +44,6 @@ class Work extends Model
         'accepted_by_seller_at' => 'datetime',
         'confirmed_by_blogger_at' => 'datetime',
         'confirmed_by_seller_at' => 'datetime',
-        'canceled_by_blogger_at' => 'datetime',
-        'canceled_by_seller_at' => 'datetime',
         'last_message_at' => 'datetime',
         'canceled_by_blogger_at' => 'datetime',
         'canceled_by_seller_at' => 'datetime',

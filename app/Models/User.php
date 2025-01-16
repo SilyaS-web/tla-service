@@ -72,7 +72,18 @@ class User extends Authenticatable
 
     public function projects()
     {
-        return $this->hasMany(Project::class, 'seller_id', 'id');
+        if ($this->role == 'seller') {
+            return $this->hasMany(Project::class, 'seller_id', 'id');
+        }
+
+        return $this->hasManyThrough(
+            Project::class,
+            Work::class,
+            'blogger_id',
+            'id',
+            'id',
+            'project_id'
+        );
     }
 
     public function blogger()
@@ -90,8 +101,9 @@ class User extends Authenticatable
         return $this->hasMany(Notification::class, 'user_id', 'id');
     }
 
-    public function tgPhone() {
-        return $this->hasOne(TgPhone::class,'id', 'tg_phone_id');
+    public function tgPhone()
+    {
+        return $this->hasOne(TgPhone::class, 'id', 'tg_phone_id');
     }
 
     public function getImageURL()
@@ -103,7 +115,8 @@ class User extends Authenticatable
         return url('storage/' . $this->image);
     }
 
-    public function getPassword() {
+    public function getPassword()
+    {
         return $this->password;
     }
 
@@ -112,7 +125,8 @@ class User extends Authenticatable
         return $this->hasMany(SellerTariff::class, 'user_id', 'id');
     }
 
-    public function getActiveTariffs($type = null) {
+    public function getActiveTariffs($type = null)
+    {
         $tariffs = $this->sellerTariffs()->where('finish_date', '>', Carbon::now());
         if ($type) {
             $tariff = null;
@@ -134,7 +148,8 @@ class User extends Authenticatable
         return $tariffs->get();
     }
 
-    public function getActiveTariffByGroup($group_id) {
+    public function getActiveTariffByGroup($group_id)
+    {
         $tariff = $this->sellerTariffs()->where('finish_date', '>', Carbon::now())->whereHas('tariff', function (Builder $query) use ($group_id) {
             $query->where('group_id', $group_id);
         })->first();
@@ -146,12 +161,13 @@ class User extends Authenticatable
         return null;
     }
 
-    public function getActiveTariffsWithLost() {
+    public function getActiveTariffsWithLost()
+    {
         $seller_tariffs = $this->tariffs()->where('finish_date', '>', Carbon::now())->get();
         foreach ($seller_tariffs as &$seller_tariff) {
             $seller_tariff->lost = $seller_tariff->quantity - $this->seller->works()->whereHas('projectWork', function (Builder $query) use ($seller_tariff) {
-                $query->where('type', $seller_tariff->type);
-            })->count();
+                    $query->where('type', $seller_tariff->type);
+                })->count();
         }
         return $seller_tariffs;
     }
