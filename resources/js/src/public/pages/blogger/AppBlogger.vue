@@ -36,6 +36,7 @@
             </div>
         </div>
     </section>
+    <AddBloggerContentPopup ref="contentPopup"></AddBloggerContentPopup>
     <Footer></Footer>
 </template>
 <script>
@@ -56,9 +57,12 @@
     import SellersWorks from '../../components/blogger/SellersWorksListComponent'
     import Chat from '../../components/ChatIndex'
 
+    import AddBloggerContentPopup from '../../components/blogger/AddContentPopupComponent'
+
     export default{
         components: {
-            Aside, Header, ProjectsList, Chat, SellersWorks, AcceptedProjects, Footer
+            Aside, Header, ProjectsList, Chat,
+            SellersWorks, AcceptedProjects, AddBloggerContentPopup, Footer
         },
         data(){
             return {
@@ -69,6 +73,8 @@
                 newChatMessagesCount: ref(0),
                 currentItem: ref(null),
 
+                isShowAddContent: ref(true),
+
                 Loader, Tabs,
                 Project, User, Work
             }
@@ -78,6 +84,12 @@
 
             this.user = this.User.getCurrent();
             this.inWorkProjectsList = await this.Work.getUserWorksList(this.user.id, false, 1);
+
+            this.isShowAddContent = true
+
+            if(this.isShowAddContent){
+                this.$refs.contentPopup.show();
+            }
 
             setTimeout(()=>{
                 this.Loader.loaderOff();

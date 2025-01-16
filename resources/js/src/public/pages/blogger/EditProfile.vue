@@ -22,6 +22,11 @@
                         </div>
                     </div>
                     <div class="tab-content__form tab-content__form--accent" style="flex-direction:column;">
+                        <label for="" class="tab-content__form--title" style="text-align: center">Управление контентом</label>
+                        <button
+                            class="btn btn-primary" style="width: fit-content">Перейти к управлению контентом</button>
+                    </div>
+                    <div class="tab-content__form tab-content__form--accent" style="flex-direction:column;">
                         <label for="" class="tab-content__form--title">Личные данные</label>
                         <div class="tab-content__form-col">
                             <div class="form-group">
@@ -65,6 +70,7 @@
         </div>
     </section>
     <Footer></Footer>
+    <ContentPopup></ContentPopup>
 </template>
 <script>
 import {ref} from "vue";
@@ -74,10 +80,12 @@ import Header from '../../components/layout/AppHeader.vue'
 import Footer from '../../components/layout/AppFooter.vue'
 import Blogger from "../../../services/api/Blogger";
 
+import ContentPopup from "../../components/blogger/AddContentPopupComponent";
+
 import Loader from "../../../services/AppLoader";
 
 export default {
-    components:{ Header, Footer },
+    components:{ Header, Footer, ContentPopup },
     data(){
         return{
             user: ref(null),

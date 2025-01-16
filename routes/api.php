@@ -62,6 +62,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/bloggers/{blogger}', [BloggerController::class, 'show']);
     Route::post('/bloggers/{blogger}/accept', [BloggerController::class, 'accept']);
     Route::post('/bloggers/{blogger}', [BloggerController::class, 'update']);
+    Route::get('/bloggers/{blogger}/content', [BloggerController::class, 'getContent']);
     Route::post('/bloggers/{blogger}/content', [BloggerController::class, 'setContent']);
     Route::delete('/bloggers/{blogger}/content', [BloggerController::class, 'deleteContent']);
 
