@@ -1603,7 +1603,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .info-profile__projects .owl-nav,
 .info-profile__videos .owl-nav{
-    top: 100%;
+    top: calc(100% + 12px);
     justify-content: center;
     gap: 12px;
 }
@@ -1630,11 +1630,9 @@ input[type='range']::-webkit-slider-runnable-track{
     padding: 5px;
 }
 .info-profile__projects .owl-stage{
-    display: flex;
 
 }
 .info-profile__projects .owl-item {
-    flex: 1 1 auto;
 }
 .info-profile__projects-item.project-item .project-item__img{
     padding-top: 331px;

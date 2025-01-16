@@ -41,14 +41,7 @@
                 nav: true,
                 dots: false,
                 items: 1,
-                autoWidth: true,
                 responsive: {
-                    0:{
-                        autoWidth: false
-                    },
-                    886: {
-                        autoWidth: true
-                    }
                 }
             });
         }
