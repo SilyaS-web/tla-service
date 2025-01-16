@@ -10,6 +10,7 @@ use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use App\Models\ProjectFile;
 use App\Models\ProjectWork;
+use App\Models\User;
 use App\Models\Work;
 use App\Services\ImageService;
 use App\Services\OzonService;
@@ -52,7 +53,8 @@ class ProjectController extends Controller
         if (isset($validated['product_name']) && !empty($validated['product_name'])) {
             $projects->where('product_name', 'like', '%' . $validated['product_name'] . '%');
         }
-        $user = Auth()->user();;
+
+        $user = Auth()->user();
         if ($user->role === 'blogger') {
             if ($user->blogger->platforms()->max('coverage') < 2000) {
                 $projects->whereHas('projectWorks', function (Builder $query) use ($validated) {

@@ -93,7 +93,7 @@
                 </div>
                 <div class="card__row" style="text-align: center; justify-content:center">
                     <a
-                        v-bind:href="'/bloggers/' + blogger.id"
+                        @click="openBloggerInfoPopup"
                         target="_blank"
                         class=""
                         style="color:rgba(0,0,0,.4);
@@ -118,13 +118,16 @@
             </div>
         </div>
     </div>
+    <BloggerCardPopup ref="bloggerCardPopup"></BloggerCardPopup>
 </template>
 <script>
 import {ref, toRaw} from "vue";
 import axios from "axios";
+import BloggerCardPopup from "./BloggerCardPopup";
 
     export default{
         props:['blogger', 'currentProject'],
+        components: { BloggerCardPopup },
         data(){
             return{
                 themes: ref([]),
@@ -176,6 +179,10 @@ import axios from "axios";
                 let result = (this.currentProject.product_price / cover) * 1000;
 
                 return Math.round(result) === 0 ? (result).toFixed(3) : Math.round(result);
+            },
+
+            openBloggerInfoPopup(){
+                this.$refs.bloggerCardPopup.show(this.blogger);
             }
         }
     }

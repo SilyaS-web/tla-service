@@ -36,6 +36,11 @@ class Blogger extends Model
         return $this->hasMany(BloggerPlatform::class, 'blogger_id', 'id');
     }
 
+    public function content()
+    {
+        return $this->hasMany(BloggerContent::class, 'user_id', 'user_id');
+    }
+
     public function works()
     {
         return $this->hasMany(Work::class, 'blogger_id', 'user_id');
