@@ -24,6 +24,7 @@
                     <div class="tab-content__form tab-content__form--accent" style="flex-direction:column;">
                         <label for="" class="tab-content__form--title" style="text-align: center">Управление контентом</label>
                         <button
+                            @click="contentEdit"
                             class="btn btn-primary" style="width: fit-content">Перейти к управлению контентом</button>
                     </div>
                     <div class="tab-content__form tab-content__form--accent" style="flex-direction:column;">
@@ -70,7 +71,9 @@
         </div>
     </section>
     <Footer></Footer>
-    <ContentPopup></ContentPopup>
+    <ContentPopup
+        ref="contentPopup"
+    ></ContentPopup>
 </template>
 <script>
 import {ref} from "vue";
@@ -171,6 +174,9 @@ export default {
                     return
                 }
             )
+        },
+        contentEdit(){
+            this.$refs.contentPopup.show();
         }
     }
 }
