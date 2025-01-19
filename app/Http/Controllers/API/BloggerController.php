@@ -42,6 +42,7 @@ class BloggerController extends Controller
             'statuses' => 'array|nullable',
             'statuses.*' => 'numeric',
             'order_by_created_at' => 'string|nullable',
+            'has_content' => 'boolean|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -101,6 +102,10 @@ class BloggerController extends Controller
             $bloggers->whereHas('country', function (Builder $query) use ($validated) {
                 $query->where('id', $validated['country']);
             });
+        }
+
+        if (!empty($validated['has_content'])) {
+            $bloggers->has('content');
         }
 
         if (!empty($validated['sex'])) {
