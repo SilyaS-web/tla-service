@@ -390,6 +390,7 @@ export default {
 
         closePopup(){
             this.$refs.popup.close()
+
             this.resolvePromise(false)
         },
 

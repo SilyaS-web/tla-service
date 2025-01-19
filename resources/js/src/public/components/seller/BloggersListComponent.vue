@@ -125,6 +125,22 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="form-group filter__item">
+                        <label for="">Наличие контента у блогера</label>
+                        <div class="filter__item--sex" id = "filter__item">
+                            <div class="input-checkbox-w">
+                                <input
+                                    type="checkbox"
+                                    class="checkbox"
+                                    id="has-content"
+                                    :value="bloggerFilter.has_content"
+                                    @change="bloggerFilter.has_content = Number(!bloggerFilter.has_content)">
+                                <label for="has-content">Есть контент</label>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="form-group filter__item">
                         <label for="">Количество подписчиков</label>
                         <div class="input-range-w">
@@ -311,6 +327,7 @@
                     sex: [],
                     subscriber_quantity_min: 0,
                     subscriber_quantity_max: 10000000,
+                    has_content: 0,
                 }),
 
                 projectsFilter: ref({
@@ -423,6 +440,7 @@
                     sex: [],
                     subscriber_quantity_min: 0,
                     subscriber_quantity_max: 10000000,
+                    has_content: 0,
                 }
                 this.filterSubscribersQuantity = {
                     value: [0, 10000000]
