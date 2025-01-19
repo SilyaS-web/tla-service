@@ -2,7 +2,9 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Modal;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Redis;
 
 class UserResource extends JsonResource
 {
@@ -18,9 +20,18 @@ class UserResource extends JsonResource
 
         if ($this->role == 'seller') {
             $seller = $this->seller;
-            $organization_name = isset($seller->organization_name) && !empty($seller->organization_name) ? $seller->organization_type . ' '. $seller->organization_name : '';
+            $organization_name = isset($seller->organization_name) && !empty($seller->organization_name) ? $seller->organization_type . ' ' . $seller->organization_name : '';
         } else if ($this->role == 'blogger') {
             $channel_name = $this->name;
+        }
+
+        $modals = Modal::all();
+        $user_modals = Redis::smembers('user.' . $this->id . '.modals');
+
+        foreach ($modals as $modal_key => $modal) {
+            if (in_array($modal->id, $user_modals)) {
+                unset($modals[$modal_key]);
+            }
         }
 
         return [
@@ -38,7 +49,8 @@ class UserResource extends JsonResource
             'channel_name' => $channel_name,
             'created_at' => isset($this->created_at) ? $this->created_at->format('d.m.Y H:i') : null,
             'tariffs' => SellerTariffResource::collection($this->getActiveTariffs()),
-            'is_admin' => (bool) $this->is_admin,
+            'is_admin' => (bool)$this->is_admin,
+            'modals' => ModalResource::collection($modals),
         ];
     }
 }
