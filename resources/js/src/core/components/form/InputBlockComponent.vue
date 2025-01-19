@@ -5,7 +5,7 @@
             :for="inputID">{{ label }}</label>
         <input
             v-bind:value="modelValue"
-            v-on:input="console.log($event.target.value); $emit('update:modelValue', $event.target.value)"
+            v-on:input="$emit('update:modelValue', $event.target.value)"
             :type="inputType"
             :name="inputID"
             :id="inputID"

@@ -5,6 +5,7 @@
                 Заполните поля
             </div>
             <div class="form auth__form">
+
                 <div class="form-group">
                     <label for="city">Ваш город</label>
                     <input type="text" id="city" name="city" placeholder="Введите название города" class="input input--city" v-model="blogger.city">
