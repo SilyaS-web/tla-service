@@ -91,18 +91,7 @@
                         <div class="card__diagram-icon"><img src="admin/img/blogers-list/female-icon.svg" alt=""></div>
                     </div>
                 </div>
-                <div class="card__row" style="text-align: center; justify-content:center">
-                    <a
-                        @click="openBloggerInfoPopup"
-                        target="_blank"
-                        class=""
-                        style="color:rgba(0,0,0,.4);
-                        font-size:16px;
-                        font-weight:500;
-                        text-decoration:underline;
-                        margin-top: -20px;">Подробнее</a>
-                </div>
-                <div class="card__row card__row" style="flex-direction: column; gap: 5px">
+                <div class="card__row card__row" style="gap: 5px;flex-wrap:wrap">
                     <button
                         v-if="!isOfferSent"
                         @click="sendOfferToBlogger"
@@ -113,6 +102,11 @@
                         v-else
                         class="btn btn-secondary">
                         Заявка отправлена
+                    </button>
+                    <button
+                        @click="openBloggerInfoPopup"
+                        class="btn btn-secondary">
+                        Подробнее
                     </button>
                 </div>
             </div>

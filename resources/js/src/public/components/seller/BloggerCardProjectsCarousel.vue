@@ -34,6 +34,14 @@
     export default {
         props:['projects'],
         mounted(){
+            $('.info-profile__projects').addClass('owl-carousel').owlCarousel({
+                margin: 5,
+                nav: true,
+                dots: false,
+                items: 1,
+                responsive: {
+                }
+            });
         },
         updated(){
             $('.info-profile__projects').addClass('owl-carousel').owlCarousel({

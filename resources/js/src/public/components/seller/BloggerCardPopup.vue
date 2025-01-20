@@ -11,7 +11,8 @@
                     </div>
                 </div>
                 <div class="user-view__body">
-                    <div class="info-profile__body">
+                    <div
+                        :class="'info-profile__body ' + (isMoreInfoClicked ? 'show-more' : '')">
                         <div class="info-profile__left">
                             <div class="info-profile__info card__col">
                                 <div class="card__row card__header">
@@ -19,14 +20,17 @@
                                     <div class="card__name">
                                         <p class="card__name-name" title="">{{ blogger.user.name }}</p>
                                     </div>
-                                </div>
-                                <div
-                                    v-if="blogger.is_achievement"
-                                    class="info-profile__tags-items">
-                                    <div class="info-profile__tags-item">
-                                        Проверенный блогер
+                                    <div class="card__achive" title="Проверенный блогер" v-if="blogger.is_achievement">
+                                        <img src="img/achive-icon.svg" alt="">
                                     </div>
                                 </div>
+
+                                <div
+                                    @click="isMoreInfoClicked = !isMoreInfoClicked"
+                                    class="card__row card__more">
+                                    {{ (isMoreInfoClicked ? 'Скрыть' : 'Подробнее о блогере') }}
+                                </div>
+
                                 <div class="card__row card__tags">
                                     <div
                                         v-for="theme in blogger.themes"
@@ -86,11 +90,25 @@
                             </div>
                         </div>
                         <div class="info-profile__right">
+                            <div class="info-profile__tabs">
+                                <div
+                                    @click="currentTab = 'content'"
+                                    :class="'info-profile__tab ' + (currentTab === 'content' ? 'current' : '')">
+                                    Контент
+                                </div>
+                                <div
+                                    @click="currentTab = 'projects'"
+                                    :class="'info-profile__tab ' + (currentTab === 'projects' ? 'current' : '')">
+                                    Выполненные проекты
+                                </div>
+                            </div>
                             <div class="info-profile__content">
                                 <ProjectsCarousel
+                                    v-if="currentTab === 'projects'"
                                     :projects="bloggerWorks"
                                 ></ProjectsCarousel>
                                 <VideosCarousel
+                                    v-if="currentTab === 'content'"
                                     :videos="bloggerContent"
                                 ></VideosCarousel>
                             </div>
@@ -132,6 +150,9 @@
                 blogger: ref({}),
                 bloggerContent: ref([]),
                 bloggerWorks: ref([]),
+
+                currentTab: ref('content'),
+                isMoreInfoClicked: ref(false),
 
                 bloggerPlatformFields:[
                     {
