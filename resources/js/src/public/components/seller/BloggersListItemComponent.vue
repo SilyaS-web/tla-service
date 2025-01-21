@@ -120,7 +120,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="card__row card__row" style="gap: 5px;flex-wrap:wrap">
+                <div class="card__row card__btns">
                     <button
                         v-if="!isOfferSent"
                         @click="sendOfferToBlogger"

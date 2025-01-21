@@ -21,7 +21,7 @@
                                     </video>
                                 </div>
                                 <div class="blogger-comparison__title">
-                                    Плохое оформление
+                                    Не рекомендуем
                                 </div>
                                 <div class="blogger-comparison__more">
                                     <div
@@ -45,7 +45,7 @@
                                     </video>
                                 </div>
                                 <div class="blogger-comparison__title">
-                                    Хорошее оформление
+                                    Рекомендуем
                                 </div>
                                 <div class="blogger-comparison__more">
                                     <div
@@ -64,26 +64,42 @@
                             </div>
                         </div>
                         <div class="blogger-popup__body">
-                            <div class="card__col">
+                            <div class="card__col" style="width: 100%">
                                 <div class="card__row card__header">
-                                    <div class="card__img" style="background-image: url(&quot;http://localhost/storage/profile/iijulv25MZQIMIIBxH7AgIUIquvlzKHfe2W9jkKT.jpg&quot;);"></div>
+                                    <div
+                                        class="card__img"
+                                        :style="'background-image: url(' + user.image + ')'"></div>
                                     <div class="card__name">
-                                        <p class="card__name-name" title="">Екатерина</p>
+                                        <p class="card__name-name" title="">{{ user.name }}</p>
+                                        <p class="card__name-tag" title="">Блогер</p>
+                                    </div>
+                                    <div
+                                        class="card__row blogger-item__achives opened">
+                                        <div class="blogger-item__achives-title">
+                                            Достижения
+                                        </div>
+                                        <div class="blogger-item__achives-icons">
+                                            <div class="card__achive" title="Есть контент" >
+                                                <img src="/img/has-content-icon.svg" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="blogger-item__achives-items blogger-achives">
+                                            <div class="blogger-achives__item" title="Есть контент">
+                                                <div class="blogger-achives__item-icon" style="background-image: url('/img/has-content-icon.svg');">
+                                                </div>
+                                                Есть контент
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="card__row card__tags">
-                                    <div class="card__tags-item">
-                                        <span>Дети, семья и отношения</span>
+                                <div
+                                    v-if="blogger && blogger.themes"
+                                    class="card__row card__tags">
+                                    <div
+                                        v-for="theme in blogger.themes"
+                                        class="card__tags-item">
+                                        <span>{{ theme.name }}</span>
                                     </div>
-                                    <div class="card__tags-item">
-                                        <span>Дом, сад и огород</span>
-                                    </div>
-                                    <div class="card__tags-item">
-                                        <span>Дизайн интерьера, ремонт</span>
-                                    </div>
-                                </div>
-                                <div class="card__row card__desc">
-                                    <p>Лайстайл блог о семье, детях. Ремонт и обустройство дома и быта.</p>
                                 </div>
                             </div>
                             <div class="blogger-popup__upload-content blogger-content">
@@ -142,6 +158,9 @@
                                 @click="closePopup"
                                 class="btn btn-primary blogger-content__btn">
                                 Отправить
+                            </div>
+                            <div class="blogger-popup__warning">
+                                Видеофайлы должны быть не более 90 МБ и представлены в одном из следующих форматов: mpeg, ogg, mp4, webm, 3gp, mov, flv, avi, wmv, ts.
                             </div>
                         </div>
                     </div>
@@ -218,7 +237,7 @@ export default {
     data(){
         return {
             title: 'Загрузите примеры контента',
-            subtitle: 'Наше дело не так однозначно, как может показаться: экономическая повестка сегодняшнего дня однозначно определяет',
+            subtitle: 'Загрузите пример своего контента, чтобы вас заметили топовые бренды и селлеры, получите специальное достижение, место в рекомендованных и больше предложений на сотрудничество!',
 
             moreTextVisibilitiesArr: ref({
                 'good': false,
@@ -253,20 +272,31 @@ export default {
             resolvePromise: undefined,
             rejectPromise: undefined,
 
+            user: ref({}),
+            blogger: ref({}),
+
             User
         }
     },
-    mounted(){
+    async mounted(){
+        this.user = this.User.getCurrent();
+
+        await axios({
+            method: 'get',
+            url: '/api/bloggers/' + this.user.blogger_id,
+        })
+        .then(result => this.blogger = result.data.blogger)
+        .catch(error => {})
+
+        console.log(this.blogger)
     },
     methods: {
         show(opts = {}){
             this.isVisible = true
 
-            let user = this.User.getCurrent();
-
             axios({
                 method: 'get',
-                url: '/api/bloggers/' + user.blogger_id + '/content',
+                url: '/api/bloggers/' + this.user.blogger_id + '/content',
             })
             .then((result) => {
                 let contentList = result.data,
@@ -400,10 +430,8 @@ export default {
         closePopup(){
             this.isVisible = false
 
-            let user = this.User.getCurrent();
-
             axios({
-                url: '/api/users/' + user.id + '/modals/' + 1 + '/show',
+                url: '/api/users/' + this.user.id + '/modals/' + 1 + '/show',
                 method: 'get',
             })
 

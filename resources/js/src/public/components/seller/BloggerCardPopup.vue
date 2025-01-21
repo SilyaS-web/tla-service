@@ -19,6 +19,7 @@
                                     <div class="card__img" :style="'background-image: url(' + blogger.user.image + ')'"></div>
                                     <div class="card__name">
                                         <p class="card__name-name" title="">{{ blogger.user.name }}</p>
+                                        <p class="card__name-tag" title="">Блогер</p>
                                     </div>
                                     <div class="card__header-achives">
                                         <div class="card__achive" title="Проверенный блогер" v-if="blogger.is_achievement">
@@ -71,6 +72,27 @@
                                         </div>
 
                                         <div
+                                            v-if="platform.coverage"
+                                            class="item-platforms__stats-row">
+                                            <div class="item-platforms__stat">
+                                                <div class="item-platforms__stat-title">
+                                                    {{ bloggerPlatformsTitles[platform.title] ? bloggerPlatformsTitles[platform.title] : bloggerPlatformsTitles['default'] }}
+                                                </div>
+                                                <div class="item-platforms__stat-value">
+                                                    {{ platform.coverage }}
+                                                </div>
+                                            </div>
+                                            <div class="item-platforms__stat er">
+                                                <div class="item-platforms__stat-title">
+                                                    ER, %
+                                                </div>
+                                                <div class="item-platforms__stat-value">
+                                                    {{ platform.engagement_rate }}
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div
                                             v-if="platform.additional_coverage"
                                             class="item-platforms__stats-row">
                                             <div class="item-platforms__stat">
@@ -83,7 +105,7 @@
                                             </div>
                                             <div class="item-platforms__stat er">
                                                 <div class="item-platforms__stat-title">
-                                                    ER %
+                                                    ER, %
                                                 </div>
                                                 <div class="item-platforms__stat-value">
                                                     {{ platform.additional_engagement_rate }}
@@ -209,10 +231,15 @@
                         id: 123
                     },
                 ],
-                bloggerAdditPlatformsTitles: {
+                bloggerPlatformsTitles: {
                     'Instagram': 'Просмотры reels',
-                    'Youtube': 'Просмотры shorts',
+                    'Youtube': 'Просмотры выпусков',
                     'VK': 'Просмотры постов',
+                    'default': 'Просмотры',
+                },
+                bloggerAdditPlatformsTitles: {
+                    'Youtube': 'Просмотры выпусков',
+                    'VK': 'Просмотры клипов',
                     'default': 'Просмотры',
                 },
 
