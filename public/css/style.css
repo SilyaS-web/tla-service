@@ -1652,6 +1652,11 @@ input[type='range']::-webkit-slider-runnable-track{
 .info-profile__projects-item.project-item .project-item__img{
     padding-top: 331px;
 }
+.card__row.card__more{
+    display: none;
+}
+
+
 .input--name {
 }
 .input--password {
@@ -2296,27 +2301,159 @@ input[type='range']::-webkit-slider-runnable-track{
     background-size: cover;
     background-repeat: no-repeat;
 }
+.blogger-item__achives{
+    display: flex;
+    background-color: #F5FCFF;
+    border-radius: 6px;
+    padding: 6px 10px;
+    gap: 5px;
+    width: fit-content;
+    position: relative;
+    transition: all .2s linear;
+    height: 37px;
+    overflow: hidden;
+    flex-wrap: wrap;
+    align-items: start;
+}
+.blogger-item__achives::after{
+    content:"";
+    width: 14px;
+    height: 25px;
+    background-image: url("/img/arrow-alt.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    transform: rotate(-90deg);
+    opacity: .5;
+    transition: all .2s linear;
+    position: absolute;
+    right: 5px;
+}
+.blogger-item__achives-title{
+    font-size: 14px;
+    font-weight: 400;
+    color: rgba(0, 0, 0, .6);
+    cursor: pointer;
+    line-height: 1.81;
+}
+.blogger-item__achives-icons{
+    display: flex;
+    cursor:pointer;
+    transition: all .2s linear;
+}
 .card__achive {
+    border: 1px solid #fff;
     border-radius: 50%;
     background-color: var(--primary);
-    width:20px;
-    height:20px;
-    position: absolute;
-    top:-3px;left:-3px;
+    width: 25px;
+    height: 25px;
     padding: 0 !important;
-    border:0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    transition: all .2s linear;
+}
+.card__achive:not(:first-child){
+    margin-left: -8px;
 }
 .card__achive img{
-    object-fit: cover;
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    /* position: absolute; */
+    width: 17px;
+    height: 18px;
 }
+.card__header-achives{
+    position: absolute;
+    left:-3%;
+    top:-5px;
+    display:flex;
+}
+.blogger-item__achives-items{
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    opacity: 0;
+    transition: all .2s linear;
+    width: 100%;
+}
+.blogger-achives__item{
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    border-radius: 3px;
+    font-size: 12px;
+    color: rgba(0, 0, 0, .6);
+    font-weight: 400;
+    padding: 4px;
+    border: 1px solid rgba(62, 66, 77, .07);
+    width: 0;
+    overflow: hidden;
+}
+.blogger-achives__item-icon {
+    border: 1px solid #fff;
+    border-radius: 50%;
+    background-color: var(--primary);
+    width: 23px;
+    height: 23px;
+    padding: 0 !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    transition: all .2s linear;
+    background-size: 70%;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+.blogger-item__achives.opened{
+    animation-name: bloggerAchivesOpen;
+    animation-duration: .2s;
+    animation-iteration-count: 1;
+    animation-direction: normal;
+    animation-fill-mode: forwards;
+}
+.blogger-item__achives.opened::after{
+    transform: rotate(0deg);
+    margin-left: auto;
+}
+.blogger-item__achives.opened .blogger-item__achives-icons{
+}
+.blogger-item__achives.opened .card__achive{
+    opacity: 0;
+    margin-left: 0;
+}
+.blogger-item__achives.opened .blogger-item__achives-items{
+    opacity: 1;
+}
+.blogger-item__achives.opened .blogger-achives__item{
+    width: fit-content;
+}
+
+@keyframes bloggerAchivesOpen {
+    0%{
+        width: fit-content;
+        height: 37px;
+    }
+    50%{
+        width: 100%;
+        height: 37px;
+    }
+    100% {
+        height: 85px;
+        width: 100%;
+    }
+}
+
 .card__name {
     display: flex;
     flex-direction: column;
     padding:12px 0;
-    gap: 8px;
+    gap: 4px;
 }
 
 .card__name-name {
@@ -2325,7 +2462,7 @@ input[type='range']::-webkit-slider-runnable-track{
     justify-content: center;
 }
 .card__name-tag {
-    font-size: 15px;
+    font-size: 14px;
     color: rgba(0, 0, 0, .4);
 }
 .card__platforms{
@@ -6578,6 +6715,9 @@ input[type='range']::-webkit-slider-runnable-track{
     .card__name-name{
         font-size: 14px;
     }
+    .card__name-tag{
+        font-size: 12px;
+    }
 
     .popup-project__title{
         font-size: 20px;
@@ -6682,7 +6822,7 @@ input[type='range']::-webkit-slider-runnable-track{
         gap: 20px;
     }
 
-    .card__more{
+    .card__row.card__more{
         display: flex;
         font-weight: 500;
         align-items: center;

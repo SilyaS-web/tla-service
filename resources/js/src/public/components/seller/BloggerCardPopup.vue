@@ -20,8 +20,13 @@
                                     <div class="card__name">
                                         <p class="card__name-name" title="">{{ blogger.user.name }}</p>
                                     </div>
-                                    <div class="card__achive" title="Проверенный блогер" v-if="blogger.is_achievement">
-                                        <img src="img/achive-icon.svg" alt="">
+                                    <div class="card__header-achives">
+                                        <div class="card__achive" title="Проверенный блогер" v-if="blogger.is_achievement">
+                                            <img src="img/achive-icon.svg" alt="">
+                                        </div>
+                                        <div class="card__achive" title="Есть контент" v-if="blogger.content && blogger.content.length > 0">
+                                            <img src="img/has-content-icon.svg" alt="">
+                                        </div>
                                     </div>
                                 </div>
 
