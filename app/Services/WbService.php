@@ -87,61 +87,73 @@ class WbService
         return $card;
     }
 
-    public static function getHost($e)
+    public static function getHost($t)
     {
-        $t = "01";
+        $r = '';
         switch (!0) {
-            case $e >= 0 && $e <= 143:
-                $t = "01";
+            case $t >= 0 && $t <= 143:
+                $r = "01";
                 break;
-            case $e >= 144 && $e <= 287:
-                $t = "02";
+            case $t <= 287:
+                $r = "02";
                 break;
-            case $e >= 288 && $e <= 431:
-                $t = "03";
+            case $t <= 431:
+                $r = "03";
                 break;
-            case $e >= 432 && $e <= 719:
-                $t = "04";
+            case $t <= 719:
+                $r = "04";
                 break;
-            case $e >= 720 && $e <= 1007:
-                $t = "05";
+            case $t <= 1007:
+                $r = "05";
                 break;
-            case $e >= 1008 && $e <= 1061:
-                $t = "06";
+            case $t <= 1061:
+                $r = "06";
                 break;
-            case $e >= 1062 && $e <= 1115:
-                $t = "07";
+            case $t <= 1115:
+                $r = "07";
                 break;
-            case $e >= 1116 && $e <= 1169:
-                $t = "08";
+            case $t <= 1169:
+                $r = "08";
                 break;
-            case $e >= 1170 && $e <= 1313:
-                $t = "09";
+            case $t <= 1313:
+                $r = "09";
                 break;
-            case $e >= 1314 && $e <= 1601:
-                $t = "10";
+            case $t <= 1601:
+                $r = "10";
                 break;
-            case $e >= 1602 && $e <= 1655:
-                $t = "11";
+            case $t <= 1655:
+                $r = "11";
                 break;
-            case $e >= 1656 && $e <= 1919:
-                $t = "12";
+            case $t <= 1919:
+                $r = "12";
                 break;
-            case $e >= 1920 && $e <= 2045:
-                $t = "13";
+            case $t <= 2045:
+                $r = "13";
                 break;
-            case $e >= 2046 && $e <= 2189:
-                $t = "14";
+            case $t <= 2189:
+                $r = "14";
                 break;
-            case $e >= 2090 && $e <= 2405:
-                $t = "15";
+            case $t <= 2405:
+                $r = "15";
                 break;
-            case $e >= 2406 && $e <= 2621:
-                $t = "16";
+            case $t <= 2621:
+                $r = "16";
+                break;
+            case $t <= 2837:
+                $r = "17";
+                break;
+            case $t <= 3053:
+                $r = "18";
+                break;
+            case $t <= 3269:
+                $r = "19";
+                break;
+            case $t <= 3485:
+                $r = "20";
                 break;
             default:
-                $t = "17";
+                $r = "21";
         }
-        return "basket-$t.wbbasket.ru";
+        return "basket-$r.wbbasket.ru";
     }
 }
