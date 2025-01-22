@@ -9,8 +9,8 @@ import AdminIndex from './src/modules/admin/index.vue'
 // user imports
 import Auth from './src/modules/auth/login/index.vue'
 import Register from './src1/auth/pages/AppRegister.vue'
-import BloggerRegister from './src1/auth/pages/BloggerData.vue'
-import Profile from './src1/public/pages/index.vue'
+import BloggerRegister from './src/modules/auth/blogger-register/index'
+import SellerProfile from './src/modules/public/seller/index'
 import SellerEditProfile from './src1/public/pages/seller/EditProfile.vue'
 import BloggerEditProfile from './src1/public/pages/blogger/EditProfile.vue'
 import Tariffs from './src1/public/pages/seller/AppTariffs.vue'
@@ -22,12 +22,13 @@ import User from './src1/services/api/User.vue'
 const app = createApp();
 
 const routes = [
-    { path: '/profile/:item?/:id?', name: 'Profile', component: Profile },
+    { path: '/seller/profile/:item?/:id?', name: 'SellerProfile', component: SellerProfile },
+    // { path: '/blogger/profile/:item?/:id?', name: 'BloggerProfile', component: Profile },
     { path: '/register', name: 'Register', component: Register },
     { path: '/blogger/register', name: 'BloggerRegister', component: BloggerRegister },
     { path: '/login', name: 'Login', component: Auth },
-    { path: '/seller/edit-profile', name: 'SellerEditProfile', component: SellerEditProfile },
-    { path: '/blogger/edit-profile', name: 'BloggerEditProfile', component: BloggerEditProfile },
+    { path: '/seller/profile/edit', name: 'SellerEditProfile', component: SellerEditProfile },
+    { path: '/blogger/profile/edit', name: 'BloggerEditProfile', component: BloggerEditProfile },
     { path: '/tariffs', name: 'Tariffs', component: Tariffs },
     { path: '/moderation', name: 'Moderation', component: Moderation },
     { path: '/banned', name: 'Banned', component: Banned },
@@ -90,7 +91,7 @@ router.beforeEach(async (to, from) => {
         }
 
         return {
-            name: 'Profile'
+            name: 'SellerProfile'
         }
     }
     else{

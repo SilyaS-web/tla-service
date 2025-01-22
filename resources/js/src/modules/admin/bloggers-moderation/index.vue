@@ -29,7 +29,7 @@
 </template>
 <script>
 import BloggerItem from './BloggerCard';
-import ConfirmPopup from '../../../core/components/popups/ConfirmationPopup';
+import ConfirmPopup from '../../../core/components/popups/confirmation-popup/ConfirmationPopup';
 import AcceptPopup from '../../../core/components/popups/blogger-moderation/BloggerAcceptPopup';
 
 export default{

@@ -27,7 +27,7 @@
 </template>
 <script>
 import BloggerItem from './BloggerCard';
-import ConfirmPopup from '../../../core/components/popups/ConfirmationPopup';
+import ConfirmPopup from '../../../core/components/popups/confirmation-popup/ConfirmationPopup';
 
 export default{
     props: ['bloggers'],

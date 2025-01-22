@@ -20,7 +20,6 @@ export default {
             return this.listClassList.join(' ')
         },
         getItemClassList(){
-            console.log(this.itemsClassList)
             return this.itemsClassList.join(' ')
         }
     },

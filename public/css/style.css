@@ -4539,6 +4539,10 @@ input[type='range']::-webkit-slider-runnable-track{
     max-width: 680px;
     width: 100%;
 }
+.popup__body:has(.popup-project){
+    max-width: 975px!important;
+    padding: 0!important;
+}
 .popup__header{
     margin-bottom: 20px;
 }

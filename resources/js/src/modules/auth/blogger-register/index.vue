@@ -92,6 +92,9 @@
 </template>
 
 <script>
+import axios from 'axios';
+import {ref} from "vue";
+
 import Input from "../../../core/components/form/InputBlockComponent";
 import Select from "../../../core/components/form/SelectBlockComponent";
 import InputFile from "../../../core/components/form/InputFileBlockComponent";
@@ -99,12 +102,9 @@ import Textarea from "../../../core/components/form/TextareaBlockComponent";
 
 import ChooseThemeBlock from "./ChooseThemeComponent";
 
-import Blogger from "../../services/api/Blogger";
-import Themes from "../../services/api/Themes";
-import User from "../../services/api/User";
-
-import axios from 'axios';
-import {ref} from "vue";
+import Blogger from "../../../core/services/api/Blogger";
+import Themes from "../../../core/services/api/Themes";
+import User from "../../../core/services/api/User";
 
 export default{
     components:{Input, Select, InputFile, Textarea, ChooseThemeBlock},
@@ -113,7 +113,7 @@ export default{
             user:ref({}),
             blogger:ref({}),
             errors: ref({}),
-            themes: ref({}),
+            themes: ref([]),
             countries: [
                 {
                     id: 1,
@@ -163,11 +163,6 @@ export default{
 
         if(this.user.blogger_id) {
             this.blogger = await this.Blogger.getItem(this.user.blogger_id);
-
-            // for (let k in this.platformFields){
-            //     var platform =
-            //     if(this.platformFields[k].platform_id)
-            // }
         }
     },
     methods: {

@@ -26,7 +26,7 @@
 </template>
 <script>
 import SellerItem from './SellerCard'
-import ConfirmPopup from '../../../core/components/popups/ConfirmationPopup';
+import ConfirmPopup from '../../../core/components/popups/confirmation-popup/ConfirmationPopup';
 
 export default{
     props: ['sellers'],
