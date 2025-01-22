@@ -94,6 +94,7 @@
                     </div>
                 </div>
                 <div
+                    v-if="blogger.is_achievement || (blogger.content && blogger.content.length > 0)"
                     @click="$event.target.closest('.blogger-item__achives').classList.toggle('opened')"
                     class="card__row blogger-item__achives">
                     <div class="blogger-item__achives-title">
