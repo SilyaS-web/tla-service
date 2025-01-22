@@ -1374,7 +1374,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 
 .popup__body:has(.user-view){
-    max-width: 900px!important;
+    max-width: 1040px!important;
     width: 100%;
     padding-bottom: 75px;
 }
