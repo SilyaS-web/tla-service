@@ -27,9 +27,6 @@
     <script src="{{ asset('libs/owl/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
 
-    <link rel="stylesheet" href="{{ asset('libs/snow/snow.min.css') }}">
-    <script src="{{ asset('libs/snow/snow.min.js') }}"></script>
-
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript" >
         // (function(m,e,t,r,i,k,a){m[i]=m[i]function(){(m[i].a=m[i].a[]).push(arguments)};
@@ -63,7 +60,4 @@
 
 @php($script = "js/app.js?v=" . rand(100000, 9999999))
 <script src="{{ asset($script) }}"></script>
-<script>
-    new Snow();
-</script>
 </html>
