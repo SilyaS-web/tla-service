@@ -23,12 +23,12 @@
                         {{ chatMessages }}
                     </div>
                 </a>
-<!--                <a-->
-<!--                    v-on:click="switchTab('partners')"-->
-<!--                    style="margin-top:30px;"-->
-<!--                    href="#" class="nav-menu__item nav-menu__link tab partners-link" data-content="partners">-->
-<!--                    Партнеры-->
-<!--                </a>-->
+                <a
+                    v-on:click="switchTab('partners')"
+                    style="margin-top:30px;"
+                    href="#" class="nav-menu__item nav-menu__link tab partners-link" data-content="partners">
+                    Партнеры
+                </a>
             </div>
         </div>
         <div class="nav-menu__close">

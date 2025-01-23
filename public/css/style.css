@@ -4466,6 +4466,19 @@ input[type='range']::-webkit-slider-runnable-track{
 .partners__item-btns a{
     display: block;
 }
+.partners__item-image{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* border: 1px solid rgba(0, 0, 0, .1); */
+    border-radius: 10px;
+    /* padding: 20px; */
+    background-image: url('/img/partners/Frame 6.png');
+    padding-top: 27%;
+    background-repeat: no-repeat;
+    background-position: 100%;
+    background-size: cover;
+}
 
 .label {
     --labelColor: var(--baseColor);
