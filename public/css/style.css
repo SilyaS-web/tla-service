@@ -2840,6 +2840,7 @@ input[type='range']::-webkit-slider-runnable-track{
     max-width: 320px;
     transition: box-shadow .2s linear;
     cursor: pointer;
+    gap: 6px;
 }
 .project-item:hover{
     box-shadow: 0px 0px 10px 6px rgba(181,76,219,.1);
@@ -6256,7 +6257,7 @@ input[type='range']::-webkit-slider-runnable-track{
         max-width: 100%;
     }
     .info-profile__videos{
-        width: calc(100vw - 42px);
+        width: 100vw;
     }
     .info-profile__videos .owl-stage{
         display: flex;
@@ -6414,9 +6415,6 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .nav-menu__item.active::before{
         opacity: 1;
-    }
-    .popup{
-        padding-bottom: 60px;
     }
     .partners-link{
         margin-top: 0!important;
@@ -6634,7 +6632,7 @@ input[type='range']::-webkit-slider-runnable-track{
         height: 416px;
     }
     .info-profile__projects-item.project-item .project-item__img{
-        padding-top: 227px;
+        padding-top: 100%;
     }
 
     .blogger-comparison__item{
@@ -6686,6 +6684,10 @@ input[type='range']::-webkit-slider-runnable-track{
     .popup-project__img{
         height:420px;
         width:100%;
+    }
+
+    .popup__body{
+        padding-bottom: 75px!important;
     }
 
     .project-item{
@@ -6761,9 +6763,30 @@ input[type='range']::-webkit-slider-runnable-track{
 
 }
 @media(max-width:475px){
-    .popup__body{
-        padding: 30px 20px;
+    .popup::-webkit-scrollbar{
+        width: 6px;
+        background-color: #fff;
     }
+    .popup::-webkit-scrollbar-thumb{
+
+    }
+    .popup{
+        overflow-y: auto;
+        height: 100vh;
+    }
+    .popup__body{
+        padding: 25px 10px;
+        width: 100%;
+        height: 100%;
+        max-width: unset;
+        border-radius: 0;
+        min-height: 100vh;
+    }
+    .popup__container._container{
+        padding: 0;
+        margin: 0;
+    }
+
     .title{
         font-size: 24px;
     }
@@ -6949,6 +6972,19 @@ input[type='range']::-webkit-slider-runnable-track{
         padding-top: 180px;
         margin-bottom: 0;
     }
+    .project-item__content{
+        margin-top: 0;
+    }
+    .project-item__format-tags{
+        margin-bottom: 12px;
+    }
+    .project-item:has(.owl-dots.disabled) .project-item__title{
+        margin-top: 17px;
+    }
+
+    .card__tags-item{
+        font-size: 12px;
+    }
 
 
     .blogger-comparison__title{
@@ -7074,6 +7110,10 @@ input[type='range']::-webkit-slider-runnable-track{
     .blogger-popup__body .card__name-name{
         font-size: 13px;
     }
+
+    .info-profile__body .card__header-achives{
+        left: -1%;
+    }
 }
 @media(max-width:447px){
     .quest{
@@ -7108,9 +7148,6 @@ input[type='range']::-webkit-slider-runnable-track{
         font-size: 16px;
     }
     .project-item__participants{
-        font-size: 14px;
-    }
-    .card__tags-item{
         font-size: 14px;
     }
 
