@@ -158,9 +158,13 @@
             }
         },
         mounted(){
+<<<<<<< HEAD
             console.log(this.project)
             if(!this.Quest)
                 this.Quest = new CreateProject('#create-project');
+=======
+            this.Quest = new CreateProject('#create-project');
+>>>>>>> c0f75805b96643e686f2ff8bd0a02349ed9226d7
         },
         updated(){
             if(!this.Quest)
