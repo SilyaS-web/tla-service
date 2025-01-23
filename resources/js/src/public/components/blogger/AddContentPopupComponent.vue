@@ -4,92 +4,16 @@
             <div class="popup__body" style="max-width:600px">
                 <div class="popup__blogger-content blogger-popup">
                     <div class="blogger-popup__left">
-                        <div class="blogger-popup__header">
-                            <div class="blogger-popup__title">
-                                {{ title }}
-                            </div>
-                            <div class="blogger-popup__subtitle">
-                                {{ subtitle }}
-                            </div>
-                        </div>
-                        <div class="blogger-popup__comparison blogger-comparison blogger-comparison--tablet">
-                            <div
-                                :class="'blogger-comparison__item blogger-comparison__item--bad ' +
-                                        (moreTextVisibilitiesArr['bad'] ? ' with-more-text--js' : '')">
-                                <div class="blogger-comparison__img">
-                                    <video src="/img/showreel1.mp4" loop autoplay muted>
-                                    </video>
-                                </div>
-                                <div class="blogger-comparison__title">
-                                    Не рекомендуем
-                                </div>
-                                <div class="blogger-comparison__more">
-                                    <div
-                                        @click="toggleMoreText('bad', $event)"
-                                        class="blogger-comparison__more-title">
-                                        {{ moreTextTitlesArr['bad'] }}
-                                    </div>
-                                    <div class="blogger-comparison__more-text">
-                                        1. Загружены случайные видео, не отражающие ваш стиль контента.<br>
-                                        2. Размытая картинка, плохое освещение, звук с шумами.<br>
-                                        3. Блогер отсутствует в кадре, голос неразборчивый или отсутствует.<br>
-                                        4. Товар почти не показан или взаимодействие с ним поверхностное.<br>
-                                    </div>
-                                </div>
-                            </div>
-                            <div
-                                :class="'blogger-comparison__item blogger-comparison__item--good ' +
-                                    (moreTextVisibilitiesArr['good'] ? ' with-more-text--js' : '')">
-                                <div class="blogger-comparison__img">
-                                    <video src="/img/showreel2.mp4" loop autoplay muted>
-                                    </video>
-                                </div>
-                                <div class="blogger-comparison__title">
-                                    Рекомендуем
-                                </div>
-                                <div class="blogger-comparison__more">
-                                    <div
-                                        @click="toggleMoreText('good', $event)"
-                                        class="blogger-comparison__more-title">
-                                        {{ moreTextTitlesArr['good'] }}
-                                    </div>
-                                    <div class="blogger-comparison__more-text">
-                                        1. Выберите свои лучшие работы<br>
-                                        2. Видео четкое, звук чистый<br>
-                                        3. Вы в кадре, или слышно ваш закадровый голос<br>
-                                        4. Презентуете или взаимодействуете с товаром<br>
-                                        5. Каждое из трех загруженных видео разной подачи (юмор, обзор, рекомендация, нативный формат, или опыт использования до/после)
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div class="blogger-popup__body">
                             <div class="card__col" style="width: 100%">
                                 <div class="card__row card__header">
                                     <div
                                         class="card__img"
-                                        :style="'background-image: url(' + user.image + ')'"></div>
+                                        :style="'background-image: url(https://i.pinimg.com/originals/33/d0/2c/33d02c67b4a6e90abe2d7a58f764edd8.jpg)'"></div>
                                     <div class="card__name">
                                         <p class="card__name-name" title="">{{ user.name }}</p>
                                         <p class="card__name-tag" title="">Блогер</p>
-                                    </div>
-                                    <div
-                                        class="card__row blogger-item__achives opened">
-                                        <div class="blogger-item__achives-title">
-                                            Достижения
-                                        </div>
-                                        <div class="blogger-item__achives-icons">
-                                            <div class="card__achive" title="Есть контент" >
-                                                <img src="/img/has-content-icon.svg" alt="">
-                                            </div>
-                                        </div>
-                                        <div class="blogger-item__achives-items blogger-achives">
-                                            <div class="blogger-achives__item" title="Есть контент">
-                                                <div class="blogger-achives__item-icon" style="background-image: url('/img/has-content-icon.svg');">
-                                                </div>
-                                                Есть контент
-                                            </div>
-                                        </div>
+                                        <p class="card__name-desc" title="">{{ (blogger.description || '').slice(0, 80) + '...' }}</p>
                                     </div>
                                 </div>
                                 <div
@@ -99,6 +23,23 @@
                                         v-for="theme in blogger.themes"
                                         class="card__tags-item">
                                         <span>{{ theme.name }}</span>
+                                    </div>
+                                </div>
+                                <div class="card__row card__tags card__tags--achives">
+                                    <div class="card__tags-item">
+                                        <div class="card__tags-icon" style="background-image: url('/img/has-content-icon.svg');">
+                                        </div>
+                                        <span>Есть контент</span>
+                                    </div>
+                                    <div class="card__tags-item">
+                                        <div class="card__tags-icon" style="background-image: url('/img/documents-ok-icon.svg');">
+                                        </div>
+                                        <span>Документы проверены</span>
+                                    </div>
+                                    <div class="card__tags-item">
+                                        <div class="card__tags-icon" style="background-image: url('/img/star-icon-alt.svg');">
+                                        </div>
+                                        <span>Платформа рекомендует</span>
                                     </div>
                                 </div>
                             </div>
@@ -144,12 +85,22 @@
                                         </div>
                                     </div>
                                     <video src="" class="blogger-content__video" loop autoplay muted>
-                                        <source src="" type="video/mp4" />
-                                    </video>
+                                    <source src="" type="video/mp4" />
+                                </video>
                                     <div class="blogger-content__video-remove" @click="removeCardContent(cardsVideoContent[2], 2, $event)">
                                         <img src="/img/close-icon.svg" alt="">
                                     </div>
                                     <input type="file" hidden @change="saveCardContent(2, $event)">
+                                </div>
+                            </div>
+                            <div
+                                v-if="!cardsVideoContent.find(content => content.id !== null)"
+                                class="blogger-popup__header" >
+                                <div class="blogger-popup__title">
+                                    {{ title }}
+                                </div>
+                                <div class="blogger-popup__subtitle">
+                                    {{ subtitle }}
                                 </div>
                             </div>
                         </div>
