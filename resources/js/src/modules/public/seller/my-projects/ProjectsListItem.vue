@@ -53,6 +53,7 @@
                 </div>
             </div>
         </div>
+
         <div class="profile-projects__col profile-projects__content profile-projects__info" style="padding:5px 0px;">
             <div class="card__col card__stats" style="flex: 1 1 auto">
                 <div class="card__col card__stats-stats" style="flex: 1 1 auto">
@@ -64,14 +65,14 @@
                             <div class="card__stats-val">
                                 <span>{{ project.in_work_bloggers_count }}</span>
                                 <span class="card__stats-val--total">
-                                        ?
-                                        <div class="card__stats-val--total-list">
-                                            <p>Заявок отправлено — {{ project.applications_sent_count }}</p>
-                                            <p>На согласовании — {{ project.pending_bloggers_count }}</p>
-                                            <p>В работе — {{ project.in_work_bloggers_count }}</p>
-                                            <p>Выполнило работу — {{ project.completed_bloggers_count }}</p>
-                                        </div>
-                                    </span>
+                                    ?
+                                    <div class="card__stats-val--total-list">
+                                        <p>Заявок отправлено — {{ project.applications_sent_count }}</p>
+                                        <p>На согласовании — {{ project.pending_bloggers_count }}</p>
+                                        <p>В работе — {{ project.in_work_bloggers_count }}</p>
+                                        <p>Выполнило работу — {{ project.completed_bloggers_count }}</p>
+                                    </div>
+                                </span>
                             </div>
                         </div>
                         <div class="card__col card__stats-item" style="flex: 1: width: auto">
@@ -128,6 +129,13 @@
                 </div>
             </div>
         </div>
+
+        <BloggersCarousel
+            :works="bloggers_leads"
+            :cardsType="'leads'"
+            :classList="['projects-blogers--leads']"
+        ></BloggersCarousel>
+
         <div class="profile-projects__row profile-projects__blogers projects-blogers projects-blogers--leads owl-carousel">
             <div
                 v-for="work in bloggers_leads"
@@ -361,8 +369,8 @@
                 </div>
             </div>
             <span v-else class="empty-bloggers">
-                    Нет блогеров в работе
-                </span>
+                Нет блогеров в работе
+            </span>
         </div>
 
         <div class="profile-projects__row profile-projects__statistics projects-statistics">
@@ -592,62 +600,40 @@
                 </div>
             </div>
         </div>
+
         <div
             @click="isProjectOptsOpen = !isProjectOptsOpen"
             :class="'profile-projects__control-btns ' + (isProjectOptsOpen && 'active')">
             <div class="profile-projects__dots" title="Опции">
                 <img src="img/dots-icon.svg" alt="">
             </div>
-            <div class="profile-projects__opts">
-                <a
-                    @click="editProject(project)"
-                    class="profile-projects__opts-item">
-                    <img src="img/pencil-icon.svg" alt="">
-                    <div class="profile-projects__opts-name">Редактировать</div>
-                </a>
-
-                <a
-                    v-if="project.status != -3"
-                    href="#"
-                    @click="stop"
-                    class="profile-projects__opts-item">
-                    <img src="img/hide-icon.svg" alt="">
-                    <div class="profile-projects__opts-name">Скрыть</div>
-                </a>
-                <a
-                    v-else
-                    href="#"
-                    @click="start"
-                    class="profile-projects__opts-item">
-                    <img src="img/show-icon.svg" alt="">
-                    <div class="profile-projects__opts-name">Показывать</div>
-                </a>
-
-                <a
-                    @click="deleteProject"
-                    href="#" class="profile-projects__opts-item">
-                    <img src="img/delete-icon.svg" alt="">
-                    <div class="profile-projects__opts-name">Удалить</div>
-                </a>
-            </div>
+            <ProjectOptions
+                v-on:editProject="editProject"
+                v-on:deleteProject="deleteProject"
+                v-on:showProject="start"
+                v-on:hideProject="stop"
+            ></ProjectOptions>
         </div>
     </div>
+
     <confirm-popup ref="confirmPopup"></confirm-popup>
 </template>
 <script>
+import axios from "axios";
 import {ref, shallowRef} from 'vue'
 
 import Project from "../../../../core/services/api/Project.vue";
 import Work from "../../../../core/services/api/Work.vue";
 
 import Loader from "../../../../core/components/AppLoader.vue";
+import ProjectOptions from './ProjectOptionsComponent'
+import BloggersCarousel from './BloggersCarouselComponent'
 
 import ConfirmPopup from '../../../../core/components/popups/confirmation-popup/ConfirmationPopup.vue';
-import axios from "axios";
 
 export default{
     props:['project', 'currentItem'],
-    components: {ConfirmPopup},
+    components: { ConfirmPopup, ProjectOptions, BloggersCarousel},
     data(){
         return {
             bloggers_leads: ref([]),
@@ -662,6 +648,7 @@ export default{
             prodsStatisticsChartData: ref(null),
 
             isProjectOptsOpen: ref(false),
+
             Project, Work,
             Loader
         }
@@ -752,35 +739,75 @@ export default{
         }));
     },
     updated(){
-        $(`.profile-projects__item[data-id="${this.project.id}"]`).find('.projects-blogers--in_work').owlCarousel({
-            margin: 5,
-            nav: true,
-            responsive: {
-                0:{
-                    items: 1
-                },
-                1180: {
-                    items:2
-                }
-            }
-        });
-        $(`.profile-projects__item[data-id="${this.project.id}"]`).find('.projects-blogers--leads').owlCarousel({
-            margin: 5,
-            nav: true,
-            responsive: {
-                0:{
-                    items: 1
-                },
-                1180: {
-                    items:2
-                }
-            }
-        });
     },
     methods:{
         editProject(project){
             this.$emit('edit', project)
         },
+        async deleteProject(){
+            const isConfirmed = await this.$refs.confirmPopup.show({
+                title: 'Подтвердите действие',
+                subtitle: 'После подтверждения пользователя нельзя будет восстановить',
+                okButton: 'Подтвердить',
+                cancelButton: 'Отмена',
+            });
+
+            if (isConfirmed) {
+                this.Project.delete(this.project.id).then((res) => {
+                    if(res){
+                        $(`.profile-projects__item[data-id="${this.project.id}"]`).remove();
+                    }
+                })
+            }
+        },
+        stop(){
+            this.Project.stop(this.project.id).then((res) => {
+                if(res){
+                    this.project.status = -3;
+
+                    var statusName = 'Приостановлено';
+
+                    if(!this.project.is_blogger_access){
+                        statusName = 'Не опубликовано'
+                    }
+
+                    this.project.status_name = statusName;
+                }
+            })
+        },
+        start(){
+            this.Project.start(this.project.id).then((res) => {
+                if(res){
+                    this.project.status = 0;
+
+                    var statusName = 'Активно';
+
+                    if(!this.project.is_blogger_access){
+                        statusName = 'Не опубликовано'
+                    }
+
+                    this.project.status_name = statusName
+                }
+            })
+        },
+        activate(){
+            this.$refs.confirmPopup.show({
+                title: 'Подтвердите действие',
+                subtitle: 'После подтверждения пользователя нельзя будет восстановить',
+                okButton: 'Подтвердить',
+                cancelButton: 'Отмена',
+            }).then((isConfirmed) => {
+                if(isConfirmed){
+                    this.Project.activate(this.project.id).then((res) => {
+                        if(res){
+                            this.project.is_blogger_access = 1
+                            this.project.status_name = 'Опубликовано'
+                        }
+                    })
+                }
+            })
+        },
+
         goToChat(work){
             this.$emit('switchTab', work.id)
         },
@@ -788,9 +815,6 @@ export default{
         getBloggersInWork(){
             return new Promise((resolve, reject) => {
                 this.Loader.loaderOn(`.profile-projects__item[data-id="${this.project.id}"] .projects-blogers--in_work`)
-
-                $(`.profile-projects__item[data-id="${this.project.id}"]`)
-                    .find('.projects-blogers--in_work').owlCarousel('destroy')
 
                 this.Work.getProjectsList(this.project, 'active').then(data => {
 
@@ -855,23 +879,23 @@ export default{
                 method: 'get',
                 url: '/api/projects/' + this.project.id + '/statistics',
             })
-                .then(result => {
-                    if(result.data.statistics.completed_works)
-                        this.completed_works = result.data.statistics.completed_works;
+            .then(result => {
+                if(result.data.statistics.completed_works)
+                    this.completed_works = result.data.statistics.completed_works;
 
-                    if(result.data.statistics.completed_works_statistics)
-                        this.completed_works_statistics = result.data.statistics.completed_works_statistics;
+                if(result.data.statistics.completed_works_statistics)
+                    this.completed_works_statistics = result.data.statistics.completed_works_statistics;
 
-                    if(result.data.statistics.marketplace_statistics)
-                        this.marketplace_statistics = JSON.parse(result.data.statistics.marketplace_statistics);
+                if(result.data.statistics.marketplace_statistics)
+                    this.marketplace_statistics = JSON.parse(result.data.statistics.marketplace_statistics);
 
-                    this.updateProductStatistics()
+                this.updateProductStatistics()
 
-                    this.Loader.loaderOff()
-                })
-                .catch(error => {
-                    this.Loader.loaderOff()
-                })
+                this.Loader.loaderOff()
+            })
+            .catch(error => {
+                this.Loader.loaderOff()
+            })
         },
         updateProductStatistics(){
             this.prodsStatisticsChart.destroy()
@@ -963,77 +987,6 @@ export default{
                     },
                 }
             }));
-        },
-        async deleteProject(event){
-            event.preventDefault();
-
-            const isConfirmed = await this.$refs.confirmPopup.show({
-                title: 'Подтвердите действие',
-                subtitle: 'После подтверждения пользователя нельзя будет восстановить',
-                okButton: 'Подтвердить',
-                cancelButton: 'Отмена',
-            });
-
-            if (isConfirmed) {
-                this.Project.delete(this.project.id).then((res) => {
-                    if(res){
-                        $(`.profile-projects__item[data-id="${this.project.id}"]`).remove();
-                    }
-                })
-            }
-        },
-        stop(event){
-            event.preventDefault()
-
-            this.Project.stop(this.project.id).then((res) => {
-                if(res){
-                    this.project.status = -3;
-
-                    var statusName = 'Приостановлено';
-
-                    if(!this.project.is_blogger_access){
-                        statusName = 'Не опубликовано'
-                    }
-
-                    this.project.status_name = statusName;
-                }
-            })
-        },
-        start(event){
-            event.preventDefault()
-
-            this.Project.start(this.project.id).then((res) => {
-                if(res){
-                    this.project.status = 0;
-
-                    var statusName = 'Активно';
-
-                    if(!this.project.is_blogger_access){
-                        statusName = 'Не опубликовано'
-                    }
-
-                    this.project.status_name = statusName
-                }
-            })
-        },
-        async activate(event){
-            event.preventDefault()
-
-            const isConfirmed = await this.$refs.confirmPopup.show({
-                title: 'Подтвердите действие',
-                subtitle: 'После подтверждения пользователя нельзя будет восстановить',
-                okButton: 'Подтвердить',
-                cancelButton: 'Отмена',
-            });
-
-            if(isConfirmed){
-                this.Project.activate(this.project.id).then((res) => {
-                    if(res){
-                        this.project.is_blogger_access = 1
-                        this.project.status_name = 'Опубликовано'
-                    }
-                })
-            }
         },
 
         denyWork(work){
