@@ -3,6 +3,7 @@
         <div class="popup__inner popup-project">
             <div class="popup-project__left">
                 <Carousel
+                :carouselID="'popup-project__imgs-carousel'"
                 :itemsList="projectInfo.imgs"
                 :listClassList="['popup-project__carousel']"
                 :itemsClassList="['popup-project__img']"

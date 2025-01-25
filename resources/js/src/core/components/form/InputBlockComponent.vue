@@ -11,7 +11,7 @@
             :id="inputID"
             :placeholder="inputPlaceholder"
             :class="'input ' +  (getInputClassString())">
-        <span class="error" v-if = "error">{{ error }}</span>
+        <span class="error" v-if="error">{{ error }}</span>
     </div>
 </template>
 <script>

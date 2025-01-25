@@ -1,11 +1,13 @@
 <template>
     <div
+        :id="carouselID"
         :class="'profile-projects__row profile-projects__blogers projects-blogers owl-carousel ' + (getCarouselClassString())">
         <div
             v-if="works && works.length > 0"
             v-for="work in works"
             :data-id="work.blogger.id"
-            class="list-blogers__item bloger-item card">
+            class="list-blogers__item bloger-item card"
+        >
             <div class="card__row card__content">
                 <div class="card__col">
                     <div class="card__row card__header">
@@ -137,15 +139,30 @@
 </template>
 <script>
 export default{
-    props:['works', 'carouselClassList', 'cardsType'],
+    props:['project', 'carouselID', 'works', 'carouselClassList', 'cardsType'],
     data(){
         return{
 
         }
     },
+    mounted(){
+        $('.owl-carousel#' + this.carouselID).owlCarousel({
+            margin: 5,
+            nav: true,
+            responsive: {
+                0:{
+                    items: 1
+                },
+                1180: {
+                    items:2
+                }
+            }
+        });
+    },
     updated(){
-        $('.owl-carousel').owlCarousel('destroy')
-        $('.owl-carousel').owlCarousel({
+        console.log(this.works)
+        $('.owl-carousel#' + this.carouselID).owlCarousel('destroy')
+        $('.owl-carousel#' + this.carouselID).owlCarousel({
             margin: 5,
             nav: true,
             responsive: {
@@ -170,7 +187,7 @@ export default{
         },
 
         getCarouselClassString(){
-            return (this.carouselClassList || []).join(' ')
+            return this.carouselClassList && this.carouselClassList.length > 0 ? this.carouselClassList.join(' ') : ''
         }
     }
 }

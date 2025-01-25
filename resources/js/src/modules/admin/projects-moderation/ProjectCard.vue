@@ -4,6 +4,7 @@
         class="list-projects__item project-item" :data-id="project.id">
         <div class="project-item__carousel">
             <Carousel
+                :carouselID="'project-item__imgs-carousel-' + project.id"
                 :listClassList="['project-item__carousel--carousel']"
                 :itemsClassList="['project-item__img']"
                 :itemsList="project.project_files"

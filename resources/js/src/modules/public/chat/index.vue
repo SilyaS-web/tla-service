@@ -1,10 +1,6 @@
 <template>
     <div class="profile-chat tab-content" id="chat">
         <div class="profile-chat__body" v-if="user">
-            <!--            <div class="profile-projects__title title">-->
-            <!--                <span v-if="user.role == 'blogger'"> Чат с селлерами </span>-->
-            <!--                <span v-else> Чат с блогерами </span>-->
-            <!--            </div>-->
             <div class="profile-tabs__content-item">
                 <div class="tab-content__chat chat">
                     <div class="chat__body">

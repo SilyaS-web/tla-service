@@ -7,35 +7,35 @@
             <div class="create-project__quest quest">
                 <div class="quest__steps">
                     <div id="step_1" class="quest__step step current">
-                        <div class="form-group">
-                            <label for="product-name">Название товара</label>
-                            <input
-                                v-model="project.product_name"
-                                type="text"
-                                id="product-name"
-                                name="product_name"
-                                placeholder="Введите наименование товара" class="input input--product_name">
-                            <span class="error" v-if="errors && errors.product_name">{{ errors.product_name }}</span>
-                        </div>
+                        <Input
+                            v-model="project.product_name"
+                            :label="'Название товара'"
+                            :inputType="'text'"
+                            :inputPlaceholder="'Введите наименование товара'"
+                            :inputClassList="['input--product_name']"
+                            :inputID="'product-name'"
+                            :error="(errors && errors.product_name ? errors.product_name : null)"
+                        ></Input>
                         <div class="quest__step-row">
-                            <div class="form-group">
-                                <label for="project-articul">Артикул товара</label>
-                                <input
-                                    type="text"
-                                    v-model="project.product_nm"
-                                    id="product-articul"
-                                    name="product_nm"
-                                    placeholder="Введите артикул" class="input input--product_price">
-                                <span class="error" v-if="errors && errors.product_nm">{{ errors.product_nm }}</span>
-                            </div>
-                            <div class="form-group" style="flex:1 1">
-                                <label for="" style="display:unset">Цена товара</label>
-                                <div class="quantity-input">
-                                    <input
-                                        v-model="project.product_price"
-                                        type="number" class="input" value="0" name="product_price">
-                                </div>
-                            </div>
+                            <Input
+                                v-model="project.product_nm"
+                                :label="'Артикул товара'"
+                                :inputType="'text'"
+                                :inputPlaceholder="'Введите артикул'"
+                                :inputClassList="['input--product_articul']"
+                                :inputID="'product-articul'"
+                                :error="(errors && errors.product_nm ? errors.product_nm : null)"
+                            ></Input>
+
+                            <Input
+                                v-model="project.product_price"
+                                :label="'Цена товара'"
+                                :inputType="'number'"
+                                :inputPlaceholder="'Введите цену товара'"
+                                :inputClassList="['input--product_price']"
+                                :inputID="'product-price'"
+                                :error="(errors && errors.product_price ? errors.product_price : null)"
+                            ></Input>
                         </div>
                         <div class="form-group marketing-format" style="z-index: 3;" >
                             <label for="format">Выберите формат</label>
@@ -133,7 +133,10 @@ import { ref } from "vue";
 
 import Project from '../../../../core/services/api/Project.vue'
 
+import Input from '../../../../core/components/form/InputBlockComponent'
+
 export default {
+    components:{ Input },
     data(){
         return {
             project: ref({

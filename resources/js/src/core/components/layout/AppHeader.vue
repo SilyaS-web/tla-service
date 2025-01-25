@@ -30,7 +30,7 @@
                             </span>
                         </div>
                         <div class="header__profile-settings">
-                            <router-link :to="{path: '/' + user.role + '/edit-profile'}">
+                            <router-link :to="{path: '/' + user.role + '/profile/edit'}">
                                 Личные данные
                             </router-link>
 
@@ -257,7 +257,7 @@
                             </span>
                         </div>
                         <div class="header__profile-settings">
-                            <router-link :to="{path: '/' + user.role + '/edit-profile'}">
+                            <router-link :to="{path: '/' + user.role + '/profile/edit'}">
                                 Личные данные
                             </router-link>
 

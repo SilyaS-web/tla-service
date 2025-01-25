@@ -3,13 +3,32 @@
         v-if="project"
         :data-id="project.id"
         :data-brand = "project.marketplace_brand"
-        :class="'profile-projects__row profile-projects__item ' + (project.currentProject ? 'hovered' : '')">
-        <div class="profile-projects__col profile-projects__img profile-projects--carousel owl-carousel">
-            <div
-                v-for="image in project.project_files"
-                :style="'background-image:url(' + image.link + ')'"
-                class="project-item__img"></div>
-        </div>
+        :class="'profile-projects__row profile-projects__item ' + (project.currentProject ? 'hovered' : '')"
+    >
+
+        <!-- карусель изображений проекта-->
+        <Carousel
+            :carouselID="'project-item__imgs-carousel-' + project.id"
+            :listClassList="['profile-projects__col', 'profile-projects__img', 'profile-projects--carousel']"
+            :itemsClassList="['project-item__img']"
+            :itemsList="project.project_files"
+            :props="{
+                margin: 5,
+                nav: false,
+                dots: true,
+                responsive: {
+                    0:{
+                        items: 1
+                    },
+                    1180: {
+                        items:1
+                    }
+                }
+            }"
+        >
+        </Carousel>
+
+        <!-- информация о проекте-->
         <div class="profile-projects__col profile-projects__content" style="padding:5px 0px;">
             <div class="profile-projects__row" style="align-items: start">
                 <div
@@ -54,6 +73,7 @@
             </div>
         </div>
 
+        <!-- дополнительная информация о проекте-->
         <div class="profile-projects__col profile-projects__content profile-projects__info" style="padding:5px 0px;">
             <div class="card__col card__stats" style="flex: 1 1 auto">
                 <div class="card__col card__stats-stats" style="flex: 1 1 auto">
@@ -130,249 +150,31 @@
             </div>
         </div>
 
+        <!-- карусель заявок от блогеров-->
         <BloggersCarousel
+            :project="project"
+            :carouselID="'bloggers-leads-' + project.id"
             :works="bloggers_leads"
             :cardsType="'leads'"
-            :classList="['projects-blogers--leads']"
+            :carouselClassList="['projects-blogers--leads']"
+            v-on:acceptWork="acceptWork"
+            v-on:denyWork="denyWork"
+            v-on:goToChat="goToChat"
         ></BloggersCarousel>
 
-        <div class="profile-projects__row profile-projects__blogers projects-blogers projects-blogers--leads owl-carousel">
-            <div
-                v-for="work in bloggers_leads"
-                :data-id="work.blogger.id"
-                class="list-blogers__item bloger-item card">
-                <div class="card__row card__content">
-                    <div class="card__col">
-                        <div class="card__row card__header">
-                            <div
-                                :style="'background-image:url(' + (work.blogger.user.image || '/img/profile-icon.svg') + ')'"
-                                class="card__img">
-                                <div v-if="work.blogger.is_achivement" class="card__achive">
-                                    <img src="img/achive-icon.svg" alt="">
-                                </div>
-                            </div>
-                            <div class="card__name">
-                                <p class="card__name-name">
-                                    {{ work.blogger.user.name }}
-                                </p>
-                                <p style="font-size: 12px">
-                                    {{ work.blogger.country.name }}, {{ work.blogger.city }}
-                                </p>
-                            </div>
-                            <div class="card__platforms">
-                                <a
-                                    v-for="platform in work.blogger.platforms"
-                                    :href="platform.link"
-                                    :class="'card__platform ' + platform.title + ')'"
-                                    target="_blank">
-                                    <img :src="platform.image" alt="">
-                                </a>
-                            </div>
-                        </div>
-                        <div class="card__row card__desc-title">
-                            <p style="font-weight: 500; font-size: 18px;">
-                                Сообщение от блогера
-                            </p>
-                        </div>
-                        <div class="card__row card__desc">
-                            <p>
-                                {{ work.message }}
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card__col card__stats">
-                        <div class="card__col card__stats-stats">
-                            <div class="card__row card__stats-row">
+        <!-- карусель блогеров в работе-->
+        <BloggersCarousel
+            :project="project"
+            :carouselID="'bloggers-in_work-' + project.id"
+            :works="bloggers_active"
+            :cardsType="'in_work'"
+            :carouselClassList="['projects-blogers--in_work']"
+            v-on:acceptWork="acceptWork"
+            v-on:denyWork="denyWork"
+            v-on:goToChat="goToChat"
+        ></BloggersCarousel>
 
-                                <div class="card__col card__stats-item">
-                                    <div class="card__stats-title">
-                                        <span>Подписчики</span>
-                                    </div>
-                                    <div class="card__stats-val">
-                                        <span>{{ work.blogger.summaryPlatform.subscriber_quantity }}</span>
-                                    </div>
-                                </div>
-                                <div class="card__col card__stats-item">
-                                    <div class="card__stats-title">
-                                        <span>Просмотры</span>
-                                    </div>
-                                    <div class="card__stats-val">
-                                        <span>{{ work.blogger.summaryPlatform.coverage }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card__row card__stats-row">
-
-                                <div class="card__col card__stats-item">
-                                    <div class="card__stats-title">
-                                        <span>ER %</span>
-                                    </div>
-                                    <div class="card__stats-val">
-                                        <span>{{ work.blogger.summaryPlatform.engagement_rate }}</span>
-                                    </div>
-                                </div>
-                                <div class="card__col card__stats-item">
-                                    <div class="card__stats-title">
-                                        <span>CPM</span>
-                                    </div>
-                                    <div class="card__stats-val">
-                                        <span> {{ (project.product_price / (work.blogger.summaryPlatform.coverage == 0 ? 1 : work.blogger.summaryPlatform.coverage) * 1000).toFixed(2)  }} ₽</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card__col card__column--gender">
-                            <div class="card__stats-title">
-                                <span>Пол аудитории</span>
-                            </div>
-                            <div class="card__row" style="align-items: center; gap:5px">
-                                <div class="card__diagram-icon"><img src="img/blogers-list/male-icon.svg" alt=""></div>
-                                <div class="card__diagram-line">
-                                    <span :style="'width:' + work.blogger.gender_ratio + '%;'"></span>
-                                </div>
-                                <div class="card__diagram-icon"><img src="img/blogers-list/female-icon.svg" alt=""></div>
-                            </div>
-                        </div>
-                        <div class="card__row" style="text-align: center;">
-                            <a :href="'/bloggers/' + work.blogger.id" class="" style="width: 100%; color: var(--primary); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -10px;">Подробнее</a>
-                        </div>
-                        <div class="card__row bloger-item--btns" style="gap:12px; width:100%; flex-wrap: wrap; justify-content: center">
-                            <button class="btn btn-primary" @click="acceptWork(work)">
-                                Принять
-                            </button>
-                            <button class="btn btn-secondary" @click="denyWork(work)">
-                                Отклонить
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="profile-projects__row profile-projects__blogers projects-blogers projects-blogers--in_work owl-carousel" >
-            <div
-                v-if="bloggers_active && bloggers_active.length > 0"
-                v-for="work in bloggers_active"
-                :data-id="work.id"
-                class="list-blogers__item bloger-item card">
-                <div class="card__row card__content">
-                    <div class="card__col">
-                        <div class="card__row card__header">
-                            <div
-                                style="'background-image:url(' + work.blogger.user.image + ')'"
-                                class="card__img">
-                                <div
-                                    v-if="work.blogger.is_achievement"
-                                    class="card__achive tooltip">
-                                    <img src="img/achive-icon.svg" alt="">
-                                    <div class="tooltip__text">
-                                        <p>Проверенный блогер</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card__name">
-                                <p class="card__name-name">
-                                    {{ work.blogger.user.name }}
-                                </p>
-                                <p style="font-size: 12px">
-                                    {{ work.blogger.country.name }}, {{ work.blogger.city }}
-                                </p>
-                            </div>
-                            <div class="card__platforms">
-                                <a
-                                    v-for="platform in work.blogger.platforms"
-                                    :href="platform.link"
-                                    :class="'card__platform ' + (platform.title ? platform.title.toLowerCase() : '')"
-                                    target="_blank"><img :src="platform.image" alt=""></a>
-                            </div>
-                        </div>
-                        <div class="card__row card__desc-title">
-                            <p style="font-weight: 500; font-size: 18px;">
-                                Описание канала
-                            </p>
-                        </div>
-                        <div class="card__row card__desc">
-                            <p>
-                                {{ work.blogger.description }}
-                            </p>
-                        </div>
-                    </div>
-                    <div class="card__col card__stats">
-                        <div class="card__col card__stats-stats">
-                            <div class="card__row card__stats-row">
-
-                                <div class="card__col card__stats-item">
-                                    <div class="card__stats-title">
-                                        <span>Подписчики</span>
-                                    </div>
-                                    <div class="card__stats-val">
-                                        <span>{{ work.blogger.summaryPlatform.subscriber_quantity }}</span>
-                                    </div>
-                                </div>
-                                <div class="card__col card__stats-item">
-                                    <div class="card__stats-title">
-                                        <span>Просмотры</span>
-                                    </div>
-                                    <div class="card__stats-val">
-                                        <span>{{ work.blogger.summaryPlatform.coverage }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card__row card__stats-row">
-
-                                <div class="card__col card__stats-item">
-                                    <div class="card__stats-title">
-                                        <span>ER %</span>
-                                    </div>
-                                    <div class="card__stats-val">
-                                        <span>{{ work.blogger.summaryPlatform.engagement_rate }}</span>
-                                    </div>
-                                </div>
-                                <div class="card__col card__stats-item">
-                                    <div class="card__stats-title">
-                                        <span>CPM</span>
-                                    </div>
-                                    <div class="card__stats-val">
-                                        <span>{{ (project.product_price / (work.blogger.summaryPlatform.coverage == 0 ? 1 : work.blogger.summaryPlatform.coverage) * 1000).toFixed(2) }} ₽</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card__col card__column--gender">
-                            <div class="card__stats-title">
-                                <span>Пол аудитории</span>
-                            </div>
-                            <div class="card__row" style="align-items: center; gap:5px">
-                                <div class="card__diagram-icon"><img src="img/blogers-list/male-icon.svg" alt=""></div>
-                                <div class="card__diagram-line">
-                                    <span :style="'width:' + work.blogger.gender_ratio + '%;'"></span>
-                                </div>
-                                <div class="card__diagram-icon"><img src="img/blogers-list/female-icon.svg" alt=""></div>
-                            </div>
-                        </div>
-                        <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap">
-                            <button
-                                v-if="work.status == null"
-                                :data-project-id="project.id"
-                                class="btn btn-secondary">
-                                Заявка отправлена
-                            </button>
-                            <button
-                                v-else
-                                :data-work-id="work.id"
-                                @click="goToChat(work)"
-                                class="btn btn-primary">
-                                Перейти в диалог
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <span v-else class="empty-bloggers">
-                Нет блогеров в работе
-            </span>
-        </div>
-
+        <!-- статистика по заявкам/работе, статистика товара на маркетплейсах-->
         <div class="profile-projects__row profile-projects__statistics projects-statistics">
             <div class="view-project__props view-project__props--desktop">
                 <div class="view-project__props-wrap">
@@ -544,8 +346,8 @@
                                                     </div>
                                                 </span>
                                             <span v-else>
-                                                    {{ Math.round(work.statistics.views / (findBiggestPlatform(work.blogger).summaryPlatform.subscriber_quantity == 0 ? 1 : findBiggestPlatform(work.blogger).summaryPlatform.subscriber_quantity) * 100) }}
-                                                </span>
+                                                {{ Math.round(work.statistics.views / (findBiggestPlatform(work.blogger).summaryPlatform.subscriber_quantity == 0 ? 1 : findBiggestPlatform(work.blogger).summaryPlatform.subscriber_quantity) * 100) }}
+                                            </span>
                                         </div>
                                         <div class="table-stats__col" style="width: 9%;">
                                                <span
@@ -558,8 +360,8 @@
                                                     </div>
                                                 </span>
                                             <span v-else>
-                                                    {{ Math.round(project.product_price / (work.statistics.views == 0 ? 1 : work.statistics.views) * 1000).toFixed(2) }}
-                                                </span>
+                                                {{ Math.round(project.product_price / (work.statistics.views == 0 ? 1 : work.statistics.views) * 1000).toFixed(2) }}
+                                            </span>
                                         </div>
                                         <div class="table-stats__col" style="width: 9%;">
                                                 <span
@@ -601,6 +403,7 @@
             </div>
         </div>
 
+        <!-- опции взаимодействия с проектом-->
         <div
             @click="isProjectOptsOpen = !isProjectOptsOpen"
             :class="'profile-projects__control-btns ' + (isProjectOptsOpen && 'active')">
@@ -608,6 +411,7 @@
                 <img src="img/dots-icon.svg" alt="">
             </div>
             <ProjectOptions
+                :status="project.status"
                 v-on:editProject="editProject"
                 v-on:deleteProject="deleteProject"
                 v-on:showProject="start"
@@ -626,6 +430,7 @@ import Project from "../../../../core/services/api/Project.vue";
 import Work from "../../../../core/services/api/Work.vue";
 
 import Loader from "../../../../core/components/AppLoader.vue";
+import Carousel from "../../../../core/components/AppCarousel";
 import ProjectOptions from './ProjectOptionsComponent'
 import BloggersCarousel from './BloggersCarouselComponent'
 
@@ -633,7 +438,7 @@ import ConfirmPopup from '../../../../core/components/popups/confirmation-popup/
 
 export default{
     props:['project', 'currentItem'],
-    components: { ConfirmPopup, ProjectOptions, BloggersCarousel},
+    components: { Carousel, ConfirmPopup, ProjectOptions, BloggersCarousel},
     data(){
         return {
             bloggers_leads: ref([]),
@@ -654,10 +459,6 @@ export default{
         }
     },
     mounted(){
-        $(document).on('click', '.profile-projects__control-btns', function(e){
-            $(e.currentTarget).toggleClass('active')
-        })
-
         var mediaQuery = window.matchMedia('(max-width: 911px)');
 
         window
@@ -667,45 +468,6 @@ export default{
                     //this.prodsStatisticsChart.resize()
                 }
             })
-
-        var imgsCarousel = $(`.profile-projects__item[data-id="${this.project.id}"]`).find('.profile-projects--carousel').owlCarousel({
-            margin: 5,
-            nav: false,
-            dots: true,
-            responsive: {
-                0:{
-                    items: 1
-                },
-                1180: {
-                    items:1
-                }
-            }
-        });
-
-        $(`.profile-projects__item[data-id="${this.project.id}"]`).find('.projects-blogers--in_work').owlCarousel({
-            margin: 5,
-            nav: true,
-            responsive: {
-                0:{
-                    items: 1
-                },
-                1180: {
-                    items:2
-                }
-            }
-        });
-        $(`.profile-projects__item[data-id="${this.project.id}"]`).find('.projects-blogers--leads').owlCarousel({
-            margin: 5,
-            nav: true,
-            responsive: {
-                0:{
-                    items: 1
-                },
-                1180: {
-                    items:2
-                }
-            }
-        });
 
         if(this.project.currentProject){
             $([document.documentElement, document.body]).animate({
@@ -744,21 +506,21 @@ export default{
         editProject(project){
             this.$emit('edit', project)
         },
-        async deleteProject(){
-            const isConfirmed = await this.$refs.confirmPopup.show({
+        deleteProject(){
+            this.$refs.confirmPopup.show({
                 title: 'Подтвердите действие',
                 subtitle: 'После подтверждения пользователя нельзя будет восстановить',
                 okButton: 'Подтвердить',
                 cancelButton: 'Отмена',
-            });
-
-            if (isConfirmed) {
-                this.Project.delete(this.project.id).then((res) => {
-                    if(res){
-                        $(`.profile-projects__item[data-id="${this.project.id}"]`).remove();
-                    }
-                })
-            }
+            }).then((isConfirmed) => {
+                if (isConfirmed) {
+                    this.Project.delete(this.project.id).then((res) => {
+                        if(res){
+                            $(`.profile-projects__item[data-id="${this.project.id}"]`).remove();
+                        }
+                    })
+                }
+            })
         },
         stop(){
             this.Project.stop(this.project.id).then((res) => {
@@ -836,9 +598,6 @@ export default{
             return new Promise((resolve, reject) => {
                 this.Loader.loaderOn(`.profile-projects__item[data-id="${this.project.id}"] .projects-blogers--leads`)
 
-                $(`.profile-projects__item[data-id="${this.project.id}"]`)
-                    .find('.projects-blogers--leads').owlCarousel('destroy')
-
                 this.Work.getProjectsList(this.project, 'pending').then(data => {
                     if(data){
                         this.bloggers_leads = (data || []).map(_w => {
@@ -854,6 +613,7 @@ export default{
                 })
             })
         },
+
         findBiggestPlatform(blogger){
             if(!blogger){
                 return { subscriber_quantity: 0 };

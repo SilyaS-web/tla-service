@@ -8,7 +8,7 @@
         </a>
 
         <a
-            v-if="project.status != -3"
+            v-if="status != -3"
             href="#"
             @click="hideProject"
             class="profile-projects__opts-item">
@@ -35,21 +35,25 @@
 </template>
 <script>
 export default{
-    props:['project'],
+    props:['status'],
     data(){
 
     },
     methods:{
-        editProject(){
+        editProject(event){
+            event.preventDefault()
             this.$emit('editProject', true)
         },
-        deleteProject(){
+        deleteProject(event){
+            event.preventDefault()
             this.$emit('deleteProject', true)
         },
-        showProject(){
+        showProject(event){
+            event.preventDefault()
             this.$emit('showProject', true)
         },
-        hideProject(){
+        hideProject(event){
+            event.preventDefault()
             this.$emit('hideProject', true)
         },
     }
