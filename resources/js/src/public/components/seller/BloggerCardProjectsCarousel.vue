@@ -8,7 +8,7 @@
                 v-if="project.project_files" class="project-item__carousel">
                 <div
                     class="project-item__img"
-                    :style="'background-image:url(' + project.project_files[0].link + ')'"></div>
+                    :style="'background-image:url(' + (project.project_files && project.project_files[0] ? project.project_files[0].link : '/img/placeholder.webp') + ')'"></div>
             </div>
             <div class="project-item__content">
                 <div class="project-item__title">
