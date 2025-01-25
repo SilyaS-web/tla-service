@@ -10,7 +10,7 @@
                         {{ subtitle }}
                     </div>
                 </div>
-                <div class="user-view__body">
+                <div class="user-view__body blogger-popup__body">
                     <div
                         :class="'info-profile__body ' + (isMoreInfoClicked ? 'show-more' : '')">
                         <div class="info-profile__left">
@@ -20,14 +20,7 @@
                                     <div class="card__name">
                                         <p class="card__name-name" title="">{{ blogger.user.name }}</p>
                                         <p class="card__name-tag" title="">Блогер</p>
-                                    </div>
-                                    <div class="card__header-achives">
-                                        <div class="card__achive" title="Проверенный блогер" v-if="blogger.is_achievement">
-                                            <img src="img/achive-icon.svg" alt="">
-                                        </div>
-                                        <div class="card__achive" title="Есть контент" v-if="blogger.content && blogger.content.length > 0">
-                                            <img src="img/has-content-icon.svg" alt="">
-                                        </div>
+                                        <p class="card__name-desc">{{ (blogger.description || '').slice(0, 80) + '...' }}</p>
                                     </div>
                                 </div>
 
@@ -44,74 +37,112 @@
                                         <span>{{ theme.name }}</span>
                                     </div>
                                 </div>
-                                <div class="card__row card__desc">
-                                    <p>{{ blogger.description }}</p>
+
+                                <div class="card__row card__tags card__tags--achives">
+                                    <div
+                                        v-if="blogger.content && blogger.content.length > 0"
+                                        class="card__tags-item">
+                                        <div class="card__tags-icon" style="background-image: url('/img/has-content-icon.svg');">
+                                        </div>
+                                        <span>Есть контент</span>
+                                    </div>
+                                    <div
+                                        v-if="blogger.is_achievement"
+                                        class="card__tags-item">
+                                        <div
+                                            class="card__tags-icon" style="background-image: url('/img/documents-ok-icon.svg');">
+                                        </div>
+                                        <span>Документы проверены</span>
+                                    </div>
+                                    <div class="card__tags-item">
+                                        <div class="card__tags-icon" style="background-image: url('/img/star-icon-alt.svg');">
+                                        </div>
+                                        <span>Платформа рекомендует</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div
-                                class="info-profile__platforms blogger-platforms">
-                                <div
-                                    v-for="platform in (getSortedPlatforms(blogger.platforms))"
-                                    class="blogger-platforms__item item-platforms">
-                                    <a target="_blank"
-                                       :href="platform.link"
-                                       :class="'item-platforms__title item-platforms__title--' + (getPlatformFieldPrefix(platform))">
-                                        {{ platform.title }}
-                                    </a>
+                            <div class="info-profile__platforms blogger-platforms">
+                                <div class="blogger-platforms__header">
+                                    <div
+                                        v-for="platform in blogger.platforms"
+                                        :class="'blogger-platforms__btn ' + (platform.title === currentPlatform ? 'active ' : '') + ('blogger-platforms__btn--' + getPlatformFieldPrefix(platform))"
+                                        @click="currentPlatform = platform.title">
+                                        <img
+                                            :src="'/' + platform.image" alt="">
+                                    </div>
+                                </div>
+                                <div class="blogger-platforms__body">
+                                    <div
+                                        v-for="platform in blogger.platforms"
+                                        :class="'blogger-platforms__item item-platforms ' + (getPlatformFieldPrefix(platform))">
+                                        <a target="_blank"
+                                           :href="platform.link"
+                                           :class="'item-platforms__title item-platforms__title--' + (getPlatformFieldPrefix(platform))">
+                                            {{ platform.title }}
+                                        </a>
 
-                                    <div class="item-platforms__stats">
-                                        <div class="item-platforms__stats-row">
-                                            <div class="item-platforms__stat">
-                                                <div class="item-platforms__stat-title">
-                                                    Подписчики
+                                        <div class="item-platforms__stats">
+                                            <div class="item-platforms__stats-row">
+                                                <div class="item-platforms__stat">
+                                                    <div class="item-platforms__stat-title">
+                                                        Подписчики
+                                                    </div>
+                                                    <div class="item-platforms__stat-value">
+                                                        {{ platform.subscriber_quantity }}
+                                                    </div>
                                                 </div>
-                                                <div class="item-platforms__stat-value">
-                                                    {{ platform.subscriber_quantity }}
+                                            </div>
+
+                                            <div
+                                                v-if="platform.coverage"
+                                                class="item-platforms__stats-row">
+                                                <div class="item-platforms__stat">
+                                                    <div class="item-platforms__stat-title">
+                                                        {{ bloggerPlatformsTitles[platform.title] ? bloggerPlatformsTitles[platform.title] : bloggerPlatformsTitles['default'] }}
+                                                    </div>
+                                                    <div class="item-platforms__stat-value">
+                                                        {{ platform.coverage }}
+                                                    </div>
+                                                </div>
+                                                <div class="item-platforms__stat er">
+                                                    <div class="item-platforms__stat-title">
+                                                        ER, %
+                                                    </div>
+                                                    <div class="item-platforms__stat-value">
+                                                        {{ platform.engagement_rate }}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div
+                                                v-if="platform.additional_coverage"
+                                                class="item-platforms__stats-row">
+                                                <div class="item-platforms__stat">
+                                                    <div class="item-platforms__stat-title">
+                                                        {{ bloggerAdditPlatformsTitles[platform.title] }}
+                                                    </div>
+                                                    <div class="item-platforms__stat-value">
+                                                        {{ platform.additional_coverage }}
+                                                    </div>
+                                                </div>
+                                                <div class="item-platforms__stat er">
+                                                    <div class="item-platforms__stat-title">
+                                                        ER, %
+                                                    </div>
+                                                    <div class="item-platforms__stat-value">
+                                                        {{ platform.additional_engagement_rate }}
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
+                                </div>
+                            </div>
 
-                                        <div
-                                            v-if="platform.coverage"
-                                            class="item-platforms__stats-row">
-                                            <div class="item-platforms__stat">
-                                                <div class="item-platforms__stat-title">
-                                                    {{ bloggerPlatformsTitles[platform.title] ? bloggerPlatformsTitles[platform.title] : bloggerPlatformsTitles['default'] }}
-                                                </div>
-                                                <div class="item-platforms__stat-value">
-                                                    {{ platform.coverage }}
-                                                </div>
-                                            </div>
-                                            <div class="item-platforms__stat er">
-                                                <div class="item-platforms__stat-title">
-                                                    ER, %
-                                                </div>
-                                                <div class="item-platforms__stat-value">
-                                                    {{ platform.engagement_rate }}
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div
-                                            v-if="platform.additional_coverage"
-                                            class="item-platforms__stats-row">
-                                            <div class="item-platforms__stat">
-                                                <div class="item-platforms__stat-title">
-                                                    {{ bloggerAdditPlatformsTitles[platform.title] }}
-                                                </div>
-                                                <div class="item-platforms__stat-value">
-                                                    {{ platform.additional_coverage }}
-                                                </div>
-                                            </div>
-                                            <div class="item-platforms__stat er">
-                                                <div class="item-platforms__stat-title">
-                                                    ER, %
-                                                </div>
-                                                <div class="item-platforms__stat-value">
-                                                    {{ platform.additional_engagement_rate }}
-                                                </div>
-                                            </div>
-                                        </div>
+                            <div class="info-profile__platforms-footer">
+                                <div class="info-profile__platforms-btns">
+                                    <div class="btn btn-primary">
+                                        Отправить заявку
                                     </div>
                                 </div>
                             </div>
@@ -177,6 +208,8 @@
                 blogger: ref({}),
                 bloggerContent: ref([]),
                 bloggerWorks: ref([]),
+
+                currentPlatform: ref('Instagram'),
 
                 currentTab: ref('content'),
                 isMoreInfoClicked: ref(false),
@@ -254,7 +287,7 @@
                 this.$refs.popup.open()
 
                 this.blogger = blogger
-
+                this.currentPlatform = blogger.platforms[0].title
                 this.isContentLoading = true
 
                 axios({
