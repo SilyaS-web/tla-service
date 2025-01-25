@@ -139,7 +139,9 @@
                                 </div>
                             </div>
 
-                            <div class="info-profile__platforms-footer">
+                            <div
+                                @click="_confirm"
+                                class="info-profile__platforms-footer">
                                 <div class="info-profile__platforms-btns">
                                     <div class="btn btn-primary">
                                         Отправить заявку
@@ -271,7 +273,7 @@
                     'default': 'Просмотры',
                 },
                 bloggerAdditPlatformsTitles: {
-                    'Youtube': 'Просмотры выпусков',
+                    'Youtube': 'Просмотры shorts',
                     'VK': 'Просмотры клипов',
                     'default': 'Просмотры',
                 },

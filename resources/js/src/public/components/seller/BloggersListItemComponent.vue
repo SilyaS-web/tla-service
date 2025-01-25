@@ -206,7 +206,11 @@ import BloggerCardPopup from "./BloggerCardPopup";
             },
 
             openBloggerInfoPopup(){
-                this.$refs.bloggerCardPopup.show(this.blogger);
+                this.$refs.bloggerCardPopup.show(this.blogger).then(isConfirmed => {
+                    if(!isConfirmed) return
+
+                    this.sendOfferToBlogger()
+                })
             }
         }
     }
