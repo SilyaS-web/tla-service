@@ -178,6 +178,15 @@
                                 <span class="loader"></span>
                             </div>
                         </div>
+                        <div class="info-profile__platforms-footer info-profile__platforms-footer--mobile">
+                            <div class="info-profile__platforms-btns">
+                                <div
+                                    @click="_confirm"
+                                    class="btn btn-primary">
+                                    Отправить заявку
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

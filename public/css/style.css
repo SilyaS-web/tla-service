@@ -2436,9 +2436,9 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .list-blogers__item.card {
     /* box-shadow: 0px 0px 36px 42px rgba(0, 0, 0, .02); */
-    min-width: 335px;
-    /* border: 1px solid rgba(62, 66, 77, .15); */
-    background-color: rgba(62, 66, 77, .03);
+    min-width: 337px;
+     border: 1px solid #F5F5F5;
+    /*background-color: rgba(62, 66, 77, .03);*/
     width: calc(100% / 3 - 10px);
 }
 .bloger-item {
@@ -6422,8 +6422,17 @@ input[type='range']::-webkit-slider-runnable-track{
     .info-profile__body{
         flex-direction: column;
     }
+    .info-profile__platforms-footer{
+        display: none;
+    }
+    .info-profile__platforms-footer--mobile{
+        display: block;
+    }
     .info-profile__right{
         max-width: 100%;
+        margin-bottom: 32px;
+    }
+    .info-profile__projects .owl-nav, .info-profile__videos .owl-nav{
     }
     .info-profile__videos{
         width: 100vw;
