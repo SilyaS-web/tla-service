@@ -87,7 +87,7 @@ import moment from "moment";
 import ImagePopup from "../../../core/components/popups/fullscreen-image/ImapePopup";
 
 export default{
-    props:['messages', 'chatStatus', 'statistics', 'partnerName'],
+    props:['user', 'messages', 'chatStatus', 'statistics', 'partnerName'],
     components: { ImagePopup },
     data(){
         return{
@@ -131,7 +131,7 @@ export default{
             return this.currentChat ? this.currentChat.partner_user.name : '';
         },
         getStatusName(){
-            return this.statusNames[this.currentChat.status] || ''
+            return this.statusNames[this.chatStatus] || ''
         },
         getFileType(file){
             return file.split('.').pop();

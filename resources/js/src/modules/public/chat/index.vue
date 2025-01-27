@@ -26,6 +26,7 @@
 
                             <MessagesList
                                 :messages="messages"
+                                :user="user"
                                 :chatStatus="currentChat ? currentChat.status : false"
                                 :statistics="currentChat ? currentChat.statistics : false"
                                 :partnerName="currentChat ? currentChat.partner_user.name : ''"
@@ -249,8 +250,7 @@ export default{
                 this.currentChat = work;
 
                 this.User.getMessages(work.id, this.user.id).then(data => {
-
-
+                    this.messages = (data || [])
                     resolve(data)
                 })
             })

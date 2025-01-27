@@ -36,7 +36,7 @@ import ChatItem from './ChatItemComponent'
 
 export default {
     props:['works', 'userRole', 'currentChatID'],
-    components: {ChatItem},
+    components: { ChatItem },
     data(){
         return {
             chatSearchString: ref(null),

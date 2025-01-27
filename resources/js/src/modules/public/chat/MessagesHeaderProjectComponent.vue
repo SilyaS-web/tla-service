@@ -12,13 +12,13 @@
         <div class="current-project__col">
             <div class="current-project__title">
                 <p class="name"><b>Формат рекламы</b></p>
-                <p class="articul"> {{ project_work.name }} </p>
+                <p class="articul"> {{ workType }} </p>
             </div>
         </div>
     </div>
 </template>
 <script>
 export default{
-    props:['project']
+    props:['project', 'workType']
 }
 </script>

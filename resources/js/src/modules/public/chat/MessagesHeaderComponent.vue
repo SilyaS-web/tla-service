@@ -9,6 +9,7 @@
         <ProjectSignboard
             v-if="chat && chat.project"
             :project="chat.project"
+            :workType="chat.project_work.name"
         ></ProjectSignboard>
 
         <div
