@@ -15,8 +15,7 @@
     <link rel="stylesheet" href="{{ asset('libs/meter/style.css')  }}">
 
     <link rel="stylesheet" href="{{ asset('libs/range-slider/style.css')  }}">
-    @php($style = 'css/style.css?v=' . rand(100000, 9999999))
-    <link rel="stylesheet" href="{{ asset($style)  }}">
+    <link rel="stylesheet" href="{{ mix('css/style.css')  }}">
     <link rel="stylesheet" href="{{ asset('css/loader.css')  }}">
 
     <script src="{{ asset('libs/jquery/jquery-3.7.1.min.js') }}" crossorigin="anonymous"></script>
@@ -58,6 +57,5 @@
 @include('shared.success-message')
 </body>
 
-@php($script = "js/app.js?v=" . rand(100000, 9999999))
-<script src="{{ asset($script) }}"></script>
+<script src="{{ mix('js/app.js') }}"></script>
 </html>
