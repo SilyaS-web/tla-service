@@ -21,12 +21,6 @@
                     }
                 }" >
                 </Carousel>
-<!--                <div class="popup-project__carousel owl-carousel">-->
-<!--                    <div-->
-<!--                        v-for="file in projectInfo.imgs"-->
-<!--                        :style="'background-image:url(/' + (file.link || 'img/placeholder.webp') + ')'"-->
-<!--                        class="popup-project__img"></div>-->
-<!--                </div>-->
             </div>
             <div class="popup-project__right">
                 <div class="popup-project__info">

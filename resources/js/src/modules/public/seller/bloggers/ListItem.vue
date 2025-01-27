@@ -7,12 +7,14 @@
                 <div class="card__row card__header">
                     <div class="card__img" v-bind:style="'background-image:url(' + (!blogger.user.image ? '/img/profile-icon.svg' : `${blogger.user.image}`) + ')'">
                     </div>
-                    <div class="card__achive" title="Проверенный блогер" v-if="blogger.is_achievement">
-                        <img src="img/achive-icon.svg" alt="">
-                    </div>
                     <div class="card__name">
                         <p class="card__name-name" title="">
                             {{ blogger.user.name }}
+                        </p>
+                        <p
+                            class="card__name-tag"
+                            title="">
+                            Блогер
                         </p>
                     </div>
                     <div class="card__platforms">
@@ -76,7 +78,7 @@
                                 <span>CPM</span>
                             </div>
                             <div class="card__stats-val">
-                                <span>{{ blogger.summaryPlatform.cost_per_mille || '-' }}₽</span>
+                                <span>{{ countCPM(blogger.summaryPlatform.coverage) || '-' }}₽</span>
                             </div>
                         </div>
                     </div>
@@ -91,18 +93,35 @@
                         <div class="card__diagram-icon"><img src="admin/img/blogers-list/female-icon.svg" alt=""></div>
                     </div>
                 </div>
-                <div class="card__row" style="text-align: center; justify-content:center">
-                    <a
-                        v-bind:href="'/bloggers/' + blogger.id"
-                        target="_blank"
-                        class=""
-                        style="color:rgba(0,0,0,.4);
-                        font-size:16px;
-                        font-weight:500;
-                        text-decoration:underline;
-                        margin-top: -20px;">Подробнее</a>
+                <div
+                    v-if="blogger.is_achievement || (blogger.content && blogger.content.length > 0)"
+                    @click="$event.target.closest('.blogger-item__achives').classList.toggle('opened')"
+                    class="card__row blogger-item__achives">
+                    <div class="blogger-item__achives-title">
+                        Достижения
+                    </div>
+                    <div class="blogger-item__achives-icons">
+                        <div class="card__achive" title="Проверенный блогер" v-if="blogger.is_achievement">
+                            <img src="/img/achive-icon.svg" alt="">
+                        </div>
+                        <div class="card__achive" title="Есть контент" v-if="blogger.content && blogger.content.length > 0">
+                            <img src="/img/has-content-icon.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="blogger-item__achives-items blogger-achives">
+                        <div class="blogger-achives__item" title="Проверенный блогер" v-if="blogger.is_achievement">
+                            <div class="blogger-achives__item-icon" style="background-image: url('/img/achive-icon.svg');">
+                            </div>
+                            Проверенный блогер
+                        </div>
+                        <div class="blogger-achives__item" title="Есть контент" v-if="blogger.content && blogger.content.length > 0">
+                            <div class="blogger-achives__item-icon" style="background-image: url('/img/has-content-icon.svg');">
+                            </div>
+                            Есть контент
+                        </div>
+                    </div>
                 </div>
-                <div class="card__row card__row" style="flex-direction: column; gap: 5px">
+                <div class="card__row card__btns">
                     <button
                         v-if="!isOfferSent"
                         @click="sendOfferToBlogger"
@@ -114,17 +133,25 @@
                         class="btn btn-secondary">
                         Заявка отправлена
                     </button>
+                    <button
+                        @click="openBloggerInfoPopup"
+                        class="btn btn-secondary">
+                        Подробнее
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+    <BloggerCardPopup ref="bloggerCardPopup"></BloggerCardPopup>
 </template>
 <script>
-import {ref, toRaw} from "vue";
+import {ref} from "vue";
 import axios from "axios";
+import BloggerCardPopup from "../../../../core/components/popups/blogger-card-popup/BloggerCardPopup";
 
 export default{
     props:['blogger', 'currentProject'],
+    components: { BloggerCardPopup },
     data(){
         return{
             themes: ref([]),
@@ -150,15 +177,15 @@ export default{
                     project_work_id: this.currentProject.choosedWork.id
                 }
             })
-                .then((data) => {
-                    this.isOfferSent = true
+            .then((data) => {
+                this.isOfferSent = true
+            })
+            .catch(errors => {
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'Что-то пошло не так. Попробуйте позже.'
                 })
-                .catch(errors => {
-                    notify('error', {
-                        title: 'Внимание!',
-                        message: 'Что-то пошло не так. Попробуйте позже.'
-                    })
-                })
+            })
         },
         countER(subs, cover){
             var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
@@ -167,6 +194,23 @@ export default{
             else val = Math.ceil(val);
 
             return val;
+        },
+        countCPM(cover){
+            if(!cover) return '-';
+
+            if(!this.currentProject || !this.currentProject.product_price) return '-';
+
+            let result = (this.currentProject.product_price / cover) * 1000;
+
+            return Math.round(result) === 0 ? (result).toFixed(3) : Math.round(result);
+        },
+
+        openBloggerInfoPopup(){
+            this.$refs.bloggerCardPopup.show(this.blogger).then(isConfirmed => {
+                if(!isConfirmed) return
+
+                this.sendOfferToBlogger()
+            })
         }
     }
 }

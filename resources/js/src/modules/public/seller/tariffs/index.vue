@@ -112,7 +112,6 @@ export default {
     },
     mounted(){
         this.user = this.User.getCurrent();
-        console.log(this.user)
     },
     methods:{
         callUsPopup(){

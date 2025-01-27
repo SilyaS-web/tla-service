@@ -13,11 +13,11 @@
             </div>
             <div class="filter__items">
                 <div class="form-group filter__item">
-                    <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию" v-model="bloggerFilter.name">
+                    <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию" v-model="filter.name">
                 </div>
                 <div class="form-group filter__item">
                     <label for="">Платформа</label>
-                    <select name="filter-platform" id="filter-platform" class="input" v-model="bloggerFilter.platform">
+                    <select name="filter-platform" id="filter-platform" class="input" v-model="filter.platform">
                         <option value="">Выберите платформу</option>
                         <option
                             v-for="platform in platforms"
@@ -28,14 +28,14 @@
                 </div>
                 <div class="form-group filter__item">
                     <label for="filter-country">Страна блогера</label>
-                    <select name="filter-country" id="filter-country" class="input" v-model="bloggerFilter.country">
+                    <select name="filter-country" id="filter-country" class="input" v-model="filter.country">
                         <option value="" class="">Выберите страну</option>
                         <option value="1" class="">Россия</option>
                     </select>
                 </div>
                 <div class="form-group filter__item">
                     <label for="filter-city">Город блогера</label>
-                    <input type="text" class="input" name="filter-city" id="filter-city" placeholder="Введите город" v-model="bloggerFilter.city">
+                    <input type="text" class="input" name="filter-city" id="filter-city" placeholder="Введите город" v-model="filter.city">
                 </div>
                 <div class="form-group" style="flex-direction: column;">
                     <label for="">Выберите тематику</label>
@@ -62,17 +62,33 @@
                         <div class="input-checkbox-w">
                             <input
                                 @change="setFilterSex($event, 'male')"
-                                type="checkbox" class="checkbox" id="male" :checked="bloggerFilter.sex.includes('male')">
+                                type="checkbox" class="checkbox" id="male" :checked="filter.sex.includes('male')">
                             <label for="male">Мужской</label>
                         </div>
                         <div class="input-checkbox-w">
                             <input
                                 @change="setFilterSex($event, 'female')"
-                                type="checkbox" class="checkbox" id="female" :checked="bloggerFilter.sex.includes('female')">
+                                type="checkbox" class="checkbox" id="female" :checked="filter.sex.includes('female')">
                             <label for="female">Женский</label>
                         </div>
                     </div>
                 </div>
+
+                <div class="form-group filter__item">
+                    <label for="">Наличие контента у блогера</label>
+                    <div class="filter__item--sex" id = "filter__item">
+                        <div class="input-checkbox-w">
+                            <input
+                                type="checkbox"
+                                class="checkbox"
+                                id="has-content"
+                                :value="filter.has_content"
+                                @change="filter.has_content = Number(!filter.has_content)">
+                            <label for="has-content">Есть контент</label>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group filter__item">
                     <label for="">Количество подписчиков</label>
                     <div class="input-range-w">
@@ -116,7 +132,7 @@ export default{
             filterSubscribersQuantity: ref({
                 value: [0, 10000000]
             }),
-            bloggerFilter: ref({
+            filter: ref({
                 name: '',
                 platform: '',
                 city: '',
@@ -125,6 +141,7 @@ export default{
                 sex: [],
                 subscriber_quantity_min: 0,
                 subscriber_quantity_max: 10000000,
+                has_content: 0,
             }),
 
             Platforms, Themes
@@ -137,29 +154,29 @@ export default{
     methods: {
         setFilterSex(e, value){
             if($(e.target).prop('checked')){
-                this.bloggerFilter.sex.push(value)
+                this.filter.sex.push(value)
             }
             else{
-                this.bloggerFilter.sex.splice(this.bloggerFilter.sex.indexOf(value), 1);
+                this.filter.sex.splice(this.filter.sex.indexOf(value), 1);
             }
         },
         setFilterThemes(e, id){
             if($(e.target).prop('checked')){
-                this.bloggerFilter.themes.push(id)
+                this.filter.themes.push(id)
             }
             else{
-                this.bloggerFilter.themes.splice(this.bloggerFilter.themes.indexOf(id), 1);
+                this.filter.themes.splice(this.filter.themes.indexOf(id), 1);
             }
         },
 
         applyFilter(){
-            this.bloggerFilter.subscriber_quantity_min = this.filterSubscribersQuantity.value[0]
-            this.bloggerFilter.subscriber_quantity_max = this.filterSubscribersQuantity.value[1]
+            this.filter.subscriber_quantity_min = this.filterSubscribersQuantity.value[0]
+            this.filter.subscriber_quantity_max = this.filterSubscribersQuantity.value[1]
 
-            this.$emit('applyFilter', this.bloggerFilter);
+            this.$emit('applyFilter', this.filter);
         },
         resetFilter(){
-            this.bloggerFilter = {
+            this.filter = {
                 name: '',
                 platform: '',
                 city: '',

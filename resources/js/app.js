@@ -7,23 +7,23 @@ import { createMemoryHistory, createRouter } from 'vue-router'
 import AdminIndex from './src/modules/admin/index.vue'
 
 // user imports
-import Auth from './src/modules/auth/login/index.vue'
-import Register from './src1/auth/pages/AppRegister.vue'
+import Auth from './src/modules/auth/login/index'
+import Register from './src/modules/auth/register/index'
 import BloggerRegister from './src/modules/auth/blogger-register/index'
 import SellerProfile from './src/modules/public/seller/index'
+import BloggerProfile from './src/modules/public/blogger/index'
 import SellerEditProfile from './src/modules/public/seller/profile/index'
-import BloggerEditProfile from './src1/public/pages/blogger/EditProfile.vue'
-import Tariffs from './src1/public/pages/seller/AppTariffs.vue'
-import Moderation from './src1/public/pages/blogger/AppModeration.vue'
-import Banned from './src1/public/pages/AppBanned.vue'
-import NotFound from './src1/public/pages/404.vue'
-import User from './src1/services/api/User.vue'
+import BloggerEditProfile from './src/modules/public/blogger/profile/index'
+import Tariffs from './src/modules/public/seller/tariffs/index'
+import Moderation from './src/modules/public/blogger/moderation/index'
+import Banned from './src/modules/public/banned/index'
+import User from './src/core/services/api/User'
 
 const app = createApp();
 
 const routes = [
     { path: '/seller/profile/:item?/:id?', name: 'SellerProfile', component: SellerProfile },
-    // { path: '/blogger/profile/:item?/:id?', name: 'BloggerProfile', component: Profile },
+    { path: '/blogger/profile/:item?/:id?', name: 'BloggerProfile', component: BloggerProfile },
     { path: '/register', name: 'Register', component: Register },
     { path: '/blogger/register', name: 'BloggerRegister', component: BloggerRegister },
     { path: '/login', name: 'Login', component: Auth },
@@ -32,7 +32,6 @@ const routes = [
     { path: '/tariffs', name: 'Tariffs', component: Tariffs },
     { path: '/moderation', name: 'Moderation', component: Moderation },
     { path: '/banned', name: 'Banned', component: Banned },
-    { path: '/not-found', name: '404', component: NotFound },
 ]
 
 const router = createRouter({
@@ -65,7 +64,7 @@ router.beforeEach(async (to, from) => {
         }
     }
     else if(!to.name && isAuthenticated){
-        var user = !tgToken ? await User.getUser() : await User.getCurrentUser();
+        let user = !tgToken ? await User.getUser() : await User.getCurrentUser();
 
         if(user.status == -1){
             return {
@@ -76,7 +75,7 @@ router.beforeEach(async (to, from) => {
         if(user.role == 'blogger'){
             if(user.status == 1){
                 return {
-                    name: 'Profile'
+                    name: 'BloggerProfile'
                 }
             }
             if(user.status == 0){
@@ -94,17 +93,10 @@ router.beforeEach(async (to, from) => {
             name: 'SellerProfile'
         }
     }
-    else{
-        if (!to.matched.length) {
-            return {
-                name: '404'
-            }
-        }
-    }
 })
 
 function findGetParameter(parameterName) {
-    var result = null,
+    let result = null,
         tmp = [];
 
     location.search
