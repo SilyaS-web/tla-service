@@ -1385,6 +1385,9 @@ input[type='range']::-webkit-slider-runnable-track{
     gap: 35px;
     padding-top: 18px;
 }
+.info-profile__platforms-footer--mobile{
+    display:none
+}
 .info-profile__row{
     display: flex;
     gap: 12px;
