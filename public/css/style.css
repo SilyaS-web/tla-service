@@ -7057,6 +7057,9 @@ input[type='range']::-webkit-slider-runnable-track{
         padding:10px 20px;
         font-size: 14px;
     }
+    .card__btns .btn {
+        padding: 12px;
+    }
 
     .messages-chat__item-date{
         font-size: 12px;
