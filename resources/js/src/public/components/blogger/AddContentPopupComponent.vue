@@ -52,7 +52,7 @@
                                         <div class="blogger-content__progress-progress">
                                         </div>
                                     </div>
-                                    <video src="" class="blogger-content__video" autoplay loop muted controls webkit-playsinline playsinline>
+                                    <video src="" class="blogger-content__video" autoplay loop muted webkit-playsinline playsinline>
                                         <source src="" type="video/mp4" />
                                     </video>
                                     <div class="blogger-content__video-remove" @click="removeCardContent(cardsVideoContent[0], 0, $event)">
@@ -68,7 +68,7 @@
                                         <div class="blogger-content__progress-progress">
                                         </div>
                                     </div>
-                                    <video src="" class="blogger-content__video" autoplay loop muted controls webkit-playsinline playsinline>
+                                    <video src="" class="blogger-content__video" autoplay loop muted webkit-playsinline playsinline>
                                         <source src="" type="video/mp4" />
                                     </video>
                                     <div class="blogger-content__video-remove" @click="removeCardContent(cardsVideoContent[1], 1, $event)">
@@ -84,7 +84,7 @@
                                         <div class="blogger-content__progress-progress">
                                         </div>
                                     </div>
-                                    <video src="" class="blogger-content__video" autoplay loop muted controls webkit-playsinline playsinline>
+                                    <video src="" class="blogger-content__video" autoplay loop muted webkit-playsinline playsinline>
                                     <source src="" type="video/mp4" />
                                 </video>
                                     <div class="blogger-content__video-remove" @click="removeCardContent(cardsVideoContent[2], 2, $event)">
@@ -121,7 +121,7 @@
                                 :class="'blogger-comparison__item blogger-comparison__item--bad ' +
                                         (moreTextVisibilitiesArr['bad'] ? ' with-more-text--js' : '')">
                                 <div class="blogger-comparison__img">
-                                    <video src="/img/showreel1.mp4" autoplay loop muted controls webkit-playsinline playsinline>
+                                    <video src="/img/showreel1.mp4" autoplay loop muted webkit-playsinline playsinline>
                                     </video>
                                 </div>
                                 <div class="blogger-comparison__title">
@@ -145,7 +145,7 @@
                                 :class="'blogger-comparison__item blogger-comparison__item--good ' +
                                     (moreTextVisibilitiesArr['good'] ? ' with-more-text--js' : '')">
                                 <div class="blogger-comparison__img">
-                                    <video src="/img/showreel2.mp4" autoplay loop muted controls webkit-playsinline playsinline>
+                                    <video src="/img/showreel2.mp4" autoplay loop muted webkit-playsinline playsinline>
                                     </video>
                                 </div>
                                 <div class="blogger-comparison__title">
