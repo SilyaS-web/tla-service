@@ -9,7 +9,7 @@
                                 <div class="card__row card__header">
                                     <div
                                         class="card__img"
-                                        :style="'background-image: url(https://i.pinimg.com/originals/33/d0/2c/33d02c67b4a6e90abe2d7a58f764edd8.jpg)'"></div>
+                                        :style="'background-image: url(' + blogger.user.image + ')'"></div>
                                     <div class="card__name">
                                         <p class="card__name-name" title="">{{ user.name }}</p>
                                         <p class="card__name-tag" title="">Блогер</p>
