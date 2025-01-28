@@ -158,7 +158,9 @@
             }
         },
         mounted(){
-            this.Quest = new CreateProject('#create-project');
+            console.log(this.project)
+            if(!this.Quest)
+                this.Quest = new CreateProject('#create-project');
         },
         updated(){
             if(!this.Quest)
@@ -167,6 +169,8 @@
         methods: {
             async createProject(){
                 var images = $('.upload-files__body').find('input[type="file"]');
+
+                this.project.images = []
 
                 images.each((i, v) => {
                     if($(v)[0].files)

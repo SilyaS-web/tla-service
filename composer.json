@@ -17,7 +17,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^4.0",
         "matomo/device-detector": "^6.3",
-        "piwik/device-detector": "^6.3"
+        "piwik/device-detector": "^6.3",
+        "predis/predis": "2.0"
     },
     "require-dev": {
         "spatie/laravel-ignition": "^2.0",

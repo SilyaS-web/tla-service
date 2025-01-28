@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Models\Modal;
 use App\Models\SellerTariff;
 use App\Models\Tariff;
 use App\Models\User;
@@ -20,6 +21,7 @@ use App\Models\Project;
 use App\Models\Work;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
@@ -405,6 +407,12 @@ class UserController extends Controller
         $validated = $validator->validated();
         $message_text = "Форма обратной связи\n\nИмя: " . $validated['name'] . "\nТелефон: " . $validated['phone'] . "\nСообщение: " . $validated['comment'];
         $result = TgService::sendForm($message_text);
+        return response()->json()->setStatusCode(200);
+    }
+
+    public function showModal(User $user, Modal $modal)
+    {
+        Redis::sadd('user.'. $user->id . '.modals', $modal->id);
         return response()->json()->setStatusCode(200);
     }
 }
