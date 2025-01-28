@@ -8,6 +8,8 @@
                 autoplay
                 muted
                 loop
+                playsinline
+                webkit-playsinline
                 onloadstart="this.volume=0"
                 :src="video.path"></video>
         </div>
