@@ -254,14 +254,18 @@ export default {
                     videosNodeList = $(document).find('.blogger-content__card video');
 
                 this.cardsVideoContent = this.cardsVideoContent.map((item, index) => {
-                    videosNodeList[index].src = '/' + contentList[index].path;
-                    videosNodeList[index].load();
+                    if(contentList[index]){
+                        videosNodeList[index].src = '/' + contentList[index].path;
+                        videosNodeList[index].load();
 
-                    return {
-                        'id': contentList[index].id,
-                        'src': contentList[index].path,
-                        'progress': 100
+                        return {
+                            'id': contentList[index].id,
+                            'src': contentList[index].path,
+                            'progress': 100
+                        }
                     }
+
+                    return this.cardsVideoContent[index]
                 })
             })
             .catch((err) => {
