@@ -1829,6 +1829,7 @@ input[type='range']::-webkit-slider-runnable-track{
     left: 0;
     top: 0;
     border-radius: 12px;
+    pointer-events: none;
 }
 .info-profile__projects-item.project-item{
     width: 100% !important;
