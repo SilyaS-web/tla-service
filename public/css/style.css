@@ -5012,6 +5012,7 @@ input[type='range']::-webkit-slider-runnable-track{
     position: relative;
     width: 48px;
     height: 48px;
+    overflow: hidden;
 }
 .blogger-content__card:hover{
     background-color: var(--primary);
