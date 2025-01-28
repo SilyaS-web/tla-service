@@ -254,7 +254,7 @@ export default {
                     videosNodeList = $(document).find('.blogger-content__card video');
 
                 this.cardsVideoContent = this.cardsVideoContent.map((item, index) => {
-                    videosNodeList[index].src = 'http://89.104.69.63:5080/' + contentList[index].path;
+                    videosNodeList[index].src = '/' + contentList[index].path;
                     videosNodeList[index].load();
 
                     return {
@@ -265,6 +265,7 @@ export default {
                 })
             })
             .catch((err) => {
+                console.log(err)
                 let message = (err.response && err.response.data && err.response.data.message) ?
                     err.response.data.message :
                     'Невозможно загрузить контент, попробуйте позже в личном кабинете';
