@@ -269,7 +269,6 @@ export default {
                 })
             })
             .catch((err) => {
-                console.log(err)
                 let message = (err.response && err.response.data && err.response.data.message) ?
                     err.response.data.message :
                     'Невозможно загрузить контент, попробуйте позже в личном кабинете';
