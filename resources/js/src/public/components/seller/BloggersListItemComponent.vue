@@ -7,12 +7,14 @@
                 <div class="card__row card__header">
                     <div class="card__img" v-bind:style="'background-image:url(' + (!blogger.user.image ? '/img/profile-icon.svg' : `${blogger.user.image}`) + ')'">
                     </div>
-                    <div class="card__achive" title="Проверенный блогер" v-if="blogger.is_achievement">
-                        <img src="img/achive-icon.svg" alt="">
-                    </div>
                     <div class="card__name">
                         <p class="card__name-name" title="">
                             {{ blogger.user.name }}
+                        </p>
+                        <p
+                            class="card__name-tag"
+                            title="">
+                            Блогер
                         </p>
                     </div>
                     <div class="card__platforms">
@@ -91,18 +93,35 @@
                         <div class="card__diagram-icon"><img src="admin/img/blogers-list/female-icon.svg" alt=""></div>
                     </div>
                 </div>
-                <div class="card__row" style="text-align: center; justify-content:center">
-                    <a
-                        @click="openBloggerInfoPopup"
-                        target="_blank"
-                        class=""
-                        style="color:rgba(0,0,0,.4);
-                        font-size:16px;
-                        font-weight:500;
-                        text-decoration:underline;
-                        margin-top: -20px;">Подробнее</a>
+                <div
+                    v-if="blogger.is_achievement || (blogger.content && blogger.content.length > 0)"
+                    @click="$event.target.closest('.blogger-item__achives').classList.toggle('opened')"
+                    class="card__row blogger-item__achives">
+                    <div class="blogger-item__achives-title">
+                        Достижения
+                    </div>
+                    <div class="blogger-item__achives-icons">
+                        <div class="card__achive" title="Проверенный блогер" v-if="blogger.is_achievement">
+                            <img src="/img/achive-icon.svg" alt="">
+                        </div>
+                        <div class="card__achive" title="Есть контент" v-if="blogger.content && blogger.content.length > 0">
+                            <img src="/img/has-content-icon.svg" alt="">
+                        </div>
+                    </div>
+                    <div class="blogger-item__achives-items blogger-achives">
+                        <div class="blogger-achives__item" title="Проверенный блогер" v-if="blogger.is_achievement">
+                            <div class="blogger-achives__item-icon" style="background-image: url('/img/achive-icon.svg');">
+                            </div>
+                            Проверенный блогер
+                        </div>
+                        <div class="blogger-achives__item" title="Есть контент" v-if="blogger.content && blogger.content.length > 0">
+                            <div class="blogger-achives__item-icon" style="background-image: url('/img/has-content-icon.svg');">
+                            </div>
+                            Есть контент
+                        </div>
+                    </div>
                 </div>
-                <div class="card__row card__row" style="flex-direction: column; gap: 5px">
+                <div class="card__row card__btns">
                     <button
                         v-if="!isOfferSent"
                         @click="sendOfferToBlogger"
@@ -113,6 +132,11 @@
                         v-else
                         class="btn btn-secondary">
                         Заявка отправлена
+                    </button>
+                    <button
+                        @click="openBloggerInfoPopup"
+                        class="btn btn-secondary">
+                        Подробнее
                     </button>
                 </div>
             </div>
@@ -182,7 +206,11 @@ import BloggerCardPopup from "./BloggerCardPopup";
             },
 
             openBloggerInfoPopup(){
-                this.$refs.bloggerCardPopup.show(this.blogger);
+                this.$refs.bloggerCardPopup.show(this.blogger).then(isConfirmed => {
+                    if(!isConfirmed) return
+
+                    this.sendOfferToBlogger()
+                })
             }
         }
     }

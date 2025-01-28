@@ -73,8 +73,6 @@
                 newChatMessagesCount: ref(0),
                 currentItem: ref(null),
 
-                isShowAddContent: ref(true),
-
                 Loader, Tabs,
                 Project, User, Work
             }
@@ -85,10 +83,8 @@
             this.user = this.User.getCurrent();
             this.inWorkProjectsList = await this.Work.getUserWorksList(this.user.id, false, 1);
 
-            this.isShowAddContent = true
-
-            if(this.isShowAddContent){
-                this.$refs.contentPopup.show();
+            if(this.user && this.user.modals && this.user.modals.find(modal => modal.id === 1)) {
+                this.$refs.contentPopup.show()
             }
 
             setTimeout(()=>{

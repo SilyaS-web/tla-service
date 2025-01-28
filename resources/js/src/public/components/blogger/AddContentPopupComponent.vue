@@ -1,203 +1,180 @@
 <template>
-    <popup-modal ref="popup">
-        <div class="popup__blogger-content blogger-popup">
-            <div class="blogger-popup__left">
-                <div class="blogger-popup__header">
-                    <div class="blogger-popup__title">
-                        {{ title }}
-                    </div>
-                    <div class="blogger-popup__subtitle">
-                        {{ subtitle }}
-                    </div>
-                </div>
-                <div class="blogger-popup__comparison blogger-comparison blogger-comparison--tablet">
-                    <div
-                        :class="'blogger-comparison__item blogger-comparison__item--bad ' +
-                                (moreTextVisibilitiesArr['bad'] ? ' with-more-text--js' : '')">
-                        <div class="blogger-comparison__img">
-                            <video src="/img/showreel1.mp4" loop autoplay muted>
-                            </video>
-                        </div>
-                        <div class="blogger-comparison__title">
-                            Плохое оформление
-                        </div>
-                        <div class="blogger-comparison__more">
-                            <div
-                                @click="toggleMoreText('bad', $event)"
-                                class="blogger-comparison__more-title">
-                                {{ moreTextTitlesArr['bad'] }}
-                            </div>
-                            <div class="blogger-comparison__more-text">
-                                1. Загружены случайные видео, не отражающие ваш стиль контента.<br>
-                                2. Размытая картинка, плохое освещение, звук с шумами.<br>
-                                3. Блогер отсутствует в кадре, голос неразборчивый или отсутствует.<br>
-                                4. Товар почти не показан или взаимодействие с ним поверхностное.<br>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        :class="'blogger-comparison__item blogger-comparison__item--good ' +
-                            (moreTextVisibilitiesArr['good'] ? ' with-more-text--js' : '')">
-                        <div class="blogger-comparison__img">
-                            <video src="/img/showreel2.mp4" loop autoplay muted>
-                            </video>
-                        </div>
-                        <div class="blogger-comparison__title">
-                            Хорошее оформление
-                        </div>
-                        <div class="blogger-comparison__more">
-                            <div
-                                @click="toggleMoreText('good', $event)"
-                                class="blogger-comparison__more-title">
-                                {{ moreTextTitlesArr['good'] }}
-                            </div>
-                            <div class="blogger-comparison__more-text">
-                                1. Выберите свои лучшие работы<br>
-                                2. Видео четкое, звук чистый<br>
-                                3. Вы в кадре, или слышно ваш закадровый голос<br>
-                                4. Презентуете или взаимодействуете с товаром<br>
-                                5. Каждое из трех загруженных видео разной подачи (юмор, обзор, рекомендация, нативный формат, или опыт использования до/после)
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="blogger-popup__body">
-                    <div class="card__col">
-                        <div class="card__row card__header">
-                            <div class="card__img" style="background-image: url(&quot;http://localhost/storage/profile/iijulv25MZQIMIIBxH7AgIUIquvlzKHfe2W9jkKT.jpg&quot;);"></div>
-                            <div class="card__name">
-                                <p class="card__name-name" title="">Екатерина</p>
-                            </div>
-                        </div>
-                        <div class="card__row card__tags">
-                            <div class="card__tags-item">
-                                <span>Дети, семья и отношения</span>
-                            </div>
-                            <div class="card__tags-item">
-                                <span>Дом, сад и огород</span>
-                            </div>
-                            <div class="card__tags-item">
-                                <span>Дизайн интерьера, ремонт</span>
-                            </div>
-                        </div>
-                        <div class="card__row card__desc">
-                            <p>Лайстайл блог о семье, детях. Ремонт и обустройство дома и быта.</p>
-                        </div>
-                    </div>
-                    <div class="blogger-popup__upload-content blogger-content">
-                        <div
-                            :class="'blogger-content__card ' + (getCardClass(cardsVideoContent[0]))"
-                            @click="uploadCardContent(cardsVideoContent[0], $event)">
-                            <img src="/img/plus-icon.svg" alt="" class="blogger-content__plus">
-                            <div class="blogger-content__progress-bar">
-                                <div class="blogger-content__progress-progress">
+    <div class="popup" style="" v-if="isVisible">
+        <div class="popup__container _container">
+            <div class="popup__body" style="max-width:600px">
+                <div class="popup__blogger-content blogger-popup">
+                    <div class="blogger-popup__left">
+                        <div class="blogger-popup__body">
+                            <div class="card__col" style="width: 100%">
+                                <div class="card__row card__header">
+                                    <div
+                                        class="card__img"
+                                        :style="'background-image: url(https://i.pinimg.com/originals/33/d0/2c/33d02c67b4a6e90abe2d7a58f764edd8.jpg)'"></div>
+                                    <div class="card__name">
+                                        <p class="card__name-name" title="">{{ user.name }}</p>
+                                        <p class="card__name-tag" title="">Блогер</p>
+                                        <p class="card__name-desc" title="">{{ (blogger.description || '').slice(0, 80) + '...' }}</p>
+                                    </div>
+                                </div>
+                                <div
+                                    v-if="blogger && blogger.themes"
+                                    class="card__row card__tags">
+                                    <div
+                                        v-for="theme in blogger.themes"
+                                        class="card__tags-item">
+                                        <span>{{ theme.name }}</span>
+                                    </div>
+                                </div>
+                                <div class="card__row card__tags card__tags--achives">
+                                    <div class="card__tags-item">
+                                        <div class="card__tags-icon" style="background-image: url('/img/has-content-icon.svg');">
+                                        </div>
+                                        <span>Есть контент</span>
+                                    </div>
+                                    <div class="card__tags-item">
+                                        <div class="card__tags-icon" style="background-image: url('/img/documents-ok-icon.svg');">
+                                        </div>
+                                        <span>Документы проверены</span>
+                                    </div>
+                                    <div class="card__tags-item">
+                                        <div class="card__tags-icon" style="background-image: url('/img/star-icon-alt.svg');">
+                                        </div>
+                                        <span>Платформа рекомендует</span>
+                                    </div>
                                 </div>
                             </div>
-                            <video src="" class="blogger-content__video" loop autoplay muted>
-                                <source src="" type="video/mp4" />
-                            </video>
-                            <div class="blogger-content__video-remove" @click="removeCardContent(cardsVideoContent[0], 0, $event)">
-                                <img src="/img/close-icon.svg" alt="">
-                            </div>
-                            <input type="file" hidden @change="saveCardContent(0, $event)">
-                        </div>
-                        <div
-                            :class="'blogger-content__card ' + (getCardClass(cardsVideoContent[1]))"
-                            @click="uploadCardContent(cardsVideoContent[1], $event)">
-                            <img src="/img/plus-icon.svg" alt="" class="blogger-content__plus">
-                            <div class="blogger-content__progress-bar">
-                                <div class="blogger-content__progress-progress">
+                            <div class="blogger-popup__upload-content blogger-content">
+                                <div
+                                    :class="'blogger-content__card ' + (getCardClass(cardsVideoContent[0]))"
+                                    @click="uploadCardContent(cardsVideoContent[0], $event)">
+                                    <img src="/img/plus-icon.svg" alt="" class="blogger-content__plus">
+                                    <div class="blogger-content__progress-bar">
+                                        <div class="blogger-content__progress-progress">
+                                        </div>
+                                    </div>
+                                    <video src="" class="blogger-content__video" autoplay loop muted webkit-playsinline playsinline>
+                                        <source src="" type="video/mp4" />
+                                    </video>
+                                    <div class="blogger-content__video-remove" @click="removeCardContent(cardsVideoContent[0], 0, $event)">
+                                        <img src="/img/close-icon.svg" alt="">
+                                    </div>
+                                    <input type="file" hidden @change="saveCardContent(0, $event)">
+                                </div>
+                                <div
+                                    :class="'blogger-content__card ' + (getCardClass(cardsVideoContent[1]))"
+                                    @click="uploadCardContent(cardsVideoContent[1], $event)">
+                                    <img src="/img/plus-icon.svg" alt="" class="blogger-content__plus">
+                                    <div class="blogger-content__progress-bar">
+                                        <div class="blogger-content__progress-progress">
+                                        </div>
+                                    </div>
+                                    <video src="" class="blogger-content__video" autoplay loop muted webkit-playsinline playsinline>
+                                        <source src="" type="video/mp4" />
+                                    </video>
+                                    <div class="blogger-content__video-remove" @click="removeCardContent(cardsVideoContent[1], 1, $event)">
+                                        <img src="/img/close-icon.svg" alt="">
+                                    </div>
+                                    <input type="file" hidden @change="saveCardContent(1, $event)">
+                                </div>
+                                <div
+                                    :class="'blogger-content__card ' + (getCardClass(cardsVideoContent[2]))"
+                                    @click="uploadCardContent(cardsVideoContent[2], $event)">
+                                    <img src="/img/plus-icon.svg" alt="" class="blogger-content__plus">
+                                    <div class="blogger-content__progress-bar">
+                                        <div class="blogger-content__progress-progress">
+                                        </div>
+                                    </div>
+                                    <video src="" class="blogger-content__video" autoplay loop muted webkit-playsinline playsinline>
+                                    <source src="" type="video/mp4" />
+                                </video>
+                                    <div class="blogger-content__video-remove" @click="removeCardContent(cardsVideoContent[2], 2, $event)">
+                                        <img src="/img/close-icon.svg" alt="">
+                                    </div>
+                                    <input type="file" hidden @change="saveCardContent(2, $event)">
                                 </div>
                             </div>
-                            <video src="" class="blogger-content__video" loop autoplay muted>
-                                <source src="" type="video/mp4" />
-                            </video>
-                            <div class="blogger-content__video-remove" @click="removeCardContent(cardsVideoContent[1], 1, $event)">
-                                <img src="/img/close-icon.svg" alt="">
-                            </div>
-                            <input type="file" hidden @change="saveCardContent(1, $event)">
-                        </div>
-                        <div
-                            :class="'blogger-content__card ' + (getCardClass(cardsVideoContent[2]))"
-                            @click="uploadCardContent(cardsVideoContent[2], $event)">
-                            <img src="/img/plus-icon.svg" alt="" class="blogger-content__plus">
-                            <div class="blogger-content__progress-bar">
-                                <div class="blogger-content__progress-progress">
+                            <div
+                                v-if="!cardsVideoContent.find(content => content.id !== null)"
+                                class="blogger-popup__header" >
+                                <div class="blogger-popup__title">
+                                    {{ title }}
+                                </div>
+                                <div class="blogger-popup__subtitle">
+                                    {{ subtitle }}
                                 </div>
                             </div>
-                            <video src="" class="blogger-content__video" loop autoplay muted>
-                                <source src="" type="video/mp4" />
-                            </video>
-                            <div class="blogger-content__video-remove" @click="removeCardContent(cardsVideoContent[2], 2, $event)">
-                                <img src="/img/close-icon.svg" alt="">
+                        </div>
+                        <div class="blogger-popup__footer">
+                            <div
+                                @click="closePopup"
+                                class="btn btn-primary blogger-content__btn">
+                                Отправить
                             </div>
-                            <input type="file" hidden @change="saveCardContent(2, $event)">
+                            <div class="blogger-popup__warning">
+                                Видеофайлы должны быть не более 90 МБ и представлены в одном из следующих форматов: mpeg, ogg, mp4, webm, 3gp, mov, flv, avi, wmv, ts.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="blogger-popup__right">
+                        <div class="blogger-popup__comparison blogger-comparison">
+                            <div
+                                :class="'blogger-comparison__item blogger-comparison__item--bad ' +
+                                        (moreTextVisibilitiesArr['bad'] ? ' with-more-text--js' : '')">
+                                <div class="blogger-comparison__img">
+                                    <video src="/img/showreel1.mp4" autoplay loop muted webkit-playsinline playsinline>
+                                    </video>
+                                </div>
+                                <div class="blogger-comparison__title">
+                                    Не рекомендуем
+                                </div>
+                                <div class="blogger-comparison__more">
+                                    <div
+                                        @click="toggleMoreText('bad', $event)"
+                                        class="blogger-comparison__more-title">
+                                        {{ moreTextTitlesArr['bad'] }}
+                                    </div>
+                                    <div class="blogger-comparison__more-text">
+                                        1. Загружены случайные видео, не отражающие ваш стиль контента.<br>
+                                        2. Размытая картинка, плохое освещение, звук с шумами.<br>
+                                        3. Блогер отсутствует в кадре, голос неразборчивый или отсутствует.<br>
+                                        4. Товар почти не показан или взаимодействие с ним поверхностное.<br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div
+                                :class="'blogger-comparison__item blogger-comparison__item--good ' +
+                                    (moreTextVisibilitiesArr['good'] ? ' with-more-text--js' : '')">
+                                <div class="blogger-comparison__img">
+                                    <video src="/img/showreel2.mp4" autoplay loop muted webkit-playsinline playsinline>
+                                    </video>
+                                </div>
+                                <div class="blogger-comparison__title">
+                                    Рекомендуем
+                                </div>
+                                <div class="blogger-comparison__more">
+                                    <div
+                                        @click="toggleMoreText('good', $event)"
+                                        class="blogger-comparison__more-title">
+                                        {{ moreTextTitlesArr['good'] }}
+                                    </div>
+                                    <div class="blogger-comparison__more-text">
+                                        1. Выберите свои лучшие работы<br>
+                                        2. Видео четкое, звук чистый<br>
+                                        3. Вы в кадре, или слышно ваш закадровый голос<br>
+                                        4. Презентуете или взаимодействуете с товаром<br>
+                                        5. Каждое из трех загруженных видео разной подачи (юмор, обзор, рекомендация, нативный формат, или опыт использования до/после)
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="blogger-popup__footer">
-                    <div
-                        @click="closePopup"
-                        class="btn btn-primary blogger-content__btn">
-                        Отправить
-                    </div>
-                </div>
-            </div>
-            <div class="blogger-popup__right">
-                <div class="blogger-popup__comparison blogger-comparison">
-                    <div
-                        :class="'blogger-comparison__item blogger-comparison__item--bad ' +
-                                (moreTextVisibilitiesArr['bad'] ? ' with-more-text--js' : '')">
-                        <div class="blogger-comparison__img">
-                            <video src="/img/showreel1.mp4" loop autoplay muted>
-                            </video>
-                        </div>
-                        <div class="blogger-comparison__title">
-                            Не рекомендуем
-                        </div>
-                        <div class="blogger-comparison__more">
-                            <div
-                                @click="toggleMoreText('bad', $event)"
-                                class="blogger-comparison__more-title">
-                                {{ moreTextTitlesArr['bad'] }}
-                            </div>
-                            <div class="blogger-comparison__more-text">
-                                1. Загружены случайные видео, не отражающие ваш стиль контента.<br>
-                                2. Размытая картинка, плохое освещение, звук с шумами.<br>
-                                3. Блогер отсутствует в кадре, голос неразборчивый или отсутствует.<br>
-                                4. Товар почти не показан или взаимодействие с ним поверхностное.<br>
-                            </div>
-                        </div>
-                    </div>
-                    <div
-                        :class="'blogger-comparison__item blogger-comparison__item--good ' +
-                            (moreTextVisibilitiesArr['good'] ? ' with-more-text--js' : '')">
-                        <div class="blogger-comparison__img">
-                            <video src="/img/showreel2.mp4" loop autoplay muted>
-                            </video>
-                        </div>
-                        <div class="blogger-comparison__title">
-                            Рекомендуем
-                        </div>
-                        <div class="blogger-comparison__more">
-                            <div
-                                @click="toggleMoreText('good', $event)"
-                                class="blogger-comparison__more-title">
-                                {{ moreTextTitlesArr['good'] }}
-                            </div>
-                            <div class="blogger-comparison__more-text">
-                                1. Выберите свои лучшие работы<br>
-                                2. Видео четкое, звук чистый<br>
-                                3. Вы в кадре, или слышно ваш закадровый голос<br>
-                                4. Презентуете или взаимодействуете с товаром<br>
-                                5. Каждое из трех загруженных видео разной подачи (юмор, обзор, рекомендация, нативный формат, или опыт использования до/после)
-                            </div>
-                        </div>
-                    </div>
+                <div class="close-popup" @click="closePopup">
+                    <img src='/img/close-icon.svg' alt="">
                 </div>
             </div>
         </div>
-    </popup-modal>
+    </div>
 </template>
 <script>
 import { ref } from 'vue'
@@ -211,7 +188,7 @@ export default {
     data(){
         return {
             title: 'Загрузите примеры контента',
-            subtitle: 'Наше дело не так однозначно, как может показаться: экономическая повестка сегодняшнего дня однозначно определяет',
+            subtitle: 'Загрузите пример своего контента, чтобы вас заметили топовые бренды и селлеры, получите специальное достижение, место в рекомендованных и больше предложений на сотрудничество!',
 
             moreTextVisibilitiesArr: ref({
                 'good': false,
@@ -241,37 +218,54 @@ export default {
                 },
             ]),
 
+            isVisible: ref(false),
+
             resolvePromise: undefined,
             rejectPromise: undefined,
+
+            user: ref({}),
+            blogger: ref({}),
 
             User
         }
     },
-    mounted(){
+    async mounted(){
+        this.user = this.User.getCurrent();
+
+        await axios({
+            method: 'get',
+            url: '/api/bloggers/' + this.user.blogger_id,
+        })
+        .then(result => this.blogger = result.data.blogger)
+        .catch(error => {})
+
+        console.log(this.blogger)
     },
     methods: {
         show(opts = {}){
-            this.$refs.popup.open()
-
-            let user = this.User.getCurrent();
+            this.isVisible = true
 
             axios({
                 method: 'get',
-                url: '/api/bloggers/' + user.blogger_id + '/content',
+                url: '/api/bloggers/' + this.user.blogger_id + '/content',
             })
             .then((result) => {
                 let contentList = result.data,
                     videosNodeList = $(document).find('.blogger-content__card video');
 
                 this.cardsVideoContent = this.cardsVideoContent.map((item, index) => {
-                    videosNodeList[index].src = 'http://localhost/' + contentList[index].path;
-                    videosNodeList[index].load();
+                    if(contentList[index]){
+                        videosNodeList[index].src = '/' + contentList[index].path;
+                        videosNodeList[index].load();
 
-                    return {
-                        'id': contentList[index].id,
-                        'src': contentList[index].path,
-                        'progress': 100
+                        return {
+                            'id': contentList[index].id,
+                            'src': contentList[index].path,
+                            'progress': 100
+                        }
                     }
+
+                    return this.cardsVideoContent[index]
                 })
             })
             .catch((err) => {
@@ -339,7 +333,7 @@ export default {
                 this.cardsVideoContent[cardContentIndex].src = result.data[0].path
                 this.cardsVideoContent[cardContentIndex].id = result.data[0].id
 
-                $(event.target).closest('.blogger-content__card').find('video')[0].src = 'http://localhost/' + result.data[0].path;
+                $(event.target).closest('.blogger-content__card').find('video')[0].src = '/' + result.data[0].path;
                 $(event.target).closest('.blogger-content__card').find('video')[0].load();
             })
             .catch((err) =>{
@@ -389,17 +383,23 @@ export default {
         },
 
         closePopup(){
-            this.$refs.popup.close()
+            this.isVisible = false
+
+            axios({
+                url: '/api/users/' + this.user.id + '/modals/' + 1 + '/show',
+                method: 'get',
+            })
+
             this.resolvePromise(false)
         },
 
         _confirm() {
-            this.$refs.popup.close()
+            this.isVisible = false
             this.resolvePromise(true)
         },
 
         _cancel() {
-            this.$refs.popup.close()
+            this.isVisible = false
             this.resolvePromise(false)
         },
     },
