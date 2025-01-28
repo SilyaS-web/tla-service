@@ -330,7 +330,7 @@ export default {
                 this.cardsVideoContent[cardContentIndex].src = result.data[0].path
                 this.cardsVideoContent[cardContentIndex].id = result.data[0].id
 
-                $(event.target).closest('.blogger-content__card').find('video')[0].src = 'http://localhost/' + result.data[0].path;
+                $(event.target).closest('.blogger-content__card').find('video')[0].src = '/' + result.data[0].path;
                 $(event.target).closest('.blogger-content__card').find('video')[0].load();
             })
             .catch((err) =>{
