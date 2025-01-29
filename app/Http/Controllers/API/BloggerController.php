@@ -363,7 +363,7 @@ class BloggerController extends Controller
         $blogger->city = $validated['city'];
         $blogger->sex = $validated['sex'];
 
-        if (!empty($validated['description']) && $validated['description'] === 'null') {
+        if (!empty($validated['description']) && $validated['description'] !== 'null') {
             $blogger->description = $validated['description'];
         }
 
