@@ -12,7 +12,7 @@
                 </div>
                 <div class="user-view__body blogger-popup__body">
                     <div
-                        :class="'info-profile__body ' + (isMoreInfoClicked ? 'show-more' : '')">
+                        :class="'info-profile__body '">
                         <div class="info-profile__left">
                             <div class="info-profile__info card__col">
                                 <div class="card__row card__header">
@@ -22,12 +22,6 @@
                                         <p class="card__name-tag" title="">Блогер</p>
                                         <p class="card__name-desc">{{ (blogger.description || '').slice(0, 80) + '...' }}</p>
                                     </div>
-                                </div>
-
-                                <div
-                                    @click="isMoreInfoClicked = !isMoreInfoClicked"
-                                    class="card__row card__more">
-                                    {{ (isMoreInfoClicked ? 'Скрыть' : 'Подробнее о блогере') }}
                                 </div>
 
                                 <div class="card__row card__tags">
@@ -54,11 +48,11 @@
                                         </div>
                                         <span>Документы проверены</span>
                                     </div>
-                                    <div class="card__tags-item">
-                                        <div class="card__tags-icon" style="background-image: url('/img/star-icon-alt.svg');">
-                                        </div>
-                                        <span>Платформа рекомендует</span>
-                                    </div>
+<!--                                    <div class="card__tags-item">-->
+<!--                                        <div class="card__tags-icon" style="background-image: url('/img/star-icon-alt.svg');">-->
+<!--                                        </div>-->
+<!--                                        <span>Платформа рекомендует</span>-->
+<!--                                    </div>-->
                                 </div>
                             </div>
                             <div class="info-profile__platforms blogger-platforms">
@@ -223,7 +217,6 @@
                 currentPlatform: ref('Instagram'),
 
                 currentTab: ref('content'),
-                isMoreInfoClicked: ref(false),
 
                 bloggerPlatformFields:[
                     {
@@ -303,10 +296,7 @@
 
                 axios({
                     method: 'get',
-                    url: '/api/users/' + this.blogger.user.id + '/projects',
-                    data: {
-                        work_statuses: ['completed']
-                    }
+                    url: '/api/users/' + this.blogger.user.id + '/projects?work_statuses[]=completed',
                 })
                 .then(result => {
                     this.bloggerWorks = (result.data.projects || []);

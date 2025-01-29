@@ -41,11 +41,11 @@
                                         </div>
                                         <span>Документы проверены</span>
                                     </div>
-                                    <div class="card__tags-item">
-                                        <div class="card__tags-icon" style="background-image: url('/img/star-icon-alt.svg');">
-                                        </div>
-                                        <span>Платформа рекомендует</span>
-                                    </div>
+<!--                                    <div class="card__tags-item">-->
+<!--                                        <div class="card__tags-icon" style="background-image: url('/img/star-icon-alt.svg');">-->
+<!--                                        </div>-->
+<!--                                        <span>Платформа рекомендует</span>-->
+<!--                                    </div>-->
                                 </div>
                             </div>
                             <div class="blogger-popup__upload-content blogger-content">
