@@ -26,13 +26,18 @@
                                     </div>
                                 </div>
                                 <div class="card__row card__tags card__tags--achives">
-                                    <div class="card__tags-item">
+                                    <div
+                                        v-if="blogger.content && blogger.content.length > 0"
+                                        class="card__tags-item">
                                         <div class="card__tags-icon" style="background-image: url('/img/has-content-icon.svg');">
                                         </div>
                                         <span>Есть контент</span>
                                     </div>
-                                    <div class="card__tags-item">
-                                        <div class="card__tags-icon" style="background-image: url('/img/documents-ok-icon.svg');">
+                                    <div
+                                        v-if="blogger.is_achievement"
+                                        class="card__tags-item">
+                                        <div
+                                            class="card__tags-icon" style="background-image: url('/img/documents-ok-icon.svg');">
                                         </div>
                                         <span>Документы проверены</span>
                                     </div>
