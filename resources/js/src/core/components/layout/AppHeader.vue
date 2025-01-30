@@ -347,7 +347,7 @@ export default {
         },
 
         goToChat(work_id){
-            if(this.$router.currentRoute.value.name === 'Profile'){
+            if(this.$router.currentRoute.value.name === 'SellerProfile' || this.$router.currentRoute.value.name === 'BloggerProfile'){
                 this.$emit('switchTab', 'chat', {
                     item: 'chat',
                     id: work_id
