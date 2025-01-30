@@ -171,6 +171,8 @@ export default {
         async createProject(){
             var images = $('.upload-files__body').find('input[type="file"]');
 
+            this.project.images = []
+
             images.each((i, v) => {
                 if($(v)[0].files)
                     this.project.images.push($(v)[0].files)
