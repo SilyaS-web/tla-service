@@ -129,7 +129,7 @@ export default{
 
                 case 'my-projects':
 
-                    this.Work.getUserWorksList(this.user.id, false, 1).then(data => {
+                    this.Work.getUserWorksList(this.user.id, false, 1, { order_by_last_message: 'asc' }).then(data => {
                         this.inWorkProjectsList = data;
 
                         setTimeout(()=>{
