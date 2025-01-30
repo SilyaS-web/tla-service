@@ -111,9 +111,9 @@ export default {
         sendStatistics(){
             let formData = new FormData;
 
-            for (let k in this.bloggerStatistics){
-                if(this.bloggerStatistics)
-                    formData.append(k, this.bloggerStatistics[k])
+            for (let k in this.statistics){
+                if(this.statistics)
+                    formData.append(k, this.statistics[k])
             }
 
             let image = $('#statistics-file'),
