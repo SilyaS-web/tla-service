@@ -4,32 +4,6 @@
             Заполните данные
         </div>
         <div class="popup__form" v-if="blogger">
-            <div class="form-row filter__item" style="display: flex; gap:10px;">
-                <div class="form-group">
-                    <label for="gender_ratio">Мужчины, %</label>
-                    <input
-                        id="gender_ratio"
-                        v-model="blogger.gender_ratio"
-                        v-on:input="maxValueHandler"
-                        name="gender_ratio"
-                        type="number"
-                        class="input"
-                        max="100"
-                        value = "50">
-                    <span class="error" v-if="errors.gender_ratio">{{ errors.gender_ratio }}</span>
-                </div>
-                <div class="form-group">
-                    <label for="gender_ratio_f">Женщины, %</label>
-                    <input
-                        id="gender_ratio_f"
-                        name="gender_ratio_f"
-                        type="number"
-                        class="input"
-                        v-bind:value="(100 - parseInt(blogger.gender_ratio))"
-                        v-on:input="calculateGender">
-                </div>
-            </div>
-
             <div class="form-row filter__item">
                 <label for="">Статистика по блогеру</label>
                 <platforms
@@ -134,9 +108,7 @@ export default {
             let requestData = await this.getBlogger(opts.id);
 
             this.blogger = requestData.blogger;
-
-            if(this.blogger && !this.blogger.gender_ratio)
-                this.blogger.gender_ratio = 50;
+            this.blogger.gender_ratio = 50;
 
             this.platformAdditFields = requestData.platform_fields;
             this.platformFields.forEach(_f => _f.blogger_platform = this.extractBloggersPlatformById(_f.id));

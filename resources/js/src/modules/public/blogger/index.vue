@@ -86,8 +86,8 @@ export default{
         this.inWorkProjectsList = await this.Work.getUserWorksList(this.user.id, false, 1);
 
         if(this.user && this.user.modals && this.user.modals.find(modal => modal.id === 1)) {
+            this.$refs.contentPopup.show()
         }
-        this.$refs.contentPopup.show()
 
         setTimeout(()=>{
             this.Loader.loaderOff();

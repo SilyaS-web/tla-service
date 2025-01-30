@@ -9,7 +9,7 @@
                                 <div class="card__row card__header">
                                     <div
                                         class="card__img"
-                                        :style="'background-image: url(https://i.pinimg.com/originals/33/d0/2c/33d02c67b4a6e90abe2d7a58f764edd8.jpg)'"></div>
+                                        :style="'background-image: url(' + (blogger.user.image || '/img/placeholder.webp') + ')'"></div>
                                     <div class="card__name">
                                         <p class="card__name-name" title="">{{ user.name }}</p>
                                         <p class="card__name-tag" title="">Блогер</p>
@@ -238,8 +238,6 @@ export default {
         })
             .then(result => this.blogger = result.data.blogger)
             .catch(error => {})
-
-        console.log(this.blogger)
     },
     methods: {
         show(opts = {}){
@@ -254,7 +252,7 @@ export default {
                         videosNodeList = $(document).find('.blogger-content__card video');
 
                     this.cardsVideoContent = this.cardsVideoContent.map((item, index) => {
-                        videosNodeList[index].src = 'http://localhost/' + contentList[index].path;
+                        videosNodeList[index].src = '/' + contentList[index].path;
                         videosNodeList[index].load();
 
                         return {
@@ -329,7 +327,7 @@ export default {
                     this.cardsVideoContent[cardContentIndex].src = result.data[0].path
                     this.cardsVideoContent[cardContentIndex].id = result.data[0].id
 
-                    $(event.target).closest('.blogger-content__card').find('video')[0].src = 'http://localhost/' + result.data[0].path;
+                    $(event.target).closest('.blogger-content__card').find('video')[0].src = '/' + result.data[0].path;
                     $(event.target).closest('.blogger-content__card').find('video')[0].load();
                 })
                 .catch((err) =>{

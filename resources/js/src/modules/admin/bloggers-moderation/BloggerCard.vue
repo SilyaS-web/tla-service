@@ -77,16 +77,6 @@
                         </div>
                     </div>
                 </div>
-                <div class="card__col card__column--gender">
-                    <div class="card__stats-title">
-                        <span>Пол аудитории</span>
-                    </div>
-                    <div class="card__row" style="align-items: center; gap:5px">
-                        <div class="card__diagram-icon"><img src='admin/img/blogers-list/male-icon.svg' alt=""></div>
-                        <div class="card__diagram-line"><span v-bind:style="'width:' + blogger.gender_ratio + '%'"></span></div>
-                        <div class="card__diagram-icon"><img src="admin/img/blogers-list/female-icon.svg" alt=""></div>
-                    </div>
-                </div>
                 <div class="card__row" style="text-align: center; justify-content:center">
                     <a
                         v-bind:href="'/bloggers/' + blogger.id"

@@ -8,6 +8,7 @@
                 autoplay
                 muted
                 loop
+                playsinline
                 onloadstart="this.volume=0"
                 :src="video.path"></video>
         </div>
@@ -17,7 +18,7 @@
 export default {
     props:['videos'],
     mounted() {
-        if(!$('.info-profile__videos').hasClass('owl-loaded') && this.videos.length > 0){
+        if(!$('.info-profile__videos').hasClass('owl-loaded') && this.videos && this.videos.length > 0){
             $('.info-profile__videos').owlCarousel({
                 margin: 5,
                 nav: true,

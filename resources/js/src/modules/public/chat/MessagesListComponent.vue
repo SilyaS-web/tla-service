@@ -128,7 +128,7 @@ export default{
                 return this.user.name
             }
 
-            return this.currentChat ? this.currentChat.partner_user.name : '';
+            return this.partnerName;
         },
         getStatusName(){
             return this.statusNames[this.chatStatus] || ''

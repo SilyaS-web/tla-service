@@ -102,7 +102,6 @@ export default{
         }
     },
     updated(){
-        console.log(this.project)
         if(this.projectFiles.find(f => f.link === "uploading")){
             $(`.upload-files__item input[data-id=${this.projectFiles.length - 1}]`).click();
         }

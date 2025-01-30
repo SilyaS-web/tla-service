@@ -125,7 +125,6 @@ export default{
         }
     },
     async mounted(){
-        console.log(123)
         this.Loader.loaderOn('.wrapper #all-projects');
 
         this.user = this.User.getCurrent();
