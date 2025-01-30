@@ -44,10 +44,6 @@
                                 \ 5 бартеров
                             </div>
                         </div>
-                        <div class="tariff-card__btns">
-                            <button
-                                class="btn btn-secondary">Оплатить</button>
-                        </div>
                         <div class="tariff-card__count">
                             01
                         </div>
