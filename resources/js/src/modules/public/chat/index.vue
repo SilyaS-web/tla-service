@@ -169,7 +169,7 @@ export default{
     updated(){
         if(this.currentItem){ //если мы перешли с другого модуля
             if(this.currentItem.item === 'chat'){
-                var list = this.works.map(_w => {
+                this.works.map(_w => {
                     if(_w.id == this.currentItem.id){
                         _w.currentWork = true
                     }

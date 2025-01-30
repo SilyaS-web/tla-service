@@ -2,7 +2,7 @@
     <div
         :data-id="work.id"
         v-on:click="chooseChat(work)"
-        :class="'chat__chat-item item-chat ' + (isCurrent && 'current')"
+        :class="'chat__chat-item item-chat ' + (isCurrent ? 'current' : '')"
         style="position:relative">
 
         <div class="item-chat__img" :style="'background-image: url(' + work.partner_user.image + ')'">
