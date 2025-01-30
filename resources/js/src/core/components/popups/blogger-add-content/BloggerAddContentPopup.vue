@@ -26,21 +26,21 @@
                                     </div>
                                 </div>
                                 <div class="card__row card__tags card__tags--achives">
-                                    <div class="card__tags-item">
+                                    <div class="card__tags-item" >
                                         <div class="card__tags-icon" style="background-image: url('/img/has-content-icon.svg');">
                                         </div>
                                         <span>Есть контент</span>
                                     </div>
-                                    <div class="card__tags-item">
-                                        <div class="card__tags-icon" style="background-image: url('/img/documents-ok-icon.svg');">
-                                        </div>
-                                        <span>Документы проверены</span>
-                                    </div>
-                                    <div class="card__tags-item">
-                                        <div class="card__tags-icon" style="background-image: url('/img/star-icon-alt.svg');">
-                                        </div>
-                                        <span>Платформа рекомендует</span>
-                                    </div>
+<!--                                    <div class="card__tags-item">-->
+<!--                                        <div class="card__tags-icon" style="background-image: url('/img/documents-ok-icon.svg');">-->
+<!--                                        </div>-->
+<!--                                        <span>Документы проверены</span>-->
+<!--                                    </div>-->
+<!--                                    <div class="card__tags-item">-->
+<!--                                        <div class="card__tags-icon" style="background-image: url('/img/star-icon-alt.svg');">-->
+<!--                                        </div>-->
+<!--                                        <span>Платформа рекомендует</span>-->
+<!--                                    </div>-->
                                 </div>
                             </div>
                             <div class="blogger-popup__upload-content blogger-content">
