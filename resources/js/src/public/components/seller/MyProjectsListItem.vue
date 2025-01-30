@@ -213,18 +213,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card__col card__column--gender">
-                                <div class="card__stats-title">
-                                    <span>Пол аудитории</span>
-                                </div>
-                                <div class="card__row" style="align-items: center; gap:5px">
-                                    <div class="card__diagram-icon"><img src="img/blogers-list/male-icon.svg" alt=""></div>
-                                    <div class="card__diagram-line">
-                                        <span :style="'width:' + work.blogger.gender_ratio + '%;'"></span>
-                                    </div>
-                                    <div class="card__diagram-icon"><img src="img/blogers-list/female-icon.svg" alt=""></div>
-                                </div>
-                            </div>
                             <div class="card__row" style="text-align: center;">
                                 <a :href="'/bloggers/' + work.blogger.id" class="" style="width: 100%; color: var(--primary); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -10px;">Подробнее</a>
                             </div>
@@ -328,18 +316,6 @@
                                             <span>{{ (project.product_price / (work.blogger.summaryPlatform.coverage == 0 ? 1 : work.blogger.summaryPlatform.coverage) * 1000).toFixed(2) }} ₽</span>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="card__col card__column--gender">
-                                <div class="card__stats-title">
-                                    <span>Пол аудитории</span>
-                                </div>
-                                <div class="card__row" style="align-items: center; gap:5px">
-                                    <div class="card__diagram-icon"><img src="img/blogers-list/male-icon.svg" alt=""></div>
-                                    <div class="card__diagram-line">
-                                        <span :style="'width:' + work.blogger.gender_ratio + '%;'"></span>
-                                    </div>
-                                    <div class="card__diagram-icon"><img src="img/blogers-list/female-icon.svg" alt=""></div>
                                 </div>
                             </div>
                             <div class="card__row card__row" style="gap:12px; width:100%; flex-wrap: wrap">
