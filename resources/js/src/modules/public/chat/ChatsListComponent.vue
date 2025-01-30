@@ -47,7 +47,7 @@ export default {
             this.$emit('chooseChat', work)
         },
         isChatChoosed(work){
-            if(this.currentChatID == work.id) return true
+            if(this.currentChatID == work.id || work.currentWork) return true
 
             return work.currentWork;
         },
