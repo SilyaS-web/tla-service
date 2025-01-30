@@ -1,0 +1,127 @@
+<template>
+    <div
+        v-if="project"
+        class="list-projects__item project-item" :data-id="project.id">
+        <div class="project-item__carousel">
+            <Carousel
+                :carouselID="'project-item__imgs-carousel-' + project.id"
+                :listClassList="['project-item__carousel--carousel']"
+                :itemsClassList="['project-item__img']"
+                :itemsList="project.project_files"
+                :props="{
+                    margin: 5,
+                    nav: false,
+                    dots: true,
+                    responsive: {
+                        0:{
+                            items: 1
+                        },
+                        1180: {
+                            items:1
+                        }
+                    }
+                }"
+            >
+            </Carousel>
+<!--            <div class="project-item__carousel&#45;&#45;carousel owl-carousel">-->
+<!--                <div-->
+<!--                    v-for="image in project.project_files"-->
+<!--                    class="project-item__img"-->
+<!--                    v-bind:style="'background-image:url(' + (!image.link ? '/img/profile-icon.svg' : `/${image.link}`) + ')'"></div>-->
+<!--            </div>-->
+            <div class="project-item__status active">
+                {{ project.status_name  }}
+            </div>
+        </div>
+        <div class="project-item__content">
+            <div class="project-item__title">
+                {{ project.product_price  }}₽
+            </div>
+            <div class="project-item__subtitle" title="">
+                {{ project.product_name  }}
+            </div>
+            <div class="project-item__format-tags card__row card__tags">
+                <div
+                    v-if="project.project_works && project.project_works.find(w => w.type == 'feedback')"
+                    class="card__tags-item">
+                    <span>Отзыв</span>
+                </div>
+                <div
+                    v-if="project.project_works && project.project_works.find(w => w.type == 'integration')"
+                    class="card__tags-item">
+                    <span>Интеграция</span>
+                </div>
+            </div>
+            <div class="project-item__btns">
+                <a  v-if="project.status == -2"
+                    v-bind:data-id="project.id"
+                    v-on:click="unban"
+                    class="btn btn-primary"
+                    style="width:100%">Разблокировать</a>
+                <a  v-else
+                    v-bind:data-id="project.id"
+                    v-on:click="ban"
+                    class="btn btn-primary"
+                    style="width:100%">Заблокировать</a>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+import axios from 'axios'
+import Carousel from '../../../core/components/AppCarousel'
+
+export default{
+    props: ['project'],
+    components: { Carousel },
+    mounted(){
+        if(this.project){
+            $(`.list-projects__item[data-id="${this.project.id}"]`).find('.project-item__carousel--carousel').owlCarousel({
+                margin: 5,
+                nav: false,
+                dots: true,
+                responsive: {
+                    0:{
+                        items: 1
+                    },
+                    1180: {
+                        items:1
+                    }
+                }
+            });
+        }
+    },
+    methods:{
+        unban() {
+            var id = this.project.id
+
+            axios({
+                method: 'get',
+                url: '/api/projects/' + id + '/unban',
+            })
+            .then((response) => {
+                notify('info', {
+                    title: 'Успешно!',
+                    message: 'Проект успешно разблокирован!'
+                });
+                this.$emit('statusManagement', id);
+            })
+        },
+        ban() {
+            var id = this.project.id;
+
+            axios({
+                method: 'get',
+                url: '/api/projects/' + id + '/ban',
+            })
+            .then((response) => {
+                notify('info', {
+                    title: 'Успешно!',
+                    message: 'Проект заблокирован!'
+                });
+                this.$emit('statusManagement', id);
+            })
+        },
+    }
+}
+</script>
