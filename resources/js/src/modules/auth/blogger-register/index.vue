@@ -24,7 +24,7 @@
                 </Select>
 
                 <Select
-                    v-model="blogger.country_id"
+                    v-model="blogger.sex"
                     :label="'Ваш пол'"
                     :selectClassList="['input--sex']"
                     :selectID="'sex'"
@@ -71,10 +71,12 @@
                     <span class="error" v-if="errors.themes">{{ errors.themes }}</span>
                 </div>
 
-                <div class="form-group form-group--file">
-                    <InputFile v-model:image="blogger.image"></InputFile>
-                    <span class="error" v-if="errors.image">{{ errors.image }}</span>
-                </div>
+                <InputFile
+                    v-model="blogger.image"
+                    :label="'Загрузите изображение'"
+                    :uploadedLabel="'Аватарка профиля загружена'"
+                    :error="errors.image"
+                ></InputFile>
 
                 <div class="form-btns auth__form-btns" style="margin-top:32px">
                     <button
@@ -176,7 +178,7 @@ export default{
         },
 
         mapCountriesArray(){
-            return this.blogger.countries.map(country => {
+            return this.countries.map(country => {
                 return {
                     name: country.name,
                     value: country.id
@@ -198,11 +200,7 @@ export default{
                 formdata.append(`themes[${i}]`, $(themes[i]).val())
             }
 
-            var image = $('.tab-content__profile-img-upload').find('input[type="file"]')[0];
-
-            if(image && image.files[0])
-                formdata.append('image', image.files[0]);
-
+            formdata.append('image', this.blogger.image);
             formdata.append('from_moderation', 1);
 
             axios({
