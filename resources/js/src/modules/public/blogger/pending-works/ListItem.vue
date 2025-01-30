@@ -37,6 +37,14 @@
                     <span>{{ work.name }}</span>
                 </div>
             </div>
+            <div class="project-item__btns">
+                <button
+                    @click="acceptApplication"
+                    class="btn btn-primary">Принять</button>
+                <button
+                    @click="denyApplication"
+                    class="btn btn-secondary">Отклонить</button>
+            </div>
         </div>
     </div>
 </template>
@@ -57,6 +65,26 @@ export default{
     updated(){
     },
     methods: {
+        acceptApplication(){
+            this.Work.accept(this.work.id).then(
+                () => {
+                    $(`#avail-projects .list-projects__item[data-id="${this.work.id}"]`).hide();
+                },
+                err => {
+
+                }
+            )
+        },
+        denyApplication(){
+            this.Work.deny(this.work.id).then(
+                () => {
+                    $(`#avail-projects .list-projects__item[data-id="${this.work.id}"]`).hide();
+                },
+                err => {
+
+                }
+            )
+        }
     }
 }
 </script>
