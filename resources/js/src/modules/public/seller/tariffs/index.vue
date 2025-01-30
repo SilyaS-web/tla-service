@@ -1,4 +1,5 @@
 <template>
+    <Header></Header>
     <section class="tariff">
         <div class="tariff__container  _container">
             <div class="tariff__body">
@@ -93,9 +94,10 @@ import axios from "axios";
 import User from "../../../../core/services/api/User";
 
 import CallUsPopup from '../../../../core/components/popups/call-us/CallUsPopup'
+import Header from '../../../../core/components/layout/AppHeader'
 
 export default {
-    components:{ CallUsPopup },
+    components:{ CallUsPopup, Header },
     data(){
         return{
             user: ref(null),
