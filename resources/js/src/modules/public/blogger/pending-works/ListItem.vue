@@ -49,6 +49,7 @@
     </div>
 </template>
 <script>
+import Work from '../../../../core/services/api/Work'
 import Project from '../../../../core/services/api/Project'
 import Carousel from '../../../../core/components/AppCarousel'
 
@@ -57,7 +58,7 @@ export default{
     components:{Carousel},
     data(){
         return {
-            Project
+            Project, Work
         }
     },
     mounted(){
