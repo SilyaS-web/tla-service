@@ -4909,6 +4909,9 @@ input[type='range']::-webkit-slider-runnable-track{
     overflow-y: auto;
     max-height: 280px;
 }
+.popup-body:has(.popup-project){
+    max-width:960px;
+}
 .popup-projects{
     display: flex;
     flex-wrap: wrap;
