@@ -93,13 +93,17 @@ import {ref} from "vue";
 import Project from "../../../../core/services/api/Project";
 
 export default{
-    props:['project', 'projectFiles'],
+    props:['project'],
     data(){
         return {
             errors: ref({}),
-
+            projectFiles: ref({}),
             Project
         }
+    },
+    mounted(){
+        this.projectFiles = this.project.project_files;
+        console.log(this.projectFiles, this.project)
     },
     updated(){
         if(this.projectFiles.find(f => f.link === "uploading")){

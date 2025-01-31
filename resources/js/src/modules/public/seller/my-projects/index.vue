@@ -47,7 +47,6 @@
         <EditProject
             v-if="editingProject"
             :project="editingProject"
-            :projectFiles="editingProjectFiles"
             v-on:resetEditData="resetEditData"
         ></EditProject>
 
@@ -66,7 +65,6 @@ export default {
     data(){
         return {
             editingProject: ref(false),
-            editingProjectFiles: ref([]),
 
             brands: ref([]),
         }
@@ -100,16 +98,12 @@ export default {
         },
 
         editProject(project){
-            console.log(project)
             this.editingProject = project;
             this.editingProject.feedback = (project.project_works.find(w => w.type == 'feedback') != undefined);
             this.editingProject.integration = (project.project_works.find(w => w.type == 'integration') != undefined);
-
-            this.editingProjectFiles = this.editingProject.project_files;
         },
         resetEditData(){
             this.editingProject = false;
-            this.editingProjectFiles = [];
         },
 
         switchTab(work_id){
