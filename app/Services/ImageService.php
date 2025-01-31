@@ -5,6 +5,7 @@ use Illuminate\Container\Container;
 use Illuminate\Contracts\Filesystem\Factory as FilesystemFactory;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 use Intervention\Image\Facades\Image;
 
 class ImageService
@@ -23,7 +24,8 @@ class ImageService
         return $urls;
     }
 
-    public static function makeCompressedCopies(UploadedFile $image, $folder = '', $format = 'webp') {
+    public static function makeCompressedCopies(UploadedFile $image, $folder = '', $format = 'webp'): array
+    {
         ini_set('memory_limit', '256M');
         $urls = [];
 
@@ -39,7 +41,7 @@ class ImageService
 
     public static function saveImage(\Intervention\Image\Image $image, $folder = ''): string
     {
-        $imageName = time() . '.' . 'webp';
+        $imageName = Str::random(5) . '_' . time() . '.' . 'webp';
         Storage::put('public/' . $folder . $imageName, $image->encode(), 'public');
         return $folder . $imageName;
     }
