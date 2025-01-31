@@ -264,7 +264,7 @@ a.btn:hover{
 }
 
 .form-group {
-    margin-bottom: 14px;
+    margin-bottom: 21px;
     position: relative;
     display: flex;
     flex-direction: column;
@@ -274,7 +274,7 @@ a.btn:hover{
     display: block;
     font-size: 16px;
     font-weight: 600;
-    margin-bottom: 15px;
+    margin-bottom: 12px;
 }
 .form-group .form-group__title{
     margin-bottom: 10px;
@@ -302,21 +302,33 @@ a.btn:hover{
     border: 3px solid #fff;  /* padding вокруг плашки */
 }
 .form-format{
-    border-radius: 5px;
     background-color: var(--pale);
-    padding:5px;
+    padding: 5px;
     display: flex;
     gap: 5px;
     align-items: center;
+    border: 1px solid #F5F5F5;
+    border-radius: 6px;
+    transition: all .1s linear;
 }
 .form-format label{
     margin-bottom: 0;
+    transition: all .1s linear;
+}
+.form-format input[type="checkbox"]{
+    display: none;
+}
+.form-format:has(input[type="checkbox"]:checked){
+    border-color:var(--primary)
+}
+.form-format:has(input[type="checkbox"]:checked) label{
+    color: var(--primary);
 }
 .input {
     border-radius: 10px;
-    border: 1px solid rgba(0, 0, 0, .05) ;
+    border: 1px solid #F5F5F5;
     background-color: var(--pale);
-    padding: 15px 30px;
+    padding: 13px;
     margin-bottom: 7px;
     max-width:100%;
 }
@@ -2140,11 +2152,6 @@ input[type='range']::-webkit-slider-runnable-track{
     width:18px;
     filter: brightness(0) saturate(100%) invert(46%) sepia(94%) saturate(3733%) hue-rotate(1deg) brightness(104%) contrast(103%);
 }
-.form-group {
-
-}
-.form-group--file {
-}
 .create-project__files {
     margin-bottom: 35px;
 }
@@ -2210,11 +2217,11 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .input-checkbox-w {
     background-color: var(--pale);
-    padding:15px 30px;
+    padding: 0px 30px 8px 0;
     display: flex;
     align-items: center;
     border-radius: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 0px;
 }
 .input-checkbox-w label{
     margin-bottom: 0;
@@ -2236,6 +2243,7 @@ input[type='range']::-webkit-slider-runnable-track{
        -moz-user-select: none;
             user-select: none;
     display:flex;
+    gap: 5px;
 }
 .checkbox__checkbox + label:before {
     content: '';
@@ -2329,7 +2337,7 @@ input[type='range']::-webkit-slider-runnable-track{
 .filter {
     background-color: #fff;
     border-radius: 20px;
-    padding:20px 30px;
+    padding:20px;
     transition: left .2s linear;
     z-index: 1;
 }
@@ -5331,21 +5339,6 @@ input[type='range']::-webkit-slider-runnable-track{
 .popup-project__addit{
     margin-bottom: 20px;
 }
-
-.title {
-}
-.popup__form {
-}
-.form-group {
-}
-.input {
-}
-.btn {
-}
-.btn-primary {
-}
-.send-data {
-}
 .close-popup {
     position: absolute;
     right:20px;top:15px;
@@ -5688,10 +5681,6 @@ input[type='range']::-webkit-slider-runnable-track{
 .tariff-card .quantity-w .quantity-plus img{
     max-width: 17px;
     width:100%
-}
-.form-group {
-}
-.select {
 }
 
 @media(max-width: 1740px){
@@ -6696,7 +6685,9 @@ input[type='range']::-webkit-slider-runnable-track{
     .profile-projects__body{
         max-width:100%;
     }
-
+    .form-group{
+        margin-bottom: 18px;
+    }
     .form-group label{
         font-size: 16px;
     }
@@ -7336,7 +7327,7 @@ input[type='range']::-webkit-slider-runnable-track{
         padding:20px 30px;
     }
     .input-checkbox-w{
-        padding:10px 20px
+        padding: 0px 20px 10px 10px;
     }
     .blogers-list__header{
         flex-direction: column;
