@@ -503,8 +503,8 @@ export default{
     updated(){
     },
     methods:{
-        editProject(project){
-            this.$emit('edit', project)
+        editProject(){
+            this.$emit('edit', this.project)
         },
         deleteProject(){
             this.$refs.confirmPopup.show({

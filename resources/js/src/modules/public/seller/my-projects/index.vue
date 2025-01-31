@@ -100,6 +100,7 @@ export default {
         },
 
         editProject(project){
+            console.log(project)
             this.editingProject = project;
             this.editingProject.feedback = (project.project_works.find(w => w.type == 'feedback') != undefined);
             this.editingProject.integration = (project.project_works.find(w => w.type == 'integration') != undefined);
