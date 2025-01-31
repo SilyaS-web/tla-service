@@ -103,12 +103,9 @@ export default{
     },
     mounted(){
         this.projectFiles = this.project.project_files;
-        console.log(this.projectFiles, this.project)
     },
     updated(){
-        if(this.projectFiles.find(f => f.link === "uploading")){
-            $(`.upload-files__item input[data-id=${this.projectFiles.length - 1}]`).click();
-        }
+
     },
     methods:{
         modifyProject(){
