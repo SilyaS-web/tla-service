@@ -36,13 +36,6 @@ Route::get('/profile/admin', function () {
     return view('profile.admin');
 });
 
-Route::get('/bloggers/{blogger}', [BloggerController::class, 'show'])->name('blogger-page');
-Route::get('/sellers/{seller}', [SellerController::class, 'show'])->name('seller-page');
-
-Route::get('/policy', function () {
-    return view('policy');
-})->name('policy');
-
 Route::get('{any?}', function () {
     return view('index');
 })->where('any', '.*');
