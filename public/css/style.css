@@ -4910,7 +4910,8 @@ input[type='range']::-webkit-slider-runnable-track{
     max-height: 280px;
 }
 .popup__body:has(.popup-project){
-    max-width:unset!important;
+    max-width:975px!important;
+    padding:0;
 }
 .popup-projects{
     display: flex;
