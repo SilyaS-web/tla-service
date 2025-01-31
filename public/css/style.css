@@ -4910,13 +4910,12 @@ input[type='range']::-webkit-slider-runnable-track{
     max-height: 280px;
 }
 .popup__body:has(.popup-project){
-    max-width:960px!important;
+    max-width:1200px!important;
 }
 .popup-projects{
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-
 }
 .popup-projects__item{
     background-color: #fff;
