@@ -111,9 +111,10 @@ export default{
     },
     methods:{
         modifyProject(){
-            this.project.images = this.projectFiles.filter(f => f.file).map(f => f.file);
+            console.log(this.projectFiles)
+            this.project.images = this.projectFiles.filter(f => f.file && !f.id).map(f => f.file);
             this.project.uploaded_files = this.projectFiles.filter(f => f.id).map(f => f.id);
-
+            console.log(this.project.uploaded_files, this.project.images)
             var formData = new FormData;
 
             formData.append('product_name', this.project.product_name);
