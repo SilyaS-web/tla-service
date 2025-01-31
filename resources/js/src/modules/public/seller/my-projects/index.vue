@@ -48,6 +48,7 @@
             v-if="editingProject"
             :project="editingProject"
             v-on:resetEditData="resetEditData"
+            v-on:updateMyProjects="updateMyProjects"
         ></EditProject>
 
     </div>
@@ -116,6 +117,10 @@ export default {
         applyFilter(filterData){
             this.$emit('applyFilter', filterData);
         },
+
+        updateMyProjects(){
+            this.$emit('updateMyProjects');
+        }
     }
 }
 </script>
