@@ -33,7 +33,6 @@ const Project = {
                 resolve(response.data)
             })
             .catch((errors) => {
-                console.log(errors.response)
                 let text = 'Невозможно создать проект. Проверьте все поля, если все в порядке, напишите в поддержку.';
 
                 if(errors.response.data.message)

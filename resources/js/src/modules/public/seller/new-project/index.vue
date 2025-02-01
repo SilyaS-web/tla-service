@@ -115,7 +115,7 @@
 
                                 </div>
                             </div>
-                            <span class="error" v-if="errors && errors.images">{{ errors.images }}</span>
+                            <span class="error" v-if="errors && errors['images.0']">{{ errors['images.0'] }}</span>
                         </div>
                         <div class="quest__btns">
                             <button @click="createProject" class="btn btn-primary">
@@ -208,6 +208,7 @@ export default {
                 },
                 err => {
                     this.errors = err.response.data
+                    console.log(this.errors)
                 }
             )
         },
