@@ -23,6 +23,7 @@ class Project extends Model
     public const DZEN = 'dzen';
     public const YAPPY = 'yappy';
     public const RUTUBE = 'rutube';
+    public const TIKTOK = 'tiktok';
     public const INTEGRATION = 'integration';
     public const BARTER = 'barter';
 
@@ -36,6 +37,7 @@ class Project extends Model
         self::DZEN => 'Интеграция Дзен',
         self::YAPPY => 'Интеграция Yappy',
         self::RUTUBE => 'Интеграция Rutube',
+        self::TIKTOK => 'Интеграция Tiktok',
         self::INTEGRATION => 'Интеграции',
         self::BARTER => 'Безлимит',
     ];
@@ -54,6 +56,7 @@ class Project extends Model
         self::DZEN,
         self::YAPPY,
         self::RUTUBE,
+        self::TIKTOK,
     ];
 
     public const BARTER_TYPES = [
@@ -67,6 +70,7 @@ class Project extends Model
         self::DZEN,
         self::YAPPY,
         self::RUTUBE,
+        self::TIKTOK,
     ];
 
     public const STOPPED = -3;
