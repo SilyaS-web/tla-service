@@ -16,6 +16,7 @@ use App\Services\ImageService;
 use App\Services\OzonService;
 use App\Services\WbService;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\Rule;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
@@ -25,7 +26,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ProjectController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'order_by_created_at' => 'string|nullbale',
@@ -46,11 +47,11 @@ class ProjectController extends Controller
 
         $projects = Project::where([]);
 
-        if (isset($validated['statuses']) && !empty($validated['statuses'])) {
+        if (!empty($validated['statuses'])) {
             $projects->whereIn('status', $validated['statuses']);
         }
 
-        if (isset($validated['product_name']) && !empty($validated['product_name'])) {
+        if (!empty($validated['product_name'])) {
             $projects->where('product_name', 'like', '%' . $validated['product_name'] . '%');
         }
 
@@ -62,14 +63,14 @@ class ProjectController extends Controller
                 });
             }
         } else {
-            if (isset($validated['project_type']) && !empty($validated['project_type'])) {
+            if (!empty($validated['project_type'])) {
                 $projects->whereHas('projectWorks', function (Builder $query) use ($validated) {
                     $query->where('type', $validated['project_type']);
                 });
             }
         }
 
-        if (isset($validated['category']) && !empty($validated['category'])) {
+        if (!empty($validated['category'])) {
             $projects->where('marketplace_category', 'like', '%' . $validated['category'] . '%');
         }
 
@@ -79,11 +80,11 @@ class ProjectController extends Controller
             $projects->orderBy('created_at', 'desc');
         }
 
-        if (isset($validated['is_blogger_access']) && !empty($validated['is_blogger_access'])) {
+        if (!empty($validated['is_blogger_access'])) {
             $projects->where('is_blogger_access', $validated['is_blogger_access']);
         }
 
-        if (isset($validated['status']) && !empty($validated['status'])) {
+        if (!empty($validated['status'])) {
             if ($validated['status'] == 'active') {
                 $projects->where('status', '>=', 0);
             } else {
@@ -98,7 +99,7 @@ class ProjectController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'integration_types' => 'required|array',
@@ -173,26 +174,26 @@ class ProjectController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function show(Project $project)
+    public function show(Project $project): JsonResponse
     {
         $data = new ProjectResource($project);
 
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function ban(Project $project)
+    public function ban(Project $project): JsonResponse
     {
         $project->update(['status' => Project::BANNED]);
         return response()->json()->setStatusCode(200);
     }
 
-    public function unban(Project $project)
+    public function unban(Project $project): JsonResponse
     {
         $project->update(['status' => Project::STOPPED]);
         return response()->json()->setStatusCode(200);
     }
 
-    public function update(Project $project)
+    public function update(Project $project): JsonResponse
     {
         if (!Auth::user()->sellerTariffs()->where('finish_date', '>', Carbon::now())->where('tariff_id', 20)->first()) {
             return response()->json(['message' => 'Приобретите подписку чтобы редактировать проект'])->setStatusCode(400);
@@ -227,7 +228,7 @@ class ProjectController extends Controller
         }
 
         foreach ($project->projectFiles as $file) {
-            if (!isset($validated['uploaded_images']) || empty($validated['uploaded_images']) || !in_array($file->id, $validated['uploaded_images'])) {
+            if (empty($validated['uploaded_images']) || !in_array($file->id, $validated['uploaded_images'])) {
                 $file->delete();
             }
         }
@@ -265,7 +266,7 @@ class ProjectController extends Controller
         return response()->json([])->setStatusCode(200);
     }
 
-    public function delete(Project $project)
+    public function delete(Project $project): JsonResponse
     {
         $user = Auth::user();
         if ($project->is_blogger_access) {
@@ -282,19 +283,19 @@ class ProjectController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function destroy(Project $project)
+    public function destroy(Project $project): JsonResponse
     {
         $project->delete();
         return response()->json()->setStatusCode(200);
     }
 
-    public function activate(Project $project)
+    public function activate(Project $project): JsonResponse
     {
         $project->update(['is_blogger_access' => true]);
         return response()->json()->setStatusCode(200);
     }
 
-    public function stop(Project $project)
+    public function stop(Project $project): JsonResponse
     {
         if ($project->status === Project::ACTIVE) {
             $project->update(['status' => Project::STOPPED]);
@@ -314,7 +315,7 @@ class ProjectController extends Controller
         return response()->json(['message' => 'Нельзя изменить статус проекта из текущего статуса '])->setStatusCode(400);
     }
 
-    public function works(Project $project, Request $request)
+    public function works(Project $project, Request $request): JsonResponse
     {
         $user = Auth::user();
         $validator = Validator::make($request->all(), [
@@ -332,7 +333,6 @@ class ProjectController extends Controller
         $validated = $validator->validated();
 
         if (isset($validated['status']) && !empty($validated['status'])) {
-            $works = null;
             $seller_id = $project->seller_id;
 
             if ($validated['status'] == 'active') {
@@ -355,7 +355,7 @@ class ProjectController extends Controller
         }
 
         $works = $project->works();
-        if (isset($validated['creator_role']) && !empty($validated['creator_role'])) {
+        if (!empty($validated['creator_role'])) {
             if ($validated['creator_role'] == 'seller') {
                 $works->where('created_by', $user->id);
             } else {
@@ -373,7 +373,7 @@ class ProjectController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function getProductInfo(Project $project)
+    public function getProductInfo(Project $project): JsonResponse
     {
         $total_quantity = $project->projectWorks()->sum('quantity');
         $lost_quantity = $total_quantity - $project->works()->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
@@ -393,7 +393,7 @@ class ProjectController extends Controller
         ], 200);
     }
 
-    public function getApplicationsCount()
+    public function getApplicationsCount(): array
     {
         $user = Auth::user();
         $projects = $user->projects;
@@ -405,7 +405,7 @@ class ProjectController extends Controller
         return $application_count_by_projects;
     }
 
-    public function categories(Request $request)
+    public function categories(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'category' => 'string|nullable',
@@ -427,7 +427,7 @@ class ProjectController extends Controller
         return response()->json(['categories' => $categories])->setStatusCode(200);
     }
 
-    public function statistics(Project $project)
+    public function statistics(Project $project): JsonResponse
     {
         $data = [
             'statistics' => new ProjectStatisticsResource($project),

@@ -62,6 +62,7 @@ class Project extends Model
     public const BARTER_TYPES = [
         self::INTEGRATION,
         self::FEEDBACK,
+        self::UGC_CONTENT,
         self::INSTAGRAM,
         self::YOUTUBE,
         self::TELEGRAM,
