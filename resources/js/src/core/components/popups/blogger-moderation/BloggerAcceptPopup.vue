@@ -131,10 +131,10 @@ export default {
                     method: 'get',
                     url: '/api/bloggers/' + id,
                 })
-                    .then(result => resolve(result.data))
-                    .catch(error => {
-                        resolve([])
-                    })
+                .then(result => resolve(result.data))
+                .catch(error => {
+                    resolve([])
+                })
             })
         },
 
