@@ -101,8 +101,8 @@ class ProjectController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'feedback' => 'boolean|nullable',
-            'integration' => 'boolean|nullable',
+            'integration_types' => 'required|array',
+            'integration_types.*' => ['string', Rule::in(Project::TYPES)],
             'product_name' => 'required|min:3|max:250',
             'product_nm' => 'required|numeric|digits_between:1,14',
             'product_link' => 'required|min:3|max:1000',
@@ -117,7 +117,7 @@ class ProjectController extends Controller
 
         $validated = $validator->validated();
 
-        if (empty($validated['feedback']) && empty($validated['integration'])) {
+        if (empty($validated['integration_types'])) {
             return response()->json(['message' => 'Вы не выбрали формат рекламы'])->setStatusCode(400);
         }
 
@@ -151,17 +151,9 @@ class ProjectController extends Controller
         $validated['status'] = Project::ACTIVE;
         $project = Project::create($validated);
 
-        if (!empty($validated['feedback'])) {
+        foreach ($validated['integration_types'] as $integration_type) {
             ProjectWork::create([
-                'type' => Project::FEEDBACK,
-                'quantity' => -1,
-                'project_id' => $project->id,
-            ]);
-        }
-
-        if (!empty($validated['integration'])) {
-            ProjectWork::create([
-                'type' => Project::INTEGRATION,
+                'type' => $integration_type,
                 'quantity' => -1,
                 'project_id' => $project->id,
             ]);

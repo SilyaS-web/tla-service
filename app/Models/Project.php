@@ -24,6 +24,7 @@ class Project extends Model
     public const YAPPY = 'yappy';
     public const RUTUBE = 'rutube';
     public const INTEGRATION = 'integration';
+    public const UGC_CONTENT = 'ugc_content';
     public const BARTER = 'barter';
 
     public const TYPE_NAMES = [
@@ -37,12 +38,14 @@ class Project extends Model
         self::YAPPY => 'Интеграция Yappy',
         self::RUTUBE => 'Интеграция Rutube',
         self::INTEGRATION => 'Интеграции',
+        self::UGC_CONTENT => 'UGC-контент',
         self::BARTER => 'Безлимит',
     ];
 
     public const TYPES = [
         self::INTEGRATION,
         self::FEEDBACK,
+        self::UGC_CONTENT
     ];
 
     public const INTEGRATION_TYPES = [
