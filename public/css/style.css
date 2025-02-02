@@ -1489,6 +1489,10 @@ input[type='range']::-webkit-slider-runnable-track{
     width: 100%;
     padding-bottom: 75px;
 }
+.popup__body:has(.popup-project) {
+    max-width: 975px !important;
+    padding: 0;
+}
 .user-view__container{
 }
 .info-profile__body{
