@@ -35,7 +35,7 @@
                         <div class="form-platforms__items">
                             <div
                                 v-for="platform in platforms"
-                                @click="filter.platform = platform.id"
+                                @click="filter.platform === platform.id ? filter.platform = '' : filter.platform = platform.id"
                                 :class="'form-platform ' + (filter.platform == platform.id ? 'current' : '')">
                                 <img :src="platform.image" alt="">
                             </div>
