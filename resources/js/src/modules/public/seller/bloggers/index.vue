@@ -214,6 +214,7 @@ export default{
         let user = this.User.getCurrent();
 
         if(user){
+            console.log(user.tariffs, user.tariffs.length)
             if(user.tariffs && user.tariffs.length > 0){
                 this.isBloggersListBlocked = false
             }
