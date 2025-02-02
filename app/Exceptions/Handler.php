@@ -36,7 +36,9 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            TgService::sendToDevBot($e->getMessage());
+            $message =  'Error file: ' . $e->getFile() . ' on line: ' . $e->getLine() . '
+            ' . $e->getMessage() ;
+            TgService::sendToDevBot($message);
         });
     }
 }

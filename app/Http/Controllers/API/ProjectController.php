@@ -416,9 +416,8 @@ class ProjectController extends Controller
         }
 
         $validated = $validator->validated();
-        $categories = [];
 
-        if (isset($validated['category']) && !empty($validated['category'])) {
+        if (!empty($validated['category'])) {
             $categories = Project::selectRaw('marketplace_category as theme')->where('marketplace_category', 'like', '%' . $validated['category'] . '%')->distinct('marketplace_category')->get();
         } else {
             $categories = Project::selectRaw('marketplace_category as theme')->distinct('marketplace_category')->whereNotNull('marketplace_category')->get();
