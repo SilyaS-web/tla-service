@@ -66,7 +66,7 @@
                             <div
                                 v-for="theme in filter.themes"
                                 class="form-formats__current-item">
-                                {{ (themes.find(_theme => theme === _theme.id).name) }}
+                                {{ (themes.find(_theme => theme == _theme.id).name) }}
                             </div>
                         </div>
                         <span
