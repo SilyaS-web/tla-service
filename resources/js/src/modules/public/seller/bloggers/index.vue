@@ -151,19 +151,21 @@
         </div>
 
         <!-- плашка об оплате тарифа-->
-<!--        <div class="not_paid-alert">-->
-<!--            <div class="not_paid-alert__body">-->
-<!--                <div class="not_paid-alert__title">-->
-<!--                    Каталог блогеров недоступен-->
-<!--                </div>-->
-<!--                <div class="not_paid-alert__text">-->
-<!--                    Необходимо оплатить тариф, чтобы иметь возможность просматривать<br> каталог блогеров и начать работу с ними-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="not_paid-alert__footer">-->
-<!--                <router-link :to="{ path: '/tariffs' }" class="not_paid-alert__btn btn btn-primary">Разблокировать каталог</router-link>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div
+            v-if="!isBloggersListBlocked"
+            class="not_paid-alert">
+            <div class="not_paid-alert__body">
+                <div class="not_paid-alert__title">
+                    Каталог блогеров недоступен
+                </div>
+                <div class="not_paid-alert__text">
+                    Необходимо оплатить тариф, чтобы иметь возможность просматривать<br> каталог блогеров и начать работу с ними
+                </div>
+            </div>
+            <div class="not_paid-alert__footer">
+                <router-link :to="{ path: '/tariffs' }" class="not_paid-alert__btn btn btn-primary">Разблокировать каталог</router-link>
+            </div>
+        </div>
     </div>
     <choose-project-popup ref="chooseProjectPopup"></choose-project-popup>
 </template>
@@ -196,7 +198,7 @@ export default{
             currentProject: ref(null),
             isChooseProjectList: ref(false),
 
-            isBlocked: ref(false),
+            isBloggersListBlocked: ref(true),
 
             projectsFilter: ref({
                 project_type: "",
@@ -211,7 +213,11 @@ export default{
     async mounted(){
         let user = this.User.getCurrent();
 
-        this.isBlocked = !(user && (user.tariffs && user.tariffs.length > 0))
+        if(user){
+            if(user.tariffs && user.tariffs.length > 0){
+                this.isBloggersListBlocked = false
+            }
+        }
     },
 
     updated(){
