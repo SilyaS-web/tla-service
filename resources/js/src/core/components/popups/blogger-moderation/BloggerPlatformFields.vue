@@ -1,10 +1,9 @@
 <template>
-    <div :class="'popup__form-row popup__form-stat form-stat ' + (platform.blogger_platform && platform.blogger_platform.link ? 'fill' : '')">
-        <div class="form-stat__title" v-on:click="slideCard">
+    <div :class="'popup__form-row popup__form-stat form-stat ' + (isPlatformFilled() ? 'fill ' : ' ') + (isPlatformFieldActive ? 'active' : '')">
+        <div class="form-stat__title" v-on:click="isPlatformFieldActive = !isPlatformFieldActive">
             {{ platform.name }}
         </div>
         <div
-            v-on:click.stop
             class="form-stat__content">
             <div class="form-stat__row">
                 <div class="form-group" style="width:100%; max-width:100%">
@@ -15,7 +14,8 @@
                         type="text"
                         class="input"
                         name=""
-                        style="width:100%; max-width:100%">
+                        style="width:100%; max-width:100%"
+                    >
                 </div>
             </div>
             <div class="form-stat__row">
@@ -85,12 +85,16 @@
     </div>
 </template>
 <script>
+import {ref} from 'vue'
+
     export default{
         props: ['platformAdditFields', 'platform'],
+        data(){
+            return{
+                isPlatformFieldActive: ref(false)
+            }
+        },
         methods: {
-            slideCard(e){
-                $(e.target).closest('.form-stat').toggleClass('active');
-            },
             calculateER(){
                 var subs = this.platform.blogger_platform.subscriber_quantity,
                     cover =  this.platform.blogger_platform.coverage,
@@ -104,6 +108,10 @@
                     val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
 
                 this.platform.blogger_platform.additional_engagement_rate = (Math.round(val * 100) / 100).toFixed(2);
+            },
+
+            isPlatformFilled(){
+                return this.platform.blogger_platform && this.platform.blogger_platform.link
             }
         }
     }
