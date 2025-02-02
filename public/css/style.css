@@ -754,9 +754,9 @@ input[type='range']::-webkit-slider-runnable-track{
     overflow: hidden;
     padding: 20px;
 }
-.not_paid-alert{
-    display: none;
-}
+/*.not_paid-alert{*/
+/*    display: none;*/
+/*}*/
 .profile-blogers.not-paid .not_paid-alert{
     position: absolute;
     width: calc(100% + 40px);
