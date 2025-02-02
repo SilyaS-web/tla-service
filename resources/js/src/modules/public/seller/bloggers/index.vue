@@ -112,9 +112,8 @@
                                 Фильтр
                             </p>
                             <a
-                                @click="resetProjectsFilter"
-                                href="#" class="filter__reset">
-                                Сбросить
+                                href="#" class="filter__hide">
+                                Скрыть
                             </a>
                         </div>
                         <div class="filter__items">
@@ -142,8 +141,8 @@
                                     @click="applyProjectsFilter"
                                     class="btn btn-primary">Применить</button>
                                 <button
-                                    @click=""
-                                    class="btn btn-secondary hide">Скрыть</button>
+                                    @click="resetProjectsFilter"
+                                    class="btn btn-secondary">Сбросить</button>
                             </div>
                         </div>
                     </div>

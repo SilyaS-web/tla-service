@@ -6,26 +6,43 @@
                     Фильтр
                 </p>
                 <a
-                    @click="resetFilter"
-                    href="#" class="filter__reset">
-                    Сбросить
+                    href="#" class="filter__hide">
+                    Скрыть
                 </a>
             </div>
             <div class="filter__items">
                 <div class="form-group filter__item">
                     <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию" v-model="filter.name">
                 </div>
+
+                <div class="form-group filter__item">
+                    <div class="filter__item--has-content" id = "filter__item">
+                        <div class="checkbox">
+                            <input
+                                type="checkbox"
+                                class="checkbox__checkbox"
+                                id="has-content"
+                                :value="filter.has_content"
+                                @change="filter.has_content = Number(!filter.has_content)">
+                            <label for="has-content">Есть контент</label>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-group filter__item">
                     <label for="">Платформа</label>
-                    <select name="filter-platform" id="filter-platform" class="input" v-model="filter.platform">
-                        <option value="">Выберите платформу</option>
-                        <option
-                            v-for="platform in platforms"
-                            :value="platform.id">
-                            {{ platform.title }}
-                        </option>
-                    </select>
+                    <div class="form-platforms">
+                        <div class="form-platforms__items">
+                            <div
+                                v-for="platform in platforms"
+                                @click="filter.platform = platform"
+                                :class="'form-platform ' + (filter.platform == platform ? 'current' : '')">
+                                <img :src="platform.image" alt="">
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <div class="form-group filter__item">
                     <label for="filter-country">Страна блогера</label>
                     <select name="filter-country" id="filter-country" class="input" v-model="filter.country">
@@ -33,26 +50,46 @@
                         <option value="1" class="">Россия</option>
                     </select>
                 </div>
+
                 <div class="form-group filter__item">
                     <label for="filter-city">Город блогера</label>
                     <input type="text" class="input" name="filter-city" id="filter-city" placeholder="Введите город" v-model="filter.city">
                 </div>
+
                 <div class="form-group" style="flex-direction: column;">
                     <label for="">Выберите тематику</label>
-                    <div class="form-formats">
+                    <div :class="'form-formats ' + (isFilterThemesOpen ? 'form-formats--open' : '')">
                         <div
-                            v-for="theme in themes"
-                            class="form__row form-format">
-                            <input
-                                :id="'theme-' + theme.id"
-                                :value="theme.id"
-                                type="checkbox" name="themes[]" class="form-format__check"
-                                @change="setFilterThemes($event, theme.id)"
-                            >
-                            <label
-                                :for="'theme-' + theme.id">
+                            v-if="filter.themes.length > 0"
+                            @click="isFilterThemesOpen = !isFilterThemesOpen"
+                            class="form-formats__current">
+                            <div
+                                v-for="theme in filter.themes"
+                                class="form-formats__current-item">
                                 {{ theme.name }}
-                            </label>
+                            </div>
+                        </div>
+                        <span
+                            v-else
+                            @click="isFilterThemesOpen = !isFilterThemesOpen"
+                            class="form-formats__empty">
+                            Выбрать
+                        </span>
+
+                        <div class="form-formats__items">
+                            <div
+                                v-for="theme in themes"
+                                class="form__row form-format">
+                                <input
+                                    :id="'theme-' + theme.id"
+                                    type="checkbox" name="themes[]" class="form-format__check"
+                                    @change="setFilterThemes(theme)"
+                                >
+                                <label
+                                    :for="'theme-' + theme.id">
+                                    {{ theme.name }}
+                                </label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -70,21 +107,6 @@
                                 @change="setFilterSex($event, 'female')"
                                 type="checkbox" class="checkbox" id="female" :checked="filter.sex.includes('female')">
                             <label for="female">Женский</label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group filter__item">
-                    <label for="">Наличие контента у блогера</label>
-                    <div class="filter__item--sex" id = "filter__item">
-                        <div class="input-checkbox-w">
-                            <input
-                                type="checkbox"
-                                class="checkbox"
-                                id="has-content"
-                                :value="filter.has_content"
-                                @change="filter.has_content = Number(!filter.has_content)">
-                            <label for="has-content">Есть контент</label>
                         </div>
                     </div>
                 </div>
@@ -109,8 +131,8 @@
                         @click="applyFilter"
                         class="btn btn-primary">Применить</button>
                     <button
-                        @click=""
-                        class="btn btn-secondary hide">Скрыть</button>
+                        @click="resetFilter"
+                        class="btn btn-secondary">Сбросить</button>
                 </div>
             </div>
         </div>
@@ -144,6 +166,8 @@ export default{
                 has_content: 0,
             }),
 
+            isFilterThemesOpen: ref(false),
+
             Platforms, Themes
         }
     },
@@ -160,18 +184,26 @@ export default{
                 this.filter.sex.splice(this.filter.sex.indexOf(value), 1);
             }
         },
-        setFilterThemes(e, id){
-            if($(e.target).prop('checked')){
-                this.filter.themes.push(id)
+        setFilterThemes(theme){
+            if(!this.filter.themes.find(t => t.id === theme.id)){
+                this.filter.themes.push(theme)
             }
             else{
-                this.filter.themes.splice(this.filter.themes.indexOf(id), 1);
+                this.filter.themes.splice(this.filter.themes.indexOf(theme), 1);
             }
+        },
+        getFilterThemesString(){
+            let currentThemes = themes.filter(t => this.filter.themes.find(t.id));
+
+            return currentThemes.map(t => t.name).join(', ')
         },
 
         applyFilter(){
             this.filter.subscriber_quantity_min = this.filterSubscribersQuantity.value[0]
             this.filter.subscriber_quantity_max = this.filterSubscribersQuantity.value[1]
+
+            this.filter.themes = this.filter.themes.map(t => t.id)
+            this.filter.platforms = this.platforms.themes.map(p => p.id)
 
             this.$emit('applyFilter', this.filter);
         },
