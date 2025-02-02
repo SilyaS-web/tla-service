@@ -50,7 +50,7 @@ class PopupAcceptBloger extends Popup{
 
         $(this.node).find('.btn.send-data').on('click', this.sendData)
         $(this.node).find('.close-popup').on('click', this.closePopup)
-        $(this.node).find('.form-stat__title').on('click', (e) => this.statCardClick(e))
+        // $(this.node).find('.form-stat__title').on('click', (e) => this.statCardClick(e))
 
         var changeTelegramEr = null, self = this;
 

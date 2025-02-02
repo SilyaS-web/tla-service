@@ -21,10 +21,10 @@
     <title>Панель управления</title>
 </head>
 <body>
-    <div class="wrapper" id = "app">
-        <admin-index></admin-index>
-    </div>
-    @include('shared.success-message')
+<div class="wrapper" id = "app">
+    <admin-index></admin-index>
+</div>
+@include('shared.success-message')
 </body>
 
 <script src="{{ asset('admin/js/script.js') }}"></script>

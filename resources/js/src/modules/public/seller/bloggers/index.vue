@@ -1,5 +1,5 @@
 <template>
-    <div :class="'profile-blogers tab-content '" id="profile-blogers-list">
+    <div :class="'profile-blogers tab-content ' + (isBloggersListBlocked ? 'not-paid' : '')" id="profile-blogers-list">
         <!-- страница каталога блогеров-->
         <div v-if="!isChooseProjectList" class="profile-blogers__body">
             <div class="projects-list__header">
@@ -112,9 +112,8 @@
                                 Фильтр
                             </p>
                             <a
-                                @click="resetProjectsFilter"
-                                href="#" class="filter__reset">
-                                Сбросить
+                                href="#" class="filter__hide">
+                                Скрыть
                             </a>
                         </div>
                         <div class="filter__items">
@@ -142,8 +141,8 @@
                                     @click="applyProjectsFilter"
                                     class="btn btn-primary">Применить</button>
                                 <button
-                                    @click=""
-                                    class="btn btn-secondary hide">Скрыть</button>
+                                    @click="resetProjectsFilter"
+                                    class="btn btn-secondary">Сбросить</button>
                             </div>
                         </div>
                     </div>
@@ -152,19 +151,19 @@
         </div>
 
         <!-- плашка об оплате тарифа-->
-<!--        <div class="not_paid-alert">-->
-<!--            <div class="not_paid-alert__body">-->
-<!--                <div class="not_paid-alert__title">-->
-<!--                    Каталог блогеров недоступен-->
-<!--                </div>-->
-<!--                <div class="not_paid-alert__text">-->
-<!--                    Необходимо оплатить тариф, чтобы иметь возможность просматривать<br> каталог блогеров и начать работу с ними-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="not_paid-alert__footer">-->
-<!--                <router-link :to="{ path: '/tariffs' }" class="not_paid-alert__btn btn btn-primary">Разблокировать каталог</router-link>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="not_paid-alert">
+            <div class="not_paid-alert__body">
+                <div class="not_paid-alert__title">
+                    Каталог блогеров недоступен
+                </div>
+                <div class="not_paid-alert__text">
+                    Необходимо оплатить тариф, чтобы иметь возможность просматривать<br> каталог блогеров и начать работу с ними
+                </div>
+            </div>
+            <div class="not_paid-alert__footer">
+                <router-link :to="{ path: '/tariffs' }" class="not_paid-alert__btn btn btn-primary">Разблокировать каталог</router-link>
+            </div>
+        </div>
     </div>
     <choose-project-popup ref="chooseProjectPopup"></choose-project-popup>
 </template>
@@ -197,7 +196,7 @@ export default{
             currentProject: ref(null),
             isChooseProjectList: ref(false),
 
-            isBlocked: ref(false),
+            isBloggersListBlocked: ref(true),
 
             projectsFilter: ref({
                 project_type: "",
@@ -212,7 +211,12 @@ export default{
     async mounted(){
         let user = this.User.getCurrent();
 
-        this.isBlocked = !(user && (user.tariffs && user.tariffs.length > 0))
+        if(user){
+            console.log(user.tariffs && user.tariffs.length > 0)
+            if(user.tariffs && user.tariffs.length > 0){
+                this.isBloggersListBlocked = false
+            }
+        }
     },
 
     updated(){

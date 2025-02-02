@@ -3,7 +3,9 @@
         <div class="form-stat__title" v-on:click="slideCard">
             {{ platform.name }}
         </div>
-        <div class="form-stat__content">
+        <div
+            v-on:click.stop
+            class="form-stat__content">
             <div class="form-stat__row">
                 <div class="form-group" style="width:100%; max-width:100%">
                     <label v-bind:for="platform.prefix + '_link'">Ссылка</label>

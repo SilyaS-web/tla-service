@@ -4,10 +4,12 @@ namespace App\Models;
 
 use App\Services\OzonService;
 use App\Services\WbService;
+use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 
 class Project extends Model
@@ -23,7 +25,9 @@ class Project extends Model
     public const DZEN = 'dzen';
     public const YAPPY = 'yappy';
     public const RUTUBE = 'rutube';
+    public const TIKTOK = 'tiktok';
     public const INTEGRATION = 'integration';
+    public const UGC_CONTENT = 'ugc_content';
     public const BARTER = 'barter';
 
     public const TYPE_NAMES = [
@@ -36,13 +40,16 @@ class Project extends Model
         self::DZEN => 'Интеграция Дзен',
         self::YAPPY => 'Интеграция Yappy',
         self::RUTUBE => 'Интеграция Rutube',
+        self::TIKTOK => 'Интеграция Tiktok',
         self::INTEGRATION => 'Интеграции',
+        self::UGC_CONTENT => 'UGC-контент',
         self::BARTER => 'Безлимит',
     ];
 
     public const TYPES = [
         self::INTEGRATION,
         self::FEEDBACK,
+        self::UGC_CONTENT
     ];
 
     public const INTEGRATION_TYPES = [
@@ -54,11 +61,13 @@ class Project extends Model
         self::DZEN,
         self::YAPPY,
         self::RUTUBE,
+        self::TIKTOK,
     ];
 
     public const BARTER_TYPES = [
         self::INTEGRATION,
         self::FEEDBACK,
+        self::UGC_CONTENT,
         self::INSTAGRAM,
         self::YOUTUBE,
         self::TELEGRAM,
@@ -67,6 +76,7 @@ class Project extends Model
         self::DZEN,
         self::YAPPY,
         self::RUTUBE,
+        self::TIKTOK,
     ];
 
     public const STOPPED = -3;
@@ -198,7 +208,7 @@ class Project extends Model
         return "Активно";
     }
 
-    public function isSended($user = null)
+    public function isSended($user = null): bool
     {
         if (!$user) {
             $user = Auth::user();
@@ -212,7 +222,7 @@ class Project extends Model
         return false;
     }
 
-    public function isCompleted()
+    public function isCompleted(): bool
     {
         $is_null = true;
         if ($this->status == self::COMPLETED) {
@@ -233,7 +243,7 @@ class Project extends Model
         return $is_null;
     }
 
-    public function getStatusClass()
+    public function getStatusClass(): string
     {
         if (!$this->is_blogger_access || $this->status == self::BANNED) {
             return "disactive";
@@ -242,7 +252,7 @@ class Project extends Model
         return "active";
     }
 
-    public function getProjectWorkNames($format = null)
+    public function getProjectWorkNames($format = null): array|string|null
     {
         $project_works = $this->projectWorks;
         $names = [];
@@ -263,7 +273,7 @@ class Project extends Model
         return $names;
     }
 
-    public function getProjectWorkNamesWithQuantity()
+    public function getProjectWorkNamesWithQuantity(): array
     {
         $project_works = $this->projectWorks;
         $formats = [];
@@ -282,7 +292,7 @@ class Project extends Model
         return $formats;
     }
 
-    public function getImageURL($only_primary = false)
+    public function getImageURL($only_primary = false): Application|array|string|UrlGenerator|\Illuminate\Contracts\Foundation\Application|null
     {
         if ($only_primary) {
             if ($this->projectFiles->first()) {
@@ -305,7 +315,7 @@ class Project extends Model
     }
 
 
-    public function getStatistics(string $ozon_client_id = null, string $ozon_api_key = null)
+    public function getStatistics(string $ozon_client_id = null, string $ozon_api_key = null): bool|string
     {
         $start_date = now()->subDays(30);
         $end_date = now();
