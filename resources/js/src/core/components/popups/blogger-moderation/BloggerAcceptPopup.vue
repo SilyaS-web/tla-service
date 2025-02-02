@@ -95,6 +95,12 @@ export default {
                 prefix: 'yappy',
                 id: 5
             },
+            {
+                name: 'TikTok',
+                key: 'tt',
+                prefix: 'tt',
+                id: 9
+            },
         ]),
         blogger: ref(null),
         platformAdditFields: ref([]),
@@ -125,10 +131,10 @@ export default {
                     method: 'get',
                     url: '/api/bloggers/' + id,
                 })
-                    .then(result => resolve(result.data))
-                    .catch(error => {
-                        resolve([])
-                    })
+                .then(result => resolve(result.data))
+                .catch(error => {
+                    resolve([])
+                })
             })
         },
 
@@ -160,12 +166,12 @@ export default {
                     url: '/api/bloggers/' + this.blogger.id + '/accept',
                     data: toRaw(this.blogger)
                 })
-                    .then(result => resolve(result.data))
-                    .catch(err => {
-                        this.errors = err.response.data;
-                        notify('info', {title: 'Внимание', message: 'Не удалось принять блогера'});
-                        reject()
-                    })
+                .then(result => resolve(result.data))
+                .catch(err => {
+                    this.errors = err.response.data;
+                    notify('info', {title: 'Внимание', message: 'Не удалось принять блогера'});
+                    reject()
+                })
             })
         },
 
