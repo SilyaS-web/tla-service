@@ -118,7 +118,7 @@
                             v-model="filterSubscribersQuantity.value"
                             v-bind="filterSubscribersQuantity"
                             :min="0"
-                            :max="10000000"
+                            :max="4000000"
                         ></Slider>
                     </div>
                     <div class="form-group row" style="margin-top: 10px; flex-direction:row; justify-content: space-between; display:flex; gap: 15px">
@@ -152,7 +152,7 @@ export default{
             themes: ref([]),
 
             filterSubscribersQuantity: ref({
-                value: [0, 10000000]
+                value: [0, 4000000]
             }),
             filter: ref({
                 name: '',
@@ -162,7 +162,7 @@ export default{
                 themes: [],
                 sex: [],
                 subscriber_quantity_min: 0,
-                subscriber_quantity_max: 10000000,
+                subscriber_quantity_max: 4000000,
                 has_content: 0,
             }),
 
@@ -216,10 +216,10 @@ export default{
                 themes: [],
                 sex: [],
                 subscriber_quantity_min: 0,
-                subscriber_quantity_max: 10000000,
+                subscriber_quantity_max: 4000000,
             }
             this.filterSubscribersQuantity = {
-                value: [0, 10000000]
+                value: [0, 4000000]
             }
 
             $('.form-format__check').prop('checked', false)
