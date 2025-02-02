@@ -1627,7 +1627,7 @@ input[type='range']::-webkit-slider-runnable-track{
     border-radius: 0 10px 10px 10px;
     transition: all .2s linear;
     flex: 1 1 auto;
-    max-width: 460px;
+    max-width: 515px;
     opacity: 0;
     display: none;
     border: 1px solid unset;
