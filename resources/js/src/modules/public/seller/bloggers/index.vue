@@ -1,5 +1,5 @@
 <template>
-    <div :class="'profile-blogers tab-content '" id="profile-blogers-list">
+    <div :class="'profile-blogers tab-content ' + (isBloggersListBlocked ? 'not-paid' : '')" id="profile-blogers-list">
         <!-- страница каталога блогеров-->
         <div v-if="!isChooseProjectList" class="profile-blogers__body">
             <div class="projects-list__header">
@@ -151,9 +151,7 @@
         </div>
 
         <!-- плашка об оплате тарифа-->
-        <div
-            v-if="!isBloggersListBlocked"
-            class="not_paid-alert">
+        <div class="not_paid-alert">
             <div class="not_paid-alert__body">
                 <div class="not_paid-alert__title">
                     Каталог блогеров недоступен
@@ -214,6 +212,7 @@ export default{
         let user = this.User.getCurrent();
 
         if(user){
+            console.log(user.tariffs && user.tariffs.length > 0)
             if(user.tariffs && user.tariffs.length > 0){
                 this.isBloggersListBlocked = false
             }

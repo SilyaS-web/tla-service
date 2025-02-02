@@ -1410,9 +1410,9 @@ $(window).on('load', function(){
     //     }
     // })
 
-    $(document).find('.form-stat__title').on('click', function(e){
-        $(e.target).closest('.form-stat').toggleClass('active');
-    })
+    // $(document).find('.form-stat__title').on('click', function(e){
+    //     $(e.target).closest('.form-stat').toggleClass('active');
+    // })
 
     // $(document).on('click', '.item-chat__project-link--seller', function(e){
     //     var pId = $(e.target).closest('.item-chat__project-link--seller').data('project-id');

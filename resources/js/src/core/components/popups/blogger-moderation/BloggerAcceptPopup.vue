@@ -95,6 +95,12 @@ export default {
                 prefix: 'yappy',
                 id: 5
             },
+            {
+                name: 'TikTok',
+                key: 'TikTok',
+                prefix: 'tt',
+                id: 9
+            },
         ]),
         blogger: ref(null),
         platformAdditFields: ref([]),
@@ -125,10 +131,10 @@ export default {
                     method: 'get',
                     url: '/api/bloggers/' + id,
                 })
-                    .then(result => resolve(result.data))
-                    .catch(error => {
-                        resolve([])
-                    })
+                .then(result => resolve(result.data))
+                .catch(error => {
+                    resolve([])
+                })
             })
         },
 
