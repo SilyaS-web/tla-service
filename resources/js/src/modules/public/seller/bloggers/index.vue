@@ -152,7 +152,7 @@
 
         <!-- плашка об оплате тарифа-->
         <div
-            v-if="isBloggersListOpened"
+            v-if="isBloggersListBlocked"
             class="not_paid-alert">
             <div class="not_paid-alert__body">
                 <div class="not_paid-alert__title">
@@ -198,7 +198,7 @@ export default{
             currentProject: ref(null),
             isChooseProjectList: ref(false),
 
-            isBloggersListOpened: ref(false),
+            isBloggersListBlocked: ref(true),
 
             projectsFilter: ref({
                 project_type: "",
@@ -215,7 +215,7 @@ export default{
 
         if(user){
             if(user.tariffs && user.tariffs.length > 0){
-                this.isBloggersListOpened = true
+                this.isBloggersListBlocked = false
             }
         }
     },
