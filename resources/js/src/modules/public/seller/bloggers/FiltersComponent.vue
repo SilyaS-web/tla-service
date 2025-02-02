@@ -64,9 +64,9 @@
                             @click="isFilterThemesOpen = !isFilterThemesOpen"
                             class="form-formats__current">
                             <div
-                                v-for="theme in themes.filter(theme => filter.themes.find(_theme => _theme === theme.id))"
+                                v-for="theme in filter.themes"
                                 class="form-formats__current-item">
-                                {{ theme.name }}
+                                {{ (themes.find(_theme => theme === _theme.id).name) }}
                             </div>
                         </div>
                         <span
