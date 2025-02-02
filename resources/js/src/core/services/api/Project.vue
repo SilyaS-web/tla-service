@@ -9,16 +9,19 @@ const Project = {
                 resolve(false)
             }
 
-            var formData = new FormData;
+            let formData = new FormData;
 
             for (const key in data) {
-                if(!['images'].includes(key))
+                if(!['images', 'integration_types'].includes(key))
                     formData.append(key, data[key])
             }
-            for( var i = 0; i < data.images.length; i++ ){
+            for( let i = 0; i < data.images.length; i++ ){
                 let file = data.images[i][0];
 
                 file && formData.append('images[' + i + ']', file);
+            }
+            for( let i = 0; i < data.integration_types.length; i++ ){
+                formData.append('integration_types[' + i + ']', data.integration_types[i]);
             }
 
             axios({

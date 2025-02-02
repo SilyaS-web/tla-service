@@ -37,13 +37,19 @@
                                 :error="(errors && errors.product_price ? errors.product_price : null)"
                             ></Input>
                         </div>
+
                         <div class="form-group marketing-format" style="z-index: 3;" >
                             <label for="format">Выберите формат</label>
                             <span class="error" v-if="errors && errors.project_type">{{ errors.project_type }}</span>
 
                             <div class="marketing-format__item input-checkbox-w">
                                 <div class="checkbox">
-                                    <input type="checkbox" id="feedback" class="checkbox__checkbox" v-model="project.feedback">
+                                    <input
+                                        type="checkbox"
+                                        id="feedback"
+                                        class="checkbox__checkbox"
+                                        value="feedback"
+                                        v-model="project.integration_types">
                                     <label for="feedback"></label>
                                 </div>
                                 <label for="product-feedback">Выкуп + отзыв
@@ -75,7 +81,12 @@
                             </div>
                             <div class="marketing-format__item input-checkbox-w">
                                 <div class="checkbox">
-                                    <input type="checkbox" id="integration" class="checkbox__checkbox" v-model="project.integration">
+                                    <input
+                                        type="checkbox"
+                                        id="integration"
+                                        class="checkbox__checkbox"
+                                        value="integration"
+                                        v-model="project.integration_types">
                                     <label for="integration"></label>
                                 </div>
                                 <label for="product-inst">
@@ -101,6 +112,43 @@
                                         <div class="format-hint__body">
                                             Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя
                                             интеграции с лидерами мнений.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="marketing-format__item input-checkbox-w">
+                                <div class="checkbox">
+                                    <input
+                                        type="checkbox"
+                                        id="ugc-content"
+                                        class="checkbox__checkbox"
+                                        value="ugc_content"
+                                        v-model="project.integration_types"
+                                    >
+                                    <label for="ugc-content"></label>
+                                </div>
+                                <label for="product-inst">
+                                    UGC-контент
+                                    <div class="format-tooltip format-tooltip--mobile" data-hint="ugc-content-hint">
+                                        ?
+                                        <div class="format-hint format-hint--text" id="ugc-content-hint">
+                                            <div class="format-hint__title">
+                                                UGC-контент
+                                            </div>
+                                            <div class="format-hint__body">
+                                                Селлер отправляет товар блогеру, который снимает фото/видео-контент и передаёт его селлеру для использования в рекламе и на маркетплейсах. Блогер не публикует контент в своих соцсетях и не пишет отзыв.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                                <div class="format-tooltip" data-hint="inst">
+                                    ?
+                                    <div class="format-hint format-hint--text" id="inst">
+                                        <div class="format-hint__title">
+                                            UGC-контент
+                                        </div>
+                                        <div class="format-hint__body">
+                                            Селлер отправляет товар блогеру, который снимает фото/видео-контент и передаёт его селлеру для использования в рекламе и на маркетплейсах. Блогер не публикует контент в своих соцсетях и не пишет отзыв.
                                         </div>
                                     </div>
                                 </div>
@@ -144,8 +192,7 @@ export default {
                 product_nm: null,
                 product_price: null,
                 product_link: null,
-                feedback: false,
-                integration: false,
+                integration_types: [],
                 images: [],
             }),
             errors: ref({
@@ -178,9 +225,6 @@ export default {
                     this.project.images.push($(v)[0].files)
             })
 
-            this.project.feedback = this.project.feedback ? 1 : 0;
-            this.project.integration = this.project.integration ? 1 : 0;
-
             this.Project.create(this.project).then(
                 data => {
                     this.project = {
@@ -188,11 +232,7 @@ export default {
                         product_nm: null,
                         product_price: null,
                         product_link: null,
-                        feedback_quantity: 0,
-                        inst_quantity: 0,
-                        youtube_quantity: 0,
-                        vk_quantity: 0,
-                        telegram_quantity: 0,
+                        integration_types: [],
                         images: [],
                     }
 

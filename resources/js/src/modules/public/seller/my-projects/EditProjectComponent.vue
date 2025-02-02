@@ -111,18 +111,21 @@ export default{
     },
     methods:{
         modifyProject(){
-            console.log(this.projectFiles)
             this.project.images = this.projectFiles.filter(f => f.file && !f.id).map(f => f.file);
             this.project.uploaded_files = this.projectFiles.filter(f => f.id).map(f => f.id);
-            console.log(this.project.uploaded_files, this.project.images)
+
             var formData = new FormData;
 
             formData.append('product_name', this.project.product_name);
             formData.append('product_nm', this.project.product_nm);
             formData.append('product_link', this.project.product_link);
             formData.append('product_price', this.project.product_price);
-            formData.append('feedback', (this.project.feedback ? 1 : 0));
-            formData.append('integration', (this.project.integration ? 1 : 0));
+
+            if(this.project.integration_types){
+                for (let i = 0; i < this.project.integration_types.length; i++){
+                    formData.append('integration_types[' + i + ']', this.project.integration_types[i]);
+                }
+            }
 
             for (let i = 0; i < this.project.images.length; i++){
                 if(this.project.images[i])
