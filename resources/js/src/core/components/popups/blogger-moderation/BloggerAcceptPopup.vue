@@ -95,6 +95,12 @@ export default {
                 prefix: 'yappy',
                 id: 5
             },
+            {
+                name: 'TikTok',
+                key: 'TikTok',
+                prefix: 'tt',
+                id: 9
+            },
         ]),
         blogger: ref(null),
         platformAdditFields: ref([]),
