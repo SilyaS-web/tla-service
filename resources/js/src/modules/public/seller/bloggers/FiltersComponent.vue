@@ -83,7 +83,7 @@
                                 <input
                                     :id="'theme-' + theme.id"
                                     type="checkbox" name="themes[]" class="form-format__check"
-                                    @change="setFilterThemes(theme)"
+                                    @change="setFilterThemes(theme.id)"
                                 >
                                 <label
                                     :for="'theme-' + theme.id">
@@ -191,11 +191,6 @@ export default{
             else{
                 this.filter.themes.splice(this.filter.themes.indexOf(themeID), 1);
             }
-        },
-        getFilterThemesString(){
-            let currentThemes = themes.filter(t => this.filter.themes.find(t.id));
-
-            return currentThemes.map(t => t.name).join(', ')
         },
 
         applyFilter(){
