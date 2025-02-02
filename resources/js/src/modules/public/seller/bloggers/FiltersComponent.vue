@@ -64,7 +64,7 @@
                             @click="isFilterThemesOpen = !isFilterThemesOpen"
                             class="form-formats__current">
                             <div
-                                v-for="theme in filter.themes"
+                                v-for="theme in themes.filter(theme => filter.themes.find(_theme => _theme === theme.id))"
                                 class="form-formats__current-item">
                                 {{ theme.name }}
                             </div>
@@ -184,12 +184,12 @@ export default{
                 this.filter.sex.splice(this.filter.sex.indexOf(value), 1);
             }
         },
-        setFilterThemes(theme){
-            if(!this.filter.themes.find(t => t.id === theme.id)){
-                this.filter.themes.push(theme)
+        setFilterThemes(themeID){
+            if(!this.filter.themes.find(t => t.id === themeID)){
+                this.filter.themes.push(themeID)
             }
             else{
-                this.filter.themes.splice(this.filter.themes.indexOf(theme), 1);
+                this.filter.themes.splice(this.filter.themes.indexOf(themeID), 1);
             }
         },
         getFilterThemesString(){
@@ -201,8 +201,6 @@ export default{
         applyFilter(){
             this.filter.subscriber_quantity_min = this.filterSubscribersQuantity.value[0]
             this.filter.subscriber_quantity_max = this.filterSubscribersQuantity.value[1]
-
-            this.filter.themes = this.filter.themes.map(t => t.id)
 
             this.$emit('applyFilter', this.filter);
         },
