@@ -203,7 +203,7 @@ export default{
             this.filter.subscriber_quantity_max = this.filterSubscribersQuantity.value[1]
 
             this.filter.themes = this.filter.themes.map(t => t.id)
-            this.filter.platforms = this.filter.platforms.map(p => p.id)
+            this.filter.platform = this.filter.platform.id
 
             this.$emit('applyFilter', this.filter);
         },
