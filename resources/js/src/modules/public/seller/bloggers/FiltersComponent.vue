@@ -35,8 +35,8 @@
                         <div class="form-platforms__items">
                             <div
                                 v-for="platform in platforms"
-                                @click="filter.platform = platform"
-                                :class="'form-platform ' + (filter.platform == platform ? 'current' : '')">
+                                @click="filter.platform = platform.id"
+                                :class="'form-platform ' + (filter.platform == platform.id ? 'current' : '')">
                                 <img :src="platform.image" alt="">
                             </div>
                         </div>
@@ -203,7 +203,6 @@ export default{
             this.filter.subscriber_quantity_max = this.filterSubscribersQuantity.value[1]
 
             this.filter.themes = this.filter.themes.map(t => t.id)
-            this.filter.platform = this.filter.platform.id
 
             this.$emit('applyFilter', this.filter);
         },
