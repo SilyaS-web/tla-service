@@ -99,7 +99,7 @@ class WorkController extends Controller
     public function accept(Work $work)
     {
         $user = Auth::user();
-        $seller_user = $work->seller();
+        $seller_user = User::find($work->seller_id);
 
         if (!$seller_user) {
             return response()->json(['message' => 'Владелец проекта удалён или заблокирован'])->setStatusCode(400);
