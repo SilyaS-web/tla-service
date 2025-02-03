@@ -4,6 +4,7 @@ namespace App\Exceptions;
 
 use App\Services\TgService;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Auth;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -36,7 +37,11 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            $message =  'Error file: ' . $e->getFile() . ' on line: ' . $e->getLine() . '
+            $user_message = 'Неавторизованный пользователь';
+            if (Auth::check()) {
+                $user_message = 'ID пользователя: ' . Auth::id();
+            }
+            $message =  $user_message . ', ошибка в файле: ' . $e->getFile() . ' на строке: ' . $e->getLine() . '
             ' . $e->getMessage() ;
             TgService::sendToDevBot($message);
         });
