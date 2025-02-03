@@ -99,6 +99,11 @@ class WorkController extends Controller
     public function accept(Work $work)
     {
         $user = Auth::user();
+        $seller_user = $work->seller();
+
+        if (!$seller_user) {
+            return response()->json(['message' => 'Владелец проекта удалён или заблокирован'])->setStatusCode(400);
+        }
 
         if ($work->created_by == $user->id) {
             return response()->json(['message' => 'Вы не можете принять свою заявку'])->setStatusCode(400);
@@ -109,7 +114,8 @@ class WorkController extends Controller
         }
 
         $project_work = $work->projectWork;
-        $seller_tariff = $user->getActiveTariffs($project_work->type);
+
+        $seller_tariff = $seller_user->getActiveTariffs($project_work->type);
         if ($seller_tariff && $seller_tariff->quantity !== 0) {
             $project_work->update(['finish_date' => $seller_tariff->finish_date]);
             if ($seller_tariff->quantity > 0) {
