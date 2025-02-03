@@ -269,7 +269,7 @@ export default {
                 },
                 {
                     name: 'Tiktok',
-                    key: 'tiktok',
+                    key: 'Tiktok',
                     prefix: 'tiktok',
                     id: 9
                 },
