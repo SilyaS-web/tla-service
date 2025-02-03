@@ -265,7 +265,13 @@ export default {
                     name: 'VK',
                     key: 'VK',
                     prefix: 'vk',
-                    id: 123
+                    id: 4
+                },
+                {
+                    name: 'Tiktok',
+                    key: 'tiktok',
+                    prefix: 'tiktok',
+                    id: 9
                 },
             ],
             bloggerPlatformsTitles: {
