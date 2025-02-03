@@ -193,7 +193,7 @@ class UserController extends Controller
 
         $works = $user->works();
 
-        if (isset($validated['created_by']) && !empty($validated['created_by'])) {
+        if (!empty($validated['created_by'])) {
             if ($validated['created_by'] < 0) {
                 $works->where('created_by', '<>', $validated['created_by'] * -1);
             } else {
@@ -209,13 +209,13 @@ class UserController extends Controller
             }
         }
 
-        if (isset($validated['order_by_last_message']) && !empty($validated['order_by_last_message'])) {
+        if (!empty($validated['order_by_last_message'])) {
             $works->orderBy('last_message_at', $validated['order_by_last_message']);
         } else {
             $works->orderBy('last_message_at', 'desc');
         }
 
-        if (isset($validated['project_type']) && !empty($validated['project_type'])) {
+        if (!empty($validated['project_type'])) {
             $project_ids = Project::whereHas('projectWorks', function (Builder $query) use ($validated, $user) {
                 $query->where('type', $validated['project_type']);
             })->get('id')->pluck('id');
@@ -223,7 +223,7 @@ class UserController extends Controller
             $works->whereIn('project_id', $project_ids);
         }
 
-        if (isset($validated['product_name']) && !empty($validated['product_name'])) {
+        if (!empty($validated['product_name'])) {
             $works->whereHas('project', function (Builder $query) use ($validated) {
                 $query->where('product_name', 'like', '%' . $validated['product_name'] . '%');
             });
@@ -285,17 +285,17 @@ class UserController extends Controller
 
         $notifications = $user->notifications()->where('viewed_at', null);
 
-        if (isset($validated['order_by']) && !empty($validated['order_by'])) {
+        if (!empty($validated['order_by'])) {
             $notifications->orderBy('created_at', $validated['order_by']);
         } else {
             $notifications->orderBy('created_at', 'desc');
         }
 
-        if (isset($validated['limit']) && !empty($validated['limit'])) {
+        if (!empty($validated['limit'])) {
             $notifications->offset(0)->limit($validated['limit']);
         }
 
-        if (isset($validated['viewed']) && !empty($validated['viewed'])) {
+        if (!empty($validated['viewed'])) {
             $notifications->whereNotNull('viewed_at');
         }
 

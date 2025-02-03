@@ -7,9 +7,8 @@
                         Фильтр
                     </p>
                     <a
-                        @click="resetFilter"
-                        href="#" class="filter__reset">
-                        Сбросить
+                        href="#" class="filter__hide">
+                        Скрыть
                     </a>
                 </div>
                 <div class="filter__items">
@@ -49,9 +48,10 @@
                         <button
                             @click="applyFilter"
                             class="btn btn-primary ">Применить</button>
+
                         <button
-                            @click=""
-                            class="btn btn-secondary hide">Скрыть</button>
+                            @click="resetFilter"
+                            class="btn btn-secondary">Cбросить</button>
                     </div>
                 </div>
             </div>

@@ -37,13 +37,19 @@
                                 :error="(errors && errors.product_price ? errors.product_price : null)"
                             ></Input>
                         </div>
+
                         <div class="form-group marketing-format" style="z-index: 3;" >
                             <label for="format">Выберите формат</label>
                             <span class="error" v-if="errors && errors.project_type">{{ errors.project_type }}</span>
 
                             <div class="marketing-format__item input-checkbox-w">
                                 <div class="checkbox">
-                                    <input type="checkbox" id="feedback" class="checkbox__checkbox" v-model="project.feedback">
+                                    <input
+                                        type="checkbox"
+                                        id="feedback"
+                                        class="checkbox__checkbox"
+                                        value="feedback"
+                                        v-model="project.integration_types">
                                     <label for="feedback"></label>
                                 </div>
                                 <label for="product-feedback">Выкуп + отзыв
@@ -51,12 +57,10 @@
                                         ?
                                         <div class="format-hint format-hint--text" id="product-feedback">
                                             <div class="format-hint__title">
-                                                Рекламный пост
+                                                Выкуп + отзыв
                                             </div>
                                             <div class="format-hint__body">
-                                                Улучшайте рейтинг вашей ĸарточĸи, публиĸуя положительные отзывы.
-                                                Это поможет переĸрыть негативные отзывы и повысить доверие
-                                                поĸупателей. Получите выĸупы не опасаясь санĸций от марĸетплейса.
+                                                Блогер покупает товар на маркетплейсе по заданию селлера, после чего пишет отзыв и создаёт фото/видео-контент, не размещая его в соцсетях. Контент и отзыв соответствуют ТЗ селлера. Реклама и публикация в соцсетях не предусмотрены.
                                             </div>
                                         </div>
                                     </div>
@@ -68,14 +72,19 @@
                                             Выкуп + отзыв
                                         </div>
                                         <div class="format-hint__body">
-                                            Выкуп товара предполагает его приобретение блогером на маркетплейсе, после чего он публикует подробный отзыв, сопровождаемый фото или видео материалами.
+                                            Блогер покупает товар на маркетплейсе по заданию селлера, после чего пишет отзыв и создаёт фото/видео-контент, не размещая его в соцсетях. Контент и отзыв соответствуют ТЗ селлера. Реклама и публикация в соцсетях не предусмотрены.
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="marketing-format__item input-checkbox-w">
                                 <div class="checkbox">
-                                    <input type="checkbox" id="integration" class="checkbox__checkbox" v-model="project.integration">
+                                    <input
+                                        type="checkbox"
+                                        id="integration"
+                                        class="checkbox__checkbox"
+                                        value="integration"
+                                        v-model="project.integration_types">
                                     <label for="integration"></label>
                                 </div>
                                 <label for="product-inst">
@@ -87,7 +96,7 @@
                                                 Интеграция
                                             </div>
                                             <div class="format-hint__body">
-                                                Интеграция подразумевает публикации блогером контента в социальной сети, с прикреплением ссылки либо упоминание артикула вашего товара.
+                                                Селлер отправляет товар блогеру для обзора. Блогер делает контент и размещает его в своих соцсетях (пост, сторис, видео и т. д.), но не передаёт контент в использование селлеру и не пишет отзыв на маркетплейсах.
                                             </div>
                                         </div>
                                     </div>
@@ -99,8 +108,44 @@
                                             Интеграция
                                         </div>
                                         <div class="format-hint__body">
-                                            Повышайте охваты, узнаваемость и доверие ĸ вашему бренду и товару, используя
-                                            интеграции с лидерами мнений.
+                                            Селлер отправляет товар блогеру для обзора. Блогер делает контент и размещает его в своих соцсетях (пост, сторис, видео и т. д.), но не передаёт контент в использование селлеру и не пишет отзыв на маркетплейсах.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="marketing-format__item input-checkbox-w">
+                                <div class="checkbox">
+                                    <input
+                                        type="checkbox"
+                                        id="ugc-content"
+                                        class="checkbox__checkbox"
+                                        value="ugc_content"
+                                        v-model="project.integration_types"
+                                    >
+                                    <label for="ugc-content"></label>
+                                </div>
+                                <label for="product-inst">
+                                    UGC-контент
+                                    <div class="format-tooltip format-tooltip--mobile" data-hint="ugc-content-hint">
+                                        ?
+                                        <div class="format-hint format-hint--text" id="ugc-content-hint">
+                                            <div class="format-hint__title">
+                                                UGC-контент
+                                            </div>
+                                            <div class="format-hint__body">
+                                                Селлер отправляет товар блогеру, который снимает фото/видео-контент и передаёт его селлеру для использования в рекламе и на маркетплейсах. Блогер не публикует контент в своих соцсетях и не пишет отзыв.
+                                            </div>
+                                        </div>
+                                    </div>
+                                </label>
+                                <div class="format-tooltip" data-hint="inst">
+                                    ?
+                                    <div class="format-hint format-hint--text" id="inst">
+                                        <div class="format-hint__title">
+                                            UGC-контент
+                                        </div>
+                                        <div class="format-hint__body">
+                                            Селлер отправляет товар блогеру, который снимает фото/видео-контент и передаёт его селлеру для использования в рекламе и на маркетплейсах. Блогер не публикует контент в своих соцсетях и не пишет отзыв.
                                         </div>
                                     </div>
                                 </div>
@@ -144,8 +189,7 @@ export default {
                 product_nm: null,
                 product_price: null,
                 product_link: null,
-                feedback: false,
-                integration: false,
+                integration_types: [],
                 images: [],
             }),
             errors: ref({
@@ -178,9 +222,6 @@ export default {
                     this.project.images.push($(v)[0].files)
             })
 
-            this.project.feedback = this.project.feedback ? 1 : 0;
-            this.project.integration = this.project.integration ? 1 : 0;
-
             this.Project.create(this.project).then(
                 data => {
                     this.project = {
@@ -188,11 +229,7 @@ export default {
                         product_nm: null,
                         product_price: null,
                         product_link: null,
-                        feedback_quantity: 0,
-                        inst_quantity: 0,
-                        youtube_quantity: 0,
-                        vk_quantity: 0,
-                        telegram_quantity: 0,
+                        integration_types: [],
                         images: [],
                     }
 

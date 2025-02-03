@@ -80,8 +80,8 @@
             </div>
         </div>
     </div>
+    <image-popup ref="imagePopup"></image-popup>
 </template>
-<image-popup ref="imagePopup"></image-popup>
 <script>
 import moment from "moment";
 import ImagePopup from "../../../core/components/popups/fullscreen-image/ImapePopup";
