@@ -1,143 +1,61 @@
 <template>
-    <div class="list-blogers__item bloger-item card" data-id="{{ blogger.id }}">
-        <div class="card__row card__content">
-            <div class="card__col">
-                <div class="card__row card__header">
-                    <div class="card__img" v-bind:style="'background-image:url(' + (!blogger.user.image ? '/img/profile-icon.svg' : `${blogger.user.image}`) + ')'">
-                    </div>
-                    <div class="card__achive" title="Проверенный блогер" v-if="blogger.is_achievement">
-                        <img src="/img/achive-icon.svg" alt="">
-                    </div>
-                    <div class="card__name">
-                        <p class="card__name-name" title="">
-                            {{ blogger.user.name }}
-                        </p>
-                    </div>
-                    <div class="card__platforms">
-                        <div
-                            v-for="platform in blogger.platforms"
-                            v-bind:class="'card__platform ' +  (platform.title ? platform.title.toLowerCase() : '')"
-                        >
-                            <img v-bind:src="platform.image || ''" alt="">
-                        </div>
-                    </div>
-                </div>
-                <div class="card__row card__tags">
+    <BloggerCard
+        v-if="blogger"
 
-                    <div
-                        v-for="theme in blogger.themes"
-                        class="card__tags-item">
-                        <span>{{ theme.name }}</span>
-                    </div>
-                </div>
-                <div class="card__row card__desc">
-                    <p>
-                        {{ blogger.description }}
-                    </p>
-                </div>
-            </div>
-            <div class="card__col card__stats">
-                <div class="card__col card__stats-stats">
-                    <div class="card__row card__stats-row">
+        :id="blogger.id"
+        :image="blogger.user.image"
+        :name="blogger.user.name"
+        :platforms="blogger.platforms"
+        :themes="blogger.themes"
+        :description="blogger.description"
+        :subscriber_quantity="blogger.summaryPlatform.subscriber_quantity"
+        :coverage="blogger.summaryPlatform.coverage"
+    >
+        <div class="card__row" style="text-align: center; justify-content:center">
+            <a
+                @click="openBloggerInfoPopup"
+                target="_blank"
+                class=""
+                style="color:rgba(0,0,0,.4);
+                            font-size:16px;
+                            font-weight:500;
+                            text-decoration:underline;
+                            margin-top: -20px;">Подробнее</a>
+        </div>
 
-                        <div class="card__col card__stats-item">
-                            <div class="card__stats-title">
-                                <span>Подписчики</span>
-                            </div>
-                            <div class="card__stats-val" v-bind:title="blogger.summaryPlatform.subscriber_quantity">
-                                <span>{{ blogger.summaryPlatform.subscriber_quantity }}</span>
-                            </div>
-                        </div>
-                        <div class="card__col card__stats-item">
-                            <div class="card__stats-title">
-                                <span>Охваты</span>
-                            </div>
-                            <div class="card__stats-val" v-bind:title="blogger.summaryPlatform.coverage">
-                                <span>{{ blogger.summaryPlatform.coverage }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card__row card__stats-row">
-
-                        <div class="card__col card__stats-item">
-                            <div class="card__stats-title">
-                                <span>ER %</span>
-                            </div>
-                            <div class="card__stats-val">
-                                <span>{{ countER(blogger.summaryPlatform.subscriber_quantity, blogger.summaryPlatform.coverage) }}</span>
-                            </div>
-                        </div>
-                        <div class="card__col card__stats-item">
-                            <div class="card__stats-title">
-                                <span>CPM</span>
-                            </div>
-                            <div class="card__stats-val">
-                                <span>{{ blogger.summaryPlatform.cost_per_mille || '-' }}₽</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card__row" style="text-align: center; justify-content:center">
-                    <a
-                        v-bind:href="'/bloggers/' + blogger.id"
-                        target="_blank"
-                        class=""
-                        style="color:rgba(0,0,0,.4);
-                        font-size:16px;
-                        font-weight:500;
-                        text-decoration:underline;
-                        margin-top: -20px;">Подробнее</a>
-                </div>
-                <div v-if="blogger.user.status === 0" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn btn-primary" v-on:click="agree">
-                        Принять
-                    </button>
-                    <button class="btn btn-secondary" v-on:click="ban">
-                        Отклонить
-                    </button>
-                    <div class="btn-delete btn-delete--icon">
-                        <img src="/img/trash-icon.svg" alt="" v-on:click="deletionConfirmation">
-                    </div>
-                </div>
-                <div v-else-if="blogger.user.status === 1" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn btn-primary" v-on:click="ban">
-                        Заблокировать
-                    </button>
-                    <button class="btn btn-delete" v-on:click="deletionConfirmation">
-                        Удалить
-                    </button>
-                </div>
-                <div v-else-if="blogger.user.status === -1" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn btn-primary" v-on:click="unban">
-                        Разблокировать
-                    </button>
-                    <button class="btn btn-delete" v-on:click="deletionConfirmation">
-                        Удалить
-                    </button>
-                </div>
+        <div class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <button class="btn btn-primary" v-on:click="agree">
+                Принять
+            </button>
+            <button class="btn btn-delete" v-on:click="ban">
+                Отклонить
+            </button>
+            <div class="btn-delete btn-delete--icon">
+                <img src="/img/trash-icon.svg" alt="" v-on:click="deletionConfirmation">
             </div>
         </div>
-    </div>
+    </BloggerCard>
+
+    <blogger-card-popup ref="bloggerCardPopup"></blogger-card-popup>
 </template>
 <script>
+import BloggerCardPopup from "../../../core/components/popups/blogger-card-popup/BloggerCardPopup";
+import BloggerCard from "../../../core/components/blogger-card/index";
+
 export default{
     props: ['blogger', 'bloggers'],
-    components: { },
+    components: { BloggerCardPopup, BloggerCard },
     methods:{
         deletionConfirmation() {
             this.$emit('deletionConfirmation', this.blogger.user.id)
-        },
-
-        ban() {
-            this.$emit('ban', this.blogger.user.id)
         },
 
         agree() {
             this.$emit('agree', this.blogger.id)
         },
 
-        unban() {
-            this.$emit('unban', this.blogger.user.id)
+        ban() {
+            this.$emit('ban', this.blogger.user.id)
         },
 
         countER(subs, cover){
@@ -147,6 +65,10 @@ export default{
             else val = Math.ceil(val);
 
             return val;
+        },
+
+        openBloggerInfoPopup(){
+            this.$refs.bloggerCardPopup.show(this.blogger)
         }
     }
 }

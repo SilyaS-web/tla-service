@@ -196,7 +196,7 @@ export default{
             currentProject: ref(null),
             isChooseProjectList: ref(false),
 
-            isBloggersListBlocked: ref(true),
+            isBloggersListBlocked: ref(false),
 
             projectsFilter: ref({
                 project_type: "",
@@ -212,7 +212,6 @@ export default{
         let user = this.User.getCurrent();
 
         if(user){
-            console.log(user.tariffs && user.tariffs.length > 0)
             if(user.tariffs && user.tariffs.length > 0){
                 this.isBloggersListBlocked = false
             }

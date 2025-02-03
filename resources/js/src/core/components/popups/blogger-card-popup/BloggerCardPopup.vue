@@ -134,6 +134,7 @@
                             </div>
 
                             <div
+                                v-if="user && user.role !== 'admin'"
                                 @click="_confirm"
                                 class="info-profile__platforms-footer">
                                 <div class="info-profile__platforms-btns">
@@ -172,7 +173,9 @@
                                 <span class="loader"></span>
                             </div>
                         </div>
-                        <div class="info-profile__platforms-footer info-profile__platforms-footer--mobile">
+                        <div
+                            v-if="user && user.role !== 'admin'"
+                            class="info-profile__platforms-footer info-profile__platforms-footer--mobile">
                             <div class="info-profile__platforms-btns">
                                 <div
                                     @click="_confirm"

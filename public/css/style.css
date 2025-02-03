@@ -1484,14 +1484,14 @@ input[type='range']::-webkit-slider-runnable-track{
     color:rgba(0, 0, 0, .4)
 }
 
+.popup__body:has(.popup-project) {
+    max-width: 975px !important;
+    padding: 0;
+}
 .popup__body:has(.user-view){
     max-width: 1040px!important;
     width: 100%;
     padding-bottom: 75px;
-}
-.popup__body:has(.popup-project) {
-    max-width: 975px !important;
-    padding: 0;
 }
 .user-view__container{
 }
@@ -7588,6 +7588,24 @@ input[type='range']::-webkit-slider-runnable-track{
         min-width:265px;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
