@@ -1611,7 +1611,8 @@ input[type='range']::-webkit-slider-runnable-track{
     justify-content: center;
     align-items: center;
     transition: all .2s linear;
-    border: 1px solid #F5FCFF;
+    border: 1px solid #fff;
+    border-bottom: 0;
 }
 .blogger-platforms__btn img{
     width: 24px;
@@ -1769,6 +1770,7 @@ input[type='range']::-webkit-slider-runnable-track{
 
 .blogger-platforms__btn--tiktok.active{
     border: 1px solid #000;
+    border-bottom: 0;
 }
 .blogger-platforms__btn--tiktok.active img{
     filter:unset;
