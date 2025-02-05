@@ -144,7 +144,7 @@ export default {
     props:[
         'id', 'image', 'name', 'platforms', 'themes', 'description',
         'work_message', 'content', 'is_achievement', 'subscriber_quantity',
-        'coverage'
+        'coverage', 'product_price'
     ],
     methods:{
         countER(subs, cover){
@@ -158,9 +158,9 @@ export default {
         countCPM(cover){
             if(!cover) return '-';
 
-            if(!this.currentProject || !this.currentProject.product_price) return '-';
+            if(!this.product_price) return '-';
 
-            let result = (this.currentProject.product_price / cover) * 1000;
+            let result = (this.product_price / cover) * 1000;
 
             return Math.round(result) === 0 ? (result).toFixed(3) : Math.round(result);
         },

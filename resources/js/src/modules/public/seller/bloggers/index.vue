@@ -62,24 +62,28 @@
                         v-if="projects.length > 0"
                         v-for="project in projects"
                         class="list-projects__item project-item">
-                        <!--                        <div class="owl-carousel project-item__carousel">-->
-                        <!--                            <div-->
-                        <!--                                v-for="file in project.project_files"-->
-                        <!--                                :style="'background-image: url(' + file.link + ')'"-->
-                        <!--                                class="project-item__img">-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
-                        <carousel
-                            :nav="false"
-                            :dots="true"
-                            :items="1"
-                            :responsive="{ 0:{ items: 1 }, 1180: { items:1 } }">
-                            <div
-                                v-for="file in project.project_files"
-                                :style="'background-image: url(' + file.link + ')'"
-                                class="project-item__img">
-                            </div>
-                        </carousel>
+
+                        <Carousel
+                            :carouselID="'project-item__carousel-' + project.id"
+                            :listClassList="['project-item__carousel']"
+                            :itemsClassList="['project-item__img']"
+                            :itemsList="project.project_files"
+                            :props="{
+                                margin: 5,
+                                nav: false,
+                                dots: true,
+                                responsive: {
+                                    0:{
+                                        items: 1
+                                    },
+                                    1180: {
+                                        items:1
+                                    }
+                                }
+                            }"
+                        >
+                        </Carousel>
+
                         <div class="project-item__content">
                             <div class="project-item__title">
                                 <span class="project-item__price">{{ project.product_price }}</span>₽
@@ -168,7 +172,6 @@
     <choose-project-popup ref="chooseProjectPopup"></choose-project-popup>
 </template>
 <script>
-import carousel from 'vue-owl-carousel/src/Carousel'
 import {ref} from "vue";
 
 import User from '../../../../core/services/api/User.vue'
@@ -183,12 +186,13 @@ import Filter from './FiltersComponent'
 import ChoosedProject from './ChoosedProjectComponent'
 
 import ChooseProjectPopup from '../../../../core/components/popups/choose-project/ChooseProjectPopup'
+import Carousel from "../../../../core/components/AppCarousel"
 
 export default{
     props:['bloggers', 'user'],
     components:{
         ProjectsList, BloggersListItem, ProjectsListItem,
-        ChooseProjectPopup, carousel, Filter, ChoosedProject
+        ChooseProjectPopup, Filter, ChoosedProject, Carousel
     },
     data(){
         return {

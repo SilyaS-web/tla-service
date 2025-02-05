@@ -13,24 +13,26 @@
         :subscriber_quantity="blogger.summaryPlatform.subscriber_quantity"
         :coverage="blogger.summaryPlatform.coverage"
 
-        :product_price="currentProject.product_price"
+        :product_price="currentProject ? currentProject.product_price : false"
     >
-        <button
-            v-if="!isOfferSent"
-            @click="sendOfferToBlogger"
-            class="btn btn-primary">
-            Отправить заявку
-        </button>
-        <button
-            v-else
-            class="btn btn-secondary">
-            Заявка отправлена
-        </button>
-        <button
-            @click="openBloggerInfoPopup"
-            class="btn btn-secondary">
-            Подробнее
-        </button>
+        <div class="card__row card__btns">
+            <button
+                v-if="!isOfferSent"
+                @click="sendOfferToBlogger"
+                class="btn btn-primary">
+                Отправить заявку
+            </button>
+            <button
+                v-else
+                class="btn btn-secondary">
+                Заявка отправлена
+            </button>
+            <button
+                @click="openBloggerInfoPopup"
+                class="btn btn-secondary">
+                Подробнее
+            </button>
+        </div>
     </BloggerCard>
     <BloggerCardPopup ref="bloggerCardPopup"></BloggerCardPopup>
 </template>
