@@ -134,6 +134,11 @@ class Project extends Model
         return $this->hasMany(Work::class, 'project_id', 'id');
     }
 
+    public function user()
+    {
+        return $this->hasOne(USer::class, 'id', 'user_id');
+    }
+
     public function seller()
     {
         return $this->hasOne(Seller::class, 'user_id', 'seller_id');
