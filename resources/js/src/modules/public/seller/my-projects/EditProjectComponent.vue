@@ -121,9 +121,9 @@ export default{
             formData.append('product_link', this.project.product_link);
             formData.append('product_price', this.project.product_price);
 
-            if(this.project.projects_works){
-                for (let i = 0; i < this.project.projects_works.length; i++){
-                    formData.append('integration_types[' + i + ']', this.project.projects_works[i].type);
+            if(this.project.project_works){
+                for (let i = 0; i < this.project.project_works.length; i++){
+                    formData.append('integration_types[' + i + ']', this.project.project_works[i].type);
                 }
             }
 
