@@ -5818,12 +5818,13 @@ input[type='range']::-webkit-slider-runnable-track{
 @media(max-width: 1740px){
     #seller .projects-list__filter{
         position: fixed;
-        left: -100%;
+        right: 100%;
         top: 0;
         height: 100%;
         overflow-y: auto;
     }
     #seller .projects-list__filter.opened{
+        right:unset;
         left:0;
     }
     #seller .projects-list__filter-btn{
@@ -7527,6 +7528,18 @@ input[type='range']::-webkit-slider-runnable-track{
         max-width: 32px;
         height: 32px;
     }
+
+    select[name='projects-sort']{
+        font-size: 14px!important;
+        height: 42px!important;
+    }
+
+    .tab-content__form--title{
+        font-size: 16px;
+    }
+    .tab-content__form--accent{
+        padding: 12px;
+    }
 }
 @media(max-width:400px){
 
@@ -7592,6 +7605,27 @@ input[type='range']::-webkit-slider-runnable-track{
         padding: 20px 10px;
     }
 
+    .input{
+        font-size: 14px;
+    }
+
+    .item-chat__title{
+        font-size: 12px;
+    }
+
+
+    .format-tooltip{
+        padding: 4px 8px;
+    }
+    .marketing-format__item .checkbox{
+        margin-right: 5px;
+    }
+
+    .checkbox__checkbox + label:before{
+        width: 20px;
+        height: 20px;
+        border-radius: 5px;
+    }
 }
 @media(max-width:330px){
     .bloger-item--btns>a{
@@ -7626,8 +7660,39 @@ input[type='range']::-webkit-slider-runnable-track{
     .info-profile__content-item{
         min-width:265px;
     }
-}
 
+    .form-group label{
+        font-size: 14px;
+    }
+    .upload-files__title{
+        font-size: 14px;
+    }
+    .upload-files__plus{
+        width: 40px;
+        height: 40px;
+    }
+    .upload-files__body>*{
+        padding: 8px;
+    }
+    .nav-menu__item {
+        height: 42px;
+        width: 42px;
+    }
+
+
+    .footer__body{
+        gap: 12px;
+        padding-bottom: 50px;
+    }
+}
+@media(max-width:300px){
+    .marketing-format__item .format-tooltip--mobile .format-hint {
+        right: -50px;
+    }
+    .format-hint{
+        width: 280px;
+    }
+}
 
 
 
