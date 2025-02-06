@@ -348,7 +348,7 @@ export default{
 
                 var formData = new FormData;
 
-                formData.append('message', (this.currentMessage.message ? this.currentMessage.message.trim() : ''));
+                formData.append('message', (this.currentMessage.message ? this.urlify(this.currentMessage.message.trim()) : ''));
                 formData.append('img', this.currentMessage.file);
 
                 if(!this.currentChat){
@@ -508,7 +508,13 @@ export default{
             $('.messages-create__textarea').css('height',  $('.messages-create__textarea')[0].scrollHeight + 'px')
         },
 
+        urlify(text){
+            let urlRegex = /(https?:\/\/[^\s]+)/g;
 
+            return text.replace(urlRegex, function(url) {
+                return '<a target="_blank" href="' + url + '">' + url + '</a>';
+            })
+        }
     }
 }
 </script>
