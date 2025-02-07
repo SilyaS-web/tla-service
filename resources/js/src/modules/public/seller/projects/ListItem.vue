@@ -1,45 +1,14 @@
 
 <template>
-    <div
+    <ProjectCard
         @click="openMoreInfo"
-        class="list-projects__item project-item" :data-id="project.id">
 
-        <Carousel
-            :carouselID="'project__imgs-carousel-' + project.id"
-            :itemsList="project.project_files"
-            :listClassList="['project-item__carousel']"
-            :itemsClassList="['project-item__img']"
-            :props="{
-                margin: 5,
-                nav: false,
-                dots: true,
-                responsive: {
-                    0:{
-                        items: 1
-                    },
-                    1180: {
-                        items:1
-                    }
-                }
-            }"
-        ></Carousel>
-
-        <div class="project-item__content">
-            <div class="project-item__title">
-                <span class="project-item__price">{{ project.product_price }}</span>₽
-            </div>
-            <div class="project-item__subtitle" :title="project.product_name">
-                {{ project.product_name }}
-            </div>
-            <div class="project-item__format-tags card__row card__tags">
-                <div
-                    v-for="work in project.project_works"
-                    class="card__tags-item">
-                    <span>{{ work.name }}</span>
-                </div>
-            </div>
-        </div>
-    </div>
+        :id="project.id"
+        :name="project.product_name"
+        :price="project.product_price"
+        :works="project.project_works"
+        :imgs="project.project_files"
+    ></ProjectCard>
 
     <ProjectInfoPopup ref="moreInfo"></ProjectInfoPopup>
 </template>
@@ -47,12 +16,14 @@
 import {ref} from "vue";
 
 import Project from '../../../../core/services/api/Project';
+
+import ProjectCard from '../../../../core/components/project-card/index';
 import ProjectInfoPopup from '../../../../core/components/popups/project-more-info/ProjectMoreInfoPopup';
 import Carousel from '../../../../core/components/AppCarousel';
 
 export default {
     props: ['project'],
-    components: { ProjectInfoPopup, Carousel },
+    components: { ProjectCard, ProjectInfoPopup, Carousel },
     data(){
         return{
             projectInfo: ref(false),
