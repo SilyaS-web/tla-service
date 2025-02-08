@@ -38,7 +38,7 @@
                             value: 'female',
                         },
                     ]"
-                    :error="(errors && errors.country_id ? errors.country_id : '')">
+                    :error="(errors && errors.sex ? errors.sex : '')">
                 </Select>
 
                 <Textarea
@@ -48,32 +48,18 @@
                     :id="'desc'"
                     :cols="30"
                     :rows="10"
-                    :placeholder="'Введите текст'"
+                    :placeholder="'Введите описание канала'"
                     :error="(errors && errors.description ? errors.description : '')"
                 ></Textarea>
 
-                <div class="form-group" style="flex-direction: column; margin-bottom:25px">
-                    <label for="">Выберите тематику</label>
-                    <div class="form-formats form-formats--pick">
-                        <div
-                            v-for="theme in themes"
-                            class="form__row form-format">
-                            <input
-                                :id="'theme-' + theme.id"
-                                :value="theme.id"
-                                @click="chooseTheme"
-                                type="checkbox"
-                                name=""
-                                class="form-format__check">
-                            <label :for="'theme-' + theme.id">{{ theme.name }}</label>
-                        </div>
-                    </div>
-                    <span class="error" v-if="errors.themes">{{ errors.themes }}</span>
-                </div>
+                <ChooseThemeBlock
+                    v-model="themes"
+                    :maxThemesLength="3"
+                ></ChooseThemeBlock>
 
                 <InputFile
                     v-model="blogger.image"
-                    :label="'Загрузите изображение'"
+                    :label="'Загрузите аватарку профиля'"
                     :uploadedLabel="'Аватарка профиля загружена'"
                     :error="errors.image"
                 ></InputFile>
@@ -102,10 +88,9 @@ import Select from "../../../core/components/form/SelectBlockComponent";
 import InputFile from "../../../core/components/form/InputFileBlockComponent";
 import Textarea from "../../../core/components/form/TextareaBlockComponent";
 
-import ChooseThemeBlock from "./ChooseThemeComponent";
+import ChooseThemeBlock from "../../../core/components/choose-theme/index";
 
 import Blogger from "../../../core/services/api/Blogger";
-import Themes from "../../../core/services/api/Themes";
 import User from "../../../core/services/api/User";
 
 export default{
@@ -156,27 +141,18 @@ export default{
                     active: false
                 },
             ]),
-            Themes, Blogger, User
+
+            Blogger, User
         }
     },
     async mounted() {
         this.user = this.User.getCurrent();
-        this.themes = await this.Themes.getList();
 
         if(this.user.blogger_id) {
             this.blogger = await this.Blogger.getItem(this.user.blogger_id);
         }
     },
     methods: {
-        chooseTheme(e){
-            var list = $('.form-format .form-format__check:checked');
-
-            if(list.length > 3){
-                $(e.target).prop('checked', false);
-                notify('info', {title: 'Внимание', message: 'Нельзя выбрать больше 3-х тематик'});
-            }
-        },
-
         mapCountriesArray(){
             return this.countries.map(country => {
                 return {
@@ -194,10 +170,8 @@ export default{
                     formdata.append(k, this.blogger[k])
             }
 
-            var themes = $('.form-format .form-format__check:checked');
-
-            for (let i = 0; i < themes.length; i++){
-                formdata.append(`themes[${i}]`, $(themes[i]).val())
+            for (let i = 0; i < this.themes.length; i++){
+                formdata.append(`themes[${i}]`, this.themes[i])
             }
 
             formdata.append('image', this.blogger.image);
