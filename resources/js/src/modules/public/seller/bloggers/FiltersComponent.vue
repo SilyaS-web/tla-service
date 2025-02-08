@@ -185,7 +185,7 @@ export default{
             }
         },
         setFilterThemes(themeID){
-            if(!this.filter.themes.find(t => t.id === themeID)){
+            if(!this.filter.themes.find(t => t === themeID)){
                 this.filter.themes.push(themeID)
             }
             else{
