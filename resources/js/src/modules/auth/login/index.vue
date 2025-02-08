@@ -81,12 +81,7 @@ export default{
 
                     if(data.role == 'blogger'){
                         if(data.status == 0){
-                            if(!data.blogger_id){
-                                this.$router.replace('/blogger/registration')
-                                return
-                            }
-
-                            this.$router.replace('/moderation')
+                            this.$router.replace('/blogger/registration')
                             return
                         }
                     }
