@@ -15,7 +15,7 @@
 </template>
 <script>
 export default{
-    props:['id', 'placeholder', 'cols', 'rows', 'classList', 'modelValue', 'error'],
+    props:['id', 'label', 'placeholder', 'cols', 'rows', 'classList', 'modelValue', 'error'],
     methods:{
         getSelectClassString(){
             return this.classList && this.classList.length > 0 ? this.classList.join(' ') : ''

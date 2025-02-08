@@ -54,7 +54,7 @@
 
                 <div class="form-group" style="flex-direction: column; margin-bottom:25px">
                     <label for="">Выберите тематику</label>
-                    <div class="form-formats">
+                    <div class="form-formats form-formats--pick">
                         <div
                             v-for="theme in themes"
                             class="form__row form-format">

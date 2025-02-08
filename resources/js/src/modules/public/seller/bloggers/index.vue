@@ -15,7 +15,6 @@
             </div>
 
             <!-- плашка выбранного проекта-->
-
             <ChoosedProject
                 v-if="currentProject"
                 :project="currentProject"
@@ -58,56 +57,28 @@
                     </div>
                 </div>
                 <div class="profile-projects__items list-projects__items" style="max-width:1030px">
-                    <div
-                        v-if="projects.length > 0"
+                    <ProjectCard
+                        v-if="projects && projects.length > 0"
+
                         v-for="project in projects"
-                        class="list-projects__item project-item">
 
-                        <Carousel
-                            :carouselID="'project-item__carousel-' + project.id"
-                            :listClassList="['project-item__carousel']"
-                            :itemsClassList="['project-item__img']"
-                            :itemsList="project.project_files"
-                            :props="{
-                                margin: 5,
-                                nav: false,
-                                dots: true,
-                                responsive: {
-                                    0:{
-                                        items: 1
-                                    },
-                                    1180: {
-                                        items:1
-                                    }
-                                }
-                            }"
-                        >
-                        </Carousel>
-
-                        <div class="project-item__content">
-                            <div class="project-item__title">
-                                <span class="project-item__price">{{ project.product_price }}</span>₽
-                            </div>
-                            <div class="project-item__subtitle" :title="project.product_name">
-                                {{ project.product_name }}
-                            </div>
-                            <div class="project-item__format-tags card__row card__tags">
-                                <div
-                                    v-for="work in project.project_works"
-                                    class="card__tags-item">
-                                    <span>{{ work.name }}</span>
-                                </div>
-                            </div>
-                            <div class="project-item__btns">
-                                <a
-                                    @click="chooseProject(project)"
-                                    href="#" class="btn btn-primary">Выбрать</a>
-                            </div>
+                        :id="project.id"
+                        :name="project.product_name"
+                        :price="project.product_price"
+                        :works="project.project_works"
+                        :imgs="project.project_files"
+                    >
+                        <div class="project-item__btns">
+                            <a
+                                @click="chooseProject(project)"
+                                href="#" class="btn btn-primary">Выбрать</a>
                         </div>
-                    </div>
+                    </ProjectCard>
+
                     <span v-else>Проектов нет</span>
                 </div>
             </div>
+
             <div class="profile-projects__filters profile-projects__filters--choose">
                 <div class="projects-list__filter filter">
                     <div class="filter__body">
@@ -182,17 +153,18 @@ import ProjectsList from "../projects/index";
 import BloggersListItem from "./ListItem";
 import ProjectsListItem from '../projects/ListItem'
 
+import ProjectCard from '../../../../core/components/project-card/index'
+
 import Filter from './FiltersComponent'
 import ChoosedProject from './ChoosedProjectComponent'
 
 import ChooseProjectPopup from '../../../../core/components/popups/choose-project/ChooseProjectPopup'
-import Carousel from "../../../../core/components/AppCarousel"
 
 export default{
     props:['bloggers', 'user'],
     components:{
         ProjectsList, BloggersListItem, ProjectsListItem,
-        ChooseProjectPopup, Filter, ChoosedProject, Carousel
+        ChooseProjectPopup, Filter, ChoosedProject, ProjectCard
     },
     data(){
         return {
@@ -223,21 +195,6 @@ export default{
     },
 
     updated(){
-        if(this.isChooseProjectList){
-            $('.project-item').find('.project-item__carousel').owlCarousel({
-                margin: 5,
-                nav: false,
-                dots: true,
-                responsive: {
-                    0:{
-                        items: 1
-                    },
-                    1180: {
-                        items:1
-                    }
-                }
-            });
-        }
     },
     methods:{
         async chooseProject(project){

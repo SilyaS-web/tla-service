@@ -1,44 +1,22 @@
 <template>
-    <div
+    <ProjectCard
         v-if="work.project"
-        class="list-projects__item project-item">
-        <div class="project-item__carousel">
-            <div class="project-item__carousel--carousel owl-carousel">
-                <div
-                    v-for="file in work.project.project_files"
-                    class="project-item__img" :style="'background-image:url(' + file.link + ')'"></div>
-            </div>
-            <div class="project-item__status active">
-                {{ work.project.status_name }}
-            </div>
-        </div>
-        <div class="project-item__content">
-            <div class="project-item__title">
-                <span class="project-item__price">{{ work.project.product_price }}</span>₽
-            </div>
-            <div class="project-item__subtitle" :title="work.project.product_name">
-                {{ work.project.product_name }}
-            </div>
-            <div class="project-item__format-tags card__row card__tags">
-                <div
-                    v-for="work in work.project.feedbackWork"
-                    class="card__tags-item">
-                    <span>{{ work.name }}</span>
-                </div>
-            </div>
-            <div class="project-item__btns">
-                <!--                <button-->
-                <!--                    @click="goToChat"-->
-                <!--                    class="btn btn-primary btn-blogger-send-offer" style="width:100%">Перейти в чат</button>-->
-            </div>
-        </div>
-    </div>
+
+        :id="work.project.id"
+        :name="work.project.product_name"
+        :price="work.project.product_price"
+        :works="work.project.project_works"
+        :imgs="work.project.project_files"
+    ></ProjectCard>
 </template>
 <script>
 import Project from '../../../../core/services/api/Project'
 
+import ProjectCard from '../../../../core/components/project-card/index'
+
 export default{
     props: ['work'],
+    components:{ ProjectCard },
     data(){
         return {
             Project
