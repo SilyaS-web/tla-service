@@ -7039,11 +7039,16 @@ input[type='range']::-webkit-slider-runnable-track{
         padding-bottom: 140px!important;
     }
 
+    .list-projects__items{
+        gap: 5px;
+    }
+
     .project-item{
-        min-width:unset
+        min-width:unset;
+        width: calc(100% / 2 - 3px)
     }
     .project-item .project-item__content{
-        padding: 0 10px;
+        padding: 0 6px;
     }
     .project-item__title{
         font-size: 20px;
@@ -7321,7 +7326,7 @@ input[type='range']::-webkit-slider-runnable-track{
         font-size: 12px;
     }
     .project-item__img{
-        padding-top: 180px;
+        padding-top: 100%;
         margin-bottom: 0;
     }
     .project-item__content{
@@ -7331,7 +7336,21 @@ input[type='range']::-webkit-slider-runnable-track{
         margin-bottom: 12px;
     }
     .project-item:has(.owl-dots.disabled) .project-item__title{
-        margin-top: 17px;
+        margin-top: 27px;
+    }
+    .project-item__format-tags{
+        gap: 6px;
+    }
+    .project-item__title{
+        font-size: 14px;
+    }
+    .project-item__subtitle{
+        font-size: 12px;
+    }
+
+    .owl-dots>*{
+        width: 5px;
+        height: 5px;
     }
 
     .card__tags-item{
@@ -7398,7 +7417,7 @@ input[type='range']::-webkit-slider-runnable-track{
     .card__img{
         width: 64px;
         height: 64px;
-
+        margin-right: 5px;
     }
 
     .card__btns{
@@ -7626,6 +7645,36 @@ input[type='range']::-webkit-slider-runnable-track{
         height: 20px;
         border-radius: 5px;
     }
+
+    .tariff-card{
+        min-width:unset
+    }
+    .tariff-card__single{
+        font-size: 12px;
+    }
+    .tariff-card__title{
+        font-size: 21px;
+        margin-bottom: 12px;
+    }
+    .tariff-card__subtitle{
+        font-size: 15px;
+    }
+    .tariff-card__total{
+        font-size: 21px;
+    }
+    .tariff-card__prices{
+        margin-bottom: 21px;
+    }
+    .tariff__header .tariff__title{
+        font-size: 21px;
+    }
+    .tariff__subtitle{
+        font-size: 15px;
+        margin-bottom: 24px;
+    }
+    .tariff__items{
+        gap: 12px;
+    }
 }
 @media(max-width:330px){
     .bloger-item--btns>a{
@@ -7680,6 +7729,16 @@ input[type='range']::-webkit-slider-runnable-track{
     }
 
 
+    .title{
+        font-size: 21px;
+        margin-bottom: 18px;
+    }
+
+    .projects-list__header{
+        gap: 5px;
+    }
+
+
     .footer__body{
         gap: 12px;
         padding-bottom: 50px;
@@ -7693,6 +7752,7 @@ input[type='range']::-webkit-slider-runnable-track{
         width: 280px;
     }
 }
+
 
 
 
