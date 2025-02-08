@@ -194,7 +194,7 @@
                                         <span>{{ project.clicks_count }}</span>
                                     </div>
                                 </div>
-                                <div class="card__col card__stats-item" style="flex: 1: width: auto">
+                                <div class="card__col card__stats-item" style="">
                                     <div class="card__stats-title">
                                         <span>Охваты</span>
                                     </div>
@@ -212,7 +212,7 @@
                                         <span>{{ (project.product_price / (((completed_works_statistics && completed_works_statistics.total_views == 0) || completed_works_statistics && !completed_works_statistics.total_views ? 1 : (completed_works_statistics ? completed_works_statistics.total_views : 1)) * 1000)).toFixed(2) }} ₽</span>
                                     </div>
                                 </div>
-                                <div class="card__col card__stats-item" style="flex: 1; width: auto">
+                                <div class="card__col card__stats-item" style="">
                                     <div class="card__stats-title">
                                         <span>CPC</span>
                                     </div>
