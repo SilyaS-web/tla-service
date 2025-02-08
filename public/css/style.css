@@ -289,6 +289,31 @@ a.btn:hover{
     background-color: var(--pale);
     cursor: pointer;
 }
+.form-formats--pick{
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: 1px solid #F5F5F5;
+    max-height:250px;
+    overflow-y: auto;
+    gap: 5px;
+    padding: 5px;
+}
+.form-formats--pick::-webkit-scrollbar {
+    width: 12px;               /* ширина scrollbar */
+}
+.form-formats--pick::-webkit-scrollbar-track {
+    background: unset;        /* цвет дорожки */
+
+}
+.form-formats--pick::-webkit-scrollbar-thumb {
+    background-color: #7A7674;    /* цвет плашки */
+    border-radius: 20px;       /* закругления плашки */
+    border: 3px solid #fff;  /* padding вокруг плашки */
+}
+.form-formats--pick .form-format{
+    width: -moz-fit-content;
+    width: fit-content;
+}
 .form-formats__empty{
     font-weight: 500;
     color: rgba(0, 0, 0, .2);
@@ -7752,6 +7777,10 @@ input[type='range']::-webkit-slider-runnable-track{
         width: 280px;
     }
 }
+
+
+
+
 
 
 
