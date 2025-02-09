@@ -101,6 +101,12 @@ export default {
                 prefix: 'tt',
                 id: 9
             },
+            {
+                name: 'VK',
+                key: 'VK',
+                prefix: 'vk',
+                id: 4
+            }
         ]),
         blogger: ref(null),
         platformAdditFields: ref([]),

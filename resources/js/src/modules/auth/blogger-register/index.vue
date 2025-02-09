@@ -20,7 +20,7 @@
                     :selectClassList="['input--country']"
                     :selectID="'country'"
                     :optionsList="mapCountriesArray()"
-                    :error="(errors && errors.country_id ? errors.country_id : '')">
+                    :error="errors.country_id">
                 </Select>
 
                 <Select
@@ -107,40 +107,6 @@ export default{
                     name: 'Россия'
                 },
             ],
-            platformFields: ref([
-                {
-                    name: 'Telegram',
-                    key: 'Telegram',
-                    prefix: 'tg',
-                    platform_id: 1,
-                    link: null,
-                    active: false
-                },
-                {
-                    name: 'Ins',
-                    key: 'Instagram',
-                    prefix: 'inst',
-                    platform_id: 3,
-                    link: null,
-                    active: false
-                },
-                {
-                    name: 'Ytube',
-                    key: 'Youtube',
-                    prefix: 'yt',
-                    platform_id: 2,
-                    link: null,
-                    active: false
-                },
-                {
-                    name: 'Вконтакте',
-                    key: 'VK',
-                    prefix: 'vk',
-                    platform_id: 4,
-                    link: null,
-                    active: false
-                },
-            ]),
 
             Blogger, User
         }
@@ -187,6 +153,7 @@ export default{
             })
             .catch((err) =>{
                 this.errors = err.response.data;
+                console.log(this.errors.image)
                 notify('error', {title: 'Ошибка', message: 'Не удалось сохранить данные, проверьте все поля, если все в порядке напишите в поддержку.'});
             })
         }

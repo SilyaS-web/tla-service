@@ -8,8 +8,7 @@
             </div>
             <input
                 @change="uploadImage"
-                v-bind:value="modelValue"
-                v-on:input="$emit('update:modelValue', $event.target.files[0])"
+                v-on:change="$emit('update:modelValue', $event.target.files[0])"
                 type="file" name="image" class="" id="profile-img">
         </label>
         <span class="error" v-if="error">{{ error }}</span>
