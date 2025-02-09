@@ -371,7 +371,7 @@ export default{
                 axios({
                     method: 'post',
                     url: '/api/users/' + this.user.id + '/works/' + this.currentChat.id + '/messages',
-                    data: formData
+                    data: formData,
                 })
                 .then(response => {
                     this.uploadFileObject.title = 'Прикрепите файл';
