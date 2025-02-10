@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="{{ asset('libs/meter/style.css')  }}">
 
     <link rel="stylesheet" href="{{ asset('libs/range-slider/style.css')  }}">
-    <link rel="stylesheet" href="{{ mix('css/style.css')  }}">
     <link rel="stylesheet" href="{{ asset('css/loader.css')  }}">
 
     <script src="{{ asset('libs/jquery/jquery-3.7.1.min.js') }}" crossorigin="anonymous"></script>
@@ -25,6 +24,8 @@
     <script src="{{ asset('libs/funnel/funnel-chart.js') }}"></script>
     <script src="{{ asset('libs/owl/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/script.js') }}"></script>
+
+    <link rel="stylesheet" href="{{ mix('css/style.css')  }}">
 
     <!-- Yandex.Metrika counter -->
     <script type="text/javascript" >

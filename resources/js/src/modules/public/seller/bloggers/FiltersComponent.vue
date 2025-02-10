@@ -56,43 +56,10 @@
                     <input type="text" class="input" name="filter-city" id="filter-city" placeholder="Введите город" v-model="filter.city">
                 </div>
 
-                <div class="form-group" style="flex-direction: column;">
-                    <label for="">Выберите тематику</label>
-                    <div :class="'form-formats ' + (isFilterThemesOpen ? 'form-formats--open' : '')">
-                        <div
-                            v-if="filter.themes.length > 0"
-                            @click="isFilterThemesOpen = !isFilterThemesOpen"
-                            class="form-formats__current">
-                            <div
-                                v-for="theme in filter.themes"
-                                class="form-formats__current-item">
-                                {{ (themes.find(_theme => theme == _theme.id).name) }}
-                            </div>
-                        </div>
-                        <span
-                            v-else
-                            @click="isFilterThemesOpen = !isFilterThemesOpen"
-                            class="form-formats__empty">
-                            Выбрать
-                        </span>
+                <ChooseTheme
+                    v-model="filter.themes"
+                ></ChooseTheme>
 
-                        <div class="form-formats__items">
-                            <div
-                                v-for="theme in themes"
-                                class="form__row form-format">
-                                <input
-                                    :id="'theme-' + theme.id"
-                                    type="checkbox" name="themes[]" class="form-format__check"
-                                    @change="setFilterThemes(theme.id)"
-                                >
-                                <label
-                                    :for="'theme-' + theme.id">
-                                    {{ theme.name }}
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="form-group filter__item">
                     <label for="">Пол блогера</label>
                     <div class="filter__item--sex" id = "filter__item--sex">
@@ -140,16 +107,18 @@
 </template>
 <script>
 import {ref} from "vue";
+
 import Slider from '@vueform/slider'
+
 import Platforms from "../../../../core/services/api/Platforms";
-import Themes from "../../../../core/services/api/Themes";
+
+import ChooseTheme from "../../../../core/components/choose-theme/index"
 
 export default{
-    components:{ Slider },
+    components:{ Slider, ChooseTheme },
     data(){
         return{
             platforms: ref([]),
-            themes: ref([]),
 
             filterSubscribersQuantity: ref({
                 value: [0, 4000000]
@@ -166,14 +135,11 @@ export default{
                 has_content: 0,
             }),
 
-            isFilterThemesOpen: ref(false),
-
-            Platforms, Themes
+            Platforms
         }
     },
     async mounted() {
         this.platforms = await this.Platforms.getList();
-        this.themes = await this.Themes.getList();
     },
     methods: {
         setFilterSex(e, value){
@@ -182,14 +148,6 @@ export default{
             }
             else{
                 this.filter.sex.splice(this.filter.sex.indexOf(value), 1);
-            }
-        },
-        setFilterThemes(themeID){
-            if(!this.filter.themes.find(t => t.id === themeID)){
-                this.filter.themes.push(themeID)
-            }
-            else{
-                this.filter.themes.splice(this.filter.themes.indexOf(themeID), 1);
             }
         },
 

@@ -161,7 +161,7 @@ export default{
         async applyFilterProjects(filterData){
             this.Loader.loaderOn('.wrapper .profile__content-inner');
 
-            this.Project.getList(filterData).then(data => {
+            this.Project.getList({...filterData, ...{is_blogger_access: 1, statuses: [0]}}).then(data => {
                 this.allProjects = data || [];
 
                 setTimeout(()=>{

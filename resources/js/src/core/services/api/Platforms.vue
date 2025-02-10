@@ -5,12 +5,12 @@ import axios from 'axios'
 const Platforms = {
     getList: () => {
         return new Promise((resolve, reject) => {
-            var platforms = localStorage.getItem('platforms') ? JSON.parse(localStorage.getItem('platforms')) : false;
-
-            if(platforms && platforms.length > 0){
-                resolve(platforms)
-                return;
-            }
+            // var platforms = localStorage.getItem('platforms') ? JSON.parse(localStorage.getItem('platforms')) : false;
+            //
+            // if(platforms && platforms.length > 0){
+            //     resolve(platforms)
+            //     return;
+            // }
 
             axios({
                 method: 'get',

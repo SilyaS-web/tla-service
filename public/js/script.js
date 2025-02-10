@@ -1625,33 +1625,6 @@ $(window).on('load', function(){
         $(e.target).closest('.profile-projects__item').toggleClass('active-bloggers-in_work');
     })
 
-    $('.profile-projects__item').find('.profile-projects--carousel').owlCarousel({
-        margin: 5,
-        nav: false,
-        dots: true,
-        responsive: {
-            0:{
-                items: 1
-            },
-            1180: {
-                items:1
-            }
-        }
-    });
-    $('.list-projects__item').find('.project-item__carousel--carousel').owlCarousel({
-        margin: 5,
-        nav: false,
-        dots: true,
-        responsive: {
-            0:{
-                items: 1
-            },
-            1180: {
-                items:1
-            }
-        }
-    });
-
     $(document).on('click', '.profile-projects__item .profile-projects__blogers', function(e){
         e.stopPropagation()
     })

@@ -208,8 +208,8 @@ class ProjectController extends Controller
             'uploaded_images.*' => 'numeric',
             'images' => 'array',
             'images.*' => 'image|max:10240',
-            'feedback' => 'boolean|nullable',
-            'integration' => 'boolean|nullable',
+            'integration_types' => 'required|array',
+            'integration_types.*' => ['string', Rule::in(Project::TYPES)],
         ]);
 
         if ($validator->fails()) {
@@ -218,7 +218,7 @@ class ProjectController extends Controller
 
         $validated = $validator->validated();
 
-        if (empty($validated['feedback']) && empty($validated['integration'])) {
+        if (empty($validated['integration_types'])) {
             return response()->json(['message' => 'Количество видов рекламы не было выбрано'])->setStatusCode(400);
         }
 
@@ -247,22 +247,22 @@ class ProjectController extends Controller
 
         $project->update($validated);
 
-        foreach (Project::TYPES as $type) {
-            $project_work = $project->projectWorks()->where('type', $type)->first();
-            if ($project_work) {
-                if (isset($validated[$type]) && $validated[$type] >= $project_work->quantity) {
-                    $project_work->update([
-                        'quantity' => -1,
-                    ]);
-                }
-            } else if (isset($validated[$type]) && $validated[$type] > 0) {
-                ProjectWork::create([
-                    'type' => $type,
-                    'quantity' => -1,
-                    'project_id' => $project->id,
-                ]);
-            }
-        }
+//        foreach (Project::TYPES as $type) {
+//            $project_work = $project->projectWorks()->where('type', $type)->first();
+//            if ($project_work) {
+//                if (isset($validated[$type]) && $validated[$type] >= $project_work->quantity) {
+//                    $project_work->update([
+//                        'quantity' => -1,
+//                    ]);
+//                }
+//            } else if (isset($validated[$type]) && $validated[$type] > 0) {
+//                ProjectWork::create([
+//                    'type' => $type,
+//                    'quantity' => -1,
+//                    'project_id' => $project->id,
+//                ]);
+//            }
+//        }
         return response()->json([])->setStatusCode(200);
     }
 
