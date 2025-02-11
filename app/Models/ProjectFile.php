@@ -20,9 +20,4 @@ class ProjectFile extends Model
         'type',
         'link',
     ];
-
-    public function getImageURL()
-    {
-        return url('storage/' . $this->link);
-    }
 }

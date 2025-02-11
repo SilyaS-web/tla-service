@@ -11,7 +11,7 @@ class BloggerResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         $country = $this->country ?? null;
         return [

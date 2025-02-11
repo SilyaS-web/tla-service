@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -65,12 +67,12 @@ class User extends Authenticatable
         }
     }
 
-    public function payments()
+    public function payments(): HasMany
     {
         return $this->hasMany(Payment::class, 'user_id', 'id');
     }
 
-    public function projects()
+    public function projects(): HasManyThrough|HasMany
     {
         if ($this->role == 'seller') {
             return $this->hasMany(Project::class, 'seller_id', 'id');
@@ -86,41 +88,22 @@ class User extends Authenticatable
         );
     }
 
-    public function blogger()
+    public function blogger(): HasOne
     {
         return $this->hasOne(Blogger::class, 'user_id', 'id');
     }
 
-    public function seller()
+    public function seller(): HasOne
     {
         return $this->hasOne(Seller::class, 'user_id', 'id');
     }
 
-    public function notifications()
+    public function notifications(): HasMany
     {
         return $this->hasMany(Notification::class, 'user_id', 'id');
     }
 
-    public function tgPhone()
-    {
-        return $this->hasOne(TgPhone::class, 'id', 'tg_phone_id');
-    }
-
-    public function getImageURL()
-    {
-        if (empty($this->image)) {
-            return asset('img/profile-icon.svg');
-        }
-
-        return url('storage/' . $this->image);
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    public function sellerTariffs()
+    public function sellerTariffs(): HasMany
     {
         return $this->hasMany(SellerTariff::class, 'user_id', 'id');
     }
@@ -146,29 +129,5 @@ class User extends Authenticatable
         }
 
         return $tariffs->get();
-    }
-
-    public function getActiveTariffByGroup($group_id)
-    {
-        $tariff = $this->sellerTariffs()->where('finish_date', '>', Carbon::now())->whereHas('tariff', function (Builder $query) use ($group_id) {
-            $query->where('group_id', $group_id);
-        })->first();
-
-        if ($tariff) {
-            return $tariff;
-        }
-
-        return null;
-    }
-
-    public function getActiveTariffsWithLost()
-    {
-        $seller_tariffs = $this->tariffs()->where('finish_date', '>', Carbon::now())->get();
-        foreach ($seller_tariffs as &$seller_tariff) {
-            $seller_tariff->lost = $seller_tariff->quantity - $this->seller->works()->whereHas('projectWork', function (Builder $query) use ($seller_tariff) {
-                    $query->where('type', $seller_tariff->type);
-                })->count();
-        }
-        return $seller_tariffs;
     }
 }

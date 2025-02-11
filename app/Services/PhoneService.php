@@ -4,7 +4,7 @@ namespace App\Services;
 
 class PhoneService
 {
-    public static function format($phone)
+    public static function format($phone): array|string
     {
         $formatted_phone = str_replace(['(', ')', ' ', '-'], '', $phone);
         if (isset($formatted_phone[0])) {

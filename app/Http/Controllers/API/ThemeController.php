@@ -3,14 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PlatformResource;
 use App\Http\Resources\ThemeResource;
 use App\Models\Theme;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class ThemeController extends Controller
 {
-    public function index(Request $request)
+    public function index(): JsonResponse
     {
         $payments = ThemeResource::collection(Theme::all());
         $data = [

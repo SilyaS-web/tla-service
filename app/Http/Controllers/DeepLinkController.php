@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\DeepLink;
 use App\Models\DeepLinkStat;
-use App\Models\Project;
 use App\Models\Work;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;

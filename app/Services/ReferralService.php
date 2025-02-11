@@ -7,7 +7,7 @@ use App\Models\ReferralUser;
 
 class ReferralService
 {
-    public static function ref($user_id, $code, $role)
+    public static function ref($user_id, $code): void
     {
         $referralCode = ReferralCode::where("code", $code)->first();
         if ($referralCode) {

@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SellerTariff extends Model
@@ -27,21 +28,13 @@ class SellerTariff extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function tariff()
+    public function tariff(): HasOne
     {
         return $this->hasOne(Tariff::class, 'id', 'tariff_id');
     }
 
-    public function User()
+    public function User(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
-    }
-
-    public function canExtend() {
-        if ($this->quantity == 0 || $this->finish_date < Carbon::now()->addDays(7)) {
-            return true;
-        }
-
-        return false;
     }
 }

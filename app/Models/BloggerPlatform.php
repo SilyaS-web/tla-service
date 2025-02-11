@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BloggerPlatform extends Model
@@ -23,17 +25,18 @@ class BloggerPlatform extends Model
         'icon_url',
     ];
 
-    public function platform()
+    public function platform(): HasOne
     {
         return $this->hasOne(Platform::class, 'id', 'platform_id');
     }
 
-    public function blogger()
+    public function blogger(): BelongsTo
     {
         return $this->belongsTo(Blogger::class, 'id', 'blogger_id');
     }
 
-    public static function getFields() {
+    public static function getFields(): array
+    {
         return [
             'Telegram' => [
                 'coverage' => 'Просмотры',

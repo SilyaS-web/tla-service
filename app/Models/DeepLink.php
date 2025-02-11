@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class DeepLink extends Model
 {
@@ -16,24 +18,18 @@ class DeepLink extends Model
         'destination',
     ];
 
-    public function user()
+    public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function work()
+    public function work(): HasOne
     {
         return $this->hasOne(Work::class, 'id', 'work_id');
     }
 
-    public function deepLinkStat()
+    public function deepLinkStat(): HasMany
     {
         return $this->hasMany(DeepLinkStat::class, 'link_id', 'id');
-    }
-
-    public function getClicksCount() {
-        $deep_link_stat_count = $this->deepLinkStat()->count();
-
-        return $deep_link_stat_count;
     }
 }

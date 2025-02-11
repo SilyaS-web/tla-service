@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class ProjectWork extends Model
 {
@@ -22,22 +24,12 @@ class ProjectWork extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function project() {
+    public function project(): HasOne
+    {
         return $this->hasOne(Project::class, 'id', 'project_id');
     }
 
-    public function getProjectWorkName()
-    {
-        $name = '';
-
-        if (isset(Project::TYPE_NAMES[$this->type])) {
-            $name = Project::TYPE_NAMES[$this->type];
-        }
-
-        return $name;
-    }
-
-    public function works()
+    public function works(): HasMany
     {
         return $this->hasMany(Work::class, 'project_work_id', 'id');
     }

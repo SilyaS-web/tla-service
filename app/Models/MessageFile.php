@@ -14,9 +14,4 @@ class MessageFile extends Model
         'type',
         'link',
     ];
-
-    public function getURL()
-    {
-        return url('storage/' . $this->link);
-    }
 }

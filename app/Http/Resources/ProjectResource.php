@@ -14,7 +14,7 @@ class ProjectResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         $statCount = WbService::getFeedbackCounters($this->product_nm);
         $clicks_count = $this->getClicksCount();

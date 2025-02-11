@@ -3,17 +3,15 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PaymentResource;
 use App\Models\DeepLink;
 use App\Models\DeepLinkStat;
-use App\Models\Payment;
 use App\Models\Work;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request)
+    public function index(): JsonResponse
     {
         $user = auth()->user();
         $wb_stats = $user->seller->getWBFeedbackStats();

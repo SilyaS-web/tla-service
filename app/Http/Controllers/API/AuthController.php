@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\App;
 
 class AuthController extends Controller
 {
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|min:3',
@@ -116,7 +116,7 @@ class AuthController extends Controller
         return response()->json(['message' => 'Неудалось авторизоваться'])->setStatusCode(400);
     }
 
-    public function storeBlogger(User $user, array $platforms)
+    public function storeBlogger(User $user, array $platforms): void
     {
         $blogger = Blogger::create([
             'user_id' => $user->id,
@@ -165,7 +165,7 @@ class AuthController extends Controller
         return response()->json('success', 200);
     }
 
-    public function isTgConfirmed()
+    public function isTgConfirmed(): JsonResponse
     {
         $validator = Validator::make(request()->all(), [
             'phone' => 'required',
@@ -186,7 +186,7 @@ class AuthController extends Controller
         return response()->json('success', 200);
     }
 
-    public function authenticate()
+    public function authenticate(): JsonResponse
     {
         $validated = request()->validate([
             'phone' => 'required',
@@ -223,16 +223,7 @@ class AuthController extends Controller
         ]])->setStatusCode(400);
     }
 
-    public function logout()
-    {
-        auth()->logout();
-        request()->session()->regenerateToken();
-        request()->session()->invalidate();
-
-        return redirect()->route('login');
-    }
-
-    public function resetPassword()
+    public function resetPassword(): JsonResponse
     {
         $validator = Validator::make(request()->all(), [
             'phone' => 'required',

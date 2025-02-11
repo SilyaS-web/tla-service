@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class UserAchievemnt extends Model
+class UserAchievement extends Model
 {
     use HasFactory, SoftDeletes;
 }

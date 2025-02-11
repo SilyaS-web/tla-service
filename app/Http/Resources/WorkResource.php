@@ -9,14 +9,12 @@ use Illuminate\Support\Facades\Auth;
 
 class WorkResource extends JsonResource
 {
-    private $with_array;
-
     /**
      * Transform the resource into an array.
      *
      * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         $user = Auth::user();
         $project = null;

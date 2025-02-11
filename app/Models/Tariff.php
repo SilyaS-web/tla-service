@@ -5,6 +5,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 
 class Tariff extends Model
@@ -43,17 +44,13 @@ class Tariff extends Model
         'is_best'
     ];
 
-    public function tariffGroup()
-    {
-        return $this->hasOne(TariffGroup::class, 'id', 'group_id');
-    }
-
-    public function sellerTariffs()
+    public function sellerTariffs(): HasMany
     {
         return $this->hasMany(SellerTariff::class, 'tariff_id', 'id');
     }
 
-    public function isActive() {
+    public function isActive(): bool
+    {
         $user_active = $this->sellerTariffs()->where('user_id', Auth::user()->id)->where('finish_date', '>', Carbon::now())->first();
         return $user_active ? true : false;
     }

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class DeepLinkStat extends Model
 {
@@ -23,7 +24,7 @@ class DeepLinkStat extends Model
         'is_mobile',
     ];
 
-    public function deepLink()
+    public function deepLink(): HasOne
     {
         return $this->hasOne(DeepLink::class, 'id', 'link_id');
     }

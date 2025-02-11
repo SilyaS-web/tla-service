@@ -2,19 +2,15 @@
 
 namespace App\Services;
 
-use App\Models\Notification;
-use Illuminate\Support\Facades\Log;
-
 class OzonService
 {
-
-    public static function getProductInfo(int $product_nm, int $client_id, string $api_key)
+    public static function getProductInfo(int $product_nm, int $client_id, string $api_key): bool|array
     {
         $card = self::getGeneralInfo($product_nm, $client_id, $api_key);
         if (!isset($card->id)) return false;
 
-        $product_attributes_without_names = self::getProductAttributestInfo($card->id, $client_id, $api_key);
-        $attributes = self::getAttributestInfo($card->description_category_id, $card->type_id, $client_id, $api_key);
+        $product_attributes_without_names = self::getProductAttributesInfo($card->id, $client_id, $api_key);
+        $attributes = self::getAttributesInfo($card->description_category_id, $card->type_id, $client_id, $api_key);
         $product_attributes = [];
         $product_brand = '';
 
@@ -43,117 +39,6 @@ class OzonService
             'options' => $product_attributes,
             'description' => $product_description,
         ];
-    }
-
-    public static function getOrdersStats(int $nm, int $ozon_client_id, string $ozon_api_key)
-    {
-        $card = self::getGeneralInfo($nm, $ozon_client_id, $ozon_api_key);
-        if (!$card) {
-            $result = [
-                'orders' => 0,
-                'earnings' => 0,
-                'prices_history' => [],
-                'orders_history' => [],
-            ];
-
-            return $result;
-        }
-
-        $date_from = date('Y-m-d', strtotime("-1 month"));
-        $date_to = date('Y-m-d');
-        $filters = [];
-
-        foreach ($card->sources as $source) {
-            $filters[] = [
-                "key" => "sku",
-                "value" => "$source->sku"
-            ];
-        }
-
-        $curl = curl_init();
-        $post_data = [
-            "date_from" => $date_from,
-            "date_to" => $date_to,
-            "metrics" => [
-                "revenue",
-                "ordered_units"
-            ],
-            "filters" => $filters,
-            "dimension" => [
-                "sku",
-                "day"
-            ],
-            "sort" => [
-                [
-                    "key" => "day",
-                    "order" => "ASC"
-                ]
-            ],
-            "limit" => 1000,
-            "offset" => 0
-        ];
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://api-seller.ozon.ru/v1/analytics/data',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => false,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => json_encode($post_data),
-            CURLOPT_HTTPHEADER => array(
-                'Client-Id: ' . $ozon_client_id,
-                'Api-Key: ' . $ozon_api_key,
-                'Content-Type: application/json',
-            ),
-        ));
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
-
-        $result = json_decode($response);
-        if (!isset($result->result)) {
-            $result = [
-                'orders' => 0,
-                'earnings' => 0,
-                'prices_history' => [],
-                'orders_history' => [],
-            ];
-
-            return $result;
-        }
-
-        $result = $result->result;
-        $date_array = [];
-        foreach ($result->data as $data) {
-            if (isset($date_array[$data->dimensions[1]->id])) {
-                $date_array[$data->dimensions[1]->id] = [
-                    'dt' => $data->dimensions[1]->id,
-                    "earnings" => $data->metrics[0] + $date_array[$data->dimensions[1]->id]['earnings'],
-                    "orders" => $data->metrics[1] + $date_array[$data->dimensions[1]->id]['orders'],
-                ];
-            } else {
-                $date_array[$data->dimensions[1]->id] = [
-                    'dt' => $data->dimensions[1]->id,
-                    "earnings" => $data->metrics[0],
-                    "orders" => $data->metrics[1],
-                ];
-            }
-        }
-
-        $earnings = $result->totals[0];
-        $orders = $result->totals[1];
-        $result_array = [
-            'orders' => $orders,
-            'earnings' => $earnings,
-            'prices_history' => array_values($date_array),
-            'orders_history' => array_values($date_array),
-        ];
-
-        return $result_array;
     }
 
     public static function getGeneralInfo(int $product_nm, int $client_id, string $api_key)
@@ -190,7 +75,7 @@ class OzonService
         return $result->result;
     }
 
-    public static function getProductAttributestInfo(int $product_nm, int $client_id, string $api_key)
+    public static function getProductAttributesInfo(int $product_nm, int $client_id, string $api_key): array
     {
         $curl = curl_init();
 
@@ -228,7 +113,7 @@ class OzonService
         return [];
     }
 
-    public static function getAttributestInfo(int $description_category_id, int $type_id, int $client_id, string $api_key)
+    public static function getAttributesInfo(int $description_category_id, int $type_id, int $client_id, string $api_key)
     {
         $curl = curl_init();
 

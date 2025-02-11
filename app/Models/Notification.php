@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
@@ -25,18 +26,13 @@ class Notification extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function user()
+    public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function work()
+    public function work(): HasOne
     {
         return $this->hasOne(Work::class, 'id', 'work_id');
-    }
-
-    public function fromUser()
-    {
-        return $this->hasOne(User::class, 'id', 'from_user_id');
     }
 }
