@@ -41,13 +41,13 @@ class Seller extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function works(): HasMany
+    public function deals(): HasMany
     {
-        return $this->hasMany(Work::class, 'seller_id', 'user_id');
+        return $this->hasMany(Deal::class, 'seller_id', 'id');
     }
 
-    public function projects()
+    public function projects(): HasMany
     {
-        return $this->hasMany(Project::class, 'seller_id', 'user_id');
+        return $this->hasMany(Project::class, 'seller_id', 'id');
     }
 }

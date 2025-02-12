@@ -43,9 +43,9 @@ class Blogger extends Model
         return $this->hasMany(BloggerContent::class, 'user_id', 'user_id');
     }
 
-    public function works(): HasMany
+    public function deals(): HasMany
     {
-        return $this->hasMany(Work::class, 'blogger_id', 'user_id');
+        return $this->hasMany(Deal::class, 'blogger_id', 'id');
     }
 
     public function themes(): HasMany

@@ -9,7 +9,7 @@ use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use App\Models\ProjectFile;
 use App\Models\ProjectWork;
-use App\Models\Work;
+use App\Models\Deal;
 use App\Services\ImageService;
 use App\Services\OzonService;
 use App\Services\WbService;
@@ -270,7 +270,7 @@ class ProjectController extends Controller
             foreach ($project->projectWorks as $project_work) {
                 $seller_tariff = $user->getActiveTariffs($project_work->type);
                 if ($seller_tariff) {
-                    $lost = $project_work->quantity - $project->works()->where('project_work_id', $project_work->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
+                    $lost = $project_work->quantity - $project->works()->where('project_work_id', $project_work->id)->whereIn('status', [Deal::IN_PROGRESS, Deal::COMPLETED])->count();
                     $seller_tariff->update(['quantity' => $seller_tariff->quantity + $lost]);
                 }
             }
@@ -334,7 +334,7 @@ class ProjectController extends Controller
 
             if ($validated['status'] == 'active') {
                 $works = $project->works()->where(function (Builder $query) use ($seller_id) {
-                    $query->where('created_by', $seller_id)->where('status', '<>', Work::CANCELED)->orWhere('status', '<>', null);
+                    $query->where('created_by', $seller_id)->where('status', '<>', Deal::CANCELED)->orWhere('status', '<>', null);
                 });
             } else {
                 $works = $project->works()->where('created_by', '<>', $seller_id)->where('status', null);
@@ -345,7 +345,7 @@ class ProjectController extends Controller
             }
 
             $data = [
-                'works' => WorkResource::collection($works->get()),
+                'deals' => WorkResource::collection($works->get()),
             ];
 
             return response()->json($data)->setStatusCode(200);
@@ -364,7 +364,7 @@ class ProjectController extends Controller
         }
 
         $data = [
-            'works' => WorkResource::collection($works->get()),
+            'deals' => WorkResource::collection($works->get()),
         ];
 
         return response()->json($data)->setStatusCode(200);

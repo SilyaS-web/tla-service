@@ -15,7 +15,7 @@ class Message extends Model
         'work_id',
         'message',
         'viewed_at',
-        'user_id'
+        'deal_id'
     ];
 
     protected $casts = [
@@ -29,8 +29,8 @@ class Message extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function work(): HasOne
+    public function deal(): HasOne
     {
-        return $this->hasOne(Work::class, 'id', 'work_id');
+        return $this->hasOne(Deal::class, 'id', 'deal_id');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Requests\StoreUserRequest;
 use App\Models\Blogger;
 use App\Models\BloggerPlatform;
 use App\Models\Platform;
@@ -12,11 +13,9 @@ use App\Models\TgPhone;
 use App\Services\TgService;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use App\Models\User;
 use App\Services\PhoneService;
 use App\Services\ReferralService;
-use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -26,32 +25,11 @@ use Illuminate\Support\Facades\App;
 
 class AuthController extends Controller
 {
-    public function store(Request $request): JsonResponse
+    public function store(StoreUserRequest $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|min:3',
-            'email' => 'required|email|unique:users,email',
-            'phone' => 'required|unique:users,phone',
-            'role' => ['required', Rule::in(User::TYPES)],
-            'password' => 'required|min:8',
-            'platforms' => 'array',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors())->setStatusCode(400);
-        }
-
-        $validated = $validator->validated();
-        $phone = PhoneService::format($validated['phone']);
-        if (User::where('phone', $phone)->first()) {
-            return response()->json(['errors' => ['phone' => 'Аккаунт с таким номером телефона уже существует']])->setStatusCode(400);
-        }
-
-        $tg_phone = TgPhone::where('phone', $phone)->first();
-        if (!$tg_phone) {
-            return response()->json(['errors' => ['phone' => 'Необходимо подтвердить телеграм']])->setStatusCode(400);
-        }
-
+        $validated = $request->validated();
+        $phone = $validated['phone'];
+        $tg_phone_id = TgPhone::query()->where('phone', $phone)->first()->id;
         $is_agent = 0;
 
         if ($validated['role'] == 'agent') {
@@ -65,7 +43,7 @@ class AuthController extends Controller
             'name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $phone,
-            'tg_phone_id' => $tg_phone->id,
+            'tg_phone_id' => $tg_phone_id,
             'role' => $validated['role'],
             'status' => $validated['status'],
             'password' => bcrypt($validated['password']),

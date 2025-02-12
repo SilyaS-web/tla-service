@@ -12,7 +12,7 @@ class DeepLinkStat extends Model
 
     protected $fillable = [
         'link_id',
-        'datatime',
+        'datetime',
         'device',
         'operating_system',
         'country',
@@ -23,9 +23,4 @@ class DeepLinkStat extends Model
         'is_bot',
         'is_mobile',
     ];
-
-    public function deepLink(): HasOne
-    {
-        return $this->hasOne(DeepLink::class, 'id', 'link_id');
-    }
 }

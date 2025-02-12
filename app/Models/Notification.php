@@ -15,7 +15,7 @@ class Notification extends Model
         'user_id',
         'type',
         'text',
-        'work_id',
+        'deal_id',
         'from_user_id',
         'viewed_at'
     ];
@@ -31,8 +31,8 @@ class Notification extends Model
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function work(): HasOne
+    public function deal(): HasOne
     {
-        return $this->hasOne(Work::class, 'id', 'work_id');
+        return $this->hasOne(Deal::class, 'id', 'deal_id');
     }
 }

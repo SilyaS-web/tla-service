@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class Work extends Model
+class Deal extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -55,12 +55,12 @@ class Work extends Model
 
     public function blogger(): HasOne
     {
-        return $this->hasOne(Blogger::class, 'user_id', 'blogger_id');
+        return $this->hasOne(Blogger::class, 'id', 'blogger_id');
     }
 
     public function seller(): HasOne
     {
-        return $this->hasOne(Seller::class, 'user_id', 'seller_id');
+        return $this->hasOne(Seller::class, 'id', 'seller_id');
     }
 
     public function project(): HasOne
@@ -73,12 +73,12 @@ class Work extends Model
         return $this->hasMany(Message::class, 'work_id', 'id');
     }
 
-    public function getPartnerUser($role)
+    public function getPartnerUser($role): User|null
     {
         if ($role == 'seller') {
-            return $this->blogger->user;
+            return $this->blogger->user ?? null;
         } else {
-            return $this->seller->user;
+            return $this->seller->user ?? null;
         }
     }
 

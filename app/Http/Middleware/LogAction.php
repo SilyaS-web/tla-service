@@ -20,7 +20,7 @@ class LogAction
     {
         if (Auth::check()) {
             $action = Route::currentRouteAction();
-            if ($action !== 'App\Http\Controllers\API\UserController@works' && $action !== 'App\Http\Controllers\API\UserController@notifications' && $action !== 'App\Http\Controllers\API\UserController@messages') {
+            if ($action !== 'App\Http\Controllers\API\UserController@deals' && $action !== 'App\Http\Controllers\API\UserController@notifications' && $action !== 'App\Http\Controllers\API\UserController@messages') {
                 DbLog::query()->create([
                     'user_id' => Auth::id(),
                     'text' =>  $action . '|' . json_encode($request->all()),

@@ -31,6 +31,6 @@ class ProjectWork extends Model
 
     public function works(): HasMany
     {
-        return $this->hasMany(Work::class, 'project_work_id', 'id');
+        return $this->hasMany(Deal::class, 'project_work_id', 'id');
     }
 }

@@ -18,7 +18,7 @@ use App\Models\Message;
 use App\Models\MessageFile;
 use App\Models\Notification;
 use App\Models\Project;
-use App\Models\Work;
+use App\Models\Deal;
 use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -147,7 +147,7 @@ class UserController extends Controller
         }
 
         if (!empty($validated['work_statuses'])) {
-            $projects->whereHas('works', function (Builder $query) use ($validated) {
+            $projects->whereHas('deals', function (Builder $query) use ($validated) {
                 $query->whereIn('status', $validated['work_statuses']);
             });
         }
@@ -237,13 +237,13 @@ class UserController extends Controller
         }
 
         $data = [
-            'works' => WorkResource::collection($works->get()),
+            'deals' => WorkResource::collection($works->get()),
         ];
 
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function messages(User $user, Work $work, Request $request): JsonResponse
+    public function messages(User $user, Deal $work, Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'order_by' => 'string|nullable'
@@ -336,7 +336,7 @@ class UserController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function storeMessage(User $user, Work $work, Request $request): JsonResponse
+    public function storeMessage(User $user, Deal $work, Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'message' => 'string|nullable',

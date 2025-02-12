@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use App\Models\Project;
 use App\Models\ProjectWork;
-use App\Models\Work;
+use App\Models\Deal;
 use Illuminate\Console\Command;
 
 class reduce_integrations extends Command
@@ -62,7 +62,7 @@ class reduce_integrations extends Command
                 ]);
             }
 
-            $works = Work::where('project_work_id', $project_work->id);
+            $works = Deal::where('project_work_id', $project_work->id);
             $works->update([
                 'project_work_id' => $integration_project_work->id
             ]);

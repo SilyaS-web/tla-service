@@ -117,7 +117,7 @@ class Project extends Model
 
     public function works(): HasMany
     {
-        return $this->hasMany(Work::class, 'project_id', 'id');
+        return $this->hasMany(Deal::class, 'project_id', 'id');
     }
 
     public function user(): HasOne
@@ -127,6 +127,6 @@ class Project extends Model
 
     public function seller(): HasOne
     {
-        return $this->hasOne(Seller::class, 'user_id', 'seller_id');
+        return $this->hasOne(Seller::class, 'id', 'seller_id');
     }
 }

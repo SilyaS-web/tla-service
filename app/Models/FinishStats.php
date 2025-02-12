@@ -16,12 +16,12 @@ class FinishStats extends Model
         'reposts',
         'likes',
         'stats',
-        'work_id',
+        'deal_id',
         'message_id',
     ];
 
-    public function work(): HasOne
+    public function deal(): HasOne
     {
-        return $this->hasOne(Work::class, 'id', 'work_id');
+        return $this->hasOne(Deal::class, 'id', 'deal_id');
     }
 }

@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\User;
-use App\Models\Work;
+use App\Models\Deal;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 

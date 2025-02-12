@@ -52,6 +52,6 @@ class Tariff extends Model
     public function isActive(): bool
     {
         $user_active = $this->sellerTariffs()->where('user_id', Auth::user()->id)->where('finish_date', '>', Carbon::now())->first();
-        return $user_active ? true : false;
+        return (bool)$user_active;
     }
 }

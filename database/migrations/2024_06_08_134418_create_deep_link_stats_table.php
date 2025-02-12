@@ -17,7 +17,7 @@ class CreateDeepLinkStatsTable extends Migration
             $table->id();
             $table->unsignedBigInteger('link_id');
             $table->foreign('link_id')->references('id')->on('deep_links')->cascadeOnDelete();
-            $table->timestamp('datatime')->nullable();
+            $table->timestamp('datetime')->nullable();
             $table->string('device')->nullable();
             $table->string('operating_system')->nullable();
             $table->string('country')->nullable();

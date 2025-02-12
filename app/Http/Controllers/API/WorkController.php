@@ -11,7 +11,7 @@ use App\Models\MessageFile;
 use App\Models\Notification;
 use App\Models\Project;
 use App\Models\ProjectWork;
-use App\Models\Work;
+use App\Models\Deal;
 use App\Models\User;
 use App\Services\TgService;
 use Illuminate\Http\JsonResponse;
@@ -36,7 +36,7 @@ class WorkController extends Controller
 
         $validated = $validator->validated();
 
-        return response()->json(WorkResource::collection(Work::all()));
+        return response()->json(WorkResource::collection(Deal::all()));
     }
 
     public function store(Request $request): JsonResponse
@@ -76,7 +76,7 @@ class WorkController extends Controller
             $blogger_user = Blogger::find($validated['blogger_id']);
         }
 
-        $work = Work::create([
+        $work = Deal::create([
             'project_id' => $project_work->project->id,
             'blogger_id' => $user->role == 'seller' ? $blogger_user->user->id : $user->id,
             'seller_id' => $user->role == 'seller' ? $user->id : $project_work->project->seller_id,
@@ -98,7 +98,7 @@ class WorkController extends Controller
         return response()->json(['id' => $work->id])->setStatusCode(200);
     }
 
-    public function accept(Work $work): JsonResponse
+    public function accept(Deal $work): JsonResponse
     {
         $user = Auth::user();
         $seller_user = User::find($work->seller_id);
@@ -139,7 +139,7 @@ class WorkController extends Controller
             'from_user_id' => $user->id,
         ]);
 
-        $work->status = Work::PENDING;
+        $work->status = Deal::PENDING;
         $work->last_message_at = date('Y-m-d H:i');
         $work->save();
 
@@ -147,7 +147,7 @@ class WorkController extends Controller
         return response()->json('success')->setStatusCode(200);
     }
 
-    public function start(Work $work): JsonResponse
+    public function start(Deal $work): JsonResponse
     {
         $user = Auth::user();
         $work->accept($user);
@@ -158,8 +158,8 @@ class WorkController extends Controller
             'message' => $user->name . ' готов приступить к работе',
         ]);
 
-        if ($work->isBothAccepted() && $work->status = Work::PENDING) {
-            $work->status = Work::IN_PROGRESS;
+        if ($work->isBothAccepted() && $work->status = Deal::PENDING) {
+            $work->status = Deal::IN_PROGRESS;
             $work->save();
             $message_text = 'Статус работы изменён на: <span style="color: var(--primary)">выполняется</span>';
             if ($work->projectWork->type != Project::FEEDBACK) {
@@ -199,7 +199,7 @@ class WorkController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function createDeepLinkByWork(Work $work)
+    public function createDeepLinkByWork(Deal $work)
     {
         $user = Auth::user();
         $data = [
@@ -218,7 +218,7 @@ class WorkController extends Controller
         return $deep_link;
     }
 
-    public function confirm(Work $work, Request $request): JsonResponse
+    public function confirm(Deal $work, Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'message' => '',
@@ -255,7 +255,7 @@ class WorkController extends Controller
                 'user_id' => 1,
                 'message' => 'Проект успешно завершён',
             ]);
-            $work->status = Work::COMPLETED;
+            $work->status = Deal::COMPLETED;
             $work->save();
             $work->project->isCompleted();
             Notification::create([
@@ -271,7 +271,7 @@ class WorkController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function stats(Work $work, Request $request): JsonResponse
+    public function stats(Deal $work, Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'views' => 'numeric',
@@ -329,7 +329,7 @@ class WorkController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function deny(Work $work): JsonResponse
+    public function deny(Deal $work): JsonResponse
     {
         $work->delete();
         $user = Auth::user();
@@ -346,7 +346,7 @@ class WorkController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function cancel(Work $work): JsonResponse
+    public function cancel(Deal $work): JsonResponse
     {
         $user = Auth::user();
         $role = $user->role;
@@ -374,7 +374,7 @@ class WorkController extends Controller
                 $seller_tariff->update(['quantity' => $seller_tariff->quantity + 1]);
             }
 
-            $work->update(['status' => Work::CANCELED]);
+            $work->update(['status' => Deal::CANCELED]);
             $message_text = 'Статус работы изменён на: <span style="color: var(--primary)">отменена</span>';
             Message::create([
                 'work_id' => $work->id,

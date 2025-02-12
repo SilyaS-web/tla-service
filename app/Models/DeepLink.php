@@ -25,11 +25,6 @@ class DeepLink extends Model
 
     public function work(): HasOne
     {
-        return $this->hasOne(Work::class, 'id', 'work_id');
-    }
-
-    public function deepLinkStat(): HasMany
-    {
-        return $this->hasMany(DeepLinkStat::class, 'link_id', 'id');
+        return $this->hasOne(Deal::class, 'id', 'work_id');
     }
 }

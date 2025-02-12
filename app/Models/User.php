@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -58,13 +59,15 @@ class User extends Authenticatable
         'updated_at' => 'datetime',
     ];
 
-    public function works()
+    public function works(): Collection|null
     {
         if ($this->role == self::SELLER && $this->seller) {
-            return $this->seller->works();
+            return $this->seller->works() ?? null;
         } else if ($this->role == self::BLOGGER && $this->blogger) {
-            return $this->blogger->works();
+            return $this->blogger->works() ?? null;
         }
+
+        return null;
     }
 
     public function payments(): HasMany
@@ -80,7 +83,7 @@ class User extends Authenticatable
 
         return $this->hasManyThrough(
             Project::class,
-            Work::class,
+            Deal::class,
             'blogger_id',
             'id',
             'id',

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TariffGroup extends Model
 {
@@ -13,7 +14,7 @@ class TariffGroup extends Model
         'title',
     ];
 
-    public function tariffs()
+    public function tariffs(): HasMany
     {
         return $this->hasMany(Tariff::class, 'group_id', 'id');
     }
