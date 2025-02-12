@@ -112,7 +112,7 @@ class BloggerController extends Controller
             $bloggers->whereIn('sex', $validated['sex']);
         }
 
-        if (isset($validated['order_by_created_at']) && !empty($validated['order_by_date'])) {
+        if (isset($validated['order_by_created_at']) && !empty($validated['order_by_created_at'])) {
             $bloggers->orderBy('created_at', $validated['order_by_created_at']);
         } else {
             $bloggers->orderBy('created_at', 'desc');

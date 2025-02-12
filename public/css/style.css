@@ -3128,6 +3128,49 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .list-projects__item {
 }
+.list-projects__left{
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+.list-projects__sort{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.list-projects__sort-item{
+    font-size: 18px;
+    cursor: pointer;
+    color:rgba(0,0,0,.4);
+    border-bottom: 1px dashed;
+    display: flex;
+    gap: 4px;
+    transition: all .1s linear;
+}
+.list-projects__sort-item::after{
+    content:"";
+    background-image: url("/img/arrow-right.svg");
+    background-position: center;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    width: 15px;
+    filter: invert(97%) sepia(0%) saturate(4%) hue-rotate(141deg) brightness(91%) contrast(81%);
+    transition: all .1s linear;
+}
+.list-projects__sort-item--asc::after{
+    transform: rotate(90deg);
+}
+.list-projects__sort-item--desc::after{
+    transform: rotate(-90deg);
+}
+.list-projects__sort-item:hover{
+    color:var(--primary);
+}
+.list-projects__sort-item:hover::after{
+    filter: invert(55%) sepia(85%) saturate(4805%) hue-rotate(256deg) brightness(89%) contrast(92%)
+}
+
 
 
 .current-project{
@@ -7785,6 +7828,13 @@ input[type='range']::-webkit-slider-runnable-track{
         width: 280px;
     }
 }
+
+
+
+
+
+
+
 
 
 

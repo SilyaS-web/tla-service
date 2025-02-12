@@ -107,7 +107,7 @@ export default{
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
         }
 
-        if(!this.user || this.user.role != 'admin'){
+        if(!this.user || this.user.role !== 'admin'){
             window.location.href = '/'
         }
 

@@ -3,8 +3,18 @@
         <!-- страница каталога блогеров-->
         <div v-if="!isChooseProjectList" class="profile-blogers__body">
             <div class="projects-list__header">
-                <div class="list-projects__title title">
-                    Список блогеров
+                <div class="list-projects__left">
+                    <div class="list-projects__title title">
+                        Список блогеров
+                    </div>
+                    <div class="list-projects__sort">
+                        <div
+                            @click="sortBloggers('createdAt', sort.createdAt.orderBy === 'asc' ? 'desc' : 'asc')"
+                            :class="'list-projects__sort-item list-projects__sort-item--' + sort.createdAt.orderBy"
+                        >
+                            {{ sort.createdAt.sortData[sort.createdAt.orderBy].title }}
+                        </div>
+                    </div>
                 </div>
                 <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
                     <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
@@ -179,6 +189,21 @@ export default{
                 product_name: '',
             }),
 
+            sort:ref({
+                createdAt: {
+                    key: 'order_by_created_at',
+                    orderBy: 'asc',
+                    sortData: {
+                        asc: {
+                            title: 'Сначала старые',
+                        },
+                        desc: {
+                            title: 'Сначала новые',
+                        },
+                    }
+                }
+            }),
+
             Project, User,
             Loader
         }
@@ -252,6 +277,23 @@ export default{
                     this.Loader.loaderOff('#profile-blogers-list');
                 }, 300)
             })
+        },
+
+        sortBloggers(sortItemKey, newOrderDirection){
+            this.sort[sortItemKey].orderBy = newOrderDirection;
+
+            let orderList = {};
+
+            for (const sortListKey in this.sort) {
+                const orderDirectionKey = this.sort[sortListKey].key;
+                const orderDirectionValue = this.sort[sortListKey].orderBy;
+
+                Object.assign(orderList, {
+                    [orderDirectionKey]: orderDirectionValue
+                })
+            }
+
+            this.applyBloggersFilter(orderList)
         },
 
         //фильтры списка блогеров
