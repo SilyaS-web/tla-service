@@ -33,7 +33,7 @@
                                 Пробный
                             </div>
                             <div class="tariff-card__subtitle">
-                                30 дней бесплатно
+                                14 дней бесплатно
                             </div>
                         </div>
                         <div class="tariff-card__prices">
@@ -41,7 +41,7 @@
                                 0 руб
                             </div>
                             <div class="tariff-card__single">
-                                \ 5 бартеров
+                                \ 3 бартеров
                             </div>
                         </div>
                         <div class="tariff-card__count">
@@ -57,9 +57,15 @@
                                 Действует 30 дней
                             </div>
                         </div>
+                        <div class="tariff-card__total--discount">
+                            50%
+                        </div>
                         <div class="tariff-card__prices">
-                            <div class="tariff-card__total" style="text-wrap:nowrap">
-                                4990 руб
+                            <div class="tariff-card__total tariff__col" style="text-wrap:nowrap">
+                                2490 руб
+                                <span class="tariff-card__total--old">
+                                    4990 руб
+                                </span>
                             </div>
                             <div class="tariff-card__single">
                                 неограниченное количество бартеров
