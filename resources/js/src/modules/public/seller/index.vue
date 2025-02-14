@@ -60,6 +60,7 @@
         </div>
     </div>
     <Footer></Footer>
+    <DistributionPopup ref="distributionPopup"></DistributionPopup>
 </template>
 <script>
 import {ref} from 'vue'
@@ -82,12 +83,13 @@ import Aside from '../../../core/components/layout/seller/AppAside'
 import Header from '../../../core/components/layout/AppHeader'
 import Footer from '../../../core/components/layout/AppFooter'
 import Tariffs from './tariffs/index'
+import DistributionPopup from '../../../core/components/popups/seller-mass-distribution/SellerMassDistribution.vue'
 import Partners from './partners/index'
 
 export default{
     components: {
         Aside, CreateProject, ProjectsList,
-        MyProjectsList, BloggersList, Chat, Header, Footer, Tariffs, Partners,
+        MyProjectsList, BloggersList, Chat, Header, Footer, Tariffs, Partners, DistributionPopup
     },
     data(){
         return {
@@ -138,6 +140,8 @@ export default{
         if(this.isShowTariffs){
             localStorage.setItem('show_tariffs', false)
         }
+
+        this.$refs.distributionPopup.show({ title: 'Массовая рассылка', okButton: 'Отправить' })
 
         setTimeout(() => {
             this.Loader.loaderOff('#all-projects');

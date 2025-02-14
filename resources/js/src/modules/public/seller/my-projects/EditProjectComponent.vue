@@ -48,31 +48,11 @@
                             </div>
 
                         </div>
-                        <div class="form-group form-group--file create-project__files upload-files">
-                            <div class="upload-files__title">
-                                Загрузите изображения товара
-                            </div>
-                            <div class="upload-files__body">
-                                <div
-                                    v-for="(file, ind) in projectFiles"
-                                    class="upload-files__item uploaded" :style="'display:' + (file.link != 'uploading' ? 'flex' : 'none')">
-                                    <div class="upload-files__path" :title="file.link">{{ file.link }}</div>
-                                    <div
-                                        @click="deleteFile(file)"
-                                        class="upload-files__delete">
-                                    </div>
-                                    <input
-                                        @change="uploadFile"
-                                        type="file" :data-id="ind" hidden="" name="images[]">
-                                </div>
-                                <div
-                                    @click="triggerUpload"
-                                    class="upload-files__plus">
-
-                                </div>
-                            </div>
-                            <span class="error" v-if="errors.images">{{ errors.images }}</span>
-                        </div>
+                        <UploadFilesBlock
+                            v-model="projectFiles"
+                            :label="'Загрузите изображения товара'"
+                            :error="errors.images"
+                        ></UploadFilesBlock>
                     </div>
                     <div id="step_2" class="quest__step step current">
                         <div class="quest__btns">
@@ -90,10 +70,14 @@
 </template>
 <script>
 import {ref} from "vue";
+
+import UploadFilesBlock from '../../../../core/components/form/PlusFilesUploadBlockComponent.vue'
+
 import Project from "../../../../core/services/api/Project";
 
 export default{
     props:['project'],
+    components:{UploadFilesBlock},
     data(){
         return {
             errors: ref({}),
