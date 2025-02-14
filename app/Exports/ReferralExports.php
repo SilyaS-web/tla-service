@@ -11,7 +11,7 @@ use JustCommunication\TinkoffAcquiringAPIClient\Model\Payment as TPayment;
 class ReferralExports implements FromCollection, WithHeadings, WithMapping
 {
     use Exportable;
-    public $referral_code_id = null;
+    public ?int $referral_code_id = null;
 
     public function __construct(int $referral_code_id)
     {
@@ -30,15 +30,15 @@ class ReferralExports implements FromCollection, WithHeadings, WithMapping
         ];
     }
 
-    public function map($referral_user): array
+    public function map($row): array
     {
         return [
-            $referral_user->user_id,
-            $referral_user->user->name,
-            $referral_user->user->phone,
-            $referral_user->user->role,
-            date_format($referral_user->user->created_at, 'd.m.y H:i'),
-            $referral_user->user->payments()->where('status', TPayment::STATUS_CONFIRMED)->sum('price') / 100,
+            $row->user_id,
+            $row->user->name,
+            $row->user->phone,
+            $row->user->role,
+            date_format($row->user->created_at, 'd.m.y H:i'),
+            $row->user->payments()->where('status', TPayment::STATUS_CONFIRMED)->sum('price') / 100,
         ];
     }
 

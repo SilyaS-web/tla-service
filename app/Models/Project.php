@@ -8,6 +8,55 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $product_name
+ * @property string $product_nm
+ * @property string $product_link
+ * @property float $product_price
+ * @property int $status
+ * @property int $seller_id
+ * @property string|null $marketplace_brand
+ * @property string|null $marketplace_category
+ * @property string|null $marketplace_product_name
+ * @property string|null $marketplace_description
+ * @property string|null $marketplace_options
+ * @property int|null $marketplace_rate
+ * @property int|null $is_blogger_access
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\Seller|null $seller
+ * @property-read \App\Models\User|null $user
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Deal> $works
+ * @property-read int|null $works_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Project newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Project newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Project onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Project query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereDeletedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereIsBloggerAccess($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereMarketplaceBrand($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereMarketplaceCategory($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereMarketplaceDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereMarketplaceOptions($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereMarketplaceProductName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereMarketplaceRate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereProductLink($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereProductName($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereProductNm($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereProductPrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereSellerId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Project withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Project withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Project extends Model
 {
     use HasFactory, SoftDeletes;

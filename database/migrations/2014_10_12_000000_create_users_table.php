@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('telegram_verified_at')->nullable();
             $table->unsignedBigInteger('tg_phone_id');
             $table->foreign('tg_phone_id')->references('id')->on('tg_phones')->cascadeOnDelete();
+            $table->integer('is_admin')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

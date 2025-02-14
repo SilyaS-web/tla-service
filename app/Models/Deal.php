@@ -8,6 +8,22 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * 
+ *
+ * @property-read \App\Models\Blogger|null $blogger
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Message> $messages
+ * @property-read int|null $messages_count
+ * @property-read \App\Models\Project|null $project
+ * @property-read \App\Models\Seller|null $seller
+ * @method static \Illuminate\Database\Eloquent\Builder|Deal newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deal newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deal onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deal query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deal withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deal withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Deal extends Model
 {
     use HasFactory, SoftDeletes;

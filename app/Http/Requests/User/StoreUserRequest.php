@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\User;
 
-use App\Models\TgPhone;
 use App\Models\User;
 use App\Services\PhoneService;
 use Illuminate\Contracts\Validation\ValidationRule;
@@ -10,6 +9,11 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
+
+/**
+ *
+ * @property string|null $phone
+ */
 
 class StoreUserRequest extends FormRequest
 {
@@ -31,7 +35,7 @@ class StoreUserRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {

@@ -18,6 +18,7 @@ class CreateTgPhonesTable extends Migration
             $table->id();
             $table->string('phone')->unique();
             $table->bigInteger('chat_id')->nullable();
+            $table->string('username')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -19,8 +19,8 @@ class CreateFinishStatsTable extends Migration
             $table->unsignedBigInteger('views');
             $table->unsignedBigInteger('reposts');
             $table->unsignedBigInteger('likes');
-            $table->unsignedBigInteger('work_id');
-            $table->foreign('work_id')->references('id')->on('deals')->cascadeOnDelete();
+            $table->unsignedBigInteger('deal_id');
+            $table->foreign('deal_id')->references('id')->on('deals')->cascadeOnDelete();
             $table->unsignedBigInteger('message_id');
             $table->foreign('message_id')->references('id')->on('messages')->cascadeOnDelete();
             $table->string('platform')->nullable();
