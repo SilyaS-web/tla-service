@@ -124,6 +124,13 @@ class AuthController extends Controller
 
         foreach ($platforms as $blogger_platform) {
             if (!empty($blogger_platform['link'])) {
+                $platform = Platform::where('title', $blogger_platform['name'])->first()->id;
+
+                if (!$platform) {
+                    TgService::sendMessage($user->tgPhone->chat_id, 'Платформа ' . $blogger_platform['name'] . ' не найдена');
+                    return;
+                }
+
                 BloggerPlatform::create([
                     'blogger_id' => $blogger->id,
                     'platform_id' => Platform::where('title', $blogger_platform['name'])->first()->id,
