@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use App\Models\Project;
 use App\Models\SellerTariff;
 use App\Models\Tariff;
@@ -25,7 +25,7 @@ use JustCommunication\TinkoffAcquiringAPIClient\Model\Payment as TPayment;
 
 class PaymentController extends Controller
 {
-    public function index(Request $request)
+    public function index(): JsonResponse
     {
         $payments = PaymentResource::collection(Payment::all());
         $data = [
@@ -34,7 +34,7 @@ class PaymentController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function successPayment(Payment $payment)
+    public function successPayment(Payment $payment): JsonResponse
     {
         $from_landing = request()->input('from_landing', null);
         $user = User::find($payment->user_id);
@@ -77,7 +77,7 @@ class PaymentController extends Controller
         return redirect('/')->setStatusCode(400);
     }
 
-    public function failPayment(Payment $payment)
+    public function failPayment()
     {
         $from_landing = request()->input('from_landing', null);
         if ($from_landing) {
@@ -85,11 +85,6 @@ class PaymentController extends Controller
         }
 
         return redirect()->route('tariff')->with('success', 'При получении платежа произошла ошибка');
-    }
-
-    public function notificationsPayment(Payment $payment)
-    {
-        echo 'OK';
     }
 
     public function init(Tariff $tariff, Int $selected_quantity = null, $from_landing = false, $user_id = null, $degug_price = null)
@@ -167,7 +162,7 @@ class PaymentController extends Controller
         }
     }
 
-    public function checkState(Payment $payment)
+    public function checkState(Payment $payment): JsonResponse|string
     {
         $client = new TinkoffAcquiringAPIClient(config('tbank.terminal_key'), config('tbank.secret'));
         $payment_id = $payment->payment_id;

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\WorkResource;
 use App\Models\Blogger;
 use App\Models\DeepLink;
 use App\Models\FinishStats;
@@ -10,12 +11,11 @@ use App\Models\MessageFile;
 use App\Models\Notification;
 use App\Models\Project;
 use App\Models\ProjectWork;
-use App\Models\Work;
+use App\Models\Deal;
 use App\Models\User;
 use App\Services\TgService;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -23,7 +23,7 @@ use App\Http\Controllers\Controller;
 
 class WorkController extends Controller
 {
-    public function index(Project $project, Request $request)
+    public function index(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'statuses' => 'array|nullable',
@@ -35,9 +35,11 @@ class WorkController extends Controller
         }
 
         $validated = $validator->validated();
+
+        return response()->json(WorkResource::collection(Deal::all()));
     }
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'project_work_id' => 'required|exists:project_works,id',
@@ -68,13 +70,13 @@ class WorkController extends Controller
             }
             $blogger_user = $user;
         } else {
-            if (!isset($validated['blogger_id']) || empty($validated['blogger_id'])) {
+            if (empty($validated['blogger_id'])) {
                 return response()->json(['message' => 'У пользователя должна быть роль blogger либо укажите blogger_id'])->setStatusCode(400);
             }
             $blogger_user = Blogger::find($validated['blogger_id']);
         }
 
-        $work = Work::create([
+        $work = Deal::create([
             'project_id' => $project_work->project->id,
             'blogger_id' => $user->role == 'seller' ? $blogger_user->user->id : $user->id,
             'seller_id' => $user->role == 'seller' ? $user->id : $project_work->project->seller_id,
@@ -96,7 +98,7 @@ class WorkController extends Controller
         return response()->json(['id' => $work->id])->setStatusCode(200);
     }
 
-    public function accept(Work $work)
+    public function accept(Deal $work): JsonResponse
     {
         $user = Auth::user();
         $seller_user = User::find($work->seller_id);
@@ -137,7 +139,7 @@ class WorkController extends Controller
             'from_user_id' => $user->id,
         ]);
 
-        $work->status = Work::PENDING;
+        $work->status = Deal::PENDING;
         $work->last_message_at = date('Y-m-d H:i');
         $work->save();
 
@@ -145,7 +147,7 @@ class WorkController extends Controller
         return response()->json('success')->setStatusCode(200);
     }
 
-    public function start(Work $work)
+    public function start(Deal $work): JsonResponse
     {
         $user = Auth::user();
         $work->accept($user);
@@ -156,8 +158,8 @@ class WorkController extends Controller
             'message' => $user->name . ' готов приступить к работе',
         ]);
 
-        if ($work->isBothAccepted() && $work->status = Work::PENDING) {
-            $work->status = Work::IN_PROGRESS;
+        if ($work->isBothAccepted() && $work->status = Deal::PENDING) {
+            $work->status = Deal::IN_PROGRESS;
             $work->save();
             $message_text = 'Статус работы изменён на: <span style="color: var(--primary)">выполняется</span>';
             if ($work->projectWork->type != Project::FEEDBACK) {
@@ -197,7 +199,7 @@ class WorkController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function createDeepLinkByWork(Work $work)
+    public function createDeepLinkByWork(Deal $work)
     {
         $user = Auth::user();
         $data = [
@@ -216,7 +218,7 @@ class WorkController extends Controller
         return $deep_link;
     }
 
-    public function confirm(Work $work, Request $request)
+    public function confirm(Deal $work, Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'message' => '',
@@ -253,7 +255,7 @@ class WorkController extends Controller
                 'user_id' => 1,
                 'message' => 'Проект успешно завершён',
             ]);
-            $work->status = Work::COMPLETED;
+            $work->status = Deal::COMPLETED;
             $work->save();
             $work->project->isCompleted();
             Notification::create([
@@ -269,7 +271,7 @@ class WorkController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function stats(Work $work, Request $request)
+    public function stats(Deal $work, Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'views' => 'numeric',
@@ -327,7 +329,7 @@ class WorkController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function deny(Work $work)
+    public function deny(Deal $work): JsonResponse
     {
         $work->delete();
         $user = Auth::user();
@@ -344,7 +346,7 @@ class WorkController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function cancel(Work $work)
+    public function cancel(Deal $work): JsonResponse
     {
         $user = Auth::user();
         $role = $user->role;
@@ -372,7 +374,7 @@ class WorkController extends Controller
                 $seller_tariff->update(['quantity' => $seller_tariff->quantity + 1]);
             }
 
-            $work->update(['status' => Work::CANCELED]);
+            $work->update(['status' => Deal::CANCELED]);
             $message_text = 'Статус работы изменён на: <span style="color: var(--primary)">отменена</span>';
             Message::create([
                 'work_id' => $work->id,
@@ -388,14 +390,7 @@ class WorkController extends Controller
             ]);
             TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' отклонил вашу заявку на проект' . $work->project->product_name);
         }
-    }
 
-    public function viewChat(Work $work)
-    {
-        if (Auth::user()->role !== 'admin') {
-            return redirect()->route('profile');
-        }
-        $user_id = $work->seller_id;
-        return view('shared.admin.chat', compact('work', 'user_id'));
+        return response()->json()->setStatusCode(200);
     }
 }

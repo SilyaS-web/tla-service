@@ -26,12 +26,6 @@ Route::prefix('lnk')->group(function () {
 
 Route::match(['get', 'post'], '/payment/{tariff}', [PaymentController::class, 'regFromPayment']);
 
-Route::prefix('apist')->group(function () {
-    Route::get('/check-tariffs', [SellerController::class, 'checkTariffs']);
-    Route::get('/check-projects', [SellerController::class, 'checkProjectWorks']);
-    Route::post('/send-feedback', [UserController::class, 'sendFeedback']);
-});
-
 Route::get('/profile/admin', function () {
     return view('profile.admin');
 });

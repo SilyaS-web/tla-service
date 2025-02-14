@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Validator;
 
 class TariffController extends Controller
 {
-    public function index(Request $request) {
+    public function index(Request $request): JsonResponse
+    {
         $validator = Validator::make($request->all(), [
             'is_active' => 'boolean|nullable',
         ]);
@@ -24,7 +25,7 @@ class TariffController extends Controller
         $validated = $validator->validated();
 
         $tariffs = Tariff::where([]);
-        if (isset($validated['is_active']) && !empty($validated['is_active'])) {
+        if (!empty($validated['is_active'])) {
             $tariffs->offset(0)->limit($validated['is_active']);
         }
 

@@ -34,16 +34,18 @@ class Handler extends ExceptionHandler
      *
      * @return void
      */
-    public function register()
+    public function register(): void
     {
-        $this->reportable(function (Throwable $e) {
-            $user_message = 'Неавторизованный пользователь';
-            if (Auth::check()) {
-                $user_message = 'ID пользователя: ' . Auth::id();
-            }
-            $message =  $user_message . ', ошибка в файле: ' . $e->getFile() . ' на строке: ' . $e->getLine() . '
+        if (app()->isProduction()) {
+            $this->reportable(function (Throwable $e) {
+                $user_message = 'Неавторизованный пользователь';
+                if (Auth::check()) {
+                    $user_message = 'ID пользователя: ' . Auth::id();
+                }
+                $message =  $user_message . ', ошибка в файле: ' . $e->getFile() . ' на строке: ' . $e->getLine() . '
             ' . $e->getMessage() ;
-            TgService::sendToDevBot($message);
-        });
+                TgService::sendToDevBot($message);
+            });
+        }
     }
 }

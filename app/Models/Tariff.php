@@ -5,8 +5,43 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ * 
+ *
+ * @property int $id
+ * @property string $title
+ * @property string|null $description
+ * @property int $price
+ * @property string $type
+ * @property int $quantity
+ * @property int $period
+ * @property int $group_id
+ * @property int $is_active
+ * @property int $is_best
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SellerTariff> $sellerTariffs
+ * @property-read int|null $seller_tariffs_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff whereGroupId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff whereIsActive($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff whereIsBest($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff wherePeriod($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff wherePrice($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff whereQuantity($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff whereType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Tariff whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Tariff extends Model
 {
     use HasFactory;
@@ -43,18 +78,14 @@ class Tariff extends Model
         'is_best'
     ];
 
-    public function tariffGroup()
-    {
-        return $this->hasOne(TariffGroup::class, 'id', 'group_id');
-    }
-
-    public function sellerTariffs()
+    public function sellerTariffs(): HasMany
     {
         return $this->hasMany(SellerTariff::class, 'tariff_id', 'id');
     }
 
-    public function isActive() {
+    public function isActive(): bool
+    {
         $user_active = $this->sellerTariffs()->where('user_id', Auth::user()->id)->where('finish_date', '>', Carbon::now())->first();
-        return $user_active ? true : false;
+        return (bool)$user_active;
     }
 }

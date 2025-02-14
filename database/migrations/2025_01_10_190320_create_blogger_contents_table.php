@@ -18,10 +18,6 @@ return new class extends Migration
             $table->string('path')->nullable();
             $table->timestamps();
         });
-
-        Schema::table('bloggers', function (Blueprint $table) {
-            $table->timestamp('content_published_at')->nullable();
-        });
     }
 
     /**

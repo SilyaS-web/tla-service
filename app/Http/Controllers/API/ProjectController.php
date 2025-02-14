@@ -4,14 +4,12 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Resources\ProjectStatisticsResource;
 use App\Http\Resources\WorkResource;
-use App\Models\Seller;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProjectResource;
 use App\Models\Project;
 use App\Models\ProjectFile;
 use App\Models\ProjectWork;
-use App\Models\User;
-use App\Models\Work;
+use App\Models\Deal;
 use App\Services\ImageService;
 use App\Services\OzonService;
 use App\Services\WbService;
@@ -21,7 +19,6 @@ use Illuminate\Validation\Rule;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ProjectController extends Controller
@@ -273,7 +270,7 @@ class ProjectController extends Controller
             foreach ($project->projectWorks as $project_work) {
                 $seller_tariff = $user->getActiveTariffs($project_work->type);
                 if ($seller_tariff) {
-                    $lost = $project_work->quantity - $project->works()->where('project_work_id', $project_work->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
+                    $lost = $project_work->quantity - $project->works()->where('project_work_id', $project_work->id)->whereIn('status', [Deal::IN_PROGRESS, Deal::COMPLETED])->count();
                     $seller_tariff->update(['quantity' => $seller_tariff->quantity + $lost]);
                 }
             }
@@ -305,7 +302,7 @@ class ProjectController extends Controller
         return response()->json(['message' => 'Нельзя изменить статус проекта из текущего статуса '])->setStatusCode(400);
     }
 
-    public function start(Project $project)
+    public function start(Project $project): JsonResponse
     {
         if ($project->status == Project::STOPPED) {
             $project->update(['status' => Project::ACTIVE]);
@@ -337,18 +334,18 @@ class ProjectController extends Controller
 
             if ($validated['status'] == 'active') {
                 $works = $project->works()->where(function (Builder $query) use ($seller_id) {
-                    $query->where('created_by', $seller_id)->where('status', '<>', Work::CANCELED)->orWhere('status', '<>', null);
+                    $query->where('created_by', $seller_id)->where('status', '<>', Deal::CANCELED)->orWhere('status', '<>', null);
                 });
             } else {
                 $works = $project->works()->where('created_by', '<>', $seller_id)->where('status', null);
             }
 
-            if (isset($validated['order_by_last_message']) && !empty($validated['order_by_last_message'])) {
+            if (!empty($validated['order_by_last_message'])) {
                 $works->orderBy('last_message_at', $validated['order_by_last_message']);
             }
 
             $data = [
-                'works' => WorkResource::collection($works->get()),
+                'deals' => WorkResource::collection($works->get()),
             ];
 
             return response()->json($data)->setStatusCode(200);
@@ -362,47 +359,15 @@ class ProjectController extends Controller
                 $works->where('created_by', '<>', $user->id);
             }
         }
-        if (isset($validated['statuses']) && !empty($validated['statuses'])) {
+        if (!empty($validated['statuses'])) {
             $works->whereIn('status', $validated['statuses']);
         }
 
         $data = [
-            'works' => WorkResource::collection($works->get()),
+            'deals' => WorkResource::collection($works->get()),
         ];
 
         return response()->json($data)->setStatusCode(200);
-    }
-
-    public function getProductInfo(Project $project): JsonResponse
-    {
-        $total_quantity = $project->projectWorks()->sum('quantity');
-        $lost_quantity = $total_quantity - $project->works()->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count();
-
-        return response()->json([
-            'category' => $project->marketplace_category,
-            'product_name' => $project->marketplace_product_name ?? $project->product_name,
-            'description' => $project->marketplace_description,
-            'total_quantity' => $total_quantity,
-            'lost_quantity' => $lost_quantity,
-            'product_code' => $project->product_nm,
-            'price' => $project->product_price,
-            'images' => $project->getImageURL(),
-            'optioins' => $project->marketplace_options != 'null' ? $project->marketplace_options : NULL,
-            'link' => $project->product_link,
-            'application_sent' => $project->isSended(),
-        ], 200);
-    }
-
-    public function getApplicationsCount(): array
-    {
-        $user = Auth::user();
-        $projects = $user->projects;
-        $application_count_by_projects = [];
-        foreach ($projects as $project) {
-            $application_count_by_projects[$project->id] = $project->works()->where('status', null)->where('created_by', '<>', $user->id)->count();
-        }
-
-        return $application_count_by_projects;
     }
 
     public function categories(Request $request): JsonResponse

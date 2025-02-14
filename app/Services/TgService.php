@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 
 class TgService
 {
-    public static function sendResetPassword($chat_id, $password)
+    public static function sendResetPassword($chat_id, $password): bool
     {
         if (!App::environment('production')) {
             Log::info("[sendResetPassword] chat_id " . $chat_id . " password " . $password);
@@ -17,7 +17,7 @@ class TgService
         return (bool) self::sendMessage($chat_id, $text, ['parse_mode' => 'MarkdownV2',]);
     }
 
-    public static function notify($chat_id, $text)
+    public static function notify($chat_id, $text): bool
     {
         if (!App::environment('production')) {
             Log::info("[notify] chat_id " . $chat_id . " text " . $text);
@@ -27,7 +27,7 @@ class TgService
         return (bool) self::sendMessage($chat_id, $text);
     }
 
-    public static function sendMessage($chat_id, $text, $params = [])
+    public static function sendMessage($chat_id, $text, $params = []): bool|string
     {
         $api_key = config('telegram.main_bot_api_key');
         $data = [
@@ -64,7 +64,7 @@ class TgService
         return $http_code == 200 ? "success" : false;
     }
 
-    public static function sendForm($message_text)
+    public static function sendForm($message_text): bool|string
     {
         if (!App::environment('production')) {
             Log::info("[sendForm] message_text " . $message_text);
@@ -101,7 +101,7 @@ class TgService
         return $httpcode == 200 ? "success" : false;
     }
 
-    public static function sendPayment($message_text)
+    public static function sendPayment($message_text): bool|string
     {
         if (!App::environment('production')) {
             Log::info("[sendPayment] message_text " . $message_text);
@@ -138,7 +138,7 @@ class TgService
         return $httpcode == 200 ? "success" : false;
     }
 
-    public static function sendModeration($message_text)
+    public static function sendModeration($message_text): bool|string
     {
         if (!App::environment('production')) {
             Log::info("[sendModeration] message_text " . $message_text);
@@ -175,7 +175,7 @@ class TgService
         return $httpcode == 200 ? "success" : false;
     }
 
-    public static function sendModerationMessage($status, $phone, $password, $token, $chat_id)
+    public static function sendModerationMessage($status, $phone, $password, $token, $chat_id): bool|string
     {
         $api_key = config('telegram.main_bot_api_key');
         $new_phone = str_replace("+", "\\+", $phone);
@@ -237,7 +237,7 @@ class TgService
         return $httpcode == 200 ? "success" : false;
     }
 
-    public static function sendToDevBot($error_message)
+    public static function sendToDevBot($error_message): bool|string
     {
         $api_key = config('telegram.dev_bot_api_key');
         $group_id = config('telegram.errors_group_id');

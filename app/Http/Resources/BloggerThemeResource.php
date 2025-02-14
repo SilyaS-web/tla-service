@@ -11,7 +11,7 @@ class BloggerThemeResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'theme_id' => $this->theme_id,

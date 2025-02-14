@@ -12,7 +12,7 @@ class NotificationResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
 
         $image_url = asset('img/profile-icon.svg');

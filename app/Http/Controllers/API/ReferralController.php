@@ -7,13 +7,14 @@ use App\Exports\ReferralWithPaymentExports;
 use App\Http\Resources\ReferralCodeResource;
 use App\Models\ReferralCode;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 class ReferralController extends Controller
 {
-    public function index()
+    public function index(): JsonResponse
     {
         $referral_codes = ReferralCode::all();
 

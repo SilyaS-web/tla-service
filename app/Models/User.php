@@ -5,10 +5,69 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Laravel\Sanctum\HasApiTokens;
+
+/**
+ * 
+ *
+ * @mixin Builder
+ * @property int $id
+ * @property TgPhone $tgPhone
+ * @property string $name
+ * @property string|null $email
+ * @property string $phone
+ * @property string|null $image
+ * @property string $role
+ * @property string $password
+ * @property int $status
+ * @property \Illuminate\Support\Carbon|null $telegram_verified_at
+ * @property int $tg_phone_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property int|null $is_admin
+ * @property-read \App\Models\Blogger|null $blogger
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Notification> $notifications
+ * @property-read int|null $notifications_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Payment> $payments
+ * @property-read int|null $payments_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Project> $projects
+ * @property-read int|null $projects_count
+ * @property-read \App\Models\Seller|null $seller
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\SellerTariff> $sellerTariffs
+ * @property-read int|null $seller_tariffs_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \Laravel\Sanctum\PersonalAccessToken> $tokens
+ * @property-read int|null $tokens_count
+ * @method static \Database\Factories\UserFactory factory($count = null, $state = [])
+ * @method static Builder|User newModelQuery()
+ * @method static Builder|User newQuery()
+ * @method static Builder|User onlyTrashed()
+ * @method static Builder|User query()
+ * @method static Builder|User whereCreatedAt($value)
+ * @method static Builder|User whereDeletedAt($value)
+ * @method static Builder|User whereEmail($value)
+ * @method static Builder|User whereId($value)
+ * @method static Builder|User whereImage($value)
+ * @method static Builder|User whereIsAdmin($value)
+ * @method static Builder|User whereName($value)
+ * @method static Builder|User wherePassword($value)
+ * @method static Builder|User wherePhone($value)
+ * @method static Builder|User whereRole($value)
+ * @method static Builder|User whereStatus($value)
+ * @method static Builder|User whereTelegramVerifiedAt($value)
+ * @method static Builder|User whereTgPhoneId($value)
+ * @method static Builder|User whereUpdatedAt($value)
+ * @method static Builder|User withTrashed()
+ * @method static Builder|User withoutTrashed()
+ * @mixin \Eloquent
+ */
 
 class User extends Authenticatable
 {
@@ -22,6 +81,8 @@ class User extends Authenticatable
     public const TYPES = [
         self::SELLER, self::BLOGGER, self::ADMIN, self::AGENT
     ];
+
+    protected $primaryKey = 'id';
 
     /**
      * The attributes that are mass assignable.
@@ -56,21 +117,23 @@ class User extends Authenticatable
         'updated_at' => 'datetime',
     ];
 
-    public function works()
+    public function works(): Collection|null
     {
         if ($this->role == self::SELLER && $this->seller) {
-            return $this->seller->works();
+            return $this->seller->works() ?? null;
         } else if ($this->role == self::BLOGGER && $this->blogger) {
-            return $this->blogger->works();
+            return $this->blogger->works() ?? null;
         }
+
+        return null;
     }
 
-    public function payments()
+    public function payments(): HasMany
     {
         return $this->hasMany(Payment::class, 'user_id', 'id');
     }
 
-    public function projects()
+    public function projects(): HasManyThrough|HasMany
     {
         if ($this->role == 'seller') {
             return $this->hasMany(Project::class, 'seller_id', 'id');
@@ -78,7 +141,7 @@ class User extends Authenticatable
 
         return $this->hasManyThrough(
             Project::class,
-            Work::class,
+            Deal::class,
             'blogger_id',
             'id',
             'id',
@@ -86,41 +149,22 @@ class User extends Authenticatable
         );
     }
 
-    public function blogger()
+    public function blogger(): HasOne
     {
         return $this->hasOne(Blogger::class, 'user_id', 'id');
     }
 
-    public function seller()
+    public function seller(): HasOne
     {
         return $this->hasOne(Seller::class, 'user_id', 'id');
     }
 
-    public function notifications()
+    public function notifications(): HasMany
     {
         return $this->hasMany(Notification::class, 'user_id', 'id');
     }
 
-    public function tgPhone()
-    {
-        return $this->hasOne(TgPhone::class, 'id', 'tg_phone_id');
-    }
-
-    public function getImageURL()
-    {
-        if (empty($this->image)) {
-            return asset('img/profile-icon.svg');
-        }
-
-        return url('storage/' . $this->image);
-    }
-
-    public function getPassword()
-    {
-        return $this->password;
-    }
-
-    public function sellerTariffs()
+    public function sellerTariffs(): HasMany
     {
         return $this->hasMany(SellerTariff::class, 'user_id', 'id');
     }
@@ -146,29 +190,5 @@ class User extends Authenticatable
         }
 
         return $tariffs->get();
-    }
-
-    public function getActiveTariffByGroup($group_id)
-    {
-        $tariff = $this->sellerTariffs()->where('finish_date', '>', Carbon::now())->whereHas('tariff', function (Builder $query) use ($group_id) {
-            $query->where('group_id', $group_id);
-        })->first();
-
-        if ($tariff) {
-            return $tariff;
-        }
-
-        return null;
-    }
-
-    public function getActiveTariffsWithLost()
-    {
-        $seller_tariffs = $this->tariffs()->where('finish_date', '>', Carbon::now())->get();
-        foreach ($seller_tariffs as &$seller_tariff) {
-            $seller_tariff->lost = $seller_tariff->quantity - $this->seller->works()->whereHas('projectWork', function (Builder $query) use ($seller_tariff) {
-                    $query->where('type', $seller_tariff->type);
-                })->count();
-        }
-        return $seller_tariffs;
     }
 }

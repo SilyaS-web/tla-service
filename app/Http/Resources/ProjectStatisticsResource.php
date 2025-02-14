@@ -12,7 +12,7 @@ class ProjectStatisticsResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         $user = Auth()->user();
         $finish_stats = $this->getFinishStats();

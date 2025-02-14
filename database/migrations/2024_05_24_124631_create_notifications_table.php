@@ -20,7 +20,7 @@ class CreateNotificationsTable extends Migration
             $table->string('type', 50)->nullable();
             $table->string('text', 500);
             $table->timestamp('viewed_at')->nullable();
-            $table->unsignedBigInteger('work_id')->nullable();
+            $table->unsignedBigInteger('deal_id')->nullable();
             $table->unsignedBigInteger('from_user_id')->nullable();
             $table->timestamps();
             $table->softDeletes();

@@ -51,9 +51,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users/{user}/unban', [UserController::class, 'unban']);
     Route::get('/users/{user}/projects', [UserController::class, 'projects']);
     Route::get('/users/{user}/projects/barnds', [UserController::class, 'brands']);
-    Route::get('/users/{user}/works', [UserController::class, 'works']);
-    Route::get('/users/{user}/works/{work}/messages', [UserController::class, 'messages']);
-    Route::post('/users/{user}/works/{work}/messages', [UserController::class, 'storeMessage']);
+    Route::get('/users/{user}/deals', [UserController::class, 'works']);
+    Route::get('/users/{user}/deals/{work}/messages', [UserController::class, 'messages']);
+    Route::post('/users/{user}/deals/{work}/messages', [UserController::class, 'storeMessage']);
     Route::get('/users/{user}/notifications', [UserController::class, 'notifications']);
     Route::get('/users/{user}/notifications/view', [UserController::class, 'viewNotification']);
     Route::get('/users/{user}/notifications/{notification}/view', [UserController::class, 'viewNotification']);
@@ -78,20 +78,20 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/projects/{project}', [ProjectController::class, 'show']);
     Route::get('/projects/{project}/ban', [ProjectController::class, 'ban']);
     Route::get('/projects/{project}/unban', [ProjectController::class, 'unban']);
-    Route::get('/projects/{project}/works', [ProjectController::class, 'works']);
+    Route::get('/projects/{project}/deals', [ProjectController::class, 'works']);
     Route::get('/projects/{project}/statistics', [ProjectController::class, 'statistics']);
     Route::delete('/projects/{project}', [ProjectController::class, 'delete']);
     Route::get('/projects/{project}/stop', [ProjectController::class, 'stop']);
     Route::get('/projects/{project}/start', [ProjectController::class, 'start']);
     Route::get('/projects/{project}/activate', [ProjectController::class, 'activate']);
 
-    Route::post('/works', [WorkController::class, 'store']);
-    Route::get('/works/{work}/deny', [WorkController::class, 'deny']);
-    Route::get('/works/{work}/cancel', [WorkController::class, 'cancel']);
-    Route::get('/works/{work}/accept', [WorkController::class, 'accept']);
-    Route::get('/works/{work}/start', [WorkController::class, 'start']);
-    Route::get('/works/{work}/confirm', [WorkController::class, 'confirm']);
-    Route::post('/works/{work}/stats', [WorkController::class, 'stats']);
+    Route::post('/deals', [WorkController::class, 'store']);
+    Route::get('/deals/{work}/deny', [WorkController::class, 'deny']);
+    Route::get('/deals/{work}/cancel', [WorkController::class, 'cancel']);
+    Route::get('/deals/{work}/accept', [WorkController::class, 'accept']);
+    Route::get('/deals/{work}/start', [WorkController::class, 'start']);
+    Route::get('/deals/{work}/confirm', [WorkController::class, 'confirm']);
+    Route::post('/deals/{work}/stats', [WorkController::class, 'stats']);
 
     Route::get('/payments', [PaymentController::class, 'index']);
 

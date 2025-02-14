@@ -13,7 +13,7 @@ class UserResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         $organization_name = false;
         $channel_name = false;

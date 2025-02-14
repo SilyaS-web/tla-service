@@ -893,7 +893,7 @@ class PopupBloggerSendOffer extends Popup{
     instance = null;
 
     node = '';
-    sendUri = "/apist/works";
+    sendUri = "/apist/deals";
     projectWorkId = false;
     projectFormat = false;
 
@@ -1760,7 +1760,7 @@ selectTab = (tabName)=>{
 //     el.classList.add('disabled');
 //     el.disabled = true;
 //     $.ajax({
-//         url: 'apist/works/' + work_id + ' /deny',
+//         url: 'apist/deals/' + work_id + ' /deny',
 //         success: (res)=>{
 //             self.closePopup();
 //             notify('info', {title: 'Успешно!', message: 'Заявка отклонена'});
@@ -1783,7 +1783,7 @@ selectTab = (tabName)=>{
 //     el.classList.add('disabled');
 //     el.disabled = true;
 //     $.ajax({
-//         url: 'apist/works/' + work_id + ' /deny',
+//         url: 'apist/deals/' + work_id + ' /deny',
 //         success: ()=>{
 //             notify('info', {title: 'Успешно!', message: 'Заявка отклонена'});
 //             let index = $(el).closest('owl-item').index() - 1;
@@ -1806,7 +1806,7 @@ selectTab = (tabName)=>{
 //     el.classList.add('disabled');
 //     el.disabled = true;
 //     $.ajax({
-//         url: 'apist/works/' + work_id + ' /start',
+//         url: 'apist/deals/' + work_id + ' /start',
 //         success: ()=>{
 //             notify('info', {title: 'Успешно!', message: 'Заявка принята'});
 //             $(el).prop("onclick", null).off("click");

@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DeepLink;
 use App\Models\DeepLinkStat;
-use App\Models\Project;
-use App\Models\Work;
+use App\Models\Deal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
@@ -44,7 +43,7 @@ class DeepLinkController extends Controller
 
         DeepLinkStat::create([
             'link_id' => $link_id,
-            'datatime' => date('Y-m-d H:i'),
+            'datetime' => date('Y-m-d H:i'),
             'device' => $dd->getDeviceName(),
             'operating_system' => $dd->getOs('name') ?? null,
             'country' => $geoData['data']['country'] ?? null,
@@ -61,7 +60,7 @@ class DeepLinkController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'user_id' => 'required|exists:users,id',
-            'work_id' => 'exists:works,id',
+            'work_id' => 'exists:deals,id',
             'destination' => 'required|url',
         ]);
 
@@ -83,7 +82,7 @@ class DeepLinkController extends Controller
     {
         $user = Auth::user();
 
-        $works = Work::where([['blogger_id', $user->id]])->get();
+        $works = Deal::where([['blogger_id', $user->id]])->get();
         $deepLinkStats = DeepLinkStat::whereIn('work_id', $works->pluck('id'))->getAttributewhere('created_at', '>=',  date('Y-m-d', time() - (86400 * 14)))
         ->groupBy('date')
         ->orderBy('date', 'DESC')

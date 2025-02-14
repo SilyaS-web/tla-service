@@ -11,7 +11,7 @@ class PartnerResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray($response)
+    public function toArray($response): array
     {
         return [
             'id' => $this->id,

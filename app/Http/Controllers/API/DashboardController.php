@@ -3,28 +3,26 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PaymentResource;
 use App\Models\DeepLink;
 use App\Models\DeepLinkStat;
-use App\Models\Payment;
-use App\Models\Work;
+use App\Models\Deal;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class DashboardController extends Controller
 {
-    public function index(Request $request)
+    public function index(): JsonResponse
     {
         $user = auth()->user();
         $wb_stats = $user->seller->getWBFeedbackStats();
-        $projects = $user->projects()->withCount(['works' => function (Builder $query) {
+        $projects = $user->projects()->withCount(['deals' => function (Builder $query) {
             $query->where('status', 1);
         }])->get();
 
         $start_date = now()->subDays(30);
         $end_date = now();
 
-        $works = Work::where([['seller_id', $user->id]])->get();
+        $works = Deal::where([['seller_id', $user->id]])->get();
         $deep_link_ids = DeepLink::whereIn('work_id', $works->pluck('id'))->get()->pluck('id');
         $deep_link_stats = DeepLinkStat::selectRaw('DATE_FORMAT(created_at, "%Y-%m-%d") as date')->whereHas('deepLink', function (Builder $query) use ($deep_link_ids) {
             $query->whereIn('link_id', $deep_link_ids);
@@ -45,7 +43,7 @@ class DashboardController extends Controller
             }
         }
 
-        $bloggers_finish = Work::selectRaw('DATE_FORMAT(confirmed_by_seller_at, "%Y-%m-%d") as date')->where('seller_id', $user->id)->where('status', Work::COMPLETED)->whereBetween('created_at', [$start_date, $end_date])->get();
+        $bloggers_finish = Deal::selectRaw('DATE_FORMAT(confirmed_by_seller_at, "%Y-%m-%d") as date')->where('seller_id', $user->id)->where('status', Deal::COMPLETED)->whereBetween('created_at', [$start_date, $end_date])->get();
         foreach ($bloggers_finish as $blogger_finish) {
             if (isset($total_stats[$blogger_finish->date])) {
                 $total_stats[$blogger_finish->date]['bloggers'] += 1;

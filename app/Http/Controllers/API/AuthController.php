@@ -2,144 +2,47 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Models\Blogger;
-use App\Models\BloggerPlatform;
-use App\Models\Platform;
-use App\Models\Seller;
-use App\Models\SellerTariff;
-use App\Models\Tariff;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\User\StoreUserRequest;
+use App\Http\Resources\UserResource;
 use App\Models\TgPhone;
-use App\Services\TgService;
-use Carbon\Carbon;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use App\Models\User;
 use App\Services\PhoneService;
-use App\Services\ReferralService;
-use Illuminate\Validation\Rule;
+use App\Services\TgService;
+use App\Services\UserService;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
-use App\Http\Controllers\Controller;
-use App\Http\Resources\UserResource;
-use Illuminate\Support\Facades\App;
 
 class AuthController extends Controller
 {
-    public function store(Request $request)
+    public function store(StoreUserRequest $request): JsonResponse
     {
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|min:3',
-            'email' => 'required|email|unique:users,email',
-            'phone' => 'required|unique:users,phone',
-            'role' => ['required', Rule::in(User::TYPES)],
-            'password' => 'required|min:8',
-            'platforms' => 'array',
-        ]);
+        $validated = $request->validated();
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors())->setStatusCode(400);
-        }
+//        try {
+            $user = UserService::store($validated);
 
-        $validated = $validator->validated();
-        $phone = PhoneService::format($validated['phone']);
-        if (User::where('phone', $phone)->first()) {
-            return response()->json(['errors' => ['phone' => 'Аккаунт с таким номером телефона уже существует']])->setStatusCode(400);
-        }
+            $credentials = [
+                'phone' => $validated['phone'],
+                'password' => $validated['password'],
+            ];
 
-        $tg_phone = TgPhone::where('phone', $phone)->first();
-        if (!$tg_phone) {
-            return response()->json(['errors' => ['phone' => 'Необходимо подтвердить телеграм']])->setStatusCode(400);
-        }
-
-        $is_agent = 0;
-
-        if ($validated['role'] == 'agent') {
-            $validated['role'] = 'seller';
-            $is_agent = 1;
-        }
-
-        $validated['status'] = $validated['role'] == 'seller' ? 1 : 0;
-
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'phone' => $phone,
-            'tg_phone_id' => $tg_phone->id,
-            'role' => $validated['role'],
-            'status' => $validated['status'],
-            'password' => bcrypt($validated['password']),
-        ]);
-
-        if ($validated['role'] == 'seller') {
-            Seller::create([
-                'user_id' => $user->id,
-                'is_agent' => $is_agent
-            ]);
-            $tariff = Tariff::find(19);
-            SellerTariff::create([
-                'user_id' => $user->id,
-                'tariff_id' => $tariff->id,
-                'type' => $tariff->type,
-                'quantity' => $tariff->quantity,
-                'finish_date' => Carbon::now()->addDays($tariff->period),
-                'activation_date' => Carbon::now(),
-            ]);
-            $user->update(['status' => 1]);
-        } else if ($validated['role'] == 'blogger') {
-            $this->storeBlogger($user, $validated['platforms']);
-        }
-
-        if (session()->has('ref_code')) {
-            $role = $user->role;
-            if ($is_agent) {
-                $role = 'agent';
-            }
-
-            ReferralService::ref($user->id, session()->get('ref_code'), $role);
-        }
-
-        $credentials = [
-            'phone' => $phone,
-            'password' => $validated['password'],
-        ];
-
-        if (Auth::attempt($credentials)) {
-            $token = $user->createToken('Bearer');
-            $show_tariffs = false;
-            if ($user->role == 'seller') {
-                $show_tariffs = true;
-            }
-            return response()->json(['user' => $user, 'token' => $token->plainTextToken, 'show_tariffs' => $show_tariffs])->setStatusCode(200);
-        }
-
-        return response()->json(['message' => 'Неудалось авторизоваться'])->setStatusCode(400);
-    }
-
-    public function storeBlogger(User $user, array $platforms)
-    {
-        $blogger = Blogger::create([
-            'user_id' => $user->id,
-        ]);
-
-        foreach ($platforms as $blogger_platform) {
-            if (!empty($blogger_platform['link'])) {
-                $platform = Platform::where('title', $blogger_platform['name'])->first()->id;
-
-                if (!$platform) {
-                    TgService::sendMessage($user->tgPhone->chat_id, 'Платформа ' . $blogger_platform['name'] . ' не найдена');
-                    return;
+            if (Auth::attempt($credentials)) {
+                $token = $user->createToken('Bearer');
+                $show_tariffs = false;
+                if ($user->role == 'seller') {
+                    $show_tariffs = true;
                 }
-
-                BloggerPlatform::create([
-                    'blogger_id' => $blogger->id,
-                    'platform_id' => Platform::where('title', $blogger_platform['name'])->first()->id,
-                    'link' => $blogger_platform['link'],
-                ]);
+                return response()->json(['user' => $user, 'token' => $token->plainTextToken, 'show_tariffs' => $show_tariffs])->setStatusCode(200);
             }
-        }
 
-        TgService::sendModeration($user->name . ' оставил заявку на модерацию');
+            return response()->json(['message' => 'Не удалось авторизоваться'])->setStatusCode(400);
+//        } catch (\Throwable $th) {
+//            return response()->json(['message' => $th->getMessage()])->setStatusCode(400);
+//        }
     }
 
     public function setTGPhone(): JsonResponse
@@ -165,7 +68,7 @@ class AuthController extends Controller
         return response()->json('success', 200);
     }
 
-    public function isTgConfirmed()
+    public function isTgConfirmed(): JsonResponse
     {
         $validator = Validator::make(request()->all(), [
             'phone' => 'required',
@@ -186,7 +89,7 @@ class AuthController extends Controller
         return response()->json('success', 200);
     }
 
-    public function authenticate()
+    public function authenticate(): JsonResponse
     {
         $validated = request()->validate([
             'phone' => 'required',
@@ -223,16 +126,7 @@ class AuthController extends Controller
         ]])->setStatusCode(400);
     }
 
-    public function logout()
-    {
-        auth()->logout();
-        request()->session()->regenerateToken();
-        request()->session()->invalidate();
-
-        return redirect()->route('login');
-    }
-
-    public function resetPassword()
+    public function resetPassword(): JsonResponse
     {
         $validator = Validator::make(request()->all(), [
             'phone' => 'required',

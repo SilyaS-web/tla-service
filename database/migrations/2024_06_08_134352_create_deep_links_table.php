@@ -17,8 +17,8 @@ class CreateDeepLinksTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->cascadeOnDelete();
-            $table->unsignedBigInteger('work_id')->nullable();
-            $table->foreign('work_id')->references('id')->on('works')->cascadeOnDelete();
+            $table->unsignedBigInteger('deal_id')->nullable();
+            $table->foreign('deal_id')->references('id')->on('deals')->cascadeOnDelete();
             $table->string('destination', 1500);
             $table->string('link');
             $table->timestamps();

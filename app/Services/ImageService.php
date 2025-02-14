@@ -1,8 +1,7 @@
 <?php
 
 namespace App\Services;
-use Illuminate\Container\Container;
-use Illuminate\Contracts\Filesystem\Factory as FilesystemFactory;
+
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -10,7 +9,8 @@ use Intervention\Image\Facades\Image;
 
 class ImageService
 {
-    public static function makeCompressedCopiesFromFile($image, $folder = '', $format = 'webp') {
+    public static function makeCompressedCopiesFromFile($image, $folder = '', $format = 'webp'): array
+    {
         ini_set('memory_limit', '256M');
         $urls = [];
 

@@ -2,10 +2,63 @@
 
 namespace App\Models;
 
-use Carbon\Carbon;
+use Illuminate\Database\Query\Builder as QueryBuilder;
+use Illuminate\Database\Eloquent\Builder as EloquentBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
+
+/**
+ *
+ * @property int $id
+ * @property int $user_id
+ * @property int $organization_name
+ * @property string|null $organization_type
+ * @property int|null $is_achievement
+ * @property int $is_agent
+ * @property string|null $inn
+ * @property string|null $description
+ * @property string|null $finish_date
+ * @property string|null $wb_link
+ * @property string|null $wb_api_key
+ * @property string|null $ozon_link
+ * @property string|null $ozon_api_key
+ * @property string|null $ozon_client_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Deal> $deals
+ * @property-read int|null $deals_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Project> $projects
+ * @property-read int|null $projects_count
+ * @property-read \App\Models\User|null $user
+ * @method static EloquentBuilder|Seller newModelQuery()
+ * @method static EloquentBuilder|Seller newQuery()
+ * @method static EloquentBuilder|Seller onlyTrashed()
+ * @method static EloquentBuilder|Seller query()
+ * @method static EloquentBuilder|Seller whereCreatedAt($value)
+ * @method static EloquentBuilder|Seller whereDeletedAt($value)
+ * @method static EloquentBuilder|Seller whereDescription($value)
+ * @method static EloquentBuilder|Seller whereFinishDate($value)
+ * @method static EloquentBuilder|Seller whereId($value)
+ * @method static EloquentBuilder|Seller whereInn($value)
+ * @method static EloquentBuilder|Seller whereIsAchievement($value)
+ * @method static EloquentBuilder|Seller whereIsAgent($value)
+ * @method static EloquentBuilder|Seller whereOrganizationName($value)
+ * @method static EloquentBuilder|Seller whereOrganizationType($value)
+ * @method static EloquentBuilder|Seller whereOzonApiKey($value)
+ * @method static EloquentBuilder|Seller whereOzonClientId($value)
+ * @method static EloquentBuilder|Seller whereOzonLink($value)
+ * @method static EloquentBuilder|Seller whereUpdatedAt($value)
+ * @method static EloquentBuilder|Seller whereUserId($value)
+ * @method static EloquentBuilder|Seller whereWbApiKey($value)
+ * @method static EloquentBuilder|Seller whereWbLink($value)
+ * @method static EloquentBuilder|Seller withTrashed()
+ * @method static EloquentBuilder|Seller withoutTrashed()
+ * @mixin \Eloquent
+ */
 
 class Seller extends Model
 {
@@ -35,266 +88,18 @@ class Seller extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function user()
+    public function user(): HasOne
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
 
-    public function works()
+    public function deals(): HasMany
     {
-        return $this->hasMany(Work::class, 'seller_id', 'user_id');
+        return $this->hasMany(Deal::class, 'seller_id', 'id');
     }
 
-    public function sellerTariffs()
+    public function projects(): HasMany
     {
-        return $this->hasMany(SellerTariff::class, 'user_id', 'user_id');
-    }
-
-    public function projects()
-    {
-        return $this->hasMany(Project::class, 'seller_id', 'user_id');
-    }
-
-    public function getNMfromWB()
-    {
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://suppliers-api.wildberries.ru/content/v2/get/cards/list?locale=ru',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => '{
-                "settings": {
-                    "filter": {
-                     "withPhoto": -1
-                    },
-                    "cursor": {
-                    "limit": 100
-                    }
-                }
-            }',
-            CURLOPT_HTTPHEADER => array(
-                'Content-Type: application/json',
-                'Accept: application/json',
-                'Authorization: ' . $this->wb_api_key,
-            ),
-        ));
-
-        $response = curl_exec($curl);
-
-        $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        curl_close($curl);
-        if (200 != $http_code) {
-            return 0;
-        }
-
-        $nm = [];
-        $result = json_decode($response);
-        foreach ($result as $product_card) {
-            $nm[] = $product_card->nmID;
-        }
-        return $nm;
-    }
-
-    public function getNMStatWB($nm)
-    {
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://feedbacks-api.wildberries.ru/api/v1/feedbacks/products/rating/nmid?nmId=' . $nm,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                'Accept: application/json',
-                'Authorization: ' . $this->wb_api_key,
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        curl_close($curl);
-        if (200 != $http_code) {
-            return [];
-        }
-
-        $result = json_decode($response);
-        $valuation = $result->data->valuation ?? 0;
-        $feedbacksCount = $result->data->feedbacksCount ?? 0;
-
-        return ['valuation' => $valuation, 'feedbacksCount' => $feedbacksCount];
-    }
-
-    public function getCountUnansweredWB()
-    {
-
-        if (empty($this->wb_api_key)) {
-            return 0;
-        }
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, array(
-            CURLOPT_URL => 'https://feedbacks-api.wildberries.ru/api/v1/feedbacks/count-unanswered',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'GET',
-            CURLOPT_HTTPHEADER => array(
-                'Accept: application/json',
-                'Authorization: ' . $this->wb_api_key,
-            ),
-        ));
-
-        $response = curl_exec($curl);
-        $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        curl_close($curl);
-        if (200 != $http_code) {
-            return 0;
-        }
-
-        $result = json_decode($response);
-        $countUnanswered = $result->data->countUnanswered;
-
-        return $countUnanswered;
-    }
-
-    public function getWBFeedbackStats()
-    {
-        if (empty($this->wb_api_key)) {
-            return ['total' => 0, 'avg' => 0, 'low' => [], 'mid' => [], 'hig' => [], 'pr_low' => [], 'pr_mid' => [], 'percent' => 0];
-        }
-
-        $total = 0;
-        $avg = 0;
-        $low = [];
-        $mid = [];
-        $hig = [];
-        $pr_low = [];
-        $pr_mid = [];
-        $total_valuation = 0;
-        $products_feedbacks = [];
-        $percent = 0;
-        $feedbacks = $this->curlWBFeedbacks();
-
-        if (empty($feedbacks)) {
-            return ['total' => 0, 'avg' => 0, 'low' => [], 'mid' => [], 'hig' => [], 'pr_low' => [], 'pr_mid' => [], 'percent' => 0];
-        }
-
-        foreach ($feedbacks as $feedback) {
-            $total += 1;
-            $productValuation = $feedback->productValuation;
-            $total_valuation += $productValuation;
-
-            $products_feedbacks[$feedback->productDetails->nmId]['count'] = ($products_feedbacks[$feedback->productDetails->nmId]['count'] ?? 0) + 1;
-            $products_feedbacks[$feedback->productDetails->nmId]['valution_sum'] = ($products_feedbacks[$feedback->productDetails->nmId]['valution_sum'] ?? 0) + $productValuation;
-        }
-
-        foreach ($products_feedbacks as $id => $feedback_stat) {
-            if ($feedback_stat['count'] < 25) {
-                $pr_low[] = $id;
-            } else if ($feedback_stat['count'] < 50) {
-                $pr_mid[] = $id;
-            }
-
-            $product_avg_valution = $feedback_stat['valution_sum'] / ($feedback_stat['count'] == 0 ? 1 : $feedback_stat['count']);
-            if ($product_avg_valution < 4.2) {
-                $low[] = $id;
-            } else if ($product_avg_valution < 4.5) {
-                $mid[] = $id;
-            } else {
-                $hig[] = $id;
-            }
-        }
-
-        $avg = $total > 0 ? $total_valuation / $total : 0;
-
-        if ($avg <= 4.5) {
-            $percent = 11.1 * $avg;
-        } else if ($avg <= 4.7) {
-            $percent = 15.9 * $avg;
-        } else if ($avg <= 4.85) {
-            $percent = 18 * $avg;
-        } else if ($avg <= 4.92) {
-            $percent = 19 * $avg;
-        } else {
-            $percent = 20 * $avg;
-        }
-
-        return [
-            'total' => $total,
-            'avg' => $avg,
-            'low' => $low,
-            'mid' => $mid,
-            'hig' => $hig,
-            'pr_low' => $pr_low,
-            'pr_mid' => $pr_mid,
-            'percent' => $percent,
-        ];
-    }
-
-    public function curlWBFeedbacks()
-    {
-        $take = 5000;
-        $skip = 0;
-        $is_answered = 'true';
-        $feedbacks = [];
-        $next = true;
-        do {
-            usleep(1100);
-            $curl = curl_init();
-            $url = "https://feedbacks-api.wildberries.ru/api/v1/feedbacks?isAnswered=" . $is_answered . "&take=" . $take. "&skip=" . $skip;
-            curl_setopt_array($curl, array(
-                CURLOPT_URL => $url,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 0,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => 'GET',
-                CURLOPT_HTTPHEADER => array(
-                    'Accept: application/json',
-                    'Authorization: ' . $this->wb_api_key,
-                ),
-            ));
-
-            $response = curl_exec($curl);
-            $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-            curl_close($curl);
-            $skip += 5000;
-            if ($http_code == 200) {
-                $result = json_decode($response);
-                $new_feedbacks = $result->data->feedbacks;
-
-                if (count($new_feedbacks) > 0) {
-                    $feedbacks = array_merge($feedbacks, $new_feedbacks);
-                } else {
-                    if ($is_answered == 'true') {
-                        $is_answered = 'false';
-                        $skip = 0;
-                    } else {
-                        $next = false;
-                    }
-                }
-            } else {
-                $next = false;
-            }
-        } while ($next);
-
-        return $feedbacks;
+        return $this->hasMany(Project::class, 'seller_id', 'id');
     }
 }

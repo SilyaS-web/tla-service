@@ -6,6 +6,7 @@ use App\Models\Seller;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\SellerResource;
 use App\Services\ImageService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 class SellerController extends Controller
 {
 
-    public function index(Request $request)
+    public function index(): JsonResponse
     {
         $sellers = Seller::with('user')->get();
         $data = [
@@ -23,15 +24,16 @@ class SellerController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function show(Seller $seller) {
+    public function show(Seller $seller): JsonResponse
+    {
         $data = [
             'seller' => new SellerResource($seller),
         ];
 
-        return  response()->json($data)->setStatusCode(200);
+        return response()->json($data)->setStatusCode(200);
     }
 
-    public function update(Seller $seller, Request $request)
+    public function update(Seller $seller, Request $request): JsonResponse
     {
         $validator = Validator::make(request()->all(), [
             'name' => 'required|min:3',
@@ -50,7 +52,7 @@ class SellerController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return  response()->json($validator->errors())->setStatusCode(400);
+            return response()->json($validator->errors())->setStatusCode(400);
         }
 
         $validated = $validator->validated();
@@ -81,7 +83,7 @@ class SellerController extends Controller
             }
 
             $seller_image = $request->file('image');
-            $urls = ImageService::makeCompressedCopies($seller_image, 'profile/'.$user->id.'/');
+            $urls = ImageService::makeCompressedCopies($seller_image, 'profile/' . $user->id . '/');
 
             $user->image = $urls[1];
         }
@@ -98,17 +100,6 @@ class SellerController extends Controller
             'organization_name' => $validated['organization_name'] ?? null,
         ]);
 
-        return  response()->json(isset($image_path) ? ['image' => 'storage/' . $image_path] : '')->setStatusCode(200);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Blogger  $blogger
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Seller $blogger)
-    {
-        //
+        return response()->json(isset($image_path) ? ['image' => 'storage/' . $image_path] : '')->setStatusCode(200);
     }
 }

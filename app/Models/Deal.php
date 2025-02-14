@@ -3,10 +3,28 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
-class Work extends Model
+/**
+ * 
+ *
+ * @property-read \App\Models\Blogger|null $blogger
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Message> $messages
+ * @property-read int|null $messages_count
+ * @property-read \App\Models\Project|null $project
+ * @property-read \App\Models\Seller|null $seller
+ * @method static \Illuminate\Database\Eloquent\Builder|Deal newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deal newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deal onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deal query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deal withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Deal withoutTrashed()
+ * @mixin \Eloquent
+ */
+class Deal extends Model
 {
     use HasFactory, SoftDeletes;
 
@@ -51,102 +69,55 @@ class Work extends Model
         'updated_at' => 'datetime',
     ];
 
-    public function blogger()
+    public function blogger(): HasOne
     {
-        return $this->hasOne(Blogger::class, 'user_id', 'blogger_id');
+        return $this->hasOne(Blogger::class, 'id', 'blogger_id');
     }
 
-    public function seller()
+    public function seller(): HasOne
     {
-        return $this->hasOne(Seller::class, 'user_id', 'seller_id');
+        return $this->hasOne(Seller::class, 'id', 'seller_id');
     }
 
-    public function project()
+    public function project(): HasOne
     {
         return $this->hasOne(Project::class, 'id', 'project_id');
     }
 
-    public function messages()
+    public function messages(): HasMany
     {
         return $this->hasMany(Message::class, 'work_id', 'id');
     }
 
-    public function projectWork()
-    {
-        return $this->hasOne(ProjectWork::class, 'id', 'project_work_id');
-    }
-
-    public function finishStats()
-    {
-        return $this->hasOne(FinishStats::class, 'work_id', 'id');
-    }
-
-    public function deepLink()
-    {
-        return $this->hasOne(DeepLink::class, 'work_id', 'id');
-    }
-
-    public function getPartnerUser($role)
+    public function getPartnerUser($role): User|null
     {
         if ($role == 'seller') {
-            return $this->blogger->user;
+            return $this->blogger->user ?? null;
         } else {
-            return $this->seller->user;
+            return $this->seller->user ?? null;
         }
     }
 
-    public function accept($user)
+    public function accept($user): void
     {
         $param = 'accepted_by_' . $user->role . '_at';
         $this->$param = date('Y-m-d H:i');
         $this->save();
     }
 
-    public function confirm($user)
+    public function confirm($user): void
     {
         $param = 'confirmed_by_' . $user->role . '_at';
         $this->$param = date('Y-m-d H:i');
         $this->save();
     }
 
-    public function isBothAccepted()
+    public function isBothAccepted(): bool
     {
         return !empty($this->accepted_by_seller_at) && !empty($this->accepted_by_blogger_at);
     }
 
-    public function isAcceptedByUser($user)
-    {
-        $param = 'accepted_by_' . $user->role . '_at';
-        if ($this->$param) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function isConfirmedByUser($user)
-    {
-        $param = 'confirmed_by_' . $user->role . '_at';
-        if ($this->$param) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public function getTotlaClicks()
-    {
-        $total_clicks = 0;
-
-        $deepLink = $this->deepLink;
-        if ($deepLink) {
-            $total_clicks = $deepLink->getClicksCount();
-        }
-
-        return $total_clicks;
-    }
-
-    public function getStatus()
+    public function getStatus(): string
     {
         switch ($this->status) {
             case self::COMPLETED:

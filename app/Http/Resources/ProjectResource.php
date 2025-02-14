@@ -3,7 +3,7 @@
 namespace App\Http\Resources;
 
 use App\Models\Project;
-use App\Models\Work;
+use App\Models\Deal;
 use App\Services\WbService;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -14,7 +14,7 @@ class ProjectResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         $statCount = WbService::getFeedbackCounters($this->product_nm);
         $clicks_count = $this->getClicksCount();
@@ -56,7 +56,7 @@ class ProjectResource extends JsonResource
             'created_at' => isset($this->created_at) ? $this->created_at->format('d.m.Y') : null,
             'works_count' => $this->works()->count(),
             'is_blogger_works' => $this->when($request->user()->role == 'blogger', function () use ($request) {
-                return Work::withTrashed()->where('blogger_id', $request->user()->id)->where('project_id', $this->id)->first() ? true : false;
+                return Deal::withTrashed()->where('blogger_id', $request->user()->id)->where('project_id', $this->id)->first() ? true : false;
             }),
         ];
     }

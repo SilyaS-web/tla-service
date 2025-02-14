@@ -18,8 +18,9 @@ use App\Models\Message;
 use App\Models\MessageFile;
 use App\Models\Notification;
 use App\Models\Project;
-use App\Models\Work;
+use App\Models\Deal;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Validation\Rule;
@@ -29,7 +30,7 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
-    public function currentUser()
+    public function currentUser(): JsonResponse
     {
         $user = Auth::user();
         if ($user->role == 'seller' && $user->status == 1) {
@@ -56,7 +57,7 @@ class UserController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-     public function show(User $user)
+     public function show(User $user): JsonResponse
     {
         $data = [
             'user' => new UserResource($user),
@@ -65,7 +66,7 @@ class UserController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function ban(User $user)
+    public function ban(User $user): JsonResponse
     {
         if ($user->status == 0 && $user->role == User::BLOGGER) {
             TgService::sendMessage($user->tgPhone->chat_id, "Ваша заявка на регистрацию была отклонена модератором.
@@ -87,7 +88,7 @@ class UserController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function unban(User $user)
+    public function unban(User $user): JsonResponse
     {
         $user->status = 1;
         $user->save();
@@ -96,7 +97,7 @@ class UserController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function delete(User $user)
+    public function delete(User $user): JsonResponse
     {
         $log_message = 'Удалён пользователь ' . $user->name . ', роль ' . $user->role . ', телефон' . $user->phone . ', email' . $user->email;
         DbLog::create(['text' => $log_message]);
@@ -105,7 +106,7 @@ class UserController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function projects(User $user)
+    public function projects(User $user): JsonResponse
     {
         $validator = Validator::make(request()->all(), [
             'project_type' => [Rule::in(Project::TYPES)],
@@ -146,7 +147,7 @@ class UserController extends Controller
         }
 
         if (!empty($validated['work_statuses'])) {
-            $projects->whereHas('works', function (Builder $query) use ($validated) {
+            $projects->whereHas('deals', function (Builder $query) use ($validated) {
                 $query->whereIn('status', $validated['work_statuses']);
             });
         }
@@ -172,7 +173,7 @@ class UserController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function works(User $user, Request $request)
+    public function works(User $user, Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'created_by' => 'numeric|nullable',
@@ -236,13 +237,13 @@ class UserController extends Controller
         }
 
         $data = [
-            'works' => WorkResource::collection($works->get()),
+            'deals' => WorkResource::collection($works->get()),
         ];
 
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function messages(User $user, Work $work, Request $request)
+    public function messages(User $user, Deal $work, Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'order_by' => 'string|nullable'
@@ -256,7 +257,7 @@ class UserController extends Controller
 
         $messages = $work->messages();
 
-        if (isset($validated['order_by']) && !empty($validated['order_by'])) {
+        if (!empty($validated['order_by'])) {
             $messages->orderBy('created_at', $validated['order_by']);
         }
 
@@ -269,7 +270,7 @@ class UserController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function notifications(User $user, Request $request)
+    public function notifications(User $user, Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'order_by' => 'string|nullable',
@@ -306,7 +307,7 @@ class UserController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function viewNotification(User $user, Notification $notification = null)
+    public function viewNotification(User $user, Notification $notification = null): JsonResponse
     {
         if ($notification) {
             $notification->viewed_at = date('Y-m-d H:i');
@@ -320,7 +321,7 @@ class UserController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function brands(User $user)
+    public function brands(User $user): JsonResponse
     {
         if ($user->role != 'seller') {
             return response()->json(['message' => 'У пользователя должна быть роль селлер'])->setStatusCode(400);
@@ -335,7 +336,7 @@ class UserController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function storeMessage(User $user, Work $work, Request $request)
+    public function storeMessage(User $user, Deal $work, Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'message' => 'string|nullable',
@@ -345,14 +346,6 @@ class UserController extends Controller
         if ($validator->fails()) {
             return response()->json($validator->errors())->setStatusCode(400);
         }
-
-        // if (!isset($work->project)) {
-        //     return response()->json(['message' => ['Проект удалён']], 400);
-        // }
-
-        // if ($work->status === Work::COMPLETED) {
-        //     return response()->json(['message' => ['Проект завершён']], 400);
-        // }
 
         $validated = $validator->validated();
 
@@ -392,7 +385,7 @@ class UserController extends Controller
         return response()->json()->setStatusCode(200);
     }
 
-    public function sendFeedback()
+    public function sendFeedback(): JsonResponse
     {
         $validator = Validator::make(request()->all(), [
             'phone' => 'string|required',
@@ -406,11 +399,11 @@ class UserController extends Controller
 
         $validated = $validator->validated();
         $message_text = "Форма обратной связи\n\nИмя: " . $validated['name'] . "\nТелефон: " . $validated['phone'] . "\nСообщение: " . $validated['comment'];
-        $result = TgService::sendForm($message_text);
+        TgService::sendForm($message_text);
         return response()->json()->setStatusCode(200);
     }
 
-    public function showModal(User $user, Modal $modal)
+    public function showModal(User $user, Modal $modal): JsonResponse
     {
         Redis::sadd('user.'. $user->id . '.modals', $modal->id);
         return response()->json()->setStatusCode(200);

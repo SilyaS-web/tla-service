@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Resources\BloggerContentResource;
-use App\Http\Resources\UserResource;
 use App\Models\Blogger;
 use App\Models\BloggerContent;
 use App\Models\BloggerPlatform;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BloggerResource;
 use App\Models\BloggerTheme;
-use App\Models\ProjectFile;
 use App\Services\ImageService;
 use App\Services\TgService;
 use App\Services\VideoService;
@@ -22,12 +20,10 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use const http\Client\Curl\AUTH_ANY;
 
 class BloggerController extends Controller
 {
-
-    public function index(Request $request)
+    public function index(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'name' => 'string|nullable',
@@ -126,7 +122,7 @@ class BloggerController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function store(Request $request)
+    public function store(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'description' => 'string|nullable',
@@ -139,7 +135,7 @@ class BloggerController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
+            return response()->json($validator->errors(), 400);
         }
 
         $user = Auth::user();
@@ -199,7 +195,7 @@ class BloggerController extends Controller
         return response()->json([])->setStatusCode(200);
     }
 
-    public function show(Blogger $blogger)
+    public function show(Blogger $blogger): JsonResponse
     {
         $data = [
             'blogger' => new BloggerResource($blogger),
@@ -209,7 +205,7 @@ class BloggerController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-    public function accept(Blogger $blogger, Request $request)
+    public function accept(Blogger $blogger, Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'is_achievement' => 'boolean|nullable',
@@ -294,7 +290,7 @@ class BloggerController extends Controller
         return response()->json('success', 200);
     }
 
-    public function update(Blogger $blogger, Request $request)
+    public function update(Blogger $blogger, Request $request): JsonResponse
     {
         $validator = Validator::make(request()->all(), [
             'name' => 'required|min:3',

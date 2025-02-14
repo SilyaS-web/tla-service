@@ -22,6 +22,7 @@ class CreatePaymentsTable extends Migration
             $table->foreign('tariff_id')->references('id')->on('tariffs')->cascadeOnDelete();
             $table->double('price');
             $table->string('status')->nullable();
+            $table->integer('quantity')->nullable();
             $table->timestamps();
         });
     }
