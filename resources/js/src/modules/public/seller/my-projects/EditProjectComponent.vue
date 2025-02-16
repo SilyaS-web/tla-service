@@ -51,6 +51,7 @@
                         <UploadFilesBlock
                             v-model="projectFiles"
                             :label="'Загрузите изображения товара'"
+                            :files="project.project_files"
                             :error="errors.images"
                         ></UploadFilesBlock>
                     </div>
@@ -81,17 +82,13 @@ export default{
     data(){
         return {
             errors: ref({}),
-            projectFiles: ref({}),
+            projectFiles: ref([]),
             Project
         }
     },
     mounted(){
-        this.projectFiles = this.project.project_files;
     },
     updated(){
-        if(this.projectFiles.find(f => f.link === "uploading")){
-            $(`.upload-files__item input[data-id=${this.projectFiles.length - 1}]`).click();
-        }
     },
     methods:{
         modifyProject(){
@@ -143,18 +140,6 @@ export default{
         },
         resetEditData(){
             this.$emit('resetEditData')
-        },
-        deleteFile(file){
-            this.projectFiles = this.projectFiles.filter(_f => _f.link != file.link);
-        },
-        triggerUpload(){
-            this.projectFiles.push({link: 'uploading', isUploaded: true});
-        },
-        uploadFile(event){
-            var file = $(event.target)[0].files[0];
-
-            this.projectFiles[this.projectFiles.length - 1].link = file.name;
-            this.projectFiles[this.projectFiles.length - 1].file = file;
         },
     }
 }

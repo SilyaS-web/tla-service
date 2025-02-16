@@ -31,13 +31,18 @@ import {ref} from "vue"
 
 export default {
     name: "PlusFilesUploadBlockComponent",
-    props:['label', 'files', 'error'],
+    props:{
+        label:{type: String, required: true},
+        files:{type:Array, required: false, default: []},
+        error:{type: [String, Array], required: false, default: ""}
+    },
     data(){
         return {
             uploadFiles: ref([])
         }
     },
-    beforeMount(){
+    mounted(){
+        this.uploadFiles = this.files
     },
     updated(){
         if(this.uploadFiles.find(f => f.link === "uploading")){

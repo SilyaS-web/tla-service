@@ -61,6 +61,7 @@
     </div>
     <Footer></Footer>
     <DistributionPopup ref="distributionPopup"></DistributionPopup>
+    <DistributionTable></DistributionTable>
 </template>
 <script>
 import {ref} from 'vue'
@@ -84,12 +85,14 @@ import Header from '../../../core/components/layout/AppHeader'
 import Footer from '../../../core/components/layout/AppFooter'
 import Tariffs from './tariffs/index'
 import DistributionPopup from '../../../core/components/popups/seller-mass-distribution/SellerMassDistribution.vue'
+import DistributionTable from './components/bloggers-distribution-board/index.vue'
 import Partners from './partners/index'
 
 export default{
     components: {
         Aside, CreateProject, ProjectsList,
-        MyProjectsList, BloggersList, Chat, Header, Footer, Tariffs, Partners, DistributionPopup
+        MyProjectsList, BloggersList, Chat, Header, Footer,
+        Tariffs, Partners, DistributionPopup, DistributionTable
     },
     data(){
         return {

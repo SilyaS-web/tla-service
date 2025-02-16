@@ -32,6 +32,17 @@
                 class="btn btn-secondary">
                 Подробнее
             </button>
+            <div class="checkbox">
+                <input
+                    @change="toggleBloggerInMassDestributionList"
+                    :id="'checkbox-blogger-card-' + blogger.id"
+                    class="checkbox__checkbox" type="checkbox" name="">
+
+                <label
+                    :for="'checkbox-blogger-card-' + blogger.id"
+                    class="">
+                </label>
+            </div>
         </div>
     </BloggerCard>
     <BloggerCardPopup ref="bloggerCardPopup"></BloggerCardPopup>
@@ -104,7 +115,41 @@ export default{
 
                 this.sendOfferToBlogger()
             })
+        },
+
+        toggleBloggerInMassDestributionList(){
+            let bloggersList = localStorage.getItem('massDistributionList') ?
+                JSON.parse(localStorage.getItem('massDistributionList'))
+                : [];
+
+            if(bloggersList.find(_blogger => _blogger.id === this.blogger.id)){
+                bloggersList = bloggersList.filter(_blogger => _blogger.id !== this.blogger.id)
+            }
+            else{
+                bloggersList.push(this.blogger)
+            }
+
+            localStorage.setItem('massDistributionList', JSON.stringify(bloggersList))
+            window.dispatchEvent(new CustomEvent('massDistributionListChanged', {
+                detail: {
+                    storage: bloggersList
+                }
+            }));
         }
     }
 }
 </script>
+<style scoped>
+    .checkbox{
+        display: flex;
+    }
+    .checkbox__checkbox + label:before{
+        width: 30px;
+        height: 30px;
+        border: 1px solid rgba(0, 0, 0, .4);
+    }
+    .checkbox__checkbox:checked + label::before{
+        filter: invert(45%) sepia(40%) saturate(6353%) hue-rotate(259deg) brightness(91%) contrast(87%);
+        background-size: 20px;
+    }
+</style>

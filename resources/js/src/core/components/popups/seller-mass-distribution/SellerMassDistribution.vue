@@ -13,77 +13,79 @@
                     <div class="popup-distribution__title">
                         Список блогеров
                     </div>
-                    <div class="distribution-bloggers__items _scrollable">
-                        <div
-                            v-for="blogger in bloggers"
-                            class="distribution-bloggers__item">
+                    <div class="distribution-bloggers__content _scrollable">
+                        <div class="distribution-bloggers__items">
                             <div
-                                @click="openBloggerCard($event)"
-                                class="distribution-bloggers__item-header">
-                                <div class="distribution-bloggers__image">
-                                    <img
-                                        :src="(!blogger.user.image ? '/img/placeholder.webp' : blogger.user.image)"
-                                        alt="">
-                                </div>
-                                <div class="distribution-bloggers__info">
-                                    <div class="distribution-bloggers__name">
-                                        {{ blogger.user.name }}
+                                v-for="blogger in bloggers"
+                                class="distribution-bloggers__item">
+                                <div
+                                    @click="openBloggerCard($event)"
+                                    class="distribution-bloggers__item-header">
+                                    <div class="distribution-bloggers__image">
+                                        <img
+                                            :src="(!blogger.user.image ? '/img/placeholder.webp' : blogger.user.image)"
+                                            alt="">
                                     </div>
-                                    <div class="distribution-bloggers__status">
-                                        Блогер
+                                    <div class="distribution-bloggers__info">
+                                        <div class="distribution-bloggers__name">
+                                            {{ blogger.user.name }}
+                                        </div>
+                                        <div class="distribution-bloggers__status">
+                                            Блогер
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="distribution-bloggers__item-body">
-                                <div class="distribution-bloggers__platforms">
-                                    <div class="card__col card__stats">
-                                        <div class="card__col card__stats-stats">
-                                            <div class="card__row card__stats-row">
+                                <div class="distribution-bloggers__item-body">
+                                    <div class="distribution-bloggers__platforms">
+                                        <div class="card__col card__stats">
+                                            <div class="card__col card__stats-stats">
+                                                <div class="card__row card__stats-row">
 
-                                                <div class="card__col card__stats-item">
-                                                    <div class="card__stats-title">
-                                                        <span>Подписчики</span>
+                                                    <div class="card__col card__stats-item">
+                                                        <div class="card__stats-title">
+                                                            <span>Подписчики</span>
+                                                        </div>
+                                                        <div class="card__stats-val" v-bind:title="blogger.summaryPlatform.subscriber_quantity">
+                                                            <span>{{ blogger.summaryPlatform.subscriber_quantity }}</span>
+                                                        </div>
                                                     </div>
-                                                    <div class="card__stats-val" v-bind:title="blogger.summaryPlatform.subscriber_quantity">
-                                                        <span>{{ blogger.summaryPlatform.subscriber_quantity }}</span>
+                                                    <div class="card__col card__stats-item">
+                                                        <div class="card__stats-title">
+                                                            <span>Охваты</span>
+                                                        </div>
+                                                        <div class="card__stats-val" v-bind:title="blogger.summaryPlatform.coverage">
+                                                            <span>{{ blogger.summaryPlatform.coverage }}</span>
+                                                        </div>
                                                     </div>
                                                 </div>
-                                                <div class="card__col card__stats-item">
-                                                    <div class="card__stats-title">
-                                                        <span>Охваты</span>
-                                                    </div>
-                                                    <div class="card__stats-val" v-bind:title="blogger.summaryPlatform.coverage">
-                                                        <span>{{ blogger.summaryPlatform.coverage }}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="card__row card__stats-row">
+                                                <div class="card__row card__stats-row">
 
-                                                <div class="card__col card__stats-item">
-                                                    <div class="card__stats-title">
-                                                        <span>ER %</span>
+                                                    <div class="card__col card__stats-item">
+                                                        <div class="card__stats-title">
+                                                            <span>ER %</span>
+                                                        </div>
+                                                        <div class="card__stats-val">
+                                                            <span>{{ countER(blogger.summaryPlatform.subscriber_quantity, blogger.summaryPlatform.coverage) }}</span>
+                                                        </div>
                                                     </div>
-                                                    <div class="card__stats-val">
-                                                        <span>{{ countER(blogger.summaryPlatform.subscriber_quantity, blogger.summaryPlatform.coverage) }}</span>
-                                                    </div>
-                                                </div>
-                                                <div class="card__col card__stats-item">
-                                                    <div class="card__stats-title">
-                                                        <span>CPM</span>
-                                                    </div>
-                                                    <div class="card__stats-val">
-                                                        <span>{{ countCPM(blogger.summaryPlatform.coverage) || '-' }}₽</span>
+                                                    <div class="card__col card__stats-item">
+                                                        <div class="card__stats-title">
+                                                            <span>CPM</span>
+                                                        </div>
+                                                        <div class="card__stats-val">
+                                                            <span>{{ countCPM(blogger.summaryPlatform.coverage) || '-' }}₽</span>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="distribution-bloggers__item-footer">
-                                <div
-                                    @click="popBloggerFromList(blogger)"
-                                    class="btn btn-secondary">Убрать из списка</div>
+                                <div class="distribution-bloggers__item-footer">
+                                    <div
+                                        @click="popBloggerFromList(blogger)"
+                                        class="btn btn-secondary">Убрать из списка</div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -144,191 +146,7 @@ export default {
             okButton: 'Подтвердить',
             cancelButton: 'Отмена',
 
-            bloggers: ref([
-                {
-                    "id": 109,
-                    "name": null,
-                    "description": "Лайстайл блог о семье, детях. Ремонт и обустройство дома и быта.",
-                    "sex": "female",
-                    "is_achievement": true,
-                    "gender_ratio": 50,
-                    "status": null,
-                    "city": "1",
-                    "country": {
-                        "id": 1,
-                        "name": "Российская Федерация",
-                        "created_at": null,
-                        "updated_at": null
-                    },
-                    "summaryPlatform": {
-                        "platform_id": 3,
-                        "subscriber_quantity": 32900,
-                        "coverage": 18000,
-                        "additional_coverage": null,
-                        "link": "https://instagram.com/mom.nicole_",
-                        "engagement_rate": 54.71,
-                        "additional_engagement_rate": null,
-                        "cost_per_mille": null,
-                        "image": "img/inst-icon.svg",
-                        "title": "Instagram"
-                    },
-                    "content": [],
-                    "themes": [
-                        {
-                            "theme_id": 4,
-                            "name": "Дети, семья и отношения"
-                        },
-                        {
-                            "theme_id": 5,
-                            "name": "Дом, сад и огород"
-                        },
-                        {
-                            "theme_id": 7,
-                            "name": "Дизайн интерьера, ремонт"
-                        }
-                    ],
-                    "user": {
-                        "id": 184,
-                        "name": "Екатерина",
-                        "email": "f_katherina80@mail.ru",
-                        "phone": "+79539538633",
-                        "image": "http://localhost/storage/profile/iijulv25MZQIMIIBxH7AgIUIquvlzKHfe2W9jkKT.jpg",
-                        "status": 1,
-                        "role": "blogger",
-                        "seller_id": false,
-                        "blogger_id": 109,
-                        "is_blogger_on_moderation": false,
-                        "organization_name": false,
-                        "channel_name": "Екатерина",
-                        "created_at": "11.09.2024 00:15",
-                        "tariffs": [],
-                        "is_admin": false,
-                        "modals": []
-                    }
-                },
-                {
-                    "id": 107,
-                    "name": null,
-                    "description": "Блог о моделинге, Краснодарском крае, распаковки",
-                    "sex": "female",
-                    "is_achievement": true,
-                    "gender_ratio": 50,
-                    "status": null,
-                    "city": "1",
-                    "country": {
-                        "id": 1,
-                        "name": "Российская Федерация",
-                        "created_at": null,
-                        "updated_at": null
-                    },
-                    "summaryPlatform": {
-                        "platform_id": 3,
-                        "subscriber_quantity": 32900,
-                        "coverage": 18000,
-                        "additional_coverage": null,
-                        "link": "https://instagram.com/mom.nicole_",
-                        "engagement_rate": 54.71,
-                        "additional_engagement_rate": null,
-                        "cost_per_mille": null,
-                        "image": "img/inst-icon.svg",
-                        "title": "Instagram"
-                    },
-                    "content": [],
-                    "themes": [
-                        {
-                            "theme_id": 16,
-                            "name": "Красота и косметика"
-                        },
-                        {
-                            "theme_id": 17,
-                            "name": "Лайфстайл"
-                        },
-                        {
-                            "theme_id": 19,
-                            "name": "Мода и шопинг"
-                        }
-                    ],
-                    "user": {
-                        "id": 174,
-                        "name": "Анна",
-                        "email": "mmll@yandex.ru",
-                        "phone": "+79183109611",
-                        "image": "http://localhost/storage/profile/QOBOwPE1yr0spIDljEZgpbzV4UC0qKndFLi4vdit.jpg",
-                        "status": 1,
-                        "role": "blogger",
-                        "seller_id": false,
-                        "blogger_id": 107,
-                        "is_blogger_on_moderation": false,
-                        "organization_name": false,
-                        "channel_name": "Анна",
-                        "created_at": "06.09.2024 07:43",
-                        "tariffs": [],
-                        "is_admin": false,
-                        "modals": []
-                    }
-                },
-                {
-                    "id": 103,
-                    "name": null,
-                    "description": "Лайфстайл, ремонт , рецепты, обзоры",
-                    "sex": "female",
-                    "is_achievement": true,
-                    "gender_ratio": 50,
-                    "status": null,
-                    "city": "1",
-                    "country": {
-                        "id": 1,
-                        "name": "Российская Федерация",
-                        "created_at": null,
-                        "updated_at": null
-                    },
-                    "summaryPlatform": {
-                        "platform_id": 3,
-                        "subscriber_quantity": 32900,
-                        "coverage": 18000,
-                        "additional_coverage": null,
-                        "link": "https://instagram.com/mom.nicole_",
-                        "engagement_rate": 54.71,
-                        "additional_engagement_rate": null,
-                        "cost_per_mille": null,
-                        "image": "img/inst-icon.svg",
-                        "title": "Instagram"
-                    },
-                    "content": [],
-                    "themes": [
-                        {
-                            "theme_id": 4,
-                            "name": "Дети, семья и отношения"
-                        },
-                        {
-                            "theme_id": 7,
-                            "name": "Дизайн интерьера, ремонт"
-                        },
-                        {
-                            "theme_id": 17,
-                            "name": "Лайфстайл"
-                        }
-                    ],
-                    "user": {
-                        "id": 167,
-                        "name": "Алла",
-                        "email": "Alla5555@mail.ru",
-                        "phone": "+79094447764",
-                        "image": "http://localhost/storage/profile/UmYN9IS2MrPfMUYMefV13PHHSkCmlFa2P2Yhz9Hr.jpg",
-                        "status": 1,
-                        "role": "blogger",
-                        "seller_id": false,
-                        "blogger_id": 103,
-                        "is_blogger_on_moderation": false,
-                        "organization_name": false,
-                        "channel_name": "Алла",
-                        "created_at": "02.09.2024 20:28",
-                        "tariffs": [],
-                        "is_admin": false,
-                        "modals": []
-                    }
-                }
-            ]),
+            bloggers: ref([]),
 
             distributionInfo:ref({
                 text:"",
@@ -351,6 +169,10 @@ export default {
                 this.cancelButton = opts.cancelButton
             }
 
+            this.bloggers = localStorage.getItem('massDistributionList') ?
+                JSON.parse(localStorage.getItem('massDistributionList'))
+                : [];
+
             this.$refs.popup.open()
 
             return new Promise((resolve, reject) => {
@@ -369,7 +191,9 @@ export default {
             this.resolvePromise(false)
         },
 
-        popBloggerFromList(){  },
+        popBloggerFromList(blogger){
+            this.bloggers = this.bloggers.filter(_blogger => _blogger.id !== blogger.id)
+        },
 
         openBloggerCard(event){
             $(event.target).closest('.distribution-bloggers__item').toggleClass('opened')
@@ -400,12 +224,15 @@ export default {
         font-weight: 600;
         margin-bottom: 18px;
     }
+    .distribution-bloggers__content{
+        height: 366px;
+        overflow-y: scroll;
+    }
     .distribution-bloggers__items{
+        height: fit-content;
         display: flex;
         flex-direction: column;
         gap: 8px;
-        height: 366px;
-        overflow: scroll;
     }
     .distribution-bloggers__item{
         width: 100%;
@@ -414,8 +241,8 @@ export default {
         display: flex;
         flex-direction: column;
         gap: 6px;
-        padding: 12px 12px 20px 12px;
-        height:80px;
+        padding: 12px 12px 12px 12px;
+        height: 94px;
         overflow: hidden;
         transition: all .1s linear;
     }
@@ -447,13 +274,19 @@ export default {
         margin-bottom:18px;
     }
     .distribution-bloggers__image{
-        width: 80px;
-        height: 80px;
+        width: 70px;
+        height: 70px;
         border-radius: 8px;
         overflow: hidden;
+        position: relative;
     }
     .distribution-bloggers__image img{
         object-fit: cover;
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
+        height: 100%;
     }
     .distribution-bloggers__info{
         display: flex;
