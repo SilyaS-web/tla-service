@@ -3,6 +3,7 @@
     import { useRouter } from 'vue-router'
 
     const User = {
+        // need refactor
         getCurrent: () => {
             let user = localStorage.getItem('user');
 
@@ -48,6 +49,8 @@
                 })
             })
         },
+
+        //auth methods
         auth: (data) => {
             return new Promise((resolve, reject) => {
                 axios({
@@ -83,7 +86,6 @@
                 })
             })
         },
-
         register: (data) => {
             return new Promise((resolve, reject) => {
                 axios({
@@ -118,18 +120,6 @@
             })
         },
 
-        isBlogger: () => {
-            let user = User.getCurrent();
-
-            return user && user.role == 'blogger'
-        },
-
-        isSeller: () => {
-            let user = User.getCurrent();
-
-            return user && user.role == 'seller'
-        },
-
         getWorks(user_id, orderBy = 'desc', is_active = 1, _with = ['project']){
             return new Promise((resolve, reject) => {
                 var params = {is_active: is_active};
@@ -159,7 +149,6 @@
                 })
             })
         },
-
         getMessages(work_id, user_id){
             return new Promise((resolve, reject) => {
                 axios({
@@ -173,6 +162,64 @@
                     notify('error', {
                         title: 'Внимание!',
                         message: 'Что-то пошло нет так, попробуйте зайти позже или обратитесь в поддержку.'
+                    })
+
+                    resolve([])
+                })
+            })
+        },
+        getStatistics(id = null){
+            if(!id){
+                id = User.getCurrent().id
+            }
+
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: 'get',
+                    url: '/api/users/' + id + '/dashboard'
+                })
+                .then(response => {
+                    resolve(response.data);
+                })
+                .catch((errors) => {
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'Не удалось загрузить статистику, попробуйте зайти позже или обратитесь в поддержку.'
+                    })
+
+                    reject(false)
+
+                    resolve({
+                        total_feedbacks_count: 0,
+                        avg_feedbacks_value: 0,
+                        products_bad_feedbacks: [],
+                        products_good_feedbacks: [],
+                        products_great_feedbacks: [],
+                        products_few_feedbacks_count: [],
+                        products_normal_feedbacks_count: [],
+                        unanswered_feedbacks_count: 0,
+                        total_clicks: 0,
+                        statistics: {},
+                        is_wb_api_key: false,
+                        feedback_ratio: 0
+                    })
+                })
+            })
+        },
+        getProjects: (user_id, filterData = false) => {
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: 'get',
+                    url: '/api/users/' + user_id + '/projects',
+                    params: filterData
+                })
+                .then(response => {
+                    resolve(response.data.projects);
+                })
+                .catch((errors) => {
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'Не удалось загрузить проекты, попробуйте зайти позже или обратитесь в поддержку.'
                     })
 
                     resolve([])

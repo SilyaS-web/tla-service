@@ -249,16 +249,6 @@ export default {
                 }
             )
         },
-        feedbackCheckbox(event){
-            if($(event.target).is(':checked')){
-                this.project.integration = false;
-            }
-        },
-        integrationCheckbox(event){
-            if($(event.target).is(':checked')){
-                this.project.feedback = false;
-            }
-        },
     }
 }
 </script>

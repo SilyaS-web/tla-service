@@ -129,7 +129,7 @@ export default{
 
         this.user = this.User.getCurrent();
 
-        // this.dashboard = await this.getSellerStats(this.user.id);
+        // this.dashboard = await this.User.getStatistics();
 
         this.projects = await this.Project.getList({is_blogger_access: 1, statuses: [0]});
 
@@ -166,11 +166,10 @@ export default{
             $('.wrapper').toggleClass('footer_disabled', this.isChatTab || tab === 'create-project')
 
             switch (tab){
-
                 case 'profile-projects':
                     this.myProjects = []
 
-                    this.Project.getUsersProjectsList(this.user.id).then(data => {
+                    this.User.getProjects(this.user.id).then(data => {
                         var list = data || [];
 
                         if(this.currentItem){ //если мы перешли с другого модуля
@@ -227,44 +226,11 @@ export default{
         async updateMyProjects(){
             this.Loader.loaderOn('.wrapper .profile__content-inner');
 
-            this.myProjects = await this.Project.getUsersProjectsList(this.user.id);
+            this.myProjects = await this.User.getProjects(this.user.id);
 
             setTimeout(()=>{
                 this.Loader.loaderOff();
             }, 300)
-        },
-
-        getSellerStats(id){
-            return new Promise((resolve, reject) => {
-                axios({
-                    method: 'get',
-                    url: '/api/users/' + this.User.getCurrent().id + '/dashboard'
-                })
-                    .then(response => {
-                        resolve(response.data);
-                    })
-                    .catch((errors) => {
-                        notify('error', {
-                            title: 'Внимание!',
-                            message: 'Не удалось загрузить статистику, попробуйте зайти позже или обратитесь в поддержку.'
-                        })
-
-                        resolve({
-                            total_feedbacks_count: 0,
-                            avg_feedbacks_value: 0,
-                            products_bad_feedbacks: [],
-                            products_good_feedbacks: [],
-                            products_great_feedbacks: [],
-                            products_few_feedbacks_count: [],
-                            products_normal_feedbacks_count: [],
-                            unanswered_feedbacks_count: 0,
-                            total_clicks: 0,
-                            statistics: {},
-                            is_wb_api_key: false,
-                            feedback_ratio: 0
-                        })
-                    })
-            })
         },
 
         findBloggerBiggestPlatform(blogger){
@@ -301,7 +267,7 @@ export default{
         async applyFilterMyProjects(filterData){
             this.Loader.loaderOn('.wrapper .profile__content-inner');
 
-            this.myProjects = await this.Project.getUsersProjectsList(this.user.id, filterData);
+            this.myProjects = await this.User.getProjects(this.user.id, filterData);
 
             setTimeout(()=>{
                 this.Loader.loaderOff();

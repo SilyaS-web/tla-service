@@ -575,42 +575,34 @@ export default{
         },
 
         getBloggersInWork(){
-            return new Promise((resolve, reject) => {
-                this.Loader.loaderOn(`.profile-projects__item[data-id="${this.project.id}"] .projects-blogers--in_work`)
+            this.Loader.loaderOn(`.profile-projects__item[data-id="${this.project.id}"] .projects-blogers--in_work`)
 
-                this.Work.getProjectsList(this.project, 'active').then(data => {
+            this.Work.getProjectsList(this.project, 'active').then(data => {
 
-                    if(data){
-                        this.bloggers_active = (data || []).map(_w => {
-                            _w.blogger = this.findBiggestPlatform(_w.blogger);
+                if(data){
+                    this.bloggers_active = (data || []).map(_w => {
+                        _w.blogger = this.findBiggestPlatform(_w.blogger);
 
-                            return _w;
-                        })
-                    }
+                        return _w;
+                    })
+                }
 
-                    this.Loader.loaderOff()
-
-                    resolve(true)
-                })
+                this.Loader.loaderOff()
             })
         },
         getBloggersLeads(){
-            return new Promise((resolve, reject) => {
-                this.Loader.loaderOn(`.profile-projects__item[data-id="${this.project.id}"] .projects-blogers--leads`)
+            this.Loader.loaderOn(`.profile-projects__item[data-id="${this.project.id}"] .projects-blogers--leads`)
 
-                this.Work.getProjectsList(this.project, 'pending').then(data => {
-                    if(data){
-                        this.bloggers_leads = (data || []).map(_w => {
-                            _w.blogger = this.findBiggestPlatform(_w.blogger);
+            this.Work.getProjectsList(this.project, 'pending').then(data => {
+                if(data){
+                    this.bloggers_leads = (data || []).map(_w => {
+                        _w.blogger = this.findBiggestPlatform(_w.blogger);
 
-                            return _w;
-                        })
-                    }
+                        return _w;
+                    })
+                }
 
-                    this.Loader.loaderOff()
-
-                    resolve(true)
-                })
+                this.Loader.loaderOff()
             })
         },
 
@@ -632,30 +624,31 @@ export default{
 
             return blogger;
         },
+
         getProjectStatistics(){
             this.Loader.loaderOn(`.profile-projects__item[data-id="${this.project.id}"] .projects-statistics`)
 
-            axios({
-                method: 'get',
-                url: '/api/projects/' + this.project.id + '/statistics',
-            })
-            .then(result => {
-                if(result.data.statistics.completed_works)
-                    this.completed_works = result.data.statistics.completed_works;
+            this.Project.getStatistics(this.project.id)
+                .then((result) => {
+                    if(result.data.statistics.completed_works)
+                        this.completed_works = result.data.statistics.completed_works;
 
-                if(result.data.statistics.completed_works_statistics)
-                    this.completed_works_statistics = result.data.statistics.completed_works_statistics;
+                    if(result.data.statistics.completed_works_statistics)
+                        this.completed_works_statistics = result.data.statistics.completed_works_statistics;
 
-                if(result.data.statistics.marketplace_statistics)
-                    this.marketplace_statistics = JSON.parse(result.data.statistics.marketplace_statistics);
+                    if(result.data.statistics.marketplace_statistics)
+                        this.marketplace_statistics = JSON.parse(result.data.statistics.marketplace_statistics);
 
-                this.updateProductStatistics()
+                    this.updateProductStatistics()
 
-                this.Loader.loaderOff()
-            })
-            .catch(error => {
-                this.Loader.loaderOff()
-            })
+                    this.Loader.loaderOff()
+                })
+                .catch(() => {
+                    this.Loader.loaderOff()
+                })
+                .finally(() => {
+                    this.Loader.loaderOff()
+                })
         },
         updateProductStatistics(){
             this.prodsStatisticsChart.destroy()

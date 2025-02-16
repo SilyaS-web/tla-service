@@ -38,9 +38,11 @@
 </template>
 <script>
 import {ref} from "vue";
-import axios from "axios";
+
 import BloggerCardPopup from "../../../../core/components/popups/blogger-card-popup/BloggerCardPopup";
 import BloggerCard from "../../../../core/components/blogger-card/index";
+
+import Work from "../../../../core/services/api/Work.vue"
 
 export default{
     props:['blogger', 'currentProject'],
@@ -50,6 +52,8 @@ export default{
             themes: ref([]),
             platforms: ref([]),
             isOfferSent: ref(false),
+
+            Work
         }
     },
     methods:{
@@ -62,40 +66,8 @@ export default{
                 return
             }
 
-            axios({
-                url: '/api/works',
-                method: 'post',
-                data: {
-                    blogger_id: this.blogger.id,
-                    project_work_id: this.currentProject.choosedWork.id
-                }
-            })
-            .then((data) => {
-                this.isOfferSent = true
-            })
-            .catch(errors => {
-                notify('error', {
-                    title: 'Внимание!',
-                    message: 'Что-то пошло не так. Попробуйте позже.'
-                })
-            })
-        },
-        countER(subs, cover){
-            var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
-
-            if(val - 1 < 0) val = Math.round(val).toFixed(2);
-            else val = Math.ceil(val);
-
-            return val;
-        },
-        countCPM(cover){
-            if(!cover) return '-';
-
-            if(!this.currentProject || !this.currentProject.product_price) return '-';
-
-            let result = (this.currentProject.product_price / cover) * 1000;
-
-            return Math.round(result) === 0 ? (result).toFixed(3) : Math.round(result);
+            this.Work.sendOfferToBlogger(this.blogger.id, this.currentProject.choosedWork.id)
+                .then(() => { this.isOfferSent = true })
         },
 
         openBloggerInfoPopup(){

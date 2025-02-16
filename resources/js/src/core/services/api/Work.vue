@@ -56,6 +56,29 @@ const Work = {
             })
         })
     },
+    sendOfferToBlogger: (blogger_id, project_work_id) => {
+        return new Promise((resolve, reject) => {
+            axios({
+                url: '/api/works',
+                method: 'post',
+                data: {
+                    blogger_id: blogger_id,
+                    project_work_id: project_work_id
+                }
+            })
+            .then((data) => {
+                resolve(true)
+            })
+            .catch(errors => {
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'Что-то пошло не так. Попробуйте позже.'
+                })
+
+                reject(false)
+            })
+        })
+    },
     deny(work_id){
         return new Promise((resolve, reject) => {
             axios({
