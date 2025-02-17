@@ -59,6 +59,7 @@
             </div>
         </div>
     </div>
+    <promotion-banner></promotion-banner>
     <Footer></Footer>
 </template>
 <script>
@@ -83,11 +84,13 @@ import Header from '../../../core/components/layout/AppHeader'
 import Footer from '../../../core/components/layout/AppFooter'
 import Tariffs from './tariffs/index'
 import Partners from './partners/index'
+import PromotionBanner from "../../../core/components/promotion-banner/index.vue";
 
 export default{
     components: {
         Aside, CreateProject, ProjectsList,
         MyProjectsList, BloggersList, Chat, Header, Footer, Tariffs, Partners,
+        PromotionBanner
     },
     data(){
         return {
