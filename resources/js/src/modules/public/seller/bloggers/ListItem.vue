@@ -32,7 +32,9 @@
                 class="btn btn-secondary">
                 Подробнее
             </button>
-            <div class="checkbox">
+            <div
+                v-if="currentProject"
+                class="checkbox">
                 <input
                     @change="toggleBloggerInMassDestributionList"
                     :id="'checkbox-blogger-card-' + blogger.id"

@@ -1,6 +1,6 @@
 <template>
     <div
-        v-if="bloggers && bloggers.length > 0"
+        v-show="bloggers && bloggers.length > 0"
         class="bloggers-table">
         <div class="bloggers-table__content">
             <div class="bloggers-table__header">
@@ -70,7 +70,9 @@
                 </div>
                 <div class="bloggers-table__col">
                     <div class="bloggers-table__btns">
-                        <div class="btn btn-primary"> Отправить ТЗ</div>
+                        <div
+                            @click="$emit('mass-distribution')"
+                            class="btn btn-primary"> Отправить ТЗ</div>
                         <div
                             @click="cleanMassDistributionList"
                             class="btn btn-white"> Очистить список
@@ -87,8 +89,8 @@
 <script>
 import {ref} from "vue";
 
-import {countER} from "../../../../../core/utils/countER";
-import bloggersList from "../../../../admin/bloggers-list/index.vue";
+import {countER} from "../../../../core/utils/countER";
+import bloggersList from "../../../admin/bloggers-list/index.vue";
 
 export default {
     name: 'BloggersDistributionBoard',
@@ -113,6 +115,8 @@ export default {
         }
     },
     mounted() {
+        this.bloggers = [];
+
         window.addEventListener('massDistributionListChanged', (event) => {
             this.bloggers = this.executeBloggersFromLS();
             this.countStatistics()
@@ -168,7 +172,7 @@ export default {
         },
         isPossibleToMoveLeft() {
             const trackWidth = $('.table-images__body').width();
-            const wrapWidth = $('.table-images').width() - 10;
+            const wrapWidth = Math.abs($('.table-images').width() - 30);
 
             return (Math.abs(this.bloggersListPosition) + wrapWidth) <= trackWidth
         },

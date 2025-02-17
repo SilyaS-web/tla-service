@@ -140,7 +140,12 @@
             </div>
         </div>
     </div>
+
     <choose-project-popup ref="chooseProjectPopup"></choose-project-popup>
+    <distribution-table
+        v-on:mass-distribution="openMassDistributionPopup"
+    ></distribution-table>
+    <distribution-popup ref="distributionPopup"></distribution-popup>
 </template>
 <script>
 import {ref} from "vue";
@@ -160,11 +165,15 @@ import ChoosedProject from './ChoosedProjectComponent'
 
 import ChooseProjectPopup from '../../../../core/components/popups/choose-project/ChooseProjectPopup'
 
+import DistributionTable from './DistributionTable.vue'
+import DistributionPopup from "../../../../core/components/popups/seller-mass-distribution/SellerMassDistribution.vue";
+
 export default{
     props:['bloggers', 'user'],
     components:{
+        DistributionPopup,
         ProjectsList, BloggersListItem, ProjectsListItem,
-        ChooseProjectPopup, Filter, ChoosedProject, ProjectCard
+        ChooseProjectPopup, Filter, ChoosedProject, ProjectCard, DistributionTable
     },
     data(){
         return {
@@ -257,6 +266,10 @@ export default{
         //фильтры списка блогеров
         applyBloggersFilter(filterData){
             this.$emit('applyFilter', filterData);
+        },
+
+        openMassDistributionPopup(){
+            this.$refs.distributionPopup.show({ title: 'Массовая рассылка', okButton: 'Отправить' })
         }
     }
 }
