@@ -3,7 +3,7 @@
         <div class="banner__content">
             <div class="banner__header">
                 <div class="banner__title">
-                    Распродажа 11.11<br> Двойная выгода 🎁
+                    Режем цены пополам!<br> Скидка 50% 🎁
                 </div>
                 <div class="banner__close" @click="hide">
                     <img src="img/close-icon.svg" alt="">
@@ -11,7 +11,7 @@
             </div>
             <div class="banner__body">
                 <div class="banner__text">
-                    Оплати подписку в ноябре – <br>получи 60 дней вместо 30!
+                    Выгода 50% при оплате платной подписки<br>Цена <span style="text-decoration: line-through">4990</span> 2490 рублей
                 </div>
                 <div class="banner__btns">
                     <router-link
