@@ -100,7 +100,7 @@
                                 <span>CPM</span>
                             </div>
                             <div class="card__stats-val">
-                                <span>{{ countCPM(coverage) || '-' }}₽</span>
+                                <span>{{ countCPM(coverage, product_price) || '-' }}₽</span>
                             </div>
                         </div>
                     </div>

@@ -17,7 +17,9 @@
                             @mouseout="stopSliding"
                             style="display: none"
                             class="table-images__left-slide--js"></div>
-                        <div class="table-images__track">
+                        <div
+                            @scroll="toggleSlideArrows"
+                            class="table-images__track">
                             <div
                                 :style="'transform:translateX(' + bloggersListPosition + 'px)'"
                                 class="table-images__body">
@@ -73,16 +75,13 @@
                         <div
                             @click="$emit('mass-distribution')"
                             class="btn btn-primary"> Отправить ТЗ</div>
-                        <div
-                            @click="cleanMassDistributionList"
-                            class="btn btn-white"> Очистить список
-                        </div>
                     </div>
                 </div>
             </div>
             <div class="bloggers-table__footer">
 
             </div>
+            <div class="close-popup" @click="cleanMassDistributionList"><img src="/img/close-icon.svg" alt=""></div>
         </div>
     </div>
 </template>
@@ -115,10 +114,16 @@ export default {
         }
     },
     mounted() {
-        this.bloggers = [];
-
         window.addEventListener('massDistributionListChanged', (event) => {
-            this.bloggers = this.executeBloggersFromLS();
+            const blogger = event.detail.storage;
+
+            if(this.bloggers.indexOf(blogger) !== -1) {
+                this.bloggers = this.bloggers.filter(_blogger => _blogger.id !== blogger.id);
+            }
+            else{
+                this.bloggers.push(blogger)
+            }
+
             this.countStatistics()
             this.toggleSlideArrows()
 
@@ -126,11 +131,6 @@ export default {
         });
     },
     methods: {
-        executeBloggersFromLS() {
-            return localStorage.getItem('massDistributionList') ?
-                JSON.parse(localStorage.getItem('massDistributionList'))
-                : []
-        },
         countStatistics() {
             this.totalSubs = this.bloggers
                 .map(b => b.summaryPlatform.subscriber_quantity)
@@ -203,7 +203,7 @@ export default {
 .bloggers-table {
     position: fixed;
     z-index: 999;
-    width: 100%;
+    width: calc(100% - 20px);
     max-width: 1145px;
     border-radius: 12px;
     box-shadow: 0px 4px 12px 6px rgba(0, 0, 0, .15);
@@ -218,11 +218,12 @@ export default {
 .bloggers-table__content {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .bloggers-table__body {
     display: flex;
-    gap: 8px;
+    gap:12px;
     justify-content: space-between;
 }
 
@@ -268,7 +269,7 @@ export default {
 }
 
 .table-images__img:not(:first-child) {
-    margin-right: -12px;
+    margin-left: -12px;
 }
 
 .table-images__img img {
@@ -330,8 +331,195 @@ export default {
     margin-bottom: auto;
 }
 
-.bloggers-table__btns .btn {
-    padding: 12px;
+.bloggers-table__btns .btn-primary {
+    padding: 14px 80px;
+    font-size: 18px;
+}
+
+.bloggers-table .close-popup{
+    right: -45px;
+    top: -8px;
+}
+
+@media(max-width:1030px){
+    .bloggers-table__btns .btn-primary{
+        padding: 12px ;
+    }
+    .bloggers-table .close-popup{
+        right: -24px;
+        top: -8px;
+    }
+    .bloggers-table__col:has(.bloggers-table__btns){
+        flex: 1 1 285px;
+    }
+    .bloggers-table__btns .btn-primary{
+        padding: 14px;
+        font-size: 18px;
+        width: 100%;
+        text-align: center;
+    }
+}
+@media(max-width:925px){
+    .table-images__img{
+        width: 60px;
+        height: 60px;
+    }
+    .table-images__img:not(:first-child) {
+        margin-left: -12px;
+    }
+    .table-images{
+        min-width: 200px;
+    }
+    .table-images__track{
+        max-width: 200px;
+    }
+    .table-images__left-slide--js,
+    .table-images__right-slide--js{
+        width: 60px;
+        height: 60px;
+        pointer-events: none;
+    }
+    .table-images__right-slide--js{
+        right: -42px;
+    }
+    .table-images__left-slide--js{
+        left: -42px;
+    }
+    .bloggers-table{
+        padding: 18px 26px;
+    }
+    .bloggers-table__title{
+        font-size: 19px;
+        margin-bottom: 12px;
+    }
+    .bloggers-table__body{
+        gap: 18px;
+    }
+    .bloggers-table__btns .btn-primary{
+        padding: 12px;
+        font-size: 16px;
+    }
+    .bloggers-table__statistics{
+        gap: 12px;
+    }
+    .bloggers-table__col{
+        gap: 0;
+    }
+    .bloggers-table__statistics-name{
+        font-size: 14px;
+        text-wrap: nowrap;
+    }
+    .bloggers-table__statistics-val{
+        font-size: 18px;
+    }
+    .bloggers-table__col:has(.bloggers-table__btns) {
+        max-width: 285px;
+    }
+}
+@media(max-width:675px){
+    .bloggers-table{
+        padding: 20px 32px;
+        bottom: 98px;
+    }
+    .bloggers-table__body{
+        gap: 32px;
+        flex-direction: column;
+    }
+    .bloggers-table__col:has(.bloggers-table__statistics){
+        order:1
+    }
+    .bloggers-table__col:has(.table-images){
+        order:2
+    }
+    .bloggers-table__col:has(.bloggers-table__btns){
+        order:3
+    }
+    .bloggers-table__col:has(.bloggers-table__btns){
+        flex:unset;
+    }
+    .bloggers-table__title{
+        font-size: 23px;
+        margin-bottom: 14px;
+    }
+    .bloggers-table__statistics{
+        gap: 32px;
+    }
+    .bloggers-table__statistics-name{
+        font-size: 17px;
+    }
+    .bloggers-table__statistics-val{
+        font-size: 21px;
+    }
+    .table-images{
+        min-width: unset;
+    }
+    .table-images__track{
+        display: none;
+    }
+    .bloggers-table__btns .btn-primary{
+        padding: 16px;
+        font-size: 18px;
+    }
+    .table-images__img{
+        width: 75px;
+        height: 75px;
+    }
+}
+@media(max-width:430px){
+    .bloggers-table[data-v-cfdd2e12] {
+        padding: 12px 24px;
+        bottom: 72px;
+    }
+
+    .bloggers-table__title{
+        font-size: 18px;
+        margin-bottom: 10px;
+    }
+
+    .bloggers-table__body{
+        gap: 24px;
+    }
+
+    .bloggers-table__statistics-item{
+        gap: 4px;
+    }
+    .bloggers-table__statistics-name{
+        font-size: 14px;
+    }
+    .bloggers-table__statistics-val{
+        font-size: 18px;
+    }
+
+    .table-images__img{
+        width: 60px;
+        height: 60px;
+    }
+
+    .bloggers-table__statistics{
+        flex-wrap: wrap;
+    }
+
+    .table-images__left-slide--js[data-v-cfdd2e12],
+    .table-images__right-slide--js[data-v-cfdd2e12]{
+        width: 25px;
+        height: 60px;
+    }
+    .table-images__right-slide--js{
+        right: -24px;
+    }
+    .table-images__left-slide--js{
+        left: -24px;
+    }
+
+    .bloggers-table__btns .btn-primary{
+        padding: 12px;
+        font-size: 16px;
+    }
+
+    .bloggers-table .close-popup{
+        right: -8px;
+        top: -7px;
+    }
 }
 
 </style>

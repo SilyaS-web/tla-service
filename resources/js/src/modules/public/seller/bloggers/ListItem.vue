@@ -43,6 +43,7 @@
                 <label
                     :for="'checkbox-blogger-card-' + blogger.id"
                     class="">
+                    Выбрать блогера
                 </label>
             </div>
         </div>
@@ -93,23 +94,6 @@ export default{
                 })
             })
         },
-        countER(subs, cover){
-            var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
-
-            if(val - 1 < 0) val = Math.round(val).toFixed(2);
-            else val = Math.ceil(val);
-
-            return val;
-        },
-        countCPM(cover){
-            if(!cover) return '-';
-
-            if(!this.currentProject || !this.currentProject.product_price) return '-';
-
-            let result = (this.currentProject.product_price / cover) * 1000;
-
-            return Math.round(result) === 0 ? (result).toFixed(3) : Math.round(result);
-        },
 
         openBloggerInfoPopup(){
             this.$refs.bloggerCardPopup.show(this.blogger).then(isConfirmed => {
@@ -120,21 +104,9 @@ export default{
         },
 
         toggleBloggerInMassDestributionList(){
-            let bloggersList = localStorage.getItem('massDistributionList') ?
-                JSON.parse(localStorage.getItem('massDistributionList'))
-                : [];
-
-            if(bloggersList.find(_blogger => _blogger.id === this.blogger.id)){
-                bloggersList = bloggersList.filter(_blogger => _blogger.id !== this.blogger.id)
-            }
-            else{
-                bloggersList.push(this.blogger)
-            }
-
-            localStorage.setItem('massDistributionList', JSON.stringify(bloggersList))
             window.dispatchEvent(new CustomEvent('massDistributionListChanged', {
                 detail: {
-                    storage: bloggersList
+                    storage: this.blogger
                 }
             }));
         }
@@ -142,16 +114,66 @@ export default{
 }
 </script>
 <style scoped>
-    .checkbox{
+    .card__btns .checkbox{
         display: flex;
+
     }
-    .checkbox__checkbox + label:before{
+    .card__btns .checkbox__checkbox + label{
+        font-size: 0;
+    }
+    .card__btns .checkbox__checkbox + label:before{
         width: 30px;
         height: 30px;
         border: 1px solid rgba(0, 0, 0, .4);
     }
-    .checkbox__checkbox:checked + label::before{
+    .card__btns .checkbox__checkbox:checked + label::before{
         filter: invert(45%) sepia(40%) saturate(6353%) hue-rotate(259deg) brightness(91%) contrast(87%);
         background-size: 20px;
+    }
+
+    @media(max-width:1530px){
+        .card__btns{
+            flex-wrap: wrap;
+        }
+        .card__btns .checkbox{
+            order:1;
+            width: 100%;
+        }
+        .card__btns .btn-primary{
+            order:2;
+        }
+        .card__btns .btn-secondary{
+            order:3;
+        }
+        .card__btns .checkbox__checkbox + label{
+            font-size: inherit;
+            font-weight: 500;
+            color:rgba(0,0,0,.6);
+            margin-bottom: 12px;
+        }
+        .card__btns .checkbox__checkbox + label::before{
+            width: 24px;
+            height: 24px;
+            border-radius: 6px;
+        }
+        .card__btns .checkbox__checkbox:checked + label::before{
+            background-size: 17px;
+        }
+        .card__btns .checkbox__checkbox:checked + label{
+            color:var(--primary)
+        }
+    }
+    @media(max-width:475px){
+        .card__btns .checkbox__checkbox + label{
+            font-size: 13px;
+        }
+        .card__btns .checkbox__checkbox + label::before{
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+        }
+        .card__btns .checkbox__checkbox:checked + label::before{
+            background-size: 13px;
+        }
     }
 </style>

@@ -73,7 +73,7 @@
                                                             <span>CPM</span>
                                                         </div>
                                                         <div class="card__stats-val">
-                                                            <span>{{ countCPM(blogger.summaryPlatform.coverage) || '-' }}₽</span>
+                                                            <span>{{ countCPM(blogger.summaryPlatform.coverage, productPrice) || '-' }}₽</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -104,15 +104,24 @@
                             :class-list="[]"
                             :placeholder="'Введите текст'"
                             :label="'Опишите подробности ТЗ'"
-                            :error="errors && errors.text"
+                            :error="errors.text"
 
                             v-model="distributionInfo.text"
                         >
                         </Textarea>
+
+                        <FormatTypes
+                            v-model="distributionInfo.integration_types"
+                            :integrationTypes="integrationTypes"
+                            :label="'Формат работы'"
+                            :error="errors.integration_types"
+                        ></FormatTypes>
+
                         <FilesUpload
                             v-model="distributionInfo.files"
+                            :id="'distribution-upload'"
                             :label="'Загрузите файлы ТЗ'"
-                            :error="errors && errors.files"
+                            :error="errors.files"
                         ></FilesUpload>
                     </div>
                     <div class="info-distribution__footer">
@@ -136,10 +145,11 @@ import AppPopup from "../AppPopup.vue";
 
 import Textarea from "../../form/TextareaBlockComponent.vue";
 import FilesUpload from "../../form/PlusFilesUploadBlockComponent.vue";
+import FormatTypes from '../../../../core/components/form/FormatChooseComponent.vue'
 
 export default {
     name: "SellerMassDistribution",
-    components: {AppPopup,Textarea,FilesUpload},
+    components: {AppPopup,Textarea,FilesUpload, FormatTypes},
     data() {
         return {
             title: 'Массовая рассылка',
@@ -154,24 +164,37 @@ export default {
                 bloggersIDs: [],
             }),
 
-            errors: ref(null),
+            integrationTypes: ref([]),
+            productPrice: ref(null),
+
+            errors: ref({}),
 
             resolvePromise: undefined,
             rejectPromise: undefined,
         }
+    },
+    mounted(){
+        window.addEventListener('massDistributionListChanged', (event) => {
+            const blogger = event.detail.storage;
+
+            if(this.bloggers.indexOf(blogger) !== -1) {
+                this.bloggers = this.bloggers.filter(_blogger => _blogger.id !== blogger.id);
+            }
+            else{
+                this.bloggers.push(blogger)
+            }
+        });
     },
     methods: {
         show(opts = {}) {
             this.title = opts.title
             this.okButton = opts.okButton
 
-            if (opts.cancelButton) {
-                this.cancelButton = opts.cancelButton
-            }
+            if(opts.integrationTypes)
+                this.integrationTypes.push(opts.integrationTypes.type);
 
-            this.bloggers = localStorage.getItem('massDistributionList') ?
-                JSON.parse(localStorage.getItem('massDistributionList'))
-                : [];
+            if(opts.productPrice)
+                this.productPrice = opts.productPrice;
 
             this.$refs.popup.open()
 
@@ -206,7 +229,7 @@ export default {
 
 
 <style scoped>
-    .btn:not(.btn-primary){
+    .distribution-bloggers__item-footer .btn:not(.btn-primary){
         padding: 10px 24px;
     }
     .popup__title{
@@ -224,8 +247,16 @@ export default {
         font-weight: 600;
         margin-bottom: 18px;
     }
+    .info-distribution .marketing-format{
+        flex-direction:row;
+        flex-wrap:wrap;
+    }
+    .distribution-bloggers{
+        height: 100%;
+    }
+
     .distribution-bloggers__content{
-        height: 366px;
+        height: 92.9%;
         overflow-y: scroll;
     }
     .distribution-bloggers__items{
@@ -292,6 +323,7 @@ export default {
         display: flex;
         flex-direction: column;
         gap: 6px;
+        padding-top: 6px;
     }
     .distribution-bloggers__name{
         font-size: 16px;
@@ -308,6 +340,88 @@ export default {
         display: flex;
         flex-direction: column;
         gap: 6px;
+    }
+
+    @media(max-width:768px){
+        .popup-distribution>*{
+            width: 100%;
+        }
+        .popup-distribution{
+            flex-direction: column;
+        }
+        .distribution-bloggers__item-header::after{
+            width: 27px;
+            height: 27px;
+        }
+        .distribution-bloggers__content{
+            max-height: 450px;
+            height:100%;
+        }
+        .distribution-bloggers__name{
+            font-size: 17px;
+        }
+        .distribution-bloggers__status{
+            font-size: 15px;
+        }
+        .distribution-bloggers__item{
+            gap: 10px;
+        }
+        .distribution-bloggers__item.opened{
+            height: 270px;
+        }
+        .distribution-bloggers__platforms .card__stats-stats{
+            flex-direction: row;
+        }
+        .distribution-bloggers__platforms .card__stats-title{
+            font-size: 16px;
+        }
+        .distribution-bloggers__platforms .card__stats-val{
+            font-size: 23px;
+        }
+        .distribution-bloggers__item-footer .btn:not(.btn-primary){
+            padding: 14px 28px;
+            font-size: 17px;
+        }
+
+        .info-distribution__body .format-hint{
+            left:-150px;
+        }
+    }
+
+    @media(max-width:550px){
+        .distribution-bloggers__name{
+            font-size: 16px;
+        }
+        .distribution-bloggers__status{
+            font-size: 14px;
+        }
+        .distribution-bloggers__item-footer .btn:not(.btn-primary){
+            padding: 10px 16px;
+            font-size: 16px;
+        }
+        .distribution-bloggers__platforms .card__stats-stats{
+            gap: 12px;
+        }
+        .distribution-bloggers__platforms .card__stats-title{
+            font-size: 14px;
+        }
+        .distribution-bloggers__platforms .card__stats-val{
+            font-size: 20px;
+        }
+        .distribution-bloggers__item-header::after{
+            width: 24px;
+            height: 24px;
+        }
+    }
+    @media(max-width:475px){
+        .distribution-bloggers__item-footer .btn:not(.btn-primary){
+            padding: 10px 20px;
+            font-size: 14px;
+        }
+        .info-distribution__body .format-hint{
+            right:unset;
+            left:-170px;
+        }
     }
 
 

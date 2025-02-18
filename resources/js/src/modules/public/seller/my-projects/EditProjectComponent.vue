@@ -50,6 +50,7 @@
                         </div>
                         <UploadFilesBlock
                             v-model="projectFiles"
+                            :id="'update-project-upload'"
                             :label="'Загрузите изображения товара'"
                             :files="project.project_files"
                             :error="errors.images"

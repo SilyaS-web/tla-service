@@ -139,13 +139,15 @@
                 <router-link :to="{ path: '/tariffs' }" class="not_paid-alert__btn btn btn-primary">Разблокировать каталог</router-link>
             </div>
         </div>
-    </div>
 
-    <choose-project-popup ref="chooseProjectPopup"></choose-project-popup>
-    <distribution-table
-        v-on:mass-distribution="openMassDistributionPopup"
-    ></distribution-table>
-    <distribution-popup ref="distributionPopup"></distribution-popup>
+        <choose-project-popup ref="chooseProjectPopup"></choose-project-popup>
+        <distribution-table
+            v-on:mass-distribution="openMassDistributionPopup"
+        ></distribution-table>
+        <distribution-popup
+            ref="distributionPopup"
+        ></distribution-popup>
+    </div>
 </template>
 <script>
 import {ref} from "vue";
@@ -269,7 +271,12 @@ export default{
         },
 
         openMassDistributionPopup(){
-            this.$refs.distributionPopup.show({ title: 'Массовая рассылка', okButton: 'Отправить' })
+            this.$refs.distributionPopup.show({
+                title: 'Массовая рассылка',
+                integrationTypes:  this.currentProject.choosedWork,
+                productPrice:  this.currentProject.product_price,
+                okButton: 'Отправить'
+            })
         }
     }
 }

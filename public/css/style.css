@@ -293,6 +293,7 @@ a.btn:hover{
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 12px;
+    width: 100%;
 }
 .form-group .form-group__title{
     margin-bottom: 10px;
@@ -790,6 +791,15 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .profile-chat__body{
     width: 100%;
+}
+.profile-blogers.loading{
+    overflow: hidden;
+}
+.profile-blogers.loading .bloggers-table{
+    opacity: 0;
+}
+.bloggers-table{
+    opacity: 1;
 }
 .profile-blogers.not-paid{
     position: relative;
@@ -2395,6 +2405,7 @@ input[type='range']::-webkit-slider-runnable-track{
     align-items: center;
     border-radius: 10px;
     margin-bottom: 0px;
+    width: fit-content;
 }
 .input-checkbox-w label{
     margin-bottom: 0;
