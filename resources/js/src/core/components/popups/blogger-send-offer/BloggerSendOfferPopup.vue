@@ -48,7 +48,7 @@ export default {
             })
         },
         sendOffer(){
-            if(!this.offer.project_work_id){
+            if(!this.offer.project_work_ids || this.offer.project_work_ids.length === 0){
                 notify('error', {
                     title: 'Внимание!',
                     message: 'Невозможно отправить предложение, не выбран формат рекламы'

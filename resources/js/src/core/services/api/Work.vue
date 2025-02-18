@@ -62,8 +62,8 @@ const Work = {
                 url: '/api/works',
                 method: 'post',
                 data: {
-                    blogger_id: blogger_id,
-                    project_work_id: project_work_id
+                    blogger_ids: [blogger_id],
+                    project_work_ids: [project_work_id]
                 }
             })
             .then((data) => {
