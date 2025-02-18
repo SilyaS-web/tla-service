@@ -129,7 +129,7 @@ export default{
         },
 
         sendToModeration(){
-            var formdata = new FormData;
+            let formdata = new FormData;
 
             for(let k in this.blogger){
                 if(!['themes'].includes(k))
@@ -143,19 +143,11 @@ export default{
             formdata.append('image', this.blogger.image);
             formdata.append('from_moderation', 1);
 
-            axios({
-                method: 'post',
-                url: '/api/bloggers/' + this.user.blogger_id,
-                data: formdata
-            })
-            .then((data) => {
-                this.$router.replace('/profile')
-            })
-            .catch((err) =>{
-                this.errors = err.response.data;
-                console.log(this.errors.image)
-                notify('error', {title: 'Ошибка', message: 'Не удалось сохранить данные, проверьте все поля, если все в порядке напишите в поддержку.'});
-            })
+            this.Blogger.sendToModeration(this.user.blogger_id, formdata)
+                .then(() => { this.$router.replace('/profile') })
+                .catch((errors) => {
+                    this.errors = errors
+                })
         }
     }
 }

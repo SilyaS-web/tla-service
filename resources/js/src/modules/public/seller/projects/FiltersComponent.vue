@@ -57,7 +57,7 @@
 </template>
 <script>
 import {ref} from "vue";
-
+import Categories from "../../../../core/services/api/Categories.vue";
 export default {
     data(){
         return{
@@ -68,6 +68,8 @@ export default {
             }),
             currentCategory: ref(''),
             categories: ref([]),
+
+            Categories
         }
     },
     methods:{
@@ -85,20 +87,10 @@ export default {
             this.$emit('applyFilter', {});
         },
         getCategories(event){
-            var value = $(event.target).val();
+            const value = $(event.target).val();
 
-            axios({
-                method: 'get',
-                url: '/api/projects/categories',
-                params:{
-                    category: value
-                }
-            })
-                .then(response => {
-                    this.categories = response.data.categories
-                })
-                .catch(error => {
-                })
+            this.Categories.getList(value)
+                .then((categories) => this.categories = categories)
         },
         chooseCategory(category){
             this.filter.category = category.theme;

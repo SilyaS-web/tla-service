@@ -118,26 +118,12 @@ export default{
                     formData.append('uploaded_images[' + i + ']', this.project.uploaded_files[i])
             }
 
-            axios({
-                method: 'post',
-                url: '/api/projects/' + this.project.id,
-                data: formData
-            })
-            .then((data) =>{
-                this.resetEditData()
-
-                notify('info', {title: 'Успешно!', message: 'Данные успешно обновлены.'});
-
-                this.$emit('updateMyProjects');
-            })
-            .catch((err) => {
-                let message =  (err.response.data && err.response.data.message) ?
-                    err.response.data.message :
-                    'Невозможно сохранить проект, перепроверьте все поля, данные не заполнены, либо заполнены некоректно.';
-
-                notify('info', {title: 'Внимание!', message: message});
-                this.errors = err.response.errors;
-            })
+            this.Project.update(this.project.id, formData)
+                .then((data) => {
+                    this.resetEditData()
+                    this.$emit('updateMyProjects');
+                })
+                .catch(errors => this.errors = errors)
         },
         resetEditData(){
             this.$emit('resetEditData')

@@ -172,9 +172,7 @@ export default {
                 },
                 err => {
                     this.errors = err.response.data;
-
                     this.Loader.loaderOff('.edit-profile');
-                    return
                 }
             )
         },

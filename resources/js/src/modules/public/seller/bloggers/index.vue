@@ -229,7 +229,7 @@ export default{
 
             this.Loader.loaderOn('#profile-blogers-list');
 
-            this.Project.getUsersProjectsList(this.user.id, {is_blogger_access: 1, statuses: [0]}).then(data => {
+            this.User.getProjects(this.user.id, {is_blogger_access: 1, statuses: [0]}).then(data => {
                 this.projects = data || [];
 
                 setTimeout(()=>{
@@ -242,7 +242,7 @@ export default{
         applyProjectsFilter(){
             this.Loader.loaderOn('#profile-blogers-list');
 
-            this.Project.getUsersProjectsList(this.user.id, this.projectsFilter).then(data => {
+            this.User.getProjects(this.user.id, this.projectsFilter).then(data => {
                 this.projects = data || [];
                 setTimeout(()=>{
                     this.Loader.loaderOff('#profile-blogers-list');
@@ -257,7 +257,7 @@ export default{
 
             this.Loader.loaderOn('#profile-blogers-list');
 
-            this.Project.getUsersProjectsList(this.user.id, {}).then(data => {
+            this.User.getProjects(this.user.id, {}).then(data => {
                 this.projects = data || [];
                 setTimeout(()=>{
                     this.Loader.loaderOff('#profile-blogers-list');

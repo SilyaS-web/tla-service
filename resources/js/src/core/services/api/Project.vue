@@ -1,7 +1,6 @@
 <script>
 import axios from 'axios'
 
-
 const Project = {
     create: (data) => {
         return new Promise((resolve, reject) => {
@@ -50,9 +49,31 @@ const Project = {
             })
         })
     },
-    delete: (project_id) => {
+    update: (projectID, data) => {
         return new Promise((resolve, reject) => {
-            if(!project_id){
+            axios({
+                method: 'post',
+                url: '/api/projects/' + projectID,
+                data: data
+            })
+            .then((data) =>{
+                notify('info', {title: 'Успешно!', message: 'Данные успешно обновлены.'});
+                resolve(data)
+            })
+            .catch((err) => {
+                let message =  (err.response.data && err.response.data.message) ?
+                    err.response.data.message :
+                    'Невозможно сохранить проект, перепроверьте все поля, данные не заполнены, либо заполнены некоректно.';
+
+                notify('info', {title: 'Внимание!', message: message});
+
+                reject(err.response.errors)
+            })
+        })
+    },
+    delete: (projectID) => {
+        return new Promise((resolve, reject) => {
+            if(!projectID){
                 notify('error', {
                     title: 'Внимание!',
                     message: 'Что-то пошло не так. Невозможно удалить проект.'
@@ -63,7 +84,7 @@ const Project = {
 
             axios({
                 method: 'delete',
-                url: '/api/projects/' + project_id,
+                url: '/api/projects/' + projectID,
             })
             .then((response) => {
                 resolve(true)
@@ -78,9 +99,9 @@ const Project = {
             })
         })
     },
-    stop: (project_id) => {
+    stop: (projectID) => {
         return new Promise((resolve, reject) => {
-            if(!project_id){
+            if(!projectID){
                 notify('error', {
                     title: 'Внимание!',
                     message: 'Что-то пошло не так. Невозможно поменять статус проекта.'
@@ -91,7 +112,7 @@ const Project = {
 
             axios({
                 method: 'get',
-                url: '/api/projects/' + project_id + '/stop',
+                url: '/api/projects/' + projectID + '/stop',
             })
             .then((response) => {
                 resolve(true)
@@ -105,9 +126,9 @@ const Project = {
             })
         })
     },
-    start: (project_id) => {
+    start: (projectID) => {
         return new Promise((resolve, reject) => {
-            if(!project_id){
+            if(!projectID){
                 notify('error', {
                     title: 'Внимание!',
                     message: 'Что-то пошло не так. Невозможно поменять статус проекта.'
@@ -118,7 +139,7 @@ const Project = {
 
             axios({
                 method: 'get',
-                url: '/api/projects/' + project_id + '/start',
+                url: '/api/projects/' + projectID + '/start',
             })
             .then((response) => {
                 resolve(true)
@@ -133,9 +154,9 @@ const Project = {
             })
         })
     },
-    activate: (project_id) => {
+    activate: (projectID) => {
         return new Promise((resolve, reject) => {
-            if(!project_id){
+            if(!projectID){
                 notify('error', {
                     title: 'Внимание!',
                     message: 'Что-то пошло не так. Невозможно поменять статус проекта.'
@@ -146,7 +167,7 @@ const Project = {
 
             axios({
                 method: 'get',
-                url: '/api/projects/' + project_id + '/activate',
+                url: '/api/projects/' + projectID + '/activate',
             })
             .then((response) => {
                 resolve(true)
@@ -182,62 +203,20 @@ const Project = {
             })
         })
     },
-
-    getUsersProjectsList: (user_id, filterData = false) => {
+    getStatistics: (projectID) => {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'get',
-                url: '/api/users/' + user_id + '/projects',
-                params: filterData
+                url: '/api/projects/' + projectID + '/statistics',
             })
-            .then(response => {
-                resolve(response.data.projects);
+            .then(result => {
+                resolve(result)
             })
-            .catch((errors) => {
-                notify('error', {
-                    title: 'Внимание!',
-                    message: 'Не удалось загрузить проекты, попробуйте зайти позже или обратитесь в поддержку.'
-                })
-
-                resolve([])
+            .catch(error => {
+                reject(false)
             })
         })
-    },
-    getFeedbackWork(project){
-        var feedbackWork = project.project_works ? project.project_works.filter(w => w.type == 'feedback') : {
-            lost_quantity: 0,
-            quantity: 0
-        };
-
-        if(!feedbackWork || feedbackWork.length == 0) {
-            feedbackWork = {
-                lost_quantity: 0,
-                quantity: 0
-            };
-        }
-        else{
-            feedbackWork = {
-                lost_quantity: feedbackWork[0].lost_quantity,
-                quantity: parseInt(feedbackWork[0].quantity)
-            }
-        }
-
-        return feedbackWork;
-    },
-    getIntegrationWork(project){
-        var integrationWorks = project.project_works ? project.project_works.filter(w => w.type != 'feedback') : null,
-            integrationWork = {
-                lost_quantity: 0,
-                quantity: 0
-            };
-
-        if(integrationWorks && integrationWorks.length > 0){
-            integrationWork.lost_quantity = integrationWorks.map(w => w.lost_quantity).reduce((a, b) => a + b, 0);
-            integrationWork.quantity = integrationWorks.map(w => parseInt(w.quantity)).reduce((a, b) => a + b, 0);
-        }
-
-        return integrationWork;
-    },
+    }
 };
 
 export default Project
