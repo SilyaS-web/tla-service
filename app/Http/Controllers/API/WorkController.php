@@ -44,7 +44,6 @@ class WorkController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'project_id' => 'nullable|exists:projects,id',
             'project_work_id' => 'nullable|exists:project_works,id',
             'project_work_names' => 'required|array',
             'project_work_names.*' => 'required|string',
@@ -62,7 +61,7 @@ class WorkController extends Controller
         $validated = $validator->validated();
         $user = Auth::user();
 
-        if (!$validated('project_id')) {
+        if (!empty($validated('project_id')) && !empty($validated('project_work_names'))) {
             $project = Project::find($validated['project_id']);
             $project_works = ProjectWork::whereIn('name', $validated['project_work_names'])->get();
         } else if (!empty($validated['project_work_id'])) {
