@@ -98,9 +98,8 @@ class WorkController extends Controller
                 return response()->json(['message' => 'У пользователя должна быть роль Блогер'])->setStatusCode(400);
             }
 
-            $blogger_users = Blogger::whereIn('id', $validated['blogger_ids'])->get();
-            foreach ($blogger_users as $blogger_user) {
-                $works[] = $this->createWork($project->id, $blogger_user->id, $user->id, $validated['message'], $project->product_name, $project_works);
+            foreach ($validated['blogger_ids'] as $blogger_id) {
+                $works[] = $this->createWork($project->id, $blogger_id, $user->id, $validated['message'], $project->product_name, $project_works);
             }
         }
 
