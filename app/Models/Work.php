@@ -71,6 +71,11 @@ class Work extends Model
         return $this->hasMany(Message::class, 'work_id', 'id');
     }
 
+    public function files()
+    {
+        return $this->hasMany(WorkFile::class, 'work_id', 'id');
+    }
+
     public function projectWorks()
     {
         return $this->hasManyThrough(ProjectWork::class, WorkProjectWork::class, 'work_id', 'project_work_id', 'id', 'id');

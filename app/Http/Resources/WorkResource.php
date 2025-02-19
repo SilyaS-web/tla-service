@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Models\User;
 use App\Models\Work;
+use App\Models\WorkFile;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
@@ -59,6 +60,7 @@ class WorkResource extends JsonResource
             'statistics' => new FinishStatsResource($this->finishStats),
             'new_messages_count' => $this->messages()->where('viewed_at', null)->where('user_id', '<>', $user->id)->count(),
             'project_work' => new ProjectWorkResource($this->projectWork),
+            'files' => WorkFileResource::collection($this->files)
         ];
     }
 }
