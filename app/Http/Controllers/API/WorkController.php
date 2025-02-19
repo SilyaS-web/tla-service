@@ -17,6 +17,7 @@ use App\Models\WorkProjectWork;
 use App\Services\TgService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -44,6 +45,7 @@ class WorkController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'project_id' => 'nullable|exists:projects,id',
+            'project_work_id' => 'nullable|exists:project_works,id',
             'project_work_names' => 'required|array',
             'project_work_names.*' => 'required|string',
             'blogger_ids' => 'nullable|array',
@@ -62,9 +64,16 @@ class WorkController extends Controller
 
         if (!$validated('project_id')) {
             $project = Project::find($validated['project_id']);
+            $project_works = ProjectWork::whereIn('name', $validated['project_work_names'])->get();
+        } else if (!empty($validated['project_work_id'])) {
+            $project_works = ProjectWork::where('id', $validated['project_work_id'])->get();
+            if (!empty($project_works)) {
+                $project = $project_works->first()->project;
+            } else {
+                return response()->json(['message' => 'Не удалось найти проект'], 400);
+            }
         } else {
-            $project_work = ProjectWork::find($validated['project_work_ids'][0]);
-            $project = $project_work->project;
+            return response()->json(['message' => 'Не удалось найти проект'], 400);
         }
 
         if (!$project) {
@@ -81,7 +90,7 @@ class WorkController extends Controller
                 return response()->json(['message' => 'Заявка отправлена'])->setStatusCode(400);
             }
 
-            $works[] = $this->createWork($project->id, $user->id, $project->seller_id, $validated['message'], $project->product_name, $validated['project_work_names']);
+            $works[] = $this->createWork($project->id, $user->id, $project->seller_id, $validated['message'], $project->product_name, $project_works);
         } else {
             if (empty($validated['blogger_id'])) {
                 return response()->json(['message' => 'У пользователя должна быть роль Блогер'])->setStatusCode(400);
@@ -89,7 +98,7 @@ class WorkController extends Controller
 
             $blogger_users = Blogger::whereIn('id', $validated['blogger_ids']);
             foreach ($blogger_users as $blogger_user) {
-                $works[] = $this->createWork($project->id, $blogger_user->id, $user->id, $validated['message'], $project->product_name, $validated['project_work_names']);
+                $works[] = $this->createWork($project->id, $blogger_user->id, $user->id, $validated['message'], $project->product_name, $project_works);
             }
         }
 
@@ -108,7 +117,7 @@ class WorkController extends Controller
         return response()->json(['id' => $works[0]->id])->setStatusCode(200);
     }
 
-    public function createWork(int $project_id, int $blogger_id, int $seller_id, string|null $message, string $product_name, array $project_work_names): Work
+    public function createWork(int $project_id, int $blogger_id, int $seller_id, string|null $message, string $product_name, Collection $project_works): Work
     {
         $user = Auth::user();
         $work = Work::create([
@@ -119,8 +128,6 @@ class WorkController extends Controller
             'message' => $message,
             'created_by' => $user->id,
         ]);
-
-        $project_works = ProjectWork::whereIn('name' , $project_work_names)->where('project_id', $project_id)->get();
 
         foreach ($project_works as $project_work) {
            WorkProjectWork::create([
