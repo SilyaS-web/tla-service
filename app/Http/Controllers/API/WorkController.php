@@ -44,6 +44,7 @@ class WorkController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'project_id' => 'nullable|exists:projects,id',
             'project_work_id' => 'nullable|exists:project_works,id',
             'project_work_names' => 'nullable|array',
             'project_work_names.*' => 'nullable|string',
