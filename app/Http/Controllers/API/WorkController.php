@@ -51,7 +51,7 @@ class WorkController extends Controller
             'project_work_names' => 'nullable|array',
             'project_work_names.*' => 'nullable|string',
             'blogger_ids' => 'nullable|array',
-            'blogger_ids.*' => 'nullable|exists:bloggers,id',
+            'blogger_ids.*' => 'nullable|exists:users,id',
             'files' => 'nullable|array',
             'files.*' => 'nullable|file|max:51200',
             'message' => 'string|nullable',
