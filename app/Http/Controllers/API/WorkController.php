@@ -62,7 +62,7 @@ class WorkController extends Controller
         $validated = $validator->validated();
         $user = Auth::user();
 
-        if (!empty($validated('project_id')) && !empty($validated('project_work_names'))) {
+        if (!empty($validated['project_id']) && !empty($validated['project_work_names'])) {
             $project = Project::find($validated['project_id']);
             $project_works = ProjectWork::whereIn('name', $validated['project_work_names'])->get();
         } else if (!empty($validated['project_work_id'])) {
