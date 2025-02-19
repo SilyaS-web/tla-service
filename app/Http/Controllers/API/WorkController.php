@@ -9,11 +9,13 @@ use App\Models\Message;
 use App\Models\MessageFile;
 use App\Models\Notification;
 use App\Models\Project;
+use App\Models\ProjectFile;
 use App\Models\ProjectWork;
 use App\Models\Work;
 use App\Models\User;
 use App\Models\WorkFile;
 use App\Models\WorkProjectWork;
+use App\Services\ImageService;
 use App\Services\TgService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -102,7 +104,8 @@ class WorkController extends Controller
             }
         }
 
-        foreach ($request->allFiles() as $file) {
+        $work_files = $request->file('files');
+        foreach ($work_files as $file) {
             $file_path = $file->store('works', 'public');
 
             foreach ($works as $work) {
