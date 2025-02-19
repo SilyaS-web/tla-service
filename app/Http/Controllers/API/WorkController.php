@@ -12,10 +12,11 @@ use App\Models\Project;
 use App\Models\ProjectWork;
 use App\Models\Work;
 use App\Models\User;
+use App\Models\WorkFile;
+use App\Models\WorkProjectWork;
 use App\Services\TgService;
-use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -23,7 +24,7 @@ use App\Http\Controllers\Controller;
 
 class WorkController extends Controller
 {
-    public function index(Project $project, Request $request)
+    public function index(Project $project, Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'statuses' => 'array|nullable',
@@ -34,14 +35,21 @@ class WorkController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $validated = $validator->validated();
+        $validator->validated();
+
+        return response()->json([], 200);
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'project_work_id' => 'required|exists:project_works,id',
-            'blogger_id' => 'exists:bloggers,id|nullable',
+            'project_id' => 'nullable|exists:projects,id',
+            'project_work_names' => 'required|array',
+            'project_work_names.*' => 'required|string',
+            'blogger_ids' => 'nullable|array',
+            'blogger_ids.*' => 'required|exists:bloggers,id',
+            'files' => 'required|array',
+            'files.*' => 'required|file|max:51200',
             'message' => 'string|nullable',
         ]);
 
@@ -52,8 +60,13 @@ class WorkController extends Controller
         $validated = $validator->validated();
         $user = Auth::user();
 
-        $project_work = ProjectWork::find($validated['project_work_id']);
-        $project = $project_work->project;
+        if (!$validated('project_id')) {
+            $project = Project::find($validated['project_id']);
+        } else {
+            $project_work = ProjectWork::find($validated['project_work_ids'][0]);
+            $project = $project_work->project;
+        }
+
         if (!$project) {
             return response()->json(['message' => 'Проект на который вы отправляете заявку удалён или заблокирован'])->setStatusCode(400);
         }
@@ -62,38 +75,70 @@ class WorkController extends Controller
             return response()->json(['message' => 'Проект на который вы отправляете не опубликован'])->setStatusCode(400);
         }
 
+        $works = [];
         if ($user->role == 'blogger') {
-            if ($project_work->project->isSended()) {
+            if ($project->isSended()) {
                 return response()->json(['message' => 'Заявка отправлена'])->setStatusCode(400);
             }
-            $blogger_user = $user;
+
+            $works[] = $this->createWork($project->id, $user->id, $project->seller_id, $validated['message'], $project->product_name, $validated['project_work_names']);
         } else {
-            if (!isset($validated['blogger_id']) || empty($validated['blogger_id'])) {
-                return response()->json(['message' => 'У пользователя должна быть роль blogger либо укажите blogger_id'])->setStatusCode(400);
+            if (empty($validated['blogger_id'])) {
+                return response()->json(['message' => 'У пользователя должна быть роль Блогер'])->setStatusCode(400);
             }
-            $blogger_user = Blogger::find($validated['blogger_id']);
+
+            $blogger_users = Blogger::whereIn('id', $validated['blogger_ids']);
+            foreach ($blogger_users as $blogger_user) {
+                $works[] = $this->createWork($project->id, $blogger_user->id, $user->id, $validated['message'], $project->product_name, $validated['project_work_names']);
+            }
         }
 
+        foreach ($request->allFiles() as $file) {
+            $file_path = $file->store('works', 'public');
+
+            foreach ($works as $work) {
+                WorkFile::create([
+                    'source_id' => $work->id,
+                    'type' => 0,
+                    'link' => $file_path,
+                ]);
+            }
+        }
+
+        return response()->json(['id' => $works[0]->id])->setStatusCode(200);
+    }
+
+    public function createWork(int $project_id, int $blogger_id, int $seller_id, string|null $message, string $product_name, array $project_work_names): Work
+    {
+        $user = Auth::user();
         $work = Work::create([
-            'project_id' => $project_work->project->id,
-            'blogger_id' => $user->role == 'seller' ? $blogger_user->user->id : $user->id,
-            'seller_id' => $user->role == 'seller' ? $user->id : $project_work->project->seller_id,
+            'project_id' => $project_id,
+            'blogger_id' => $blogger_id,
+            'seller_id' => $seller_id,
             'status' => null,
-            'project_work_id' => $project_work->id,
-            'message' => $validated['message'] ?? null,
+            'message' => $message,
             'created_by' => $user->id,
         ]);
+
+        $project_works = ProjectWork::whereIn('name' , $project_work_names)->where('project_id', $project_id)->get();
+
+        foreach ($project_works as $project_work) {
+           WorkProjectWork::create([
+               'work_id' => $work->id,
+               'project_work_id' => $project_work->id,
+           ]);
+        }
 
         Notification::create([
             'user_id' => $work->getPartnerUser($user->role)->id,
             'type' => 'Новая заявка',
-            'text' => 'Вам поступила новая заявка от ' . $user->name . ' на проект ' . $project_work->project->product_name,
+            'text' => 'Вам поступила новая заявка от ' . $user->name . ' на проект ' . $product_name,
             'work_id' => $work->id,
             'from_user_id' => $user->id,
         ]);
 
-        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Вам поступила новая заявка от ' . $user->name . ' на проект ' . $project_work->project->product_name);
-        return response()->json(['id' => $work->id])->setStatusCode(200);
+        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Вам поступила новая заявка от ' . $user->name . ' на проект ' . $product_name);
+        return $work;
     }
 
     public function accept(Work $work)

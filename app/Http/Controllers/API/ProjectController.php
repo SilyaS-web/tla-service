@@ -433,6 +433,10 @@ class ProjectController extends Controller
         ];
 
         return response()->json($data)->setStatusCode(200);
+    }
+
+    public function types()
+    {
 
     }
 }

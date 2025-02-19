@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App;
 use App\Services\TgService;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Auth;
@@ -36,14 +37,16 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
-        $this->reportable(function (Throwable $e) {
-            $user_message = 'Неавторизованный пользователь';
-            if (Auth::check()) {
-                $user_message = 'ID пользователя: ' . Auth::id();
-            }
-            $message =  $user_message . ', ошибка в файле: ' . $e->getFile() . ' на строке: ' . $e->getLine() . '
+        if (!App::isLocal()) {
+            $this->reportable(function (Throwable $e) {
+                $user_message = 'Неавторизованный пользователь';
+                if (Auth::check()) {
+                    $user_message = 'ID пользователя: ' . Auth::id();
+                }
+                $message =  $user_message . ', ошибка в файле: ' . $e->getFile() . ' на строке: ' . $e->getLine() . '
             ' . $e->getMessage() ;
-            TgService::sendToDevBot($message);
-        });
+                TgService::sendToDevBot($message);
+            });
+        }
     }
 }
