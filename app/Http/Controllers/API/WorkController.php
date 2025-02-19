@@ -92,7 +92,7 @@ class WorkController extends Controller
 
             $works[] = $this->createWork($project->id, $user->id, $project->seller_id, $validated['message'], $project->product_name, $project_works);
         } else {
-            if (empty($validated['blogger_id'])) {
+            if (empty($validated['blogger_ids'])) {
                 return response()->json(['message' => 'У пользователя должна быть роль Блогер'])->setStatusCode(400);
             }
 
