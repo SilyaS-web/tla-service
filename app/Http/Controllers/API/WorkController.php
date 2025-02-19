@@ -45,12 +45,12 @@ class WorkController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'project_work_id' => 'nullable|exists:project_works,id',
-            'project_work_names' => 'required|array',
-            'project_work_names.*' => 'required|string',
+            'project_work_names' => 'nullable|array',
+            'project_work_names.*' => 'nullable|string',
             'blogger_ids' => 'nullable|array',
-            'blogger_ids.*' => 'required|exists:bloggers,id',
-            'files' => 'required|array',
-            'files.*' => 'required|file|max:51200',
+            'blogger_ids.*' => 'nullable|exists:bloggers,id',
+            'files' => 'nullable|array',
+            'files.*' => 'nullable|file|max:51200',
             'message' => 'string|nullable',
         ]);
 
