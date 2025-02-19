@@ -73,7 +73,7 @@ class Work extends Model
 
     public function files()
     {
-        return $this->hasMany(WorkFile::class, 'work_id', 'id');
+        return $this->hasMany(WorkFile::class, 'source_id', 'id');
     }
 
     public function projectWorks()
