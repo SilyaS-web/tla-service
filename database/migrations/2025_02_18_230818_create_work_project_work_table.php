@@ -24,7 +24,7 @@ return new class extends Migration
 
         $works = Work::all();
         foreach ($works as $work) {
-            WOrkProjectWork::create([
+            WorkProjectWork::create([
                 'work_id' => $work->id,
                 'project_work_id' => $work->project_work_id,
             ]);
