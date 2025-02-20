@@ -29,11 +29,14 @@ import {ref} from "vue";
 
 import PopupModal from '../AppPopup.vue';
 
+import Work from '../../../services/api/Work.vue';
+
 export default {
     components: { PopupModal },
     data(){
         return{
-            offer: ref({})
+            offer: ref({}),
+            Work
         }
     },
     methods:{
@@ -48,7 +51,7 @@ export default {
             })
         },
         sendOffer(){
-            if(!this.offer.project_work_ids || this.offer.project_work_ids.length === 0){
+            if(!this.offer.project_work_id){
                 notify('error', {
                     title: 'Внимание!',
                     message: 'Невозможно отправить предложение, не выбран формат рекламы'
@@ -57,25 +60,11 @@ export default {
                 return
             }
 
-            axios({
-                method: 'post',
-                url: '/api/works',
-                data: this.offer
-            })
-            .then((response) => {
-                notify('info', {
-                    title: 'Успешно!',
-                    message: 'Заявка отправлена.'
-                });
-
-                this._confirm()
-            })
-            .catch((errors) => {
-                notify('error', {
-                    title: 'Внимание!',
-                    message: 'Невозможно обновить данные.'
-                });
-            })
+            this.Work.sendOffer(null, this.offer.project_work_id, null, this.offer.message)
+                .then((response) => {
+                    this._confirm()
+                })
+                .catch((errors) => {  })
         },
         _confirm() {
             this.$refs.popup.close()

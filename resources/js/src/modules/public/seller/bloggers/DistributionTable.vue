@@ -141,8 +141,8 @@ export default {
                 .reduce((a, b) => a + b, 0);
         },
         cleanMassDistributionList() {
-            localStorage.setItem('massDistributionList', JSON.stringify([]));
             this.bloggers = [];
+            window.dispatchEvent(new CustomEvent('massDistributionListEmpty', { }));
         },
         slideBloggersList(direction) {
             const _self = this;

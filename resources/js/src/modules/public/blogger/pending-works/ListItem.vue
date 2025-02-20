@@ -17,6 +17,7 @@
                 class="btn btn-secondary">Отклонить</button>
         </div>
     </ProjectCard>
+    <specification-popup ref="specificationPopup"></specification-popup>
 </template>
 <script>
 import Work from '../../../../core/services/api/Work'
@@ -24,9 +25,11 @@ import Project from '../../../../core/services/api/Project'
 
 import ProjectCard from '../../../../core/components/project-card/index'
 
+import SpecificationPopup from '../../../../core/components/popups/specification-popup/SpecificationPopup.vue'
+
 export default{
     props: ['work'],
-    components:{ProjectCard},
+    components:{ProjectCard, SpecificationPopup},
     data(){
         return {
             Project, Work
@@ -38,14 +41,21 @@ export default{
     },
     methods: {
         acceptApplication(){
-            this.Work.accept(this.work.id).then(
-                () => {
-                    $(`#avail-projects .list-projects__item[data-id="${this.work.id}"]`).hide();
-                },
-                err => {
-
+            this.$refs.specificationPopup.show({
+                specification:{
+                    text: this.work.message,
+                    files: this.work.files
                 }
-            )
+            });
+
+            // this.Work.accept(this.work.id).then(
+            //     () => {
+            //         $(`#avail-projects .list-projects__item[data-id="${this.work.id}"]`).hide();
+            //     },
+            //     err => {
+            //
+            //     }
+            // )
         },
         denyApplication(){
             this.Work.deny(this.work.id).then(

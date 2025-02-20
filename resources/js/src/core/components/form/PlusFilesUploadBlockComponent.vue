@@ -60,6 +60,7 @@ export default {
     methods:{
         deleteFile(file){
             this.uploadFiles = this.uploadFiles.filter(_f => _f.link !== file.link);
+
             this.$emit('update:modelValue', this.uploadFiles)
         },
         triggerUpload(){
@@ -70,7 +71,7 @@ export default {
 
             this.uploadFiles[this.uploadFiles.length - 1].link = file.name;
             this.uploadFiles[this.uploadFiles.length - 1].file = file;
-
+            console.log(this.uploadFiles)
             this.$emit('update:modelValue', this.uploadFiles)
         },
     }

@@ -40,123 +40,10 @@
 
                         <FormatTypes
                             v-model="project.integration_types"
+                            :id="'new-project'"
                             :label="'Выберите формат'"
                             :error="errors.project_type"
                         ></FormatTypes>
-
-<!--                        <div class="form-group marketing-format" style="z-index: 3;" >-->
-<!--                            <label for="format">Выберите формат</label>-->
-<!--                            <span class="error" v-if="errors && errors.project_type">{{ errors.project_type }}</span>-->
-
-<!--                            <div class="marketing-format__item input-checkbox-w">-->
-<!--                                <div class="checkbox">-->
-<!--                                    <input-->
-<!--                                        type="checkbox"-->
-<!--                                        id="feedback"-->
-<!--                                        class="checkbox__checkbox"-->
-<!--                                        value="feedback"-->
-<!--                                        v-model="project.integration_types">-->
-<!--                                    <label for="feedback"></label>-->
-<!--                                </div>-->
-<!--                                <label for="product-feedback">Выкуп + отзыв-->
-<!--                                    <div class="format-tooltip format-tooltip&#45;&#45;mobile" data-hint="product-feedback">-->
-<!--                                        ?-->
-<!--                                        <div class="format-hint format-hint&#45;&#45;text" id="product-feedback">-->
-<!--                                            <div class="format-hint__title">-->
-<!--                                                Выкуп + отзыв-->
-<!--                                            </div>-->
-<!--                                            <div class="format-hint__body">-->
-<!--                                                Блогер покупает товар на маркетплейсе по заданию селлера, после чего пишет отзыв и создаёт фото/видео-контент, не размещая его в соцсетях. Контент и отзыв соответствуют ТЗ селлера. Реклама и публикация в соцсетях не предусмотрены.-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </label>-->
-<!--                                <div class="format-tooltip" data-hint="feedback">-->
-<!--                                    ?-->
-<!--                                    <div class="format-hint format-hint&#45;&#45;text" id="feedback">-->
-<!--                                        <div class="format-hint__title">-->
-<!--                                            Выкуп + отзыв-->
-<!--                                        </div>-->
-<!--                                        <div class="format-hint__body">-->
-<!--                                            Блогер покупает товар на маркетплейсе по заданию селлера, после чего пишет отзыв и создаёт фото/видео-контент, не размещая его в соцсетях. Контент и отзыв соответствуют ТЗ селлера. Реклама и публикация в соцсетях не предусмотрены.-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="marketing-format__item input-checkbox-w">-->
-<!--                                <div class="checkbox">-->
-<!--                                    <input-->
-<!--                                        type="checkbox"-->
-<!--                                        id="integration"-->
-<!--                                        class="checkbox__checkbox"-->
-<!--                                        value="integration"-->
-<!--                                        v-model="project.integration_types">-->
-<!--                                    <label for="integration"></label>-->
-<!--                                </div>-->
-<!--                                <label for="product-inst">-->
-<!--                                    Интеграция-->
-<!--                                    <div class="format-tooltip format-tooltip&#45;&#45;mobile" data-hint="product-inst">-->
-<!--                                        ?-->
-<!--                                        <div class="format-hint format-hint&#45;&#45;text" id="product-inst">-->
-<!--                                            <div class="format-hint__title">-->
-<!--                                                Интеграция-->
-<!--                                            </div>-->
-<!--                                            <div class="format-hint__body">-->
-<!--                                                Селлер отправляет товар блогеру для обзора. Блогер делает контент и размещает его в своих соцсетях (пост, сторис, видео и т. д.), но не передаёт контент в использование селлеру и не пишет отзыв на маркетплейсах.-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </label>-->
-<!--                                <div class="format-tooltip" data-hint="inst">-->
-<!--                                    ?-->
-<!--                                    <div class="format-hint format-hint&#45;&#45;text" id="inst">-->
-<!--                                        <div class="format-hint__title">-->
-<!--                                            Интеграция-->
-<!--                                        </div>-->
-<!--                                        <div class="format-hint__body">-->
-<!--                                            Селлер отправляет товар блогеру для обзора. Блогер делает контент и размещает его в своих соцсетях (пост, сторис, видео и т. д.), но не передаёт контент в использование селлеру и не пишет отзыв на маркетплейсах.-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="marketing-format__item input-checkbox-w">-->
-<!--                                <div class="checkbox">-->
-<!--                                    <input-->
-<!--                                        type="checkbox"-->
-<!--                                        id="ugc-content"-->
-<!--                                        class="checkbox__checkbox"-->
-<!--                                        value="ugc_content"-->
-<!--                                        v-model="project.integration_types"-->
-<!--                                    >-->
-<!--                                    <label for="ugc-content"></label>-->
-<!--                                </div>-->
-<!--                                <label for="product-inst">-->
-<!--                                    UGC-контент-->
-<!--                                    <div class="format-tooltip format-tooltip&#45;&#45;mobile" data-hint="ugc-content-hint">-->
-<!--                                        ?-->
-<!--                                        <div class="format-hint format-hint&#45;&#45;text" id="ugc-content-hint">-->
-<!--                                            <div class="format-hint__title">-->
-<!--                                                UGC-контент-->
-<!--                                            </div>-->
-<!--                                            <div class="format-hint__body">-->
-<!--                                                Селлер отправляет товар блогеру, который снимает фото/видео-контент и передаёт его селлеру для использования в рекламе и на маркетплейсах. Блогер не публикует контент в своих соцсетях и не пишет отзыв.-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </label>-->
-<!--                                <div class="format-tooltip" data-hint="inst">-->
-<!--                                    ?-->
-<!--                                    <div class="format-hint format-hint&#45;&#45;text" id="inst">-->
-<!--                                        <div class="format-hint__title">-->
-<!--                                            UGC-контент-->
-<!--                                        </div>-->
-<!--                                        <div class="format-hint__body">-->
-<!--                                            Селлер отправляет товар блогеру, который снимает фото/видео-контент и передаёт его селлеру для использования в рекламе и на маркетплейсах. Блогер не публикует контент в своих соцсетях и не пишет отзыв.-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
 
                         <UploadFiles
                             v-model="project.images"
@@ -165,17 +52,6 @@
                             :error="errors['images.0']"
                         ></UploadFiles>
 
-<!--                        <div class="form-group form-group&#45;&#45;file create-project__files upload-files">-->
-<!--                            <div class="upload-files__title">-->
-<!--                                Загрузите изображения товара-->
-<!--                            </div>-->
-<!--                            <div class="upload-files__body">-->
-<!--                                <div class="upload-files__plus">-->
-
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <span class="error" v-if="errors && errors['images.0']">{{ errors['images.0'] }}</span>-->
-<!--                        </div>-->
                         <div class="quest__btns">
                             <button @click="createProject" class="btn btn-primary">
                                 Сохранить
@@ -226,14 +102,7 @@ export default {
     },
     methods: {
         async createProject(){
-            const images = $('.upload-files__body').find('input[type="file"]');
-
-            this.project.images = []
-
-            images.each((i, v) => {
-                if($(v)[0].files)
-                    this.project.images.push($(v)[0].files)
-            })
+            this.project.images = this.project.images.map(obj => obj.file)
 
             this.Project.create(this.project).then(
                 data => {

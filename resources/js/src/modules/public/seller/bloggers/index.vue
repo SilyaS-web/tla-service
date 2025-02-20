@@ -275,6 +275,7 @@ export default{
                 title: 'Массовая рассылка',
                 integrationTypes:  this.currentProject.choosedWork,
                 productPrice:  this.currentProject.product_price,
+                productID:  this.currentProject.id,
                 okButton: 'Отправить'
             })
         }

@@ -70,6 +70,16 @@ export default{
             Work
         }
     },
+    mounted(){
+       window.addEventListener('massDistributionListEmpty', () => {
+           $('#checkbox-blogger-card-' + this.blogger.id).prop('checked', false)
+       })
+        window.addEventListener('massDistributionListChanged', (event) => {
+            if(event.target.detail === this.blogger.id){
+                $('#checkbox-blogger-card-' + this.blogger.id).prop('checked', false)
+            }
+        })
+    },
     methods:{
         sendOfferToBlogger(){
             if(!this.currentProject){
@@ -80,7 +90,7 @@ export default{
                 return
             }
 
-            this.Work.sendOfferToBlogger(this.blogger.id, this.currentProject.choosedWork.id)
+            this.Work.sendOffer([this.blogger.id], this.currentProject.choosedWork.id)
                 .then(() => { this.isOfferSent = true })
         },
 

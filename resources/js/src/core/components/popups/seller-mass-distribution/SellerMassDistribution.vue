@@ -112,6 +112,7 @@
 
                         <FormatTypes
                             v-model="distributionInfo.integration_types"
+                            :id="'distribution-formats'"
                             :integrationTypes="integrationTypes"
                             :label="'Формат работы'"
                             :error="errors.integration_types"
@@ -125,7 +126,9 @@
                         ></FilesUpload>
                     </div>
                     <div class="info-distribution__footer">
-                        <div class="btn btn-primary">
+                        <div
+                            @click="_confirm"
+                            class="btn btn-primary">
                             {{ okButton }}
                         </div>
                     </div>
@@ -140,12 +143,15 @@ import {countER} from "../../../utils/countER";
 import {countCPM} from "../../../utils/countCPM";
 
 import {ref} from "vue";
+import axios from "axios";
 
 import AppPopup from "../AppPopup.vue";
 
 import Textarea from "../../form/TextareaBlockComponent.vue";
 import FilesUpload from "../../form/PlusFilesUploadBlockComponent.vue";
 import FormatTypes from '../../../../core/components/form/FormatChooseComponent.vue'
+
+import Work from '../../../../core/services/api/Work.vue'
 
 export default {
     name: "SellerMassDistribution",
@@ -162,15 +168,19 @@ export default {
                 text:"",
                 files:[],
                 bloggersIDs: [],
+                integration_types: [],
             }),
 
             integrationTypes: ref([]),
             productPrice: ref(null),
+            productID: ref(null),
 
             errors: ref({}),
 
             resolvePromise: undefined,
             rejectPromise: undefined,
+
+            Work
         }
     },
     mounted(){
@@ -196,6 +206,9 @@ export default {
             if(opts.productPrice)
                 this.productPrice = opts.productPrice;
 
+            if(opts.productID)
+                this.productID = opts.productID;
+
             this.$refs.popup.open()
 
             return new Promise((resolve, reject) => {
@@ -205,8 +218,44 @@ export default {
         },
 
         _confirm() {
-            this.$refs.popup.close()
-            this.resolvePromise(true)
+            let formdata = new FormData;
+
+            formdata.append('project_id', this.productID)
+            formdata.append('message', this.distributionInfo.text)
+
+            for(let i = 0; i < this.distributionInfo.files.length; i++){
+                formdata.append(`files[${i}]`, this.distributionInfo.files[i].file)
+            }
+            for(let i = 0; i < this.bloggers.length; i++){
+                formdata.append(`blogger_ids[${i}]`, this.bloggers[i].user.id)
+            }
+            for(let i = 0; i < this.distributionInfo.integration_types.length; i++){
+                formdata.append(`project_work_names[${i}]`, this.distributionInfo.integration_types[i])
+            }
+
+            axios({
+                url: '/api/works',
+                method: 'post',
+                data: formdata
+            })
+            .then(() => {
+                notify('info', {
+                    title: 'Успешно!',
+                    message: 'Заявки отправлены.'
+                });
+
+                this.$refs.popup.close()
+                this.resolvePromise(true)
+            })
+            .catch(err => {
+                const message =  (err.response.data && err.response.data.message) ?
+                    err.response.data.message :
+                    'Что-то пошло не так. Перепроверьте все данные или попробуйте позже.';
+
+                notify('info', {title: 'Внимание!', message: message});
+
+                this.errors = err.response.errors
+            })
         },
 
         _cancel() {
@@ -216,10 +265,12 @@ export default {
 
         popBloggerFromList(blogger){
             this.bloggers = this.bloggers.filter(_blogger => _blogger.id !== blogger.id)
+
         },
 
         openBloggerCard(event){
             $(event.target).closest('.distribution-bloggers__item').toggleClass('opened')
+
         },
 
         countER, countCPM
