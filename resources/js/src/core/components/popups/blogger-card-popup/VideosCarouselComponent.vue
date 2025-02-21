@@ -5,6 +5,7 @@
             v-for="video in videos"
             class="info-profile__content-item">
             <video
+                controls
                 autoplay
                 muted
                 loop

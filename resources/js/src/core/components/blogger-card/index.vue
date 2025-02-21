@@ -100,7 +100,7 @@
                                 <span>CPM</span>
                             </div>
                             <div class="card__stats-val">
-                                <span>{{ countCPM(coverage) || '-' }}₽</span>
+                                <span>{{ countCPM(coverage, product_price) || '-' }}₽</span>
                             </div>
                         </div>
                     </div>
@@ -140,30 +140,26 @@
     </div>
 </template>
 <script>
+import {countER} from "../../utils/countER.js";
+import {countCPM} from "../../utils/countCPM.js";
+
 export default {
-    props:[
-        'id', 'image', 'name', 'platforms', 'themes', 'description',
-        'work_message', 'content', 'is_achievement', 'subscriber_quantity',
-        'coverage', 'product_price'
-    ],
+    props: {
+        id: { type: Number, required: true },
+        image:{ type: String, required: false },
+        name: { type: String, required: true },
+        platforms: { type: Array, required:false },
+        themes: { type: Array, required: false },
+        description:{ type: String, required: false },
+        work_message: { type: String, required: false },
+        content: {type: Array, required: false},
+        is_achievement: {type: Boolean, required: false},
+        subscriber_quantity: {type: Number, required: true},
+        coverage: {type: Number, required: true},
+        product_price: {type: Number, required: false}
+    },
     methods:{
-        countER(subs, cover){
-            var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
-
-            if(val - 1 < 0) val = Math.round(val).toFixed(2);
-            else val = Math.ceil(val);
-
-            return val;
-        },
-        countCPM(cover){
-            if(!cover) return '-';
-
-            if(!this.product_price) return '-';
-
-            let result = (this.product_price / cover) * 1000;
-
-            return Math.round(result) === 0 ? (result).toFixed(3) : Math.round(result);
-        },
-    }
+        countER, countCPM,
+    },
 }
 </script>

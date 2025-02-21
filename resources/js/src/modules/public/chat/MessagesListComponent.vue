@@ -84,7 +84,7 @@
 </template>
 <script>
 import moment from "moment";
-import ImagePopup from "../../../core/components/popups/fullscreen-image/ImapePopup";
+import ImagePopup from "../../../core/components/popups/fullscreen-asset/AssetPopup";
 
 export default{
     props:['user', 'messages', 'chatStatus', 'statistics', 'partnerName'],
@@ -138,7 +138,7 @@ export default{
         },
 
         openImage(src){
-            this.$refs.imagePopup.show(src)
+            this.$refs.imagePopup.show({imageUrl: src})
         },
 
         isImg(file){

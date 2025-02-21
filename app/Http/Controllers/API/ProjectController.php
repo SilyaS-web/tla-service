@@ -247,22 +247,6 @@ class ProjectController extends Controller
 
         $project->update($validated);
 
-//        foreach (Project::TYPES as $type) {
-//            $project_work = $project->projectWorks()->where('type', $type)->first();
-//            if ($project_work) {
-//                if (isset($validated[$type]) && $validated[$type] >= $project_work->quantity) {
-//                    $project_work->update([
-//                        'quantity' => -1,
-//                    ]);
-//                }
-//            } else if (isset($validated[$type]) && $validated[$type] > 0) {
-//                ProjectWork::create([
-//                    'type' => $type,
-//                    'quantity' => -1,
-//                    'project_id' => $project->id,
-//                ]);
-//            }
-//        }
         return response()->json([])->setStatusCode(200);
     }
 
@@ -433,6 +417,10 @@ class ProjectController extends Controller
         ];
 
         return response()->json($data)->setStatusCode(200);
+    }
+
+    public function types()
+    {
 
     }
 }

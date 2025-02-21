@@ -56,17 +56,32 @@ const Work = {
             })
         })
     },
-    sendOfferToBlogger: (blogger_id, project_work_id) => {
+    sendOffer: (blogger_ids = null, project_work_id = null, project_work_names = null, message = "") => {
         return new Promise((resolve, reject) => {
+            let data = {
+                message: message
+            }
+
+            if(blogger_ids)
+                data['blogger_ids'] = blogger_ids
+
+            if(project_work_names)
+                data['project_work_names'] = project_work_names
+
+            if(project_work_id)
+                data['project_work_id'] = project_work_id
+
             axios({
                 url: '/api/works',
                 method: 'post',
-                data: {
-                    blogger_id: blogger_id,
-                    project_work_id: project_work_id
-                }
+                data: data
             })
             .then((data) => {
+                notify('info', {
+                    title: 'Успешно!',
+                    message: 'Заявка отправлена.'
+                });
+
                 resolve(true)
             })
             .catch(errors => {

@@ -24,7 +24,7 @@
                                 id="has-content"
                                 :value="filter.has_content"
                                 @change="filter.has_content = Number(!filter.has_content)">
-                            <label for="has-content">Есть контент</label>
+                            <label for="has-content">Есть примеры контента</label>
                         </div>
                     </div>
                 </div>

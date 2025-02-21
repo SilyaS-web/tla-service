@@ -1,6 +1,6 @@
 <template>
     <transition name="fade">
-        <div class="popup" style="" v-if="isVisible">
+        <div :id="id" class="popup" style="" v-if="isVisible">
             <div class="popup__container _container">
                 <div class="popup__body" style="max-width:600px">
                     <slot></slot>
@@ -15,7 +15,7 @@
 <script>
 export default {
     name: 'PopupModal',
-
+    props:['id'],
     data: () => ({
         isVisible: false,
     }),

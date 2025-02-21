@@ -72,6 +72,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/sellers/{seller}', [SellerController::class, 'update']);
 
     Route::get('/projects', [ProjectController::class, 'index']);
+    Route::get('/projects/types', [ProjectController::class, 'types']);
     Route::post('/projects', [ProjectController::class, 'store']);
     Route::post('/projects/{project}', [ProjectController::class, 'update']);
     Route::get('/projects/categories', [ProjectController::class, 'categories']);
