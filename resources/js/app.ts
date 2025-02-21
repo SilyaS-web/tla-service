@@ -1,4 +1,4 @@
-require('./bootstrap');
+require('./bootstrap.ts');
 
 import { createApp } from 'vue'
 import { createMemoryHistory, createRouter } from 'vue-router'
@@ -7,17 +7,17 @@ import { createMemoryHistory, createRouter } from 'vue-router'
 import AdminIndex from './src/modules/admin/index.vue'
 
 // user imports
-import Auth from './src/modules/auth/login/index'
-import Register from './src/modules/auth/register/index'
-import BloggerRegister from './src/modules/auth/blogger-register/index'
-import SellerProfile from './src/modules/public/seller/index'
-import BloggerProfile from './src/modules/public/blogger/index'
-import SellerEditProfile from './src/modules/public/seller/profile/index'
-import BloggerEditProfile from './src/modules/public/blogger/profile/index'
-import Tariffs from './src/modules/public/seller/tariffs/index'
-import Moderation from './src/modules/public/blogger/moderation/index'
-import Banned from './src/modules/public/banned/index'
-import User from './src/core/services/api/User'
+import Auth from './src/modules/auth/login/index.vue'
+import Register from './src/modules/auth/register/index.vue'
+import BloggerRegister from './src/modules/auth/blogger-register/index.vue'
+import SellerProfile from './src/modules/public/seller/index.vue'
+import BloggerProfile from './src/modules/public/blogger/index.vue'
+import SellerEditProfile from './src/modules/public/seller/profile/index.vue'
+import BloggerEditProfile from './src/modules/public/blogger/profile/index.vue'
+import Tariffs from './src/modules/public/seller/tariffs/index.vue'
+import Moderation from './src/modules/public/blogger/moderation/index.vue'
+import Banned from './src/modules/public/banned/index.vue'
+import User from './src/core/services/api/User.vue'
 
 const app = createApp();
 
@@ -58,7 +58,7 @@ router.beforeEach(async (to, from) => {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + isAuthenticated;
     }
 
-    if (!['Register', 'Login'].includes(to.name) && !isAuthenticated) {
+    if (!['Register', 'Login'].includes(String(to.name)) && !isAuthenticated) {
         return {
             name: 'Login'
         }

@@ -72,7 +72,7 @@
                             <div class="card__stats-title">
                                 <span>Подписчики</span>
                             </div>
-                            <div class="card__stats-val" v-bind:title="subscriber_quantity">
+                            <div class="card__stats-val">
                                 <span>{{ subscriber_quantity }}</span>
                             </div>
                         </div>
@@ -80,7 +80,7 @@
                             <div class="card__stats-title">
                                 <span>Охваты</span>
                             </div>
-                            <div class="card__stats-val" v-bind:title="coverage">
+                            <div class="card__stats-val">
                                 <span>{{ coverage }}</span>
                             </div>
                         </div>
@@ -139,7 +139,7 @@
         </div>
     </div>
 </template>
-<script>
+<script lang="ts">
 import {countER} from "../../utils/countER.js";
 import {countCPM} from "../../utils/countCPM.js";
 

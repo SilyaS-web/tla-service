@@ -85,10 +85,10 @@
         </div>
     </div>
 </template>
-<script>
+<script lang="ts">
 import {ref} from "vue";
 
-import {countER} from "../../../../core/utils/countER";
+import {countER} from "../../../../core/utils/countER.js";
 
 import DistributionList from "../../../../core/mixins/DistributionList.js";
 

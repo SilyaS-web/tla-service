@@ -138,9 +138,9 @@
     </app-popup>
 </template>
 
-<script>
-import {countER} from "../../../utils/countER";
-import {countCPM} from "../../../utils/countCPM";
+<script lang="ts">
+import {countER} from "../../../utils/countER.js";
+import {countCPM} from "../../../utils/countCPM.js";
 
 import {ref} from "vue";
 import axios from "axios";

@@ -1,12 +1,11 @@
-function countCPM(cover, price){
+function countCPM(cover:number, price:number):number|string{
     if (!cover) return '-';
 
     if (!price) return '-';
 
-    const result = (price / cover) * 1000;
+    const result:number = (price / cover) * 1000;
 
     return Math.round(result) === 0 ? (result).toFixed(3) : Math.round(result);
 }
 
 export {countCPM}
-
