@@ -45,7 +45,7 @@ class PaymentController extends Controller
             TgService::sendPayment($message_text);
 
             $seller_start_tariff = $user->getActiveTariffByGroup(1);
-            if ($tariff->type == Project::FEEDBACK && $user->getActiveTariffByGroup(1)) {
+            if ($tariff->type == Project::BARTER && $user->getActiveTariffByGroup(1)) {
                 $seller_start_tariff->delete();
             }
 
