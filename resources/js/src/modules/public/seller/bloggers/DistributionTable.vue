@@ -89,21 +89,18 @@
 import {ref} from "vue";
 
 import {countER} from "../../../../core/utils/countER";
-import bloggersList from "../../../admin/bloggers-list/index.vue";
+
+import DistributionList from "../../../../core/mixins/DistributionList.js";
 
 export default {
     name: 'BloggersDistributionBoard',
-    computed: {
-        bloggersList() {
-            return bloggersList
-        }
-    },
+    mixins:[DistributionList],
     data() {
         return {
-            bloggers: ref([]),
-
             totalSubs: ref(0),
             totalCover: ref(0),
+
+            bloggers: ref([]),
 
             bloggersListPosition: ref(1),
 
@@ -114,15 +111,29 @@ export default {
         }
     },
     mounted() {
-        window.addEventListener('massDistributionListChanged', (event) => {
-            const blogger = event.detail.storage;
+        window.addEventListener(this.distributionEventNames.add, (event) => {
+            const blogger = event.detail.blogger;
 
             if(this.bloggers.indexOf(blogger) !== -1) {
-                this.bloggers = this.bloggers.filter(_blogger => _blogger.id !== blogger.id);
+                return
             }
-            else{
-                this.bloggers.push(blogger)
+
+            this.bloggers.push(blogger)
+
+            this.countStatistics()
+            this.toggleSlideArrows()
+
+            this.bloggersListPosition = 1;
+        });
+
+        window.addEventListener(this.distributionEventNames.remove, (event) => {
+            const blogger = event.detail.blogger;
+
+            if(this.bloggers.indexOf(blogger) === -1) {
+                return
             }
+
+            this.bloggers = this.bloggers.filter(_blogger => _blogger.id !== blogger.id);
 
             this.countStatistics()
             this.toggleSlideArrows()
@@ -142,7 +153,7 @@ export default {
         },
         cleanMassDistributionList() {
             this.bloggers = [];
-            window.dispatchEvent(new CustomEvent('massDistributionListEmpty', { }));
+            window.dispatchEvent(new CustomEvent(this.distributionEventNames.empty, { }));
         },
         slideBloggersList(direction) {
             const _self = this;

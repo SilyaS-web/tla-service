@@ -83,7 +83,7 @@
                                 </div>
                                 <div class="distribution-bloggers__item-footer">
                                     <div
-                                        @click="popBloggerFromList(blogger)"
+                                        @click="removeBloggerToDistributionList(blogger)"
                                         class="btn btn-secondary">Убрать из списка</div>
                                 </div>
                             </div>
@@ -153,16 +153,17 @@ import FormatTypes from '../../../../core/components/form/FormatChooseComponent.
 
 import Work from '../../../../core/services/api/Work.vue'
 
+import DistributionList from '../../../mixins/DistributionList.js'
+
 export default {
     name: "SellerMassDistribution",
     components: {AppPopup,Textarea,FilesUpload, FormatTypes},
+    mixins:[DistributionList],
     data() {
         return {
             title: 'Массовая рассылка',
             okButton: 'Подтвердить',
             cancelButton: 'Отмена',
-
-            bloggers: ref([]),
 
             distributionInfo:ref({
                 text:"",
@@ -170,6 +171,8 @@ export default {
                 bloggersIDs: [],
                 integration_types: [],
             }),
+
+            bloggers: ref([]),
 
             integrationTypes: ref([]),
             productPrice: ref(null),
@@ -184,15 +187,22 @@ export default {
         }
     },
     mounted(){
-        window.addEventListener('massDistributionListChanged', (event) => {
-            const blogger = event.detail.storage;
+        window.addEventListener(this.distributionEventNames.add, (event) => {
+            const blogger = event.detail.blogger;
+
+            if(this.bloggers.indexOf(blogger) === -1) {
+                this.bloggers.push(blogger)
+            }
+        });
+        window.addEventListener(this.distributionEventNames.remove, (event) => {
+            const blogger = event.detail.blogger;
 
             if(this.bloggers.indexOf(blogger) !== -1) {
                 this.bloggers = this.bloggers.filter(_blogger => _blogger.id !== blogger.id);
             }
-            else{
-                this.bloggers.push(blogger)
-            }
+        });
+        window.addEventListener(this.distributionEventNames.empty, () => {
+            this.bloggers = []
         });
     },
     methods: {
@@ -263,10 +273,9 @@ export default {
             this.resolvePromise(false)
         },
 
-        popBloggerFromList(blogger){
-            this.bloggers = this.bloggers.filter(_blogger => _blogger.id !== blogger.id)
-
-        },
+        // popBloggerFromList(blogger){
+        //     this.removeBloggerToDistributionList(blogger)
+        // },
 
         openBloggerCard(event){
             $(event.target).closest('.distribution-bloggers__item').toggleClass('opened')

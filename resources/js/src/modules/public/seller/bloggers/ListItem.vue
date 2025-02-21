@@ -36,7 +36,7 @@
                 v-if="currentProject"
                 class="checkbox">
                 <input
-                    @change="toggleBloggerInMassDestributionList"
+                    @change="toggleBloggerInMassDistributionList($event)"
                     :id="'checkbox-blogger-card-' + blogger.id"
                     class="checkbox__checkbox" type="checkbox" name="">
 
@@ -58,9 +58,12 @@ import BloggerCard from "../../../../core/components/blogger-card/index";
 
 import Work from "../../../../core/services/api/Work.vue"
 
+import DistributionList from "../../../../core/mixins/DistributionList.js"
+
 export default{
     props:['blogger', 'currentProject'],
     components: { BloggerCardPopup, BloggerCard },
+    mixins:[DistributionList],
     data(){
         return{
             themes: ref([]),
@@ -71,13 +74,12 @@ export default{
         }
     },
     mounted(){
-       window.addEventListener('massDistributionListEmpty', () => {
-           $('#checkbox-blogger-card-' + this.blogger.id).prop('checked', false)
-       })
-        window.addEventListener('massDistributionListChanged', (event) => {
-            if(event.target.detail === this.blogger.id){
+        window.addEventListener(this.distributionEventNames.remove, (event) => {
+            if(event.detail.blogger.id === this.blogger.id)
                 $('#checkbox-blogger-card-' + this.blogger.id).prop('checked', false)
-            }
+        })
+        window.addEventListener(this.distributionEventNames.empty, () => {
+            $('#checkbox-blogger-card-' + this.blogger.id).prop('checked', false)
         })
     },
     methods:{
@@ -102,12 +104,13 @@ export default{
             })
         },
 
-        toggleBloggerInMassDestributionList(){
-            window.dispatchEvent(new CustomEvent('massDistributionListChanged', {
-                detail: {
-                    storage: this.blogger
-                }
-            }));
+        toggleBloggerInMassDistributionList(event){
+            const isChecked = $(event.target).prop('checked');
+
+            if(isChecked)
+                this.appendBloggerToDistributionList(this.blogger)
+            else
+                this.removeBloggerToDistributionList(this.blogger)
         }
     }
 }
