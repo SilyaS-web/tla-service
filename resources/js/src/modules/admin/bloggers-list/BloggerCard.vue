@@ -38,6 +38,9 @@
             <button class="btn btn-delete" v-on:click="deletionConfirmation">
                 Удалить
             </button>
+            <app-tooltip>
+
+            </app-tooltip>
         </div>
     </BloggerCard>
     <blogger-card-popup ref="bloggerCardPopup"></blogger-card-popup>
@@ -46,10 +49,11 @@
 
 import BloggerCardPopup from "../../../core/components/popups/blogger-card-popup/BloggerCardPopup";
 import BloggerCard from "../../../core/components/blogger-card/index";
+import AppTooltip from "../../../core/components/AppTooltip.vue";
 
 export default{
     props: ['blogger', 'bloggers'],
-    components: { BloggerCard, BloggerCardPopup },
+    components: { BloggerCard, BloggerCardPopup, AppTooltip },
     methods:{
         deletionConfirmation() {
             this.$emit('deletionConfirmation', this.blogger.user.id)
@@ -65,7 +69,21 @@ export default{
 
         openBloggerInfoPopup(){
             this.$refs.bloggerCardPopup.show(this.blogger)
-        }
+        },
     }
 }
 </script>
+
+<style scoped>
+    .blogger-card__options{
+        width: 24px;
+        height: 24px;
+        align-self: center;
+        opacity: .4;
+        cursor: pointer;
+        transition:all .1s linear;
+    }
+    .blogger-card__options:hover{
+        opacity:1;
+    }
+</style>
