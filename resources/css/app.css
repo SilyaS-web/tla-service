@@ -2658,6 +2658,7 @@ input[type='range']::-webkit-slider-runnable-track{
     flex-wrap: wrap;
     gap: 10px;
 }
+
 .list-blogers__item.card {
     /* box-shadow: 0px 0px 36px 42px rgba(0, 0, 0, .02); */
     min-width: 337px;
