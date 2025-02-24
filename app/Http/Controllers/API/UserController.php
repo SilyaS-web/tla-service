@@ -35,9 +35,9 @@ class UserController extends Controller
     {
         $user = Auth::user();
         if ($user->role == 'seller' && $user->status == 1) {
-            if(count($user->projects) === 0) {
+            if (count($user->projects) === 0) {
                 $tariffs = $user->getActiveTariffs();
-                if(count($tariffs) == 0) {
+                if (count($tariffs) == 0) {
                     $tariff = Tariff::find(19);
                     SellerTariff::create([
                         'user_id' => $user->id,
@@ -58,7 +58,7 @@ class UserController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-     public function show(User $user)
+    public function show(User $user)
     {
         $data = [
             'user' => new UserResource($user),
@@ -79,9 +79,9 @@ class UserController extends Controller
 
 Если у вас есть вопросы, вы можете с нами связаться в [чате](https://t.me/adswap_admin)";
             TgService::sendMessage($user->tgPhone->chat_id, $text, [
-                    'disable_web_page_preview' => true,
-                    'parse_mode' => 'MarkdownV2',
-                ]);
+                'disable_web_page_preview' => true,
+                'parse_mode' => 'MarkdownV2',
+            ]);
         }
 
         $user->status = -1;
@@ -263,16 +263,18 @@ class UserController extends Controller
         }
 
         $work->messages()->whereNull('viewed_at')->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
-        $messages = $messages->get();
+        $specification_message = [
+            'id' => 0,
+            'message' => $work->message,
+            'user_id' => 1,
+            'is_specification' => true,
+            'viewed_at' => null,
+            'created_at' => null,
+        ];
+
+        $messages = array_merge((array)MessageResource::collection($messages->get()), $specification_message);
         $data = [
-            'messages' => MessageResource::collection($messages)->additional([
-                'id' => 0,
-                'message' => $work->message,
-                'user_id' => 1,
-                'is_specification' => true,
-                'viewed_at' => null,
-                'created_at' => null,
-            ]),
+            'messages' => $messages
         ];
 
         return response()->json($data)->setStatusCode(200);
@@ -413,7 +415,7 @@ class UserController extends Controller
 
     public function showModal(User $user, Modal $modal)
     {
-        Redis::sadd('user.'. $user->id . '.modals', $modal->id);
+        Redis::sadd('user.' . $user->id . '.modals', $modal->id);
         return response()->json()->setStatusCode(200);
     }
 }
