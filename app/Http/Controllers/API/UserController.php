@@ -267,7 +267,7 @@ class UserController extends Controller
 
         $message_collection = MessageResource::collection($messages->get());
 
-        $message_collection = [
+        $specification_message = [
             'id' => 0,
             'message' => $work->message,
             'sender_id' => 1,
@@ -276,7 +276,7 @@ class UserController extends Controller
             'viewed_at' => null,
             'created_at' => null,
         ];
-
+        $message_collection = array_merge([$specification_message], $message_collection)
         $data = [
             'messages' => $message_collection
         ];
