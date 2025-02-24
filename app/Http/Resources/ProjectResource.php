@@ -24,7 +24,7 @@ class ProjectResource extends JsonResource
         if ($user->role === 'blogger' && $user->blogger->platforms()->max('coverage') < 2000) {
             $project_works = $this->projectWorks()->where('type', Project::FEEDBACK);
         } else {
-            $project_works = $this->projectWorks();
+            $project_works = $this->projectWorks()->where([]);
         }
         $project_works->where('is_auto_generated', false)->get();
 
