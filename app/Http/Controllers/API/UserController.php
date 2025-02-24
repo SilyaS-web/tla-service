@@ -275,7 +275,7 @@ class UserController extends Controller
         ];
 
         $messages = MessageResource::collection($messages->get());
-        $merged = $messages->merge([$specification_message]);
+        $merged = $messages->merge($specification_message);
 
         $data = [
             'messages' => $merged,
