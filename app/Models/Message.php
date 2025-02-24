@@ -10,6 +10,8 @@ class Message extends Model
 {
     use HasFactory, SoftDeletes;
 
+    public bool $is_specification = false;
+
     protected $fillable = [
         'work_id',
         'message',
