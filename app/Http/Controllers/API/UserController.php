@@ -267,13 +267,13 @@ class UserController extends Controller
             'id' => 0,
             'message' => $work->message,
             'sender_id' => 1,
-            'files' => WorkResource::collection($work->files),
+            'files' => WorkFileResource::collection($work->files),
             'is_specification' => true,
             'viewed_at' => null,
             'created_at' => null,
         ];
 
-        $messages = array_merge((array)MessageResource::collection($messages->get()), $specification_message);
+        $messages = array_merge((array) MessageResource::collection($messages->get()), $specification_message);
         $data = [
             'messages' => $messages
         ];
