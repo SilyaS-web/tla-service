@@ -273,10 +273,11 @@ class UserController extends Controller
             'created_at' => null,
         ]);
 
-        $messages = MessageResource::collection($messages->get()->merge($specification_message));
+        $messages = $messages->get();
+        $merged = $messages->merge($specification_message);
 
         $data = [
-            'messages' => $messages,
+            'messages' => MessageResource::collection($merged),
         ];
 
         return response()->json($data)->setStatusCode(200);
