@@ -11,6 +11,7 @@ class ProjectWork extends Model
 
     protected $fillable = [
         'type',
+        'is_auto_generated',
         'quantity',
         'project_id',
         'finish_date'

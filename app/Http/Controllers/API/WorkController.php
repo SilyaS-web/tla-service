@@ -17,6 +17,7 @@ use App\Models\WorkFile;
 use App\Models\WorkProjectWork;
 use App\Services\ImageService;
 use App\Services\TgService;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Collection;
@@ -68,6 +69,18 @@ class WorkController extends Controller
             $project = Project::find($validated['project_id']);
             if (empty($project)) {
                 return response()->json(['message' => 'Не удалось найти проект'], 400);
+            }
+            foreach ($validated['project_work_names'] as $type) {
+                $projectWork = ProjectWork::where('type', $type)->first();
+                if (empty($projectWork)) {
+                    ProjectWork::create([
+                        'type' => $type,
+                        'project_id' => $validated['project_id'],
+                        'quantity' => -1,
+                        'is_auto_generated' => true,
+                        'finish_date' => Carbon::now(),
+                    ]);
+                }
             }
             $project_works = ProjectWork::whereIn('type', $validated['project_work_names'])->where('project_id', $project->id)->get();
         } else if (!empty($validated['project_work_id'])) {
