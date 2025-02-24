@@ -22,11 +22,10 @@ class ProjectResource extends JsonResource
         $user = Auth()->user();
 
         if ($user->role === 'blogger' && $user->blogger->platforms()->max('coverage') < 2000) {
-            $project_works = $this->projectWorks()->where('type', Project::FEEDBACK);
+            $project_works = $this->projectWorks()->where('type', Project::FEEDBACK)->where('is_auto_generated', false)->get();
         } else {
-            $project_works = $this->projectWorks()->where([]);
+            $project_works = $this->projectWorks()->where('is_auto_generated', false)->get();
         }
-        $project_works->where('is_auto_generated', false)->get();
 
         return [
             'id' => $this->id,
