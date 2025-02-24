@@ -274,15 +274,7 @@ class UserController extends Controller
             'created_at' => null,
         ];
 
-        $messages = (MessageResource::collection($messages->get()))->additional([
-            'id' => 0,
-            'message' => $work->message,
-            'sender_id' => 1,
-            'files' => MessageFileResource::collection($work->files),
-            'is_specification' => true,
-            'viewed_at' => null,
-            'created_at' => null,
-        ]);
+        $messages = MessageResource::collection($messages->get()->merge($specification_message));
 
         $data = [
             'messages' => $messages,
