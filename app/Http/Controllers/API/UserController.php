@@ -264,15 +264,14 @@ class UserController extends Controller
 
         $work->messages()->whereNull('viewed_at')->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
 
-        $specification_message = [
+        $specification_message = new Message([
             'id' => 0,
             'message' => $work->message,
-            'sender_id' => 1,
-            'files' => MessageFileResource::collection($work->files),
+            'user_id' => 1,
             'is_specification' => true,
             'viewed_at' => null,
             'created_at' => null,
-        ];
+        ]);
 
         $messages = MessageResource::collection($messages->get()->merge($specification_message));
 

@@ -34,7 +34,7 @@ class Message extends Model
         return $this->hasOne(Work::class, 'id', 'work_id');
     }
 
-    public function messageFiles()
+    public function files()
     {
         return $this->hasMany(MessageFile::class, 'source_id', 'id');
     }
