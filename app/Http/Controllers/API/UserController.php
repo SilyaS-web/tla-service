@@ -266,7 +266,8 @@ class UserController extends Controller
         $specification_message = [
             'id' => 0,
             'message' => $work->message,
-            'user_id' => 1,
+            'sender_id' => 1,
+            'files' => WorkResource::collection($work->files),
             'is_specification' => true,
             'viewed_at' => null,
             'created_at' => null,
