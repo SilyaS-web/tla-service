@@ -263,7 +263,9 @@ class UserController extends Controller
         }
 
         $work->messages()->whereNull('viewed_at')->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
-        $specification_message = [
+
+        $message_collection = new MessageResource($messages->get());
+        $message_collection->additional([
             'id' => 0,
             'message' => $work->message,
             'sender_id' => 1,
@@ -271,11 +273,10 @@ class UserController extends Controller
             'is_specification' => true,
             'viewed_at' => null,
             'created_at' => null,
-        ];
+        ]);
 
-        $messages = array_merge((array) MessageResource::collection($messages->get()), $specification_message);
         $data = [
-            'messages' => $messages
+            'messages' => $message_collection
         ];
 
         return response()->json($data)->setStatusCode(200);
