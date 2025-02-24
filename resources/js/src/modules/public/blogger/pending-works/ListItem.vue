@@ -46,16 +46,15 @@ export default{
                     text: this.work.message,
                     files: this.work.files
                 }
+            })
+            .then(isConfirmed => {
+                this.Work.accept(this.work.id).then(
+                    () => {
+                        $(`#avail-projects .list-projects__item[data-id="${this.work.id}"]`).hide();
+                    },
+                    err => { }
+                )
             });
-
-            // this.Work.accept(this.work.id).then(
-            //     () => {
-            //         $(`#avail-projects .list-projects__item[data-id="${this.work.id}"]`).hide();
-            //     },
-            //     err => {
-            //
-            //     }
-            // )
         },
         denyApplication(){
             this.Work.deny(this.work.id).then(

@@ -1,7 +1,7 @@
 <template>
     <div class="chat__messages messages-chat">
         <div
-            v-if="isAvailableToShowMessages()"
+            v-if="isAvailableToShowMessages(messages)"
             v-for="message in messages"
             :class="'messages-chat__item ' + getMessageClass(message)">
 
@@ -106,14 +106,14 @@ export default{
     },
     methods:{
         getMessageClass(message){
-            if(message.sender_id === 1){
-                return 'messages-chat__item--system'
+            switch (message.sender_id) {
+                case 1:
+                    return 'messages-chat__item--system';
+                case this.user.id:
+                    return 'messages-chat__item--author'
+                default:
+                    return '';
             }
-            if(message.sender_id === this.user.id){
-                return 'messages-chat__item--author'
-            }
-
-            return '';
         },
         getFormatedDate(value){
             if (value) {
@@ -121,14 +121,14 @@ export default{
             }
         },
         getSenderName(message){
-            if(message.sender_id === 1){
-                return ''
+            switch (message.sender_id) {
+                case 1:
+                    return '';
+                case this.user.id:
+                    return this.user.name
+                default:
+                    return this.partnerName;
             }
-            if(message.sender_id === this.user.id){
-                return this.user.name
-            }
-
-            return this.partnerName;
         },
         getStatusName(){
             return this.statusNames[this.chatStatus] || ''
@@ -141,9 +141,10 @@ export default{
             this.$refs.imagePopup.show({imageUrl: src})
         },
 
-        isAvailableToShowMessages(){
+        isAvailableToShowMessages(messages){
             const isMessages = messages && messages.length > 0;
-            return isMessages && !(messages.length === 1 && messages[0].is_specification)
+            // return isMessages && !(messages.length === 1 && messages[0].is_specification)
+            return isMessages
         },
 
         isImg(file){
