@@ -266,8 +266,8 @@ class UserController extends Controller
         $specification_message = new Message([
             'id' => 0,
             'message' => $work->message,
-            'sender_id' => 1,
-            'files' => $work->files,
+            'user_id' => 1,
+            'messageFiles' => $work->files,
             'is_specification' => true
         ]);
 
