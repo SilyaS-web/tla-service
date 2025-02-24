@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\WorkFileResource;
 use App\Models\Modal;
 use App\Models\SellerTariff;
 use App\Models\Tariff;
@@ -256,14 +257,25 @@ class UserController extends Controller
 
         $messages = $work->messages();
 
-        if (isset($validated['order_by']) && !empty($validated['order_by'])) {
+        if (!empty($validated['order_by'])) {
             $messages->orderBy('created_at', $validated['order_by']);
         }
 
         $work->messages()->whereNull('viewed_at')->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
 
+        $specification_message = new Message([
+            'id' => 0,
+            'message' => $work->message,
+            'sender_id' => 1,
+            'files' => $this->files,
+
+        ]);
+
+        $messages = $messages->get();
+        $merged = $messages->merge($specification_message);
+
         $data = [
-            'messages' => MessageResource::collection($messages->get()),
+            'messages' => MessageResource::collection($merged),
         ];
 
         return response()->json($data)->setStatusCode(200);
