@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('project_works', function (Blueprint $table) {
+        Schema::table('project_works', function (Blueprint $table) {
             $table->boolean('is_auto_generated')->default(false);
         });
     }
