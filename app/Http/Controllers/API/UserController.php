@@ -267,12 +267,12 @@ class UserController extends Controller
             'id' => 0,
             'message' => $work->message,
             'sender_id' => 1,
-            'files' => $this->files,
+            'files' => $work->files,
 
         ]);
 
         $messages = $messages->get();
-        $merged = $messages->merge($specification_message);
+        $merged = $messages->merge([$specification_message]);
 
         $data = [
             'messages' => MessageResource::collection($merged),
