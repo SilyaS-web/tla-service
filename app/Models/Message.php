@@ -11,7 +11,6 @@ class Message extends Model
     use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'is_specification',
         'work_id',
         'message',
         'viewed_at',
