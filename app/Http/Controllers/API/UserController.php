@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Resources\MessageFileResource;
+use App\Http\Resources\MessagesResource;
 use App\Http\Resources\WorkFileResource;
 use App\Models\Modal;
 use App\Models\SellerTariff;
@@ -264,7 +265,7 @@ class UserController extends Controller
 
         $work->messages()->whereNull('viewed_at')->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
 
-        $message_collection = new MessageResource($messages->get());
+        $message_collection = new MessagesResource($messages->get());
         $message_collection->additional([
             'id' => 0,
             'message' => $work->message,
