@@ -78,7 +78,14 @@ class Work extends Model
 
     public function projectWorks()
     {
-        return $this->hasManyThrough(ProjectWork::class, WorkProjectWork::class, 'work_id', 'project_work_id', 'id', 'id');
+        return $this->hasManyThrough(
+            ProjectWork::class,
+            WorkProjectWork::class,
+            'work_id',
+            'project_work_id',
+            'id',
+            'id'
+        );
     }
 
     public function projectWork()

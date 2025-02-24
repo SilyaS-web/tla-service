@@ -2,9 +2,11 @@
 
 namespace App\Http\Resources;
 
+use App\Models\ProjectWork;
 use App\Models\User;
 use App\Models\Work;
 use App\Models\WorkFile;
+use App\Models\WorkProjectWork;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,6 +35,8 @@ class WorkResource extends JsonResource
             ];
         }
 
+        $work_project_work_ids = WorkProjectWork::where('work_id', $this->id)->pluck('project_work_id');
+        $project_works = ProjectResource::collection(ProjectWork::whereIn('id', $work_project_work_ids)->get());
         return [
             'id' => $this->id,
             'blogger' => $this->when($user->role != 'blogger', function () use ($request) {
@@ -59,7 +63,7 @@ class WorkResource extends JsonResource
             'created_at' => isset($this->created_at) ? $this->created_at->format('Y-m-d H:i') : null,
             'statistics' => new FinishStatsResource($this->finishStats),
             'new_messages_count' => $this->messages()->where('viewed_at', null)->where('user_id', '<>', $user->id)->count(),
-            'project_work' => ProjectWorkResource::collection($this->projectWorks),
+            'project_work' => $project_works,
             'files' => WorkFileResource::collection($this->files)
         ];
     }
