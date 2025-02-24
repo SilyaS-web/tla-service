@@ -66,7 +66,10 @@ class WorkController extends Controller
 
         if (!empty($validated['project_id']) && !empty($validated['project_work_names'])) {
             $project = Project::find($validated['project_id']);
-            $project_works = ProjectWork::whereIn('type', $validated['project_work_names'])->get();
+            if (empty($project)) {
+                return response()->json(['message' => 'Не удалось найти проект'], 400);
+            }
+            $project_works = ProjectWork::whereIn('type', $validated['project_work_names'])->where('project_id', $project->id)->get();
         } else if (!empty($validated['project_work_id'])) {
             $project_works = ProjectWork::where('id', $validated['project_work_id'])->get();
             if (!empty($project_works)) {
