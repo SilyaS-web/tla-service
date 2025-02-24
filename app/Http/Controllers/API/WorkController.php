@@ -71,7 +71,7 @@ class WorkController extends Controller
                 return response()->json(['message' => 'Не удалось найти проект'], 400);
             }
             foreach ($validated['project_work_names'] as $type) {
-                $projectWork = ProjectWork::where('type', $type)->first();
+                $projectWork = ProjectWork::where('type', $type)->where('project_id', $project->id)->first();
                 if (empty($projectWork)) {
                     ProjectWork::create([
                         'type' => $type,
