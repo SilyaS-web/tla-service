@@ -276,7 +276,7 @@ class UserController extends Controller
             'viewed_at' => null,
             'created_at' => null,
         ];
-        $message_collection = array_merge([$specification_message], $message_collection)
+        $message_collection = array_merge([$specification_message], $message_collection);
         $data = [
             'messages' => $message_collection
         ];
