@@ -268,7 +268,7 @@ class UserController extends Controller
             'message' => $work->message,
             'sender_id' => 1,
             'files' => $work->files,
-
+            'is_specification' => true
         ]);
 
         $messages = $messages->get();
