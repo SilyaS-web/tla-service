@@ -1,7 +1,7 @@
 <template>
     <div class="chat__messages messages-chat">
         <div
-            v-if="messages && messages.length > 0"
+            v-if="isAvailableToShowMessages()"
             v-for="message in messages"
             :class="'messages-chat__item ' + getMessageClass(message)">
 
@@ -139,6 +139,11 @@ export default{
 
         openImage(src){
             this.$refs.imagePopup.show({imageUrl: src})
+        },
+
+        isAvailableToShowMessages(){
+            const isMessages = messages && messages.length > 0;
+            return isMessages && !(messages.length === 1 && messages[0].is_specification)
         },
 
         isImg(file){

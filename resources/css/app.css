@@ -2714,7 +2714,7 @@ input[type='range']::-webkit-slider-runnable-track{
     width: fit-content;
     position: relative;
     transition: all .2s linear;
-    height: 37px;
+    height: 43.9922px;
     overflow: hidden;
     flex-wrap: wrap;
     align-items: start;
@@ -2844,7 +2844,7 @@ input[type='range']::-webkit-slider-runnable-track{
     margin-bottom: 18px;
 }
 .blogger-popup__body .blogger-item__achives.opened{
-    width: 145px!important;
+    width: 100%!important;
     margin-left: 11%;
 }
 
@@ -2853,14 +2853,12 @@ input[type='range']::-webkit-slider-runnable-track{
     0%{
         width: -moz-fit-content;
         width: fit-content;
-        height: 37px;
+        height: 43.9922px;
     }
     50%{
         width: 100%;
-        height: 37px;
     }
     100% {
-        height: 120px;
         width: 100%;
     }
 }

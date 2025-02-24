@@ -107,7 +107,7 @@
                 </div>
 
                 <div v-if="is_achievement || (content && content.length > 0)"
-                    @click="$event.target.closest('.blogger-item__achives').classList.toggle('opened')"
+                    @click="toggleAchivements($event)"
                     class="card__row blogger-item__achives">
                     <div class="blogger-item__achives-title">
                         Достижения
@@ -159,6 +159,21 @@ export default {
         product_price: {type: Number, required: false}
     },
     methods:{
+        toggleAchivements(e){
+            const parent = e.target.closest('.blogger-item__achives');
+            const parentHeight = parent.getBoundingClientRect().height;
+            const itemsHeight = parent.querySelector('.blogger-item__achives-items')
+                .getBoundingClientRect().height;
+
+            if(parent.classList.contains('opened')){
+                parent.style.height = `${parentHeight - itemsHeight}px`
+            }
+            else{
+                parent.style.height = `${parentHeight + itemsHeight}px`
+            }
+
+            parent.classList.toggle('opened')
+        },
         countER, countCPM,
     },
 }
