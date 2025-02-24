@@ -4,8 +4,6 @@ namespace App\Http\Resources;
 
 use App\Models\ProjectWork;
 use App\Models\User;
-use App\Models\Work;
-use App\Models\WorkFile;
 use App\Models\WorkProjectWork;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
@@ -36,7 +34,7 @@ class WorkResource extends JsonResource
         }
 
         $work_project_work_ids = WorkProjectWork::where('work_id', $this->id)->pluck('project_work_id');
-        $project_works = ProjectResource::collection(ProjectWork::whereIn('id', $work_project_work_ids)->get());
+        $project_works = ProjectWorkResource::collection(ProjectWork::whereIn('id', $work_project_work_ids)->get());
         return [
             'id' => $this->id,
             'blogger' => $this->when($user->role != 'blogger', function () use ($request) {
