@@ -278,7 +278,7 @@ class UserController extends Controller
         ]);
 
         $data = [
-            'messages' => $message_collection
+            'messages' => WorkFileResource::collection($work->files)
         ];
 
         return response()->json($data)->setStatusCode(200);
