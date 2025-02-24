@@ -267,7 +267,7 @@ class UserController extends Controller
 
         $message_collection = MessageResource::collection($messages->get());
 
-        $message_collection = $message_collection->additional([
+        $message_collection = [
             'id' => 0,
             'message' => $work->message,
             'sender_id' => 1,
@@ -275,7 +275,7 @@ class UserController extends Controller
             'is_specification' => true,
             'viewed_at' => null,
             'created_at' => null,
-        ]);
+        ];
 
         $data = [
             'messages' => $message_collection
