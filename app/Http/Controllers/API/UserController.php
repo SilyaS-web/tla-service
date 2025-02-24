@@ -274,7 +274,7 @@ class UserController extends Controller
             'created_at' => null,
         ];
 
-        $messages = MessageResource::collection($messages->get())->additional([
+        $messages = (MessageResource::collection($messages->get()))->additional([
             'id' => 0,
             'message' => $work->message,
             'sender_id' => 1,
