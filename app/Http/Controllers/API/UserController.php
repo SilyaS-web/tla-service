@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\MessageFileResource;
 use App\Http\Resources\WorkFileResource;
 use App\Models\Modal;
 use App\Models\SellerTariff;
@@ -263,19 +264,21 @@ class UserController extends Controller
 
         $work->messages()->whereNull('viewed_at')->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
 
-        $specification_message = new Message([
+        $specification_message = [
             'id' => 0,
             'message' => $work->message,
-            'user_id' => 1,
-            'messageFiles' => $work->files,
-            'is_specification' => true
-        ]);
+            'sender_id' => 1,
+            'files' => MessageFileResource::collection($work->files),
+            'is_specification' => true,
+            'viewed_at' => null,
+            'created_at' => null,
+        ];
 
-        $messages = $messages->get();
+        $messages = MessageResource::collection($messages->get());
         $merged = $messages->merge([$specification_message]);
 
         $data = [
-            'messages' => MessageResource::collection($merged),
+            'messages' => $merged,
         ];
 
         return response()->json($data)->setStatusCode(200);
