@@ -59,7 +59,7 @@ class WorkResource extends JsonResource
             'created_at' => isset($this->created_at) ? $this->created_at->format('Y-m-d H:i') : null,
             'statistics' => new FinishStatsResource($this->finishStats),
             'new_messages_count' => $this->messages()->where('viewed_at', null)->where('user_id', '<>', $user->id)->count(),
-            'project_work' => new ProjectWorkResource($this->projectWork),
+            'project_work' => ProjectWorkResource::collection($this->projectWorks),
             'files' => WorkFileResource::collection($this->files)
         ];
     }
