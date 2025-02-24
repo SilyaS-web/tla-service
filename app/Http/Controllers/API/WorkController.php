@@ -75,7 +75,7 @@ class WorkController extends Controller
                 if (empty($projectWork)) {
                     ProjectWork::create([
                         'type' => $type,
-                        'project_id' => $validated['project_id'],
+                        'project_id' => $project->id,
                         'quantity' => -1,
                         'is_auto_generated' => true,
                         'finish_date' => Carbon::now(),
