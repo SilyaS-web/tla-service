@@ -2972,7 +2972,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .card__stats {
     gap: 30px;
-    margin-top: auto;
+    /*margin-top: auto;*/
 }
 .card__stats-stats{
     gap: 30px;
