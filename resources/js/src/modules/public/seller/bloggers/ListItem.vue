@@ -92,7 +92,7 @@ export default{
                 return
             }
 
-            this.Work.sendOffer([this.blogger.id], this.currentProject.choosedWork.id)
+            this.Work.sendOffer([this.blogger.user.id], this.currentProject.choosedWork.id)
                 .then(() => { this.isOfferSent = true })
         },
 
