@@ -1951,7 +1951,7 @@ input[type='range']::-webkit-slider-runnable-track{
     font-size: 18px;
 }
 .info-profile__left{
-    flex: 1 1 auto;
+    flex: 1 1 50%;
 }
 .info-profile__right{
     width: 100%;
