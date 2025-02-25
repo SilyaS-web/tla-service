@@ -63,13 +63,13 @@ class WorkController extends Controller
         }
 
         $validated = $validator->validated();
-        if (empty($validated['message']) && empty($validated['files'])) {
-            return response()->json(['message' => 'Выберите файлы или введите описание!'], 400);
-        }
 
         $user = Auth::user();
 
         if (!empty($validated['project_id']) && !empty($validated['project_work_names'])) {
+            if (empty($validated['message']) && empty($validated['files'])) {
+                return response()->json(['message' => 'Выберите файлы или введите описание!'], 400);
+            }
             $project = Project::find($validated['project_id']);
             if (empty($project)) {
                 return response()->json(['message' => 'Не удалось найти проект'], 400);
