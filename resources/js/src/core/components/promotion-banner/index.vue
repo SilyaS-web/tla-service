@@ -48,7 +48,8 @@ export default{
         }, 1500)
 
         setTimeout(() => {
-            this.bannerClass = 'inactive'
+            if(this.bannerClass !== 'disabled')
+                this.bannerClass = 'inactive'
         }, 6500)
     },
     methods: {
