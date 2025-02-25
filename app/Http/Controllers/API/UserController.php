@@ -8,7 +8,9 @@ use App\Http\Resources\WorkFileResource;
 use App\Models\Modal;
 use App\Models\SellerTariff;
 use App\Models\Tariff;
+use App\Models\TgPhone;
 use App\Models\User;
+use App\Services\PhoneService;
 use App\Services\TgService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MessageResource;
@@ -424,5 +426,24 @@ class UserController extends Controller
     {
         Redis::sadd('user.' . $user->id . '.modals', $modal->id);
         return response()->json()->setStatusCode(200);
+    }
+    public function check(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'phone' => 'string|required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+
+        $validated['phone'] = PhoneService::format($validated['phone']);
+        if (User::where('phone', $validated['phone'])->exists()) {
+            return response()->json('ok', 200);
+        }
+
+        return response()->json(['no content'], 400);
     }
 }
