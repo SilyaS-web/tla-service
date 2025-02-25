@@ -266,7 +266,7 @@ class UserController extends Controller
         $work->messages()->whereNull('viewed_at')->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
         $message_collection = MessageResource::collection($messages->get());
 
-        if (!empty($work->message) || !empty($work->files)) {
+        if (!empty($work->message) || !empty($work->files->toArray())) {
             $specification_message = [
                 'id' => 0,
                 'message' => $work->message,

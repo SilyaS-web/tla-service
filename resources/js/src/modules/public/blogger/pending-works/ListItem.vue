@@ -2,10 +2,10 @@
     <ProjectCard
         v-if="work.project"
 
-        :id="work.project.id"
+        :id="work.project.id + work.id"
         :name="work.project.product_name"
         :price="work.project.product_price"
-        :works="work.project.project_works"
+        :works="((work.project_works && work.project_works.length > 0) ? work.project_works : work.project.project_works)"
         :imgs="work.project.project_files"
     >
         <div class="project-item__btns">
@@ -41,18 +41,20 @@ export default{
     },
     methods: {
         acceptApplication(){
-            if(this.work.message || this.work.files){
+            if(this.work.message || (this.work.files && this.work.files.length > 0)){
                 this.$refs.specificationPopup.show({
                     specification:{
                         text: this.work.message,
-                        files: this.work.files
-                    }
+                        files: this.work.files,
+                        works_types: (this.work.project_works && this.work.project_works.length > 0) ? this.work.project_works : this.work.project.project_works
+                    },
+                    withConfirmation: true
                 })
                 .then(isConfirmed => {
                     if(isConfirmed){
                         this.Work.accept(this.work.id).then(
                             () => {
-                                $(`#avail-projects .list-projects__item[data-id="${this.work.id}"]`).hide();
+                                $(`#avail-projects .list-projects__item[data-id="${this.work.project.id + this.work.id}"]`).hide();
                             },
                             err => { }
                         )
@@ -62,7 +64,7 @@ export default{
             else{
                 this.Work.accept(this.work.id).then(
                     () => {
-                        $(`#avail-projects .list-projects__item[data-id="${this.work.id}"]`).hide();
+                        $(`#avail-projects .list-projects__item[data-id="${this.work.project.id + this.work.id}"]`).hide();
                     },
                     err => { }
                 )
@@ -71,7 +73,7 @@ export default{
         denyApplication(){
             this.Work.deny(this.work.id).then(
                 () => {
-                    $(`#avail-projects .list-projects__item[data-id="${this.work.id}"]`).hide();
+                    $(`#avail-projects .list-projects__item[data-id="${this.work.project.id}"]`).hide();
                 },
                 err => {
 

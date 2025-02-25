@@ -151,7 +151,7 @@ const Work = {
             .then(response => {
                 notify('info', {
                     title: 'Успешно!',
-                    message: 'Заявка от блогера принята.'
+                    message: 'Заявка принята.'
                 })
 
                 resolve(true);
