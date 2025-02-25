@@ -104,7 +104,7 @@
                             :class-list="[]"
                             :placeholder="'Введите текст'"
                             :label="'Опишите подробности ТЗ'"
-                            :error="errors.message"
+                            :error="errors ? errors.message : ''"
 
                             v-model="distributionInfo.text"
                         >
@@ -115,14 +115,14 @@
                             :id="'distribution-formats'"
                             :integrationTypes="integrationTypes"
                             :label="'Формат работы'"
-                            :error="errors.project_work_names"
+                            :error="errors ? errors.project_work_names : ''"
                         ></FormatTypes>
 
                         <FilesUpload
                             v-model="distributionInfo.files"
                             :id="'distribution-upload'"
                             :label="'Загрузите файлы ТЗ'"
-                            :error="errors['files.0']"
+                            :error="errors ? errors['files.0'] : ''"
                         ></FilesUpload>
                     </div>
                     <div class="info-distribution__footer">
@@ -272,7 +272,7 @@ export default {
 
                 notify('info', {title: 'Внимание!', message: message});
 
-                this.errors = err.response.errors;
+                this.errors = err.response.data;
 
                 this.isLoading = false;
             })
