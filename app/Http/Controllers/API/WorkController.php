@@ -124,15 +124,17 @@ class WorkController extends Controller
         }
 
         $work_files = $request->file('files');
-        foreach ($work_files as $file) {
-            $file_path = $file->storeAs('works', str_replace(' ', '_', $project->product_name) . '_' . Carbon::now() . '_' . Str::random(10),'public');
+        if (!empty($work_files)) {
+            foreach ($work_files as $file) {
+                $file_path = $file->storeAs('works', str_replace(' ', '_', $project->product_name) . '_' . Carbon::now() . '_' . Str::random(10),'public');
 
-            foreach ($works as $work) {
-                WorkFile::create([
-                    'source_id' => $work->id,
-                    'type' => 0,
-                    'link' => $file_path,
-                ]);
+                foreach ($works as $work) {
+                    WorkFile::create([
+                        'source_id' => $work->id,
+                        'type' => 0,
+                        'link' => $file_path,
+                    ]);
+                }
             }
         }
 
