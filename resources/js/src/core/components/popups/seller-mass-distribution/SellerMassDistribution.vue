@@ -104,7 +104,7 @@
                             :class-list="[]"
                             :placeholder="'Введите текст'"
                             :label="'Опишите подробности ТЗ'"
-                            :error="errors.text"
+                            :error="errors.message"
 
                             v-model="distributionInfo.text"
                         >
@@ -115,7 +115,7 @@
                             :id="'distribution-formats'"
                             :integrationTypes="integrationTypes"
                             :label="'Формат работы'"
-                            :error="errors.integration_types"
+                            :error="errors.project_work_names"
                         ></FormatTypes>
 
                         <FilesUpload
