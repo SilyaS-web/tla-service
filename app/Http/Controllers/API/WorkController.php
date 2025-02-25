@@ -63,6 +63,10 @@ class WorkController extends Controller
         }
 
         $validated = $validator->validated();
+        if (empty($validated['message']) && empty($validated['files'])) {
+            return response()->json(['errors' => ['message' => 'Выберите файлы или введите описание!']], 400);
+        }
+
         $user = Auth::user();
 
         if (!empty($validated['project_id']) && !empty($validated['project_work_names'])) {
@@ -121,7 +125,7 @@ class WorkController extends Controller
 
         $work_files = $request->file('files');
         foreach ($work_files as $file) {
-            $file_path = $file->store('works', 'public');
+            $file_path = $file->storeAs('works', str_replace(' ', '_', $project->product_name) . '_' . Carbon::now() . '_' . Str::random(10),'public');
 
             foreach ($works as $work) {
                 WorkFile::create([
