@@ -33,6 +33,7 @@ Route::post('/phones', [AuthController::class, 'setTGPhone']);
 Route::get('/platforms', [PlatformController::class, 'index']);
 Route::get('/themes', [ThemeController::class, 'index']);
 Route::post('/users', [AuthController::class, 'store']);
+Route::get('/users/exist', [UserController::class, 'check']);
 
 Route::prefix('payment')->group(function () {
     Route::get('/debug/{tariff}', [PaymentController::class, 'debugPayment']);
