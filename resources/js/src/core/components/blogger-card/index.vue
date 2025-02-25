@@ -13,7 +13,18 @@
                         <p class="card__name-name" title="">
                             {{ name }}
                         </p>
+                        <div class="blogger-achives__item" title="Проверенный блогер" v-if="is_achievement">
+                            <div class="blogger-achives__item-icon" style="background-image: url('/img/achive-icon.svg');">
+                            </div>
+                            Проверенный блогер
+                        </div>
+                        <div class="blogger-achives__item" title="Есть контент" v-else-if="content && content.length > 0">
+                            <div class="blogger-achives__item-icon" style="background-image: url('/img/has-content-icon.svg');">
+                            </div>
+                            Есть контент
+                        </div>
                         <p
+                            v-else
                             class="card__name-tag"
                             title="">
                             Блогер
@@ -106,33 +117,33 @@
                     </div>
                 </div>
 
-                <div v-if="is_achievement || (content && content.length > 0)"
-                    @click="toggleAchivements($event)"
-                    class="card__row blogger-item__achives">
-                    <div class="blogger-item__achives-title">
-                        Достижения
-                    </div>
-                    <div class="blogger-item__achives-icons">
-                        <div class="card__achive" title="Проверенный блогер" v-if="is_achievement">
-                            <img src="/img/achive-icon.svg" alt="">
-                        </div>
-                        <div class="card__achive" title="Есть контент" v-if="content && content.length > 0">
-                            <img src="/img/has-content-icon.svg" alt="">
-                        </div>
-                    </div>
-                    <div class="blogger-item__achives-items blogger-achives">
-                        <div class="blogger-achives__item" title="Проверенный блогер" v-if="is_achievement">
-                            <div class="blogger-achives__item-icon" style="background-image: url('/img/achive-icon.svg');">
-                            </div>
-                            Проверенный блогер
-                        </div>
-                        <div class="blogger-achives__item" title="Есть контент" v-if="content && content.length > 0">
-                            <div class="blogger-achives__item-icon" style="background-image: url('/img/has-content-icon.svg');">
-                            </div>
-                            Есть контент
-                        </div>
-                    </div>
-                </div>
+<!--                <div v-if="is_achievement || (content && content.length > 0)"-->
+<!--                    @click="toggleAchivements($event)"-->
+<!--                    class="card__row blogger-item__achives">-->
+<!--                    <div class="blogger-item__achives-title">-->
+<!--                        Достижения-->
+<!--                    </div>-->
+<!--                    <div class="blogger-item__achives-icons">-->
+<!--                        <div class="card__achive" title="Проверенный блогер" v-if="is_achievement">-->
+<!--                            <img src="/img/achive-icon.svg" alt="">-->
+<!--                        </div>-->
+<!--                        <div class="card__achive" title="Есть контент" v-if="content && content.length > 0">-->
+<!--                            <img src="/img/has-content-icon.svg" alt="">-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="blogger-item__achives-items blogger-achives">-->
+<!--                        <div class="blogger-achives__item" title="Проверенный блогер" v-if="is_achievement">-->
+<!--                            <div class="blogger-achives__item-icon" style="background-image: url('/img/achive-icon.svg');">-->
+<!--                            </div>-->
+<!--                            Проверенный блогер-->
+<!--                        </div>-->
+<!--                        <div class="blogger-achives__item" title="Есть контент" v-if="content && content.length > 0">-->
+<!--                            <div class="blogger-achives__item-icon" style="background-image: url('/img/has-content-icon.svg');">-->
+<!--                            </div>-->
+<!--                            Есть контент-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
                 <slot></slot>
             </div>
@@ -152,8 +163,8 @@ export default {
         themes: { type: Array, required: false },
         description:{ type: String, required: false },
         work_message: { type: String, required: false },
-        content: {type: Array, required: false},
-        is_achievement: {type: Boolean, required: false},
+        content: {type: Array, required: false, default: false},
+        is_achievement: {type: Boolean, required: false, default: false},
         subscriber_quantity: {type: Number, required: true},
         coverage: {type: Number, required: true},
         product_price: {type: Number, required: false}

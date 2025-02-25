@@ -16,13 +16,16 @@
                         <div class="info-profile__left">
                             <div class="info-profile__info card__col">
                                 <div class="card__row card__header">
-                                    <div class="card__img" :style="'background-image: url(' + blogger.user.image + ')'"></div>
+                                    <div
+                                        @click="openImage(blogger.user.image)"
+                                        class="card__img" :style="'background-image: url(' + blogger.user.image + ')'"></div>
                                     <div class="card__name">
                                         <p class="card__name-name" title="">{{ blogger.user.name }}</p>
                                         <p class="card__name-tag" title="">Блогер</p>
-                                        <p class="card__name-desc">{{ (blogger.description || '').slice(0, 80) + '...' }}</p>
                                     </div>
                                 </div>
+
+                                <p class="info-profile__info-desc">{{ blogger.description }}</p>
 
                                 <div class="card__row card__tags">
                                     <div
@@ -189,6 +192,7 @@
             </div>
         </div>
     </popup-modal>
+    <image-popup ref="imagePopup"></image-popup>
 </template>
 <script>
 import { ref } from 'vue'
@@ -197,11 +201,12 @@ import User from "../../../services/api/User";
 import PopupModal from '../AppPopup.vue';
 import VideosCarousel from './VideosCarouselComponent';
 import ProjectsCarousel from './ProjectsCarouselComponent';
+import ImagePopup from '../fullscreen-asset/AssetPopup.vue';
 import Loader from '../../AppLoader';
 
 export default {
     name: 'BloggerCardPopup',
-    components: { PopupModal, VideosCarousel, ProjectsCarousel },
+    components: { PopupModal, VideosCarousel, ProjectsCarousel, ImagePopup },
     data(){
         return {
             title: 'Профиль блогера',
@@ -340,6 +345,11 @@ export default {
         closePopup(){
             this.$refs.popup.close()
             this.resolvePromise(false)
+        },
+
+        openImage(src){
+            if(src)
+                this.$refs.imagePopup.show({imageUrl: src})
         },
 
         _confirm() {
