@@ -121,7 +121,7 @@ class WorkController extends Controller
 
         $work_files = $request->file('files');
         foreach ($work_files as $file) {
-            $file_path = $file->store('works', 'public');
+            $file_path = $file->storeAs('works', $project->product_name . '_' . Str::random(10),'public');
 
             foreach ($works as $work) {
                 WorkFile::create([
