@@ -64,7 +64,7 @@ class WorkController extends Controller
 
         $validated = $validator->validated();
         if (empty($validated['message']) && empty($validated['files'])) {
-            return response()->json(['errors' => ['message' => 'Выберите файлы или введите описание!']], 400);
+            return response()->json(['message' => 'Выберите файлы или введите описание!'], 400);
         }
 
         $user = Auth::user();
