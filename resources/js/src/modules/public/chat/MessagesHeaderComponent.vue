@@ -9,7 +9,7 @@
         <ProjectSignboard
             v-if="chat && chat.project"
             :project="chat.project"
-            :workType="chat.project_work.name"
+            :workType="getWorkType()"
         ></ProjectSignboard>
 
         <div
@@ -68,6 +68,17 @@ export default {
         },
         chatAction(action){
             this.$emit('chatAction', action)
+        },
+        getWorkType(){
+            const chat = this.chat;
+            const typeFromWork = (chat.project_works && chat.project_works.length > 0) ? chat.project_works[0].name : false;
+            const typeFromProject = (chat.project.project_works && chat.project.project_works.length > 0) ? chat.project.project_works[0].name : false;
+
+            if(typeFromWork) return typeFromWork;
+
+            if(typeFromProject) return typeFromProject;
+
+            return 'Неизвестно'
         }
     }
 }

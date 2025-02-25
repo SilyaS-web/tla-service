@@ -122,13 +122,13 @@
                             v-model="distributionInfo.files"
                             :id="'distribution-upload'"
                             :label="'Загрузите файлы ТЗ'"
-                            :error="errors.files"
+                            :error="errors['files.0']"
                         ></FilesUpload>
                     </div>
                     <div class="info-distribution__footer">
                         <div
                             @click="_confirm"
-                            class="btn btn-primary">
+                            :class="'btn btn-primary ' + (isLoading ? 'btn-loading' : '')">
                             {{ okButton }}
                         </div>
                     </div>
@@ -158,7 +158,7 @@ import DistributionList from '../../../mixins/DistributionList.js'
 export default {
     name: "SellerMassDistribution",
     components: {AppPopup,Textarea,FilesUpload, FormatTypes},
-    mixins:[DistributionList],
+    mixins: [ DistributionList ],
     data() {
         return {
             title: 'Массовая рассылка',
@@ -179,6 +179,8 @@ export default {
             productID: ref(null),
 
             errors: ref({}),
+
+            isLoading: ref(false),
 
             resolvePromise: undefined,
             rejectPromise: undefined,
@@ -209,6 +211,10 @@ export default {
         show(opts = {}) {
             this.title = opts.title
             this.okButton = opts.okButton
+
+            this.distributionInfo.files = [];
+            this.distributionInfo.integration_types = [];
+            this.integrationTypes = [];
 
             if(opts.integrationTypes)
                 this.integrationTypes.push(opts.integrationTypes.type);
@@ -243,6 +249,8 @@ export default {
                 formdata.append(`project_work_names[${i}]`, this.distributionInfo.integration_types[i])
             }
 
+            this.isLoading = true;
+
             axios({
                 url: '/api/works',
                 method: 'post',
@@ -253,7 +261,7 @@ export default {
                     title: 'Успешно!',
                     message: 'Заявки отправлены.'
                 });
-
+                this.isLoading = false;
                 this.$refs.popup.close()
                 this.resolvePromise(true)
             })
@@ -264,7 +272,9 @@ export default {
 
                 notify('info', {title: 'Внимание!', message: message});
 
-                this.errors = err.response.errors
+                this.errors = err.response.errors;
+
+                this.isLoading = false;
             })
         },
 
@@ -279,7 +289,6 @@ export default {
 
         openBloggerCard(event){
             $(event.target).closest('.distribution-bloggers__item').toggleClass('opened')
-
         },
 
         countER, countCPM
@@ -316,7 +325,8 @@ export default {
     }
 
     .distribution-bloggers__content{
-        height: 92.9%;
+        height: fit-content;
+        max-height:561px;
         overflow-y: scroll;
     }
     .distribution-bloggers__items{
@@ -408,6 +418,7 @@ export default {
         }
         .popup-distribution{
             flex-direction: column;
+            gap: 32px;
         }
         .distribution-bloggers__item-header::after{
             width: 27px;

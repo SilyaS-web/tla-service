@@ -63,8 +63,8 @@ import AddContentPopup from '../../../core/components/popups/blogger-add-content
 
 export default{
     components: {
-        Aside, Header, ProjectsList, Chat, SellersWorks, AcceptedProjects, Footer,
-        AddContentPopup
+        Aside, Header, ProjectsList, Chat, SellersWorks,
+        AcceptedProjects, Footer, AddContentPopup
     },
     data(){
         return {
@@ -80,7 +80,7 @@ export default{
         }
     },
     async mounted() {
-        this.Loader.loaderOn('.wrapper .profile__content-inner');
+        this.Loader.loaderOn('.wrapper #my-projects');
 
         this.user = this.User.getCurrent();
         this.inWorkProjectsList = await this.Work.getUserWorksList(this.user.id, false, 1);
@@ -90,7 +90,7 @@ export default{
         }
 
         setTimeout(()=>{
-            this.Loader.loaderOff();
+            this.Loader.loaderOff('#my-projects');
 
             if(this.$router.currentRoute.value.params && this.$router.currentRoute.value.params.item && this.$router.currentRoute.value.params.id){
                 this.switchTab('chat', {
@@ -140,7 +140,7 @@ export default{
                     break;
 
                 case 'avail-projects':
-                    this.Work.getUserWorksList(this.user.id, -this.user.id, 0).then((data) =>{
+                    this.Work.getUserWorksList(this.user.id, false, 0).then((data) =>{
                         this.works = (data || []).filter(w => w.project);
 
                         setTimeout(()=>{

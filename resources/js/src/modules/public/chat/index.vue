@@ -27,6 +27,7 @@
                             <MessagesList
                                 :messages="messages"
                                 :user="user"
+                                :chatWorks="currentChat ? currentChat.project_works : false"
                                 :chatStatus="currentChat ? currentChat.status : false"
                                 :statistics="currentChat ? currentChat.statistics : false"
                                 :partnerName="currentChat ? currentChat.partner_user.name : ''"
@@ -397,8 +398,8 @@ export default{
             })
         },
         getChatBtnData(work){
-            if(work && (work.status == 'pending' || work.status == null) && work.project_work.lost_quantity < 1){
-            }
+            // if(work && (work.status == 'pending' || work.status == null) && work.project_work.lost_quantity < 1){
+            // }
 
             if(work && work.status == 'completed'){
                 return {

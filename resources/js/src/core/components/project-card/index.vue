@@ -5,7 +5,7 @@
 
         <Carousel
             v-if="!isSingleImage"
-            :carouselID="'project__imgs-carousel-' + id"
+            :carouselID="'project__imgs-carousel-' + carouselID"
             :itemsList="imgs"
             :listClassList="['project-item__carousel']"
             :itemsClassList="['project-item__img']"
@@ -72,15 +72,29 @@ export default {
     data(){
         return{
             projectInfo: ref(false),
+            carouselID: ref(''),
         }
     },
     mounted() {
+        this.carouselID = this.makeRandomString(5)
     },
     updated(){
     },
 
     methods:{
-        getProjectClassList(){ return this.classList.join(' ') }
+        getProjectClassList(){ return this.classList.join(' ') },
+
+        makeRandomString(length) {
+            let result = '';
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            const charactersLength = characters.length;
+            let counter = 0;
+            while (counter < length) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                counter += 1;
+            }
+            return result;
+        }
     }
 }
 </script>
