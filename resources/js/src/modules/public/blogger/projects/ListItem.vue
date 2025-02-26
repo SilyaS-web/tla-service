@@ -66,7 +66,7 @@ export default{
 
             if(data){
                 this.$refs.sendOfferPopup.show({
-                    project_work_ids: [data.id],
+                    project_work_id: data.id,
                     message: ""
                 })
                 .then(isConfirmed => {
