@@ -199,7 +199,7 @@ class WorkController extends Controller
         }
         $project_work = $project_works[0];
 
-        $seller_tariff = $seller_user->getActiveTariffs($project_works->type);
+        $seller_tariff = $seller_user->getActiveTariffs($project_work->type);
         if ($seller_tariff && $seller_tariff->quantity !== 0) {
             $project_work->update(['finish_date' => $seller_tariff->finish_date]);
             if ($seller_tariff->quantity > 0) {
