@@ -35,6 +35,7 @@ class WorkResource extends JsonResource
 
         $work_project_work_ids = WorkProjectWork::where('work_id', $this->id)->pluck('project_work_id');
         $project_works = ProjectWorkResource::collection(ProjectWork::whereIn('id', $work_project_work_ids)->get());
+
         return [
             'id' => $this->id,
             'blogger' => $this->when($user->role != 'blogger', function () use ($request) {
