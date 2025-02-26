@@ -191,7 +191,7 @@ class WorkController extends Controller
             return response()->json(['message' => 'Заявка уже принята или отклонена'])->setStatusCode(400);
         }
 
-        $work_project_work_ids = WorkProjectWork::where('work_id', $this->id)->pluck('project_work_id');
+        $work_project_work_ids = WorkProjectWork::where('work_id', $work->id)->pluck('project_work_id');
         $project_works = ProjectWorkResource::collection(ProjectWork::whereIn('id', $work_project_work_ids)->get());
 
         if (empty($project_works)) {
@@ -234,7 +234,7 @@ class WorkController extends Controller
         $user = Auth::user();
         $work->accept($user);
         $work->update(['last_message_at' => date('Y-m-d H:i')]);
-        $work_project_work_ids = WorkProjectWork::where('work_id', $this->id)->pluck('project_work_id');
+        $work_project_work_ids = WorkProjectWork::where('work_id', $work->id)->pluck('project_work_id');
         $project_works = ProjectWorkResource::collection(ProjectWork::whereIn('id', $work_project_work_ids)->get());
         if (empty($project_works)) {
             return response()->json()->setStatusCode(400);
@@ -457,7 +457,7 @@ class WorkController extends Controller
         TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' хочет отменить работы по проекту' . $work->project->product_name);
 
         if (!empty($work->canceled_by_blogger_at) && !empty($work->canceled_by_seller_at)) {
-            $work_project_work_ids = WorkProjectWork::where('work_id', $this->id)->pluck('project_work_id');
+            $work_project_work_ids = WorkProjectWork::where('work_id', $work->id)->pluck('project_work_id');
             $project_works = ProjectWorkResource::collection(ProjectWork::whereIn('id', $work_project_work_ids)->get());
 
             if (empty($project_works)) {
