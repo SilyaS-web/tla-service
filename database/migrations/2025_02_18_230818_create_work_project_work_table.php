@@ -29,6 +29,10 @@ return new class extends Migration
                 'project_work_id' => $work->project_work_id,
             ]);
         }
+
+        Schema::table('works', function (Blueprint $table) {
+            $table->unsignedBigInteger('project_work_id')->nullable()->change();
+        });
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\ProjectWorkResource;
 use App\Models\Blogger;
 use App\Models\DeepLink;
 use App\Models\FinishStats;
@@ -145,7 +146,7 @@ class WorkController extends Controller
     {
         $user = Auth::user();
         $work = Work::create([
-            'project_work_id' => 109,
+            'project_work_id' => null,
             'project_id' => $project_id,
             'blogger_id' => $blogger_id,
             'seller_id' => $seller_id,
@@ -190,7 +191,13 @@ class WorkController extends Controller
             return response()->json(['message' => 'Заявка уже принята или отклонена'])->setStatusCode(400);
         }
 
-        $project_work = $work->projectWork;
+        $work_project_work_ids = WorkProjectWork::where('work_id', $work->id)->pluck('project_work_id');
+        $project_works = ProjectWorkResource::collection(ProjectWork::whereIn('id', $work_project_work_ids)->get());
+
+        if (empty($project_works)) {
+            return response()->json(['message' => 'Проект содержит ошибку'])->setStatusCode(400);
+        }
+        $project_work = $project_works[0];
 
         $seller_tariff = $seller_user->getActiveTariffs($project_work->type);
         if ($seller_tariff && $seller_tariff->quantity !== 0) {
@@ -227,6 +234,13 @@ class WorkController extends Controller
         $user = Auth::user();
         $work->accept($user);
         $work->update(['last_message_at' => date('Y-m-d H:i')]);
+        $work_project_work_ids = WorkProjectWork::where('work_id', $work->id)->pluck('project_work_id');
+        $project_works = ProjectWorkResource::collection(ProjectWork::whereIn('id', $work_project_work_ids)->get());
+        if (empty($project_works)) {
+            return response()->json()->setStatusCode(400);
+        }
+        $project_work = $project_works[0];
+
         Message::create([
             'work_id' => $work->id,
             'user_id' => 1,
@@ -237,7 +251,7 @@ class WorkController extends Controller
             $work->status = Work::IN_PROGRESS;
             $work->save();
             $message_text = 'Статус работы изменён на: <span style="color: var(--primary)">выполняется</span>';
-            if ($work->projectWork->type != Project::FEEDBACK) {
+            if ($project_work->type != Project::FEEDBACK) {
                 $deeplink = $this->createDeepLinkByWork($work);
                 $link = request()->getSchemeAndHttpHost() . '/lnk/' . $deeplink->link;
                 $message_text .= ' - ссылка для сбора статистики <a target="_blank" href="' . $link . '">' . $link . '</a>';
@@ -443,7 +457,14 @@ class WorkController extends Controller
         TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' хочет отменить работы по проекту' . $work->project->product_name);
 
         if (!empty($work->canceled_by_blogger_at) && !empty($work->canceled_by_seller_at)) {
-            $project_work = $work->projectWork;
+            $work_project_work_ids = WorkProjectWork::where('work_id', $work->id)->pluck('project_work_id');
+            $project_works = ProjectWorkResource::collection(ProjectWork::whereIn('id', $work_project_work_ids)->get());
+
+            if (empty($project_works)) {
+                return response()->json(['message' => 'Проект содержит ошибку'])->setStatusCode(400);
+            }
+            $project_work = $project_works[0];
+
             $seller_tariff = $user->getActiveTariffs($project_work->type);
             if ($seller_tariff && $seller_tariff->quantity >= 0) {
                 $seller_tariff->update(['quantity' => $seller_tariff->quantity + 1]);
