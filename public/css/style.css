@@ -1665,6 +1665,11 @@ input[type='range']::-webkit-slider-runnable-track{
 .info-profile__info{
     margin-bottom: 24px;
 }
+.info-profile__info-desc{
+    margin-top: 8px;
+    margin-bottom: 12px;
+    font-size: 14px;
+}
 .blogger-platforms{
     display: flex;
     flex-direction: column;
@@ -1946,7 +1951,7 @@ input[type='range']::-webkit-slider-runnable-track{
     font-size: 18px;
 }
 .info-profile__left{
-    flex: 1 1 auto;
+    flex: 1 1 50%;
 }
 .info-profile__right{
     width: 100%;
@@ -2705,6 +2710,9 @@ input[type='range']::-webkit-slider-runnable-track{
     background-size: cover;
     background-repeat: no-repeat;
 }
+.blogger-popup__body .card__img{
+    cursor: pointer;
+}
 .blogger-item__achives{
     display: flex;
     background-color: #F5FCFF;
@@ -2796,6 +2804,12 @@ input[type='range']::-webkit-slider-runnable-track{
     border: 1px solid rgba(62, 66, 77, .07);
     width: 0;
     overflow: hidden;
+}
+.card__name .blogger-achives__item{
+    overflow: visible;
+    width: 100%;
+    padding: 4px 4px 4px 0px;
+    border: unset;
 }
 .blogger-achives__item-icon {
     border: 1px solid #fff;
@@ -2965,6 +2979,13 @@ input[type='range']::-webkit-slider-runnable-track{
     max-width: 450px;
     margin-bottom: 20px;
     font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    line-height: 21px;
+    max-height: 48px;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
 .btn {
 }
@@ -2972,7 +2993,7 @@ input[type='range']::-webkit-slider-runnable-track{
 }
 .card__stats {
     gap: 30px;
-    /*margin-top: auto;*/
+    margin-top: auto;
 }
 .card__stats-stats{
     gap: 30px;
@@ -5451,8 +5472,8 @@ input[type='range']::-webkit-slider-runnable-track{
 
 .blogger-popup__body .card__img{
     width: 100%;
-    height: 100px;
-    max-width:100px
+    height: 80px;
+    max-width: 80px
 }
 .blogger-popup__body .card__name{
     padding: 6px 0;
@@ -7053,13 +7074,13 @@ input[type='range']::-webkit-slider-runnable-track{
     .blogger-popup__body .card__tags{
         gap: 8px;
     }
-    .blogger-popup__body .card__name-desc{
+    .info-profile__info-desc{
         font-size: 12px;
         margin-top: 6px;
     }
     .blogger-popup__body .card__img{
-        max-width:80px;
-        height: 80px;
+        max-width:70px;
+        height: 70px;
     }
 
     .blogger-popup__title{
@@ -7573,8 +7594,8 @@ input[type='range']::-webkit-slider-runnable-track{
         gap: 6px;
     }
     .blogger-popup__body .card__img {
-        max-width: 85px;
-        height: 85px;
+        max-width: 60px;
+        height: 60px;
         margin-right: 0;
     }
     .blogger-popup__body .card__name-desc{

@@ -258,7 +258,7 @@ export default{
         async applyFilterBloggers(filterData){
             this.Loader.loaderOn('.wrapper .profile__content-inner');
 
-            this.Blogger.getList(false, filterData).then(data => {
+            this.Blogger.getList([1], filterData).then(data => {
                 this.bloggers = (data || []).map(_b => this.findBloggerBiggestPlatform(_b));
 
                 setTimeout(()=>{
