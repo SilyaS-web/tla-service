@@ -145,7 +145,7 @@ class WorkController extends Controller
     {
         $user = Auth::user();
         $work = Work::create([
-            'project_work_id' => 109,
+            'project_work_id' => null,
             'project_id' => $project_id,
             'blogger_id' => $blogger_id,
             'seller_id' => $seller_id,
