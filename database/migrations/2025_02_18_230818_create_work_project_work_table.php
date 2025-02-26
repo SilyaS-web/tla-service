@@ -31,7 +31,7 @@ return new class extends Migration
         }
 
         Schema::table('works', function (Blueprint $table) {
-            $table->unsignedBigInteger('project_work_id')->nullable();
+            $table->unsignedBigInteger('project_work_id')->nullable()->change();
         });
     }
 
