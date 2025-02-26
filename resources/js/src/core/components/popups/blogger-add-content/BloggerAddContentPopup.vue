@@ -49,7 +49,7 @@
                                     @click="uploadCardContent(cardsVideoContent[0], $event)">
                                     <img src="/img/plus-icon.svg" alt="" class="blogger-content__plus">
                                     <div class="blogger-content__progress-bar">
-                                        <div class="blogger-content__progress-progress">
+                                        <div class="blogger-content__progress-progress" :style="{ width: cardsVideoContent[0].progress + '%' }">
                                         </div>
                                     </div>
                                     <video src="" class="blogger-content__video" loop autoplay muted>
@@ -65,7 +65,7 @@
                                     @click="uploadCardContent(cardsVideoContent[1], $event)">
                                     <img src="/img/plus-icon.svg" alt="" class="blogger-content__plus">
                                     <div class="blogger-content__progress-bar">
-                                        <div class="blogger-content__progress-progress">
+                                        <div class="blogger-content__progress-progress" :style="{ width: cardsVideoContent[1].progress + '%' }">
                                         </div>
                                     </div>
                                     <video src="" class="blogger-content__video" loop autoplay muted>
@@ -81,7 +81,7 @@
                                     @click="uploadCardContent(cardsVideoContent[2], $event)">
                                     <img src="/img/plus-icon.svg" alt="" class="blogger-content__plus">
                                     <div class="blogger-content__progress-bar">
-                                        <div class="blogger-content__progress-progress">
+                                        <div class="blogger-content__progress-progress" :style="{ width: cardsVideoContent[2].progress + '%' }">
                                         </div>
                                     </div>
                                     <video src="" class="blogger-content__video" loop autoplay muted>
@@ -247,31 +247,31 @@ export default {
                 method: 'get',
                 url: '/api/bloggers/' + this.user.blogger_id + '/content',
             })
-                .then((result) => {
-                    let contentList = result.data,
-                        videosNodeList = $(document).find('.blogger-content__card video');
+            .then((result) => {
+                let contentList = result.data,
+                    videosNodeList = $(document).find('.blogger-content__card video');
 
-                    this.cardsVideoContent = this.cardsVideoContent.map((item, index) => {
-                        videosNodeList[index].src = '/' + contentList[index].path;
-                        videosNodeList[index].load();
+                this.cardsVideoContent = this.cardsVideoContent.map((item, index) => {
+                    videosNodeList[index].src = '/' + contentList[index].path;
+                    videosNodeList[index].load();
 
-                        return {
-                            'id': contentList[index].id,
-                            'src': contentList[index].path,
-                            'progress': 100
-                        }
-                    })
+                    return {
+                        'id': contentList[index].id,
+                        'src': contentList[index].path,
+                        'progress': 100
+                    }
                 })
-                .catch((err) => {
-                    let message = (err.response && err.response.data && err.response.data.message) ?
-                        err.response.data.message :
-                        'Невозможно загрузить контент, попробуйте позже в личном кабинете';
+            })
+            .catch((err) => {
+                let message = (err.response && err.response.data && err.response.data.message) ?
+                    err.response.data.message :
+                    'Невозможно загрузить контент, попробуйте позже в личном кабинете';
 
-                    notify('error', {
-                        title: 'Внимание!',
-                        message: message
-                    })
+                notify('error', {
+                    title: 'Внимание!',
+                    message: message
                 })
+            })
 
             return new Promise((resolve, reject) => {
                 this.resolvePromise = resolve
@@ -321,25 +321,33 @@ export default {
             axios({
                 method: 'post',
                 url: '/api/bloggers/' + user.blogger_id + '/content',
-                data: formdata
+                data: formdata,
+                onUploadProgress: (progressEvent) => {
+                    const totalLength = progressEvent.lengthComputable ? progressEvent.total : progressEvent.target.getResponseHeader('content-length') || progressEvent.target.getResponseHeader('x-decompressed-content-length');
+
+                    if (totalLength !== null) {
+                        this.cardsVideoContent[cardContentIndex].progress = Math.round((progressEvent.loaded * 100) / totalLength)
+                    }
+                }
             })
-                .then((result) => {
-                    this.cardsVideoContent[cardContentIndex].src = result.data[0].path
-                    this.cardsVideoContent[cardContentIndex].id = result.data[0].id
+            .then((result) => {
+                this.cardsVideoContent[cardContentIndex].src = result.data[0].path
+                this.cardsVideoContent[cardContentIndex].id = result.data[0].id
+                this.cardsVideoContent[cardContentIndex].progress = 100
 
-                    $(event.target).closest('.blogger-content__card').find('video')[0].src = '/' + result.data[0].path;
-                    $(event.target).closest('.blogger-content__card').find('video')[0].load();
-                })
-                .catch((err) =>{
-                    let message = (err.response && err.response.data && err.response.data.message) ?
-                        err.response.data.message :
-                        'Невозможно загрузить контент, попробуйте позже в личном кабинете';
+                $(event.target).closest('.blogger-content__card').find('video')[0].src = '/' + result.data[0].path;
+                $(event.target).closest('.blogger-content__card').find('video')[0].load();
+            })
+            .catch((err) =>{
+                let message = (err.response && err.response.data && err.response.data.message) ?
+                    err.response.data.message :
+                    'Невозможно загрузить контент, попробуйте позже в личном кабинете';
 
-                    notify('error', {
-                        title: 'Внимание!',
-                        message: message
-                    })
+                notify('error', {
+                    title: 'Внимание!',
+                    message: message
                 })
+            })
         },
 
         removeCardContent(cardContent, cardContentIndex, event){

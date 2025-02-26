@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\MessageFileResource;
+use App\Http\Resources\MessagesResource;
+use App\Http\Resources\WorkFileResource;
 use App\Models\Modal;
 use App\Models\SellerTariff;
 use App\Models\Tariff;
+use App\Models\TgPhone;
 use App\Models\User;
+use App\Services\PhoneService;
 use App\Services\TgService;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\MessageResource;
@@ -33,9 +38,9 @@ class UserController extends Controller
     {
         $user = Auth::user();
         if ($user->role == 'seller' && $user->status == 1) {
-            if(count($user->projects) === 0) {
+            if (count($user->projects) === 0) {
                 $tariffs = $user->getActiveTariffs();
-                if(count($tariffs) == 0) {
+                if (count($tariffs) == 0) {
                     $tariff = Tariff::find(19);
                     SellerTariff::create([
                         'user_id' => $user->id,
@@ -56,7 +61,7 @@ class UserController extends Controller
         return response()->json($data)->setStatusCode(200);
     }
 
-     public function show(User $user)
+    public function show(User $user)
     {
         $data = [
             'user' => new UserResource($user),
@@ -77,9 +82,9 @@ class UserController extends Controller
 
 Если у вас есть вопросы, вы можете с нами связаться в [чате](https://t.me/adswap_admin)";
             TgService::sendMessage($user->tgPhone->chat_id, $text, [
-                    'disable_web_page_preview' => true,
-                    'parse_mode' => 'MarkdownV2',
-                ]);
+                'disable_web_page_preview' => true,
+                'parse_mode' => 'MarkdownV2',
+            ]);
         }
 
         $user->status = -1;
@@ -256,14 +261,29 @@ class UserController extends Controller
 
         $messages = $work->messages();
 
-        if (isset($validated['order_by']) && !empty($validated['order_by'])) {
+        if (!empty($validated['order_by'])) {
             $messages->orderBy('created_at', $validated['order_by']);
         }
 
         $work->messages()->whereNull('viewed_at')->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
+        $message_collection = MessageResource::collection($messages->get());
+
+        if (!empty($work->message) || !empty($work->files->toArray())) {
+            $specification_message = [
+                'id' => 0,
+                'message' => $work->message,
+                'sender_id' => 1,
+                'files' => WorkFileResource::collection($work->files),
+                'is_specification' => true,
+                'viewed_at' => null,
+                'created_at' => null,
+            ];
+
+            $message_collection = array_merge([$specification_message], $message_collection->toArray(new Request()));
+        }
 
         $data = [
-            'messages' => MessageResource::collection($messages->get()),
+            'messages' => $message_collection
         ];
 
         return response()->json($data)->setStatusCode(200);
@@ -346,14 +366,6 @@ class UserController extends Controller
             return response()->json($validator->errors())->setStatusCode(400);
         }
 
-        // if (!isset($work->project)) {
-        //     return response()->json(['message' => ['Проект удалён']], 400);
-        // }
-
-        // if ($work->status === Work::COMPLETED) {
-        //     return response()->json(['message' => ['Проект завершён']], 400);
-        // }
-
         $validated = $validator->validated();
 
         if (!isset($validated['img']) && !isset($validated['message'])) {
@@ -412,7 +424,26 @@ class UserController extends Controller
 
     public function showModal(User $user, Modal $modal)
     {
-        Redis::sadd('user.'. $user->id . '.modals', $modal->id);
+        Redis::sadd('user.' . $user->id . '.modals', $modal->id);
         return response()->json()->setStatusCode(200);
+    }
+    public function check(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'phone' => 'string|required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+
+        $validated['phone'] = PhoneService::format($validated['phone']);
+        if (User::where('phone', $validated['phone'])->exists()) {
+            return response()->json('ok', 200);
+        }
+
+        return response()->json(['no content'], 400);
     }
 }

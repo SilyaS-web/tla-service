@@ -63,15 +63,6 @@ export default{
             this.$emit('unban', this.blogger.user.id)
         },
 
-        countER(subs, cover){
-            var val = subs > 0 && cover > 0 ? (cover / subs) * 100 : 0;
-
-            if(val - 1 < 0) val = Math.round(val).toFixed(2);
-            else val = Math.ceil(val);
-
-            return val;
-        },
-
         openBloggerInfoPopup(){
             this.$refs.bloggerCardPopup.show(this.blogger)
         }

@@ -79,6 +79,8 @@
 </template>
 <script>
 import ListItem from './ListItem'
+import Categories from "../../../../core/services/api/Categories.vue";
+
 import {ref} from "vue";
 
 export default{
@@ -93,6 +95,8 @@ export default{
             }),
             currentCategory: ref(''),
             categories: ref([]),
+
+            Categories
         }
     },
     mounted(){
@@ -118,20 +122,10 @@ export default{
             this.currentCategory = ''
         },
         getCategories(event){
-            var value = $(event.target).val();
+            const value = $(event.target).val();
 
-            axios({
-                method: 'get',
-                url: '/api/projects/categories',
-                params:{
-                    category: value
-                }
-            })
-            .then(response => {
-                this.categories = response.data.categories
-            })
-            .catch(error => {
-            })
+            this.Categories.getList(value)
+                .then((categories) => this.categories = categories)
         },
         chooseCategory(category){
             this.filter.category = category.theme;

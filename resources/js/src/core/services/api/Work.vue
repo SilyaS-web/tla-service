@@ -56,6 +56,44 @@ const Work = {
             })
         })
     },
+    sendOffer: (blogger_ids = null, project_work_id = null, project_work_names = null, message = "") => {
+        return new Promise((resolve, reject) => {
+            let data = {
+                message: message
+            }
+
+            if(blogger_ids)
+                data['blogger_ids'] = blogger_ids
+
+            if(project_work_names)
+                data['project_work_names'] = project_work_names
+
+            if(project_work_id)
+                data['project_work_id'] = project_work_id
+
+            axios({
+                url: '/api/works',
+                method: 'post',
+                data: data
+            })
+            .then((data) => {
+                notify('info', {
+                    title: 'Успешно!',
+                    message: 'Заявка отправлена.'
+                });
+
+                resolve(true)
+            })
+            .catch(errors => {
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'Что-то пошло не так. Попробуйте позже.'
+                })
+
+                reject(false)
+            })
+        })
+    },
     deny(work_id){
         return new Promise((resolve, reject) => {
             axios({
@@ -113,7 +151,7 @@ const Work = {
             .then(response => {
                 notify('info', {
                     title: 'Успешно!',
-                    message: 'Заявка от блогера принята.'
+                    message: 'Заявка принята.'
                 })
 
                 resolve(true);

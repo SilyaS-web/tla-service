@@ -17,30 +17,12 @@ class Project extends Model
     use HasFactory, SoftDeletes;
 
     public const FEEDBACK = 'feedback';
-    public const INSTAGRAM = 'inst';
-    public const YOUTUBE = 'youtube';
-    public const VK = 'vk';
-    public const TELEGRAM = 'telegram';
-    public const OK = 'ok';
-    public const DZEN = 'dzen';
-    public const YAPPY = 'yappy';
-    public const RUTUBE = 'rutube';
-    public const TIKTOK = 'tiktok';
     public const INTEGRATION = 'integration';
     public const UGC_CONTENT = 'ugc_content';
     public const BARTER = 'barter';
 
     public const TYPE_NAMES = [
         self::FEEDBACK => 'Выкуп + Отзыв',
-        self::INSTAGRAM => 'Интеграция Inst',
-        self::YOUTUBE => 'Интеграция YouTube',
-        self::VK => 'Интеграция VK',
-        self::TELEGRAM => 'Интеграция Telegram',
-        self::OK => 'Интеграция Одноклассники',
-        self::DZEN => 'Интеграция Дзен',
-        self::YAPPY => 'Интеграция Yappy',
-        self::RUTUBE => 'Интеграция Rutube',
-        self::TIKTOK => 'Интеграция Tiktok',
         self::INTEGRATION => 'Интеграции',
         self::UGC_CONTENT => 'UGC-контент',
         self::BARTER => 'Безлимит',
@@ -52,31 +34,10 @@ class Project extends Model
         self::UGC_CONTENT
     ];
 
-    public const INTEGRATION_TYPES = [
-        self::INSTAGRAM,
-        self::YOUTUBE,
-        self::VK,
-        self::TELEGRAM,
-        self::OK,
-        self::DZEN,
-        self::YAPPY,
-        self::RUTUBE,
-        self::TIKTOK,
-    ];
-
     public const BARTER_TYPES = [
         self::INTEGRATION,
         self::FEEDBACK,
         self::UGC_CONTENT,
-        self::INSTAGRAM,
-        self::YOUTUBE,
-        self::TELEGRAM,
-        self::VK,
-        self::OK,
-        self::DZEN,
-        self::YAPPY,
-        self::RUTUBE,
-        self::TIKTOK,
     ];
 
     public const STOPPED = -3;
@@ -84,14 +45,6 @@ class Project extends Model
     public const PENDING = -1;
     public const ACTIVE = 0;
     public const COMPLETED = 1;
-
-    public const STATUSES = [
-        self::STOPPED,
-        self::BANNED,
-        self::PENDING,
-        self::ACTIVE,
-        self::COMPLETED,
-    ];
 
     /**
      * The attributes that are mass assignable.
@@ -248,55 +201,6 @@ class Project extends Model
         return $is_null;
     }
 
-    public function getStatusClass(): string
-    {
-        if (!$this->is_blogger_access || $this->status == self::BANNED) {
-            return "disactive";
-        }
-
-        return "active";
-    }
-
-    public function getProjectWorkNames($format = null): array|string|null
-    {
-        $project_works = $this->projectWorks;
-        $names = [];
-        if ($format) {
-            if (self::TYPE_NAMES[$format]) {
-                return self::TYPE_NAMES[$format];
-            }
-
-            return null;
-        }
-
-        foreach ($project_works as $project_work) {
-            if (isset(self::TYPE_NAMES[$project_work->type])) {
-                $names[] = self::TYPE_NAMES[$project_work->type];
-            }
-        }
-
-        return $names;
-    }
-
-    public function getProjectWorkNamesWithQuantity(): array
-    {
-        $project_works = $this->projectWorks;
-        $formats = [];
-
-        foreach ($project_works as $project_work) {
-            if (isset(self::TYPE_NAMES[$project_work->type])) {
-                $formats[] = [
-                    'id' => $project_work->id,
-                    'name' => self::TYPE_NAMES[$project_work->type],
-                    'total_quantity' => $project_work->quantity,
-                    'lost_quantity' => $project_work->quantity - $this->works()->where('project_work_id', $project_work->id)->whereIn('status', [Work::IN_PROGRESS, Work::COMPLETED])->count(),
-                ];
-            }
-        }
-
-        return $formats;
-    }
-
     public function getImageURL($only_primary = false): Application|array|string|UrlGenerator|\Illuminate\Contracts\Foundation\Application|null
     {
         if ($only_primary) {
@@ -318,7 +222,6 @@ class Project extends Model
 
         return null;
     }
-
 
     public function getStatistics(string $ozon_client_id = null, string $ozon_api_key = null): bool|string
     {

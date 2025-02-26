@@ -93,6 +93,24 @@ const Blogger = {
             })
         })
     },
+
+    sendToModeration(blogger_id, data){
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'post',
+                url: '/api/bloggers/' + blogger_id,
+                data: data
+            })
+            .then((data) => {
+                resolve(true)
+            })
+            .catch((err) =>{
+                notify('error', {title: 'Ошибка', message: 'Не удалось сохранить данные, проверьте все поля, если все в порядке напишите в поддержку.'});
+
+                reject(err.response.data)
+            })
+        })
+    },
 };
 
 export default Blogger

@@ -76,7 +76,7 @@ class AuthController extends Controller
                 'user_id' => $user->id,
                 'is_agent' => $is_agent
             ]);
-            $tariff = Tariff::find(19);
+            $tariff = Tariff::find(1);
             SellerTariff::create([
                 'user_id' => $user->id,
                 'tariff_id' => $tariff->id,

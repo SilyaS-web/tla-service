@@ -1,7 +1,7 @@
 <template>
     <div class="profile-projects__opts">
         <a
-            @click="editProject"
+            @click.prevent="editProject"
             class="profile-projects__opts-item">
             <img src="img/pencil-icon.svg" alt="">
             <div class="profile-projects__opts-name">Редактировать</div>
@@ -10,7 +10,7 @@
         <a
             v-if="status != -3"
             href="#"
-            @click="hideProject"
+            @click.prevent="hideProject"
             class="profile-projects__opts-item">
             <img src="img/hide-icon.svg" alt="">
             <div class="profile-projects__opts-name">Скрыть</div>
@@ -19,14 +19,14 @@
         <a
             v-else
             href="#"
-            @click="showProject"
+            @click.prevent="showProject"
             class="profile-projects__opts-item">
             <img src="img/show-icon.svg" alt="">
             <div class="profile-projects__opts-name">Показывать</div>
         </a>
 
         <a
-            @click="deleteProject"
+            @click.prevent="deleteProject"
             href="#" class="profile-projects__opts-item">
             <img src="img/delete-icon.svg" alt="">
             <div class="profile-projects__opts-name">Удалить</div>
@@ -41,19 +41,15 @@ export default{
     },
     methods:{
         editProject(event){
-            event.preventDefault()
             this.$emit('editProject', true)
         },
         deleteProject(event){
-            event.preventDefault()
             this.$emit('deleteProject', true)
         },
         showProject(event){
-            event.preventDefault()
             this.$emit('showProject', true)
         },
         hideProject(event){
-            event.preventDefault()
             this.$emit('hideProject', true)
         },
     }

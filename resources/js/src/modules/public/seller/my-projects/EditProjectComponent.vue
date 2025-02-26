@@ -48,31 +48,13 @@
                             </div>
 
                         </div>
-                        <div class="form-group form-group--file create-project__files upload-files">
-                            <div class="upload-files__title">
-                                Загрузите изображения товара
-                            </div>
-                            <div class="upload-files__body">
-                                <div
-                                    v-for="(file, ind) in projectFiles"
-                                    class="upload-files__item uploaded" :style="'display:' + (file.link != 'uploading' ? 'flex' : 'none')">
-                                    <div class="upload-files__path" :title="file.link">{{ file.link }}</div>
-                                    <div
-                                        @click="deleteFile(file)"
-                                        class="upload-files__delete">
-                                    </div>
-                                    <input
-                                        @change="uploadFile"
-                                        type="file" :data-id="ind" hidden="" name="images[]">
-                                </div>
-                                <div
-                                    @click="triggerUpload"
-                                    class="upload-files__plus">
-
-                                </div>
-                            </div>
-                            <span class="error" v-if="errors.images">{{ errors.images }}</span>
-                        </div>
+                        <UploadFilesBlock
+                            v-model="projectFiles"
+                            :id="'update-project-upload'"
+                            :label="'Загрузите изображения товара'"
+                            :files="project.project_files"
+                            :error="errors.images"
+                        ></UploadFilesBlock>
                     </div>
                     <div id="step_2" class="quest__step step current">
                         <div class="quest__btns">
@@ -90,24 +72,24 @@
 </template>
 <script>
 import {ref} from "vue";
+
+import UploadFilesBlock from '../../../../core/components/form/PlusFilesUploadBlockComponent.vue'
+
 import Project from "../../../../core/services/api/Project";
 
 export default{
     props:['project'],
+    components:{UploadFilesBlock},
     data(){
         return {
             errors: ref({}),
-            projectFiles: ref({}),
+            projectFiles: ref([]),
             Project
         }
     },
     mounted(){
-        this.projectFiles = this.project.project_files;
     },
     updated(){
-        if(this.projectFiles.find(f => f.link === "uploading")){
-            $(`.upload-files__item input[data-id=${this.projectFiles.length - 1}]`).click();
-        }
     },
     methods:{
         modifyProject(){
@@ -136,41 +118,15 @@ export default{
                     formData.append('uploaded_images[' + i + ']', this.project.uploaded_files[i])
             }
 
-            axios({
-                method: 'post',
-                url: '/api/projects/' + this.project.id,
-                data: formData
-            })
-            .then((data) =>{
-                this.resetEditData()
-
-                notify('info', {title: 'Успешно!', message: 'Данные успешно обновлены.'});
-
-                this.$emit('updateMyProjects');
-            })
-            .catch((err) => {
-                let message =  (err.response.data && err.response.data.message) ?
-                    err.response.data.message :
-                    'Невозможно сохранить проект, перепроверьте все поля, данные не заполнены, либо заполнены некоректно.';
-
-                notify('info', {title: 'Внимание!', message: message});
-                this.errors = err.response.errors;
-            })
+            this.Project.update(this.project.id, formData)
+                .then((data) => {
+                    this.resetEditData()
+                    this.$emit('updateMyProjects');
+                })
+                .catch(errors => this.errors = errors)
         },
         resetEditData(){
             this.$emit('resetEditData')
-        },
-        deleteFile(file){
-            this.projectFiles = this.projectFiles.filter(_f => _f.link != file.link);
-        },
-        triggerUpload(){
-            this.projectFiles.push({link: 'uploading', isUploaded: true});
-        },
-        uploadFile(event){
-            var file = $(event.target)[0].files[0];
-
-            this.projectFiles[this.projectFiles.length - 1].link = file.name;
-            this.projectFiles[this.projectFiles.length - 1].file = file;
         },
     }
 }

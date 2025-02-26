@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Resources\ProjectWorkResource;
 use App\Models\Blogger;
 use App\Models\DeepLink;
 use App\Models\FinishStats;
@@ -9,13 +10,18 @@ use App\Models\Message;
 use App\Models\MessageFile;
 use App\Models\Notification;
 use App\Models\Project;
+use App\Models\ProjectFile;
 use App\Models\ProjectWork;
 use App\Models\Work;
 use App\Models\User;
+use App\Models\WorkFile;
+use App\Models\WorkProjectWork;
+use App\Services\ImageService;
 use App\Services\TgService;
-use Illuminate\Database\Eloquent\Builder;
+use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
@@ -23,7 +29,7 @@ use App\Http\Controllers\Controller;
 
 class WorkController extends Controller
 {
-    public function index(Project $project, Request $request)
+    public function index(Project $project, Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
             'statuses' => 'array|nullable',
@@ -34,14 +40,22 @@ class WorkController extends Controller
             return response()->json($validator->errors(), 400);
         }
 
-        $validated = $validator->validated();
+        $validator->validated();
+
+        return response()->json([], 200);
     }
 
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'project_work_id' => 'required|exists:project_works,id',
-            'blogger_id' => 'exists:bloggers,id|nullable',
+            'project_id' => 'nullable|exists:projects,id',
+            'project_work_id' => 'nullable|exists:project_works,id',
+            'project_work_names' => 'nullable|array',
+            'project_work_names.*' => 'nullable|string',
+            'blogger_ids' => 'nullable|array',
+            'blogger_ids.*' => 'nullable|exists:users,id',
+            'files' => 'nullable|array',
+            'files.*' => 'nullable|file|max:51200',
             'message' => 'string|nullable',
         ]);
 
@@ -50,10 +64,41 @@ class WorkController extends Controller
         }
 
         $validated = $validator->validated();
+
         $user = Auth::user();
 
-        $project_work = ProjectWork::find($validated['project_work_id']);
-        $project = $project_work->project;
+        if (!empty($validated['project_id']) && !empty($validated['project_work_names'])) {
+            if (empty($validated['message']) && empty($validated['files'])) {
+                return response()->json(['message' => 'Выберите файлы или введите описание!'], 400);
+            }
+            $project = Project::find($validated['project_id']);
+            if (empty($project)) {
+                return response()->json(['message' => 'Не удалось найти проект'], 400);
+            }
+            foreach ($validated['project_work_names'] as $type) {
+                $projectWork = ProjectWork::where('type', $type)->where('project_id', $project->id)->first();
+                if (empty($projectWork)) {
+                    ProjectWork::create([
+                        'type' => $type,
+                        'project_id' => $project->id,
+                        'quantity' => -1,
+                        'is_auto_generated' => true,
+                        'finish_date' => Carbon::now(),
+                    ]);
+                }
+            }
+            $project_works = ProjectWork::whereIn('type', $validated['project_work_names'])->where('project_id', $project->id)->get();
+        } else if (!empty($validated['project_work_id'])) {
+            $project_works = ProjectWork::where('id', $validated['project_work_id'])->get();
+            if (!empty($project_works)) {
+                $project = $project_works->first()->project;
+            } else {
+                return response()->json(['message' => 'Не удалось найти проект'], 400);
+            }
+        } else {
+            return response()->json(['message' => 'Не удалось найти проект'], 400);
+        }
+
         if (!$project) {
             return response()->json(['message' => 'Проект на который вы отправляете заявку удалён или заблокирован'])->setStatusCode(400);
         }
@@ -62,38 +107,71 @@ class WorkController extends Controller
             return response()->json(['message' => 'Проект на который вы отправляете не опубликован'])->setStatusCode(400);
         }
 
+        $works = [];
         if ($user->role == 'blogger') {
-            if ($project_work->project->isSended()) {
+            if ($project->isSended()) {
                 return response()->json(['message' => 'Заявка отправлена'])->setStatusCode(400);
             }
-            $blogger_user = $user;
+
+            $works[] = $this->createWork($project->id, $user->id, $project->seller_id, $validated['message'], $project->product_name, $project_works);
         } else {
-            if (!isset($validated['blogger_id']) || empty($validated['blogger_id'])) {
-                return response()->json(['message' => 'У пользователя должна быть роль blogger либо укажите blogger_id'])->setStatusCode(400);
+            if (empty($validated['blogger_ids'])) {
+                return response()->json(['message' => 'У пользователя должна быть роль Блогер'])->setStatusCode(400);
             }
-            $blogger_user = Blogger::find($validated['blogger_id']);
+
+            foreach ($validated['blogger_ids'] as $blogger_id) {
+                $works[] = $this->createWork($project->id, $blogger_id, $user->id, $validated['message'], $project->product_name, $project_works);
+            }
         }
 
+        $work_files = $request->file('files');
+        if (!empty($work_files)) {
+            foreach ($work_files as $file) {
+                $file_path = $file->storeAs('works', str_replace(' ', '_', $project->product_name) . '_' . Carbon::now() . '_' . Str::random(10),'public');
+
+                foreach ($works as $work) {
+                    WorkFile::create([
+                        'source_id' => $work->id,
+                        'type' => 0,
+                        'link' => $file_path,
+                    ]);
+                }
+            }
+        }
+
+        return response()->json(['id' => $works[0]->id])->setStatusCode(200);
+    }
+
+    public function createWork(int $project_id, int $blogger_id, int $seller_id, string|null $message, string $product_name, Collection $project_works): Work
+    {
+        $user = Auth::user();
         $work = Work::create([
-            'project_id' => $project_work->project->id,
-            'blogger_id' => $user->role == 'seller' ? $blogger_user->user->id : $user->id,
-            'seller_id' => $user->role == 'seller' ? $user->id : $project_work->project->seller_id,
+            'project_work_id' => null,
+            'project_id' => $project_id,
+            'blogger_id' => $blogger_id,
+            'seller_id' => $seller_id,
             'status' => null,
-            'project_work_id' => $project_work->id,
-            'message' => $validated['message'] ?? null,
+            'message' => $message,
             'created_by' => $user->id,
         ]);
+
+        foreach ($project_works as $project_work) {
+           WorkProjectWork::create([
+               'work_id' => $work->id,
+               'project_work_id' => $project_work->id,
+           ]);
+        }
 
         Notification::create([
             'user_id' => $work->getPartnerUser($user->role)->id,
             'type' => 'Новая заявка',
-            'text' => 'Вам поступила новая заявка от ' . $user->name . ' на проект ' . $project_work->project->product_name,
+            'text' => 'Вам поступила новая заявка от ' . $user->name . ' на проект ' . $product_name,
             'work_id' => $work->id,
             'from_user_id' => $user->id,
         ]);
 
-        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Вам поступила новая заявка от ' . $user->name . ' на проект ' . $project_work->project->product_name);
-        return response()->json(['id' => $work->id])->setStatusCode(200);
+        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, 'Вам поступила новая заявка от ' . $user->name . ' на проект ' . $product_name);
+        return $work;
     }
 
     public function accept(Work $work)
@@ -113,7 +191,13 @@ class WorkController extends Controller
             return response()->json(['message' => 'Заявка уже принята или отклонена'])->setStatusCode(400);
         }
 
-        $project_work = $work->projectWork;
+        $work_project_work_ids = WorkProjectWork::where('work_id', $work->id)->pluck('project_work_id');
+        $project_works = ProjectWorkResource::collection(ProjectWork::whereIn('id', $work_project_work_ids)->get());
+
+        if (empty($project_works)) {
+            return response()->json(['message' => 'Проект содержит ошибку'])->setStatusCode(400);
+        }
+        $project_work = $project_works[0];
 
         $seller_tariff = $seller_user->getActiveTariffs($project_work->type);
         if ($seller_tariff && $seller_tariff->quantity !== 0) {
@@ -150,6 +234,13 @@ class WorkController extends Controller
         $user = Auth::user();
         $work->accept($user);
         $work->update(['last_message_at' => date('Y-m-d H:i')]);
+        $work_project_work_ids = WorkProjectWork::where('work_id', $work->id)->pluck('project_work_id');
+        $project_works = ProjectWorkResource::collection(ProjectWork::whereIn('id', $work_project_work_ids)->get());
+        if (empty($project_works)) {
+            return response()->json()->setStatusCode(400);
+        }
+        $project_work = $project_works[0];
+
         Message::create([
             'work_id' => $work->id,
             'user_id' => 1,
@@ -160,7 +251,7 @@ class WorkController extends Controller
             $work->status = Work::IN_PROGRESS;
             $work->save();
             $message_text = 'Статус работы изменён на: <span style="color: var(--primary)">выполняется</span>';
-            if ($work->projectWork->type != Project::FEEDBACK) {
+            if ($project_work->type != Project::FEEDBACK) {
                 $deeplink = $this->createDeepLinkByWork($work);
                 $link = request()->getSchemeAndHttpHost() . '/lnk/' . $deeplink->link;
                 $message_text .= ' - ссылка для сбора статистики <a target="_blank" href="' . $link . '">' . $link . '</a>';
@@ -366,7 +457,14 @@ class WorkController extends Controller
         TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' хочет отменить работы по проекту' . $work->project->product_name);
 
         if (!empty($work->canceled_by_blogger_at) && !empty($work->canceled_by_seller_at)) {
-            $project_work = $work->projectWork;
+            $work_project_work_ids = WorkProjectWork::where('work_id', $work->id)->pluck('project_work_id');
+            $project_works = ProjectWorkResource::collection(ProjectWork::whereIn('id', $work_project_work_ids)->get());
+
+            if (empty($project_works)) {
+                return response()->json(['message' => 'Проект содержит ошибку'])->setStatusCode(400);
+            }
+            $project_work = $project_works[0];
+
             $seller_tariff = $user->getActiveTariffs($project_work->type);
             if ($seller_tariff && $seller_tariff->quantity >= 0) {
                 $seller_tariff->update(['quantity' => $seller_tariff->quantity + 1]);

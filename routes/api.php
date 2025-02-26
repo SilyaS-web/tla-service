@@ -33,6 +33,7 @@ Route::post('/phones', [AuthController::class, 'setTGPhone']);
 Route::get('/platforms', [PlatformController::class, 'index']);
 Route::get('/themes', [ThemeController::class, 'index']);
 Route::post('/users', [AuthController::class, 'store']);
+Route::get('/users/exist', [UserController::class, 'check']);
 
 Route::prefix('payment')->group(function () {
     Route::get('/debug/{tariff}', [PaymentController::class, 'debugPayment']);
@@ -72,6 +73,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/sellers/{seller}', [SellerController::class, 'update']);
 
     Route::get('/projects', [ProjectController::class, 'index']);
+    Route::get('/projects/types', [ProjectController::class, 'types']);
     Route::post('/projects', [ProjectController::class, 'store']);
     Route::post('/projects/{project}', [ProjectController::class, 'update']);
     Route::get('/projects/categories', [ProjectController::class, 'categories']);
