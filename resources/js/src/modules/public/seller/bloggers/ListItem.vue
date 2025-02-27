@@ -120,51 +120,41 @@ export default{
         display: flex;
 
     }
-    .card__btns .checkbox__checkbox + label{
-        font-size: 0;
-    }
-    .card__btns .checkbox__checkbox + label:before{
-        width: 30px;
-        height: 30px;
-        border: 1px solid rgba(0, 0, 0, .4);
-    }
     .card__btns .checkbox__checkbox:checked + label::before{
         filter: invert(45%) sepia(40%) saturate(6353%) hue-rotate(259deg) brightness(91%) contrast(87%);
         background-size: 20px;
     }
-
-    @media(max-width:1530px){
-        .card__btns{
-            flex-wrap: wrap;
-        }
-        .card__btns .checkbox{
-            order:1;
-            width: 100%;
-        }
-        .card__btns .btn-primary{
-            order:2;
-        }
-        .card__btns .btn-secondary{
-            order:3;
-        }
-        .card__btns .checkbox__checkbox + label{
-            font-size: inherit;
-            font-weight: 500;
-            color:rgba(0,0,0,.6);
-            margin-bottom: 12px;
-        }
-        .card__btns .checkbox__checkbox + label::before{
-            width: 24px;
-            height: 24px;
-            border-radius: 6px;
-        }
-        .card__btns .checkbox__checkbox:checked + label::before{
-            background-size: 17px;
-        }
-        .card__btns .checkbox__checkbox:checked + label{
-            color:var(--primary)
-        }
+    .card__btns{
+        flex-wrap: wrap;
     }
+    .card__btns .checkbox{
+        order:1;
+        width: 100%;
+    }
+    .card__btns .btn-primary{
+        order:2;
+    }
+    .card__btns .btn-secondary{
+        order:3;
+    }
+    .card__btns .checkbox__checkbox + label{
+        font-size: inherit;
+        font-weight: 500;
+        color:rgba(0,0,0,.6);
+        margin-bottom: 12px;
+    }
+    .card__btns .checkbox__checkbox + label::before{
+        width: 24px;
+        height: 24px;
+        border-radius: 6px;
+    }
+    .card__btns .checkbox__checkbox:checked + label::before{
+        background-size: 17px;
+    }
+    .card__btns .checkbox__checkbox:checked + label{
+        color:var(--primary)
+    }
+
     @media(max-width:475px){
         .card__btns .checkbox__checkbox + label{
             font-size: 13px;
