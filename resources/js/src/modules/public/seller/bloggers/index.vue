@@ -1,5 +1,5 @@
 <template>
-    <div :class="'profile-blogers tab-content ' + (isBloggersListBlocked ? 'not-paid' : '')" id="profile-blogers-list">
+    <div :class="'profile-blogers ' + (isBloggersListBlocked ? 'not-paid' : '')" id="bloggers-list">
         <!-- страница каталога блогеров-->
         <div v-if="!isChooseProjectList" class="profile-blogers__body">
             <div class="projects-list__header">
@@ -147,6 +147,12 @@
         <distribution-popup
             ref="distributionPopup"
         ></distribution-popup>
+
+        <app-observe
+            :options="{rootMargin: '0px 0px 1000px 0px', threshold: [0]}"
+            ref="appObserver"
+            @intersect="getBloggers({status:[1]})"
+        ></app-observe>
     </div>
 </template>
 <script>
@@ -154,6 +160,7 @@ import {ref} from "vue";
 
 import User from '../../../../core/services/api/User.vue'
 import Project from '../../../../core/services/api/Project.vue'
+import Blogger from '../../../../core/services/api/Blogger.vue'
 import Loader from '../../../../core/components/AppLoader.vue'
 
 import ProjectsList from "../projects/index";
@@ -170,15 +177,22 @@ import ChooseProjectPopup from '../../../../core/components/popups/choose-projec
 import DistributionTable from './DistributionTable.vue'
 import DistributionPopup from "../../../../core/components/popups/seller-mass-distribution/SellerMassDistribution.vue";
 
+import AppObserve from "../../../../core/services/Observer.vue";
+
 export default{
-    props:['bloggers', 'user'],
+    props:['user'],
     components:{
         DistributionPopup,
         ProjectsList, BloggersListItem, ProjectsListItem,
-        ChooseProjectPopup, Filter, ChoosedProject, ProjectCard, DistributionTable
+        ChooseProjectPopup, Filter, ChoosedProject,
+        ProjectCard, DistributionTable,
+
+        AppObserve
     },
     data(){
         return {
+            bloggers:ref([]),
+
             projects:ref([]),
             currentProject: ref(null),
             isChooseProjectList: ref(false),
@@ -190,19 +204,22 @@ export default{
                 product_name: '',
             }),
 
-            Project, User,
+            Project, User, Blogger,
             Loader
         }
     },
-
-    async mounted(){
-        let user = this.User.getCurrent();
+    mounted(){
+        const user = this.User.getCurrent();
 
         if(user){
             if(user.tariffs && user.tariffs.length > 0){
                 this.isBloggersListBlocked = false
             }
         }
+
+        this.Loader.loaderOn(this.$el);
+
+        this.getBloggers({status: [1]})
     },
 
     updated(){
@@ -265,9 +282,43 @@ export default{
             })
         },
 
+        getBloggers(data){
+            let params = {}
+
+            for (const key in data) {
+                if(data[key]) params[key] = data[key]
+            }
+
+            const limitData = this.$refs.appObserver.getPaginationData()
+
+            params.limit = [limitData.itemsOnPage, limitData.itemsCount]
+
+            this.Blogger.getList(params).then(data => {
+                this.bloggers = [...this.bloggers, ...(data || []).map(_b => this.findBloggerBiggestPlatform(_b))];
+
+                setTimeout(()=>{
+                    this.Loader.loaderOff(this.$el);
+                }, 300)
+            })
+        },
+
         //фильтры списка блогеров
         applyBloggersFilter(filterData){
-            this.$emit('applyFilter', filterData);
+            this.Loader.loaderOn('#profile-blogers-list');
+
+            let params = {}
+
+            for (const key in filterData) {
+                if(filterData[key]) params[key] = filterData[key]
+            }
+
+            this.Blogger.getList(params).then(data => {
+                this.bloggers = (data || []).map(_b => this.findBloggerBiggestPlatform(_b));
+
+                setTimeout(()=>{
+                    this.Loader.loaderOff(this.$el);
+                }, 300)
+            })
         },
 
         openMassDistributionPopup(){
@@ -278,7 +329,22 @@ export default{
                 productID:  this.currentProject.id,
                 okButton: 'Отправить'
             })
-        }
+        },
+
+        findBloggerBiggestPlatform(blogger){
+            let summaryPlatform = { subscriber_quantity: 0 };
+
+            if(blogger.platforms){
+                blogger.platforms.forEach(_p => {
+                    if(summaryPlatform.subscriber_quantity < _p.subscriber_quantity)
+                        summaryPlatform = _p
+                });
+            }
+
+            blogger.summaryPlatform = summaryPlatform;
+
+            return blogger;
+        },
     }
 }
 </script>

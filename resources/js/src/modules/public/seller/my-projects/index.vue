@@ -1,6 +1,6 @@
 <template>
     <div
-        class="profile-projects tab-content" id="profile-projects">
+        class="profile-projects" id="my-projects-list">
         <div
             v-if="!editingProject"
             class="profile-projects__body">

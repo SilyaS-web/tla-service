@@ -68,18 +68,30 @@ const Blogger = {
         })
     },
 
-    getList(status = [], filterData = {}){
+  /*
+    *data = {
+    *    status: [],
+    *    name: '',
+    *    platform: '',
+    *    city: '',
+    *    country: '',
+    *    themes: [],
+    *    sex: [],
+    *    subscriber_quantity_min: false,
+    *    subscriber_quantity_max: false,
+    *    has_content: 0,
+    *    limit: [from, count],
+    *}
+    *
+   */
+    getList(data = {}){
         return new Promise((resolve, reject) => {
-            var params = {
-                statuses: status || [],
-            };
+            let params = {}
 
-            if(filterData){
-                var keys = Object.keys(filterData);
-
-                keys.forEach(k => {
-                    params[k] = filterData[k]
-                })
+            for (const key in data) {
+                if(data[key]){
+                    params[key] = data[key]
+                }
             }
 
             axios({

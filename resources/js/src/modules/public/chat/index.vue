@@ -1,5 +1,5 @@
 <template>
-    <div class="profile-chat tab-content" id="chat">
+    <div class="profile-chat" id="chat">
         <div class="profile-chat__body" v-if="user">
             <div class="profile-tabs__content-item">
                 <div class="tab-content__chat chat">

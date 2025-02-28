@@ -4,20 +4,64 @@
     <section class="profile" id="seller">
         <div class="profile__container _container">
             <div class="profile__body">
-                <Aside v-on:switchTab="switchTab" :chatMessages="newChatMessagesCount"></Aside>
+                <Aside
+                    v-on:switchTab="switchTab"
+                    :tabs="[
+                        {
+                            tabName: 'Создать проект',
+                            tabContent: 'create-project',
+                            classList: ['project-link']
+                        },
+                        {
+                            tabName: 'Мои проекты',
+                            tabContent: 'my-projects-list',
+                            classList: ['projects-list-link']
+                        },
+                        {
+                            tabName: 'Все проекты',
+                            tabContent: 'projects-list',
+                            classList: ['all-projects-list-link'],
+                            isActive: true
+                        },
+                        // {
+                        //     tabName: 'Дашборд',
+                        //     tabContent: 'dashboard',
+                        // },
+                        {
+                            tabName: 'Каталог блогеров',
+                            tabContent: 'bloggers-list',
+                            classList: ['blogers-list-link'],
+                        },
+                        {
+                            tabName: 'Чат с блогерами',
+                            tabContent: 'chat',
+                            notifications: newChatMessagesCount,
+                            classList: ['chat-link'],
+                        },
+                        // {
+                        //     tabName: 'Партнеры',
+                        //     tabContent: 'partners',
+                        // },
+                    ]"
+                ></Aside>
                 <div class="profile__content">
                     <div class="profile__content-inner">
                         <!-- создание проекта -->
-                        <CreateProject v-on:switchTab="switchTab"></CreateProject>
+                        <CreateProject
+                            v-if="tab === 'create-project'"
+                            v-on:switchTab="switchTab">
+                        </CreateProject>
 
                         <!-- Список всех проектов -->
                         <ProjectsList
+                            v-if="tab === 'projects-list'"
                             :projects="projects"
                             v-on:applyFilter="applyFilterProjects">
                         </ProjectsList>
 
                         <!-- список моих проектов -->
                         <MyProjectsList
+                            v-if="tab === 'my-project-list'"
                             :myProjects="myProjects"
                             v-on:updateMyProjects="updateMyProjects"
                             v-on:switchTab="switchTab"
@@ -26,20 +70,22 @@
 
                         <!-- список блогеров -->
                         <BloggersList
-                            v-on:applyFilter="applyFilterBloggers"
-                            :bloggers="bloggers"
+                            v-if="tab === 'bloggers-list'"
                             :user="user">
                         </BloggersList>
 
                         <!-- чат -->
                         <Chat
-                            :currentItem=currentItem
-                            :isChatTab=isChatTab
+                            v-if="tab === 'chat'"
+                            :currentItem="currentItem"
+                            :isChatTab="isChatTab"
                             v-on:switchTab="switchTab"
                             v-on:newMessages="newChatMessages"
                             v-on:updateCurrentItem="currentItem = $event"></Chat>
 
-                        <Partners></Partners>
+<!--                        <Partners-->
+<!--                            v-if=""-->
+<!--                        ></Partners>-->
                     </div>
                 </div>
             </div>
@@ -69,17 +115,15 @@ import axios from "axios";
 import User from '../../../core/services/api/User.vue'
 import Seller from '../../../core/services/api/Seller.vue'
 import Project from '../../../core/services/api/Project.vue'
-import Blogger from '../../../core/services/api/Blogger.vue'
 
 import Loader from '../../../core/components/AppLoader'
-import Tabs from '../../../core/components/AppTabs'
 
 import CreateProject from './new-project/index'
 import ProjectsList from './projects/index'
 import MyProjectsList from './my-projects/index'
 import BloggersList from './bloggers/index'
 import Chat from '../chat/index'
-import Aside from '../../../core/components/layout/seller/AppAside'
+import Aside from '../../../core/components/layout/tabs-aside/index'
 import Header from '../../../core/components/layout/AppHeader'
 import Footer from '../../../core/components/layout/AppFooter'
 import Tariffs from './tariffs/index'
@@ -115,7 +159,6 @@ export default{
                 "er": 0,
                 "cpc": 0
             }),
-            bloggers: ref([]),
             projects: ref([]),
 
             currentItem: ref(null),
@@ -123,8 +166,12 @@ export default{
 
             isShowTariffs: ref(false),
 
-            User, Seller, Blogger, Project,
-            Loader, Tabs
+            tab: ref('projects-list'),
+
+            isChatTab: ref(false),
+
+            User, Seller, Project,
+            Loader
         }
     },
     async mounted(){
@@ -155,14 +202,12 @@ export default{
     },
     methods:{
         async switchTab(tab, currentItem = false){
-            this.Tabs.tabClick(tab)
+            this.tab = tab
 
             this.currentItem = null
 
             if(currentItem)
                 this.currentItem = currentItem;
-
-            this.Loader.loaderOn('.wrapper #' + tab);
 
             this.isChatTab = tab === 'chat';
 
@@ -197,14 +242,6 @@ export default{
                     break;
 
                 case 'profile-blogers-list':
-                    this.Blogger.getList([1]).then(data => {
-                        this.bloggers = (data || []).map(_b => this.findBloggerBiggestPlatform(_b));
-
-                        setTimeout(()=>{
-                            this.Loader.loaderOff('#profile-blogers-list');
-                        }, 300)
-                    })
-
                     break;
 
                 case 'all-projects':
@@ -219,9 +256,6 @@ export default{
                     break;
 
                 default:
-                    setTimeout(()=>{
-                        this.Loader.loaderOff();
-                    }, 300)
                     break
             }
         },
@@ -236,35 +270,8 @@ export default{
             }, 300)
         },
 
-        findBloggerBiggestPlatform(blogger){
-            var summaryPlatform = { subscriber_quantity: 0 };
-
-            if(blogger.platforms){
-                blogger.platforms.forEach(_p => {
-                    if(summaryPlatform.subscriber_quantity < _p.subscriber_quantity)
-                        summaryPlatform = _p
-                });
-            }
-
-            blogger.summaryPlatform = summaryPlatform;
-
-            return blogger;
-        },
-
         newChatMessages(messagesCount){
             this.newChatMessagesCount = messagesCount
-        },
-
-        async applyFilterBloggers(filterData){
-            this.Loader.loaderOn('.wrapper .profile__content-inner');
-
-            this.Blogger.getList([1], filterData).then(data => {
-                this.bloggers = (data || []).map(_b => this.findBloggerBiggestPlatform(_b));
-
-                setTimeout(()=>{
-                    this.Loader.loaderOff();
-                }, 300)
-            })
         },
 
         async applyFilterMyProjects(filterData){

@@ -1,5 +1,5 @@
 <template>
-    <div class="profile-create-project tab-content" id="create-project">
+    <div class="profile-create-project" id="create-project">
         <div class="create-project__body">
             <div class="create-project__title title">
                 Создать проект
