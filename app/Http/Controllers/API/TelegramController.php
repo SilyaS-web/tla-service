@@ -3,15 +3,13 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\TariffResource;
-use App\Models\Tariff;
 use App\Models\TgPhone;
-use App\Services\TariffService;
 use App\Services\TgService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Log;
 
 class TelegramController extends Controller
 {
@@ -27,11 +25,11 @@ class TelegramController extends Controller
         }
 
         $validated = $validator->validated();
+        Log::info('from_chat_id: ' . $validated['from_chat_id'] . ' message_id: ' . $validated['message_id']);
 
         $tg_phones = TgPhone::whereHas('user', function (Builder $query) {
             $query->where('role', 'blogger');
         })->get();
-
         $error = false;
         foreach ($tg_phones as $phone) {
             if (!TgService::copyMessage($phone->chat_id, $validated['from_chat_id'], $validated['message_id'])) {
