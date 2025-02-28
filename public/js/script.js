@@ -85,7 +85,7 @@ $(window).on('load', function(){
 
 
     $(document).on('click', '.projects-list__filter-btn', function(){
-        $(this).closest('.tab-content').find('.projects-list__filter').toggleClass('opened')
+        $(this).closest('.profile-tab--js').find('.projects-list__filter').toggleClass('opened')
     })
     $(document).on('click', '.filter__hide', function(){
         $(this).closest('.filter').removeClass('opened');

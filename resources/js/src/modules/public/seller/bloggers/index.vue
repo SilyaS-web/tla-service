@@ -1,5 +1,5 @@
 <template>
-    <div :class="'profile-blogers tab-content ' + (isBloggersListBlocked ? 'not-paid' : '')" id="profile-blogers-list">
+    <div :class="'profile-blogers profile-tab--js ' + (isBloggersListBlocked ? 'not-paid' : '')" id="bloggers-list">
         <!-- страница каталога блогеров-->
         <div v-if="!isChooseProjectList" class="profile-blogers__body">
             <div class="projects-list__header">
@@ -41,6 +41,21 @@
                     :currentProject="currentProject">
                 </BloggersListItem>
                 <span v-else> В списке блогеров пусто </span>
+
+                <div
+                    v-if="bloggers.length > 0 && isShowLoadingBloggers"
+                    v-for="i of (bloggers.length % 4 + 4)"
+                    class="loading-blogger">
+                    <div class="loading-blogger__header _loading-row">
+                    </div>
+                    <div class="loading-blogger__body">
+                        <div class="loading-blogger__loading-stats _loading-row"></div>
+                        <div class="loading-blogger__loading-row">
+                            <div class="loading-blogger__loading-col loading-blogger__loading-col--two-third  _loading-row"></div>
+                            <div class="loading-blogger__loading-col loading-blogger__loading-col--one-third _loading-row"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -74,7 +89,7 @@
 
                         :id="project.id"
                         :name="project.product_name"
-                        :price="project.product_price"
+                        :price="project.product_price || 0"
                         :works="project.project_works"
                         :imgs="project.project_files"
                     >
@@ -149,8 +164,22 @@
                 <router-link :to="{ path: '/tariffs' }" class="not_paid-alert__btn btn btn-primary">Разблокировать каталог</router-link>
             </div>
         </div>
+
+        <choose-project-popup ref="chooseProjectPopup"></choose-project-popup>
+        <distribution-table
+            v-on:mass-distribution="openMassDistributionPopup"
+        ></distribution-table>
+        <distribution-popup
+            ref="distributionPopup"
+        ></distribution-popup>
+
+        <app-observe
+            :options="{rootMargin: '0px 0px 1000px 0px', threshold: [0]}"
+            :itemsCount="20"
+            ref="appObserver"
+            @intersect="getBloggers({status:[1]})"
+        ></app-observe>
     </div>
-    <choose-project-popup ref="chooseProjectPopup"></choose-project-popup>
 </template>
 <script>
 import {ref} from "vue";
@@ -196,10 +225,12 @@ export default{
 
             isBloggersListBlocked: ref(false),
 
+            bloggersFilter: {},
+
             sort:ref({
                 createdAt: {
                     key: 'order_by_created_at',
-                    orderBy: 'asc',
+                    orderBy: 'desc',
                     sortData: {
                         asc: {
                             title: 'Сначала старые',
@@ -216,6 +247,8 @@ export default{
                 product_name: '',
             }),
 
+            isShowLoadingBloggers: ref(false),
+
             Project, User, Blogger,
             Loader
         }
@@ -231,11 +264,13 @@ export default{
 
         this.Loader.loaderOn(this.$el);
 
+        this.$refs.appObserver.restoreLimit()
         this.getBloggers({status: [1]})
     },
 
     updated(){
     },
+
     methods:{
         async chooseProject(project){
             const data = await this.$refs.chooseProjectPopup.show({
@@ -266,7 +301,6 @@ export default{
                 }, 300)
             })
         },
-
         // фильтры для проектов
         applyProjectsFilter(){
             this.Loader.loaderOn('#profile-blogers-list');
@@ -301,12 +335,26 @@ export default{
                 if(data[key]) params[key] = data[key]
             }
 
-            const limitData = this.$refs.appObserver.getPaginationData()
+            for (const key in this.bloggersFilter) {
+                if(this.bloggersFilter[key]) params[key] = this.bloggersFilter[key]
+            }
 
+            const limitData = this.$refs.appObserver.getPaginationData()
             params.limit = [limitData.itemsOnPage, limitData.itemsCount]
 
-            this.Blogger.getList(params).then(data => {
-                this.bloggers = [...this.bloggers, ...(data || []).map(_b => this.findBloggerBiggestPlatform(_b))];
+            this.Blogger.getList(params).then(bloggers => {
+                if(!this.$refs.appObserver.observer){
+                    this.$refs.appObserver.startObserve()
+                }
+
+                if(!bloggers || bloggers.length === 0) {
+                    this.$refs.appObserver.stopObserve();
+                    this.isShowLoadingBloggers = false
+                }
+                else {
+                    this.bloggers = [...this.bloggers, ...(bloggers || []).map(_b => this.findBloggerBiggestPlatform(_b))];
+                    this.isShowLoadingBloggers = true
+                }
 
                 setTimeout(()=>{
                     this.Loader.loaderOff(this.$el);
@@ -317,6 +365,29 @@ export default{
         sortBloggers(sortItemKey, newOrderDirection){
             this.sort[sortItemKey].orderBy = newOrderDirection;
 
+            this.assignFilterAndSortData()
+
+            this.Loader.loaderOn(this.$el);
+
+            this.$refs.appObserver.stopObserve();
+            this.$refs.appObserver.observer = null;
+            this.$refs.appObserver.restoreLimit()
+            this.bloggers = [];
+
+            this.getBloggers({status:[1]})
+        },
+
+        //фильтры списка блогеров
+        applyBloggersFilter(filterData){
+            this.Loader.loaderOn(this.$el);
+
+            this.bloggersFilter = filterData;
+
+            this.assignFilterAndSortData()
+            this.getBloggers({status: [1]})
+        },
+
+        assignFilterAndSortData(){
             let orderList = {};
 
             for (const sortListKey in this.sort) {
@@ -328,26 +399,7 @@ export default{
                 })
             }
 
-            this.applyBloggersFilter(orderList)
-        },
-
-        //фильтры списка блогеров
-        applyBloggersFilter(filterData){
-            this.Loader.loaderOn('#profile-blogers-list');
-
-            let params = {}
-
-            for (const key in filterData) {
-                if(filterData[key]) params[key] = filterData[key]
-            }
-
-            this.Blogger.getList(params).then(data => {
-                this.bloggers = (data || []).map(_b => this.findBloggerBiggestPlatform(_b));
-
-                setTimeout(()=>{
-                    this.Loader.loaderOff(this.$el);
-                }, 300)
-            })
+            this.bloggersFilter = Object.assign(this.bloggersFilter, orderList)
         },
 
         openMassDistributionPopup(){
@@ -377,3 +429,69 @@ export default{
     }
 }
 </script>
+
+<style scoped>
+    .loading-blogger{
+        display: flex;
+        gap: 12px;
+        flex-direction: column;
+        height: 100%;
+        width: calc(100% / 3 - 10px);
+        max-width: 510px;
+        padding: 20px;
+        background-color: #fff;
+        min-width: 337px;
+        border: 1px solid #F5F5F5;
+    }
+    .loading-blogger__header{
+        height: 175px;
+        width: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .loading-blogger__body{
+        margin-top: 21px;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        width: 100%;
+    }
+    .loading-blogger__loading-stats{
+        width: 100%;
+        height: 125px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .loading-blogger__loading-row{
+        width: 100%;
+        display: flex;
+        gap: 8px;
+    }
+    .loading-blogger__loading-col{
+        height: 46px;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+    .loading-blogger__loading-col--one-third{
+        width:calc(33.33% - 4px);
+    }
+    .loading-blogger__loading-col--two-third{
+        width:calc(67.77% - 4px);
+    }
+
+    ._loading-row {
+        color: transparent;
+        background: linear-gradient(100deg, #eceff1 30%, #f6f7f8 50%, #eceff1 70%);
+        background-size: 400%;
+        animation: loading 1.2s ease-in-out infinite;
+    }
+
+    @keyframes loading {
+        0% {
+            background-position: 100% 50%;
+        }
+        100% {
+            background-position: 0 50%;
+        }
+    }
+</style>

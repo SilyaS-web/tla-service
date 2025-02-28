@@ -3,35 +3,38 @@
 </template>
 
 <script>
-const _itemsCount = 20;
-let _page = 1;
+let _page = 0;
 
 export default {
-    props: ['options'],
+    props: ['options', 'itemsCount'],
     data: () => ({
         observer: null,
     }),
-    mounted() {
-        const options = this.options || {};
-        this.observer = new IntersectionObserver(([entry]) => {
-            if (entry && entry.isIntersecting) {
-                _page++
-                this.$emit("intersect");
-            }
-        }, options);
-
-        this.observer.observe(this.$el);
-    },
+    mounted() { },
     methods:{
+        restoreLimit(){ _page = 0 },
         getPaginationData(){
             return {
-                'itemsOnPage': _itemsCount * _page,
-                'itemsCount': _itemsCount,
+                'itemsOnPage': this.itemsCount * _page,
+                'itemsCount': this.itemsCount,
             }
-        }
+        },
+        startObserve(){
+            const options = this.options || {};
+
+            this.observer = new IntersectionObserver(([entry]) => {
+                if (entry && entry.isIntersecting) {
+                    _page++
+                    this.$emit("intersect");
+                }
+            }, options);
+
+            this.observer.observe(this.$el);
+        },
+        stopObserve(){ this.observer.disconnect() }
     },
     destroyed() {
-        this.observer.disconnect();
+        this.stopObserve();
     },
 };
 </script>

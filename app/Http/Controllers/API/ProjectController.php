@@ -37,6 +37,7 @@ class ProjectController extends Controller
             'statuses.*' => 'string',
             'status' => 'string|nullable',
             'is_blogger_access' => 'boolean|nullable',
+            'limit' => 'array|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -82,6 +83,10 @@ class ProjectController extends Controller
 
         if (!empty($validated['is_blogger_access'])) {
             $projects->where('is_blogger_access', $validated['is_blogger_access']);
+        }
+
+        if (!empty($validated['limit']) && !empty($validated['limit'])) {
+            $projects->skip($validated['limit'][0])->take($validated['limit'][1]);
         }
 
         if (!empty($validated['status'])) {

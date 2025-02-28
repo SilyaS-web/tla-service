@@ -9,7 +9,7 @@ const Loader = {
         $(node).append(loaderTemplate)
         $(node).addClass('loading')
     },
-    loaderOff: (node = '') => {
+    loaderOff: (node) => {
         $(document).find(node).removeClass('loading')
 
         if(node) {

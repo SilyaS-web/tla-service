@@ -52,20 +52,18 @@
                             v-on:switchTab="switchTab">
                         </CreateProject>
 
-                        <!-- Список всех проектов -->
+                        <!-- список всех проектов -->
                         <ProjectsList
                             v-if="tab === 'projects-list'"
                             :projects="projects"
-                            v-on:applyFilter="applyFilterProjects">
+                        >
                         </ProjectsList>
 
                         <!-- список моих проектов -->
                         <MyProjectsList
-                            v-if="tab === 'my-project-list'"
-                            :myProjects="myProjects"
-                            v-on:updateMyProjects="updateMyProjects"
+                            v-if="tab === 'my-projects-list'"
+                            :currentItem="currentItem"
                             v-on:switchTab="switchTab"
-                            v-on:applyFilter="applyFilterMyProjects"
                         ></MyProjectsList>
 
                         <!-- список блогеров -->
@@ -78,7 +76,6 @@
                         <Chat
                             v-if="tab === 'chat'"
                             :currentItem="currentItem"
-                            :isChatTab="isChatTab"
                             v-on:switchTab="switchTab"
                             v-on:newMessages="newChatMessages"
                             v-on:updateCurrentItem="currentItem = $event"></Chat>
@@ -168,30 +165,22 @@ export default{
 
             tab: ref('projects-list'),
 
-            isChatTab: ref(false),
-
             User, Seller, Project,
             Loader
         }
     },
     async mounted(){
-        this.Loader.loaderOn('.wrapper #all-projects');
-
         this.user = this.User.getCurrent();
 
         // this.dashboard = await this.User.getStatistics();
 
-        this.projects = await this.Project.getList({is_blogger_access: 1, statuses: [0]});
-
-        this.isShowTariffs = localStorage.getItem('show_tariffs') ? JSON.parse(localStorage.getItem('show_tariffs')) : false;
+        this.isShowTariffs = localStorage.getItem('show_tariffs') ?
+            JSON.parse(localStorage.getItem('show_tariffs')) :
+            false;
 
         if(this.isShowTariffs){
             localStorage.setItem('show_tariffs', false)
         }
-
-        setTimeout(() => {
-            this.Loader.loaderOff('#all-projects');
-        }, 300)
 
         if(this.$router.currentRoute.value.params && this.$router.currentRoute.value.params.item && this.$router.currentRoute.value.params.id){
             await this.switchTab('chat', {
@@ -203,96 +192,16 @@ export default{
     methods:{
         async switchTab(tab, currentItem = false){
             this.tab = tab
-
             this.currentItem = null
-
             if(currentItem)
                 this.currentItem = currentItem;
 
-            this.isChatTab = tab === 'chat';
-
-            $('.wrapper').toggleClass('footer_disabled', this.isChatTab || tab === 'create-project')
-
-            switch (tab){
-                case 'profile-projects':
-                    this.myProjects = []
-
-                    this.User.getProjects(this.user.id).then(data => {
-                        var list = data || [];
-
-                        if(this.currentItem){ //если мы перешли с другого модуля
-                            if(this.currentItem.item === 'projects'){
-                                list = list.map(_p => {
-                                    _p.currentProject = _p.id == this.currentItem.id
-
-                                    return _p;
-                                });
-
-                                this.currentItem = null
-                            }
-                        }
-
-                        this.myProjects = list;
-
-                        setTimeout(()=>{
-                            this.Loader.loaderOff('#profile-projects');
-                        }, 300)
-                    })
-
-                    break;
-
-                case 'profile-blogers-list':
-                    break;
-
-                case 'all-projects':
-                    this.Project.getList({is_blogger_access: 1, statuses: [0]}).then(data => {
-                        this.projects = data || [];
-
-                        setTimeout(()=>{
-                            this.Loader.loaderOff('#all-projects');
-                        }, 300)
-                    })
-
-                    break;
-
-                default:
-                    break
-            }
-        },
-
-        async updateMyProjects(){
-            this.Loader.loaderOn('.wrapper .profile__content-inner');
-
-            this.myProjects = await this.User.getProjects(this.user.id);
-
-            setTimeout(()=>{
-                this.Loader.loaderOff();
-            }, 300)
+            $('.wrapper').toggleClass('footer_disabled', ['create-project', 'chat'].includes(tab))
         },
 
         newChatMessages(messagesCount){
             this.newChatMessagesCount = messagesCount
         },
-
-        async applyFilterMyProjects(filterData){
-            this.Loader.loaderOn('.wrapper .profile__content-inner');
-
-            this.myProjects = await this.User.getProjects(this.user.id, filterData);
-
-            setTimeout(()=>{
-                this.Loader.loaderOff();
-            }, 300)
-        },
-
-        async applyFilterProjects(filterData){
-            this.Loader.loaderOn('.wrapper .profile__content-inner');
-
-            this.projects = await this.Project.getList(Object.assign(filterData, {is_blogger_access: 1, statuses: [0]}));
-
-            setTimeout(()=>{
-                this.Loader.loaderOff();
-            }, 300)
-        }
     }
 }
 </script>

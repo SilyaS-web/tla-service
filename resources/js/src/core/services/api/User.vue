@@ -206,7 +206,17 @@
                 })
             })
         },
-        getProjects: (user_id, filterData = false) => {
+        /**
+         *
+         * @param user_id
+         * @param filterData = {
+         *     project_type: null,
+         *     product_name: null,
+         *
+         * }
+         * @returns {Promise<unknown>}
+         */
+        getProjects: (user_id, filterData = {}) => {
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'get',

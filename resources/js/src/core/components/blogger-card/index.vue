@@ -167,7 +167,7 @@ export default {
         is_achievement: {type: Boolean, required: false, default: false},
         subscriber_quantity: {type: Number, required: true},
         coverage: {type: Number, required: true},
-        product_price: {type: Number, required: false}
+        product_price: {type: [Number, Boolean], required: false}
     },
     methods:{
         toggleAchivements(e){
