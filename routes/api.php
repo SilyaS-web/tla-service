@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BloggerController;
 use App\Http\Controllers\API\DashboardController;
@@ -113,5 +114,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/partners/{partner}', [PartnerController::class, 'show']);
     Route::post('/partners/{partner}', [PartnerController::class, 'update']);
     Route::delete('/partners/{partner}', [PartnerController::class, 'destroy']);
+
+    Route::get('/stats', [AdminController::class, 'stats']);
 });
 
