@@ -4945,7 +4945,6 @@ input[type='range']::-webkit-slider-runnable-track{
 .partners__item-text{
     font-size: 16px;
     font-weight: 500;
-    max-width: 70%;
     min-width: 200px;
 }
 .partners__item-text:not(:last-child){
