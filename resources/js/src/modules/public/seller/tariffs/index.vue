@@ -41,7 +41,7 @@
                                 0 руб
                             </div>
                             <div class="tariff-card__single">
-                                \ 3 бартеров
+                                \ 3 интеграций
                             </div>
                         </div>
                         <div class="tariff-card__count">
@@ -68,7 +68,7 @@
                                 </span>
                             </div>
                             <div class="tariff-card__single">
-                                неограниченное количество бартеров
+                                неограниченное количество интеграций
                             </div>
                         </div>
                         <div class="tariff-card__btns">
