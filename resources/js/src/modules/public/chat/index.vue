@@ -412,7 +412,7 @@ export default{
                 }
             }
             else if(work && work.status == 'progress'){
-                if(work.project_work.type != 'feedback' && work.statistics == null){
+                if(work.project_works[0].type != 'feedback' && work.statistics == null){
                     if(this.user.role == 'blogger'){
                         return {
                             title: 'Прикрепить статистику',
