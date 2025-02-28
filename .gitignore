@@ -3,6 +3,8 @@
 /public/storage
 /public/js/app.js
 /public/mix-manifest.json
+/public/js/app.js.LICENSE.txt
+/public/css/style.css
 /storage/*.key
 /vendor
 .env
