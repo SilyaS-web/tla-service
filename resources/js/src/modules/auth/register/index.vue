@@ -103,7 +103,7 @@ export default{
     },
     methods:{
         async registration(){
-            var isPasswordsMatches = (this.user.password === this.user.repeatPassword);
+            const isPasswordsMatches = (this.user.password === this.user.repeatPassword);
 
             if(!isPasswordsMatches){
                 notify('error', {
@@ -121,7 +121,7 @@ export default{
                 data => {
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
 
-                    if(this.user.role == 'blogger'){
+                    if(this.user.role === 'blogger'){
                         this.$router.replace('/blogger/register')
                         return
                     }
