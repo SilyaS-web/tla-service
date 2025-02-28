@@ -10,7 +10,7 @@ use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\SellerController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ReferralController;
-use App\Http\Controllers\API\TariffController;
+use App\Http\Controllers\API\TelegramController;
 use App\Http\Controllers\API\ThemeController;
 use App\Http\Controllers\API\WorkController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +34,7 @@ Route::get('/platforms', [PlatformController::class, 'index']);
 Route::get('/themes', [ThemeController::class, 'index']);
 Route::post('/users', [AuthController::class, 'store']);
 Route::get('/users/exist', [UserController::class, 'check']);
+Route::post('/distribute', [TelegramController::class, 'distribute']);
 
 Route::prefix('payment')->group(function () {
     Route::get('/debug/{tariff}', [PaymentController::class, 'debugPayment']);
@@ -100,8 +101,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/referrals', [ReferralController::class, 'index']);
     Route::get('/referrals/export', [ReferralController::class, 'export']);
 
-    Route::get('/tariifs', [TariffController::class, 'index']);
-    Route::get('/tariifs/{tariff}/price', [TariffController::class, 'getPrice']);
+    Route::get('/tariifs', [TelegramController::class, 'index']);
+    Route::get('/tariifs/{tariff}/price', [TelegramController::class, 'getPrice']);
 
     Route::post('/feedback', [UserController::class, 'sendFeedback']);
 

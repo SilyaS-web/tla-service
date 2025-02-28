@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Http\Controllers\API;
+
+use App\Http\Controllers\Controller;
+use App\Http\Resources\TariffResource;
+use App\Models\Tariff;
+use App\Models\TgPhone;
+use App\Services\TariffService;
+use App\Services\TgService;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+
+class TelegramController extends Controller
+{
+    public function distribute(Request $request): JsonResponse
+    {
+        $validator = Validator::make($request->all(), [
+            'from_chat_id' => 'required|numeric',
+            'message_id' => 'required|numeric',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 400);
+        }
+
+        $validated = $validator->validated();
+
+        $tg_phones = TgPhone::whereHas('user', function (Builder $query) {
+            $query->where('role', 'blogger');
+        })->get();
+
+        $error = false;
+        foreach ($tg_phones as $phone) {
+            if (!TgService::copyMessage($phone->chat_id, $validated['from_chat_id'], $validated['message_id'])) {
+                $error = true;
+            };
+        }
+        return response()->json()->setStatusCode(!$error ? 200 : 400);
+    }
+}
