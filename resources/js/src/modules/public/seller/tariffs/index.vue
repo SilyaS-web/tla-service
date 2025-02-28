@@ -33,7 +33,7 @@
                                 Пробный
                             </div>
                             <div class="tariff-card__subtitle">
-                                30 дней бесплатно
+                                14 дней бесплатно
                             </div>
                         </div>
                         <div class="tariff-card__prices">
@@ -41,7 +41,7 @@
                                 0 руб
                             </div>
                             <div class="tariff-card__single">
-                                \ 5 бартеров
+                                \ 3 интеграции
                             </div>
                         </div>
                         <div class="tariff-card__count">
@@ -62,7 +62,7 @@
                                 4990 руб
                             </div>
                             <div class="tariff-card__single">
-                                неограниченное количество бартеров
+                                неограниченное количество интеграции
                             </div>
                         </div>
                         <div class="tariff-card__btns">
@@ -124,18 +124,18 @@ export default {
                     url: '/api/feedback',
                     params: data
                 })
-                    .then(data => {
-                        notify('info', {
-                            title: 'Успешно!',
-                            message: 'Ваше обращение успешно доставлено'
-                        });
-                    })
-                    .catch(data => {
-                        notify('error', {
-                            title: 'Внимание!',
-                            message: 'Невозможно отправить обращение, попробуйте позже или напишите в поддержку'
-                        });
-                    })
+                .then(data => {
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Ваше обращение успешно доставлено'
+                    });
+                })
+                .catch(data => {
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'Невозможно отправить обращение, попробуйте позже или напишите в поддержку'
+                    });
+                })
             })
         },
         buyUnlimited(){
