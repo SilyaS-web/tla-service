@@ -27,7 +27,7 @@
                     v-on:click="switchTab('partners')"
                     style="margin-top:30px;"
                     href="#" class="nav-menu__item nav-menu__link tab partners-link" data-content="partners">
-                    Партнеры
+                    Предложения
                 </a>
             </div>
         </div>

@@ -4,7 +4,7 @@
             <div class="partners__content">
                 <div class="partners__header">
                     <div class="list-projects__title title">
-                        Партнеры
+                        Предложения
                     </div>
                 </div>
                 <div class="partners__body">
