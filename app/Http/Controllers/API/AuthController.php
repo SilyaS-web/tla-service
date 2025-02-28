@@ -35,6 +35,7 @@ class AuthController extends Controller
             'role' => ['required', Rule::in(User::TYPES)],
             'password' => 'required|min:8',
             'platforms' => 'array',
+            'ref_code' => 'string|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -90,13 +91,13 @@ class AuthController extends Controller
             $this->storeBlogger($user, $validated['platforms']);
         }
 
-        if (session()->has('ref_code')) {
+        if (!empty($validated['ref_code'])) {
             $role = $user->role;
             if ($is_agent) {
                 $role = 'agent';
             }
 
-            ReferralService::ref($user->id, session()->get('ref_code'), $role);
+            ReferralService::ref($user->id, $validated['ref_code'], $role);
         }
 
         $credentials = [
