@@ -8,6 +8,7 @@ use App\Services\TgService;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Log;
 
@@ -45,9 +46,24 @@ class TelegramController extends Controller
             ]
         ];
         foreach ($tg_phones as $phone) {
-            if (!TgService::copyMessage($phone->chat_id, $validated['from_chat_id'], $validated['message_id'], $params)) {
+            if (Redis::smembers('tgphone.' . $phone->id . '.distribution') && count(Redis::smembers('tgphone.' . $phone->id . '.distribution')) > 0) {
+                Log::info('skip tg phone: ' . $phone->id);
+                continue;
+            }
+
+            Log::info('process tg phone: ' . $phone->id);
+            try {
+                if (!TgService::copyMessage($phone->chat_id, $validated['from_chat_id'], $validated['message_id'], $params)) {
+                    Log::info('error tg phone: ' . $phone->id);
+                    $error = true;
+                } else {
+                    Redis::sadd('tgphone.' . $phone->id . '.distribution', 1);
+                }
+            } catch (\Throwable $th) {
+                Log::info('error tg phone: ' . $phone->id);
                 $error = true;
-            };
+            }
+
         }
         return response()->json()->setStatusCode(!$error ? 200 : 400);
     }
