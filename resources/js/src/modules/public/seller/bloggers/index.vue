@@ -1,10 +1,20 @@
 <template>
-    <div :class="'profile-blogers ' + (isBloggersListBlocked ? 'not-paid' : '')" id="bloggers-list">
+    <div :class="'profile-blogers tab-content ' + (isBloggersListBlocked ? 'not-paid' : '')" id="profile-blogers-list">
         <!-- страница каталога блогеров-->
         <div v-if="!isChooseProjectList" class="profile-blogers__body">
             <div class="projects-list__header">
-                <div class="list-projects__title title">
-                    Список блогеров
+                <div class="list-projects__left">
+                    <div class="list-projects__title title">
+                        Список блогеров
+                    </div>
+                    <div class="list-projects__sort">
+                        <div
+                            @click="sortBloggers('createdAt', sort.createdAt.orderBy === 'asc' ? 'desc' : 'asc')"
+                            :class="'list-projects__sort-item list-projects__sort-item--' + sort.createdAt.orderBy"
+                        >
+                            {{ sort.createdAt.sortData[sort.createdAt.orderBy].title }}
+                        </div>
+                    </div>
                 </div>
                 <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
                     <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
@@ -139,21 +149,8 @@
                 <router-link :to="{ path: '/tariffs' }" class="not_paid-alert__btn btn btn-primary">Разблокировать каталог</router-link>
             </div>
         </div>
-
-        <choose-project-popup ref="chooseProjectPopup"></choose-project-popup>
-        <distribution-table
-            v-on:mass-distribution="openMassDistributionPopup"
-        ></distribution-table>
-        <distribution-popup
-            ref="distributionPopup"
-        ></distribution-popup>
-
-        <app-observe
-            :options="{rootMargin: '0px 0px 1000px 0px', threshold: [0]}"
-            ref="appObserver"
-            @intersect="getBloggers({status:[1]})"
-        ></app-observe>
     </div>
+    <choose-project-popup ref="chooseProjectPopup"></choose-project-popup>
 </template>
 <script>
 import {ref} from "vue";
@@ -198,6 +195,21 @@ export default{
             isChooseProjectList: ref(false),
 
             isBloggersListBlocked: ref(false),
+
+            sort:ref({
+                createdAt: {
+                    key: 'order_by_created_at',
+                    orderBy: 'asc',
+                    sortData: {
+                        asc: {
+                            title: 'Сначала старые',
+                        },
+                        desc: {
+                            title: 'Сначала новые',
+                        },
+                    }
+                }
+            }),
 
             projectsFilter: ref({
                 project_type: "",
@@ -300,6 +312,23 @@ export default{
                     this.Loader.loaderOff(this.$el);
                 }, 300)
             })
+        },
+
+        sortBloggers(sortItemKey, newOrderDirection){
+            this.sort[sortItemKey].orderBy = newOrderDirection;
+
+            let orderList = {};
+
+            for (const sortListKey in this.sort) {
+                const orderDirectionKey = this.sort[sortListKey].key;
+                const orderDirectionValue = this.sort[sortListKey].orderBy;
+
+                Object.assign(orderList, {
+                    [orderDirectionKey]: orderDirectionValue
+                })
+            }
+
+            this.applyBloggersFilter(orderList)
         },
 
         //фильтры списка блогеров
