@@ -45,7 +45,7 @@ class TelegramController extends Controller
             ]
         ];
         foreach ($tg_phones as $phone) {
-            if (!TgService::copyMessage($phone->chat_id, $validated['from_chat_id'], $validated['message_id']), $params) {
+            if (!TgService::copyMessage($phone->chat_id, $validated['from_chat_id'], $validated['message_id'], $params)) {
                 $error = true;
             };
         }
