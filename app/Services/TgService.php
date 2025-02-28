@@ -64,7 +64,7 @@ class TgService
         return $http_code == 200 ? "success" : false;
     }
 
-    public static function copyMessage($chat_id, $from_chat_id, $message_id): bool|string
+    public static function copyMessage($chat_id, $from_chat_id, $message_id, $params = []): bool|string
     {
         $api_key = config('telegram.main_bot_api_key');
         $data = [
@@ -72,6 +72,10 @@ class TgService
             'from_chat_id' => $from_chat_id,
             'message_id' => $message_id,
         ];
+
+        if (!empty($params)) {
+            $data = array_merge($data, $params);
+        }
 
         Log::info("[copyMessage] data " . json_encode($data));
 

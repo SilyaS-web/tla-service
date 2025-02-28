@@ -30,9 +30,22 @@ class TelegramController extends Controller
         $tg_phones = TgPhone::whereHas('user', function (Builder $query) {
             $query->where('role', 'blogger');
         })->get();
+
         $error = false;
+        $params = [
+            'reply_markup' => [
+                'inline_keyboard' => [
+                    [
+                        [
+                            'text' => 'Подробнее',
+                            'url' => 'https://t.me/adswap_blogger/103'
+                        ],
+                    ]
+                ]
+            ]
+        ];
         foreach ($tg_phones as $phone) {
-            if (!TgService::copyMessage($phone->chat_id, $validated['from_chat_id'], $validated['message_id'])) {
+            if (!TgService::copyMessage($phone->chat_id, $validated['from_chat_id'], $validated['message_id'], $params)) {
                 $error = true;
             };
         }
