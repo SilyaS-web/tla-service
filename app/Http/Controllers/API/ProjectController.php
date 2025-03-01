@@ -91,30 +91,19 @@ class ProjectController extends Controller
                 $projects->where('status', '<', 0);
             }
         }
-
-        if (!empty($validated['order_by_created_at'])) {
-            $projects->orderBy('created_at', $validated['order_by_created_at']);
-        } else {
-            $projects->orderBy('created_at', 'desc');
-        }
+        $sort_fields = [];
 
         if (!empty($validated['order_by_product_price'])) {
-            $projects->orderBy('product_price', $validated['order_by_product_price']);
+            $sort_fields['product_price'] = $validated['order_by_product_price'];
+        } else {
+            if (isset($validated['order_by_created_at'])) {
+                $sort_fields['created_at'] = $validated['order_by_created_at'];
+            } else {
+                $sort_fields['created_at'] = 'desc';
+            }
         }
 
-//         $sortBy = [];
-//         $projectsCollection = ProjectResource::collection($projects->get());
-//
-//         if (isset($validated['order_by_product_price'])) {
-//             $projectsCollection = $projectsCollection->sortBy(['product_price', $validated['order_by_product_price']]);
-//         }
-//
-//         if (isset($validated['order_by_created_at'])) {
-//             $projectsCollection = $projectsCollection->sortBy(['created_at', $validated['order_by_created_at']]);
-//         } else {
-//             $projectsCollection = $projectsCollection->sortBy(['created_at', 'desc']);
-//         }
-//         dd($sortBy);
+        $projects->ofSort($sort_fields);
 
         $data = [
             'projects' => ProjectResource::collection($projects->get()),
