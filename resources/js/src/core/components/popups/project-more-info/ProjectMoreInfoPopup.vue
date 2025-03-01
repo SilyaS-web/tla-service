@@ -39,8 +39,7 @@
                     </div>
                     <div class="popup-project__addit characteristics">
                         <p class="popup-project__addit-title">Дополнительная информация</p>
-                        <div class="characteristics__category">
-                            {{ projectInfo.contentEmptyText ? projectInfo.contentEmptyText : projectInfo.category }}
+                        <div class="characteristics__category" v-html="projectInfo.contentEmptyText ? projectInfo.contentEmptyText : projectInfo.category">
                         </div>
                         <div
                             v-if="!projectInfo.contentEmptyText"
