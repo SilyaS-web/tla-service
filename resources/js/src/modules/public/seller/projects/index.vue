@@ -2,8 +2,19 @@
     <div class="profile-projects" id="projects-list">
         <div class="profile-projects__body">
             <div class="projects-list__header">
-                <div class="list-projects__title title">
-                    Все проекты
+                <div class="list-projects__left">
+                    <div class="list-projects__title title">
+                        Список проектов
+                    </div>
+                    <div class="list-projects__sort">
+                        <div
+                            v-for="(value, name) in sort"
+                            @click="sortProjects(name, value.orderBy === 'asc' ? 'desc' : 'asc')"
+                            :class="'list-projects__sort-item list-projects__sort-item--' + value.orderBy"
+                        >
+                            {{ value.sortData[value.orderBy].title }}
+                        </div>
+                    </div>
                 </div>
                 <div class="" style="display: flex; gap: 10px; flex-wrap: wrap;">
                     <button class="btn btn-primary projects-list__filter-btn">Фильтры</button>
@@ -17,18 +28,10 @@
                 ></ListItem>
                 <span v-else>Проектов нет</span>
 
-                <div
+                <ProjectCardLoading
                     v-if="projects.length > 0 && isShowLoadingProjects"
-                    v-for="i of (projects.length % 4 + 4)"
-                    class="loading-project">
-                    <div class="loading-project__image _loading-row">
-                    </div>
-                    <div class="loading-project__content">
-                        <div class="loading-project__loading-row _loading-row"></div>
-                        <div class="loading-project__loading-row _loading-row"></div>
-                        <div class="loading-project__loading-row _loading-row"></div>
-                    </div>
-                </div>
+                    v-for="i of calculateLoadingItemsCount( '.project-item', projects.length, (projects.length % 4) + 4)"
+                ></ProjectCardLoading>
             </div>
         </div>
 
@@ -47,24 +50,54 @@
 </template>
 <script>
 import {ref} from "vue";
-import Project from '../../../../core/services/api/Project.vue'
 
-import ListItem from './ListItem'
+import Project from '../../../../core/services/api/Project.vue'
+import AppObserve from "../../../../core/services/Observer.vue";
+
 import Filter from './FiltersComponent'
+import ListItem from './ListItem'
 
 import Loader from '../../../../core/components/AppLoader.vue'
+import ProjectCardLoading from '../../../../core/components/project-card-loading/index.vue'
 
-import AppObserve from "../../../../core/services/Observer.vue";
+import {calculateLoadingItemsCount} from "../../../../core/utils/calculateLoadingItemsCount";
 
 export default{
     props:[],
-    components: {Filter, ListItem, AppObserve},
+    components: {Filter, ListItem, ProjectCardLoading, AppObserve},
     data(){
         return {
             projects: ref([]),
             filterData: {},
 
             isShowLoadingProjects: ref(false),
+
+            sort: ref({
+                createdAt: {
+                    key: 'order_by_created_at',
+                    orderBy: 'desc',
+                    sortData: {
+                        asc: {
+                            title: 'Сначала старые',
+                        },
+                        desc: {
+                            title: 'Сначала новые',
+                        },
+                    }
+                },
+                product_price: {
+                    key: 'order_by_product_price',
+                    orderBy: 'desc',
+                    sortData: {
+                        asc: {
+                            title: 'Сначала дорогие',
+                        },
+                        desc: {
+                            title: 'Сначала дешевые',
+                        },
+                    }
+                },
+            }),
 
             Project, Loader
         }
@@ -113,60 +146,46 @@ export default{
         applyFilter(filterData){
             this.filterData = filterData;
 
+            this.$refs.appObserver.stopObserve();
+            this.$refs.appObserver.observer = null;
+            this.$refs.appObserver.restoreLimit()
+            this.projects = [];
+
             this.getProjects({is_blogger_access: 1, statuses: [0]})
         },
+
+        sortProjects(sortItemKey, newOrderDirection){
+            this.sort[sortItemKey].orderBy = newOrderDirection;
+
+            this.assignFilterAndSortData()
+
+            this.Loader.loaderOn(this.$el);
+
+            this.$refs.appObserver.stopObserve();
+            this.$refs.appObserver.observer = null;
+            this.$refs.appObserver.restoreLimit()
+            this.projects = [];
+
+            this.getProjects({is_blogger_access: 1, statuses: [0]})
+        },
+
+        assignFilterAndSortData(){
+            let orderList = {};
+
+            for (const sortListKey in this.sort) {
+                const orderDirectionKey = this.sort[sortListKey].key;
+                const orderDirectionValue = this.sort[sortListKey].orderBy;
+
+                Object.assign(orderList, {
+                    [orderDirectionKey]: orderDirectionValue
+                })
+            }
+
+            this.filterData = Object.assign(this.filterData, orderList)
+        },
+
+
+        calculateLoadingItemsCount
     }
 }
 </script>
-
-<style scoped>
-    .loading-project{
-        width: calc(100% / 4 - 10px);
-        background-color: #fff;
-        border-radius: 10px;
-        padding: 15px;
-        min-width: 250px;
-        display: flex;
-        flex-direction: column;
-        max-width: 320px;
-        transition: box-shadow .2s linear;
-        cursor: pointer;
-        gap: 6px;
-    }
-    .loading-project__image{
-        position: relative;
-        margin-bottom: 10px;
-        width: 100%;
-        background-repeat: no-repeat;
-        background-size: cover;
-        padding-top: 270px;
-        border-radius: 10px;
-    }
-    .loading-project__content{
-        display: flex;
-        flex-direction: column;
-        flex: 1 1 auto;
-        margin-top: 15px;
-        gap: 8px;
-    }
-    .loading-project__content > *{
-        width: 100%;
-        height: 24px;
-    }
-
-    ._loading-row {
-        color: transparent;
-        background: linear-gradient(100deg, #eceff1 30%, #f6f7f8 50%, #eceff1 70%);
-        background-size: 400%;
-        animation: loading 1.2s ease-in-out infinite;
-    }
-
-    @keyframes loading {
-        0% {
-            background-position: 100% 50%;
-        }
-        100% {
-            background-position: 0 50%;
-        }
-    }
-</style>

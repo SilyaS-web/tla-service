@@ -32,7 +32,6 @@
             ></ChoosedProject>
 
             <!-- каталог блогеров-->
-
             <div class="blogers-list__list list-blogers">
                 <BloggersListItem
                     v-if="bloggers && bloggers.length > 0"
@@ -42,20 +41,10 @@
                 </BloggersListItem>
                 <span v-else> В списке блогеров пусто </span>
 
-                <div
+                <BloggerCardLoading
                     v-if="bloggers.length > 0 && isShowLoadingBloggers"
-                    v-for="i of (bloggers.length % 4 + 4)"
-                    class="loading-blogger">
-                    <div class="loading-blogger__header _loading-row">
-                    </div>
-                    <div class="loading-blogger__body">
-                        <div class="loading-blogger__loading-stats _loading-row"></div>
-                        <div class="loading-blogger__loading-row">
-                            <div class="loading-blogger__loading-col loading-blogger__loading-col--two-third  _loading-row"></div>
-                            <div class="loading-blogger__loading-col loading-blogger__loading-col--one-third _loading-row"></div>
-                        </div>
-                    </div>
-                </div>
+                    v-for="i of calculateLoadingItemsCount('.bloger-item', bloggers.length, (bloggers.length % 4) + 4)"
+                ></BloggerCardLoading>
             </div>
         </div>
 
@@ -166,9 +155,11 @@
         </div>
 
         <choose-project-popup ref="chooseProjectPopup"></choose-project-popup>
+
         <distribution-table
             v-on:mass-distribution="openMassDistributionPopup"
         ></distribution-table>
+
         <distribution-popup
             ref="distributionPopup"
         ></distribution-popup>
@@ -193,6 +184,8 @@ import ProjectsList from "../projects/index";
 import BloggersListItem from "./ListItem";
 import ProjectsListItem from '../projects/ListItem'
 
+import BloggerCardLoading from '../../../../core/components/blogger-card-loading/index.vue'
+
 import ProjectCard from '../../../../core/components/project-card/index'
 
 import Filter from './FiltersComponent'
@@ -205,13 +198,15 @@ import DistributionPopup from "../../../../core/components/popups/seller-mass-di
 
 import AppObserve from "../../../../core/services/Observer.vue";
 
+import {calculateLoadingItemsCount} from "../../../../core/utils/calculateLoadingItemsCount";
+
 export default{
     props:['user'],
     components:{
         DistributionPopup,
         ProjectsList, BloggersListItem, ProjectsListItem,
         ChooseProjectPopup, Filter, ChoosedProject,
-        ProjectCard, DistributionTable,
+        ProjectCard, DistributionTable, BloggerCardLoading,
 
         AppObserve
     },
@@ -227,7 +222,7 @@ export default{
 
             bloggersFilter: {},
 
-            sort:ref({
+            sort: ref({
                 createdAt: {
                     key: 'order_by_created_at',
                     orderBy: 'desc',
@@ -239,7 +234,7 @@ export default{
                             title: 'Сначала новые',
                         },
                     }
-                }
+                },
             }),
 
             projectsFilter: ref({
@@ -383,6 +378,11 @@ export default{
 
             this.bloggersFilter = filterData;
 
+            this.$refs.appObserver.stopObserve();
+            this.$refs.appObserver.observer = null;
+            this.$refs.appObserver.restoreLimit()
+            this.bloggers = [];
+
             this.assignFilterAndSortData()
             this.getBloggers({status: [1]})
         },
@@ -426,72 +426,8 @@ export default{
 
             return blogger;
         },
+
+        calculateLoadingItemsCount,
     }
 }
 </script>
-
-<style scoped>
-    .loading-blogger{
-        display: flex;
-        gap: 12px;
-        flex-direction: column;
-        height: 100%;
-        width: calc(100% / 3 - 10px);
-        max-width: 510px;
-        padding: 20px;
-        background-color: #fff;
-        min-width: 337px;
-        border: 1px solid #F5F5F5;
-    }
-    .loading-blogger__header{
-        height: 175px;
-        width: 100%;
-        border-radius: 10px;
-        overflow: hidden;
-    }
-    .loading-blogger__body{
-        margin-top: 21px;
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-        width: 100%;
-    }
-    .loading-blogger__loading-stats{
-        width: 100%;
-        height: 125px;
-        border-radius: 10px;
-        overflow: hidden;
-    }
-    .loading-blogger__loading-row{
-        width: 100%;
-        display: flex;
-        gap: 8px;
-    }
-    .loading-blogger__loading-col{
-        height: 46px;
-        border-radius: 10px;
-        overflow: hidden;
-    }
-    .loading-blogger__loading-col--one-third{
-        width:calc(33.33% - 4px);
-    }
-    .loading-blogger__loading-col--two-third{
-        width:calc(67.77% - 4px);
-    }
-
-    ._loading-row {
-        color: transparent;
-        background: linear-gradient(100deg, #eceff1 30%, #f6f7f8 50%, #eceff1 70%);
-        background-size: 400%;
-        animation: loading 1.2s ease-in-out infinite;
-    }
-
-    @keyframes loading {
-        0% {
-            background-position: 100% 50%;
-        }
-        100% {
-            background-position: 0 50%;
-        }
-    }
-</style>

@@ -29,7 +29,8 @@ class ProjectController extends Controller
     public function index(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'order_by_created_at' => 'string|nullbale',
+            'order_by_created_at' => 'string|nullable',
+            'order_by_product_price' => 'string|nullable',
             'project_type' => [Rule::in(Project::TYPES), 'nullable'],
             'category' => 'string|nullable',
             'product_name' => 'string|nullable',
@@ -75,12 +76,6 @@ class ProjectController extends Controller
             $projects->where('marketplace_category', 'like', '%' . $validated['category'] . '%');
         }
 
-        if (isset($validated['order_by_created_at']) && !empty($validated['order_by_date'])) {
-            $projects->orderBy('created_at', $validated['order_by_created_at']);
-        } else {
-            $projects->orderBy('created_at', 'desc');
-        }
-
         if (!empty($validated['is_blogger_access'])) {
             $projects->where('is_blogger_access', $validated['is_blogger_access']);
         }
@@ -97,8 +92,22 @@ class ProjectController extends Controller
             }
         }
 
+        $sortBy = [];
+        $projectsCollection = ProjectResource::collection($projects->get());
+
+        if (isset($validated['order_by_product_price'])) {
+            $projectsCollection->sortBy('product_price', $validated['order_by_product_price'])->values()->all();
+        }
+
+        if (isset($validated['order_by_created_at'])) {
+            $projectsCollection->sortBy('created_at', $validated['order_by_created_at'])->values()->all();
+        } else {
+             $projectsCollection->sortBy('created_at', 'desc')->values()->all();
+        }
+//         dd($sortBy);
+
         $data = [
-            'projects' => ProjectResource::collection($projects->get()),
+            'projects' => $projectsCollection,
         ];
 
         return response()->json($data)->setStatusCode(200);
