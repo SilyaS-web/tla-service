@@ -15,7 +15,7 @@ const Project = {
                     formData.append(key, data[key])
             }
             for( let i = 0; i < data.images.length; i++ ){
-                let file = data.images[i][0];
+                let file = data.images[i];
 
                 file && formData.append('images[' + i + ']', file);
             }

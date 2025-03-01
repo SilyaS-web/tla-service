@@ -3,7 +3,6 @@
         :id="id"
         class="form-group marketing-format" style="z-index: 3;" >
         <label for="format">Выберите формат</label>
-        <span class="error" v-if="error">{{ error }}</span>
 
         <div class="marketing-format__item input-checkbox-w">
             <div class="checkbox">
@@ -137,6 +136,8 @@
                 </svg>
             </div>
         </div>
+
+        <span class="error" v-if="error">{{ error }}</span>
     </div>
     <video-popup ref="videoPopup"></video-popup>
 </template>

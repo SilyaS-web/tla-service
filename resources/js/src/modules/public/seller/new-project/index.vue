@@ -14,7 +14,7 @@
                             :inputPlaceholder="'Введите наименование товара'"
                             :inputClassList="['input--product_name']"
                             :inputID="'product-name'"
-                            :error="(errors && errors.product_name ? errors.product_name : null)"
+                            :error="(errors && errors.product_name ? errors.product_name[0] : null)"
                         ></Input>
                         <div class="quest__step-row">
                             <Input
@@ -24,7 +24,7 @@
                                 :inputPlaceholder="'Введите артикул'"
                                 :inputClassList="['input--product_articul']"
                                 :inputID="'product-articul'"
-                                :error="(errors && errors.product_nm ? errors.product_nm : null)"
+                                :error="(errors && errors.product_nm ? errors.product_nm[0] : null)"
                             ></Input>
 
                             <Input
@@ -34,7 +34,7 @@
                                 :inputPlaceholder="'Введите цену товара'"
                                 :inputClassList="['input--product_price']"
                                 :inputID="'product-price'"
-                                :error="(errors && errors.product_price ? errors.product_price : null)"
+                                :error="(errors && errors.product_price ? errors.product_price[0] : null)"
                             ></Input>
                         </div>
                         <div class="quest__step-row">
@@ -45,7 +45,7 @@
                                 :inputPlaceholder="'Введите ссылку'"
                                 :inputClassList="['input--product_link']"
                                 :inputID="'product-link'"
-                                :error="(errors && errors.product_link ? errors.product_link : null)"
+                                :error="(errors && errors.product_link ? errors.product_link[0] : null)"
                             ></Input>
                         </div>
 
@@ -53,14 +53,14 @@
                             v-model="project.integration_types"
                             :id="'new-project'"
                             :label="'Выберите формат'"
-                            :error="errors.project_type"
+                            :error="(errors && errors.integration_types ? errors.integration_types[0] : null)"
                         ></FormatTypes>
 
                         <UploadFiles
                             v-model="project.images"
                             :id="'create-project-upload'"
                             :label="'Загрузите изображения товара'"
-                            :error="errors['images.0']"
+                            :error="errors.images && errors.images[0]"
                         ></UploadFiles>
 
                         <div class="quest__btns">
@@ -113,8 +113,8 @@ export default {
     },
     methods: {
         async createProject(){
-            this.project.images = this.project.images.map(obj => obj.file)
-
+            this.project.images = this.project.images.filter(obj => obj.file).map(obj => obj.file)
+            console.log(this.project.images)
             this.Project.create(this.project).then(
                 data => {
                     this.project = {
