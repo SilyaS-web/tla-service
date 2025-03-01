@@ -22,7 +22,6 @@
             <div
                 @click="triggerUpload"
                 class="upload-files__plus">
-
             </div>
         </div>
         <span class="error" v-if="error">{{ error }}</span>
