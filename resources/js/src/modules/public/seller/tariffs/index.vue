@@ -41,7 +41,7 @@
                                 0 руб
                             </div>
                             <div class="tariff-card__single">
-                                \ 3 интеграции
+                                \ 3 интеграций
                             </div>
                         </div>
                         <div class="tariff-card__count">
@@ -57,12 +57,18 @@
                                 Действует 30 дней
                             </div>
                         </div>
+                        <div class="tariff-card__total--discount">
+                            50%
+                        </div>
                         <div class="tariff-card__prices">
-                            <div class="tariff-card__total" style="text-wrap:nowrap">
-                                4990 руб
+                            <div class="tariff-card__total tariff__col" style="text-wrap:nowrap">
+                                2490 руб
+                                <span class="tariff-card__total--old">
+                                    4990 руб
+                                </span>
                             </div>
                             <div class="tariff-card__single">
-                                неограниченное количество интеграции
+                                неограниченное количество интеграций
                             </div>
                         </div>
                         <div class="tariff-card__btns">

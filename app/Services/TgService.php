@@ -64,6 +64,45 @@ class TgService
         return $http_code == 200 ? "success" : false;
     }
 
+    public static function copyMessage($chat_id, $from_chat_id, $message_id, $params = []): bool|string
+    {
+        $api_key = config('telegram.main_bot_api_key');
+        $data = [
+            'chat_id' => $chat_id,
+            'from_chat_id' => $from_chat_id,
+            'message_id' => $message_id,
+        ];
+
+        if (!empty($params)) {
+            $data = array_merge($data, $params);
+        }
+
+        Log::info("[copyMessage] data " . json_encode($data));
+
+        $curl = curl_init();
+        $url = 'https://api.telegram.org/bot' . $api_key . '/copyMessage';
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($data),
+            CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+        ));
+
+        $response = curl_exec($curl);
+        $http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+        curl_close($curl);
+        Log::info("[copyMessage] response " . $response);
+
+        return $http_code == 200 ? "success" : false;
+    }
+
     public static function sendForm($message_text)
     {
         if (!App::environment('production')) {

@@ -35,6 +35,7 @@ class AuthController extends Controller
             'role' => ['required', Rule::in(User::TYPES)],
             'password' => 'required|min:8',
             'platforms' => 'array',
+            'ref_code' => 'nullable',
         ]);
 
         if ($validator->fails()) {
@@ -90,13 +91,13 @@ class AuthController extends Controller
             $this->storeBlogger($user, $validated['platforms']);
         }
 
-        if (session()->has('ref_code')) {
+        if (!empty($validated['ref_code'])) {
             $role = $user->role;
             if ($is_agent) {
                 $role = 'agent';
             }
 
-            ReferralService::ref($user->id, session()->get('ref_code'), $role);
+            ReferralService::ref($user->id, $validated['ref_code'], $role);
         }
 
         $credentials = [
@@ -124,6 +125,13 @@ class AuthController extends Controller
 
         foreach ($platforms as $blogger_platform) {
             if (!empty($blogger_platform['link'])) {
+                $platform = Platform::where('title', $blogger_platform['name'])->first()->id;
+
+                if (!$platform) {
+                    TgService::sendMessage($user->tgPhone->chat_id, 'Платформа ' . $blogger_platform['name'] . ' не найдена');
+                    return;
+                }
+
                 BloggerPlatform::create([
                     'blogger_id' => $blogger->id,
                     'platform_id' => Platform::where('title', $blogger_platform['name'])->first()->id,

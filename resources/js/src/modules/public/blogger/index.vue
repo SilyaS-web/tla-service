@@ -140,7 +140,7 @@ export default{
                     break;
 
                 case 'avail-projects':
-                    this.Work.getUserWorksList(this.user.id, false, 0).then((data) =>{
+                    this.Work.getUserWorksList(this.user.id, this.user.id * -1, 0).then((data) =>{
                         this.works = (data || []).filter(w => w.project);
 
                         setTimeout(()=>{

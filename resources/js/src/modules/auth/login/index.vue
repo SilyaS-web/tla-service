@@ -32,7 +32,8 @@
                     <button class="btn btn-primary" type="submit" v-on:click="login">
                         Войти
                     </button>
-                    <a href="https://t.me/adswap_bot" class="btn btn-white">
+                    <a
+                        :href="'https://t.me/adswap_bot' + (referralCode ? `?start=${referralCode}` : '')" class="btn btn-white">
                         Нет аккаунта? Зарегистрируйтесь
                     </a>
                 </div>
@@ -64,10 +65,13 @@ export default{
                 password: null
             }),
 
+            referralCode: ref(''),
+
             User,
         }
     },
-    created(){
+    mounted(){
+        this.referralCode = this.findGetParameter('code')
     },
     methods:{
         login(){
@@ -75,12 +79,12 @@ export default{
                 data => {
                     axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
 
-                    if(data.role == 'admin'){
+                    if(data.role === 'admin'){
                         window.location.href = '/profile/admin'
                     }
 
-                    if(data.role == 'blogger'){
-                        if(data.status == 0){
+                    if(data.role === 'blogger'){
+                        if(data.status === 0){
                             this.$router.replace('/blogger/registration')
                             return
                         }
@@ -95,7 +99,21 @@ export default{
         },
         openResetPasswordPopup(){
             this.$refs.resetPasswordPopup.show()
+        },
+        findGetParameter(parameterName) {
+            let result = null,
+                tmp = [];
+
+            location.search
+                .substr(1)
+                .split("&")
+                .forEach(function (item) {
+                    tmp = item.split("=");
+                    if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+                });
+            return result;
         }
+
     }
 }
 </script>
