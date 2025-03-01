@@ -67,7 +67,7 @@ const Project = {
 
                 notify('info', {title: 'Внимание!', message: message});
 
-                reject(err.response.errors)
+                reject(err.response.data)
             })
         })
     },
