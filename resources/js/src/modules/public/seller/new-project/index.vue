@@ -26,7 +26,6 @@
                                 :inputID="'product-articul'"
                                 :error="(errors && errors.product_nm ? errors.product_nm[0] : null)"
                             ></Input>
-
                             <Input
                                 v-model="project.product_price"
                                 :label="'Цена товара'"
@@ -37,17 +36,17 @@
                                 :error="(errors && errors.product_price ? errors.product_price[0] : null)"
                             ></Input>
                         </div>
-                        <div class="quest__step-row">
-                            <Input
-                                v-model="project.product_link"
-                                :label="'Ссылка на товар'"
-                                :inputType="'text'"
-                                :inputPlaceholder="'Введите ссылку'"
-                                :inputClassList="['input--product_link']"
-                                :inputID="'product-link'"
-                                :error="(errors && errors.product_link ? errors.product_link[0] : null)"
-                            ></Input>
-                        </div>
+<!--                        <div class="quest__step-row">-->
+<!--                            <Input-->
+<!--                                v-model="project.product_link"-->
+<!--                                :label="'Ссылка на товар'"-->
+<!--                                :inputType="'text'"-->
+<!--                                :inputPlaceholder="'Введите ссылку'"-->
+<!--                                :inputClassList="['input&#45;&#45;product_link']"-->
+<!--                                :inputID="'product-link'"-->
+<!--                                :error="(errors && errors.product_link ? errors.product_link[0] : null)"-->
+<!--                            ></Input>-->
+<!--                        </div>-->
 
                         <FormatTypes
                             v-model="project.integration_types"
@@ -91,7 +90,7 @@ export default {
                 product_name: null,
                 product_nm: null,
                 product_price: null,
-                product_link: null,
+                // product_link: null,
                 integration_types: [],
                 images: [],
             }),
@@ -99,7 +98,7 @@ export default {
                 product_name: null,
                 product_nm: null,
                 product_price: null,
-                product_link: null,
+                // product_link: null,
                 project_type: null,
                 images: null,
             }),
@@ -114,14 +113,14 @@ export default {
     methods: {
         async createProject(){
             this.project.images = this.project.images.filter(obj => obj.file).map(obj => obj.file)
-            console.log(this.project.images)
+
             this.Project.create(this.project).then(
                 data => {
                     this.project = {
                         product_name: null,
                         product_nm: null,
                         product_price: null,
-                        product_link: null,
+                        // product_link: null,
                         integration_types: [],
                         images: [],
                     }

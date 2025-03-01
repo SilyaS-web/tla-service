@@ -93,10 +93,16 @@ export default{
     },
     methods:{
         modifyProject(){
-            this.project.images = this.projectFiles.filter(f => f.file && !f.id).map(f => f.file);
-            this.project.uploaded_files = this.projectFiles.filter(f => f.id).map(f => f.id);
+            if(this.projectFiles && this.projectFiles.length > 0) {
+                this.project.images = this.projectFiles.filter(f => f.file && !f.id).map(f => f.file);
+                this.project.uploaded_files = this.projectFiles.filter(f => f.id).map(f => f.id);
+            }
+            else{
+                this.project.images = [];
+                this.project.uploaded_files = this.project.project_files.map(p => p.id);
+            }
 
-            var formData = new FormData;
+            let formData = new FormData;
 
             formData.append('product_name', this.project.product_name);
             formData.append('product_nm', this.project.product_nm);
