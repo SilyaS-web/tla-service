@@ -37,6 +37,17 @@
                                 :error="(errors && errors.product_price ? errors.product_price : null)"
                             ></Input>
                         </div>
+                        <div class="quest__step-row">
+                            <Input
+                                v-model="project.product_link"
+                                :label="'Ссылка на товар'"
+                                :inputType="'text'"
+                                :inputPlaceholder="'Введите ссылку'"
+                                :inputClassList="['input--product_link']"
+                                :inputID="'product-link'"
+                                :error="(errors && errors.product_link ? errors.product_link : null)"
+                            ></Input>
+                        </div>
 
                         <FormatTypes
                             v-model="project.integration_types"
