@@ -106,7 +106,6 @@ class ProjectController extends Controller
             'integration_types.*' => ['string', Rule::in(Project::TYPES)],
             'product_name' => 'required|min:3|max:250',
             'product_nm' => 'required|numeric|digits_between:1,14',
-            'product_link' => 'required|min:3|max:1000',
             'product_price' => 'required|numeric|digits_between:1,14',
             'images' => 'required|array',
             'images.*' => 'image|max:10240',
@@ -202,7 +201,7 @@ class ProjectController extends Controller
         $validator = Validator::make(request()->all(), [
             'product_name' => 'required|min:3|max:250',
             'product_nm' => 'required|min:3|numeric',
-            'product_link' => 'required|min:3|max:1000',
+            'product_link' => 'nullable|min:3|max:1000',
             'product_price' => 'required|numeric',
             'uploaded_images' => 'array',
             'uploaded_images.*' => 'numeric',
