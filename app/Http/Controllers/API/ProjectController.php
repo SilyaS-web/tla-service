@@ -92,22 +92,32 @@ class ProjectController extends Controller
             }
         }
 
-        $sortBy = [];
-        $projectsCollection = ProjectResource::collection($projects->get());
-
-        if (isset($validated['order_by_product_price'])) {
-            $projectsCollection->sortBy('product_price', $validated['order_by_product_price'])->values()->all();
-        }
-
-        if (isset($validated['order_by_created_at'])) {
-            $projectsCollection->sortBy('created_at', $validated['order_by_created_at'])->values()->all();
+        if (!empty($validated['order_by_created_at'])) {
+            $projects->orderBy('created_at', $validated['order_by_created_at']);
         } else {
-             $projectsCollection->sortBy('created_at', 'desc')->values()->all();
+            $projects->orderBy('created_at', 'desc');
         }
+
+        if (!empty($validated['order_by_product_price'])) {
+            $projects->orderBy('product_price', $validated['order_by_product_price']);
+        }
+
+//         $sortBy = [];
+//         $projectsCollection = ProjectResource::collection($projects->get());
+//
+//         if (isset($validated['order_by_product_price'])) {
+//             $projectsCollection = $projectsCollection->sortBy(['product_price', $validated['order_by_product_price']]);
+//         }
+//
+//         if (isset($validated['order_by_created_at'])) {
+//             $projectsCollection = $projectsCollection->sortBy(['created_at', $validated['order_by_created_at']]);
+//         } else {
+//             $projectsCollection = $projectsCollection->sortBy(['created_at', 'desc']);
+//         }
 //         dd($sortBy);
 
         $data = [
-            'projects' => $projectsCollection,
+            'projects' => ProjectResource::collection($projects->get()),
         ];
 
         return response()->json($data)->setStatusCode(200);
