@@ -71,7 +71,7 @@ export default {
 
             this.uploadFiles[this.uploadFiles.length - 1].link = file.name;
             this.uploadFiles[this.uploadFiles.length - 1].file = file;
-            console.log(this.uploadFiles)
+
             this.$emit('update:modelValue', this.uploadFiles)
         },
     }
