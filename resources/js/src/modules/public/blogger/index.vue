@@ -83,7 +83,7 @@ export default{
         this.Loader.loaderOn('.wrapper #my-projects');
 
         this.user = this.User.getCurrent();
-        this.inWorkProjectsList = await this.Work.getUserWorksList(this.user.id, this.user.id * -1, 1);
+        this.inWorkProjectsList = await this.Work.getUserWorksList(this.user.id, false, 1);
 
         if(this.user && this.user.modals && this.user.modals.find(modal => modal.id === 1)) {
             this.$refs.contentPopup.show()
@@ -140,7 +140,7 @@ export default{
                     break;
 
                 case 'avail-projects':
-                    this.Work.getUserWorksList(this.user.id, false, 0).then((data) =>{
+                    this.Work.getUserWorksList(this.user.id, this.user.id * -1, 0).then((data) =>{
                         this.works = (data || []).filter(w => w.project);
 
                         setTimeout(()=>{
