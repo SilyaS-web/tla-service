@@ -187,7 +187,8 @@ class UserController extends Controller
             'category' => 'string|nullable',
             'product_name' => 'string|nullable',
             'with' => 'array|nullable',
-            'with.*' => 'string'
+            'with.*' => 'string',
+            'order_by_created_at' => 'string|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -238,6 +239,12 @@ class UserController extends Controller
             $works->whereHas('project', function (Builder $query) use ($validated) {
                 $query->where('marketplace_category', 'like', '%' . $validated['category'] . '%');
             });
+        }
+
+        if (isset($validated['order_by_created_at']) && !empty($validated['order_by_date'])) {
+            $works->orderBy('created_at', $validated['order_by_created_at']);
+        } else {
+            $works->orderBy('created_at', 'desc');
         }
 
         $data = [
