@@ -7352,6 +7352,7 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .project-item .project-item__content{
         padding: 0 6px;
+        height: 100%;
     }
     .project-item__title{
         font-size: 20px;
@@ -7809,8 +7810,8 @@ input[type='range']::-webkit-slider-runnable-track{
         box-shadow: unset;
     }
     .list-header__btns .btn svg{
-        width: 20px;
-        height: 20px;
+        width: 24px;
+        height: 24px;
         stroke: rgba(0,0,0,.4);
         display: block;
     }
