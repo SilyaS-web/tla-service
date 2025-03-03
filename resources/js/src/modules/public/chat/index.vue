@@ -1,5 +1,5 @@
 <template>
-    <div class="profile-chat" id="chat">
+    <div class="profile-chat" id="chat" style="position: relative">
         <div class="profile-chat__body" v-if="user">
             <div class="profile-tabs__content-item">
                 <div class="tab-content__chat chat">
@@ -92,10 +92,9 @@
                 </div>
             </div>
         </div>
+        <confirm-popup ref="confirmPopup"></confirm-popup>
+        <statistics-popup ref="statisticsPopup"></statistics-popup>
     </div>
-
-    <confirm-popup ref="confirmPopup"></confirm-popup>
-    <statistics-popup ref="statisticsPopup"></statistics-popup>
 </template>
 <script>
 import { ref } from "vue";
@@ -110,6 +109,8 @@ import MessagesList from "./MessagesListComponent";
 
 import ConfirmPopup from "../../../core/components/popups/confirmation-popup/ConfirmationPopup";
 import StatisticsPopup from "../../../core/components/popups/work-statistics/WorkStatisticsPopup";
+
+import Loader from '../../../core/services/AppLoader.vue'
 
 export default{
     props:['currentItem'],
@@ -143,13 +144,14 @@ export default{
             isChatsMobile: ref(true),
             isMessagesMobile: ref(true),
 
-            User
+            User, Loader
         }
     },
-    async mounted(){
+    mounted(){
         this.user = this.User.getCurrent();
 
-        this.getChats();
+        this.Loader.loaderOn(this.$el);
+        this.getChats().then(() => { this.Loader.loaderOff(this.$el); });
 
         this.chatsListIntervalId = localStorage.getItem('chats_interval_id')
 
@@ -183,7 +185,7 @@ export default{
 
                 this.$emit('updateCurrentItem', null);
 
-                var childOffset = ($(document).find(`.item-chat[data-id="${this.currentItem.id}"]`) ? $(document).find(`.item-chat[data-id="${this.currentItem.id}"]`).offset().top : 0),
+                let childOffset = ($(document).find(`.item-chat[data-id="${this.currentItem.id}"]`) ? $(document).find(`.item-chat[data-id="${this.currentItem.id}"]`).offset().top : 0),
                     wrapOffset = $(document).find('#chat .chat__chat-items').offset().top,
                     scrolledValue = $(document).find('#chat .chat__chat-items').scrollTop();
 
@@ -195,7 +197,7 @@ export default{
 
         if(this.isTablet){
             if(this.isChatsMobile && this.currentChat && this.backBtnPressed){
-                var childOffset = ($(document).find(`.item-chat[data-id="${this.currentChat.id}"]`) ? $(document).find(`.item-chat[data-id="${this.currentChat.id}"]`).offset().top : 0),
+                let childOffset = ($(document).find(`.item-chat[data-id="${this.currentChat.id}"]`) ? $(document).find(`.item-chat[data-id="${this.currentChat.id}"]`).offset().top : 0),
                     wrapOffset = $(document).find('#chat .chat__chat-items').offset().top,
                     scrolledValue = $(document).find('#chat .chat__chat-items').scrollTop();
 
@@ -257,26 +259,30 @@ export default{
             })
         },
         getChats(){
-            this.User.getWorks(this.user.id).then(data => {
-                this.works = (data || [])
+            return new Promise((resolve, reject) => {
+                this.User.getWorks(this.user.id).then(data => {
+                    this.works = (data || [])
 
-                var newMessages = this.works.filter(w => w.new_messages_count).map(w => w.new_messages_count).reduce((a, b) => a + b, 0);
+                    const newMessages = this.works.filter(w => w.new_messages_count).map(w => w.new_messages_count).reduce((a, b) => a + b, 0);
 
-                if(this.currentChat) {
-                    var work = this.works.find(w => w.id == this.currentChat.id)
+                    if(this.currentChat) {
+                        const work = this.works.find(w => w.id === this.currentChat.id)
 
-                    this.currentChat.status = work ? work.status : this.currentChat.status;
-                    this.currentChat.accepted_by_seller_at = work ? work.accepted_by_seller_at : this.currentChat.accepted_by_seller_at;
-                    this.currentChat.accepted_by_blogger_at = work ? work.accepted_by_blogger_at : this.currentChat.accepted_by_blogger_at;
-                    this.currentChat.confirmed_by_blogger_at = work ? work.confirmed_by_blogger_at : this.currentChat.confirmed_by_blogger_at;
-                    this.currentChat.confirmed_by_seller_at = work ? work.confirmed_by_seller_at : this.currentChat.confirmed_by_seller_at;
-                    this.currentChat.statistics = work ? work.statistics : this.currentChat.statistics;
+                        this.currentChat.status = work ? work.status : this.currentChat.status;
+                        this.currentChat.accepted_by_seller_at = work ? work.accepted_by_seller_at : this.currentChat.accepted_by_seller_at;
+                        this.currentChat.accepted_by_blogger_at = work ? work.accepted_by_blogger_at : this.currentChat.accepted_by_blogger_at;
+                        this.currentChat.confirmed_by_blogger_at = work ? work.confirmed_by_blogger_at : this.currentChat.confirmed_by_blogger_at;
+                        this.currentChat.confirmed_by_seller_at = work ? work.confirmed_by_seller_at : this.currentChat.confirmed_by_seller_at;
+                        this.currentChat.statistics = work ? work.statistics : this.currentChat.statistics;
 
-                    this.currentChat.btnData = this.getChatBtnData(this.currentChat)
-                }
-                if(newMessages && newMessages > 0){
-                    this.$emit('newMessages', newMessages)
-                }
+                        this.currentChat.btnData = this.getChatBtnData(this.currentChat)
+                    }
+                    if(newMessages && newMessages > 0){
+                        this.$emit('newMessages', newMessages)
+                    }
+
+                    resolve(data)
+                })
             })
         },
         async btnAction(action){

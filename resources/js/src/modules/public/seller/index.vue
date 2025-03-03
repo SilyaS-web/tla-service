@@ -113,7 +113,7 @@ import User from '../../../core/services/api/User.vue'
 import Seller from '../../../core/services/api/Seller.vue'
 import Project from '../../../core/services/api/Project.vue'
 
-import Loader from '../../../core/components/AppLoader'
+import Loader from '../../../core/services/AppLoader.vue'
 
 import CreateProject from './new-project/index'
 import ProjectsList from './projects/index'

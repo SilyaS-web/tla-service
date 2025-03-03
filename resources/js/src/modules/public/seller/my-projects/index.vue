@@ -36,7 +36,7 @@
                     v-on:switchTab="switchTab"
                     v-on:edit="editProject"
                 ></ProjectsListItem>
-                <span v-else> Проектов нет </span>
+                <span class="list-empty" v-else> Проектов нет </span>
             </div>
         </div>
 
@@ -63,7 +63,7 @@ import EditProject from "./EditProjectComponent";
 
 import User from "../../../../core/services/api/User.vue";
 
-import Loader from "../../../../core/components/AppLoader.vue";
+import Loader from "../../../../core/services/AppLoader.vue";
 
 export default {
     components: {ProjectsListItem, Filter, EditProject},

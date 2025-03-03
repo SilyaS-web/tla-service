@@ -35,13 +35,12 @@
     </aside>
 </template>
 <script>
-import Tabs from '../../AppTabs.vue'
+import Tabs from '../../../mixins/Tabs.js'
 
 export default{
     props:['isAdmin'],
-    data(){
-        return Tabs;
-    },
+    mixins:[Tabs],
+    data(){ },
     methods:{
         switchTab(event){
             this.$emit('switchTab', $(event.target).data('content'))

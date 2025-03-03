@@ -7,6 +7,8 @@
         :price="project.product_price"
         :works="project.project_works"
         :imgs="project.project_files"
+
+        :classList="classList"
     >
         <div class="project-item__btns">
             <button
@@ -38,7 +40,7 @@ import ProjectCard from '../../../../core/components/project-card/index';
 
 export default{
     components: { ChooseProjectPopup, Carousel, ProjectInfo, SendOffer, ProjectCard },
-    props:['project'],
+    props:['project', 'classList'],
     data(){
         return {
             isSendOfferPopupOpen: ref(false),

@@ -50,4 +50,25 @@ export default {
     width: 100%;
     height: 24px;
 }
+@media (max-width: 1045px) {
+    .loading-project {
+        width: calc(100% / 2 - 10px);
+    }
+}
+@media (max-width: 745px) {
+    .loading-project {
+        min-width: 225px;
+    }
+}
+@media (max-width: 675px) {
+    .loading-project {
+        padding: 0;
+    }
+}
+@media (max-width: 545px) {
+    .loading-project {
+        min-width: unset;
+        width: calc(100% / 2 - 3px);
+    }
+}
 </style>

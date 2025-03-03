@@ -1,5 +1,6 @@
 <template>
-    <div class="list-blogers__item bloger-item card">
+    <div
+        :class="'list-blogers__item bloger-item card ' + (bloggersClasses)">
         <div class="card__row card__content">
             <div class="card__col">
                 <div class="card__row card__header">
@@ -167,7 +168,11 @@ export default {
         is_achievement: {type: Boolean, required: false, default: false},
         subscriber_quantity: {type: Number, required: true},
         coverage: {type: Number, required: true},
-        product_price: {type: [Number, Boolean], required: false}
+        product_price: {type: [Number, Boolean], required: false},
+        classList: {type: Array, required: false, default: []}
+    },
+    computed:{
+        bloggersClasses(){ return this.classList.join(' ') }
     },
     methods:{
         toggleAchivements(e){

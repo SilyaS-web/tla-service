@@ -66,4 +66,10 @@ export default {
 .loading-blogger__loading-col--two-third{
     width:calc(67.77% - 4px);
 }
+@media (max-width: 675px) {
+    .loading-blogger {
+        width: 100%;
+        min-width: unset;
+    }
+}
 </style>

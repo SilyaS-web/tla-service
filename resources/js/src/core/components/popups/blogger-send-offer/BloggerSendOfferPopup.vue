@@ -60,7 +60,7 @@ export default {
                 return
             }
 
-            this.Work.sendOffer(null, this.offer.project_work_id, null, this.offer.message)
+            this.Work.sendOffer({project_work_id: this.offer.project_work_id, message: this.offer.message})
                 .then((response) => {
                     this._confirm()
                 })
