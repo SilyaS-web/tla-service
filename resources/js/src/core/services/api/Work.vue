@@ -21,21 +21,26 @@ const Work = {
             })
         })
     },
-    getUserWorksList: (user_id, created_by = false, is_active = 0, filterData = false, _with = ['project']) => {
+
+    /**
+     * @param user_id Number
+     * @param data = {
+     *     created_by: String | Boolean,
+     *     is_active: Number [0,1],
+     *     product_name: String,
+     *     project_type: String,
+     *     category: String,
+     *     _with: Array,
+     *     order_by_last_message: String
+     * }
+     * @returns {Promise<unknown>}
+     */
+    getUserWorksList: (user_id, data = {}) => {
         return new Promise((resolve, reject) => {
-            var params = {is_active: is_active};
+            let params = {};
 
-            if(created_by)
-                params.created_by = created_by;
-
-            if(_with)
-                params.with = _with;
-
-            if(filterData){
-                for(let k in filterData){
-                    if(filterData[k])
-                        params[k] = filterData[k]
-                }
+            for (const key in data) {
+                if(data[key]) params[key] = data[key]
             }
 
             axios({
@@ -56,25 +61,28 @@ const Work = {
             })
         })
     },
-    sendOffer: (blogger_ids = null, project_work_id = null, project_work_names = null, message = "") => {
+
+    /**
+     * @param data = {
+     *     blogger_ids: Array | Null,
+     *     project_work_id: Number | Null,
+     *     project_work_names: Array | Null,
+     *     message: String | Null,
+     * }
+     * @returns {Promise<boolean>}
+     */
+    sendOffer: (data) => {
         return new Promise((resolve, reject) => {
-            let data = {
-                message: message
+            let params = {};
+
+            for (const key in data) {
+                if(data[key]) params[key] = data[key]
             }
-
-            if(blogger_ids)
-                data['blogger_ids'] = blogger_ids
-
-            if(project_work_names)
-                data['project_work_names'] = project_work_names
-
-            if(project_work_id)
-                data['project_work_id'] = project_work_id
 
             axios({
                 url: '/api/works',
                 method: 'post',
-                data: data
+                data: params
             })
             .then((data) => {
                 notify('info', {

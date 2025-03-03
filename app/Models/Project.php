@@ -248,4 +248,13 @@ class Project extends Model
 
         return json_encode($stats);
     }
+
+    public function scopeOfSort($query, $sort)
+    {
+        foreach ($sort as $column => $direction) {
+            $query->orderBy($column, $direction);
+        }
+
+        return $query;
+    }
 }

@@ -130,7 +130,7 @@ import Seller from "../../../../core/services/api/Seller";
 
 import Header from '../../../../core/components/layout/AppHeader'
 import Footer from '../../../../core/components/layout/AppFooter'
-import Loader from "../../../../core/components/AppLoader";
+import Loader from "../../../../core/services/AppLoader.vue";
 
 export default {
     components:{ Header, Footer },

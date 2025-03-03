@@ -1,6 +1,6 @@
 <template>
     <div
-        :class="'list-projects__item project-item ' + (getProjectClassList())"
+        :class="'list-projects__item project-item ' + (projectClasses)"
         :data-id="id">
 
         <Carousel
@@ -80,10 +80,10 @@ export default {
     },
     updated(){
     },
-
+    computed:{
+        projectClasses(){ return this.classList.join(' ') },
+    },
     methods:{
-        getProjectClassList(){ return this.classList.join(' ') },
-
         makeRandomString(length) {
             let result = '';
             const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

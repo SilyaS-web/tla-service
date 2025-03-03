@@ -14,6 +14,8 @@
         :coverage="blogger.summaryPlatform.coverage"
 
         :product_price="currentProject ? currentProject.product_price : false"
+
+        :classList="classList"
     >
         <div class="card__row card__btns">
             <button
@@ -61,7 +63,7 @@ import Work from "../../../../core/services/api/Work.vue"
 import DistributionList from "../../../../core/mixins/DistributionList.js"
 
 export default{
-    props:['blogger', 'currentProject'],
+    props:['blogger', 'currentProject', 'classList'],
     components: { BloggerCardPopup, BloggerCard },
     mixins:[DistributionList],
     data(){
@@ -92,7 +94,7 @@ export default{
                 return
             }
 
-            this.Work.sendOffer([this.blogger.user.id], this.currentProject.choosedWork.id)
+            this.Work.sendOffer({blogger_ids: [this.blogger.user.id], project_work_id: this.currentProject.choosedWork.id})
                 .then(() => { this.isOfferSent = true })
         },
 

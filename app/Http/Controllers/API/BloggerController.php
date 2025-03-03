@@ -43,6 +43,7 @@ class BloggerController extends Controller
             'statuses.*' => 'numeric',
             'order_by_created_at' => 'string|nullable',
             'has_content' => 'boolean|nullable',
+            'limit' => 'array|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -112,10 +113,14 @@ class BloggerController extends Controller
             $bloggers->whereIn('sex', $validated['sex']);
         }
 
-        if (isset($validated['order_by_created_at']) && !empty($validated['order_by_date'])) {
+        if (isset($validated['order_by_created_at']) && !empty($validated['order_by_created_at'])) {
             $bloggers->orderBy('created_at', $validated['order_by_created_at']);
         } else {
             $bloggers->orderBy('created_at', 'desc');
+        }
+
+        if (isset($validated['limit']) && !empty($validated['limit'])) {
+            $bloggers->skip($validated['limit'][0])->take($validated['limit'][1]);
         }
 
         $data = [

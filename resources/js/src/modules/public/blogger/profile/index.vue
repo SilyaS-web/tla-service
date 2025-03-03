@@ -88,7 +88,7 @@ import ContentPopup from "../../../../core/components/popups/blogger-add-content
 
 import Header from '../../../../core/components/layout/AppHeader.vue'
 import Footer from '../../../../core/components/layout/AppFooter.vue'
-import Loader from "../../../../core/components/AppLoader";
+import Loader from "../../../../core/services/AppLoader.vue";
 
 export default {
     components:{ Header, Footer, ContentPopup },

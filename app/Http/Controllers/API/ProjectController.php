@@ -29,7 +29,8 @@ class ProjectController extends Controller
     public function index(Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), [
-            'order_by_created_at' => 'string|nullbale',
+            'order_by_created_at' => 'string|nullable',
+            'order_by_product_price' => 'string|nullable',
             'project_type' => [Rule::in(Project::TYPES), 'nullable'],
             'category' => 'string|nullable',
             'product_name' => 'string|nullable',
@@ -37,6 +38,7 @@ class ProjectController extends Controller
             'statuses.*' => 'string',
             'status' => 'string|nullable',
             'is_blogger_access' => 'boolean|nullable',
+            'limit' => 'array|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -74,14 +76,12 @@ class ProjectController extends Controller
             $projects->where('marketplace_category', 'like', '%' . $validated['category'] . '%');
         }
 
-        if (isset($validated['order_by_created_at']) && !empty($validated['order_by_date'])) {
-            $projects->orderBy('created_at', $validated['order_by_created_at']);
-        } else {
-            $projects->orderBy('created_at', 'desc');
-        }
-
         if (!empty($validated['is_blogger_access'])) {
             $projects->where('is_blogger_access', $validated['is_blogger_access']);
+        }
+
+        if (!empty($validated['limit']) && !empty($validated['limit'])) {
+            $projects->skip($validated['limit'][0])->take($validated['limit'][1]);
         }
 
         if (!empty($validated['status'])) {
@@ -91,6 +91,19 @@ class ProjectController extends Controller
                 $projects->where('status', '<', 0);
             }
         }
+        $sort_fields = [];
+
+        if (!empty($validated['order_by_product_price'])) {
+            $sort_fields['product_price'] = $validated['order_by_product_price'];
+        } else {
+            if (isset($validated['order_by_created_at'])) {
+                $sort_fields['created_at'] = $validated['order_by_created_at'];
+            } else {
+                $sort_fields['created_at'] = 'desc';
+            }
+        }
+
+        $projects->ofSort($sort_fields);
 
         $data = [
             'projects' => ProjectResource::collection($projects->get()),

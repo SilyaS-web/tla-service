@@ -8,6 +8,8 @@
         :price="project.product_price"
         :works="project.project_works"
         :imgs="project.project_files"
+
+        :classList="classList"
     ></ProjectCard>
 
     <ProjectInfoPopup ref="moreInfo"></ProjectInfoPopup>
@@ -22,7 +24,7 @@ import ProjectInfoPopup from '../../../../core/components/popups/project-more-in
 import Carousel from '../../../../core/components/AppCarousel';
 
 export default {
-    props: ['project'],
+    props: ['project', 'classList'],
     components: { ProjectCard, ProjectInfoPopup, Carousel },
     data(){
         return{

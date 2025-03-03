@@ -429,7 +429,7 @@ import {ref, shallowRef} from 'vue'
 import Project from "../../../../core/services/api/Project.vue";
 import Work from "../../../../core/services/api/Work.vue";
 
-import Loader from "../../../../core/components/AppLoader.vue";
+import Loader from "../../../../core/services/AppLoader.vue";
 import Carousel from "../../../../core/components/AppCarousel";
 import ProjectOptions from './ProjectOptionsComponent'
 import BloggersCarousel from './BloggersCarouselComponent'

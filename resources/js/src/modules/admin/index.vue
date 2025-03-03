@@ -41,7 +41,7 @@
 <script>
 import {reactive, ref} from 'vue'
 import axios from 'axios'
-import Loader from '../../core/components/AppLoader'
+import Loader from '../../core/services/AppLoader.vue'
 import AdminHeader from '../../core/components/layout/admin/AppHeader'
 import AdminAside from '../../core/components/layout/admin/AppAside'
 import AdminModerationPage from './bloggers-moderation/index'
@@ -107,7 +107,7 @@ export default{
             axios.defaults.headers.common['Authorization'] = 'Bearer ' + localStorage.getItem('session_token');
         }
 
-        if(!this.user || this.user.role != 'admin'){
+        if(!this.user || this.user.role !== 'admin'){
             window.location.href = '/'
         }
 
