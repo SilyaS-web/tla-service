@@ -24,7 +24,7 @@
 <!--                            text-decoration:underline;-->
 <!--                            margin-top: -20px;">Подробнее</a>-->
 <!--        </div>-->
-        <div class="card__row" style="display: flex; gap: 6px; flex-wrap: wrap;">
+        <div class="card__row" style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center">
             <button
                 v-if="blogger.user.status === 1"
                 class="btn btn-primary" v-on:click="ban">
@@ -38,30 +38,20 @@
             <button class="btn btn-delete" v-on:click="deletionConfirmation">
                 Удалить
             </button>
-            <div
-                @mouseenter="showTooltip($event)"
-                @mouseout="hideTooltip()"
-                class="blogger-card__options-wrap">
-                <svg
-                    fill="#000000"
-                    viewBox="0 0 32 32"
-                    enable-background="new 0 0 32 32"
-                    id="Glyph"
-                    version="1.1"
-                    xml:space="preserve"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                    class="blogger-card__options"
-                >
-                    <path d="M13,16c0,1.654,1.346,3,3,3s3-1.346,3-3s-1.346-3-3-3S13,14.346,13,16z" id="XMLID_294_"/>
-                        <path d="M13,26c0,1.654,1.346,3,3,3s3-1.346,3-3s-1.346-3-3-3S13,24.346,13,26z" id="XMLID_295_"/>
-                        <path d="M13,6c0,1.654,1.346,3,3,3s3-1.346,3-3s-1.346-3-3-3S13,4.346,13,6z" id="XMLID_297_"/>
-                </svg>
-                <app-tooltip ref="appTooltip"></app-tooltip>
-            </div>
+            <app-tooltip @click="toggleTooltip" ref="appTooltip">
+                <a
+                    href="#"
+                    @click.prevent="showBloggerData"
+                >Подробнее</a>
+                <a
+                    href="#"
+                    @click.prevent="copyData"
+                >Скопировать данные</a>
+            </app-tooltip>
         </div>
     </BloggerCard>
     <blogger-card-popup ref="bloggerCardPopup"></blogger-card-popup>
+    <blogger-data ref="bloggerData"></blogger-data>
 </template>
 <script>
 
@@ -69,9 +59,11 @@ import BloggerCardPopup from "../../../core/components/popups/blogger-card-popup
 import BloggerCard from "../../../core/components/blogger-card/index";
 import AppTooltip from "../../../core/components/AppTooltip.vue";
 
+import BloggerData from '../../../core/components/popups/admin/blogger-card/BloggerCardPopup.vue'
+
 export default{
-    props: ['blogger', 'bloggers'],
-    components: { BloggerCard, BloggerCardPopup, AppTooltip },
+    props: ['blogger'],
+    components: { BloggerCard, BloggerCardPopup, BloggerData, AppTooltip },
     methods:{
         deletionConfirmation() {
             this.$emit('deletionConfirmation', this.blogger.user.id)
@@ -89,21 +81,33 @@ export default{
             this.$refs.bloggerCardPopup.show(this.blogger)
         },
 
-        showTooltip(e){ this.$refs.appTooltip.show(e) },
-        hideTooltip(){ this.$refs.appTooltip.hide() }
+        toggleTooltip(e){ this.$refs.appTooltip.show(e) },
+
+        showBloggerData(){
+            this.$refs.bloggerData.show(this.blogger.id)
+        },
+
+        copyData(){
+            if(navigator.clipboard !== undefined){
+                const bloggerData = {
+                    id: this.blogger.id,
+                    user_id: this.blogger.user.id,
+                    name: this.blogger.user.name,
+                    phone: this.blogger.user.phone,
+                    email: this.blogger.user.email,
+                }
+
+                navigator.clipboard.writeText(JSON.stringify(bloggerData)).then(function() {
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Данные блогера скопированы в буфер обмена'
+                    })
+                });
+            }
+        }
     }
 }
 </script>
 
 <style scoped>
-.blogger-card__options{
-    width: 24px;
-    height: 24px;
-    opacity: .4;
-    cursor: pointer;
-    transition:all .1s linear;
-}
-.blogger-card__options:hover{
-    opacity:1;
-}
 </style>

@@ -49,6 +49,7 @@
                 })
             })
         },
+        // need refactor
 
         //auth methods
         auth: (data) => {
@@ -116,6 +117,79 @@
                     });
 
                     reject(errors)
+                })
+            })
+        },
+
+        banUser(user_id){
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: 'get',
+                    url: '/api/users/' + user_id + '/ban',
+                })
+                .then((response) => {
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Пользователь заблокирован!'
+                    });
+
+                    resolve(response)
+                })
+                .catch(error => {
+                    notify('info', {
+                        title: 'Внимание',
+                        message: 'Не удалось заблокировать пользователя'
+                    });
+
+                    reject(error)
+                })
+            })
+        },
+        unbanUser(user_id){
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: 'get',
+                    url: '/api/users/' + user_id + '/unban',
+                })
+                .then((response) => {
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Пользователь разаблокирован!'
+                    });
+
+                    resolve(response)
+                })
+                .catch(error => {
+                    notify('info', {
+                        title: 'Внимание',
+                        message: 'Не удалось разаблокировать пользователя'
+                    });
+
+                    reject(error)
+                })
+            })
+        },
+        deleteUser(user_id){
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: 'delete',
+                    url: '/api/users/' + user_id,
+                })
+                .then((response) => {
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Пользователь удален!'
+                    });
+
+                    resolve(response)
+                })
+                .catch(error => {
+                    notify('info', {
+                        title: 'Внимание',
+                        message: 'Не удалось удалить пользователя'
+                    });
+
+                    reject(error)
                 })
             })
         },
@@ -206,13 +280,13 @@
                 })
             })
         },
+
         /**
          *
          * @param user_id
          * @param filterData = {
          *     project_type: null,
-         *     product_name: null,
-         *
+         *     product_name: null
          * }
          * @returns {Promise<unknown>}
          */

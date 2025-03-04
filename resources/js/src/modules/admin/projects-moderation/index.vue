@@ -14,21 +14,48 @@
                 <ProjectsItem
                     v-for="project in projects"
                     :project="project"
-                    v-on:statusManagement="statusManagement"
                 ></ProjectsItem>
             </div>
         </div>
     </div>
 </template>
 <script>
+import {ref} from "vue";
+
+import Project from '../../../core/services/api/Project.vue'
+
+import Loader from '../../../core/services/AppLoader.vue'
+
 import ProjectsItem from './ProjectCard'
 
 export default{
-    props: ['projects'],
-    components: {ProjectsItem},
+    data(){
+        return {
+            projects: ref([]),
+            defaultQueryData: {},
+
+            Project, Loader
+        }
+    },
+    components: { ProjectsItem },
+    mounted(){
+        this.getProjects(this.defaultQueryData);
+    },
     methods:{
-        statusManagement(){
-            this.$emit('statusManagement');
+        getProjects(data){
+            this.Loader.loaderOn(this.$el)
+
+            let params = {};
+
+            for (const key in params) {
+                if(data[key]) params[key] = data[key]
+            }
+
+            this.Project.getList(this.defaultQueryData)
+            .then(projects => {
+                this.projects = projects;
+                this.Loader.loaderOff(this.$el);
+            })
         }
     }
 }

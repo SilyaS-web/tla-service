@@ -15,12 +15,10 @@ export default {
     },
     methods:{
         show(event){
-            if(this.isVisible) return;
+            this.isVisible = !this.isVisible;
 
-            this.position.x = event.clientX;
+            this.position.x = event.clientX + 20;
             this.position.y = event.clientY;
-
-            this.isVisible = true;
 
             if(this.timeoutID){
                 clearTimeout(this.timeoutID)
@@ -38,29 +36,53 @@ export default {
 </script>
 
 <template>
-    <transition name="fade">
-        <div
-            v-if="isVisible"
-            :style="{left: `${position.x}px`, top: `${position.y}px`}"
+    <div class="dots-options">
+        <svg
+            fill="#000000"
+            viewBox="0 0 32 32"
+            enable-background="new 0 0 32 32"
+            id="Glyph"
+            version="1.1"
+            xml:space="preserve"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+            class="dots-options__icon"
+        >
+            <path d="M13,16c0,1.654,1.346,3,3,3s3-1.346,3-3s-1.346-3-3-3S13,14.346,13,16z" id="XMLID_294_"/>
+            <path d="M13,26c0,1.654,1.346,3,3,3s3-1.346,3-3s-1.346-3-3-3S13,24.346,13,26z" id="XMLID_295_"/>
+            <path d="M13,6c0,1.654,1.346,3,3,3s3-1.346,3-3s-1.346-3-3-3S13,4.346,13,6z" id="XMLID_297_"/>
+        </svg>
+        <transition name="fade">
+            <div
+                v-if="isVisible"
+                :style="{left: `${position.x}px`, top: `${position.y}px`}"
 
-            @mouseenter="isVisible = true"
-            @mouseout="isVisible = false"
+                @click="isVisible = true"
 
-            class="app-tooltip">
-            <div class="app-tooltip__content">
-                <div class="app-tooltip__body">
-                    <div class="app-tooltip__options">
-                        <a href="#">Подробнее</a>
-                        <a href="#">Редактировать</a>
-                        <a href="#">Скопировать данные</a>
+                class="app-tooltip">
+                <div class="app-tooltip__content">
+                    <div class="app-tooltip__body">
+                        <div class="app-tooltip__options">
+                           <slot></slot>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </transition>
+        </transition>
+    </div>
 </template>
 
 <style scoped>
+    .dots-options__icon{
+        width: 24px;
+        height: 24px;
+        opacity: .4;
+        cursor: pointer;
+        transition:all .1s linear;
+    }
+    .dots-options__icon:hover{
+        opacity:1;
+    }
     .app-tooltip{
         position: fixed;
         transition: all .2s linear;
@@ -81,14 +103,20 @@ export default {
         flex-direction: column;
         gap: 6px;
     }
-    .app-tooltip__options a{
+    .app-tooltip__options > *{
         text-decoration: none;
-        color:rgba(0,0,0,.4);
+        color: rgba(0, 0, 0, .4);
         font-size: 14px;
         font-weight: 500;
-        padding: 8px;
+        padding: 5px 8px;
         border-radius: 3px;
-        border:1px solid rgba(0,0,0,.4)
+        border: 1px solid rgba(0, 0, 0, .4);
+        line-height: 1;
+        transition: all .1s linear;
+    }
+    .app-tooltip__options >*:hover{
+        border-color: #000;
+        color:#000;
     }
 
 </style>

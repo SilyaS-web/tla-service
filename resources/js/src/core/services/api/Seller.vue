@@ -11,13 +11,32 @@ const Seller = {
                 method: 'get',
                 url: '/api/sellers/' + id,
             })
+                .then((response) => {
+                    resolve(response.data.seller)
+                })
+                .catch((data) => {
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'Невозможно получить информацию по селлеру, напишите в поддержку или попробуйте позже'
+                    });
+
+                    resolve(false)
+                })
+        })
+    },
+    getList: () => {
+        return new Promise((resolve, reject) => {
+            axios({
+                method: 'get',
+                url: '/api/sellers',
+            })
             .then((response) => {
-                resolve(response.data.seller)
+                resolve(response.data.sellers)
             })
             .catch((data) => {
                 notify('error', {
                     title: 'Внимание!',
-                    message: 'Невозможно получить информацию по селлеру, напишите в поддержку или попробуйте позже'
+                    message: 'Невозможно получить список селлеров. Попробуйте позже, либо обратитесь в поддержку'
                 });
 
                 resolve(false)
