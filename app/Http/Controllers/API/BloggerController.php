@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Resources\BloggerContentResource;
-use App\Http\Resources\UserResource;
 use App\Models\Blogger;
 use App\Models\BloggerContent;
 use App\Models\BloggerPlatform;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BloggerResource;
 use App\Models\BloggerTheme;
-use App\Models\ProjectFile;
 use App\Services\ImageService;
 use App\Services\TgService;
 use App\Services\VideoService;
@@ -22,11 +20,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use const http\Client\Curl\AUTH_ANY;
 
 class BloggerController extends Controller
 {
-
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(), [

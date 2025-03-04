@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Requests\User\UserUpdateRequest;
 use App\Http\Resources\MessageFileResource;
 use App\Http\Resources\MessagesResource;
 use App\Http\Resources\WorkFileResource;
@@ -10,6 +11,7 @@ use App\Models\SellerTariff;
 use App\Models\Tariff;
 use App\Models\TgPhone;
 use App\Models\User;
+use App\Services\ImageService;
 use App\Services\PhoneService;
 use App\Services\TgService;
 use App\Http\Controllers\Controller;
@@ -27,6 +29,7 @@ use App\Models\Work;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
@@ -434,6 +437,23 @@ class UserController extends Controller
         Redis::sadd('user.' . $user->id . '.modals', $modal->id);
         return response()->json()->setStatusCode(200);
     }
+
+    public function update(User $user, UserUpdateRequest $request)
+    {
+        if ($request->file('image')) {
+            if (Storage::exists($user->getImageURL())) {
+                Storage::delete($user->getImageURL());
+            }
+
+            $image = $request->file('image');
+            $urls = ImageService::makeCompressedCopies($image, 'profile/' . $user->id . '/');
+
+            $user->image = $urls[1];
+        }
+
+        $user->save();
+    }
+
     public function check(Request $request)
     {
         $validator = Validator::make($request->all(), [
