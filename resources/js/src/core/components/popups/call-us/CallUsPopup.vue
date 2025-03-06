@@ -55,7 +55,6 @@ export default {
         okButton: 'Отправить',
         cancelButton: 'Отмена',
 
-        // Private variables
         resolvePromise: undefined,
         rejectPromise: undefined,
 

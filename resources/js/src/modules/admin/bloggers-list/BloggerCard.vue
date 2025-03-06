@@ -13,17 +13,6 @@
         :content="blogger.content"
         :is_achievement="blogger.is_achievement"
     >
-<!--        <div class="card__row" style="text-align: center; justify-content:center">-->
-<!--            <a-->
-<!--                @click="openBloggerInfoPopup"-->
-<!--                target="_blank"-->
-<!--                class=""-->
-<!--                style="color:rgba(0,0,0,.4);-->
-<!--                            font-size:16px;-->
-<!--                            font-weight:500;-->
-<!--                            text-decoration:underline;-->
-<!--                            margin-top: -20px;">Подробнее</a>-->
-<!--        </div>-->
         <div class="card__row" style="display: flex; gap: 6px; flex-wrap: wrap; align-items: center">
             <button
                 v-if="blogger.user.status === 1"
@@ -84,7 +73,7 @@ export default{
         toggleTooltip(e){ this.$refs.appTooltip.show(e) },
 
         showBloggerData(){
-            this.$refs.bloggerData.show(this.blogger.id)
+            this.$refs.bloggerData.show(this.blogger.id).then(() => this.$emit('updateList'))
         },
 
         copyData(){

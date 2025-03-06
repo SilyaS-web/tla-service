@@ -335,7 +335,7 @@ class BloggerController extends Controller
             }
         }
 
-        if (!!empty($validated['name']) && $user->name != $validated['name']) {
+        if (!empty($validated['name']) && $user->name != $validated['name']) {
             $user->name = $validated['name'];
         }
 

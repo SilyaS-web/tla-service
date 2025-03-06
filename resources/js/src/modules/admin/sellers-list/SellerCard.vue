@@ -56,33 +56,45 @@
                         </div>
                     </div>
                 </div>
-                <div class="card__row" style="text-align: center; justify-content:center">
-                    <a v-bind:href="'/sellers/' + seller.id" class="" target="_blank" style="color:rgba(0,0,0,.4); font-size:16px; font-weight:500; text-decoration:underline; margin-top: -20px;">Подробнее</a>
-                </div>
 
-                <div v-if="seller.user.status == -1" class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn btn-primary" v-on:click="unban">
+                <div class="card__row" style="display: flex; gap: 5px; flex-wrap: wrap; align-items: center">
+                    <button
+                        v-if="seller.user.status === -1"
+                        class="btn btn-primary" v-on:click="unban">
                         Разблокировать
                     </button>
-                    <button class="btn btn-delete" v-on:click="deletionConfirmation">
-                        Удалить
-                    </button>
-                </div>
-                <div v-else class="card__row" style="display: flex; gap: 12px; flex-wrap: wrap;">
-                    <button class="btn btn-primary" v-on:click="ban">
+                    <button
+                        v-else
+                        class="btn btn-primary" v-on:click="ban">
                         Заблокировать
                     </button>
                     <button class="btn btn-delete" v-on:click="deletionConfirmation">
                         Удалить
                     </button>
+                    <app-tooltip @click="toggleTooltip" ref="appTooltip">
+                        <a
+                            href="#"
+                            @click.prevent="showSellerData"
+                        >Подробнее</a>
+                        <a
+                            href="#"
+                            @click.prevent="copyData"
+                        >Скопировать данные</a>
+                    </app-tooltip>
                 </div>
             </div>
         </div>
+        <SellerCardPopup ref="sellerCardPopup"></SellerCardPopup>
     </div>
 
 </template>
 <script>
+import SellerCardPopup from "../../../core/components/popups/admin/seller-card/SellerCardPopup.vue";
+
+import AppTooltip from "../../../core/components/AppTooltip.vue";
+
 export default{
+    components: {AppTooltip, SellerCardPopup},
     props: ['seller', 'sellers'],
     methods:{
         deletionConfirmation() {
@@ -96,6 +108,31 @@ export default{
         unban() {
             this.$emit('unban', this.seller.user.id)
         },
+
+        toggleTooltip(e){ this.$refs.appTooltip.show(e) },
+
+        showSellerData(){
+            this.$refs.sellerCardPopup.show(this.seller.id)
+        },
+        copyData(){
+            if(navigator.clipboard !== undefined){
+                const sellerData = {
+                    id: this.seller.id,
+                    user_id: this.seller.user.id,
+                    name: this.seller.user.name,
+                    phone: this.seller.user.phone,
+                    email: this.seller.user.email,
+                }
+
+                navigator.clipboard.writeText(JSON.stringify(sellerData)).then(function() {
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Данные селлера скопированы в буфер обмена'
+                    })
+                });
+            }
+        }
+
     }
 }
 </script>

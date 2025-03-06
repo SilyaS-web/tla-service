@@ -15,7 +15,7 @@
                     <div
                         v-for="(key, value) in statistics"
                         class="statistics__item">
-                        <b>{{ key }}</b> - <b>{{ value }}</b>
+                        <b>{{ value }}</b> - <b>{{ key }}</b>
                     </div>
                 </div>
             </div>

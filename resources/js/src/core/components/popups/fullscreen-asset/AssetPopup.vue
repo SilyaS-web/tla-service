@@ -1,5 +1,5 @@
 <template>
-    <popup-modal :id="'video-popup'" ref="popup">
+    <popup-modal :id="'media-popup'" ref="popup">
         <div
             v-if="imageUrl"
             class="fullscreen-img">

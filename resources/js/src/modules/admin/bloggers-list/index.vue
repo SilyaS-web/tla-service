@@ -17,6 +17,7 @@
                     :blogger="blogger"
                     v-on:ban="ban"
                     v-on:unban="unban"
+                    v-on:updateList="getBloggers(defaultQueryData)"
                     v-on:deletionConfirmation="deletionConfirmation"
                 ></BloggerItem>
             </div>

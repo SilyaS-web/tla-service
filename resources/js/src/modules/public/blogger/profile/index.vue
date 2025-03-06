@@ -118,40 +118,28 @@ export default {
         saveBlogger(){
             this.Loader.loaderOn('.edit-profile');
 
-            var formdata = new FormData;
+            let data = {
+                name: this.blogger.user.name,
+                email: this.blogger.user.email,
+                sex: this.blogger.sex,
+                country_id: this.blogger.country.id,
+                city: this.blogger.city,
+            };
 
-            for(let k in this.blogger){
-                if(!['user', 'country', 'platforms', 'themes'].includes(k))
-                    formdata.append(k, this.blogger[k])
-            }
-
-            formdata.append('country_id', this.blogger.country ? this.blogger.country.id : null)
-
-            this.blogger.platforms && this.blogger.platforms.map((p, ind) => {
-                formdata.append('platforms[' + ind + ']', p.platform_id)
-            })
-
-            this.blogger.themes && this.blogger.themes.map((p, ind) => {
-                formdata.append('themes[' + ind + ']', p.theme_id)
-            })
-
-            for(let k in this.blogger.user){
-                if(k != 'image')
-                    formdata.append(k, this.blogger.user[k])
-            }
-
-            var image = $('.tab-content__profile-img').find('input[type="file"]')[0];
+            let image = $('.tab-content__profile-img').find('input[type="file"]')[0];
 
             if(image && image.files[0])
-                formdata.append('image', image.files[0]);
+                data['image'] = image.files[0];
 
-            this.Blogger.put(this.blogger.id, formdata).then(
+            this.Blogger.update(this.blogger.id, data).then(
                 response => {
-                    var user = {
+                    const user = {
                         'id': this.user.id,
                         'name': this.blogger.user.name,
                         'email': this.blogger.user.email,
                         'seller_id': this.blogger.id,
+                        'content': this.blogger.content,
+                        'themes': this.blogger.themes,
                         'status': this.user.status,
                         'role': this.user.role,
                         'phone': this.user.phone,
@@ -167,11 +155,9 @@ export default {
                     }
 
                     this.Loader.loaderOff('.edit-profile');
-
-
                 },
                 err => {
-                    this.errors = err.response.data;
+                    this.errors = err;
                     this.Loader.loaderOff('.edit-profile');
                 }
             )

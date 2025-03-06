@@ -121,6 +121,44 @@
             })
         },
 
+        /**
+         * @param userID
+         * @param data = {
+         *     image: file|null
+         * }
+         */
+        update: (userID, data) => {
+           return new Promise((resolve, reject) => {
+                let formData = new FormData;
+
+               for (const key in data) {
+                   if(data[key]) formData.append(key, data[key])
+                   if(key === 'image' && data[key] === null) formData.append(key, data[key])
+               }
+
+               axios({
+                   method: 'patch',
+                   url: '/api/users/' + userID,
+                   data: formData
+               })
+               .then((response) => {
+                   notify('info', {
+                       title: 'Успешно!',
+                       message: 'Пользователь успешно обновился.'
+                   });
+
+                   resolve(response.data)
+               })
+               .catch((errors) => {
+                   notify('error', {
+                       title: 'Внимание!',
+                       message: 'Возникла ошибка, попробуйте позже.'
+                   });
+
+                   reject(errors)
+               })
+           })
+        },
         banUser(user_id){
             return new Promise((resolve, reject) => {
                 axios({
@@ -285,8 +323,8 @@
          *
          * @param user_id
          * @param filterData = {
-         *     project_type: null,
-         *     product_name: null
+         *     project_type: string,
+         *     product_name: string
          * }
          * @returns {Promise<unknown>}
          */
