@@ -440,6 +440,7 @@ class UserController extends Controller
 
     public function update(User $user, UserUpdateRequest $request)
     {
+        $validated = $request->validated();
         if ($request->file('image')) {
             if (Storage::exists($user->getImageURL())) {
                 Storage::delete($user->getImageURL());
@@ -449,6 +450,10 @@ class UserController extends Controller
             $urls = ImageService::makeCompressedCopies($image, 'profile/' . $user->id . '/');
 
             $user->image = $urls[1];
+        } else if (!isset($validated['image'])) {
+            if (Storage::exists($user->getImageURL())) {
+                Storage::delete($user->getImageURL());
+            }
         }
 
         $user->save();

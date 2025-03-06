@@ -16,7 +16,7 @@ class UserUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'image' => 'image|nullable',
+            'image' => 'image|filled',
         ];
     }
 
