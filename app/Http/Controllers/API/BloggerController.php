@@ -388,7 +388,7 @@ class BloggerController extends Controller
         return response()->json(BloggerContentResource::collection($blogger->content))->setStatusCode(200);
     }
 
-    public function setContent(): JsonResponse
+    public function setContent(Blogger $blogger): JsonResponse
     {
         $validator = Validator::make(request()->all(), [
             'videos' => 'array|required',
@@ -399,7 +399,7 @@ class BloggerController extends Controller
             return response()->json($validator->errors())->setStatusCode(400);
         }
 
-        $user_id = Auth::user()->id;
+        $user_id = $blogger->user_id ?? Auth::user()->id;
 
         $product_images = request()->file('videos');
         $blogger_content = [];
