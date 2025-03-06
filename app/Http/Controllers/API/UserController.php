@@ -260,7 +260,8 @@ class UserController extends Controller
     public function messages(User $user, Work $work, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'order_by' => 'string|nullable'
+            'order_by' => 'string|nullable',
+            'from_admin' => 'boolean|nullable'
         ]);
 
         if ($validator->fails()) {
@@ -275,7 +276,9 @@ class UserController extends Controller
             $messages->orderBy('created_at', $validated['order_by']);
         }
 
-        $work->messages()->whereNull('viewed_at')->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
+        if (!empty($validated['from_admin'])) {
+            $work->messages()->whereNull('viewed_at')->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
+        }
         $message_collection = MessageResource::collection($messages->get());
 
         if (!empty($work->message) || !empty($work->files->toArray())) {
