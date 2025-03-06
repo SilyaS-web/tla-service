@@ -458,7 +458,7 @@ class UserController extends Controller
 
         $user->save();
 
-        return response()->json($user->image, 200);
+        return response()->json($user->getImageURL(), 200);
     }
 
     public function check(Request $request)
