@@ -454,6 +454,7 @@ class UserController extends Controller
             if (Storage::exists($user->getImageURL())) {
                 Storage::delete($user->getImageURL());
             }
+            $user->image = null;
         }
 
         $user->save();
