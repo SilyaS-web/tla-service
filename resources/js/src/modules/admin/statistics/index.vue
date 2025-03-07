@@ -1,14 +1,23 @@
 <template>
     <div class="admin-view__content statistics tab-content" id="statistics">
         <div class="admin-statistics__body">
-            <div class="admin-statistics__header">
-                <div class="admin-blogers__title admin-statistics__title title">
+            <div :style="{backgroundColor: '#fff', padding:'10px 15px'}" class="admin-statistics__header">
+                <div
+                    :style="{ fontSize: '20px', fontWeight: '600'}"
+                    class="admin-statistics__title title">
                     Статистика
                 </div>
                 <!-- <div class="admin-blogers__search form-group">
                     <input type="name" id="blogers-search" class="input" placeholder="Введите название">
                     <button class="btn btn-primary blogers-search-btn">Найти</button>
                 </div> -->
+                <div :style="{display: 'flex', gap: '12px',}" class="">
+                    <input :style="{width: '250px'}" type="date" name="" id="" v-model="dates.start">
+                    <input :style="{width: '250px'}" type="date" name="" id="" v-model="dates.end">
+                    <button
+                        @click="getStatistics"
+                        :style="{width: '150px'}" class="btn btn-primary">Применить</button>
+                </div>
             </div>
             <div class="admin-view__content-wrap statistics__body">
                 <div class="statistics__items">
@@ -35,28 +44,25 @@ export default {
     data(){
         return{
             statistics:ref([]),
+            dates: ref({
+                start: null,
+                end: null,
+            }),
 
             Statistics, Loader
         }
     },
     mounted(){
-         this.getStatistics()
     },
     components: {},
     methods:{
-        getStatistics(dateStart, dateEnd){
+        getStatistics(){
             this.Loader.loaderOn(this.$el)
 
-            if(!dateStart){
-                let date = new Date();
-                dateStart = new Date(date.getFullYear(), date.getMonth(), 1);
-            }
+            const startDate = this.dates.start
+            const endDate = this.dates.end
 
-            if(!dateEnd){
-                dateEnd = Date.now()
-            }
-
-            this.Statistics.getStatistics().then(stats =>{
+            this.Statistics.getStatistics(startDate, endDate).then(stats =>{
                 this.statistics = stats
                 this.Loader.loaderOff(this.$el)
             })
