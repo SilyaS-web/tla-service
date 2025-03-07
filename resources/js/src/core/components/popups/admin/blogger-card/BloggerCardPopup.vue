@@ -344,9 +344,9 @@ export default {
 
             await this.User.getWorks(this.blogger.user.id).then(chats => {
                 this.works = chats;
-                this.currentChat = this.works[0]
+                this.currentChat = this.works.length > 0 ? this.works[0] : null
 
-                this.getMessages()
+                if(this.currentChat) this.getMessages()
             })
 
             let videosNodeList = $(document).find('.blogger-content__card video');
@@ -396,7 +396,7 @@ export default {
         },
 
         saveBlogger() {
-            let data = {
+            const data = {
                 name: this.blogger.user.name,
                 email: this.blogger.user.email,
                 sex: this.blogger.sex,
@@ -423,11 +423,7 @@ export default {
         },
 
         deleteUserImage(){
-            const data = {
-                image: null
-            }
-
-            this.User.update(this.blogger.user.id, data).then(() => { this.blogger.user.image = null })
+            this.User.update(this.blogger.user.id, {}).then(() => { this.blogger.user.image = null })
         },
         triggerUpload(e){ $(e.target).find('input[type="file"]').click() },
         uploadUserImage(e){
@@ -607,6 +603,7 @@ export default {
 .data-blogger__image-load img{
     width: 20px;
     height: 20px;
+    filter:invert(54%) sepia(90%) saturate(4926%) hue-rotate(259deg) brightness(92%) contrast(86%);
 }
 .data-blogger__image-image{
     position: relative;

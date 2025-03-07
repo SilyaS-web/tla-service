@@ -118,18 +118,19 @@ export default {
         saveBlogger(){
             this.Loader.loaderOn('.edit-profile');
 
-            let data = {
+            const data = {
                 name: this.blogger.user.name,
                 email: this.blogger.user.email,
                 sex: this.blogger.sex,
                 country_id: this.blogger.country.id,
                 city: this.blogger.city,
+                password: this.blogger.password,
+                old_password: this.blogger.old_password,
             };
 
-            let image = $('.tab-content__profile-img').find('input[type="file"]')[0];
+            const image = $('.tab-content__profile-img').find('input[type="file"]')[0];
 
-            if(image && image.files[0])
-                data['image'] = image.files[0];
+            if(image && image.files[0]) data['image'] = image.files[0];
 
             this.Blogger.update(this.blogger.id, data).then(
                 response => {

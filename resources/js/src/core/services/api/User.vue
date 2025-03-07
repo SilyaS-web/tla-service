@@ -137,7 +137,7 @@
                }
 
                axios({
-                   method: 'patch',
+                   method: 'post',
                    url: '/api/users/' + userID,
                    data: formData
                })

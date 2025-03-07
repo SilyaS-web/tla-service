@@ -112,7 +112,7 @@ export default{
         toggleTooltip(e){ this.$refs.appTooltip.show(e) },
 
         showSellerData(){
-            this.$refs.sellerCardPopup.show(this.seller.id)
+            this.$refs.sellerCardPopup.show(this.seller.id).then(() => this.$emit('updateList'))
         },
         copyData(){
             if(navigator.clipboard !== undefined){

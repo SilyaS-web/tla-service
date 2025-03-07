@@ -27,14 +27,14 @@ const Blogger = {
      *     name: string,
      *     email: string|null,
      *     image: file|null,
-     *     old_password: string|null,
-     *     password: string|null,
      *     country_id: number,
      *     description: string|null,
      *     sex: string,
      *     city: string,
      *     themes: array|null,
      *     from_moderation: boolean|null,
+     *     password: string|null,
+     *     old_password: string|null,
      * }
      * @returns {Promise<unknown>}
      */

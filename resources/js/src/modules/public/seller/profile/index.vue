@@ -160,49 +160,29 @@ export default {
         saveSeller(){
             this.Loader.loaderOn('.edit-profile');
 
-            var formdata = new FormData;
+            const data = {
+                name: this.seller.user.name,
+                email: this.seller.user.email,
+                inn: this.seller.inn,
+                organization_name: this.seller.organization_name,
+                organization_type: this.seller.organization_type,
+                ozon_api_key: this.seller.ozon_api_key,
+                ozon_client_id: this.seller.ozon_client_id,
+                ozon_link: this.seller.ozon_link,
+                wb_api_key: this.seller.wb_api_key,
+                wb_link: this.seller.wb_link,
+                password: this.seller.password,
+                old_password: this.seller.old_password,
+            };
 
-            var image = $('.tab-content__profile-img').find('input[type="file"]')[0];
+            const image = $('.tab-content__profile-img').find('input[type="file"]')[0];
 
-            if(image.files[0])
-                formdata.append('image', image.files[0]);
+            if(image && image.files[0])
+                data['image'] = image.files[0];
 
-            formdata.append('name', this.seller.user.name);
-            formdata.append('email', this.seller.user.email);
-
-            if(this.seller.old_password)
-                formdata.append('old_password', this.seller.old_password);
-
-            if(this.seller.password)
-                formdata.append('password', this.seller.password);
-
-            if(this.seller.wb_link)
-                formdata.append('wb_link', this.seller.wb_link);
-
-            if(this.seller.wb_api_key)
-                formdata.append('wb_api_key', this.seller.wb_api_key);
-
-            if(this.seller.ozon_link)
-                formdata.append('ozon_link', this.seller.ozon_link);
-
-            if(this.seller.ozon_client_id)
-                formdata.append('ozon_client_id', this.seller.ozon_client_id);
-
-            if(this.seller.ozon_api_key)
-                formdata.append('ozon_api_key', this.seller.ozon_api_key);
-
-            if(this.seller.inn)
-                formdata.append('inn', this.seller.inn);
-
-            if(this.seller.organization_type)
-                formdata.append('organization_type', this.seller.organization_type);
-
-            if(this.seller.organization_name)
-                formdata.append('organization_name', this.seller.organization_name);
-
-            this.Seller.save(this.seller.id, formdata).then(
+            this.Seller.update(this.seller.id, data).then(
                 (response) => {
-                    var user = {
+                    const user = {
                         'id': this.user.id,
                         'name': this.seller.user.name,
                         'email': this.seller.user.email,

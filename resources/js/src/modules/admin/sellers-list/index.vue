@@ -16,6 +16,7 @@
                     :seller="seller"
                     v-on:ban="ban"
                     v-on:unban="unban"
+                    v-on:updateList="getSellers(defaultQueryData)"
                     v-on:deletionConfirmation="deletionConfirmation"
                 ></SellerItem>
             </div>

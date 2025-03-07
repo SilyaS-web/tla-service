@@ -68,6 +68,7 @@
                                                 :inputID="'phone'"
                                                 :error="(errors && errors.phone ? errors.phone[0] : '')"
                                                 :style="{width:'calc(50% - 4px)'}"
+                                                :disabled="1"
                                             ></Input>
                                             <Input
                                                 v-model="seller.inn"
@@ -152,7 +153,7 @@
                                                 :inputClassList="[]"
                                                 :inputID="'ozon_link'"
                                                 :error="errors.ozon_link"
-                                                :style="{width:'100%'}"
+                                                :style="{width:'calc(50% - 4px)'}"
                                             ></Input>
                                             <Input
                                                 v-model="seller.ozon_client_id"
@@ -264,7 +265,7 @@
 <script>
 import {ref} from "vue";
 
-import Seller from '../../../../services/api/seller.vue'
+import Seller from '../../../../services/api/Seller.vue'
 import User from '../../../../services/api/User.vue'
 
 import PopupModal from "../../AppPopup.vue";
@@ -355,6 +356,24 @@ export default {
             })
         },
         saveSeller() {
+            let data = {
+                name: this.seller.user.name,
+                email: this.seller.user.email,
+                inn: this.seller.inn,
+                organization_name: this.seller.organization_name,
+                organization_type: this.seller.organization_type,
+                ozon_api_key: this.seller.ozon_api_key,
+                ozon_client_id: this.seller.ozon_client_id,
+                ozon_link: this.seller.ozon_link,
+                wb_api_key: this.seller.wb_api_key,
+                wb_link: this.seller.wb_link,
+            };
+
+            this.Seller.update(this.seller.id, data).then(() => {
+                this.$refs.popup.close()
+                this.resolvePromise(true)
+            })
+            .catch((errors) => { this.errors = errors })
         },
 
         deleteUserImage(){
