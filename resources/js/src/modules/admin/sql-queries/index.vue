@@ -29,7 +29,7 @@ export default {
     },
     mounted(){
         this.openAI = new OpenAI({
-            apiKey: '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',
+            apiKey: '',
             dangerouslyAllowBrowser: true
         });
     },
