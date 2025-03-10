@@ -1,5 +1,5 @@
 <template>
-    <div class="referal admin-view__content tab-content" id = "referral">
+    <div class="referal admin-view__content" id = "referral">
         <div class="referal__body admin-view__content-wrap">
             <div class="referal__tabs">
                 <div

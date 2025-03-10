@@ -1,5 +1,5 @@
 <template>
-    <div class="admin-view__content statistics tab-content" id="statistics">
+    <div class="admin-view__content statistics" id="statistics">
         <div class="admin-statistics__body">
             <div :style="{backgroundColor: '#fff', padding:'10px 15px'}" class="admin-statistics__header">
                 <div

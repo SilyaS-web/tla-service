@@ -1,5 +1,5 @@
 <template>
-    <div class="admin-view__content payment-history tab-content" id="payment-history">
+    <div class="admin-view__content payment-history" id="payment-history">
         <div class="admin-blogers__body">
             <div class="admin-blogers__header">
                 <div class="admin-blogers__title title">
