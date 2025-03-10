@@ -261,7 +261,7 @@
                 })
             })
         },
-        getMessages(work_id, user_id, from_admin = false){
+        getMessages(work_id, user_id, from_admin = 0){
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'get',
