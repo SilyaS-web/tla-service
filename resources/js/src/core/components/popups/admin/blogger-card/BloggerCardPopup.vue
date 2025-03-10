@@ -390,7 +390,7 @@ export default {
             this.getMessages()
         },
         getMessages() {
-            this.User.getMessages(this.currentChat.id, this.blogger.user.id).then(data => {
+            this.User.getMessages(this.currentChat.id, this.blogger.user.id, true).then(data => {
                 this.messages = (data || [])
             })
         },
