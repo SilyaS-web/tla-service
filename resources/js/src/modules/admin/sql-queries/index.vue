@@ -11,6 +11,9 @@
             <button
                 @click="listenToSpeech"
                 class="btn btn-primary">play</button>
+            <button
+                @click="getSql"
+                class="btn btn-primary">get</button>
         </div>
     </div>
 </template>
@@ -29,6 +32,7 @@ export default {
     },
     mounted(){
         this.openAI = new OpenAI({
+            baseURL: 'https://api.deepseek.com/beta',
             apiKey: '',
             dangerouslyAllowBrowser: true
         });
@@ -58,14 +62,9 @@ export default {
         },
         async getSql(){
             const response = await this.openAI.completions.create({
-                model: 'babbage-002',
-                prompt: `Translate this natural language query to SQL: ${this.speechRecognitionResult}`,
-                temperature: 0,
-                max_tokens: 60,
-                top_p: 1.0,
-                frequency_penalty: 0.0,
-                presence_penalty: 0.0,
-                stop: ['#', ';'],
+                model: 'deepseek-chat',
+                prompt: `Преврати эту строку на обычном языке в SQL запрос: ${this.speechRecognitionResult}.`,
+
             });
 
             console.log(response)
