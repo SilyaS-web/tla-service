@@ -23,7 +23,7 @@
     <script src="{{ asset('libs/chart/chart.js') }}"></script>
     <script src="{{ asset('libs/funnel/funnel-chart.js') }}"></script>
     <script src="{{ asset('libs/owl/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('js/script.js') }}"></script>
+    <script src="/js/script.js?v=1"></script>
 
     <link rel="stylesheet" href="{{ mix('css/style.css')  }}">
 
