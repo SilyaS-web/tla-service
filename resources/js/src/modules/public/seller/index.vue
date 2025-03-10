@@ -4,42 +4,85 @@
     <section class="profile" id="seller">
         <div class="profile__container _container">
             <div class="profile__body">
-                <Aside v-on:switchTab="switchTab" :chatMessages="newChatMessagesCount"></Aside>
+                <Aside
+                    v-on:switchTab="switchTab"
+                    :tabs="[
+                        {
+                            tabName: 'Создать проект',
+                            tabContent: 'create-project',
+                            classList: ['project-link']
+                        },
+                        {
+                            tabName: 'Мои проекты',
+                            tabContent: 'my-projects-list',
+                            classList: ['projects-list-link']
+                        },
+                        {
+                            tabName: 'Все проекты',
+                            tabContent: 'projects-list',
+                            classList: ['all-projects-list-link'],
+                            isActive: true
+                        },
+                        // {
+                        //     tabName: 'Дашборд',
+                        //     tabContent: 'dashboard',
+                        // },
+                        {
+                            tabName: 'Каталог блогеров',
+                            tabContent: 'bloggers-list',
+                            classList: ['blogers-list-link'],
+                        },
+                        {
+                            tabName: 'Чат с блогерами',
+                            tabContent: 'chat',
+                            notifications: newChatMessagesCount,
+                            classList: ['chat-link'],
+                        },
+                        // {
+                        //     tabName: 'Партнеры',
+                        //     tabContent: 'partners',
+                        // },
+                    ]"
+                ></Aside>
                 <div class="profile__content">
                     <div class="profile__content-inner">
                         <!-- создание проекта -->
-                        <CreateProject v-on:switchTab="switchTab"></CreateProject>
+                        <CreateProject
+                            v-if="tab === 'create-project'"
+                            v-on:switchTab="switchTab">
+                        </CreateProject>
 
-                        <!-- Список всех проектов -->
+                        <!-- список всех проектов -->
                         <ProjectsList
+                            v-if="tab === 'projects-list'"
                             :projects="projects"
-                            v-on:applyFilter="applyFilterProjects">
+                        >
                         </ProjectsList>
 
                         <!-- список моих проектов -->
                         <MyProjectsList
-                            :myProjects="myProjects"
-                            v-on:updateMyProjects="updateMyProjects"
+                            v-if="tab === 'my-projects-list'"
+                            :currentItem="currentItem"
                             v-on:switchTab="switchTab"
-                            v-on:applyFilter="applyFilterMyProjects"
                         ></MyProjectsList>
 
                         <!-- список блогеров -->
                         <BloggersList
-                            v-on:applyFilter="applyFilterBloggers"
-                            :bloggers="bloggers"
+                            v-if="tab === 'bloggers-list'"
                             :user="user">
                         </BloggersList>
 
                         <!-- чат -->
                         <Chat
-                            :currentItem=currentItem
-                            :isChatTab=isChatTab
+                            v-if="tab === 'chat'"
+                            :currentItem="currentItem"
                             v-on:switchTab="switchTab"
                             v-on:newMessages="newChatMessages"
                             v-on:updateCurrentItem="currentItem = $event"></Chat>
 
-                        <Partners></Partners>
+<!--                        <Partners-->
+<!--                            v-if=""-->
+<!--                        ></Partners>-->
                     </div>
                 </div>
             </div>
@@ -69,17 +112,15 @@ import axios from "axios";
 import User from '../../../core/services/api/User.vue'
 import Seller from '../../../core/services/api/Seller.vue'
 import Project from '../../../core/services/api/Project.vue'
-import Blogger from '../../../core/services/api/Blogger.vue'
 
-import Loader from '../../../core/components/AppLoader'
-import Tabs from '../../../core/components/AppTabs'
+import Loader from '../../../core/services/AppLoader.vue'
 
 import CreateProject from './new-project/index'
 import ProjectsList from './projects/index'
 import MyProjectsList from './my-projects/index'
 import BloggersList from './bloggers/index'
 import Chat from '../chat/index'
-import Aside from '../../../core/components/layout/seller/AppAside'
+import Aside from '../../../core/components/layout/tabs-aside/index'
 import Header from '../../../core/components/layout/AppHeader'
 import Footer from '../../../core/components/layout/AppFooter'
 import Tariffs from './tariffs/index'
@@ -115,7 +156,6 @@ export default{
                 "er": 0,
                 "cpc": 0
             }),
-            bloggers: ref([]),
             projects: ref([]),
 
             currentItem: ref(null),
@@ -123,28 +163,24 @@ export default{
 
             isShowTariffs: ref(false),
 
-            User, Seller, Blogger, Project,
-            Loader, Tabs
+            tab: ref('projects-list'),
+
+            User, Seller, Project,
+            Loader
         }
     },
     async mounted(){
-        this.Loader.loaderOn('.wrapper #all-projects');
-
         this.user = this.User.getCurrent();
 
         // this.dashboard = await this.User.getStatistics();
 
-        this.projects = await this.Project.getList({is_blogger_access: 1, statuses: [0]});
-
-        this.isShowTariffs = localStorage.getItem('show_tariffs') ? JSON.parse(localStorage.getItem('show_tariffs')) : false;
+        this.isShowTariffs = localStorage.getItem('show_tariffs') ?
+            JSON.parse(localStorage.getItem('show_tariffs')) :
+            false;
 
         if(this.isShowTariffs){
             localStorage.setItem('show_tariffs', false)
         }
-
-        setTimeout(() => {
-            this.Loader.loaderOff('#all-projects');
-        }, 300)
 
         if(this.$router.currentRoute.value.params && this.$router.currentRoute.value.params.item && this.$router.currentRoute.value.params.id){
             await this.switchTab('chat', {
@@ -155,137 +191,17 @@ export default{
     },
     methods:{
         async switchTab(tab, currentItem = false){
-            this.Tabs.tabClick(tab)
-
+            this.tab = tab
             this.currentItem = null
-
             if(currentItem)
                 this.currentItem = currentItem;
 
-            this.Loader.loaderOn('.wrapper #' + tab);
-
-            this.isChatTab = tab === 'chat';
-
-            $('.wrapper').toggleClass('footer_disabled', this.isChatTab || tab === 'create-project')
-
-            switch (tab){
-                case 'profile-projects':
-                    this.myProjects = []
-
-                    this.User.getProjects(this.user.id).then(data => {
-                        var list = data || [];
-
-                        if(this.currentItem){ //если мы перешли с другого модуля
-                            if(this.currentItem.item === 'projects'){
-                                list = list.map(_p => {
-                                    _p.currentProject = _p.id == this.currentItem.id
-
-                                    return _p;
-                                });
-
-                                this.currentItem = null
-                            }
-                        }
-
-                        this.myProjects = list;
-
-                        setTimeout(()=>{
-                            this.Loader.loaderOff('#profile-projects');
-                        }, 300)
-                    })
-
-                    break;
-
-                case 'profile-blogers-list':
-                    this.Blogger.getList([1]).then(data => {
-                        this.bloggers = (data || []).map(_b => this.findBloggerBiggestPlatform(_b));
-
-                        setTimeout(()=>{
-                            this.Loader.loaderOff('#profile-blogers-list');
-                        }, 300)
-                    })
-
-                    break;
-
-                case 'all-projects':
-                    this.Project.getList({is_blogger_access: 1, statuses: [0]}).then(data => {
-                        this.projects = data || [];
-
-                        setTimeout(()=>{
-                            this.Loader.loaderOff('#all-projects');
-                        }, 300)
-                    })
-
-                    break;
-
-                default:
-                    setTimeout(()=>{
-                        this.Loader.loaderOff();
-                    }, 300)
-                    break
-            }
-        },
-
-        async updateMyProjects(){
-            this.Loader.loaderOn('.wrapper .profile__content-inner');
-
-            this.myProjects = await this.User.getProjects(this.user.id);
-
-            setTimeout(()=>{
-                this.Loader.loaderOff();
-            }, 300)
-        },
-
-        findBloggerBiggestPlatform(blogger){
-            var summaryPlatform = { subscriber_quantity: 0 };
-
-            if(blogger.platforms){
-                blogger.platforms.forEach(_p => {
-                    if(summaryPlatform.subscriber_quantity < _p.subscriber_quantity)
-                        summaryPlatform = _p
-                });
-            }
-
-            blogger.summaryPlatform = summaryPlatform;
-
-            return blogger;
+            $('.wrapper').toggleClass('footer_disabled', ['create-project', 'chat'].includes(tab))
         },
 
         newChatMessages(messagesCount){
             this.newChatMessagesCount = messagesCount
         },
-
-        async applyFilterBloggers(filterData){
-            this.Loader.loaderOn('.wrapper .profile__content-inner');
-
-            this.Blogger.getList([1], filterData).then(data => {
-                this.bloggers = (data || []).map(_b => this.findBloggerBiggestPlatform(_b));
-
-                setTimeout(()=>{
-                    this.Loader.loaderOff();
-                }, 300)
-            })
-        },
-
-        async applyFilterMyProjects(filterData){
-            this.Loader.loaderOn('.wrapper .profile__content-inner');
-
-            this.myProjects = await this.User.getProjects(this.user.id, filterData);
-
-            setTimeout(()=>{
-                this.Loader.loaderOff();
-            }, 300)
-        },
-
-        async applyFilterProjects(filterData){
-            this.Loader.loaderOn('.wrapper .profile__content-inner');
-
-            this.projects = await this.Project.getList(Object.assign(filterData, {is_blogger_access: 1, statuses: [0]}));
-
-            setTimeout(()=>{
-                this.Loader.loaderOff();
-            }, 300)
-        }
     }
 }
 </script>

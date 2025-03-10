@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Http\Requests\User\UserUpdateRequest;
 use App\Http\Resources\MessageFileResource;
 use App\Http\Resources\MessagesResource;
 use App\Http\Resources\WorkFileResource;
@@ -10,6 +11,7 @@ use App\Models\SellerTariff;
 use App\Models\Tariff;
 use App\Models\TgPhone;
 use App\Models\User;
+use App\Services\ImageService;
 use App\Services\PhoneService;
 use App\Services\TgService;
 use App\Http\Controllers\Controller;
@@ -27,6 +29,7 @@ use App\Models\Work;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Database\Eloquent\Builder;
@@ -257,7 +260,8 @@ class UserController extends Controller
     public function messages(User $user, Work $work, Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'order_by' => 'string|nullable'
+            'order_by' => 'string|nullable',
+            'from_admin' => 'boolean|nullable'
         ]);
 
         if ($validator->fails()) {
@@ -272,7 +276,9 @@ class UserController extends Controller
             $messages->orderBy('created_at', $validated['order_by']);
         }
 
-        $work->messages()->whereNull('viewed_at')->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
+        if (!empty($validated['from_admin'])) {
+            $work->messages()->whereNull('viewed_at')->where('user_id', '<>', $user->id)->update(['viewed_at' => date('Y-m-d H:i')]);
+        }
         $message_collection = MessageResource::collection($messages->get());
 
         if (!empty($work->message) || !empty($work->files->toArray())) {
@@ -434,6 +440,31 @@ class UserController extends Controller
         Redis::sadd('user.' . $user->id . '.modals', $modal->id);
         return response()->json()->setStatusCode(200);
     }
+
+    public function update(User $user, UserUpdateRequest $request)
+    {
+        $validated = $request->validated();
+        if ($request->file('image')) {
+            if (Storage::exists($user->getImageURL())) {
+                Storage::delete($user->getImageURL());
+            }
+
+            $image = $request->file('image');
+            $urls = ImageService::makeCompressedCopies($image, 'profile/' . $user->id . '/');
+
+            $user->image = $urls[1];
+        } else if (!isset($validated['image'])) {
+            if (Storage::exists($user->getImageURL())) {
+                Storage::delete($user->getImageURL());
+            }
+            $user->image = null;
+        }
+
+        $user->save();
+
+        return response()->json($user->getImageURL(), 200);
+    }
+
     public function check(Request $request)
     {
         $validator = Validator::make($request->all(), [

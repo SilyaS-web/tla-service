@@ -9,23 +9,25 @@
                 <div
                     v-for="theme in currentThemes"
                     class="form-formats__current-item">
-                    {{ (themes.find(_theme => theme == _theme.id).name) }}
+                    {{ (themesList.find(_theme => theme == _theme.id).name) }}
                 </div>
             </div>
             <span
                 v-else
                 @click="isThemesOpen = !isThemesOpen"
-                class="form-formats__empty">
-                            Выбрать
-                        </span>
+                class="form-formats__empty"
+            >
+                Выбрать
+            </span>
 
             <div class="form-formats__items">
                 <div
-                    v-for="theme in themes"
+                    v-for="theme in themesList"
                     class="form__row form-format">
                     <input
                         :id="'theme-' + theme.id"
                         type="checkbox" name="themes[]" class="form-format__check"
+                        :checked="currentThemes.includes(theme.id)"
                         @change="setFilterThemes(theme.id, $event)"
                     >
                     <label
@@ -44,19 +46,28 @@ import Themes from '../../services/api/Themes'
 
 export default {
     props:{
-        maxThemesLength: { type: Number, required: false }
+        maxThemesLength: { type: Number, required: false },
+        themes: {type: Array, required: false, default: null}
     },
     data(){
         return{
             isThemesOpen: ref(false),
             currentThemes: ref([]),
-            themes: ref([]),
+            themesList: ref([]),
 
             Themes
         }
     },
+    watch:{
+        themes:{
+            handler(){
+                if(this.themes && this.themes.length > 0) this.currentThemes = this.themes
+            },
+            once: true
+        }
+    },
     async mounted(){
-        this.themes = await this.Themes.getList();
+        this.themesList = await this.Themes.getList();
     },
     methods:{
         setFilterThemes(themeID, event){

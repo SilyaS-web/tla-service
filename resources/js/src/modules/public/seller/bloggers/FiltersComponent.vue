@@ -131,8 +131,9 @@ export default{
                 themes: [],
                 sex: [],
                 subscriber_quantity_min: 0,
-                subscriber_quantity_max: 4000000,
+                subscriber_quantity_max: 0,
                 has_content: 0,
+                status: [1],
             }),
 
             Platforms

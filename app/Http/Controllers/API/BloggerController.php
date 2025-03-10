@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Resources\BloggerContentResource;
-use App\Http\Resources\UserResource;
 use App\Models\Blogger;
 use App\Models\BloggerContent;
 use App\Models\BloggerPlatform;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\BloggerResource;
 use App\Models\BloggerTheme;
-use App\Models\ProjectFile;
 use App\Services\ImageService;
 use App\Services\TgService;
 use App\Services\VideoService;
@@ -22,11 +20,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
-use const http\Client\Curl\AUTH_ANY;
 
 class BloggerController extends Controller
 {
-
     public function index(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -43,6 +39,7 @@ class BloggerController extends Controller
             'statuses.*' => 'numeric',
             'order_by_created_at' => 'string|nullable',
             'has_content' => 'boolean|nullable',
+            'limit' => 'array|nullable',
         ]);
 
         if ($validator->fails()) {
@@ -112,10 +109,14 @@ class BloggerController extends Controller
             $bloggers->whereIn('sex', $validated['sex']);
         }
 
-        if (isset($validated['order_by_created_at']) && !empty($validated['order_by_date'])) {
+        if (isset($validated['order_by_created_at']) && !empty($validated['order_by_created_at'])) {
             $bloggers->orderBy('created_at', $validated['order_by_created_at']);
         } else {
             $bloggers->orderBy('created_at', 'desc');
+        }
+
+        if (isset($validated['limit']) && !empty($validated['limit'])) {
+            $bloggers->skip($validated['limit'][0])->take($validated['limit'][1]);
         }
 
         $data = [
@@ -334,7 +335,7 @@ class BloggerController extends Controller
             }
         }
 
-        if (!!empty($validated['name']) && $user->name != $validated['name']) {
+        if (!empty($validated['name']) && $user->name != $validated['name']) {
             $user->name = $validated['name'];
         }
 
@@ -387,7 +388,7 @@ class BloggerController extends Controller
         return response()->json(BloggerContentResource::collection($blogger->content))->setStatusCode(200);
     }
 
-    public function setContent(): JsonResponse
+    public function setContent(Blogger $blogger): JsonResponse
     {
         $validator = Validator::make(request()->all(), [
             'videos' => 'array|required',
@@ -398,7 +399,7 @@ class BloggerController extends Controller
             return response()->json($validator->errors())->setStatusCode(400);
         }
 
-        $user_id = Auth::user()->id;
+        $user_id = $blogger->user_id ?? Auth::user()->id;
 
         $product_images = request()->file('videos');
         $blogger_content = [];

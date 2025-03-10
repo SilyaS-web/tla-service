@@ -202,7 +202,7 @@ import PopupModal from '../AppPopup.vue';
 import VideosCarousel from './VideosCarouselComponent';
 import ProjectsCarousel from './ProjectsCarouselComponent';
 import ImagePopup from '../fullscreen-asset/AssetPopup.vue';
-import Loader from '../../AppLoader';
+import Loader from '../../../services/AppLoader.vue';
 
 export default {
     name: 'BloggerCardPopup',

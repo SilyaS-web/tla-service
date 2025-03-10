@@ -49,6 +49,7 @@
                 })
             })
         },
+        // need refactor
 
         //auth methods
         auth: (data) => {
@@ -120,6 +121,117 @@
             })
         },
 
+        /**
+         * @param userID
+         * @param data = {
+         *     image: file|null
+         * }
+         */
+        update: (userID, data) => {
+           return new Promise((resolve, reject) => {
+                let formData = new FormData;
+
+               for (const key in data) {
+                   if(data[key]) formData.append(key, data[key])
+                   if(key === 'image' && data[key] === null) formData.append(key, data[key])
+               }
+
+               axios({
+                   method: 'post',
+                   url: '/api/users/' + userID,
+                   data: formData
+               })
+               .then((response) => {
+                   notify('info', {
+                       title: 'Успешно!',
+                       message: 'Пользователь успешно обновился.'
+                   });
+
+                   resolve(response.data)
+               })
+               .catch((errors) => {
+                   notify('error', {
+                       title: 'Внимание!',
+                       message: 'Возникла ошибка, попробуйте позже.'
+                   });
+
+                   reject(errors)
+               })
+           })
+        },
+        banUser(user_id){
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: 'get',
+                    url: '/api/users/' + user_id + '/ban',
+                })
+                .then((response) => {
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Пользователь заблокирован!'
+                    });
+
+                    resolve(response)
+                })
+                .catch(error => {
+                    notify('info', {
+                        title: 'Внимание',
+                        message: 'Не удалось заблокировать пользователя'
+                    });
+
+                    reject(error)
+                })
+            })
+        },
+        unbanUser(user_id){
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: 'get',
+                    url: '/api/users/' + user_id + '/unban',
+                })
+                .then((response) => {
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Пользователь разаблокирован!'
+                    });
+
+                    resolve(response)
+                })
+                .catch(error => {
+                    notify('info', {
+                        title: 'Внимание',
+                        message: 'Не удалось разаблокировать пользователя'
+                    });
+
+                    reject(error)
+                })
+            })
+        },
+        deleteUser(user_id){
+            return new Promise((resolve, reject) => {
+                axios({
+                    method: 'delete',
+                    url: '/api/users/' + user_id,
+                })
+                .then((response) => {
+                    notify('info', {
+                        title: 'Успешно!',
+                        message: 'Пользователь удален!'
+                    });
+
+                    resolve(response)
+                })
+                .catch(error => {
+                    notify('info', {
+                        title: 'Внимание',
+                        message: 'Не удалось удалить пользователя'
+                    });
+
+                    reject(error)
+                })
+            })
+        },
+
         getWorks(user_id, orderBy = 'desc', is_active = 1, _with = ['project']){
             return new Promise((resolve, reject) => {
                 var params = {is_active: is_active};
@@ -149,11 +261,14 @@
                 })
             })
         },
-        getMessages(work_id, user_id){
+        getMessages(work_id, user_id, from_admin = 0){
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'get',
-                    url: '/api/users/' + user_id + '/works/' + work_id + '/messages'
+                    url: '/api/users/' + user_id + '/works/' + work_id + '/messages',
+                    params:{
+                        from_admin: from_admin
+                    }
                 })
                 .then(response => {
                     resolve(response.data.messages);
@@ -206,7 +321,17 @@
                 })
             })
         },
-        getProjects: (user_id, filterData = false) => {
+
+        /**
+         *
+         * @param user_id
+         * @param filterData = {
+         *     project_type: string,
+         *     product_name: string
+         * }
+         * @returns {Promise<unknown>}
+         */
+        getProjects: (user_id, filterData = {}) => {
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'get',

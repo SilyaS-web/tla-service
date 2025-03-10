@@ -6,7 +6,6 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Unbounded:wght@200..900&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="/libs/owl/owl.carousel.min.css">
@@ -28,5 +27,5 @@
 </body>
 
 <script src="{{ asset('admin/js/script.js') }}"></script>
-<script src = "/js/app.js"></script>
+<script src = "{{ mix('js/app.js') }}"></script>
 </html>

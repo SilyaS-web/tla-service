@@ -2,6 +2,48 @@
 import axios from 'axios'
 
 const Project = {
+    /**
+     *
+     * @param data = {
+     *    project_type: String,
+     *    product_name: String,
+     *    category: String,
+     *    is_blogger_access: Number,
+     *    statuses: Array,
+     * }
+     * @returns {Promise<unknown>}
+     */
+    getList: (data) => {
+        return new Promise((resolve, reject) => {
+            let params = {};
+
+            for (const key in data) {
+                if(data[key]) params[key] = data[key]
+            }
+
+            axios({
+                method: 'get',
+                url: '/api/projects',
+                params: params
+            })
+            .then(response => {
+                resolve(response.data.projects);
+            })
+            .catch((errors) => {
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'Не удалось загрузить проекты, попробуйте зайти позже или обратитесь в поддержку.'
+                })
+
+                resolve([])
+            })
+        })
+    },
+    /**
+     *
+     * @param data = { }
+     * @returns {Promise<unknown>}
+     */
     create: (data) => {
         return new Promise((resolve, reject) => {
             if(!data){
@@ -49,6 +91,11 @@ const Project = {
             })
         })
     },
+    /**
+     *
+     * @param data = { }
+     * @returns {Promise<unknown>}
+     */
     update: (projectID, data) => {
         return new Promise((resolve, reject) => {
             axios({
@@ -182,41 +229,20 @@ const Project = {
             })
         })
     },
-
-    getList: (filterData) => {
-        return new Promise((resolve, reject) => {
-            axios({
-                method: 'get',
-                url: '/api/projects',
-                params: filterData
-            })
-            .then(response => {
-                resolve(response.data.projects);
-            })
-            .catch((errors) => {
-                notify('error', {
-                    title: 'Внимание!',
-                    message: 'Не удалось загрузить проекты, попробуйте зайти позже или обратитесь в поддержку.'
-                })
-
-                resolve([])
-            })
-        })
-    },
     getStatistics: (projectID) => {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'get',
                 url: '/api/projects/' + projectID + '/statistics',
             })
-            .then(result => {
-                resolve(result)
-            })
-            .catch(error => {
-                reject(false)
-            })
+                .then(result => {
+                    resolve(result)
+                })
+                .catch(error => {
+                    reject(false)
+                })
         })
-    }
+    },
 };
 
 export default Project

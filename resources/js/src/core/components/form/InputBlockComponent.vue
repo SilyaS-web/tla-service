@@ -10,7 +10,9 @@
             :name="inputID"
             :id="inputID"
             :placeholder="inputPlaceholder"
-            :class="'input ' +  (getInputClassString())">
+            :class="'input ' +  (getInputClassString())"
+            :disabled="disabled === 1"
+        >
         <span class="error" v-if="error">{{ error }}</span>
     </div>
 </template>
@@ -18,7 +20,7 @@
     export default{
         props: [
             'label', 'inputType', 'inputPlaceholder', 'inputClassList',
-            'inputID', 'error', 'modelValue'
+            'inputID', 'error', 'disabled','modelValue'
         ],
         methods:{
             getInputClassString(){

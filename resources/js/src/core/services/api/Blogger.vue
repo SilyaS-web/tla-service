@@ -21,11 +21,41 @@ const Blogger = {
             })
         })
     },
-    put: (id, formData) => {
+    /**
+     * @param bloggerID number
+     * @param data = {
+     *     name: string,
+     *     email: string|null,
+     *     image: file|null,
+     *     country_id: number,
+     *     description: string|null,
+     *     sex: string,
+     *     city: string,
+     *     themes: array|null,
+     *     from_moderation: boolean|null,
+     *     password: string|null,
+     *     old_password: string|null,
+     * }
+     * @returns {Promise<unknown>}
+     */
+    update: (bloggerID, data) => {
         return new Promise((resolve, reject) => {
+            let formData = new FormData;
+
+            for(let k in data){
+                if(data[k] && !['themes'].includes(k))
+                    formData.append(k, data[k])
+            }
+
+            if(data.themes){
+                for (let i = 0; i < data.themes.length; i++){
+                    formData.append('themes[' + i + ']', data.themes[i])
+                }
+            }
+
             axios({
                 method: 'post',
-                url: '/api/bloggers/' + id,
+                url: '/api/bloggers/' + bloggerID,
                 data: formData
             })
             .then((response) => {
@@ -42,44 +72,36 @@ const Blogger = {
                     message: 'Невозможно сохранить данные.'
                 });
 
-                reject(errors)
+                reject(errors.response.data)
             })
         })
     },
 
-    update: (data) => {
+    /**
+    *
+    * @param data = {
+    *    status: [],
+    *    name: '',
+    *    platform: '',
+    *    city: '',
+    *    country: '',
+    *    themes: [],
+    *    sex: [],
+    *    subscriber_quantity_min: false,
+    *    subscriber_quantity_max: false,
+    *    has_content: 0,
+    *    limit: [from, count]
+    * }
+    * @returns {Promise<unknown>}
+    */
+    getList(data = {}){
         return new Promise((resolve, reject) => {
-            axios({
-                method: 'post',
-                url: '/api/bloggers/' + data.id + '/update/',
-                data: data
-            })
-            .then((response) => {
-                resolve(response.data)
-            })
-            .catch((errors) => {
-                notify('error', {
-                    title: 'Внимание!',
-                    message: 'Невозможно обновить данные.'
-                });
+            let params = {}
 
-                resolve(response.data)
-            })
-        })
-    },
-
-    getList(status = [], filterData = {}){
-        return new Promise((resolve, reject) => {
-            var params = {
-                statuses: status || [],
-            };
-
-            if(filterData){
-                var keys = Object.keys(filterData);
-
-                keys.forEach(k => {
-                    params[k] = filterData[k]
-                })
+            for (const key in data) {
+                if(data[key]){
+                    params[key] = data[key]
+                }
             }
 
             axios({

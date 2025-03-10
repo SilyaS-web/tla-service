@@ -236,8 +236,8 @@ export default {
             method: 'get',
             url: '/api/bloggers/' + this.user.blogger_id,
         })
-            .then(result => this.blogger = result.data.blogger)
-            .catch(error => {})
+        .then(result => this.blogger = result.data.blogger)
+        .catch(error => {})
     },
     methods: {
         show(opts = {}){

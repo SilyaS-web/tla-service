@@ -1,6 +1,6 @@
 <template>
     <div
-        class="profile-projects tab-content" id="profile-projects">
+        class="profile-projects" id="my-projects-list">
         <div
             v-if="!editingProject"
             class="profile-projects__body">
@@ -28,13 +28,15 @@
             </div>
             <div class="profile-projects__items">
                 <ProjectsListItem
-                    v-if="myProjects && myProjects.length > 0"
-                    v-for="project in myProjects"
+                    v-if="projects && projects.length > 0"
+                    v-for="project in projects"
+
                     :project = "project"
+
                     v-on:switchTab="switchTab"
                     v-on:edit="editProject"
                 ></ProjectsListItem>
-                <span v-else> Проектов нет </span>
+                <span class="list-empty" v-else> Проектов нет </span>
             </div>
         </div>
 
@@ -48,9 +50,8 @@
             v-if="editingProject"
             :project="editingProject"
             v-on:resetEditData="resetEditData"
-            v-on:updateMyProjects="updateMyProjects"
+            v-on:updateMyProjects="getProjects()"
         ></EditProject>
-
     </div>
 </template>
 <script>
@@ -60,48 +61,101 @@ import ProjectsListItem from "./ProjectsListItem";
 import Filter from "./FiltersComponent";
 import EditProject from "./EditProjectComponent";
 
+import User from "../../../../core/services/api/User.vue";
+
+import Loader from "../../../../core/services/AppLoader.vue";
+
 export default {
     components: {ProjectsListItem, Filter, EditProject},
-    props: ['myProjects'],
+    props:['currentItem'],
     data(){
         return {
+            projects:ref([]),
             editingProject: ref(false),
 
             brands: ref([]),
+
+            Loader, User
         }
     },
+    mounted(){
+        this.getProjects()
+    },
     methods:{
+        getProjects(){
+            this.Loader.loaderOn(this.$el);
+
+            const user = this.User.getCurrent();
+
+            let params = {};
+
+            for (const key in this.filterData) {
+                if(this.filterData[key]){
+                    params[key] = this.filterData[key]
+                }
+            }
+
+            this.User.getProjects(user.id, params).then(data => {
+                let list = data || [];
+
+                if(this.currentItem){ //если мы перешли с другого модуля
+                    if(this.currentItem.item === 'projects'){
+                        list = list.map(_p => {
+                            _p.currentProject = _p.id === this.currentItem.id
+
+                            return _p;
+                        });
+
+                        this.currentItem = null
+                    }
+                }
+
+                this.projects = list;
+
+                setTimeout(()=>{
+                    this.Loader.loaderOff(this.$el);
+                }, 300)
+            })
+        },
+
+        applyFilter(filterData){
+            this.filterData = filterData;
+
+            this.getProjects()
+        },
+
         extractBrands(){
             if(!this.brands || this.brands.length === 0){
-                var list = (this.myProjects || []).filter(_p => _p.marketplace_brand).map(_p => _p.marketplace_brand);
+                const list = (this.projects || []).filter(_p => _p.marketplace_brand).map(_p => _p.marketplace_brand);
                 this.brands = list.filter((value, index, array) => array.indexOf(value) === index)
             }
         },
         sortByBrand(){
-            var sort = String($('#projects-sort').val()), counter = 0;
+            let counter = 0;
+
+            const sort = String($('#projects-sort').val());
+            const projects = $('.profile-projects__item');
 
             if(sort.length === 0){
-                $('.profile-projects__item').show()
+                projects.show()
                 return
             }
 
-            $('.profile-projects__item').each((i, v)=>{
-                if( String($(v).data('brand')).toLowerCase() != sort.toLowerCase() ){
+            projects.each((i, v)=>{
+                if(String($(v).data('brand')).toLowerCase() !== sort.toLowerCase()){
                     $(v).hide();
                     counter++;
                 }
                 else $(v).show()
             })
 
-            if(counter === $('.profile-projects__item').length){
+            if(counter === projects.length){
                 notify('info', {title: 'Внимание!', message: 'Проектов с таким брендом не найдено.'});
             }
         },
 
         editProject(project){
             this.editingProject = project;
-            this.editingProject.feedback = (project.project_works.find(w => w.type == 'feedback') != undefined);
-            this.editingProject.integration = (project.project_works.find(w => w.type == 'integration') != undefined);
         },
         resetEditData(){
             this.editingProject = false;
@@ -113,14 +167,6 @@ export default {
                 id: work_id
             })
         },
-
-        applyFilter(filterData){
-            this.$emit('applyFilter', filterData);
-        },
-
-        updateMyProjects(){
-            this.$emit('updateMyProjects');
-        }
     }
 }
 </script>

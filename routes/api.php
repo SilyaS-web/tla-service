@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BloggerController;
 use App\Http\Controllers\API\DashboardController;
@@ -45,6 +46,7 @@ Route::prefix('payment')->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/users/{user}', [UserController::class, 'delete']);
+    Route::post('/users/{user}', [UserController::class, 'update']);
     Route::get('/users/current', [UserController::class, 'currentUser']);
     Route::get('/users/{user}', [UserController::class, 'show']);
     Route::get('/users/{user}/modals/{modal}/show', [UserController::class, 'showModal']);
@@ -113,5 +115,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/partners/{partner}', [PartnerController::class, 'show']);
     Route::post('/partners/{partner}', [PartnerController::class, 'update']);
     Route::delete('/partners/{partner}', [PartnerController::class, 'destroy']);
+
+    Route::get('/stats', [AdminController::class, 'stats']);
 });
 
