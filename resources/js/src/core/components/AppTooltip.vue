@@ -20,8 +20,14 @@ export default {
             this.position.x = event.clientX + 20;
             this.position.y = event.clientY;
 
-            if(this.timeoutID){
-                clearTimeout(this.timeoutID)
+            if(this.isVisible){
+                const self = this;
+                const _f = function(){
+                    self.isVisible = false;
+                    window.removeEventListener('scroll', _f)
+                }
+
+                window.addEventListener('scroll', _f)
             }
         },
         hide(){

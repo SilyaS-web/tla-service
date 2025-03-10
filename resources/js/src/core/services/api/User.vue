@@ -261,11 +261,14 @@
                 })
             })
         },
-        getMessages(work_id, user_id){
+        getMessages(work_id, user_id, from_admin = 0){
             return new Promise((resolve, reject) => {
                 axios({
                     method: 'get',
-                    url: '/api/users/' + user_id + '/works/' + work_id + '/messages'
+                    url: '/api/users/' + user_id + '/works/' + work_id + '/messages',
+                    params:{
+                        from_admin: from_admin
+                    }
                 })
                 .then(response => {
                     resolve(response.data.messages);
