@@ -41,11 +41,6 @@
                 <AdminStatistics
                     v-if="isAdmin && tab === 'statistics'"
                 ></AdminStatistics>
-
-                <!-- Получение данных -->
-                <AdminDataTable
-                    v-if="isAdmin && tab === 'data-table'"
-                ></AdminDataTable>
             </div>
         </div>
     </section>
@@ -79,14 +74,12 @@ import AdminProjectsPage from './projects-moderation/index'
 import AdminOrdersPage from './payments/index'
 import AdminReferalDataPage from './referrals/index'
 import AdminStatistics from './statistics/index.vue'
-import AdminDataTable from './sql-queries/index.vue'
 
 export default{
     components:{
         AdminHeader, AdminAside, AdminModerationPage,
         AdminBloggersPage, AdminSellersPage, AdminProjectsPage,
         AdminOrdersPage, AdminReferalDataPage, AdminStatistics,
-        AdminDataTable
     },
     data(){
         return {
