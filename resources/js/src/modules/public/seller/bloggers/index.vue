@@ -206,7 +206,7 @@
             :options="{rootMargin: '0px 0px 1000px 0px', threshold: [0, 1]}"
             :itemsCount="20"
             ref="appObserver"
-            @intersect="getBloggers({status:[1]})"
+            @intersect="getBloggers({statuses:[1]})"
         ></app-observe>
     </div>
 </template>
@@ -302,7 +302,7 @@ export default{
         this.Loader.loaderOn(this.$el);
 
         this.$refs.appObserver.restoreLimit()
-        this.getBloggers({status: [1]})
+        this.getBloggers({statuses: [1]})
     },
 
     updated(){
@@ -360,7 +360,7 @@ export default{
             this.$refs.appObserver.restoreLimit()
             this.bloggers = [];
 
-            this.getBloggers({status:[1]})
+            this.getBloggers({statuses:[1]})
         },
 
         //фильтры списка блогеров
@@ -376,7 +376,7 @@ export default{
             this.$refs.appObserver.restoreLimit()
             this.bloggers = [];
 
-            this.getBloggers({status: [1]})
+            this.getBloggers({statuses: [1]})
         },
 
         assignFilterAndSortData(){
@@ -409,7 +409,7 @@ export default{
             this.$refs.appObserver.restoreLimit()
             this.bloggers = [];
 
-            this.getBloggers({status: [1]})
+            this.getBloggers({statuses: [1]})
         },
 
         openMassDistributionPopup(){
