@@ -19,23 +19,23 @@
 </template>
 <script>
 import {ref} from "vue";
-import OpenAI from 'openai'
+import axios from 'axios'
 
 export default {
     name: "index",
     data(){
         return{
-            openAI: null,
+            // openAI: null,
             speechRecognition: null,
             speechRecognitionResult:  ref('')
         }
     },
     mounted(){
-        this.openAI = new OpenAI({
-            baseURL: 'https://api.deepseek.com/beta',
-            apiKey: '',
-            dangerouslyAllowBrowser: true
-        });
+        // this.openAI = new OpenAI({
+        //     baseURL: 'https://api.deepseek.com/beta',
+        //     apiKey: '',
+        //     dangerouslyAllowBrowser: true
+        // });
     },
     methods:{
         listenToSpeech(){
@@ -61,13 +61,39 @@ export default {
             this.speechRecognition.start();
         },
         async getSql(){
-            const response = await this.openAI.completions.create({
-                model: 'deepseek-chat',
-                prompt: `Преврати эту строку на обычном языке в SQL запрос: ${this.speechRecognitionResult}.`,
-
-            });
-
-            console.log(response)
+            axios({
+                method: 'post',
+                url: 'https://app.text2sql.co/api/v1/sql',
+                headers: {
+                    "Authorization": "Bearer"
+                },
+                data:{
+                    "query": this.speechRecognitionResult,
+                    "dialect": 'pg_sql',
+                    "tables": [
+                        {
+                            "name": 'users',
+                            "columns": [
+                                'id', 'name', 'email',
+                                'phone', 'image', 'role',
+                                'status', 'created_at', 'updated_at'
+                            ],
+                        },
+                        {
+                            "name": 'sellers',
+                            "columns": [
+                                'id', 'user_id', 'organization_type',
+                                'is_achievement', 'inn', 'is_agent',
+                                'description', 'organization_name', 'finish_date',
+                                'wb_link', 'wb_api_key', 'ozon_link',
+                                'ozon_api_key', 'ozon_client_id', 'created_at',
+                                'updated_at', 'deleted_at',
+                            ],
+                        },
+                    ],
+                }
+            })
+            .then(res => console.log(res))
         },
     }
 }
