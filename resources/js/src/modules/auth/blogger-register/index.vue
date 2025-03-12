@@ -131,6 +131,7 @@ export default{
         sendToModeration(){
             let formdata = new FormData;
 
+            formdata.append('name', this.blogger.user.name)
             formdata.append('city', this.blogger.city)
             formdata.append('country_id', this.blogger.country_id)
             formdata.append('sex', this.blogger.sex)
