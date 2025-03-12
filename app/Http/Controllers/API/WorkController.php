@@ -113,14 +113,14 @@ class WorkController extends Controller
                 return response()->json(['message' => 'Заявка отправлена'])->setStatusCode(400);
             }
 
-            $works[] = $this->createWork($project->id, $user->id, $project->seller_id, $validated['message'], $project->product_name, $project_works);
+            $works[] = $this->createWork($project->id, $user->id, $project->seller_id, $validated['message'] ?? null, $project->product_name, $project_works);
         } else {
             if (empty($validated['blogger_ids'])) {
                 return response()->json(['message' => 'У пользователя должна быть роль Блогер'])->setStatusCode(400);
             }
 
             foreach ($validated['blogger_ids'] as $blogger_id) {
-                $works[] = $this->createWork($project->id, $blogger_id, $user->id, $validated['message'], $project->product_name, $project_works);
+                $works[] = $this->createWork($project->id, $blogger_id, $user->id, $validated['message'] ?? null, $project->product_name, $project_works);
             }
         }
 
