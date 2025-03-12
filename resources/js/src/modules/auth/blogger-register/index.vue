@@ -131,23 +131,22 @@ export default{
         sendToModeration(){
             let formdata = new FormData;
 
-            for(let k in this.blogger){
-                if(!['themes'].includes(k))
-                    formdata.append(k, this.blogger[k])
-            }
+            formdata.append('city', this.blogger.city)
+            formdata.append('country_id', this.blogger.country_id)
+            formdata.append('sex', this.blogger.sex)
+            formdata.append('description', this.blogger.description)
+            formdata.append('image', this.blogger.image);
+            formdata.append('from_moderation', 1);
 
             for (let i = 0; i < this.themes.length; i++){
                 formdata.append(`themes[${i}]`, this.themes[i])
             }
 
-            formdata.append('image', this.blogger.image);
-            formdata.append('from_moderation', 1);
-
             this.Blogger.sendToModeration(this.user.blogger_id, formdata)
-                .then(() => { this.$router.replace('/profile') })
-                .catch((errors) => {
-                    this.errors = errors
-                })
+            .then(() => { this.$router.replace('/profile') })
+            .catch((errors) => {
+                this.errors = errors
+            })
         }
     }
 }
