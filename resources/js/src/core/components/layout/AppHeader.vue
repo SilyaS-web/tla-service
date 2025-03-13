@@ -159,29 +159,12 @@
 
                     <div
                         v-if="user.role === 'seller'"
-                        href="#" class="header__col header__tarrif tarrif-header header__profile-item--js">
-
-                        Мои тарифы
-                        <div class="tarrif-header__items">
-                            <div
-                                v-if="user.tariffs && user.tariffs.length > 0"
-                                v-for="tariff in user.tariffs"
-                                class="tarrif-header__item tarrif-header__adv">
-                                {{ tariff.title }} - <b><span class="counter">{{ tariff.quantity < 0 ? '∞' : tariff.quantity}}</span> шт.</b>
-                                <div class="tarrif-header__date">
-                                    Действует до {{ format_date(tariff.finish_date) }}
-                                </div>
-                                <router-link :to="{ path: '/tariffs' }" class="tarrif-header__buy">Продлить</router-link>
-                            </div>
-
-                            <div
-                                v-else
-                                class="tarrif-header__item tarrif-header__adv">
-                                Нет оплаченых тарифов
-                                <router-link
-                                    :to="{ path: '/tariffs' }"
-                                    class="tarrif-header__buy">Выбрать тариф</router-link>
-                            </div>
+                        class="header__col header__balance balance-header">
+                        <span class="balance-header__label">Мой баланс: 50 ₽</span>
+                        <div
+                            @click="showTopupBalancePopup"
+                            class="balance-header__plus">
+                            Пополнить
                         </div>
                     </div>
 
@@ -228,6 +211,35 @@
                             </div>
                         </div>
                     </a>
+
+                    <div
+                        v-if="user.role === 'seller'"
+                        href="#" class="header__col header__tarrif tarrif-header header__profile-item--js">
+
+                        Мои тарифы
+                        <div class="tarrif-header__items">
+                            <div
+                                v-if="user.tariffs && user.tariffs.length > 0"
+                                v-for="tariff in user.tariffs"
+                                class="tarrif-header__item tarrif-header__adv">
+                                {{ tariff.title }} - <b><span class="counter">{{ tariff.quantity < 0 ? '∞' : tariff.quantity}}</span> шт.</b>
+                                <div class="tarrif-header__date">
+                                    Действует до {{ format_date(tariff.finish_date) }}
+                                </div>
+                                <router-link :to="{ path: '/tariffs' }" class="tarrif-header__buy">Продлить</router-link>
+                            </div>
+
+                            <div
+                                v-else
+                                class="tarrif-header__item tarrif-header__adv">
+                                Нет оплаченых тарифов
+                                <router-link
+                                    :to="{ path: '/tariffs' }"
+                                    class="tarrif-header__buy">Выбрать тариф</router-link>
+                            </div>
+                        </div>
+                    </div>
+
                     <div
                         v-if="user"
                         href="#" class="header__profile-w header__profile-header header__profile-item--js">
@@ -280,6 +292,7 @@
                 </a>
             </div>
         </div>
+        <TopupBalancePopup ref="topupBalancePopup"></TopupBalancePopup>
     </header>
 </template>
 <script>
@@ -289,8 +302,11 @@ import {ref} from "vue";
 
 import User from '../../services/api/User'
 
+import TopupBalancePopup from "../popups/topup-balance/TopupBalancePopup.vue";
+
 export default {
     inheritAttrs: false,
+    components:{TopupBalancePopup},
     data(){
         return {
             notifications: ref([]),
@@ -358,6 +374,8 @@ export default {
 
             this.$router.replace('/profile/chat/' + work_id)
         },
+
+        showTopupBalancePopup(){ this.$refs.topupBalancePopup.show() },
 
         hideNotification(notification){
             axios({
