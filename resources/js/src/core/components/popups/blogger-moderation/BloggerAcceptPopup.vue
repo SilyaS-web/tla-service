@@ -172,12 +172,12 @@ export default {
                     url: '/api/bloggers/' + this.blogger.id + '/accept',
                     data: toRaw(this.blogger)
                 })
-                    .then(result => resolve(result.data))
-                    .catch(err => {
-                        this.errors = err.response.data;
-                        notify('info', {title: 'Внимание', message: 'Не удалось принять блогера'});
-                        reject()
-                    })
+                .then(result => resolve(result.data))
+                .catch(err => {
+                    this.errors = err.response.data;
+                    notify('info', {title: 'Внимание', message: 'Не удалось принять блогера'});
+                    reject()
+                })
             })
         },
 
