@@ -20,10 +20,12 @@ class WorkResource extends JsonResource
     public function toArray($request)
     {
         $user = Auth::user();
+        if ($user->role == 'admin') {
+            $user = request()->user;
+        }
         $project = null;
         if (isset($user) && $user->role == User::BLOGGER && $this->project) {
             $project = new ProjectResource($this->project);
-
         } else if (request()->input('with') && in_array('project', request()->input('with')) && $this->project) {
             $project = [
                 'product_name' => $this->project->product_name,
