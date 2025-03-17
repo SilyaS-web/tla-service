@@ -36,17 +36,17 @@
                                 :error="(errors && errors.product_price ? errors.product_price[0] : null)"
                             ></Input>
                         </div>
-<!--                        <div class="quest__step-row">-->
-<!--                            <Input-->
-<!--                                v-model="project.product_link"-->
-<!--                                :label="'Ссылка на товар'"-->
-<!--                                :inputType="'text'"-->
-<!--                                :inputPlaceholder="'Введите ссылку'"-->
-<!--                                :inputClassList="['input&#45;&#45;product_link']"-->
-<!--                                :inputID="'product-link'"-->
-<!--                                :error="(errors && errors.product_link ? errors.product_link[0] : null)"-->
-<!--                            ></Input>-->
-<!--                        </div>-->
+                        <!--                        <div class="quest__step-row">-->
+                        <!--                            <Input-->
+                        <!--                                v-model="project.product_link"-->
+                        <!--                                :label="'Ссылка на товар'"-->
+                        <!--                                :inputType="'text'"-->
+                        <!--                                :inputPlaceholder="'Введите ссылку'"-->
+                        <!--                                :inputClassList="['input&#45;&#45;product_link']"-->
+                        <!--                                :inputID="'product-link'"-->
+                        <!--                                :error="(errors && errors.product_link ? errors.product_link[0] : null)"-->
+                        <!--                            ></Input>-->
+                        <!--                        </div>-->
 
                         <FormatTypes
                             v-model="project.integration_types"
@@ -114,6 +114,14 @@ export default {
     },
     methods: {
         async createProject(){
+            axios({
+                method:'get',
+                url:'http://127.0.0.1:3000/',
+            })
+            .then(res => {
+                console.log(res)
+            })
+
             // if(this.project.product_nm.length > 9){
             //     axios({
             //         method:'get',
@@ -123,25 +131,25 @@ export default {
             //         console.log(res)
             //     })
             // }
-            this.project.images = this.project.images.filter(obj => obj.file).map(obj => obj.file)
-
-            this.Project.create(this.project).then(
-                data => {
-                    this.project = {
-                        product_name: null,
-                        product_nm: null,
-                        product_price: null,
-                        // product_link: null,
-                        integration_types: [],
-                        images: [],
-                    }
-
-                    this.$emit('switchTab', 'profile-projects')
-                },
-                err => {
-                    this.errors = err.response.data
-                }
-            )
+            // this.project.images = this.project.images.filter(obj => obj.file).map(obj => obj.file)
+            //
+            // this.Project.create(this.project).then(
+            //     data => {
+            //         this.project = {
+            //             product_name: null,
+            //             product_nm: null,
+            //             product_price: null,
+            //             // product_link: null,
+            //             integration_types: [],
+            //             images: [],
+            //         }
+            //
+            //         this.$emit('switchTab', 'profile-projects')
+            //     },
+            //     err => {
+            //         this.errors = err.response.data
+            //     }
+            // )
         },
     }
 }

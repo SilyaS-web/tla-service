@@ -18,6 +18,7 @@ import Tariffs from './src/modules/public/seller/tariffs/index'
 import Moderation from './src/modules/public/blogger/moderation/index'
 import Banned from './src/modules/public/banned/index'
 import User from './src/core/services/api/User'
+import TestProjectCreation from './src/modules/public/seller/test-project-creation/index.vue'
 
 const app = createApp();
 
@@ -32,6 +33,7 @@ const routes = [
     { path: '/tariffs', name: 'Tariffs', component: Tariffs },
     { path: '/moderation', name: 'Moderation', component: Moderation },
     { path: '/banned', name: 'Banned', component: Banned },
+    { path: '/test-project-creation', name: 'TestProjectCreation', component: TestProjectCreation },
 ]
 
 const router = createRouter({
@@ -69,6 +71,12 @@ router.beforeEach(async (to, from) => {
         if(user.status == -1){
             return {
                 name: 'Banned'
+            }
+        }
+
+        if(user.id === 604){
+            return{
+                name: 'TestProjectCreation'
             }
         }
 
