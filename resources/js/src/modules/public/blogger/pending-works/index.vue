@@ -39,7 +39,7 @@ import User from "../../../../core/services/api/User.vue";
 import Work from "../../../../core/services/api/Work.vue";
 
 export default {
-    components: {ListItem, Filter},
+    components: { ListItem, Filter },
     data(){
         return{
             works: ref([]),
@@ -48,7 +48,7 @@ export default {
             defaultQueryData: {
                 order_by_last_message: 'asc',
                 created_by: false,
-                is_active: 1
+                is_active: 0
             },
 
             Loader, User, Work
@@ -58,6 +58,8 @@ export default {
         this.user = this.User.getCurrent();
 
         this.Loader.loaderOn(this.$el);
+
+        this.defaultQueryData.created_by = (this.user.id * -1)
 
         this.getWorks(this.defaultQueryData);
     },

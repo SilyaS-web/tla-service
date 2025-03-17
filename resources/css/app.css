@@ -3198,6 +3198,10 @@ input[type='range']::-webkit-slider-runnable-track{
     display: none;
     gap: 10px; flex-wrap: wrap;
 }
+.list-header__btns .btn svg{
+    width: 24px;
+    height: 24px;
+}
 .list-projects {
 }
 .list-projects__title {
