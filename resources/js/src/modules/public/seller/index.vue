@@ -10,18 +10,20 @@
                         {
                             tabName: 'Создать проект',
                             tabContent: 'create-project',
-                            classList: ['project-link']
+                            classList: ['project-link'],
+                            isActive: tab === 'create-project'
                         },
                         {
                             tabName: 'Мои проекты',
                             tabContent: 'my-projects-list',
-                            classList: ['projects-list-link']
+                            classList: ['projects-list-link'],
+                            isActive: tab === 'my-projects-list'
                         },
                         {
                             tabName: 'Все проекты',
                             tabContent: 'projects-list',
                             classList: ['all-projects-list-link'],
-                            isActive: true
+                            isActive: tab === 'projects-list'
                         },
                         // {
                         //     tabName: 'Дашборд',
@@ -31,12 +33,14 @@
                             tabName: 'Каталог блогеров',
                             tabContent: 'bloggers-list',
                             classList: ['blogers-list-link'],
+                            isActive: tab === 'bloggers-list'
                         },
                         {
                             tabName: 'Чат с блогерами',
                             tabContent: 'chat',
                             notifications: newChatMessagesCount,
                             classList: ['chat-link'],
+                            isActive: tab === 'chat'
                         },
                         // {
                         //     tabName: 'Партнеры',
@@ -183,14 +187,14 @@ export default{
         }
 
         if(this.$router.currentRoute.value.params && this.$router.currentRoute.value.params.item && this.$router.currentRoute.value.params.id){
-            await this.switchTab('chat', {
+            this.switchTab('chat', {
                 item: this.$router.currentRoute.value.params.item,
                 id: this.$router.currentRoute.value.params.id
             })
         }
     },
     methods:{
-        async switchTab(tab, currentItem = false){
+        switchTab(tab, currentItem = false){
             this.tab = tab
             this.currentItem = null
             if(currentItem)
