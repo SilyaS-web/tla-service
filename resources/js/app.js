@@ -74,12 +74,6 @@ router.beforeEach(async (to, from) => {
             }
         }
 
-        if(user.id === 604){
-            return{
-                name: 'TestProjectCreation'
-            }
-        }
-
         if(user.role == 'blogger'){
             if(user.status == 1){
                 return {

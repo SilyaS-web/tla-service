@@ -73,6 +73,10 @@ export default {
 
             this.$emit('update:modelValue', this.uploadFiles)
         },
+        appendFile(fileData){
+            this.uploadFiles.push(fileData)
+        },
+        resetFiles(){ this.uploadFiles = [] }
     }
 }
 </script>
