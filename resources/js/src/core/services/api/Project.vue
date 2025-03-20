@@ -41,7 +41,13 @@ const Project = {
     },
     /**
      *
-     * @param data = { }
+     * @param data = {
+     *     integration_types: Array,
+     *     product_name: String,
+     *     product_nm: Number,
+     *     product_price: Number,
+     *     images: Number,
+     * }
      * @returns {Promise<unknown>}
      */
     create: (data) => {

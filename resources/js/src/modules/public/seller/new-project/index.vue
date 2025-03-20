@@ -112,9 +112,13 @@ export default {
     },
     methods: {
         async createProject(){
-            this.project.images = this.project.images.filter(obj => obj.file).map(obj => obj.file)
-
-            this.Project.create(this.project).then(
+            this.Project.create({
+                integration_types: this.project.integration_types,
+                product_name: this.project.product_name,
+                product_nm: this.project.product_nm,
+                product_price: this.project.product_price,
+                images: this.project.images.filter(obj => obj.file).map(obj => obj.file),
+            }).then(
                 data => {
                     this.project = {
                         product_name: null,
