@@ -129,7 +129,7 @@ export default {
                         images: [],
                     }
 
-                    this.$emit('switchTab', 'profile-projects')
+                    this.$emit('switchTab', 'my-projects-list')
                 },
                 err => {
                     this.errors = err.response.data
