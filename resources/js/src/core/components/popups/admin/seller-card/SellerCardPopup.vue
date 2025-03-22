@@ -322,9 +322,9 @@ export default {
 
             await this.User.getWorks(this.seller.user.id).then(chats => {
                 this.works = chats;
-                this.currentChat = this.works[0]
+                this.currentChat = this.works.length > 0 ? this.works[0] : null
 
-                this.getMessages()
+                if(this.currentChat) this.getMessages()
             })
 
             await this.User.getProjects(this.seller.user.id, {}).then(projects => {
