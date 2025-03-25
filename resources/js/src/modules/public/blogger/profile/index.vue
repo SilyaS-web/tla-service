@@ -2,73 +2,53 @@
     <Header :user="user"></Header>
     <section class="edit-profile">
         <div class="edit-profile__container _container">
+            <app-aside
+                v-on:switchTab="switchTab"
+                :tabs="[
+                    {
+                        tabName: 'Основное',
+                        tabContent: 'main',
+                        classList: ['main-link'],
+                        isActive: tab === 'main'
+                    },
+                    {
+                        tabName: 'Управление контентом',
+                        tabContent: 'content-management',
+                        classList: ['content-management-link'],
+                        isActive: tab === 'content-management'
+                    },
+                    {
+                        tabName: 'Пароль',
+                        tabContent: 'password',
+                        classList: ['password-link'],
+                        isActive: tab === 'password'
+                    },
+                    {
+                        tabName: 'Мои документы',
+                        tabContent: 'documents',
+                        classList: ['documents-link'],
+                        isActive: tab === 'documents'
+                    },
+                ]"
+            >
+            </app-aside>
+
             <div class="edit-profile__body">
                 <div class="edit-profile__content" >
-                    <div class="tab-content__profile-img tab-content__form tab-content__form--accent">
-                        <label for="" class="tab-content__form--title" style="text-align: center">Аватар профиля</label>
-                        <div class="tab-content__profile-img-row">
-                            <img :src="blogger.user && blogger.user.image ? blogger.user.image : '/img/profile-icon.svg'  " alt="">
-                            <div class="tab-content__profile-img-text">
-                                <div class="form-group form-group--file">
-                                    <label class="tab-content__profile-img-upload input-file" for="profile-img">
-                                        <span>{{ imgSectionTitle }}</span>
-                                        <input
-                                            @change="imgSectionTitle = 'Изображение загружено'"
-                                            type="file" name="image" class="" id="profile-img">
-                                    </label>
-                                    <span v-if="errors['image']" class="error">{{ errors['image'] }}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-content__form tab-content__form--accent content-management" style="flex-direction:column;">
-                        <label for="" class="tab-content__form--title" style="text-align: center">Управление контентом</label>
-                        <button
-                            @click="contentEdit"
-                            class="btn btn-primary" style="width: fit-content">Перейти к управлению контентом</button>
-                        <div class="content-management__text">
-                            Загрузите пример своего контента, чтобы вас заметили топовые бренды и селлеры, получите специальное достижение, место в рекомендованных и больше предложений на сотрудничество!
-                        </div>
-                    </div>
-                    <div class="tab-content__form tab-content__form--accent" style="flex-direction:column;">
-                        <label for="" class="tab-content__form--title">Личные данные</label>
-                        <div class="tab-content__form-col">
-                            <div class="form-group">
-                                <label for="">Имя</label>
-                                <input type="text" class="input" name="name" id="name" v-model="blogger.user.name">
-                                <span v-if = "errors && errors['user.name']" class="error">{{ errors['user.name'][0] }}</span>
-                            </div>
-                            <div class="form-group">
-                                <label for="">E-mail</label>
-                                <input type="email" class="input" id="email" name="email" v-model="blogger.user.email">
-                                <span v-if = "errors && errors['user.email']" class="error">{{ errors['user.email'][0] }}</span>
-                            </div>
-                            <div class="form-group">
-                                <label for="phone">Номер телефона</label>
-                                <input type="phone" id="phone" placeholder="" name="phone" class="input input--phone" v-model="blogger.user.phone" disabled>
-                                <span v-if = "errors && errors['user.email']" class="error">{{ errors['user.email'][0] }}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="tab-content__form tab-content__form--accent" style="flex-direction:column;">
-                        <label for="" class="tab-content__form--title">Изменить пароль</label>
-                        <div class="tab-content__form-form" style="">
-                            <div class="form-group">
-                                <label for="old_password">Старый пароль</label>
-                                <input class="input" id="old_password" type="password" name="old_password" v-model="blogger.old_password">
-                                <span v-if = "errors.old_password" class="error">{{ errors.old_password }}</span>
-                            </div>
-                            <div class="form-group">
-                                <label for="password">Новый пароль</label>
-                                <input class="input" id="password" type="password" name="password" v-model="blogger.password">
-                                <span v-if = "errors.password" class="error">{{ errors.password }}</span>
-                            </div>
-                        </div>
-                    </div>
+                    <main-component
+                        :blogger="blogger"
+                        v-show="tab === 'main'"
+                    ></main-component>
 
-                    <button
-                        @click="saveBlogger"
-                        class="btn btn-primary">Сохранить изменения</button>
+                    <password-component
+                        :blogger="blogger"
+                        v-show="tab === 'password'"
+                    ></password-component>
+
+                    <documents-component
+                        :blogger="blogger"
+                        v-show="tab === 'documents'"
+                    ></documents-component>
                 </div>
             </div>
         </div>
@@ -89,11 +69,16 @@ import ContentPopup from "../../../../core/components/popups/blogger-add-content
 import Header from '../../../../core/components/layout/AppHeader.vue'
 import Footer from '../../../../core/components/layout/AppFooter.vue'
 import Loader from "../../../../core/services/AppLoader.vue";
+import AppAside from "../../../../core/components/layout/tabs-aside/index.vue";
+import MainComponent from "./MainInfoComponent.vue";
+import PasswordComponent from "./PasswordComponent.vue";
+import DocumentsComponent from "./DocumentsComponent.vue";
 
 export default {
-    components:{ Header, Footer, ContentPopup },
+    components:{DocumentsComponent, PasswordComponent, MainComponent, AppAside, Header, Footer, ContentPopup },
     data(){
         return{
+            tab: ref('main'),
             user: ref(null),
             Loader,
             User, Blogger,
@@ -115,6 +100,7 @@ export default {
         this.Loader.loaderOff('.edit-profile');
     },
     methods:{
+        switchTab(tab){ this.tab = tab },
         saveBlogger(){
             this.Loader.loaderOn('.edit-profile');
 
