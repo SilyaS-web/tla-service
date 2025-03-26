@@ -17,11 +17,34 @@
                                 :inputID="'product-articul'"
                                 :error="(errors && errors.product_nm ? errors.product_nm[0] : null)"
                             ></Input>
+                            <div class="form-group choose-marketplace">
+                                <label for="">Выберите маркетплейс</label>
+                                <div class="choose-marketplace__items">
+                                    <div
+                                        @click="projectMarketplace = 'wb'"
+                                        :class="[
+                                            'choose-marketplace__item',
+                                            (projectMarketplace === 'wb' ? 'active' : '')
+                                        ]">
+                                        <img src="/img/wildberries.svg" alt="">
+                                    </div>
+                                    <div
+                                        @click="projectMarketplace = 'ozon'"
+                                        :class="[
+                                            'choose-marketplace__item',
+                                            (projectMarketplace === 'ozon' ? 'active' : '')
+                                        ]">
+                                        <img src="/img/ozon.svg" alt="">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="quest__step-row">
                             <button
                                 @click="getProductData"
-                                :style="{flex:'unset', height: '47px', alignSelf: 'anchor-center'}"
+                                :style="{flex:'unset', height: '47px', alignSelf: 'anchor-center', marginBottom: '21px'}"
                                 class="btn btn-primary">
-                                Загрузить данные
+                                Получить данные с макретплейса
                             </button>
                         </div>
                         <div class="quest__step-row">
@@ -86,6 +109,7 @@ export default {
     components:{ Input, UploadFiles, FormatTypes },
     data(){
         return {
+            projectMarketplace: 'wb',
             project: ref({
                 product_name: null,
                 product_nm: null,
@@ -114,7 +138,7 @@ export default {
         getProductData(){
             axios({
                 method:'get',
-                url:'http://127.0.0.1:3000/product/' + (this.project.product_nm.length > 9 ? 'ozon' : 'wb') + '/' + this.project.product_nm,
+                url:'http://127.0.0.1:3000/product/' + this.projectMarketplace + '/' + this.project.product_nm,
             })
             .then(async res => {
                 this.project.product_name = res.data.title;
@@ -122,27 +146,17 @@ export default {
                 let priceArr = res.data.price.replace(/[^a-zA-Z0-9]/g, "");
                 this.project.product_price = parseFloat(priceArr);
 
-                await axios({
-                    method:'get',
-                    url:res.data.imageUrl,
-                    responseType: 'blob'
-                }).then(blob => {
-                    // const href = URL.createObjectURL(blob);
-                    //
-                    // const anchorElement = document.createElement('a');
-                    // anchorElement.href = href;
-                    // anchorElement.download = `${this.project.images.length + 1}.jpg`;
-                    //
-                    // document.body.appendChild(anchorElement);
-                    // anchorElement.click();
-                    //
-                    // document.body.removeChild(anchorElement);
-                    // window.URL.revokeObjectURL(href);
-
-                    this.$refs.uploadFiles.resetFiles()
-                    this.$refs.uploadFiles.appendFile({
-                        file: blob.data,
-                        link: `${this.project.images.length + 1}.jpg`
+                this.$refs.uploadFiles.resetFiles()
+                res.data.imageUrls.map(url => {
+                    axios({
+                        method:'get',
+                        url:url,
+                        responseType: 'blob'
+                    }).then(blob => {
+                        this.$refs.uploadFiles.appendFile({
+                            file: blob.data,
+                            link: `${this.project.images.length + 1}.jpg`
+                        })
                     })
                 })
             })
@@ -177,3 +191,25 @@ export default {
     }
 }
 </script>
+
+<style scrope>
+    .choose-marketplace__items{
+        display: flex;
+        flex-wrap:wrap;
+        gap: 12px;
+    }
+    .choose-marketplace__item{
+        width: 42px;
+        height: 42px;
+        cursor:pointer;
+    }
+    .choose-marketplace__item img{
+        object-fit: contain;
+        width: 100%;
+        border-radius: 12px;
+        transition:all .1s linear;
+    }
+    .choose-marketplace__item.active img{
+        box-shadow:0px 0px 10px 6px rgba(181,76,219,.4);
+    }
+</style>
