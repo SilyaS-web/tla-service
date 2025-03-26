@@ -29,7 +29,7 @@ class CheckSellerTariffs extends Command
      */
     public function handle()
     {
-        $active_projects = Project::query()->where('status', '>', -1)->get();
+        $active_projects = Project::query()->where('status', 0)->get();
         foreach ($active_projects as $project) {
             $seller_tariffs = SellerTariff::query()->where('user_id', $project->seller_id)->where('finish_date', '>', Carbon::now())->where('type', Project::BARTER)->whereNot('quantity',  0)->first();
             if (!$seller_tariffs) {
