@@ -6113,6 +6113,9 @@ input[type='range']::-webkit-slider-runnable-track{
 #seller .list-header__btns .projects-list__filter-btn{
     visibility: hidden;
 }
+.list-header__btns svg {
+    display: none;
+}
 
 @media(max-width: 1740px){
     #seller .projects-list__filter{
