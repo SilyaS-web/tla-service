@@ -6,15 +6,34 @@ import InputBlockComponent from "../../../../core/components/form/InputBlockComp
 export default {
     name: "PasswordComponent",
     components:{InputBlockComponent},
-    props:['blogger'],
+    props: ['saveErrors'],
     data(){
         return {
-            repeatPassword: ref(''),
-            errors: ref({}),
+            oldPassword: '',
+            newPassword: '',
+            repeatPassword: '',
+            errors:{},
+        }
+    },
+    watch:{
+        saveErrors(){
+            this.errors = this.saveErrors
         }
     },
     methods:{
-        save(){},
+        save(){
+            if(this.newPassword !== this.repeatPassword) {
+                this.errors['new_password'] = 'Пароли не совпадают'
+                this.errors['repeat_password'] = 'Пароли не совпадают'
+
+                return
+            }
+
+            this.$emit('saveSeller', {
+                old_password: this.oldPassword,
+                new_password: this.newPassword
+            })
+        },
     }
 }
 </script>
@@ -24,7 +43,7 @@ export default {
         <div class="tab-content__form" style="flex-direction:column;">
             <div class="tab-content__form-form" style="">
                 <input-block-component
-                    v-model="blogger.old_password"
+                    v-model="oldPassword"
                     :label="'Старый пароль'"
                     :inputType="'password'"
                     :inputID="'old_password'"
@@ -32,7 +51,7 @@ export default {
                     :error="errors['old_password']"
                 ></input-block-component>
                 <input-block-component
-                    v-model="blogger.old_password"
+                    v-model="newPassword"
                     :label="'Новый пароль'"
                     :inputType="'password'"
                     :inputID="'password'"

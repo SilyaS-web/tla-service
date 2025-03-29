@@ -1,5 +1,5 @@
 <template>
-    <Header :user="user"></Header>
+    <Header :currentUser="user"></Header>
     <section class="edit-profile">
         <div class="edit-profile__container _container">
             <app-aside
@@ -36,18 +36,28 @@
             <div class="edit-profile__body">
                 <div class="edit-profile__content" >
                     <main-component
-                        :blogger="blogger"
-                        v-show="tab === 'main'"
+                        :userID="user.id"
+                        :name="blogger.user.name"
+                        :phone="blogger.user.phone"
+                        :email="blogger.user.email"
+                        :image="blogger.user.image"
+                        :errors="errors"
+                        @saveBlogger="saveBlogger"
+                        @updateImage="updateImage"
+                        v-if="tab === 'main'"
                     ></main-component>
 
                     <password-component
-                        :blogger="blogger"
-                        v-show="tab === 'password'"
+                        :errors="errors"
+                        @saveBlogger="saveBlogger"
+                        v-if="tab === 'password'"
                     ></password-component>
 
                     <documents-component
                         :blogger="blogger"
-                        v-show="tab === 'documents'"
+                        @saveBlogger="saveBlogger"
+                        @updateBlogger="updateBlogger"
+                        v-if="tab === 'documents'"
                     ></documents-component>
                 </div>
             </div>
@@ -75,10 +85,10 @@ import PasswordComponent from "./PasswordComponent.vue";
 import DocumentsComponent from "./DocumentsComponent.vue";
 
 export default {
-    components:{DocumentsComponent, PasswordComponent, MainComponent, AppAside, Header, Footer, ContentPopup },
+    components:{ DocumentsComponent, PasswordComponent, MainComponent, AppAside, Header, Footer, ContentPopup },
     data(){
         return{
-            tab: ref('main'),
+            tab: ref(''),
             user: ref(null),
             Loader,
             User, Blogger,
@@ -97,14 +107,29 @@ export default {
         this.user = this.User.getCurrent();
         this.blogger = await this.Blogger.getItem(this.user.blogger_id)
 
+        this.tab = 'main'
+
         this.Loader.loaderOff('.edit-profile');
     },
     methods:{
-        switchTab(tab){ this.tab = tab },
-        saveBlogger(){
+        switchTab(tab){
+            if(tab === 'content-management'){
+                this.contentEdit()
+                return
+            }
+
+            this.tab = tab
+        },
+        updateImage(url){ this.user.image = url },
+        updateBlogger(data){
+            for (const dataKey in data) {
+                this.blogger[dataKey] = data[dataKey]
+            }
+        },
+        saveBlogger(saveData){
             this.Loader.loaderOn('.edit-profile');
 
-            const data = {
+            let data = {
                 name: this.blogger.user.name,
                 email: this.blogger.user.email,
                 sex: this.blogger.sex,
@@ -114,32 +139,18 @@ export default {
                 old_password: this.blogger.old_password,
             };
 
-            const image = $('.tab-content__profile-img').find('input[type="file"]')[0];
-
-            if(image && image.files[0]) data['image'] = image.files[0];
+            for (const key in saveData) {
+                data[key] = saveData[key]
+            }
 
             this.Blogger.update(this.blogger.id, data).then(
-                response => {
-                    const user = {
-                        'id': this.user.id,
-                        'name': this.blogger.user.name,
-                        'email': this.blogger.user.email,
-                        'seller_id': this.blogger.id,
-                        'content': this.blogger.content,
-                        'themes': this.blogger.themes,
-                        'status': this.user.status,
-                        'role': this.user.role,
-                        'phone': this.user.phone,
-                        'created_at': this.user.created_at,
-                        'channel_name': this.user.channel_name,
-                        'blogger_id': this.user.blogger_id,
-                        'image': response.image ? response.image : this.user.image,
-                    }
+                data => {
+                    this.user = data.blogger.user
+                    this.blogger = data.blogger
 
-                    if(user){
-                        this.user = user;
-                        localStorage.setItem('user', JSON.stringify(user));
-                    }
+                    localStorage.setItem('user', JSON.stringify(this.user))
+
+                    this.errors = {};
 
                     this.Loader.loaderOff('.edit-profile');
                 },

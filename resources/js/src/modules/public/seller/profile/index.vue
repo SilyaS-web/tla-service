@@ -1,5 +1,5 @@
 <template>
-    <Header :user="user"></Header>
+    <Header :currentUser="user"></Header>
     <section class="edit-profile">
         <div class="edit-profile__container _container">
             <app-aside
@@ -35,20 +35,38 @@
             <div class="edit-profile__body">
                 <div class="edit-profile__content">
                     <main-component
-                        :seller="seller"
-                        v-show="tab === 'main'"
+                        :userID="user.id"
+                        :name="seller.user.name"
+                        :phone="seller.user.phone"
+                        :email="seller.user.email"
+                        :image="seller.user.image"
+                        :errors="errors"
+                        v-if="tab === 'main'"
+                        @saveSeller="saveSeller"
+                        @updateImage="updateImage"
                     ></main-component>
                     <organization-info-component
-                        :seller="seller"
-                        v-show="tab === 'organization'"
+                        :organization_name="seller.organization_name"
+                        :organization_type="seller.organization_type"
+                        :inn="seller.inn"
+                        :errors="errors"
+                        @saveSeller="saveSeller"
+                        v-if="tab === 'organization'"
                     ></organization-info-component>
                     <password-component
-                        :seller="seller"
-                        v-show="tab === 'password'"
+                        :errors="errors"
+                        @saveSeller="saveSeller"
+                        v-if="tab === 'password'"
                     ></password-component>
                     <api-info-component
-                        :seller="seller"
-                        v-show="tab === 'api'"
+                        :wb_link="seller.wb_link"
+                        :wb_api_key="seller.wb_api_key"
+                        :ozon_link="seller.ozon_link"
+                        :ozon_client_id="seller.ozon_client_id"
+                        :ozon_api_key="seller.ozon_api_key"
+                        :errors="errors"
+                        @saveSeller="saveSeller"
+                        v-if="tab === 'api'"
                     ></api-info-component>
                 </div>
             </div>
@@ -61,12 +79,13 @@ import {ref} from "vue";
 
 import User from "../../../../core/services/api/User";
 import Seller from "../../../../core/services/api/Seller";
+import Loader from "../../../../core/services/AppLoader.vue";
 
 import Header from '../../../../core/components/layout/AppHeader'
 import Footer from '../../../../core/components/layout/AppFooter'
 import AppAside from "../../../../core/components/layout/tabs-aside/index.vue";
+
 import MainComponent from "./MainInfoComponent.vue";
-import Loader from "../../../../core/services/AppLoader.vue";
 import OrganizationInfoComponent from "./OrganizationInfoComponent.vue";
 import PasswordComponent from "./PasswordComponent.vue";
 import ApiInfoComponent from "./ApiInfoComponent.vue";
@@ -79,18 +98,15 @@ export default {
     },
     data(){
         return{
-            tab: ref('main'),
+            tab: ref(null),
 
-            user: ref(null),
-            Loader,
-            User, Seller,
+            user: ref({}),
+            seller: ref({user: {}}),
 
-            seller: ref({
-                user: {}
-            }),
             errors: ref([]),
 
-            imgSectionTitle: 'Загрузите изображение'
+            Loader,
+            User, Seller,
         }
     },
     async mounted(){
@@ -99,16 +115,17 @@ export default {
         this.user = this.User.getCurrent();
         this.seller = await this.Seller.getItem(this.user.seller_id)
 
+        this.tab = 'main'
+
         this.Loader.loaderOff('.edit-profile');
     },
     methods:{
-        switchTab(tab){
-            this.tab = tab
-        },
-        saveSeller(){
+        switchTab(tab){ this.tab = tab },
+        updateImage(url){ this.user.image = url },
+        saveSeller(saveData){
             this.Loader.loaderOn('.edit-profile');
 
-            const data = {
+            let data = {
                 name: this.seller.user.name,
                 email: this.seller.user.email,
                 inn: this.seller.inn,
@@ -123,31 +140,18 @@ export default {
                 old_password: this.seller.old_password,
             };
 
-            const image = $('.tab-content__profile-img').find('input[type="file"]')[0];
-
-            if(image && image.files[0])
-                data['image'] = image.files[0];
+            for (const key in saveData) {
+                data[key] = saveData[key]
+            }
 
             this.Seller.update(this.seller.id, data).then(
-                (response) => {
-                    const user = {
-                        'id': this.user.id,
-                        'name': this.seller.user.name,
-                        'email': this.seller.user.email,
-                        'seller_id': this.seller.id,
-                        'organization_name': this.seller.organization_name,
-                        'status': this.user.status,
-                        'role': this.user.role,
-                        'phone': this.user.phone,
-                        'created_at': this.user.created_at,
-                        'channel_name': this.user.channel_name,
-                        'blogger_id': this.user.blogger_id,
-                        'tariffs': this.user.tariffs,
-                        'image': response.image ? response.image : this.user.image,
-                    }
+                (data) => {
+                    this.user = data.seller.user
+                    this.seller = data.seller
 
-                    localStorage.setItem('user', JSON.stringify(user));
-                    this.user = user
+                    localStorage.setItem('user', JSON.stringify(data.seller.user))
+
+                    this.errors = {};
 
                     this.Loader.loaderOff('.edit-profile');
                 },

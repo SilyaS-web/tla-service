@@ -1,35 +1,49 @@
 <script>
-import InputBlockComponent from "../../../../core/components/form/InputBlockComponent.vue";
 import {ref} from "vue";
+import axios from "axios";
+
+import Blogger from "../../../../core/services/api/Blogger.vue";
+import Loader from "../../../../core/services/AppLoader.vue";
+
+import InputBlockComponent from "../../../../core/components/form/InputBlockComponent.vue";
 import SelectBlockComponent from "../../../../core/components/form/SelectBlockComponent.vue";
 
 export default {
     name: "DocumentsComponent",
+    props:['blogger'],
     components: {SelectBlockComponent, InputBlockComponent},
     data(){
         return {
-            data: ref({
-                fio:'',
-                sex:null,
-                birthDate:null,
-
-                passport:'',
-                issueDate:null,
-                unitCode:'',
-                issuedBy:'',
-                region:'',
-                city:'',
-                index:'',
-                street:'',
-                house:'',
-                apartment:'',
-
-                bank:'',
-                phone:'',
-                email:'',
-                inn:'',
-            }),
+            data: ref([
+                {
+                    fio:null,
+                    sex:null,
+                    birthDate:null,
+                },
+                {
+                    passport:null,
+                    issueDate:null,
+                    unitCode:null,
+                    issuedBy:null,
+                    region:null,
+                    city:null,
+                    index:null,
+                    street:null,
+                    house:null,
+                    apartment:null,
+                },
+                {
+                    bank:null,
+                    phone:null,
+                    email:null,
+                },
+                {
+                    inn:null,
+                },
+                {}
+            ]),
             errors: ref({}),
+            availableStep: ref(1),
             step: ref(1),
             stepDescription: [
                 'Заполните контактную информацию',
@@ -37,7 +51,113 @@ export default {
                 'Заполните данные для выплат',
                 'Заполните информацию или дождитесь автоматического получения',
                 'Следуйте инструкциям',
-            ]
+            ],
+
+            Blogger, Loader
+        }
+    },
+    created() {
+        this.data.forEach(step => {
+            for (const key in step) {
+                if(this.blogger[key]) step[key] = this.blogger[key]
+            }
+        })
+    },
+    methods:{
+        saveStep(){
+            for (const key in this.data[this.step - 1]) {
+                if(!this.data[this.step - 1][key] || this.data[this.step - 1][key].length === 0){
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'Заполните все поля.'
+                    })
+
+                    return
+                }
+            }
+
+            let data = {
+                name: this.blogger.user.name,
+                sex: this.blogger.sex,
+                country_id: this.blogger.country.id,
+                city: this.blogger.city,
+            };
+
+            for (const key in this.data[this.step - 1]) {
+                if(this.data[this.step - 1][key]) {
+                    data[key] = this.data[this.step - 1][key]
+                }
+            }
+
+            this.Blogger.update(this.blogger.id, data).then(
+                data => {
+                    this.$emit('updateBlogger', data)
+                    this.step++
+                    this.availableStep = this.step;
+                },
+                err => {
+                    this.errors = err;
+                    this.Loader.loaderOff('.edit-profile');
+                }
+            )
+        },
+        checkInn(){
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            let mm = today.getMonth() + 1;
+            let dd = today.getDate();
+
+            if (dd < 10) dd = '0' + dd;
+            if (mm < 10) mm = '0' + mm;
+
+            const formattedToday = yyyy + '-' + mm + '-' + dd;
+            const inn = this.data[this.step - 1].inn;
+
+            axios({
+                url: 'https://statusnpd.nalog.ru/api/v1/tracker/taxpayer_status',
+                method:'POST',
+                data:{
+                    requestDate: formattedToday,
+                    inn: inn,
+                }
+            })
+            .then((res) => {
+                const status = res.data.status;
+
+                if(!status){
+                    let uiMessage = '';
+
+                    switch(res.status){
+                        case 422:
+                            uiMessage+='Неверный формат данных';
+                            break;
+                        case 400:
+                            uiMessage+='Ошибка парсинга данных';
+                            break;
+                        case 500:
+                            uiMessage+='Сервер не может обработать запрос';
+                            break;
+                    }
+
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'Статус самозанятого не подтвержден. ' + uiMessage
+                    })
+
+                    return
+                }
+                console.log('Статус самозанятого успешно проверен', res)
+
+                this.saveStep();
+            })
+            .catch((err) => {
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'Статус самозанятого не подтвержден. Сервер не может обработать запрос, обратитесь в поддержку'
+                })
+
+                console.log(err.data)
+            })
         }
     }
 }
@@ -58,37 +178,37 @@ export default {
                 </a>
                 <a
                     href="#"
-                    @click="step = 2"
+                    @click="availableStep >= 2 && (step = 2)"
                     :class="[
                         'documents-content__tab',
-                        (step >= 2 ? 'active' : '')
+                        (availableStep >= 2 ? 'active' : '')
                     ]">
                     Паспорт
                 </a>
                 <a
                     href="#"
-                    @click="step = 3"
+                    @click="availableStep >= 3 && (step = 3)"
                     :class="[
                         'documents-content__tab',
-                        (step >= 3 ? 'active' : '')
+                        (availableStep >= 3 ? 'active' : '')
                     ]">
                     Платежи
                 </a>
                 <a
                     href="#"
-                    @click="step = 4"
+                    @click="availableStep >= 4 && (step = 4)"
                     :class="[
                         'documents-content__tab',
-                        (step >= 4 ? 'active' : '')
+                        (availableStep >= 4 ? 'active' : '')
                     ]">
                     Проверка ИНН
                 </a>
                 <a
                     href="#"
-                    @click="step = 5"
+                    @click="availableStep >= 5 && (step = 5)"
                     :class="[
                         'documents-content__tab',
-                        (step >= 5 ? 'active' : '')
+                        (availableStep >= 5 ? 'active' : '')
                     ]">
                     Подтверждение партнёра
                 </a>
@@ -104,7 +224,7 @@ export default {
                     class="documents-content__form">
                     <div class="documents-content__form-body">
                         <input-block-component
-                            v-model="data.fio"
+                            v-model="data[0].fio"
                             :label="'ФИО'"
                             :inputType="'text'"
                             :inputPlaceholder="'Введите ваше ФИО'"
@@ -113,7 +233,7 @@ export default {
                             :error="errors['fio']"
                         ></input-block-component>
                         <select-block-component
-                            v-model="data.sex"
+                            v-model="data[0].sex"
                             :label="'Пол'"
                             :selectID="'profile-sex'"
                             :selectClassList="[]"
@@ -134,7 +254,7 @@ export default {
                             :error="errors['sex']"
                         ></select-block-component>
                         <input-block-component
-                            v-model="data.birthDate"
+                            v-model="data[0].birthDate"
                             :label="'Дата рождения'"
                             :inputType="'date'"
                             :inputClassList="[]"
@@ -144,7 +264,7 @@ export default {
                     </div>
                     <div class="documents-content__form-footer">
                         <button
-                            @click="step++"
+                            @click="saveStep()"
                             class="btn btn-primary">Дальше</button>
                     </div>
                 </div>
@@ -155,7 +275,7 @@ export default {
                     <div class="documents-content__form-body">
                         <div class="documents-content__form-row">
                             <input-block-component
-                                v-model="data.passport"
+                                v-model="data[1].passport"
                                 :label="'Серия и номер паспорта'"
                                 :inputType="'text'"
                                 :inputPlaceholder="'Введите серию и номер вашего паспорта'"
@@ -164,7 +284,7 @@ export default {
                                 :error="errors['passport']"
                             ></input-block-component>
                             <input-block-component
-                                v-model="data.issueDate"
+                                v-model="data[1].issueDate"
                                 :label="'Дата выдачи'"
                                 :inputType="'date'"
                                 :inputClassList="[]"
@@ -174,7 +294,7 @@ export default {
                         </div>
                         <div class="documents-content__form-row">
                             <input-block-component
-                                v-model="data.unitCode"
+                                v-model="data[1].unitCode"
                                 :label="'Код подразделения'"
                                 :inputType="'text'"
                                 :inputPlaceholder="'Введите код подразделения указанный в вашем паспорте'"
@@ -183,7 +303,7 @@ export default {
                                 :error="errors['unitCode']"
                             ></input-block-component>
                             <input-block-component
-                                v-model="data.issuedBy"
+                                v-model="data[1].issuedBy"
                                 :label="'Кем выдан'"
                                 :inputType="'text'"
                                 :inputClassList="[]"
@@ -193,7 +313,7 @@ export default {
                         </div>
                         <div class="documents-content__form-row">
                             <input-block-component
-                                v-model="data.region"
+                                v-model="data[1].region"
                                 :label="'Регион'"
                                 :inputType="'text'"
                                 :inputPlaceholder="'Введите ваш регион'"
@@ -202,7 +322,7 @@ export default {
                                 :error="errors['region']"
                             ></input-block-component>
                             <input-block-component
-                                v-model="data.city"
+                                v-model="data[1].city"
                                 :label="'Город'"
                                 :inputType="'text'"
                                 :inputClassList="[]"
@@ -212,7 +332,7 @@ export default {
                         </div>
                         <div class="documents-content__form-row">
                             <input-block-component
-                                v-model="data.index"
+                                v-model="data[1].index"
                                 :label="'Индекс'"
                                 :inputType="'text'"
                                 :inputPlaceholder="'Введите ваш индекс'"
@@ -221,7 +341,7 @@ export default {
                                 :error="errors['index']"
                             ></input-block-component>
                             <input-block-component
-                                v-model="data.street"
+                                v-model="data[1].street"
                                 :label="'Улица'"
                                 :inputType="'text'"
                                 :inputClassList="[]"
@@ -231,7 +351,7 @@ export default {
                         </div>
                         <div class="documents-content__form-row">
                             <input-block-component
-                                v-model="data.house"
+                                v-model="data[1].house"
                                 :label="'Дом'"
                                 :inputType="'text'"
                                 :inputPlaceholder="'Введите ваш дом'"
@@ -240,7 +360,7 @@ export default {
                                 :error="errors['house']"
                             ></input-block-component>
                             <input-block-component
-                                v-model="data.apartment"
+                                v-model="data[1].apartment"
                                 :label="'Квартира'"
                                 :inputType="'text'"
                                 :inputClassList="[]"
@@ -251,7 +371,7 @@ export default {
                     </div>
                     <div class="documents-content__form-footer">
                         <button
-                            @click="step++"
+                            @click="saveStep()"
                             class="btn btn-primary">Дальше</button>
                     </div>
                 </div>
@@ -261,7 +381,7 @@ export default {
                     class="documents-content__form">
                     <div class="documents-content__form-body">
                         <select-block-component
-                            v-model="data.bank"
+                            v-model="data[2].bank"
                             :label="'Банк'"
                             :selectID="'profile-bank'"
                             :selectClassList="[]"
@@ -286,7 +406,7 @@ export default {
                             :error="errors['bank']"
                         ></select-block-component>
                         <input-block-component
-                            v-model="data.phone"
+                            v-model="data[2].phone"
                             :label="'Номер телефона'"
                             :inputType="'text'"
                             :inputClassList="[]"
@@ -294,7 +414,7 @@ export default {
                             :error="errors['phone']"
                         ></input-block-component>
                         <input-block-component
-                            v-model="data.email"
+                            v-model="data[2].email"
                             :label="'E-mail'"
                             :inputType="'email'"
                             :inputClassList="[]"
@@ -304,7 +424,7 @@ export default {
                     </div>
                     <div class="documents-content__form-footer">
                         <button
-                            @click="step++"
+                            @click="saveStep()"
                             class="btn btn-primary">Дальше</button>
                     </div>
                 </div>
@@ -314,7 +434,7 @@ export default {
                     class="documents-content__form">
                     <div class="documents-content__form-body">
                         <input-block-component
-                            v-model="data.inn"
+                            v-model="data[3].inn"
                             :label="'ИНН'"
                             :inputType="'inn'"
                             :inputClassList="[]"
@@ -324,7 +444,7 @@ export default {
                     </div>
                     <div class="documents-content__form-footer">
                         <button
-                            @click="step++"
+                            @click="checkInn()"
                             class="btn btn-primary">Проверить данные</button>
                     </div>
                 </div>
@@ -358,7 +478,6 @@ export default {
         display: flex;
     }
     .documents-content__tab{
-        cursor: pointer;
         text-decoration: none;
         color: #B3B3B3;
         border-bottom: 1px solid #B3B3B3;
@@ -367,6 +486,7 @@ export default {
         text-align: center;
     }
     .documents-content__tab.active{
+        cursor: pointer;
         color:#000;
         border-bottom-color: #000;
     }

@@ -6,15 +6,30 @@ import SelectBlockComponent from "../../../../core/components/form/SelectBlockCo
 
 export default {
     name: "OrganizationInfoComponent",
-    props:['seller'],
+    props:[
+        'organization_name', 'organization_type', 'inn', 'errors'
+    ],
     components:{InputBlockComponent,SelectBlockComponent},
     data(){
         return {
-            errors: ref({}),
+            saveData:ref({
+                organization_name: null,
+                organization_type: null,
+                inn: null,
+            }),
+        }
+    },
+    created(){
+        this.saveData = {
+            organization_name: this.organization_name,
+            organization_type: this.organization_type,
+            inn: this.inn,
         }
     },
     methods:{
-        save(){},
+        save(){
+            this.$emit('saveSeller', this.saveData)
+        },
     }
 }
 </script>
@@ -24,7 +39,7 @@ export default {
         <div class="tab-content__form">
             <div class="tab-content__form-form">
                 <select-block-component
-                    v-model="seller.organization_type"
+                    v-model="saveData.organization_type"
                     :label="'Тип организации'"
                     :error="errors['organization_type']"
                     :selectClassList="[]"
@@ -45,7 +60,7 @@ export default {
                     ]"
                 ></select-block-component>
                 <input-block-component
-                    v-model="seller.user.organization_name"
+                    v-model="saveData.organization_name"
                     :label="'Название организации'"
                     :inputType="'text'"
                     :inputPlaceholder="'Введите название организации'"
@@ -54,7 +69,7 @@ export default {
                     :error="errors['organization_name']"
                 ></input-block-component>
                 <input-block-component
-                    v-model="seller.user.inn"
+                    v-model="saveData.inn"
                     :label="'ИНН'"
                     :inputType="'text'"
                     :inputPlaceholder="'Введите ИНН'"

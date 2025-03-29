@@ -290,7 +290,7 @@ import {ref} from "vue";
 import User from '../../services/api/User'
 
 export default {
-    inheritAttrs: false,
+    props:['currentUser'],
     data(){
         return {
             notifications: ref([]),
@@ -299,8 +299,15 @@ export default {
             User
         }
     },
+    watch:{
+        currentUser(){
+            this.user = this.currentUser
+        }
+    },
     mounted(){
-        this.user = this.User.getCurrent();
+        if(!this.currentUser)
+            this.user = this.User.getCurrent();
+
         this.getNotifications();
 
         this.notificationsInterval = localStorage.getItem('notifications_interval_id')

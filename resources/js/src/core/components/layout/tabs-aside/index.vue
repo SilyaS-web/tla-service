@@ -27,8 +27,8 @@ export default{
     components: {ListItem},
     methods:{
         switchTab(link){
-            $('.nav-menu__item').removeClass('active')
-            $(`#${link}-tab`).addClass('active')
+            // $('.nav-menu__item').removeClass('active')
+            // $(`#${link}-tab`).addClass('active')
 
             this.$emit('switchTab', link)
         }

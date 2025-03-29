@@ -1,21 +1,53 @@
 <script>
 import {ref} from "vue";
 
+import User from '../../../../core/services/api/User.vue'
 import InputBlockComponent from "../../../../core/components/form/InputBlockComponent.vue";
 
 export default {
     name: "MainInfoComponent",
-    props:['blogger'],
+    props:[
+        'userID',
+        'image',
+        'name',
+        'email',
+        'phone',
+        'errors'
+    ],
     components:{InputBlockComponent},
     data(){
         return{
-            imgSectionTitle: ref('Изменить аватар'),
-            errors: ref([]),
+            userImage: ref(null),
+            saveData: ref({
+                name: null,
+                email: null,
+            }),
+
+            User
+        }
+    },
+    mounted(){
+        this.userImage = this.image
+        this.saveData = {
+            name: this.name,
+            email: this.email,
         }
     },
     methods:{
-        save(){},
-        ProfileImageUploaded(){}
+        save(){
+            this.$emit('saveBlogger', this.saveData)
+        },
+        profileImageUploaded(event){
+            const file = event.target.files[0]
+            const data = {
+                image: file
+            }
+
+            this.User.update(this.userID, data).then((url) => {
+                this.userImage = url;
+                this.$emit('updateImage', url)
+            })
+        }
     }
 }
 </script>
@@ -24,13 +56,13 @@ export default {
     <div class="tab-content">
         <div class="tab-content__form">
             <div class="tab-content__image">
-                <img :src="blogger.user && blogger.user.image ? blogger.user.image : '/img/profile-icon.svg'  " alt="">
+                <img :src="userImage ? userImage : '/img/profile-icon.svg'  " alt="">
                 <div class="tab-content__image-upload">
                     <div class="form-group form-group--file">
                         <label class="tab-content__profile-img-upload input-file" for="profile-img">
                             <span>Изменить аватар</span>
                             <input
-                                @change="ProfileImageUploaded"
+                                @change="profileImageUploaded"
                                 type="file" name="image" class="" id="profile-img">
                         </label>
                         <span v-if="errors['image']" class="error">{{ errors['image'] }}</span>
@@ -40,7 +72,7 @@ export default {
         </div>
         <div class="tab-content__form">
             <input-block-component
-                v-model="blogger.user.name"
+                v-model="saveData.name"
                 :label="'Имя'"
                 :inputType="'text'"
                 :inputPlaceholder="'Введите ваше имя'"
@@ -49,7 +81,7 @@ export default {
                 :error="errors['name']"
             ></input-block-component>
             <input-block-component
-                v-model="blogger.user.email"
+                v-model="saveData.email"
                 :label="'E-mail'"
                 :inputType="'email'"
                 :inputPlaceholder="'Введите E-mail'"
@@ -58,10 +90,9 @@ export default {
                 :error="errors['email']"
             ></input-block-component>
             <input-block-component
-                v-model="blogger.user.phone"
                 :label="'Номер телефона'"
                 :inputType="'phone'"
-                :inputPlaceholder="'Введите номер телефона'"
+                :inputPlaceholder="phone"
                 :inputClassList="[]"
                 :inputID="'profile-phone'"
                 :disabled="1"
