@@ -29,3 +29,25 @@
         }
     }
 </script>
+<style scoped>
+    .input {
+        border-radius: 10px;
+        border: 1px solid #F5F5F5;
+        background-color: var(--pale);
+        padding: 13px;
+        margin-bottom: 7px;
+        max-width:100%;
+    }
+    .input:focus{
+        box-shadow: 0px 0px 10px 6px rgba(181,76,219,.2);
+    }
+    .input::-moz-placeholder{
+        color: rgba(0, 0, 0, .2);
+    }
+    .input::placeholder{
+        color: rgba(0, 0, 0, .2);
+    }
+    .input.no-correct{
+        border-color:red;
+    }
+</style>

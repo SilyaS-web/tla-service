@@ -31,3 +31,47 @@ export default{
     }
 }
 </script>
+<style scoped>
+.input-file {
+    position: relative;
+    display: flex!important;
+    align-items: center;
+    padding-left: 20px;
+}
+.input-file::before{
+    content:"";
+    display: block;
+    width: 100%;
+    max-width: 30px;
+    height: 30px;
+    background-image: url(/images/download-icon.svg?8cdc3fdf3c116d343739a34df735b96f);
+    filter: invert(41%) sepia(98%) saturate(2849%) hue-rotate(259deg) brightness(91%) contrast(87%);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    margin-right: 8px;
+}
+.input-file.uploaded::before{
+    max-width: 30px; height:30px;
+    background-image: url(/images/approved-aproved-confirm-2-svgrepo-com.svg?49ae55329536a7286152d8835bf2a101);
+    filter: invert(41%) sepia(98%) saturate(2849%) hue-rotate(259deg) brightness(91%) contrast(87%)
+}
+.input-file input{
+    display: none;
+}
+.input-file__col{
+    display: flex;
+    flex-direction: column;
+}
+.input-file__file-name{
+    max-width:200px;
+    text-wrap: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    font-size: 14px;
+    color:var(--primary)
+}
+.input-file__notify{
+    margin-bottom: 3px;
+}
+</style>

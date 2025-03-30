@@ -298,6 +298,11 @@ export default {
 
 
 <style scoped>
+    .card__col{
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
     .distribution-bloggers__item-footer .btn:not(.btn-primary){
         padding: 10px 24px;
     }

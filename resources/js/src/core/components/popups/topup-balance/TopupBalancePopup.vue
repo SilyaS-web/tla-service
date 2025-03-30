@@ -1,5 +1,10 @@
 <template>
     <popup-modal id="topup-balance" ref="popup">
+        <div
+            v-if="showNotification"
+            class="topup-balance__notify">
+            На вашем балансе недостаточно средств
+        </div>
         <div class="popup__header">
             <div class="popup__title title">
                 Ваш баланс
@@ -13,24 +18,32 @@
                 <p class="topup-balance__balance">
                     13600 ₽
                 </p>
-                <p class="popup__title">Пополнить баланс через:</p>
-                <div class="topup-balance__payments">
-                    <a href="#" class="topup-balance__payments-item">
-                        ПС
-                    </a>
-                    <a href="#" class="topup-balance__payments-item">
-                        ПС
-                    </a>
-                    <a href="#" class="topup-balance__payments-item">
-                        ПС
-                    </a>
-                    <a href="#" class="topup-balance__payments-item">
-                        ПС
-                    </a>
-                    <div class="topup-balance__payments-item topup-balance__payments-item--bill">
-                        <input class="input" type="text" placeholder="Выставление счета для юр. лиц">
-                    </div>
+                <div class="topup-balance__btns">
+                    <button class="btn btn-primary">
+                        Пополнить баланс
+                    </button>
+                    <button class="btn btn-secondary">
+                        Выставить счет
+                    </button>
                 </div>
+<!--                <p class="popup__title">Пополнить баланс через:</p>-->
+<!--                <div class="topup-balance__payments">-->
+<!--                    <a href="#" class="topup-balance__payments-item">-->
+<!--                        ПС-->
+<!--                    </a>-->
+<!--                    <a href="#" class="topup-balance__payments-item">-->
+<!--                        ПС-->
+<!--                    </a>-->
+<!--                    <a href="#" class="topup-balance__payments-item">-->
+<!--                        ПС-->
+<!--                    </a>-->
+<!--                    <a href="#" class="topup-balance__payments-item">-->
+<!--                        ПС-->
+<!--                    </a>-->
+<!--                    <div class="topup-balance__payments-item topup-balance__payments-item&#45;&#45;bill">-->
+<!--                        <input class="input" type="text" placeholder="Выставление счета для юр. лиц">-->
+<!--                    </div>-->
+<!--                </div>-->
             </div>
         </div>
     </popup-modal>
@@ -46,6 +59,7 @@ export default {
     components: { PopupModal },
     data(){
         return{
+            showNotification: ref(false),
             Work
         }
     },
@@ -58,6 +72,7 @@ export default {
                 this.rejectPromise = reject
             })
         },
+        toggleNotification(){ this.showNotification = !this.showNotification },
         _confirm() {
             this.$refs.popup.close()
             this.resolvePromise(true)
@@ -74,34 +89,32 @@ export default {
 <style scoped>
 #topup-balance .popup__title{
     text-align: center;
+    font-size: 16px;
+    font-weight: 500;
+    color:#2E2E2E;
+    margin-bottom: 8px;
+}
+#topup-balance .popup__header{
+    margin-bottom: 0;
 }
 .topup-balance__balance{
-    font-size: 62px;
-    font-weight: 600;
+    font-size: 64px;
+    font-weight: 300;
     text-align: center;
-    margin-bottom: 18px;
+    margin-bottom: 32px;
+    color:#2E2E2E;
 }
-.topup-balance__payments{
+.topup-balance__btns{
     display: flex;
-    gap: 12px;
-    justify-content: center;
+    gap: 24px;
 }
-.topup-balance__payments-item{
-    width: 32px;
-    height: 32px;
-    border-radius: 6px;
-    border:1px solid rgba(0,0,0,.15);
-    padding: 5px;
-    font-size: 12px;
-    font-weight: 600;
+.topup-balance__btns > .btn{
+    flex:1 1 50%;
 }
-.topup-balance__payments-item--bill{
-    width: 240px;
-    height: 32px;
-    border:0;
-    padding: 0;
-}
-.topup-balance__payments-item--bill .input{
-    height: 32px;
+.topup-balance__notify{
+    color:#2E2E2E;
+    font-size: 28px;
+    font-weight: 400;
+    margin-bottom: 32px;
 }
 </style>
