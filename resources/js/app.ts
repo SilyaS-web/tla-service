@@ -1,27 +1,28 @@
-require('./bootstrap');
-
+import "./bootstrap"
 import { createApp } from 'vue'
-import { createMemoryHistory, createRouter } from 'vue-router'
+import {
+    createMemoryHistory, createRouter, RouteLocationNormalizedGeneric,
+    RouteLocationNormalizedLoadedGeneric, RouteRecordRaw
+} from 'vue-router'
+import axios from "axios"
 
 // admin imports
 import AdminIndex from './src/modules/admin/index.vue'
 
 // user imports
-import Auth from './src/modules/auth/login/index'
-import Register from './src/modules/auth/register/index'
-import BloggerRegister from './src/modules/auth/blogger-register/index'
-import SellerProfile from './src/modules/public/seller/index'
-import BloggerProfile from './src/modules/public/blogger/index'
-import SellerEditProfile from './src/modules/public/seller/profile/index'
-import BloggerEditProfile from './src/modules/public/blogger/profile/index'
-import Tariffs from './src/modules/public/seller/tariffs/index'
-import Moderation from './src/modules/public/blogger/moderation/index'
-import Banned from './src/modules/public/banned/index'
-import User from './src/core/services/api/User'
+import Auth from './src/modules/auth/login/index.vue'
+import Register from './src/modules/auth/register/index.vue'
+import BloggerRegister from './src/modules/auth/blogger-register/index.vue'
+import SellerProfile from './src/modules/public/seller/index.vue'
+import BloggerProfile from './src/modules/public/blogger/index.vue'
+import SellerEditProfile from './src/modules/public/seller/profile/index.vue'
+import BloggerEditProfile from './src/modules/public/blogger/profile/index.vue'
+import Tariffs from './src/modules/public/seller/tariffs/index.vue'
+import Moderation from './src/modules/public/blogger/moderation/index.vue'
+import Banned from './src/modules/public/banned/index.vue'
+import User from './src/core/services/api/User.vue'
 
-const app = createApp();
-
-const routes = [
+const routes: Array<RouteRecordRaw> = [
     { path: '/seller/profile/:item?/:id?', name: 'SellerProfile', component: SellerProfile },
     { path: '/blogger/profile/:item?/:id?', name: 'BloggerProfile', component: BloggerProfile },
     { path: '/register', name: 'Register', component: Register },
@@ -37,7 +38,7 @@ const routes = [
 const router = createRouter({
     history: createMemoryHistory(),
     routes,
-    scrollBehavior(to, from, savedPosition) {
+    scrollBehavior(to:RouteLocationNormalizedGeneric, from:RouteLocationNormalizedLoadedGeneric, savedPosition:any):any {
         if (savedPosition) {
             return savedPosition
         } else {
@@ -46,9 +47,9 @@ const router = createRouter({
     },
 })
 
-router.beforeEach(async (to, from) => {
-    const tgToken = findGetParameter('token');
-    let isAuthenticated = localStorage.getItem('session_token');
+router.beforeEach(async (to:RouteLocationNormalizedGeneric, from:RouteLocationNormalizedLoadedGeneric) => {
+    const tgToken:string|null = findGetParameter('token');
+    let isAuthenticated:string|null = localStorage.getItem('session_token');
 
     if(tgToken){
         isAuthenticated = tgToken;
@@ -58,7 +59,7 @@ router.beforeEach(async (to, from) => {
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + isAuthenticated;
     }
 
-    if (!['Register', 'Login'].includes(to.name) && !isAuthenticated) {
+    if (typeof to.name === 'string' && !['Register', 'Login'].includes(to.name) && !isAuthenticated) {
         return {
             name: 'Login'
         }
@@ -95,7 +96,7 @@ router.beforeEach(async (to, from) => {
     }
 })
 
-function findGetParameter(parameterName) {
+function findGetParameter(parameterName:string):string|null {
     let result = null,
         tmp = [];
 
@@ -112,6 +113,8 @@ function findGetParameter(parameterName) {
 localStorage.setItem('notifications_interval_id', '')
 localStorage.setItem('chats_interval_id', '')
 localStorage.setItem('chats_messages_interval_id', '')
+
+const app = createApp({});
 
 app.component('admin-index', AdminIndex)
 

@@ -10,10 +10,16 @@
         "production": "mix --production"
     },
     "devDependencies": {
+        "@types/axios": "^0.14.4",
+        "@types/lodash": "^4.17.16",
+        "auto-loader": "^0.2.0",
+        "autoprefixer": "^9.4.1",
         "axios": "^0.21.4",
         "laravel-mix": "^6.0.49",
         "lodash": "^4.17.19",
         "postcss": "^8.1.14",
+        "ts-loader": "^9.5.2",
+        "typescript": "^5.8.2",
         "vue-loader": "^16.2.0"
     },
     "dependencies": {

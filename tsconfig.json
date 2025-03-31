@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "strict": true,
+        "module": "es2015",
+        "lib": ["es6", "dom", "es2016"],
+        "moduleResolution": "node",
+        "experimentalDecorators": true,
+        "skipLibCheck": true,
+        "typeRoots": ["resources/js/typings.d.ts"],
+        "allowSyntheticDefaultImports": true
+    },
+    "include": [
+        "resources/js/**/*.ts",
+        "resources/js/**/*.vue"
+    ],
+    "exclude": [
+        "node_modules",
+        "vendor"
+    ]
+}

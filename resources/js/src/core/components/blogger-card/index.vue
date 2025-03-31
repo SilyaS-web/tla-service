@@ -84,7 +84,7 @@
                             <div class="card__stats-title">
                                 <span>Подписчики</span>
                             </div>
-                            <div class="card__stats-val" v-bind:title="subscriber_quantity">
+                            <div class="card__stats-val">
                                 <span>{{ subscriber_quantity }}</span>
                             </div>
                         </div>
@@ -92,7 +92,7 @@
                             <div class="card__stats-title">
                                 <span>Охваты</span>
                             </div>
-                            <div class="card__stats-val" v-bind:title="coverage">
+                            <div class="card__stats-val">
                                 <span>{{ coverage }}</span>
                             </div>
                         </div>
@@ -112,7 +112,7 @@
                                 <span>CPM</span>
                             </div>
                             <div class="card__stats-val">
-                                <span>{{ countCPM(coverage, product_price) || '-' }}₽</span>
+                                <span>{{ typeof product_price === 'number' ? countCPM(coverage, product_price) : '-' }}₽</span>
                             </div>
                         </div>
                     </div>
@@ -151,17 +151,23 @@
         </div>
     </div>
 </template>
-<script>
-import {countER} from "../../utils/countER.js";
-import {countCPM} from "../../utils/countCPM.js";
+<script lang="ts">
+import { defineComponent } from "vue";
+import type { PropType } from "vue";
 
-export default {
+import PlatformInterface from "../../interfaces/Platform";
+import ThemeInterface from "../../interfaces/Theme";
+
+import {countER} from "../../utils/countER";
+import {countCPM} from "../../utils/countCPM";
+
+export default defineComponent({
     props: {
         id: { type: Number, required: true },
         image:{ type: String, required: false },
         name: { type: String, required: true },
-        platforms: { type: Array, required:false },
-        themes: { type: Array, required: false },
+        platforms: { type: Array as PropType<PlatformInterface[]>, required:false },
+        themes: { type: Array as PropType<ThemeInterface[]>, required: false },
         description:{ type: String, required: false },
         work_message: { type: String, required: false },
         content: {type: Array, required: false, default: false},
@@ -169,28 +175,30 @@ export default {
         subscriber_quantity: {type: Number, required: true},
         coverage: {type: Number, required: true},
         product_price: {type: [Number, Boolean], required: false},
-        classList: {type: Array, required: false, default: []}
+        classList: {type: Array as PropType<string[]>, required: false, default: []}
     },
     computed:{
-        bloggersClasses(){ return this.classList.join(' ') }
+        bloggersClasses(): string {
+            return this.classList.join(' ')
+        }
     },
     methods:{
-        toggleAchivements(e){
-            const parent = e.target.closest('.blogger-item__achives');
-            const parentHeight = parent.getBoundingClientRect().height;
-            const itemsHeight = parent.querySelector('.blogger-item__achives-items')
-                .getBoundingClientRect().height;
-
-            if(parent.classList.contains('opened')){
-                parent.style.height = `${parentHeight - itemsHeight}px`
-            }
-            else{
-                parent.style.height = `${parentHeight + itemsHeight}px`
-            }
-
-            parent.classList.toggle('opened')
-        },
+        // toggleAchivements(e){
+        //     const parent = e.target.closest('.blogger-item__achives');
+        //     const parentHeight = parent.getBoundingClientRect().height;
+        //     const itemsHeight = parent.querySelector('.blogger-item__achives-items')
+        //         .getBoundingClientRect().height;
+        //
+        //     if(parent.classList.contains('opened')){
+        //         parent.style.height = `${parentHeight - itemsHeight}px`
+        //     }
+        //     else{
+        //         parent.style.height = `${parentHeight + itemsHeight}px`
+        //     }
+        //
+        //     parent.classList.toggle('opened')
+        // },
         countER, countCPM,
     },
-}
+})
 </script>

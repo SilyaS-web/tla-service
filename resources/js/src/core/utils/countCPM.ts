@@ -1,4 +1,4 @@
-function countCPM(cover, price){
+function countCPM(cover:number, price:number):string|number{
     if (!cover) return '-';
 
     if (!price) return '-';
