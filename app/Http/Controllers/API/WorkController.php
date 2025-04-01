@@ -447,14 +447,16 @@ class WorkController extends Controller
             'message' => $user->name . ' запросил отмену',
         ]);
 
+        $product_name = $work->project->product_name ?? '(Проект удалён)';
+
         Notification::create([
             'user_id' => $work->getPartnerUser($user->role)->id,
             'type' => 'Отмена',
-            'text' => $user->name . ' хочет отменить работы по проекту' . $work->project->product_name,
+            'text' => $user->name . ' хочет отменить работы по проекту' . $product_name,
             'work_id' => $work->id,
             'from_user_id' => $user->id,
         ]);
-        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' хочет отменить работы по проекту' . $work->project->product_name);
+        TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' хочет отменить работы по проекту' . $product_name);
 
         if (!empty($work->canceled_by_blogger_at) && !empty($work->canceled_by_seller_at)) {
             $work_project_work_ids = WorkProjectWork::where('work_id', $work->id)->pluck('project_work_id');
@@ -480,12 +482,14 @@ class WorkController extends Controller
             Notification::create([
                 'user_id' => $work->getPartnerUser($user->role)->id,
                 'type' => 'Отмена',
-                'text' => 'Работы по проекту' . $work->project->product_name . ' отменены',
+                'text' => 'Работы по проекту' . $product_name . ' отменены',
                 'work_id' => $work->id,
                 'from_user_id' => $user->id,
             ]);
-            TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' отклонил вашу заявку на проект' . $work->project->product_name);
+            TgService::notify($work->getPartnerUser($user->role)->tgPhone->chat_id, $user->name . ' отклонил вашу заявку на проект' . $product_name);
         }
+
+        return response()->json()->setStatusCode(200);
     }
 
     public function viewChat(Work $work)
