@@ -194,3 +194,176 @@ export default {
     },
 }
 </script>
+<style scoped>
+    .list-blogers__item.card {
+        /* box-shadow: 0px 0px 36px 42px rgba(0, 0, 0, .02); */
+        min-width: 337px;
+        border: 1px solid #F5F5F5;
+        /*background-color: rgba(62, 66, 77, .03);*/
+        width: calc(100% / 3 - 10px);
+    }
+    .blogger-item__achives{
+        display: flex;
+        background-color: #F5FCFF;
+        border-radius: 6px;
+        padding: 6px 10px;
+        gap: 5px;
+        width: -moz-fit-content;
+        width: fit-content;
+        position: relative;
+        transition: all .2s linear;
+        height: 43.9922px;
+        overflow: hidden;
+        flex-wrap: wrap;
+        align-items: start;
+    }
+    .blogger-popup__body .blogger-item__achives{
+        margin-bottom: 18px;
+    }
+    .blogger-item__achives::after{
+        content:"";
+        width: 14px;
+        height: 25px;
+        background-image: url("/img/arrow-alt.svg");
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        cursor: pointer;
+        transform: rotate(-90deg);
+        opacity: .5;
+        transition: all .2s linear;
+        position: absolute;
+        right: 5px;
+    }
+    .blogger-item__achives-title{
+        font-size: 14px;
+        font-weight: 400;
+        color: rgba(0, 0, 0, .6);
+        cursor: pointer;
+        line-height: 1.81;
+    }
+    .blogger-item__achives-icons{
+        display: flex;
+        cursor:pointer;
+        transition: all .2s linear;
+    }
+    .card__achive {
+        border: 1px solid #fff;
+        border-radius: 50%;
+        background-color: var(--primary);
+        width: 25px;
+        height: 25px;
+        padding: 0 !important;
+        position: relative;
+        z-index: 1;
+        transition: all .2s linear;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .card__achive:not(:first-child){
+        margin-left: -8px;
+    }
+    .card__achive img{
+        width: 17px;
+    }
+    .card__header-achives{
+        position: absolute;
+        left:-3%;
+        top:-5px;
+        display:flex;
+    }
+    .blogger-item__achives-items{
+        display: flex;
+        gap: 6px;
+        flex-direction: column;
+        opacity: 0;
+        transition: all .2s linear;
+        width: 100%;
+    }
+    .blogger-achives__item{
+        display: flex;
+        align-items: center;
+        gap: 3px;
+        border-radius: 3px;
+        font-size: 12px;
+        color: rgba(0, 0, 0, .6);
+        font-weight: 400;
+        padding: 4px;
+        border: 1px solid rgba(62, 66, 77, .07);
+        width: 0;
+        overflow: hidden;
+    }
+    .card__name .blogger-achives__item{
+        overflow: visible;
+        width: 100%;
+        padding: 4px 4px 4px 0px;
+        border: unset;
+    }
+    .blogger-achives__item-icon {
+        border: 1px solid #fff;
+        border-radius: 50%;
+        background-color: var(--primary);
+        width: 23px;
+        height: 23px;
+        padding: 0 !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+        z-index: 1;
+        transition: all .2s linear;
+        background-size: 70%;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+
+    .blogger-item__achives.opened:not(.single-achive){
+        animation-name: bloggerAchivesOpen;
+        animation-duration: .2s;
+        animation-iteration-count: 1;
+        animation-direction: normal;
+        animation-fill-mode: forwards;
+    }
+    .blogger-item__achives.opened::after{
+        transform: rotate(0deg);
+        margin-left: auto;
+    }
+    .blogger-item__achives.opened .blogger-item__achives-icons{
+    }
+    .blogger-item__achives.opened .card__achive{
+        opacity: 0;
+        margin-left: 0;
+    }
+    .blogger-item__achives.opened .blogger-item__achives-items{
+        opacity: 1;
+    }
+    .blogger-item__achives.opened .blogger-achives__item{
+        width: -moz-fit-content;
+        width: fit-content;
+    }
+
+    .blogger-popup__body .blogger-item__achives{
+        margin-bottom: 18px;
+    }
+    .blogger-popup__body .blogger-item__achives.opened{
+        width: 100%!important;
+        margin-left: 11%;
+    }
+
+
+    @keyframes bloggerAchivesOpen {
+        0%{
+            width: -moz-fit-content;
+            width: fit-content;
+            height: 43.9922px;
+        }
+        50%{
+            width: 100%;
+        }
+        100% {
+            width: 100%;
+        }
+    }
+</style>

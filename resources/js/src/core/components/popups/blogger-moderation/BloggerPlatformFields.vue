@@ -116,3 +116,52 @@ import {ref} from 'vue'
         }
     }
 </script>
+<style scoped>
+    .form-stat{
+        padding: 15px;
+        border: 1px solid rgba(0, 0, 0, .05);
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+    .form-stat__title{
+        font-size: 16px;
+        font-weight: 500;
+        margin-bottom: 0;
+        display: flex;
+        justify-content: space-between;
+        cursor: pointer;
+    }
+    .form-stat__title::after{
+        content:"";
+        width: 18px; height: 18px;
+        background-image: url(/images/arrow-alt.svg?be58a60f09e579d727825ab3744892e9);
+        background-position: center;
+        background-size: contain;
+        transition: transform .1s linear;
+    }
+    .form-stat__row{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 0 10px;
+    }
+    .form-stat__row>.form-group{
+        width:calc(50% - 4px);
+    }
+    .form-stat__row label{
+        font-size: 14px;
+    }
+    .form-stat__content{
+        height: 0;
+        overflow: hidden;
+    }
+    .form-stat.active .form-stat__content{
+        height: 100% !important;
+    }
+    .form-stat.active .form-stat__title{
+        margin-bottom: 20px;
+    }
+    .form-stat.active .form-stat__title::after{
+        transform: rotate(180deg);
+    }
+</style>

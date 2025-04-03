@@ -113,3 +113,119 @@ export default {
 
 }
 </script>
+
+<style>
+.popup-project{
+    display: flex;
+    gap: 20px;
+}
+.popup-project__left, .popup-project__right{
+    width: calc(50% - 10px);
+}
+.popup-project__right{
+    padding: 20px 20px 20px 0;
+}
+.popup-project__carousel{
+    position: relative;
+    border-radius: 20px 0 0 20px;
+    overflow: hidden;
+}
+.popup-project__carousel .owl-dots{
+    position: absolute;
+    bottom: 10px;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+}
+.popup-project__img{
+    background-position: 0 0;
+    background-size: cover;
+    background-repeat: no-repeat;
+    -o-object-fit: cover;
+    object-fit: cover;
+    height:672px;
+    width: 100%;
+}
+.popup-project__title{
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+.popup-project__row{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.popup-project__mark{
+    display: flex;
+    gap: 6px;
+    font-weight: 500;
+}
+.popup-project__mark-star{
+    width: 14px; height: 14px;
+}
+.popup-project__articul{
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, .4);
+    margin-bottom: 20px;
+}
+.popup-project__cost{
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+.popup-project__addit-title{
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-size: 18px;
+}
+.characteristics__category{
+    font-size: 16px;
+    font-weight: 600;
+    color: rgba(0, 0, 0, .4);
+    margin-bottom: 12px;
+}
+.characteristics-items{
+    height:250px;
+    overflow-y: auto;
+}
+.characteristics-items::-webkit-scrollbar {
+    width: 12px;
+}
+.characteristics-items::-webkit-scrollbar-track {
+    background: #fff;
+}
+.characteristics-items::-webkit-scrollbar-thumb {
+    background-color: #7A7674;
+    border-radius: 20px;
+    border: 3px solid #fff;
+}
+.characteristics__row{
+    display: flex;
+    font-size: 15px;
+    color: rgba(0, 0, 0, .4);
+    gap: 8px;
+}
+.characteristics__row:not(:last-child){
+    margin-bottom: 10px;
+}
+.characteristics__row-right, .characteristics__row-left{
+    width: 50%;
+}
+.characteristics__row-left{
+    display: flex;
+    gap: 8px;
+    height:-moz-fit-content;
+    height:fit-content;
+    align-items: flex-end;
+    line-height: 1;
+}
+.characteristics__row-left hr{
+    border-bottom: 1px dashed rgba(0, 0, 0, .1);
+    flex: 1 1 auto;
+}
+.popup-project__addit{
+    margin-bottom: 20px;
+}
+</style>

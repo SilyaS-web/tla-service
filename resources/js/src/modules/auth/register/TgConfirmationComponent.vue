@@ -62,3 +62,67 @@ export default {
     }
 }
 </script>
+<style scoped>
+.tg-confirmation{
+    margin-bottom: 32px;
+}
+.tg-confirmation__row{
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+
+}
+.tg-confirmation__col{
+    width:calc(50% - 12px);
+}
+.tg-confirmation__title{
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+.tg-confirmation__text{
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+.tg-confirmation__btn a{
+    font-weight: 500;
+    color: #fff;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #259CD8;
+    padding:12px 20px;
+    border-radius: 5px;
+    width: -moz-fit-content;
+    width: fit-content;
+}
+.tg-confirmation__btn a:hover{
+    text-decoration: none;
+}
+.tg-confirmation__btn a::before{
+    content:"";
+    display: block;
+    width:24px; height:24px;
+    background-image: url(/images/telegram-icon.svg?4ad4af875ea736acef90835c6ee2e6a0);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    filter: brightness(0) saturate(100%) invert(99%) sepia(39%) saturate(172%) hue-rotate(274deg) brightness(119%) contrast(100%);
+}
+.tg-confirmation__block {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.tg-confirmation__block img{
+    width: 32px;
+    heiht: 32px;
+    filter: brightness(0) saturate(100%) invert(46%) sepia(44%) saturate(6441%) hue-rotate(2deg) brightness(105%) contrast(102%);
+}
+.tg-confirmation__qr{
+    display: flex;
+    justify-content: center;align-items: center;
+}
+
+</style>

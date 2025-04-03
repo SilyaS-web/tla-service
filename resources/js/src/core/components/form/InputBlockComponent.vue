@@ -29,3 +29,30 @@
         }
     }
 </script>
+<style scoped>
+    .input {
+        border-radius: 10px;
+        border: 1px solid rgba(0,0,0,.2);
+        background-color: #fff;
+        padding: 13px;
+        margin-bottom: 7px;
+        max-width:100%;
+        transition: all .1s linear;
+        color:var(--text);
+    }
+    .input:hover{
+        border-color: #544F4F;
+    }
+    .input:focus{
+        border-color:var(--primary)
+    }
+    .input::-moz-placeholder{
+        color:#56565680;
+    }
+    .input::placeholder{
+        color:#56565680;
+    }
+    .input.no-correct{
+        border-color:red;
+    }
+</style>

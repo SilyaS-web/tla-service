@@ -178,19 +178,7 @@
         </div>
 
         <!-- плашка об оплате тарифа-->
-        <div class="not_paid-alert">
-            <div class="not_paid-alert__body">
-                <div class="not_paid-alert__title">
-                    Каталог блогеров недоступен
-                </div>
-                <div class="not_paid-alert__text">
-                    Необходимо оплатить тариф, чтобы иметь возможность просматривать<br> каталог блогеров и начать работу с ними
-                </div>
-            </div>
-            <div class="not_paid-alert__footer">
-                <router-link :to="{ path: '/tariffs' }" class="not_paid-alert__btn btn btn-primary">Разблокировать каталог</router-link>
-            </div>
-        </div>
+        <payment-alert-component></payment-alert-component>
 
         <choose-project-popup ref="chooseProjectPopup"></choose-project-popup>
 
@@ -230,6 +218,8 @@ import ChoosedProject from './ChoosedProjectComponent'
 
 import ChooseProjectPopup from '../../../../core/components/popups/choose-project/ChooseProjectPopup'
 
+import PaymentAlertComponent from "./PaymentAlertComponent.vue";
+
 import DistributionTable from './DistributionTable.vue'
 import DistributionPopup from "../../../../core/components/popups/seller-mass-distribution/SellerMassDistribution.vue";
 
@@ -244,7 +234,7 @@ export default{
         DistributionPopup,
         ProjectsList, BloggersListItem,
         ChooseProjectPopup, Filter, ChoosedProject,
-        ProjectCard, DistributionTable, BloggerCardLoading,
+        ProjectCard, DistributionTable, BloggerCardLoading, PaymentAlertComponent,
 
         AppObserve
     },

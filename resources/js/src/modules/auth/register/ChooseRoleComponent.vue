@@ -51,3 +51,46 @@ export default{
     }
 }
 </script>
+<style scoped>
+.roles-cards{
+    margin-bottom: 20px;
+}
+.roles-cards__items{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+.roles-cards__card{
+    width:150px;
+    padding:5px;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border:1px solid rgba(0,0,0,0);
+    border-radius: 5px;
+    transition: border .2s linear;
+}
+.roles-cards__card img{
+    margin-bottom: 10px;
+    height:100px;
+    margin-bottom: 10px;
+    transition: opacity .2s linear;
+}
+.roles-cards__card p{
+    font-size: 14px;
+    font-weight: 600;
+}
+.roles-cards__card:hover{
+    border:1px solid var(--primary)
+}
+.roles-cards__card:hover img{
+    /* filter: brightness(0) saturate(100%) invert(48%) sepia(99%) saturate(3278%) hue-rotate(358deg) brightness(100%) contrast(109%); */
+}
+.roles-cards__card.active{
+    border:1px solid var(--primary)
+}
+.roles-cards__card.active img{
+    /* filter: brightness(0) saturate(100%) invert(48%) sepia(99%) saturate(3278%) hue-rotate(358deg) brightness(100%) contrast(109%); */
+}
+</style>
