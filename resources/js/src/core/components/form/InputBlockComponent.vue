@@ -32,20 +32,25 @@
 <style scoped>
     .input {
         border-radius: 10px;
-        border: 1px solid #F5F5F5;
-        background-color: var(--pale);
+        border: 1px solid rgba(0,0,0,.2);
+        background-color: #fff;
         padding: 13px;
         margin-bottom: 7px;
         max-width:100%;
+        transition: all .1s linear;
+        color:var(--text);
+    }
+    .input:hover{
+        border-color: #544F4F;
     }
     .input:focus{
-        box-shadow: 0px 0px 10px 6px rgba(181,76,219,.2);
+        border-color:var(--primary)
     }
     .input::-moz-placeholder{
-        color: rgba(0, 0, 0, .2);
+        color:#56565680;
     }
     .input::placeholder{
-        color: rgba(0, 0, 0, .2);
+        color:#56565680;
     }
     .input.no-correct{
         border-color:red;

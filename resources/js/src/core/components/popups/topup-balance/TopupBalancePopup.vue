@@ -22,29 +22,14 @@
                     <button class="btn btn-primary">
                         Пополнить баланс
                     </button>
-                    <button class="btn btn-secondary">
+                    <button
+                        @click="openInvoiceIssue"
+                        class="btn btn-secondary">
                         Выставить счет
                     </button>
                 </div>
-<!--                <p class="popup__title">Пополнить баланс через:</p>-->
-<!--                <div class="topup-balance__payments">-->
-<!--                    <a href="#" class="topup-balance__payments-item">-->
-<!--                        ПС-->
-<!--                    </a>-->
-<!--                    <a href="#" class="topup-balance__payments-item">-->
-<!--                        ПС-->
-<!--                    </a>-->
-<!--                    <a href="#" class="topup-balance__payments-item">-->
-<!--                        ПС-->
-<!--                    </a>-->
-<!--                    <a href="#" class="topup-balance__payments-item">-->
-<!--                        ПС-->
-<!--                    </a>-->
-<!--                    <div class="topup-balance__payments-item topup-balance__payments-item&#45;&#45;bill">-->
-<!--                        <input class="input" type="text" placeholder="Выставление счета для юр. лиц">-->
-<!--                    </div>-->
-<!--                </div>-->
             </div>
+            <invoice-issue-popup ref="invoiceIssuePopup"></invoice-issue-popup>
         </div>
     </popup-modal>
 </template>
@@ -54,9 +39,10 @@ import {ref} from "vue";
 import PopupModal from '../AppPopup.vue';
 
 import Work from '../../../services/api/Work.vue';
+import InvoiceIssuePopup from "../invoice-issue/InvoiceIssuePopup.vue";
 
 export default {
-    components: { PopupModal },
+    components: {InvoiceIssuePopup, PopupModal },
     data(){
         return{
             showNotification: ref(false),
@@ -73,6 +59,7 @@ export default {
             })
         },
         toggleNotification(){ this.showNotification = !this.showNotification },
+        openInvoiceIssue(){ this.$refs.invoiceIssuePopup.show()  },
         _confirm() {
             this.$refs.popup.close()
             this.resolvePromise(true)
@@ -85,7 +72,12 @@ export default {
     }
 }
 </script>
-
+<style>
+#topup-balance .popup__body{
+    max-width:782px;
+    padding: 24px;
+}
+</style>
 <style scoped>
 #topup-balance .popup__title{
     text-align: center;

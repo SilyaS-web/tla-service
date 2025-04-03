@@ -51,6 +51,10 @@ export default {
     backdrop-filter: blur(.6px);
 }
 
+.popup:has(.popup){
+    backdrop-filter: unset;
+}
+
 .popup::-webkit-scrollbar {
     width: 12px;
 }
@@ -115,10 +119,6 @@ export default {
 }
 .popup__body:has(.popup-distribution){
     max-width:1020px!important;
-}
-#topup-balance .popup__body{
-    max-width:782px;
-    padding: 24px;
 }
 .popup__body:has(.fullscreen-img),
 #video-popup .popup__body:has(.fullscreen-video){

@@ -100,10 +100,6 @@
                                                 :selectID="'organization_type'"
                                                 :optionsList="[
                                                     {
-                                                        name: 'Не выбрано',
-                                                        value: '',
-                                                    },
-                                                    {
                                                         name: 'ООО',
                                                         value: 'ООО',
                                                     },
