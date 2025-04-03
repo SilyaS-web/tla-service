@@ -98,7 +98,11 @@ class SellerController extends Controller
             'organization_name' => $validated['organization_name'] ?? null,
         ]);
 
-        return  response()->json(isset($image_path) ? ['image' => 'storage/' . $image_path] : '')->setStatusCode(200);
+        $data = [
+            'seller' => new SellerResource($seller),
+        ];
+
+        return response()->json($data)->setStatusCode(200);
     }
 
     /**

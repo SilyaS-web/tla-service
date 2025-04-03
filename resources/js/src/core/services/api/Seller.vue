@@ -11,17 +11,17 @@ const Seller = {
                 method: 'get',
                 url: '/api/sellers/' + id,
             })
-                .then((response) => {
-                    resolve(response.data.seller)
-                })
-                .catch((data) => {
-                    notify('error', {
-                        title: 'Внимание!',
-                        message: 'Невозможно получить информацию по селлеру, напишите в поддержку или попробуйте позже'
-                    });
+            .then((response) => {
+                resolve(response.data.seller)
+            })
+            .catch((data) => {
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'Невозможно получить информацию по селлеру, напишите в поддержку или попробуйте позже'
+                });
 
-                    resolve(false)
-                })
+                resolve(false)
+            })
         })
     },
     getList: () => {

@@ -380,7 +380,12 @@ class BloggerController extends Controller
 
         $blogger->save();
 
-        return response()->json(isset($image_path) ? ['image' => 'storage/' . $image_path] : '')->setStatusCode(200);
+        $data = [
+            'blogger' => new BloggerResource($blogger),
+            'platform_fields' => BloggerPlatform::getFields(),
+        ];
+
+        return response()->json($data)->setStatusCode(200);
     }
 
     public function getContent(Blogger $blogger): JsonResponse

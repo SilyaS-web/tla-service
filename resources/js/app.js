@@ -1,7 +1,7 @@
 require('./bootstrap');
 
 import { createApp } from 'vue'
-import { createMemoryHistory, createRouter } from 'vue-router'
+import { createMemoryHistory, createWebHistory, createRouter } from 'vue-router'
 
 // admin imports
 import AdminIndex from './src/modules/admin/index.vue'
@@ -35,7 +35,7 @@ const routes = [
 ]
 
 const router = createRouter({
-    history: createMemoryHistory(),
+    history: createWebHistory(),
     routes,
     scrollBehavior(to, from, savedPosition) {
         if (savedPosition) {
@@ -64,7 +64,7 @@ router.beforeEach(async (to, from) => {
         }
     }
     else if(!to.name && isAuthenticated){
-        let user = !tgToken ? await User.getUser() : await User.getCurrentUser();
+        const user = !tgToken ? await User.getUser() : await User.getCurrentUser();
 
         if(user.status == -1){
             return {
