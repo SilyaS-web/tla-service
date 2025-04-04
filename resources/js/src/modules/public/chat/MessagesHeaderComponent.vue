@@ -40,6 +40,13 @@
                     {{ chat.btnData.title }}
                 </div>
                 <div
+                    v-if="this.user.role === 'seller'"
+                    class="chat__opts-item"
+                    @click="sendOfferPopup"
+                >
+                    Предложить заказ
+                </div>
+                <div
                     v-if="chat && !(chat.canceled_by_seller_at && chat.canceled_by_blogger_at)"
                     @click="chatAction('cancel')"
                     class="chat__opts-item chat__opts-item--cancel">
@@ -47,20 +54,31 @@
                 </div>
             </div>
         </div>
+        <SendOffer ref="sendOfferPopup"></SendOffer>
     </div>
 </template>
 <script>
 import {ref} from 'vue'
 
+import User from '../../../core/services/api/User.vue'
+
+import SendOffer from '../../../core/components/popups/seller-send-offer/SendOfferPopup'
+
 import ProjectSignboard from './MessagesHeaderProjectComponent'
 
 export default {
     props:['chat'],
-    components:{ ProjectSignboard },
+    components:{ ProjectSignboard, SendOffer },
     data(){
         return {
-            isOptionsOpen: ref(false)
+            isOptionsOpen: ref(false),
+            user: null,
+
+            User
         }
+    },
+    created(){
+        this.user = this.User.getCurrent()
     },
     methods:{
         backToChats(){
@@ -79,6 +97,9 @@ export default {
             if(typeFromProject) return typeFromProject;
 
             return 'Неизвестно'
+        },
+        sendOfferPopup(){
+            this.$refs.sendOfferPopup.show(null, null)
         }
     }
 }
