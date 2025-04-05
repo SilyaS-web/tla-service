@@ -82,7 +82,7 @@ export default{
                 }, 300)
             })
         },
-        applyFilter(){
+        applyFilter(filterData){
             this.filterData = filterData;
             this.Loader.loaderOn(this.$el);
             this.works = [];

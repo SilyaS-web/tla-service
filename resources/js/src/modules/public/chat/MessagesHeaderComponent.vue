@@ -14,8 +14,8 @@
 
         <div
             @click="isOptionsOpen = !isOptionsOpen"
-            :class="'chat__opts ' + (isOptionsOpen && 'active')">
-            <img src="img/dots-icon.svg" alt="">
+            :class="['chat__opts', (isOptionsOpen ? 'active' : '')]">
+            <img src="/img/dots-icon.svg" alt="">
             <div class="chat__opts-items">
                 <div class="chat__opts-partner">
                     <div

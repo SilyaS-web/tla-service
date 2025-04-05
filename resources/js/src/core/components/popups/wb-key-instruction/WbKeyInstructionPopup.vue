@@ -3,12 +3,31 @@ import PopupModal from "../AppPopup.vue";
 
 export default {
     name: "WbKeyInstructionPopup",
-    components: {PopupModal}
+    components: {PopupModal},
+    methods:{
+        show() {
+            this.$refs.popup.open()
+
+            return new Promise((resolve, reject) => {
+                this.resolvePromise = resolve
+                this.rejectPromise = reject
+            })
+        },
+        _confirm() {
+            this.$refs.popup.close()
+            this.resolvePromise(true)
+        },
+
+        _cancel() {
+            this.$refs.popup.close()
+            this.resolvePromise(false)
+        },
+    }
 }
 </script>
 
 <template>
-    <popup-modal id="wb-key-instruction">
+    <popup-modal id="wb-key-instruction" ref="popup">
         <div class="instruction__header popup__header">
             <div class="popup__title title">
                 Где найти ключ API на ВБ?
@@ -40,7 +59,6 @@ export default {
 <style>
 #wb-key-instruction .popup__body{
     max-width:782px!important;
-    padding: 24px!important;
 }
 </style>
 <style scoped>
@@ -56,12 +74,17 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    padding-left: 18px;
 }
 .instruction__list-item{
     list-style-type: decimal;
     font-size: 16px;
     font-weight: 400;
     line-height: 1;
+}
+.instruction__list-item--img{
+    list-style-type: none;
+    margin-left: -18px;
 }
 .instruction__list-item--img img{
     width: 100%;

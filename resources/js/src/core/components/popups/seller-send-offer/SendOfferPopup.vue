@@ -2,43 +2,44 @@
     <popup-modal ref="popup">
         <div class="popup__header">
             <div class="popup__title title">
-                Предложить заказ
+                Укажите детали
             </div>
             <div class="popup__subtitle">
             </div>
         </div>
         <div class="popup__form">
-            <InputBlockComponent
-                v-model="offer.price"
-                :label="'Бюджет'"
-                :inputType="'number'"
-                :inputPlaceholder="'Введите желаемый бюджет'"
-                :inputClassList="[]"
-                :inputID="'seller-offer-price'"
-                :error="null"
-            ></InputBlockComponent>
-            <SelectBlockComponent
-                v-model="offer.time"
-                :selectID="'seller-offer-time'"
-                :optionsList="timesArr.map(t => {
-                        return {
-                            name: t,
-                            value: t,
-                        }
-                    })"
-                :label="'Желаемый срок выполнения'"
-            ></SelectBlockComponent>
             <TextareaBlockComponent
                 v-model="offer.text"
                 :id="'seller-offer-text'"
-                :label="'Напишите, что требуется выполнить'"
-                :placeholder="'Введите текст'"
+                :label="'Опишите задание'"
+                :placeholder="'Напишите, что требуется выполнить'"
                 :cols="30"
                 :rows="10"
                 :classList="[]"
                 :error="null"
             >
             </TextareaBlockComponent>
+            <InputBlockComponent
+                v-model="offer.price"
+                :inputType="'number'"
+                :label="'Бюджет'"
+                :inputPlaceholder="'Введите бюджет'"
+                :inputClassList="[]"
+                :inputID="'seller-offer-price'"
+                :error="null"
+            ></InputBlockComponent>
+            <SelectBlockComponent
+                v-model="offer.time"
+                :label="'Желаемый срок выполнения'"
+                :placeholder="'Выберите желаемый срок выполнения'"
+                :selectID="'seller-offer-time'"
+                :optionsList="timesArr.map(t => {
+                    return {
+                        name: t,
+                        value: t,
+                    }
+                })"
+            ></SelectBlockComponent>
             <InputFileBlockComponent
                 v-model="offer.file"
                 :label="'Прикрепить файл'"
@@ -48,7 +49,7 @@
             <button
                 @click="sendOffer"
                 class="btn btn-primary">
-                Отправить
+                Предложить заказ
             </button>
         </div>
     </popup-modal>
@@ -110,3 +111,17 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.popup__header{
+    margin-bottom: 40px;
+}
+.popup__title{
+    text-align:left;
+    margin-bottom: 0;
+    font-size: 18px;
+}
+.btn-primary{
+    width: 100%;
+}
+</style>

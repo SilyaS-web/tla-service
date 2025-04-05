@@ -169,7 +169,7 @@ export default {
             <div class="documents-content__tabs">
                 <a
                     href="#"
-                    @click="step = 1"
+                    @click.prevent="step = 1"
                     :class="[
                         'documents-content__tab',
                         (step >= 1 ? 'active' : '')
@@ -178,7 +178,7 @@ export default {
                 </a>
                 <a
                     href="#"
-                    @click="availableStep >= 2 && (step = 2)"
+                    @click.prevent="availableStep >= 2 && (step = 2)"
                     :class="[
                         'documents-content__tab',
                         (availableStep >= 2 ? 'active' : '')
@@ -187,7 +187,7 @@ export default {
                 </a>
                 <a
                     href="#"
-                    @click="availableStep >= 3 && (step = 3)"
+                    @click.prevent="availableStep >= 3 && (step = 3)"
                     :class="[
                         'documents-content__tab',
                         (availableStep >= 3 ? 'active' : '')
@@ -196,7 +196,7 @@ export default {
                 </a>
                 <a
                     href="#"
-                    @click="availableStep >= 4 && (step = 4)"
+                    @click.prevent="availableStep >= 4 && (step = 4)"
                     :class="[
                         'documents-content__tab',
                         (availableStep >= 4 ? 'active' : '')
@@ -205,7 +205,7 @@ export default {
                 </a>
                 <a
                     href="#"
-                    @click="availableStep >= 5 && (step = 5)"
+                    @click.prevent="availableStep >= 5 && (step = 5)"
                     :class="[
                         'documents-content__tab',
                         (availableStep >= 5 ? 'active' : '')
@@ -221,6 +221,7 @@ export default {
             <div class="documents-content__forms">
                 <div
                     v-show="step === 1"
+                    id="step-1"
                     class="documents-content__form">
                     <div class="documents-content__form-body">
                         <input-block-component
@@ -271,6 +272,7 @@ export default {
 
                 <div
                     v-show="step === 2"
+                    id="step-2"
                     class="documents-content__form">
                     <div class="documents-content__form-body">
                         <div class="documents-content__form-row">
@@ -378,6 +380,7 @@ export default {
 
                 <div
                     v-show="step === 3"
+                    id="step-3"
                     class="documents-content__form">
                     <div class="documents-content__form-body">
                         <select-block-component
@@ -431,6 +434,7 @@ export default {
 
                 <div
                     v-show="step === 4"
+                    id="step-4"
                     class="documents-content__form">
                     <div class="documents-content__form-body">
                         <input-block-component
@@ -451,6 +455,7 @@ export default {
 
                 <div
                     v-show="step === 5"
+                    id="step-5"
                     class="documents-content__form">
                     <div class="documents-content__form-body">
                         <h3 class="documents-content__form-notready">Этап в разработке</h3>
@@ -491,7 +496,7 @@ export default {
         border-bottom-color: #000;
     }
     .documents-content__description{
-        color:#666666;
+        color:var(--primary);
         font-size: 14px;
         font-weight: 400;
     }
@@ -504,6 +509,7 @@ export default {
     .documents-content__form-body{
         display: flex;
         flex-direction: column;
+        max-width:501px;
     }
     .documents-content__form-row{
         display: flex;
@@ -525,7 +531,14 @@ export default {
         gap: 8px;
     }
     .documents-content__form-footer .btn{
-        flex: 1 1 782px;
-        max-width: 782px;
+        flex: 1 1 501px;
+        max-width: 501px;
+    }
+    #step-2 .documents-content__form-body{
+        max-width:100%;
+    }
+    #step-2 .documents-content__form-footer .btn{
+        flex: 1 1 100%;
+        max-width: 100%;
     }
 </style>

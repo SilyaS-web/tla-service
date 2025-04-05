@@ -54,5 +54,16 @@ export default {
     },
 }
 </script>
+<style>
+#media-popup .popup__body:has(.fullscreen-img),
+#media-popup .popup__body:has(.fullscreen-video){
+    background-color: unset !important;
+    max-width:unset !important;
+}
+#media-popup .popup__container:has(.fullscreen-img),
+#media-popup .popup__container:has(.fullscreen-video){
+    margin:0 auto;
+}
+</style>
 <style scoped>
 </style>

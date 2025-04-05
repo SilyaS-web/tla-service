@@ -12,17 +12,34 @@
                     </a>
                 </div>
                 <div class="filter__items">
-                    <div class="form-group filter__item">
-                        <input type="text" class="input" name="filter-name" id="filter-name" v-model="filter.product_name" placeholder="Поиск по названию">
-                    </div>
-                    <div class="form-group filter__item">
-                        <label for="">Формат рекламы</label>
-                        <select name="project_type" id="filter-format" class="input" v-model="filter.project_type">
-                            <option value="" class="">Выберите формат</option>
-                            <option value="integration" class="">Интеграция</option>
-                            <option value="feedback" class="">Выкуп + отзыв</option>
-                        </select>
-                    </div>
+                    <input-block-component
+                        v-model="filter.product_name"
+                        :inputID="'filter-name'"
+                        :inputType="'text'"
+                        :inputPlaceholder="'Поиск по названию'"
+                        :wrapClassList="['filter__item']"
+                    >
+                    </input-block-component>
+                    <select-block-component
+                        v-model="filter.project_type"
+                        :label="'Формат рекламы'"
+                        :selectID="'filter-format'"
+                        :wrapClassList="['filter__item']"
+                        :optionsList="[
+                            {
+                                name: 'Интеграция',
+                                value: 'integration',
+                            },
+                            {
+                                name: 'Выкуп + отзыв',
+                                value: 'feedback',
+                            },
+                            {
+                                name: 'UGC-контент',
+                                value: 'ugc_content',
+                            },
+                        ]"
+                    ></select-block-component>
 
                     <div class="filter__btns">
                         <button
@@ -39,8 +56,11 @@
 </template>
 <script>
 import {ref} from "vue";
+import InputBlockComponent from "../../../../core/components/form/InputBlockComponent.vue";
+import SelectBlockComponent from "../../../../core/components/form/SelectBlockComponent.vue";
 
 export default{
+    components: {SelectBlockComponent, InputBlockComponent},
     data(){
         return {
             filter: ref({

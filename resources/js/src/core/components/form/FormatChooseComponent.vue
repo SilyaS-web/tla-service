@@ -180,6 +180,12 @@ export default {
 </script>
 
 <style scoped>
+    .marketing-format label{
+        margin-bottom: 20px;
+    }
+    .marketing-format__item label{
+        margin-bottom: 0;
+    }
     .format-video{
         cursor: pointer;
         display: flex;

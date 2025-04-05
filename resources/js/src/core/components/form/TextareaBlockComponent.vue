@@ -1,6 +1,10 @@
 <template>
     <div class="form-group">
-        <label :for="id">{{ label }}</label>
+        <div
+            v-if="label"
+            class="form-group__header">
+            <label :for="id">{{ label }}</label>
+        </div>
         <textarea
             :name="id"
             :id="id"

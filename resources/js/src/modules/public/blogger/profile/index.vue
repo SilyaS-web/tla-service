@@ -166,3 +166,8 @@ export default {
     }
 }
 </script>
+<style>
+.tab-content__form{
+    margin-bottom: 56px;
+}
+</style>

@@ -176,6 +176,8 @@ export default{
         },
 
         applyFilter(filterData){
+            this.Loader.loaderOn(this.$el);
+
             this.filterData = filterData;
 
             this.assignFilterAndSortData();

@@ -11,9 +11,13 @@
                 </a>
             </div>
             <div class="filter__items">
-                <div class="form-group filter__item">
-                    <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию" v-model="filter.name">
-                </div>
+                <input-block-component
+                    v-model="filter.name"
+                    :inputID="'filter-name'"
+                    :inputType="'text'"
+                    :inputPlaceholder="'Поиск по названию'"
+                    :wrapClassList="['filter__item']"
+                ></input-block-component>
 
                 <div class="form-group filter__item">
                     <div class="filter__item--has-content" id = "filter__item">
@@ -23,6 +27,7 @@
                                 class="checkbox__checkbox"
                                 id="has-content"
                                 :value="filter.has_content"
+                                :checked="filter.has_content === 1"
                                 @change="filter.has_content = Number(!filter.has_content)">
                             <label for="has-content">Есть примеры контента</label>
                         </div>
@@ -36,25 +41,34 @@
                             <div
                                 v-for="platform in platforms"
                                 @click="filter.platform === platform.id ? filter.platform = '' : filter.platform = platform.id"
-                                :class="'form-platform ' + (filter.platform == platform.id ? 'current' : '')">
-                                <img :src="platform.image" alt="">
+                                :class="'form-platform ' + (filter.platform === platform.id ? 'current' : '')">
+                                <img :src="'/' + platform.image" alt="">
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="form-group filter__item">
-                    <label for="filter-country">Страна блогера</label>
-                    <select name="filter-country" id="filter-country" class="input" v-model="filter.country">
-                        <option value="" class="">Выберите страну</option>
-                        <option value="1" class="">Россия</option>
-                    </select>
-                </div>
+                <select-block-component
+                    v-model="filter.country"
+                    :label="'Страна блогера'"
+                    :selectID="'filter-country'"
+                    :wrapClassList="['filter__item']"
+                    :optionsList="[
+                        {
+                            name: 'Россия',
+                            value: '1',
+                        },
+                    ]"
+                ></select-block-component>
 
-                <div class="form-group filter__item">
-                    <label for="filter-city">Город блогера</label>
-                    <input type="text" class="input" name="filter-city" id="filter-city" placeholder="Введите город" v-model="filter.city">
-                </div>
+                <input-block-component
+                    v-model="filter.city"
+                    :label="'Город блогера'"
+                    :inputID="'filter-city'"
+                    :inputType="'text'"
+                    :inputPlaceholder="'Введите город'"
+                    :wrapClassList="['filter__item']"
+                ></input-block-component>
 
                 <ChooseTheme
                     v-model="filter.themes"
@@ -89,8 +103,22 @@
                         ></Slider>
                     </div>
                     <div class="form-group row" style="margin-top: 10px; flex-direction:row; justify-content: space-between; display:flex; gap: 15px">
-                        <input style="width:150px" type="number" class="input" v-model="filterSubscribersQuantity.value[0]">
-                        <input style="width:150px" type="number" class="input" v-model="filterSubscribersQuantity.value[1]">
+                        <input-component
+                            @input="filterSubscribersQuantity.value[0] = $event.target.value"
+                            :value="filterSubscribersQuantity.value[0]"
+                            :id="'subscribers-quantity-from'"
+                            :type="'number'"
+                            :placeholder="''"
+                        >
+                        </input-component>
+                        <input-component
+                            @input="filterSubscribersQuantity.value[1] = $event.target.value"
+                            :value="filterSubscribersQuantity.value[1]"
+                            :id="'subscribers-quantity-to'"
+                            :type="'number'"
+                            :placeholder="''"
+                        >
+                        </input-component>
                     </div>
                 </div>
                 <div class="filter__btns">
@@ -113,9 +141,12 @@ import Slider from '@vueform/slider'
 import Platforms from "../../../../core/services/api/Platforms";
 
 import ChooseTheme from "../../../../core/components/choose-theme/index"
+import InputBlockComponent from "../../../../core/components/form/InputBlockComponent.vue";
+import SelectBlockComponent from "../../../../core/components/form/SelectBlockComponent.vue";
+import InputComponent from "../../../../core/components/form/InputComponent.vue";
 
 export default{
-    components:{ Slider, ChooseTheme },
+    components:{InputComponent, SelectBlockComponent, InputBlockComponent, Slider, ChooseTheme },
     data(){
         return{
             platforms: ref([]),
@@ -168,6 +199,7 @@ export default{
                 sex: [],
                 subscriber_quantity_min: 0,
                 subscriber_quantity_max: 4000000,
+                has_content: 0,
             }
             this.filterSubscribersQuantity = {
                 value: [0, 4000000]
@@ -181,3 +213,17 @@ export default{
     }
 }
 </script>
+
+<style scoped>
+    .form-group label{
+        margin-bottom: 20px;
+    }
+    .form-group .input-checkbox-w label,
+    .form-group .checkbox label{
+        margin-bottom: 0;
+    }
+    #subscribers-quantity-from,
+    #subscribers-quantity-to{
+        width: 110px;
+    }
+</style>

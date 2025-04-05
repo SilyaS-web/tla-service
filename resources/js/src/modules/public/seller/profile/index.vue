@@ -14,7 +14,7 @@
                     {
                         tabName: 'Организация',
                         tabContent: 'organization',
-                        classList: ['organization-link'],
+                        classList: ['documents-link'],
                         isActive: tab === 'organization'
                     },
                     {
@@ -165,3 +165,8 @@ export default {
     }
 }
 </script>
+<style>
+.tab-content__form{
+    margin-bottom: 56px;
+}
+</style>

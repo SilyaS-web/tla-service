@@ -63,14 +63,12 @@ export default {
                             <span>Изменить аватар</span>
                             <input
                                 @change="profileImageUploaded"
-                                type="file" name="image" class="" id="profile-img">
+                                type="file" hidden="" name="image" class="" id="profile-img">
                         </label>
                         <span v-if="errors['image']" class="error">{{ errors['image'] }}</span>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="tab-content__form">
             <input-block-component
                 v-model="saveData.name"
                 :label="'Имя'"
@@ -109,13 +107,20 @@ export default {
 .tab-content__image{
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
+    width: fit-content;
+    align-self: flex-start;
+    margin-bottom: 40px;
 }
 .tab-content__image img{
     border-radius:50%;
     width: 172px;
     height: 172px;
-    object-fit:cover
+    object-fit:cover;
+    margin-bottom: 20px;
+}
+.tab-content .btn{
+    width: 100%;
 }
 </style>

@@ -61,19 +61,21 @@ export default {
                 <input-block-component
                     v-model="repeatPassword"
                     :label="'Новый пароль(еще раз)'"
-                    :inputType="'repeat_password'"
+                    :inputType="'password'"
                     :inputID="'repeat_password'"
                     :inputPlaceholder="'Введите новый пароль еще раз'"
                     :error="errors['repeat_password']"
                 ></input-block-component>
             </div>
-            <button
-                @click="save"
-                class="btn btn-primary">Сохранить изменения</button>
         </div>
+        <button
+            @click="save"
+            class="btn btn-primary">Сохранить изменения</button>
     </div>
 </template>
 
 <style scoped>
-
+.tab-content .btn{
+    width: 100%;
+}
 </style>

@@ -2,10 +2,13 @@
 import {ref} from "vue";
 
 import WbKeyInstructionPopup from "../../../../core/components/popups/wb-key-instruction/WbKeyInstructionPopup.vue";
+import InputBlockComponent from "../../../../core/components/form/InputBlockComponent.vue";
+import OzonClientIdInstructionsPopup
+    from "../../../../core/components/popups/ozon-client-id-instructions/OzonClientIdInstructionsPopup.vue";
 
 export default {
     name: "ApiInfoComponent",
-    components: {WbKeyInstructionPopup},
+    components: {OzonClientIdInstructionsPopup, InputBlockComponent, WbKeyInstructionPopup},
     props:[
         'wb_link',
         'wb_api_key',
@@ -27,6 +30,7 @@ export default {
     },
     methods:{
         openWbInstruction(){ this.$refs.wbInstructionPopup.show() },
+        openOzonInstruction(){ this.$refs.ozonInstructionPopup.show() },
         save(){
             this.$emit('saveSeller', this.saveData)
         }
@@ -39,43 +43,63 @@ export default {
         <div class="tab-content__form tab-content__form--api" style="flex-direction:column;">
             <div class="tab-content__form-form" style="">
                 <div class="tab-content__form-right--wb">
-                    <div class="form-group">
-                        <label for="">Ссылка на магазин WB</label>
-                        <input type="text" class="input" id="marketplace" name="wb_link" v-model="saveData.wbLink">
-                        <span v-if = "errors['wb_link']" class="error">{{ errors['wb_link'][0] }}</span>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-group__header">
-                            <label for="ozon_api_key">Ключ API WB</label>
-                            <a href="#">
-                                Где найти ключ API Wildberries?
-                            </a>
-                        </div>
-                        <input type="text" class="input" id="wb_api_key" name="wb_api_key" v-model="saveData.wbApiKey">
-                        <span v-if = "errors['wb_api_key']" class="error">{{ errors['wb_api_key'][0] }}</span>
-                    </div>
+                    <input-block-component
+                        v-model="saveData.wbLink"
+                        :label="'Ссылка на магазин WB'"
+                        :inputType="'text'"
+                        :inputPlaceholder="'Введите ссылку на магазин WB'"
+                        :inputClassList="[]"
+                        :inputID="'profile-wb_link'"
+                        :error="errors['wb_link']"
+                    ></input-block-component>
+                    <input-block-component
+                        v-model="saveData.wbLink"
+                        v-on:openWbInstruction="openWbInstruction"
+                        :label="'Ключ API WB'"
+                        :inputType="'text'"
+                        :inputPlaceholder="'Введите ключ API WB'"
+                        :inputClassList="[]"
+                        :inputID="'profile-wb_api_key'"
+                        :headerLink="{
+                            name: 'Где найти ключ API Wildberries?',
+                            eventName: 'openWbInstruction'
+                        }"
+                        :error="errors['wb_api_key'] ? errors['wb_api_key'][0] : ''"
+                    ></input-block-component>
                 </div>
                 <div class="tab-content__form-left--ozon">
-                    <div class="form-group">
-                        <label for="ozon_link">Ссылка на магазин OZON</label>
-                        <input type="text" class="input" id="ozon_link" name="ozon_link" v-model="saveData.ozonLink">
-                        <span v-if = "errors['ozon_link']" class="error">{{ errors['ozon_link'][0] }}</span>
-                    </div>
-                    <div class="form-group">
-                        <div class="form-group__header">
-                            <label for="ozon_api_key">Client ID OZON</label>
-                            <a href="#">
-                                Где найти Client ID и ключ API OZON?
-                            </a>
-                        </div>
-                        <input type="text" class="input" id="ozon_client_id" name="ozon_client_id" v-model="saveData.ozonClientID">
-                        <span v-if = "errors['ozon_client_id']" class="error">{{ errors['ozon_client_id'][0] }}</span>
-                    </div>
-                    <div class="form-group">
-                        <label for="ozon_api_key">Ключ API OZON</label>
-                        <input type="text" class="input" id="ozon_api_key" name="ozon_api_key" v-model="saveData.ozonApiKey">
-                        <span v-if = "errors['ozon_api_key']" class="error">{{ errors['ozon_api_key'][0] }}</span>
-                    </div>
+                    <input-block-component
+                        v-model="saveData.wbLink"
+                        :label="'Ссылка на магазин OZON'"
+                        :inputType="'text'"
+                        :inputPlaceholder="'Введите ссылку на магазин OZON'"
+                        :inputClassList="[]"
+                        :inputID="'profile-ozon_link'"
+                        :error="errors['ozon_link'] ? errors['ozon_link'][0] : ''"
+                    ></input-block-component>
+                    <input-block-component
+                        v-model="saveData.ozonClientID"
+                        v-on:openOzonInstruction="openOzonInstruction"
+                        :label="'Client ID OZON'"
+                        :inputType="'text'"
+                        :inputPlaceholder="'Введите Client ID OZON'"
+                        :inputClassList="[]"
+                        :inputID="'profile-ozon_client_id'"
+                        :headerLink="{
+                            name: 'Где найти Client ID и ключ API OZON?',
+                            eventName: 'openOzonInstruction'
+                        }"
+                        :error="errors['ozon_client_id'] ? errors['ozon_client_id'][0] : ''"
+                    ></input-block-component>
+                    <input-block-component
+                        v-model="saveData.ozonApiKey"
+                        :label="'Ключ API OZON'"
+                        :inputType="'text'"
+                        :inputPlaceholder="'Введите ключ API Ozon'"
+                        :inputClassList="[]"
+                        :inputID="'profile-ozon_api_key'"
+                        :error="errors['ozon_api_key'] ? errors['ozon_api_key'][0] : ''"
+                    ></input-block-component>
                 </div>
             </div>
         </div>
@@ -83,18 +107,6 @@ export default {
             @click="save"
             class="btn btn-primary">Сохранить изменения</button>
         <wb-key-instruction-popup ref="wbInstructionPopup"></wb-key-instruction-popup>
+        <ozon-client-id-instructions-popup ref="ozonInstructionPopup"></ozon-client-id-instructions-popup>
     </div>
 </template>
-
-<style scoped>
-    .form-group__header{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
-    .form-group__header a{
-        font-size: 14px;
-        font-weight: 400;
-        color:var(--text-non-accent);
-    }
-</style>

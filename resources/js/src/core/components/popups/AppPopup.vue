@@ -100,7 +100,7 @@ export default {
     position: relative;
     background-color: #fff;
     border-radius: 12px;
-    padding:40px 30px;
+    padding:32px;
     max-width: 680px;
     width: 100%;
 }
@@ -119,15 +119,6 @@ export default {
 }
 .popup__body:has(.popup-distribution){
     max-width:1020px!important;
-}
-.popup__body:has(.fullscreen-img),
-#video-popup .popup__body:has(.fullscreen-video){
-    background-color: unset !important;
-    max-width:unset !important;
-}
-.popup__container:has(.fullscreen-img),
-#video-popup .popup__container:has(.fullscreen-video){
-    margin:0 auto;
 }
 .popup#add-content .popup__body{
     width: calc(100% - 200px);
@@ -164,10 +155,10 @@ export default {
     right:20px;top:24px;
     cursor: pointer;
     z-index: 1;
-    border-radius: 50%;
+    border-radius: 6px;
     background-color: #fff;
     padding: 5px;
-    width: 34px; height: 34px;
+    width: 40px; height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -181,5 +172,22 @@ export default {
 }
 .close-popup:hover svg path{
     stroke:var(--primary);
+}
+
+@media (max-width: 545px) {
+    .popup__body {
+        padding-bottom: 140px !important;
+    }
+}
+
+@media (max-width: 475px) {
+    .popup__body {
+        padding: 25px 10px;
+        width: 100%;
+        height: 100%;
+        max-width: unset;
+        border-radius: 0;
+        min-height: 100vh;
+    }
 }
 </style>

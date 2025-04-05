@@ -1,11 +1,15 @@
 <template>
     <div class="chat__search" style="width:100%">
-        <input
-            v-model="chatSearchString"
-            type="text"
-            style="width:100%"
-            class="input chat__search-input"
-            placeholder="Введите ID проекта, Имя или Название проекта">
+        <input-component
+            @input="chatSearchString = $event.target.value"
+            :id="'chat-search-input'"
+            :type="'text'"
+            :placeholder="'Введите ID проекта, Имя или Название проекта'"
+            :value="chatSearchString"
+            :classList="['chat__search-input']"
+            :style="{width:'100%'}"
+        >
+        </input-component>
     </div>
 
     <div class="chat__chat-items">
@@ -33,10 +37,11 @@
 import {ref} from "vue";
 
 import ChatItem from './ChatItemComponent'
+import InputComponent from "../../../core/components/form/InputComponent.vue";
 
 export default {
     props:['works', 'userRole', 'currentChatID'],
-    components: { ChatItem },
+    components: {InputComponent, ChatItem },
     data(){
         return {
             chatSearchString: ref(null),

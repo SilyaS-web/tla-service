@@ -1,18 +1,11 @@
 <template>
-    <div class="form-group">
-        <label :for="selectID">{{ label }}</label>
-<!--        <select-->
-<!--            :id="selectID"-->
-<!--            :name="selectID"-->
-<!--            :class="'select ' + (getSelectClassString())"-->
-<!--            v-bind:value="modelValue"-->
-<!--            v-on:change="$emit('update:modelValue', $event.target.value)">-->
-<!--            <option-->
-<!--                v-for="option in optionsList"-->
-<!--                :value="option.value">-->
-<!--                {{ option.name }}-->
-<!--            </option>-->
-<!--        </select>-->
+    <div
+        :class="['form-group', selectWrapClassString]">
+        <div
+            v-if="label"
+            class="form-group__header">
+            <label :for="selectID">{{ label }}</label>
+        </div>
         <div
             :id="selectID"
             :data-name="selectID"
@@ -20,7 +13,7 @@
             @click="toggleSelect">
             <div class="select__selected">
                 <div :class="['select__name', (selectedItem ? 'select__name--selected' : '')]">
-                    {{ selectedItem ? selectedItem.name : 'Не выбрано' }}
+                    {{ getSelectedTitle() }}
                 </div>
                 <div class="select__icon">
                     <select-arrow-icon></select-arrow-icon>
@@ -47,8 +40,8 @@ import SelectArrowIcon from "../../icons/SelectArrowIcon.vue";
 export default{
     components: {SelectArrowIcon},
     props:[
-        'label', 'error', 'modelValue', 'selectClassList',
-        'selectID', 'optionsList'
+        'label', 'error', 'modelValue', 'selectClassList', 'wrapClassList',
+        'selectID', 'optionsList', 'placeholder'
     ],
     data(){
         return {
@@ -56,14 +49,34 @@ export default{
             selectedItem: ref(null),
         }
     },
+    watch:{
+        modelValue(){
+            if(this.selectedItem.value !== this.modelValue){
+                this.selectedItem = this.optionsList.find(item => item.value === this.modelValue);
+            }
+        }
+    },
     computed:{
         selectClassString(){
             return this.selectClassList && this.selectClassList.length > 0 ? this.selectClassList.join(' ') : ''
         },
+        selectWrapClassString(){
+            return this.wrapClassList && this.wrapClassList.length > 0 ? this.wrapClassList.join(' ') : ''
+        },
     },
     methods:{
         toggleSelect(){ this.isActive = !this.isActive },
-        selectItem(item){ this.selectedItem = item }
+        getSelectedTitle(){
+            if(this.selectedItem) return this.selectedItem.name
+
+            if(this.placeholder) return this.placeholder
+
+            return 'Не выбрано'
+        },
+        selectItem(item){
+            this.selectedItem = item
+            this.$emit('update:modelValue', this.selectedItem.value)
+        }
     }
 }
 </script>
@@ -107,8 +120,6 @@ export default{
         border-color:var(--primary);
     }
 
-
-
     .select__selected{
         display:flex;
         justify-content: space-between;
@@ -134,20 +145,22 @@ export default{
     }
 
     .select__items{
-        display:flex;
         flex-direction: column;
         gap: 2px;
         position: absolute;
-        left: -1px;
+        left: -2px;
         top: calc(100% + 1px);
-        width: calc(100% + 2px);
+        width: calc(100% + 4px);
         background-color: #fff;
         opacity: 0;
-        padding: 4px 0;
+        display: none;
+        padding: 4px 2px;
         transition: all .1s linear;
+        border-radius: 0 0 12px 12px;
     }
     .select.active .select__items{
         opacity:1;
+        display:flex;
     }
     .select__item{
         padding: 10px;

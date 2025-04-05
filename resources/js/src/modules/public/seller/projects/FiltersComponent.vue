@@ -12,36 +12,40 @@
                     </a>
                 </div>
                 <div class="filter__items">
-                    <div class="form-group filter__item">
-                        <input type="text" class="input" name="filter-name" id="filter-name" placeholder="Поиск по названию" v-model="filter.product_name">
-                    </div>
-                    <div class="form-group filter__item">
-                        <label for="filter-category">Категория</label>
-                        <input
-                            @input="getCategories"
-                            @focusout="clearCategories"
-                            v-model="currentCategory"
-                            type="text" class="input" name="filter-category" id="filter-category" placeholder="Введите категорию">
-                        <input type="text" id = "filter-category-id" hidden>
-                        <div class="filter-tooltip" v-if="categories && categories.length">
-                            <div class="filter-tooltip__items">
-                                <div
-                                    v-for="category in categories"
-                                    @click="chooseCategory(category)"
-                                    class="filter-tooltip__row">
-                                    {{ category.theme }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group filter__item">
-                        <label for="">Формат рекламы</label>
-                        <select name="filter-format" id="filter-format" class = "input" v-model="filter.project_type">
-                            <option value="" class="">Выберите формат</option>
-                            <option value="integration" class="">Интеграция</option>
-                            <option value="feedback" class="">Выкуп + отзыв</option>
-                        </select>
-                    </div>
+                    <input-block-component
+                        v-model="filter.product_name"
+                        :inputID="'filter-name'"
+                        :inputType="'text'"
+                        :inputPlaceholder="'Поиск по названию'"
+                        :wrapClassList="['filter__item']"
+                    >
+                    </input-block-component>
+
+                    <choose-category-component
+                        v-model="filter.category"
+                    ></choose-category-component>
+
+                    <select-block-component
+                        v-model="filter.project_type"
+                        :label="'Формат рекламы'"
+                        :selectID="'filter-format'"
+                        :wrapClassList="['filter__item']"
+                        :optionsList="[
+                            {
+                                name: 'Интеграция',
+                                value: 'integration',
+                            },
+                            {
+                                name: 'Выкуп + отзыв',
+                                value: 'feedback',
+                            },
+                            {
+                                name: 'UGC-контент',
+                                value: 'ugc_content',
+                            },
+                        ]"
+                    ></select-block-component>
+
                     <div class="filter__btns">
                         <button
                             @click="applyFilter"
@@ -58,7 +62,11 @@
 <script>
 import {ref} from "vue";
 import Categories from "../../../../core/services/api/Categories.vue";
+import InputBlockComponent from "../../../../core/components/form/InputBlockComponent.vue";
+import SelectBlockComponent from "../../../../core/components/form/SelectBlockComponent.vue";
+import ChooseCategoryComponent from "../../../../core/components/filter/ChooseCategoryComponent.vue";
 export default {
+    components: {ChooseCategoryComponent, SelectBlockComponent, InputBlockComponent},
     data(){
         return{
             filter: ref({
@@ -94,7 +102,7 @@ export default {
         },
         chooseCategory(category){
             this.filter.category = category.theme;
-            this.currentCategory = category.theme
+            this.currentCategory = category.theme;
         },
         clearCategories(){
             window.setTimeout(() => {this.categories = []}, 150)

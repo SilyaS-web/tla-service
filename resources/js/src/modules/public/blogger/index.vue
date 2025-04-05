@@ -10,23 +10,26 @@
                             tabName: 'Проекты в работе',
                             tabContent: 'my-projects',
                             classList: ['projects-work-link'],
+                            isActive: tab === 'my-projects'
                         },
                         {
                             tabName: 'Все проекты',
                             tabContent: 'all-projects',
                             classList: ['projects-list-link'],
-                            isActive: true
+                            isActive: tab === 'all-projects'
                         },
                         {
                             tabName: 'Заявки от селлеров',
                             tabContent: 'avail-projects',
                             classList: ['projects-avail-link'],
+                            isActive: tab === 'avail-projects'
                         },
                         {
                             tabName: 'Чат с блогерами',
                             tabContent: 'chat',
                             notifications: newChatMessagesCount,
                             classList: ['chat-link'],
+                            isActive: tab === 'chat'
                         },
                     ]"
                 ></Aside>

@@ -22,16 +22,96 @@ import User from './src/core/services/api/User'
 const app = createApp();
 
 const routes = [
-    { path: '/seller/profile/:item?/:id?', name: 'SellerProfile', component: SellerProfile },
-    { path: '/blogger/profile/:item?/:id?', name: 'BloggerProfile', component: BloggerProfile },
-    { path: '/register', name: 'Register', component: Register },
-    { path: '/blogger/register', name: 'BloggerRegister', component: BloggerRegister },
-    { path: '/login', name: 'Login', component: Auth },
-    { path: '/seller/profile/edit', name: 'SellerEditProfile', component: SellerEditProfile },
-    { path: '/blogger/profile/edit', name: 'BloggerEditProfile', component: BloggerEditProfile },
-    { path: '/tariffs', name: 'Tariffs', component: Tariffs },
-    { path: '/moderation', name: 'Moderation', component: Moderation },
-    { path: '/banned', name: 'Banned', component: Banned },
+    {
+        path: '/seller/profile/:item?/:id?',
+        name: 'SellerProfile',
+        component: SellerProfile,
+        meta: {
+            title: 'Личный кабинет',
+            description: '',
+        }
+    },
+    {
+        path: '/blogger/profile/:item?/:id?',
+        name: 'BloggerProfile',
+        component: BloggerProfile,
+        meta: {
+            title: 'Личный кабинет',
+            description: '',
+        }
+    },
+    {
+        path: '/register',
+        name: 'Register',
+        component: Register,
+        meta: {
+            title: 'Регистрация пользователя',
+            description: '',
+        }
+    },
+    {
+        path: '/blogger/register',
+        name: 'BloggerRegister',
+        component: BloggerRegister,
+        meta: {
+            title: 'Регистрация пользователя',
+            description: '',
+        }
+    },
+    {
+        path: '/login',
+        name: 'Login',
+        component: Auth,
+        meta: {
+            title: 'Авторизация пользователя',
+            description: '',
+        }
+    },
+    {
+        path: '/seller/profile/edit',
+        name: 'SellerEditProfile',
+        component: SellerEditProfile,
+        meta: {
+            title: 'Личный кабинет',
+            description: '',
+        }
+    },
+    {
+        path: '/blogger/profile/edit',
+        name: 'BloggerEditProfile',
+        component: BloggerEditProfile,
+        meta: {
+            title: 'Личный кабинет',
+            description: '',
+        }
+    },
+    {
+        path: '/tariffs',
+        name: 'Tariffs',
+        component: Tariffs,
+        meta: {
+            title: 'Тарифы',
+            description: '',
+        }
+    },
+    {
+        path: '/moderation',
+        name: 'Moderation',
+        component: Moderation,
+        meta: {
+            title: 'Вы находитесь на модерации',
+            description: '',
+        }
+    },
+    {
+        path: '/banned',
+        name: 'Banned',
+        component: Banned,
+        meta: {
+            title: 'Вы были забанены модератором',
+            description: '',
+        }
+    },
 ]
 
 const router = createRouter({
@@ -93,6 +173,13 @@ router.beforeEach(async (to, from) => {
             name: 'SellerProfile'
         }
     }
+})
+
+router.beforeEach((to) => {
+    const { title } = to.meta;
+    const defaultTitle = 'Личный кабинет';
+
+    document.title = title || defaultTitle
 })
 
 function findGetParameter(parameterName) {
