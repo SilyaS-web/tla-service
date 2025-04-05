@@ -8,7 +8,6 @@
             </div>
             <input
                 @change="uploadImage"
-                v-on:change="$emit('update:modelValue', $event.target.files[0])"
                 type="file" name="image" class="" id="profile-img">
         </label>
         <span class="error" v-if="error">{{ error }}</span>
@@ -26,7 +25,8 @@ export default{
     },
     methods:{
         uploadImage(event){
-            this.fileName = event.currentTarget.files[0].name
+            this.fileName = event.currentTarget.files[0].name;
+            this.$emit('update:modelValue', event.currentTarget.files[0])
         }
     }
 }
