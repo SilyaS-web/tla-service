@@ -20,6 +20,7 @@ class CreateProjectWorksTable extends Migration
             $table->unsignedBigInteger('project_id');
             $table->timestamp('finish_date')->nullable();
             $table->foreign('project_id')->references('id')->on('projects')->cascadeOnDelete();
+            $table->boolean('is_auto_generated')->default(false);
             $table->timestamps();
         });
     }

@@ -24,7 +24,7 @@ class CreateBloggersTable extends Migration
             $table->foreign('country_id')->references('id')->on('countries')->cascadeOnDelete();
             $table->string('city')->nullable();
             $table->double('gender_ratio')->nullable();
-            $table->string('sex');
+            $table->string('sex')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
