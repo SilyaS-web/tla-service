@@ -110,3 +110,9 @@ export default {
         <ozon-client-id-instructions-popup ref="ozonInstructionPopup"></ozon-client-id-instructions-popup>
     </div>
 </template>
+
+<style scoped>
+.tab-content .btn{
+    width: 100%;
+}
+</style>

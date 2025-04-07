@@ -179,4 +179,10 @@ export default{
         background-color: var(--primary);
         border-color: var(--primary);
     }
+
+    @media(max-width:675px){
+        .select__selected, .select__name, .select__item{
+            font-size: 14px;
+        }
+    }
 </style>

@@ -8,26 +8,6 @@
             </div>
         </div>
         <div class="popup__form">
-            <TextareaBlockComponent
-                v-model="offer.text"
-                :id="'seller-offer-text'"
-                :label="'Опишите задание'"
-                :placeholder="'Напишите, что требуется выполнить'"
-                :cols="30"
-                :rows="10"
-                :classList="[]"
-                :error="null"
-            >
-            </TextareaBlockComponent>
-            <InputBlockComponent
-                v-model="offer.price"
-                :inputType="'number'"
-                :label="'Бюджет'"
-                :inputPlaceholder="'Введите бюджет'"
-                :inputClassList="[]"
-                :inputID="'seller-offer-price'"
-                :error="null"
-            ></InputBlockComponent>
             <SelectBlockComponent
                 v-model="offer.time"
                 :label="'Желаемый срок выполнения'"
@@ -40,6 +20,26 @@
                     }
                 })"
             ></SelectBlockComponent>
+            <InputBlockComponent
+                v-model="offer.price"
+                :inputType="'number'"
+                :label="'Бюджет'"
+                :inputPlaceholder="'Введите бюджет'"
+                :inputClassList="[]"
+                :inputID="'seller-offer-price'"
+                :error="null"
+            ></InputBlockComponent>
+            <TextareaBlockComponent
+                v-model="offer.text"
+                :id="'seller-offer-text'"
+                :label="'Опишите задание'"
+                :placeholder="'Напишите, что требуется выполнить'"
+                :cols="30"
+                :rows="10"
+                :classList="[]"
+                :error="null"
+            >
+            </TextareaBlockComponent>
             <InputFileBlockComponent
                 v-model="offer.file"
                 :label="'Прикрепить файл'"

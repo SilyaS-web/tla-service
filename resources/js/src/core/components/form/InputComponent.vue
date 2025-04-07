@@ -53,5 +53,21 @@ export default {
 .input.no-correct{
     border-color:red;
 }
+.input[disabled]{
+    background-color: #E0E0E0;
+    color:#565656;
+    border:unset !important;
+}
+.input[disabled]::-moz-placeholder{
+    color:#565656;
+}
+.input[disabled]::placeholder{
+    color:#565656;
+}
+@media(max-width:675px){
+    .input{
+        font-size: 14px;
+    }
+}
 </style>
 

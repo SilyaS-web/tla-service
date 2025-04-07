@@ -169,4 +169,7 @@ export default {
 .tab-content__form{
     margin-bottom: 56px;
 }
+.tab-content .btn{
+    width: 100%;
+}
 </style>

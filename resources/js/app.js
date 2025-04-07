@@ -2,6 +2,7 @@ require('./bootstrap');
 
 import { createApp } from 'vue'
 import { createMemoryHistory, createWebHistory, createRouter } from 'vue-router'
+import Tooltip from 'primevue/tooltip';
 
 // admin imports
 import AdminIndex from './src/modules/admin/index.vue'
@@ -203,4 +204,7 @@ localStorage.setItem('chats_messages_interval_id', '')
 app.component('admin-index', AdminIndex)
 
 app.use(router)
+
+app.directive('tooltip', Tooltip);
+
 app.mount('#app')

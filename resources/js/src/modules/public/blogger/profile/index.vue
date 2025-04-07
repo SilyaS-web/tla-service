@@ -170,4 +170,9 @@ export default {
 .tab-content__form{
     margin-bottom: 56px;
 }
+@media(max-width:675px){
+    .tab-content__form{
+        margin-bottom: 32px;
+    }
+}
 </style>

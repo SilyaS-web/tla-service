@@ -25,7 +25,7 @@
                             isActive: tab === 'avail-projects'
                         },
                         {
-                            tabName: 'Чат с блогерами',
+                            tabName: 'Чат с селлерами',
                             tabContent: 'chat',
                             notifications: newChatMessagesCount,
                             classList: ['chat-link'],

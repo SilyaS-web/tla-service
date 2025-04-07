@@ -94,6 +94,7 @@ export default {
                 :inputClassList="[]"
                 :inputID="'profile-phone'"
                 :disabled="1"
+                :question="'Для изменения номера телефона свяжитесь с технической поддержкой'"
                 :error="errors['phone']"
             ></input-block-component>
             <button
@@ -122,5 +123,13 @@ export default {
 }
 .tab-content .btn{
     width: 100%;
+}
+@media(max-width:675px){
+    .tab-content__image{
+        margin-bottom: 24px;
+    }
+    .tab-content__image img{
+        margin-bottom: 12px;
+    }
 }
 </style>

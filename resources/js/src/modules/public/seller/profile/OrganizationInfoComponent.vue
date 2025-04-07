@@ -86,5 +86,7 @@ export default {
 </template>
 
 <style scoped>
-
+.tab-content .btn{
+    width: 100%;
+}
 </style>

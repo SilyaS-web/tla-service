@@ -26,6 +26,7 @@
             :class="inputClassList"
             :disabled="disabled"
         ></input-component>
+
         <closed-eye-icon
             v-show="inputType === 'password' && !isEyeOpened"
             @click="togglePassword"
@@ -36,6 +37,36 @@
             @click="togglePassword"
             class="password-input-icon password-input-icon--opened"
         ></opened-eye-icon>
+
+        <div
+            v-if="question"
+            tabindex="1"
+            v-tooltip.focus.left="{
+                value: question,
+                pt: {
+                    arrow: {
+                        style: {
+                            backgroundColor: '#fff',
+                            color: '#fff',
+                        }
+                    },
+                    text: {
+                        style:{
+                            color:'var(--primary)',
+                            width: '171px',
+                            borderRadius: '8px',
+                            fontSize: '14px',
+                            backgroundColor:'#fff',
+                            padding:'10px'
+                        }
+                    }
+                },
+            }"
+            class="input-question">
+            <question-icon></question-icon>
+        </div>
+
+
         <span class="error" v-if="error">{{ error }}</span>
     </div>
 </template>
@@ -45,21 +76,26 @@
     import ClosedEyeIcon from "../../icons/ClosedEyeIcon.vue";
     import OpenedEyeIcon from "../../icons/OpenedEyeIcon.vue";
     import InputComponent from "./InputComponent.vue";
+    import QuestionIcon from "../../icons/QuestionIcon.vue";
 
     export default{
-        components: {InputComponent, OpenedEyeIcon, ClosedEyeIcon},
+        components: {QuestionIcon, InputComponent, OpenedEyeIcon, ClosedEyeIcon},
         props: [
             'label', 'inputType', 'inputPlaceholder', 'inputClassList', 'wrapClassList',
-            'inputID', 'headerLink', 'error', 'disabled','modelValue'
+            'inputID', 'headerLink', 'error', 'disabled','modelValue', 'question',
         ],
         data(){
             return{
                 isEyeOpened: ref(false),
-                currentInputType: ref('')
+                currentInputType: ref(''),
+                tooltipPosition: ref('right')
             }
         },
         created(){
-            this.currentInputType = this.inputType
+            this.currentInputType = this.inputType;
+            if(matchMedia('max-width:675px').matches){
+                this.tooltipPosition = 'left'
+            }
         },
         computed:{
             inputWrapClassString(){
@@ -99,4 +135,31 @@
 .password-input-icon:hover path{
     fill:#56565680;
 }
+
+.input-question{
+    width: 24px;
+    height: 24px;
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+}
+
+.input-question__body{
+    width: 100%;
+    position: relative;
+}
+
+.input-question *{
+    width: 100%;
+}
+
+.input-question svg .--question-sign{
+    fill:#fff;
+}
+.input-question svg .--question-bg{
+    fill:var(--primary);
+}
+
+</style>
+<style scoped>
 </style>
