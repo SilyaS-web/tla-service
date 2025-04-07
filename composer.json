@@ -17,6 +17,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^4.0",
         "matomo/device-detector": "^6.3",
+        "moonshine/moonshine": "^3.0",
         "piwik/device-detector": "^6.3",
         "predis/predis": "2.0"
     },

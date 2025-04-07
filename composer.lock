@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5afedfcc36e2498471a6472e0c3c68d6",
+    "content-hash": "8dbe6d1c5cb97d6a3b55063c5e1625a9",
     "packages": [
         {
             "name": "brick/math",
@@ -3134,6 +3134,104 @@
             "time": "2024-03-23T07:42:40+00:00"
         },
         {
+            "name": "lee-to/fast-attributes",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lee-to/fast-attributes.git",
+                "reference": "c91c07ec23863de79aed8b6486fcfcc5ba050ae7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lee-to/fast-attributes/zipball/c91c07ec23863de79aed8b6486fcfcc5ba050ae7",
+                "reference": "c91c07ec23863de79aed8b6486fcfcc5ba050ae7",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0|^8.1|^8.2",
+                "psr/simple-cache": "^3.0"
+            },
+            "require-dev": {
+                "phpstan/phpstan": "^1.10",
+                "phpunit/phpunit": "^10.0",
+                "rector/rector": "^1.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Leeto\\FastAttributes\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Danil Shutsky",
+                    "email": "thecutcode@gmail.com",
+                    "homepage": "https://cutocode.dev"
+                }
+            ],
+            "description": "Simplifying PHP Attribute Management",
+            "homepage": "https://cutcode.dev",
+            "keywords": [
+                "attributes",
+                "php"
+            ],
+            "support": {
+                "issues": "https://github.com/lee-to/fast-attributes/issues",
+                "source": "https://github.com/lee-to/fast-attributes"
+            },
+            "time": "2024-03-19T15:57:44+00:00"
+        },
+        {
+            "name": "lee-to/laravel-package-command",
+            "version": "0.9.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lee-to/laravel-package-command.git",
+                "reference": "c2bcc9fb28882b1eac9abcb35b4559f41ab6eea4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lee-to/laravel-package-command/zipball/c2bcc9fb28882b1eac9abcb35b4559f41ab6eea4",
+                "reference": "c2bcc9fb28882b1eac9abcb35b4559f41ab6eea4",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0|^8.1|^8.2"
+            },
+            "require-dev": {
+                "fakerphp/faker": "^1.9.2",
+                "mockery/mockery": "^1.4.4",
+                "phpunit/phpunit": "^9.5.8"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Leeto\\PackageCommand\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Danil Shutsky",
+                    "email": "info@cutcode.ru",
+                    "homepage": "https://github.com/lee-to"
+                }
+            ],
+            "description": "Package development command",
+            "support": {
+                "issues": "https://github.com/lee-to/laravel-package-command/issues",
+                "source": "https://github.com/lee-to/laravel-package-command/tree/0.9.2"
+            },
+            "time": "2024-12-22T16:01:40+00:00"
+        },
+        {
             "name": "matomo/device-detector",
             "version": "6.4.1",
             "source": {
@@ -3302,6 +3400,113 @@
                 }
             ],
             "time": "2024-06-28T09:40:51+00:00"
+        },
+        {
+            "name": "moonshine/moonshine",
+            "version": "3.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/moonshine-software/moonshine.git",
+                "reference": "16590e4aff63f5766674bc2bcde789fb8f5464c6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/moonshine-software/moonshine/zipball/16590e4aff63f5766674bc2bcde789fb8f5464c6",
+                "reference": "16590e4aff63f5766674bc2bcde789fb8f5464c6",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "illuminate/contracts": "^10|^11",
+                "illuminate/support": "^10|^11",
+                "illuminate/view": "^10|^11",
+                "lee-to/fast-attributes": "^0.1.0",
+                "lee-to/laravel-package-command": "^0.9",
+                "nyholm/psr7": "^1",
+                "php": "^8.2",
+                "symfony/psr-http-message-bridge": "^7"
+            },
+            "replace": {
+                "moonshine/asset-manager": "self.version",
+                "moonshine/color-manager": "self.version",
+                "moonshine/contracts": "self.version",
+                "moonshine/core": "self.version",
+                "moonshine/laravel": "self.version",
+                "moonshine/menu-manager": "self.version",
+                "moonshine/support": "self.version",
+                "moonshine/ui": "self.version"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.64",
+                "larastan/larastan": "^2.0",
+                "moonshine/import-export": "^1.0",
+                "orchestra/testbench": "^9.0",
+                "pestphp/pest": "^3.0",
+                "pestphp/pest-plugin-laravel": "^3.0",
+                "rector/rector": "^1.0",
+                "symplify/monorepo-builder": "^11.2"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "MoonShine\\Laravel\\Providers\\MoonShineServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/Laravel/src/helpers.php",
+                    "src/Support/src/helpers.php"
+                ],
+                "psr-4": {
+                    "MoonShine\\": "src/",
+                    "MoonShine\\UI\\": "src/UI/src",
+                    "MoonShine\\Core\\": "src/Core/src",
+                    "MoonShine\\Laravel\\": "src/Laravel/src",
+                    "MoonShine\\Support\\": "src/Support/src",
+                    "MoonShine\\Contracts\\": "src/Contracts/src",
+                    "MoonShine\\MenuManager\\": "src/MenuManager/src",
+                    "MoonShine\\AssetManager\\": "src/AssetManager/src",
+                    "MoonShine\\ColorManager\\": "src/ColorManager/src",
+                    "MoonShine\\Laravel\\Database\\Factories\\": "src/Laravel/database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Danil Shutsky",
+                    "email": "info@cutcode.ru",
+                    "homepage": "https://cutcode.dev"
+                }
+            ],
+            "description": "Laravel administration panel",
+            "homepage": "https://moonshine-laravel.com",
+            "keywords": [
+                "admin",
+                "dashboard",
+                "laravel",
+                "moonshine"
+            ],
+            "support": {
+                "issues": "https://github.com/moonshine-software/moonshine/issues",
+                "source": "https://github.com/moonshine-software/moonshine"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/moonshine-software",
+                    "type": "github"
+                },
+                {
+                    "url": "https://opencollective.com/moonshine",
+                    "type": "open_collective"
+                }
+            ],
+            "time": "2024-12-19T14:42:55+00:00"
         },
         {
             "name": "mustangostang/spyc",
@@ -9931,12 +10136,12 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {},
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
         "php": "^8.1.0"
     },
-    "platform-dev": [],
+    "platform-dev": {},
     "plugin-api-version": "2.6.0"
 }
