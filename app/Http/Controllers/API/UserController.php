@@ -40,23 +40,6 @@ class UserController extends Controller
     public function currentUser()
     {
         $user = Auth::user();
-        if ($user->role == 'seller' && $user->status == 1) {
-            if (count($user->projects) === 0) {
-                $tariffs = $user->getActiveTariffs();
-                if (count($tariffs) == 0) {
-                    $tariff = Tariff::find(19);
-                    SellerTariff::create([
-                        'user_id' => $user->id,
-                        'tariff_id' => $tariff->id,
-                        'type' => $tariff->type,
-                        'quantity' => $tariff->quantity,
-                        'finish_date' => Carbon::now()->addDays($tariff->period),
-                        'activation_date' => Carbon::now(),
-                    ]);
-                }
-            }
-        }
-
         $data = [
             'user' => new UserResource($user),
         ];
