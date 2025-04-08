@@ -146,16 +146,19 @@ export default {
                 let priceArr = res.data.price.replace(/[^a-zA-Z0-9]/g, "");
                 this.project.product_price = parseFloat(priceArr);
 
-                this.$refs.uploadFiles.resetFiles()
+                this.$refs.uploadFiles.resetFiles();
+
                 res.data.imageUrls.map(url => {
                     axios({
                         method:'get',
                         url:url,
                         responseType: 'blob'
                     }).then(blob => {
+                        const imageName = this.generateRandomString();
+
                         this.$refs.uploadFiles.appendFile({
                             file: blob.data,
-                            link: `${this.project.images.length + 1}.jpg`
+                            link: `${imageName}.jpg`
                         })
                     })
                 })
@@ -188,6 +191,18 @@ export default {
                 }
             )
         },
+
+        generateRandomString(length){
+            let result = '';
+            const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            const charactersLength = characters.length;
+            let counter = 0;
+            while (counter < length) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+                counter += 1;
+            }
+            return result;
+        }
     }
 }
 </script>
