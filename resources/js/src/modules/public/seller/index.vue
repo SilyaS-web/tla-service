@@ -106,7 +106,7 @@
             </div>
         </div>
     </div>
-    <promotion-banner></promotion-banner>
+<!--    <promotion-banner></promotion-banner>-->
     <Footer></Footer>
 </template>
 <script>
