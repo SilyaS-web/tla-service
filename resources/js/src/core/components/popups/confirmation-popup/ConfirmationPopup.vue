@@ -13,7 +13,7 @@
                 <button @click="_confirm" class="btn btn-primary">
                     {{ okButton }}
                 </button>
-                <button @click="_cancel" class="btn btn-secondary">
+                <button @click="_cancel" class="btn btn-white">
                     {{ cancelButton }}
                 </button>
             </div>

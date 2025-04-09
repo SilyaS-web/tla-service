@@ -101,7 +101,7 @@ export default {
                 }
             )
         },
-        checkInn(){
+        checkInn(event){
             const today = new Date();
             const yyyy = today.getFullYear();
             let mm = today.getMonth() + 1;
@@ -112,6 +112,13 @@ export default {
 
             const formattedToday = yyyy + '-' + mm + '-' + dd;
             const inn = this.data[this.step - 1].inn;
+
+            const btn = event.target;
+
+            $(btn).addClass('btn-loading')
+
+            $(btn).removeClass('btn-danger')
+            $(btn).removeClass('btn-success')
 
             axios({
                 url: 'https://statusnpd.nalog.ru/api/v1/tracker/taxpayer_status',
@@ -139,13 +146,19 @@ export default {
                             break;
                     }
 
-                    notify('error', {
-                        title: 'Внимание!',
-                        message: 'Статус самозанятого не подтвержден. ' + uiMessage
+                    this.changeBtnData(btn, {
+                        className: 'btn-danger',
+                        text: 'Вы не зарегистрированы как самозанятый'
                     })
 
                     return
                 }
+
+                this.changeBtnData(btn, {
+                    className: 'btn-success',
+                    text: 'Проверка прошла успешно!'
+                })
+
                 console.log('Статус самозанятого успешно проверен', res)
 
                 this.saveStep();
@@ -158,7 +171,21 @@ export default {
 
                 console.log(err.data)
             })
-        }
+            .finally(() => {
+                $(btn).removeClass('btn-loading')
+            })
+        },
+        changeBtnData(btn, data){
+            const prevBtnText = $(btn).text();
+
+            $(btn).addClass(data.className);
+            $(btn).text(data.text);
+
+            setTimeout(() => {
+                $(btn).removeClass(data.className);
+                $(btn).text(prevBtnText);
+            }, 5000)
+        },
     }
 }
 </script>
@@ -448,7 +475,7 @@ export default {
                     </div>
                     <div class="documents-content__form-footer">
                         <button
-                            @click="checkInn()"
+                            @click="checkInn($event)"
                             class="btn btn-primary">Проверить данные</button>
                     </div>
                 </div>

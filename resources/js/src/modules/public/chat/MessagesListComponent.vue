@@ -48,11 +48,19 @@
                             <div class="chat-file__text">
                                 {{ file.link }}
                             </div>
-
                         </a>
                     </div>
                 </div>
             </div>
+            <offer-content-component
+                v-else-if="true"
+                :productImage="false"
+                :productName="'Название'"
+                :offerDescription="'Оставить в сторис отзыв о предоставленном продукте'"
+                :user="user"
+                :offerPrice="'3000'"
+                :offerPeriod="'2 дня'"
+            ></offer-content-component>
             <div
                 v-else
                 class="messages-chat__item-content msg-specification">
@@ -101,10 +109,11 @@
 import moment from "moment";
 import ImagePopup from "../../../core/components/popups/fullscreen-asset/AssetPopup";
 import SpecificationPopup from '../../../core/components/popups/specification-popup/SpecificationPopup.vue'
+import OfferContentComponent from "./OfferContentComponent.vue";
 
 export default{
     props:['user', 'messages', 'chatWorks', 'chatStatus', 'statistics', 'partnerName'],
-    components: { ImagePopup, SpecificationPopup },
+    components: {OfferContentComponent, ImagePopup, SpecificationPopup },
     data(){
         return{
             statusNames: {

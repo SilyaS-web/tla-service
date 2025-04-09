@@ -76,9 +76,7 @@ body::-webkit-scrollbar-thumb {
 
 a, .btn-link{
     color: var(--primary);
-    transition: -webkit-text-decoration .2s linear;
-    transition: text-decoration .2s linear;
-    transition: text-decoration .2s linear, -webkit-text-decoration .2s linear;
+    transition: all .1s linear;
 }
 a:hover{
     text-decoration: underline;
@@ -128,7 +126,7 @@ a.btn:hover{
     border-radius: 10px;
     font-size: 16px;
     background-color: var(--pale);
-    font-weight: 500;
+    font-weight: 600;
     border:1px solid rgba(0, 0, 0, 0);
     display: block;
     width: -moz-fit-content;
@@ -157,10 +155,24 @@ a.btn:hover{
     border-color:var(--secondary);
     color:var(--secondary);
 }
+
 .btn-white{
-    color: var(--primary);
-    border:1px solid rgba(0,0,0,0)
+    color: #000;
+    border:1px solid rgba(0,0,0,0);
+    background-color: #CCCDCC33;
+    box-shadow: none;
 }
+.btn-white.btn-primary{
+    color: var(--primary);
+    border:1px solid rgba(0,0,0,0);
+    background-color: #B54CDC33;
+}
+.btn-white.btn-secondary{
+    color: var(--text);
+    border:1px solid rgba(0,0,0,0);
+    background-color: #CCCDCC33;
+}
+
 .btn.disabled{
     pointer-events: none;
     border-color:grey;
@@ -171,6 +183,7 @@ a.btn:hover{
 .btn-loading{
     pointer-events: none;
     position: relative;
+    box-shadow: unset;
 }
 .btn-loading *{
     display: none;
@@ -182,7 +195,8 @@ a.btn:hover{
     left:0;right:0;bottom:0;top:0;
     margin:auto;
     width:20px; height:20px;
-    border-right:2px solid #fff;
+    border:1px solid #fff;
+    border-right:2px solid var(--text-non-accent);
     border-radius: 50%;
     animation: rotate 1s linear infinite reverse;
 }
@@ -191,6 +205,7 @@ a.btn:hover{
 }
 .btn-loading.btn-white::before{
     border-color:var(--primary);
+    border-right-color:var(--text-non-accent);
 }
 .btn-loading.btn-primary{
     color:var(--primary);
@@ -205,8 +220,14 @@ a.btn:hover{
     border-color:var(--primary);
 }
 .btn-danger {
-    background-color: #DC3545;
+    background-color: #F300001A;
+    color:var(--err);
+    border-color:rgba(0,0,0,0);
+}
+.btn-success {
+    background-color: #6EDB60;
     color:#fff;
+    border-color: #6EDB60;
 }
 .btn-warning {
     background-color: #FFC107;
@@ -3213,6 +3234,10 @@ input[type='range']::-webkit-slider-runnable-track{
     width: unset;
     background-color: unset;
 }
+.messages-chat__item--system:has(.offer-chat){
+    max-width:100%;
+    width: 100%;
+}
 .messages-chat__item--system .messages-chat__item-msg {
     font-size: 18px;
     font-weight: 600;
@@ -5833,6 +5858,10 @@ input[type='range']::-webkit-slider-runnable-track{
     }
     .chat__header .current-project__title .articul{
         font-size: 9px;
+    }
+    .messages-chat__item-status{
+        padding: 4px;
+        font-size: 10px;
     }
 
     .banner{
