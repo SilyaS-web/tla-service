@@ -3,7 +3,7 @@
         <div class="burger-menu__body">
             <div class="header__col header__profile-items">
                 <div class="header__row">
-                    <div href="#" class="header__profile-w header__profile-header header__profile-item--js">
+                    <div class="header__profile-w header__profile-header header__profile-item--js">
                         <router-link :to="{path: '/profile'}">
                             <img
                                 :src="user.image ? user.image : '/img/profile-icon.svg'"
@@ -13,125 +13,79 @@
                             <span class="header__profile-name">
                                 {{ user.name }}
                             </span>
-                            <span
-                                v-if="user.role =='seller'"
-                                class="header__profile-org">
-                                {{ user.organization_name }}
+                            <span class="header__user-balance">
+                                {{ `Баланс:${ (user.balance || '0') }₽` }}
                             </span>
-                            <span
-                                v-else-if="user.role =='blogger'"
-                                class="header__profile-org">
-                                {{ user.channel_name }}
-                            </span>
-                            <span
-                                v-else
-                                class="header__profile-org">
-                                {{ '-' }}
-                            </span>
-                        </div>
-                        <div class="header__profile-settings">
-                            <router-link :to="{path: '/' + user.role + '/profile/edit'}">
-                                Личные данные
-                            </router-link>
-
-                            <router-link
-                                v-if="user.role == 'seller'"
-                                :to="{ path: '/tariffs' }" class="row">
-                                Тарифы
-                            </router-link>
-                            <a
-                                @click="logout"
-                                style="width:100%; text-align:left">Выход</a>
-                        </div>
-                    </div>
-                    <a href="#" class="header__col header__notif header__profile-item--js" title="Уведомления">
-                        <div class="header__profile-notif header-notif-count" v-if="notifications && notifications.length > 0">
-                            {{ notifications.length }}
-                        </div>
-                        <img src="/img/notif-icon.svg" alt="" class="">
-                        <div class="header__notif-items notif-header" v-if="notifications && notifications.length > 0">
-                            <span
-                                v-if="notifications.length > 1"
-                                @click="hideAllNotifications"
-                                style="display:block; color:var(--primary); margin-bottom:10px; font-size:14px;">Скрыть все</span>
-                            <div class="notif-header__items header-notif-container" >
-                                <div
-                                    v-for="notif in notifications"
-                                    class="notif-header__col ">
-                                    <div class="notif-header__row">
-                                        <div class="notif-header__col notif-header__img">
-                                            <img :src="notif.image" alt="">
-                                        </div>
-                                        <div class="notif-header__col">
-                                            <div class="notif-header__title">
-                                                {{ notif.title || 'Новое уведомление' }}
-                                            </div>
-                                            <div class="notif-header__text">
-                                                {{ notif.text }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="notif-header__btns">
-                                        <a
-                                            v-if="notif.work_id && notif.is_work_active"
-                                            @click="goToChat(notif.work_id)"
-                                            href="#" class="notif-header__goto">Перейти</a>
-
-                                        <a
-                                            @click="hideNotification(notif)"
-                                            href="#" class="notif-header__hide">Скрыть</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div
-                    v-if="user.role === 'seller'"
-                    class="header__col header__tarrif tarrif-header header__profile-item--js">
-                    Мои тарифы
-                    <div class="tarrif-header__items">
-                        <div
-                            v-if="user.tariffs && user.tariffs.length > 0"
-                            v-for="tariff in user.tariffs"
-                            class="tarrif-header__item tarrif-header__adv">
-                            {{ tariff.title }} - <b><span class="counter">{{ tariff.quantity < 0 ? '∞' : tariff.quantity}}</span> шт.</b>
-                            <div class="tarrif-header__date">
-                                Действует до {{ format_date(tariff.finish_date) }}
-                            </div>
-                            <router-link :to="{ path: '/tariffs' }" class="tarrif-header__buy">Продлить</router-link>
-                        </div>
-
-                        <div
-                            v-else
-                            class="tarrif-header__item tarrif-header__adv">
-                            Нет оплаченых тарифов
-                            <router-link
-                                :to="{ path: '/tariffs' }"
-                                class="tarrif-header__buy">Выбрать тариф</router-link>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div
+                v-if="user.role === 'seller'"
+                class="header__balance balance-header">
+                <div class="balance-header__tariff">
+                    <p class="balance-header__tariff-label">
+                        {{ user.tariffs && user.tariffs.length > 0 ? `Тариф «${user.tariffs[0].title}»` : 'Тариф отсутствует' }}
+                    </p>
+                    <span
+                        :class="[
+                            'balance-header__tariff-date',
+                            (!user.tariffs || user.tariffs.length <= 0 ? 'balance-header__tariff-date--no-date' : '')
+                        ]">
+                        <span
+                            v-if="user.tariffs && user.tariffs.length > 0"
+                        > {{ "до " + formatDate(user.tariffs[0].finish_date) }} </span>
+                    </span>
+                </div>
+            </div>
+
             <div class="burger-menu__nav nav-burger">
-                <router-link :to="{path: '/profile'}" class="nav-burger__link nav__link">
+                <a
+                    v-if="user.role === 'seller'"
+                    @click.prevent="showTopupBalancePopup"
+                    href="#"
+                    class="nav-burger__link nav__link"
+                >Пополнить cчет</a>
+
+                <a
+                    v-if="user.role === 'blogger'"
+                    href="#"
+                    class="nav-burger__link nav__link"
+                >Вывести деньги</a>
+
+                <router-link
+                    v-if="user.role === 'seller'"
+                    :to="{ path: '/tariffs' }" class="nav-burger__link nav__link">
+                    Тарифы
+                </router-link>
+
+                <router-link
+                    v-if="['SellerProfile', 'BloggerProfile'].includes($router.currentRoute.value.name)"
+                    class="nav-burger__link nav__link" :to="{path: '/' + user.role + '/profile/edit'}">
+                    Мои данные
+                </router-link>
+
+                <router-link
+                    v-else
+                    :to="{path: '/profile'}" class="nav-burger__link nav__link">
                     {{ user.role === 'seller' ? 'Все проекты' : 'Главная' }}
                 </router-link>
+
                 <a href="https://adswap.ru/instructions" class="nav-burger__link nav__link">Инструкции</a>
-                <a href="https://adswap.ru/files" class="nav-burger__link nav__link">Файлы</a>
                 <a href="https://adswap.ru/news" class="nav-burger__link nav__link">Новости</a>
+                <a href="https://adswap.ru/files" class="nav-burger__link nav__link">Файлы</a>
+                <a href="https://t.me/adswap_admin" class="nav-burger__link nav__link nav__link--tg">Тех.поддержка</a>
+
+                <a
+                    @click="logout"
+                    class="nav-burger__link nav__link nav__link--logout"
+                    style="width:100%; text-align:left">Выход</a>
             </div>
+
             <a href="#" class="burger-menu__close">
                 <img src="/img/close-icon.svg" alt="">
             </a>
-
-            <div class="burger-contacts">
-                <div class="footer__contacts-contacts">
-                    <div class="footer__contacts-item">
-                        adswap.ru@ya.ru
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
 
@@ -155,17 +109,35 @@
                 </nav>
                 <div
                     v-if="user"
-                    class=" header__profile-items header__profile-items--desktop header__row">
-
+                    class=" header__profile-items header__row">
                     <div
                         v-if="user.role === 'seller'"
-                        class="header__col header__balance balance-header">
-                        <span class="balance-header__label">Мой баланс: 50 ₽</span>
-                        <div
-                            @click="showTopupBalancePopup"
-                            class="balance-header__plus">
-                            Пополнить
+                        class="header__balance balance-header">
+                        <div class="balance-header__tariff">
+                            <p class="balance-header__tariff-label">
+                                {{ user.tariffs && user.tariffs.length > 0 ? `Тариф «${user.tariffs[0].title}»` : 'Тариф отсутствует' }}
+                            </p>
+                            <span
+                                :class="[
+                                    'balance-header__tariff-date',
+                                    (!user.tariffs || user.tariffs.length <= 0 ? 'balance-header__tariff-date--no-date' : '')
+                                ]">
+                                <span
+                                    v-if="user.tariffs && user.tariffs.length > 0"
+                                > {{ "до " + formatDate(user.tariffs[0].finish_date) }} </span>
+                                <router-link
+                                    v-else
+                                    :to="{path: '/tariffs'}">
+                                    Приобрести
+                                </router-link>
+                            </span>
                         </div>
+                        <button
+                            v-if="user.tariffs && user.tariffs.length > 0"
+                            @click="showTopupBalancePopup"
+                            class="btn btn-secondary balance-header__plus-btn">
+                            Пополнить
+                        </button>
                     </div>
 
                     <a
@@ -211,32 +183,18 @@
                             </div>
                         </div>
                     </a>
-                    <div
-                        v-if="user"
-                        href="#" class="header__profile-w header__profile-header header__profile-item--js">
-                        <img
-                            :src="user.image ? user.image : '/img/profile-icon.svg'"
-                            alt="" class="header__profile">
+
+                    <div v-if="user" class="header__profile-w header__profile-header header__profile-item--js">
+                        <img :src="user.image ? user.image : '/img/profile-icon.svg'" alt="" class="header__profile">
                         <div class="header__profile-col">
-                            <span
-                                :data-user-id="user.id"
-                                class="header__profile-name">
+                            <div class="header__profile-name">
                                 {{ user.name }}
-                            </span>
-                            <span
-                                v-if="user.role == 'seller'"
-                                class="header__profile-org">
-                                {{ user.organization_name }}
-                            </span>
-                            <span
-                                v-else-if="user.role =='blogger'"
-                                class="header__profile-org">
-                                {{ user.channel_name }}
-                            </span>
-                            <span
-                                v-else
-                                class="header__profile-org">
-                                {{ '-' }}
+                                <div class="header__profile-arrow">
+                                    <select-arrow-icon></select-arrow-icon>
+                                </div>
+                            </div>
+                            <span class="header__user-balance">
+                                {{ `Баланс:${ (user.balance || '0') }₽` }}
                             </span>
                         </div>
                         <div class="header__profile-settings">
@@ -245,7 +203,7 @@
                             </router-link>
 
                             <router-link
-                                v-if="user.role == 'seller'"
+                                v-if="user.role === 'seller'"
                                 :to="{ path: '/tariffs' }" class="row">
                                 Тарифы
                             </router-link>
@@ -266,6 +224,7 @@
         <TopupBalancePopup ref="topupBalancePopup"></TopupBalancePopup>
     </header>
 </template>
+
 <script>
 import moment from 'moment'
 import axios from "axios";
@@ -274,11 +233,12 @@ import {ref} from "vue";
 import User from '../../services/api/User'
 
 import TopupBalancePopup from "../popups/topup-balance/TopupBalancePopup.vue";
+import SelectArrowIcon from "../../icons/SelectArrowIcon.vue";
 
 export default {
     inheritAttrs: false,
     props:['currentUser'],
-    components:{TopupBalancePopup},
+    components:{SelectArrowIcon, TopupBalancePopup},
     data(){
         return {
             notifications: ref([]),
@@ -306,7 +266,7 @@ export default {
         }
     },
     methods:{
-        format_date(value){
+        formatDate(value){
             if (value) {
                 return moment(value).format('DD.MM.YY')
             }
@@ -391,6 +351,12 @@ export default {
 }
 </script>
 
+<style>
+.header__profile-arrow svg path{
+    fill:var(--text);
+}
+</style>
+
 <style scoped>
 .header {
     border-bottom: 1px solid rgba(86,86,86, .12);
@@ -404,121 +370,35 @@ export default {
 .header__body {
     display: flex;
     align-items: center;
-    padding: 24px 32px;
+    padding: 24px 17px;
     flex-wrap: nowrap;
 }
 
-.burger{
-    width: 25px;
-    display: none;
-}
-.burger-menu {
-    right:-100%;
-    position: fixed;
-    background-color: #fff;
-    height: 100%;
-    padding:25px;
-    max-width: 300px;
-    z-index: 9999;
-    transition: right .2s linear;
-}
-.burger-menu.opened{
-    right:0;
-}
-.burger-menu__body {
-    padding-top: 30px;
-}
-.burger-menu__nav {
-}
-.burger-menu .header__col.header__notif{
-    width: 20px;
-    height: 20px;
-}
-.burger-menu .header__col .header__profile-notif{
-    top:-2px;
-    right: -3px;
-}
-.burger-menu .header__profile-org{
-    font-size: 10px;
-}
-.burger-menu .header__profile-name{
-    font-size: 12px;
-}
-.burger-menu .header__tarrif{
-    font-size: 12px;
-    margin-top: 8px;
-}
-.burger-menu .header__notif-items{
-    right:0;
-    width: 300px;
-}
-.burger-menu .notif-header__title{
-    font-size: 12px;
-}
-.burger-menu .notif-header__text{
-    font-size: 10px;
-}
-
-.nav-burger {
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    margin-bottom: 30px;
-    margin-top: 30px;
-}
-.burger-menu__profile {
-    margin-bottom: 8px;
-}
-.nav-burger__link {
-
-}
-.nav__link {
-}
-
-.header__profile-w {
-}
-.header__profile {
-}
-.header__profile-name {
-}
-.burger-menu__close {
-    width: 20px;
-    height: 20px;
-    position: absolute;
-    right: 5px; top: 15px;
-}
-
-.logo{
-
-}
-.header__logo-w {
-    width: 415px;
-}
 .logo__logo{
     width: 120px;
 }
-.header__logo {
-}
-.nav {
-}
 .header__nav {
-    margin: 0 auto;
-    width: 500px;
-    padding-top: 7px;
-}
-.nav__items {
+    margin:0 auto;
 }
 .nav__link {
     font-size: 16px;
-    color:#000;
+    color:var(--text);
     font-weight: 600;
 }
 .nav__link:not(:last-child){
-    margin-right: 26px;
+    margin-right: 20px;
 }
 .nav__link:hover{
     text-decoration: none;
     color:var(--secondary);
+}
+.nav__link.nav__link--tg{
+    color:var(--secondary);
+}
+.nav__link.nav__link--logout{
+    color:var(--err);
+    border:0!important;
+    margin-top: 24px;
 }
 .header__row{
     display: flex;
@@ -529,12 +409,31 @@ export default {
     display: flex;
     flex-direction: column;
 }
-.header__profile-items--mobile{
-    display: none;
-    margin-bottom: 30px;
+
+
+.balance-header{
+    display: flex;
+    gap: 12px;
 }
-.header__profile-items>.header__col{
+.balance-header__tariff{
+    display:flex;
+    flex-direction: column;
+    gap: 2px;
+    justify-content: center;
 }
+.balance-header__tariff-label{
+    color:#544F4F;
+    font-weight: 500;
+}
+.balance-header__tariff-date{
+    font-size: 12px;
+    font-weight: 400;
+    color:#544F4F;
+}
+.balance-header__plus-btn{
+    padding: 10px 8px;
+}
+
 .header__col.header__notif{
     width:45px; height:45px;
     justify-content: center;
@@ -632,17 +531,14 @@ export default {
     color:rgba(0, 0, 0, .4)
 }
 .header__profile-items{
-    gap: 25px;
+    gap: 20px;
 }
 .header__profile-items>.header__col img{
     max-width: 17px;
 }
 .header__profile-w {
-    background-color: var(--pale);
-    border-radius: 10px;
     display: flex;
-    align-items: center;
-    padding: 10px;
+    padding: 8px;
     max-width: unset;
     position: relative;
     cursor: pointer;
@@ -653,31 +549,43 @@ export default {
 .header__profile-col{
     display: flex;
     flex-direction: column;
-    gap: 3px;
+    gap: 4px;
 }
 .header__profile-w:hover{
     text-decoration: none;
 }
 .header__profile {
-    width: 30px;
-    height: 30px;
+    width: 100%;
+    max-width: 24px;
+    height: 24px;
     border-radius: 50%;
-    margin-right: 5px;
+    margin-right: 8px;
     -o-object-fit:cover;
     object-fit:cover;
     -o-object-position: top;
     object-position: top;
 }
 .header__profile-name{
-    font-size: 14px;
-    color: rgba(0,0,0, .4);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--text);
+    line-height: 1;
+    display:flex;
+    justify-content: space-between;
+    gap: 8px;
 }
-.header__profile-org{
+.header__user-balance{
     font-size: 12px;
-    color: rgba(0,0,0, .4);
+    font-weight: 400;
+    color:var(--primary)
 }
-.header__profile-items>.header__chat img{
-    max-width:30px;
+.header__profile-arrow{
+    width: 16px;
+    height: 16px;
+    transition:all .1s linear;
+}
+.header__profile-header.active .header__profile-arrow{
+    transform:rotate(180deg)
 }
 
 .header__profile-settings{
@@ -760,5 +668,117 @@ export default {
     margin-bottom: 10px;
     font-size: 12px;
     color:rgba(0, 0, 0, .4)
+}
+
+
+.burger{
+    width: 25px;
+    display: none;
+}
+.burger-menu {
+    right:-100%;
+    position: fixed;
+    background-color: #fff;
+    height: 100%;
+    padding: 5px 15px;
+    max-width: 215px;
+    width: 100%;
+    z-index: 9999;
+    transition: right .2s linear;
+}
+.burger-menu.opened{
+    right:0;
+}
+.burger-menu__body {
+    padding-top: 30px;
+}
+.burger-menu .header__notif-items{
+    right:0;
+    width: 300px;
+}
+.burger-menu .notif-header__title{
+    font-size: 12px;
+}
+.burger-menu .notif-header__text{
+    font-size: 10px;
+}
+
+.nav-burger {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+    margin-top: 30px;
+}
+.nav-burger > .nav__link{
+    padding: 16px 0;
+    border-top:1px solid rgba(0,0,0,.1);
+}
+.nav-burger > .nav__link:last-child{
+    border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.burger-menu__close {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 5px; top: 15px;
+}
+
+@media (max-width: 1280px) {
+    .burger {
+        display: flex;
+        align-items: center;
+        margin-left: 26px;
+    }
+    .header__profile-items > *:not(.header__notif){
+        display:none;
+    }
+    .burger-menu .header__profile-items > *{
+        display:flex;
+    }
+
+    .balance-header{
+        margin-top: 14px;
+    }
+
+    .nav__link:not(:last-child){
+        margin-right: 0;
+    }
+
+    .balance-header__tariff-label{
+        font-size: 14px;
+    }
+
+    .burger-menu .header__profile-name{
+        font-size: 14px;
+    }
+
+    .nav-burger{
+        margin-top: 14px;
+        margin-bottom: 14px;
+    }
+    .nav-burger .nav__link{
+        font-weight: 500;
+        padding: 12px 0;
+        font-size: 14px;
+    }
+    .header__notif-items {
+        right: -50px;
+        width: 300px;
+    }
+
+    .header__profile-w{
+        padding: 0;
+    }
+    .header__profile{
+        max-width: 36px;
+        height: 36px;
+    }
+}
+
+@media(max-width:675px){
+    .header__body{
+        padding: 14px 0;
+    }
 }
 </style>

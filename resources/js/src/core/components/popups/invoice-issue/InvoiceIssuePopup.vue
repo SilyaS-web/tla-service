@@ -84,7 +84,7 @@
         </div>
         <div class="invoice-issue__footer">
             <button class="btn btn-primary">
-                Отправить
+                Выставить счет
             </button>
         </div>
     </popup-modal>
@@ -146,5 +146,8 @@ export default {
         font-size: 18px;
         font-weight: 600;
         margin-bottom: 0;
+    }
+    .invoice-issue__body{
+        margin-bottom: 40px;
     }
 </style>

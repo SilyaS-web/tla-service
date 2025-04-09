@@ -7,7 +7,7 @@
         </div>
         <div class="popup__header">
             <div class="popup__title title">
-                Ваш баланс
+                Сумма пополнения
             </div>
             <div class="popup__subtitle">
 
@@ -20,16 +20,16 @@
                 </p>
                 <div class="topup-balance__btns">
                     <button class="btn btn-primary">
-                        Пополнить баланс
+                        Пополнить картой
                     </button>
                     <button
                         @click="openInvoiceIssue"
-                        class="btn btn-secondary">
+                        class="btn btn-secondary green">
                         Выставить счет
                     </button>
                 </div>
             </div>
-            <invoice-issue-popup ref="invoiceIssuePopup"></invoice-issue-popup>
+            <InvoiceIssuePopup ref="invoiceIssuePopup"></InvoiceIssuePopup>
         </div>
     </popup-modal>
 </template>
