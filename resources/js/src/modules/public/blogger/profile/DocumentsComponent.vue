@@ -7,11 +7,12 @@ import Loader from "../../../../core/services/AppLoader.vue";
 
 import InputBlockComponent from "../../../../core/components/form/InputBlockComponent.vue";
 import SelectBlockComponent from "../../../../core/components/form/SelectBlockComponent.vue";
+import SelectArrowIcon from "../../../../core/icons/SelectArrowIcon.vue";
 
 export default {
     name: "DocumentsComponent",
     props:['blogger'],
-    components: {SelectBlockComponent, InputBlockComponent},
+    components: {SelectArrowIcon, SelectBlockComponent, InputBlockComponent},
     data(){
         return {
             data: ref([
@@ -52,6 +53,7 @@ export default {
                 'Заполните информацию или дождитесь автоматического получения',
                 'Следуйте инструкциям',
             ],
+            isShowBackBtn: ref(false),
 
             Blogger, Loader
         }
@@ -61,7 +63,10 @@ export default {
             for (const key in step) {
                 if(this.blogger[key]) step[key] = this.blogger[key]
             }
-        })
+        });
+    },
+    mounted(){
+        this.isShowBackBtn = matchMedia('(max-width: 615px)').matches;
     },
     methods:{
         saveStep(){
@@ -194,11 +199,18 @@ export default {
     <div class="tab-content documents-content">
         <div class="documents-content__header">
             <div class="documents-content__tabs">
+                <div
+                    v-show="step > 1 && isShowBackBtn"
+                    @click="step--"
+                    class="documents-content__tabs-back">
+                    <select-arrow-icon></select-arrow-icon>
+                </div>
                 <a
                     href="#"
                     @click.prevent="step = 1"
                     :class="[
                         'documents-content__tab',
+                        (step === 1 ? 'current' : ''),
                         (step >= 1 ? 'active' : '')
                     ]">
                     Контакты
@@ -208,6 +220,7 @@ export default {
                     @click.prevent="availableStep >= 2 && (step = 2)"
                     :class="[
                         'documents-content__tab',
+                        (step === 2 ? 'current' : ''),
                         (availableStep >= 2 ? 'active' : '')
                     ]">
                     Паспорт
@@ -217,6 +230,7 @@ export default {
                     @click.prevent="availableStep >= 3 && (step = 3)"
                     :class="[
                         'documents-content__tab',
+                        (step === 3 ? 'current' : ''),
                         (availableStep >= 3 ? 'active' : '')
                     ]">
                     Платежи
@@ -226,7 +240,8 @@ export default {
                     @click.prevent="availableStep >= 4 && (step = 4)"
                     :class="[
                         'documents-content__tab',
-                        (availableStep >= 4 ? 'active' : '')
+                        (step === 4 ? 'current' : ''),
+                        (availableStep >= 4 ? 'active' : ''),
                     ]">
                     Проверка ИНН
                 </a>
@@ -235,6 +250,7 @@ export default {
                     @click.prevent="availableStep >= 5 && (step = 5)"
                     :class="[
                         'documents-content__tab',
+                        (step === 5 ? 'current' : ''),
                         (availableStep >= 5 ? 'active' : '')
                     ]">
                     Подтверждение партнёра
@@ -492,7 +508,11 @@ export default {
         </div>
     </div>
 </template>
-
+<style>
+.documents-content__tabs-back svg path{
+    fill: var(--text);
+}
+</style>
 <style scoped>
     .documents-content{
         width: 100%;
@@ -508,6 +528,12 @@ export default {
     }
     .documents-content__tabs{
         display: flex;
+    }
+    .documents-content__tabs-back{
+        width: 16px;
+        height: 16px;
+        transform: rotate(90deg);
+        cursor:pointer;
     }
     .documents-content__tab{
         text-decoration: none;
@@ -567,5 +593,48 @@ export default {
     #step-2 .documents-content__form-footer .btn{
         flex: 1 1 100%;
         max-width: 100%;
+    }
+
+    @media(max-width:786px){
+        .documents-content__tab{
+            font-size: 14px;
+        }
+    }
+
+    @media(max-width: 615px){
+        .documents-content__tabs{
+            align-items: center;
+        }
+        .documents-content__tab:not(.current){
+            display:none;
+        }
+        .documents-content__tab{
+            border:0;
+            font-size: 16px;
+            flex: unset;
+            font-weight: 600;
+            color:var(--text);
+            padding: 0;
+        }
+        .documents-content__tab.active{
+            color:var(--text);
+            border-bottom-color: unset;
+        }
+        .documents-content__form-row{
+            flex-direction: column;
+        }
+        .documents-content__form-row > div{
+            flex: unset;
+            width: 100%;
+        }
+        .documents-content{
+            gap: 32px;
+        }
+        .documents-content__form-row{
+            gap: 0;
+        }
+        #step-2 .documents-content__form-body{
+            gap: 24px;
+        }
     }
 </style>

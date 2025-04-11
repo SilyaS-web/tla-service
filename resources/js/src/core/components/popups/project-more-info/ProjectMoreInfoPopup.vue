@@ -228,4 +228,32 @@ export default {
 .popup-project__addit{
     margin-bottom: 20px;
 }
+@media(max-width: 884px){
+    .popup-project{
+        flex-direction: column;
+        padding:20px 10px;
+    }
+    .popup-project__carousel{
+        border-radius: 20px;
+    }
+    .popup-project__left{
+        width:75%;
+    }
+    .popup-project__right{
+        padding:0;
+        width:100%;
+    }
+    .project-item__btns{
+        max-width:250px;
+    }
+}
+@media(max-width: 545px){
+    .popup-project__left{
+        width: 100%;
+    }
+    .popup-project__img{
+        height:420px;
+        width:100%;
+    }
+}
 </style>

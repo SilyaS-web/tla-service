@@ -4432,23 +4432,6 @@ input[type='range']::-webkit-slider-runnable-track{
     }
 }
 @media(max-width:884px){
-    .popup-project{
-        flex-direction: column;
-        padding:20px 10px;
-    }
-    .popup-project__carousel{
-        border-radius: 20px;
-    }
-    .popup-project__left{
-        width:75%;
-    }
-    .popup-project__right{
-        padding:0;
-        width:100%;
-    }
-    .project-item__btns{
-        max-width:250px;
-    }
     .footer__body{
         gap: 20px;
     }
@@ -5115,13 +5098,6 @@ input[type='range']::-webkit-slider-runnable-track{
 
     .view-project__title{
         font-size: 20px;
-    }
-    .popup-project__left{
-        width: 100%;
-    }
-    .popup-project__img{
-        height:420px;
-        width:100%;
     }
 
     .popup__body{
