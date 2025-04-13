@@ -9,6 +9,7 @@ use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\PlatformController;
 use App\Http\Controllers\API\ProjectController;
 use App\Http\Controllers\API\SellerController;
+use App\Http\Controllers\API\TariffController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ReferralController;
 use App\Http\Controllers\API\TelegramController;
@@ -54,7 +55,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users/{user}/ban', [UserController::class, 'ban']);
     Route::get('/users/{user}/unban', [UserController::class, 'unban']);
     Route::get('/users/{user}/projects', [UserController::class, 'projects']);
-    Route::get('/users/{user}/projects/barnds', [UserController::class, 'brands']);
+    Route::get('/users/{user}/projects/brands', [UserController::class, 'brands']);
     Route::get('/users/{user}/works', [UserController::class, 'works']);
     Route::get('/users/{user}/works/{work}/messages', [UserController::class, 'messages']);
     Route::post('/users/{user}/works/{work}/messages', [UserController::class, 'storeMessage']);
@@ -99,15 +100,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/works/{work}/stats', [WorkController::class, 'stats']);
 
     Route::get('/payments', [PaymentController::class, 'index']);
-
-    Route::get('/referrals', [ReferralController::class, 'index']);
-    Route::get('/referrals/export', [ReferralController::class, 'export']);
-
-    Route::get('/tariifs', [TelegramController::class, 'index']);
-    Route::get('/tariifs/{tariff}/price', [TelegramController::class, 'getPrice']);
-
-    Route::post('/feedback', [UserController::class, 'sendFeedback']);
-
     Route::get('payment/{tariff}/init', [PaymentController::class, 'init']);
 
     Route::post('/partners', [PartnerController::class, 'store']);
@@ -117,5 +109,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/partners/{partner}', [PartnerController::class, 'destroy']);
 
     Route::get('/stats', [AdminController::class, 'stats']);
+    Route::post('/feedback', [UserController::class, 'sendFeedback']);
+    Route::get('/referrals', [ReferralController::class, 'index']);
+    Route::get('/referrals/export', [ReferralController::class, 'export']);
+    Route::get('/tariffs', [TariffController::class, 'index']);
 });
 

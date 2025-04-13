@@ -34,25 +34,4 @@ class TariffController extends Controller
 
         return response()->json($data)->setStatusCode(200);
     }
-
-    public function getPrice(Tariff $tariff, Request $request): JsonResponse
-    {
-        $validator = Validator::make($request->all(), [
-            'quantity' => 'string|required',
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json($validator->errors())->setStatusCode(400);
-        }
-
-        $validated = $validator->validated();
-
-        $price = TariffService::getPrice($tariff->type, $validated['quantity']);
-
-        if (!$price) {
-            return response()->json(['message' => 'Выбрано некорректное количиство или неподходящий тариф'])->setStatusCode(400);
-        }
-
-        return response()->json(['price' => $price])->setStatusCode(200);
-    }
 }

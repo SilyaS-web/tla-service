@@ -10,6 +10,25 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
+/**
+ *
+ * @property int $id
+ * @property string $name
+ * @property string $email
+ * @property string $phone
+ * @property string $image
+ * @property string $status
+ * @property string $role
+ * @property int $tg_phone_id
+ * @property string $password
+ * @property bool $is_admin
+ * @property int $balance
+ * @property \Illuminate\Support\Carbon|null $telegram_verified_at
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @mixin \Eloquent
+ */
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
@@ -35,6 +54,7 @@ class User extends Authenticatable
         'image',
         'status',
         'role',
+        'balance',
         'tg_phone_id',
         'password',
         'telegram_verified_at',
@@ -144,7 +164,7 @@ class User extends Authenticatable
         return $tariffs->get();
     }
 
-    public function getActiveTariffByGroup($group_id)
+    public function getActiveTariffByGroup($group_id): ?SellerTariff
     {
         $tariff = $this->sellerTariffs()->where('finish_date', '>', Carbon::now())->whereHas('tariff', function (Builder $query) use ($group_id) {
             $query->where('group_id', $group_id);
