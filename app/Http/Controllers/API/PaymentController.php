@@ -79,20 +79,30 @@ class PaymentController extends Controller
         echo 'OK';
     }
 
-    public function init(Tariff $tariff, $user_id = null, $debug_price = null): JsonResponse
+    public function initTariffPayment(Tariff $tariff, User $user = null, $from_landing = false, $debug_price = null): JsonResponse
     {
         $price = $tariff->price;
 
-        if (!$user_id) {
+        if (!$user) {
             $user = Auth::user();
-        } else {
-            $user = User::find($user_id);
         }
 
         $price = $debug_price ?? $price;
         $description = $debug_price != null ? 'Тестовый платёж' : $tariff->title;
 
-        $link = PaymentService::getPaymentLink($user->id, $price, $description);
+        $link = PaymentService::getPaymentLink($user->id, $price, $description, Payment::TARIFF_TYPE, $tariff->id, $from_landing);
+        return response()->json(['link' => $link])->setStatusCode(200);
+    }
+
+    public function initBalancePayment(): JsonResponse
+    {
+        $price = request()->input('price');
+        $user = Auth::user();
+
+        $price = $debug_price ?? $price;
+        $description = 'Тестовый платёж баланса';
+
+        $link = PaymentService::getPaymentLink($user->id, $price, $description, Payment::TOP_UP_TYPE);
         return response()->json(['link' => $link])->setStatusCode(200);
     }
 
@@ -116,7 +126,6 @@ class PaymentController extends Controller
     public function regFromPayment(Tariff $tariff)
     {
         $validator = Validator::make(request()->all(), [
-            'quantity' => 'numeric|nullable',
             'phone' => 'string|required',
         ]);
 
@@ -133,13 +142,13 @@ class PaymentController extends Controller
             return redirect()->route('login')->with('success', 'Аккаунт с таким номером телефона не найден')->withInput();
         }
 
-        $redirect_url = $this->init($tariff, $validated['quantity'] ?? null, true, $user->id);
+        $redirect_url = $this->initTariffPayment($tariff, $user, true);
         return redirect($redirect_url);
     }
 
     public function debugPayment(Tariff $tariff)
     {
-        $redirect_url = $this->init($tariff, true, null, 1000);
+        $redirect_url = $this->initTariffPayment($tariff, null, false, 1000);
         return redirect($redirect_url);
     }
 }

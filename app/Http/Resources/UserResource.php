@@ -3,8 +3,13 @@
 namespace App\Http\Resources;
 
 use App\Models\Modal;
+use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Redis;
+
+/**
+ * @mixin User
+ */
 
 class UserResource extends JsonResource
 {
@@ -13,7 +18,7 @@ class UserResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray($request)
+    public function toArray($request): array
     {
         $organization_name = false;
         $channel_name = false;
@@ -44,6 +49,7 @@ class UserResource extends JsonResource
             'role' => $this->role,
             'seller_id' => $this->seller->id ?? false,
             'blogger_id' => $this->blogger->id ?? false,
+            'balance' => $this->balance ?? 0,
             'is_blogger_on_moderation' => $this->status == 0 && isset($this->blogger) && empty($this->blogger->gender_ratio),
             'organization_name' => $organization_name,
             'channel_name' => $channel_name,

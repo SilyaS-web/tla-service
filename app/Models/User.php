@@ -21,7 +21,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string $role
  * @property int $tg_phone_id
  * @property string $password
- * @property bool $is_admin
+ * @property int $is_admin
  * @property int $balance
  * @property \Illuminate\Support\Carbon|null $telegram_verified_at
  * @property \Illuminate\Support\Carbon|null $created_at

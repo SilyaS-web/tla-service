@@ -7,15 +7,17 @@ use App\Models\Payment;
 use Illuminate\Support\Facades\Log;
 use JustCommunication\TinkoffAcquiringAPIClient\API\InitRequest;
 use JustCommunication\TinkoffAcquiringAPIClient\Exception\TinkoffAPIException;
-use JustCommunication\TinkoffAcquiringAPIClient\TinkoffAcquiringAPIClient;
+use App\Classes\TinkoffAcquiringAPIClient;
 
 class PaymentService
 {
-    public static function getPaymentLink(int $user_id, int $price, string $description, string $type = Payment::TARIFF_TYPE, $from_landing = false): string
+    public static function getPaymentLink(int $user_id, int $price, string $description, string $type = Payment::TARIFF_TYPE, int $tariff_id = null, $from_landing = false): string
     {
         $payment = Payment::create([
             'user_id' => $user_id,
             'price' => $price,
+            'type' => $type,
+            'tariff_id' => $tariff_id,
         ]);
 
         $client = new TinkoffAcquiringAPIClient(config('tbank.terminal_key'), config('tbank.secret'));
