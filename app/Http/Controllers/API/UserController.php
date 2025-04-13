@@ -3,13 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Requests\User\UserUpdateRequest;
-use App\Http\Resources\MessageFileResource;
-use App\Http\Resources\MessagesResource;
 use App\Http\Resources\WorkFileResource;
 use App\Models\Modal;
 use App\Models\SellerTariff;
 use App\Models\Tariff;
-use App\Models\TgPhone;
 use App\Models\User;
 use App\Services\ImageService;
 use App\Services\PhoneService;
