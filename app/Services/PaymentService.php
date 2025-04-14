@@ -7,7 +7,7 @@ use App\Models\Payment;
 use Illuminate\Support\Facades\Log;
 use JustCommunication\TinkoffAcquiringAPIClient\API\InitRequest;
 use JustCommunication\TinkoffAcquiringAPIClient\Exception\TinkoffAPIException;
-use App\Classes\TinkoffAPIClient;
+use JustCommunication\TinkoffAcquiringAPIClient\TinkoffAcquiringAPIClient;
 
 class PaymentService
 {
@@ -20,7 +20,7 @@ class PaymentService
             'tariff_id' => $tariff_id,
         ]);
 
-        $client = new TinkoffAPIClient(config('tbank.terminal_key'), config('tbank.secret'));
+        $client = new TinkoffAcquiringAPIClient(config('tbank.terminal_key'), config('tbank.secret'));
         $initRequest = new InitRequest($price, $payment->id . '_' . App::isProduction());
 
         $notification_url = url('/');

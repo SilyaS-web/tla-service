@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Payments\InitPaymentRequest;
 use App\Http\Resources\PaymentResource;
@@ -38,7 +39,7 @@ class PaymentController extends Controller
         $type = request()->input('type');
         $user = User::find($payment->user_id);
         $state = $this->checkState($payment);
-        if ($state == TPayment::STATUS_CONFIRMED) {
+        if ($state == TPayment::STATUS_CONFIRMED || !App::isProduction()) {
             switch ($type) {
                 case Payment::TARIFF_TYPE:
                     $tariff = Tariff::find($payment->tariff_id);

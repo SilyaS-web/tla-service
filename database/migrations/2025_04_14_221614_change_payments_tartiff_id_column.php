@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::table('payments', function (Blueprint $table) {
             $table->unsignedBigInteger('tariff_id')->nullable()->change();
+            $table->string('type')->nullable();
         });
     }
 
@@ -23,6 +24,7 @@ return new class extends Migration
     {
         Schema::table('payments', function (Blueprint $table) {
             $table->unsignedBigInteger('tariff_id')->nullable(false)->change();
+            $table->dropColumn('type');
         });
     }
 };
