@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Payments\InitPaymentRequest;
 use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
 use App\Services\BalanceService;
@@ -94,15 +95,13 @@ class PaymentController extends Controller
         return response()->json(['link' => $link])->setStatusCode(200);
     }
 
-    public function initBalancePayment(): JsonResponse
+    public function initBalancePayment(InitPaymentRequest $request): JsonResponse
     {
-        $price = request()->input('price');
+        $validated = $request->validated();
         $user = Auth::user();
 
-        $price = $debug_price ?? $price;
         $description = 'Тестовый платёж баланса';
-
-        $link = PaymentService::getPaymentLink($user->id, $price, $description, Payment::TOP_UP_TYPE);
+        $link = PaymentService::getPaymentLink($user->id, $validated['price'], $description, Payment::TOP_UP_TYPE);
         return response()->json(['link' => $link])->setStatusCode(200);
     }
 
