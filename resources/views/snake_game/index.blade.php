@@ -8,9 +8,46 @@
 </head>
 <body>
     <div class="score">
-        <span class="score__num">000</span>
+        <div class="score__num">
+            <span class="score__simple">000</span>
+            <p class="score__bonus"><span>0</span>/30</p>
+        </div>
+        <div class="score__progress-bar progress-bar">
+            <div class="progress-bar__items">
+                <div class="progress-bar__item progress-bar__main">
+                    <div class="progress-bar__main-item"></div>
+                    <div class="progress-bar__main-item"></div>
+                    <div class="progress-bar__main-item"></div>
+                    <div class="progress-bar__main-item"></div>
+                    <div class="progress-bar__main-item"></div>
+                    <div class="progress-bar__main-item"></div>
+                    <div class="progress-bar__main-item"></div>
+                    <div class="progress-bar__main-item"></div>
+                    <div class="progress-bar__main-item"></div>
+                    <div class="progress-bar__main-item"></div>
+                    <div class="progress-bar__main-item"></div>
+                    <div class="progress-bar__main-item"></div>
+                    <div class="progress-bar__main-item"></div>
+                    <div class="progress-bar__main-item"></div>
+                    <div class="progress-bar__main-item"></div>
+                    <div class="progress-bar__main-item"></div>
+                </div>
+                <div class="progress-bar__item progress-bar__bonus">
+                    <div class="progress-bar__bonus-item"></div>
+                    <div class="progress-bar__bonus-item"></div>
+                    <div class="progress-bar__bonus-item"></div>
+                    <div class="progress-bar__bonus-item"></div>
+                    <div class="progress-bar__bonus-item"></div>
+                    <div class="progress-bar__bonus-item"></div>
+                    <div class="progress-bar__bonus-item"></div>
+                    <div class="progress-bar__bonus-item"></div>
+                    <div class="progress-bar__bonus-item"></div>
+                    <div class="progress-bar__bonus-item"></div>
+                </div>
+            </div>
+        </div>
         <div class="question">
-            <img src="/images/snake/icon-question.svg" alt="">
+            <img src="/images/snake/icon-question.png" alt="">
         </div>
     </div>
     <div class="stage"></div>
@@ -68,7 +105,8 @@
             <p>Игра окончена! Вас счет: <span id="score">1</span>, теперь вы можете эти очки в наших клубах!</p>
         </div>
         <div class="popup__footer">
-            <button class="btn popup-btn">Продолжить</button>
+            <button class="btn primary popup-btn">Начать заново</button>
+            <button class="btn secondary popup-btn">Забрать бонусы</button>
         </div>
     </div>
 </div>
@@ -550,7 +588,8 @@ Food Tile Entity
         this.h = opt.h;
         this.blur = 0;
         this.scale = 1;
-        this.hue = 10;
+        this.hue = opt.hue;
+        this.bgc = opt.bgc;
         this.opacity = 0;
         this.elem = document.createElement( 'div' );
         this.elem.style.position = 'absolute';
@@ -585,7 +624,7 @@ Food Tile Entity
         this.elem.style.width = this.w + 'px';
         this.elem.style.height = this.h + 'px';
         this.elem.style[ 'transform' ] = 'translateZ(0) scale(' + this.scale + ')';
-        this.elem.style.backgroundColor = 'hsla(' + this.hue + ', 100%, 51%, 1)';
+        this.elem.style.backgroundColor = this.bgc;
         this.elem.style.boxShadow = '0 0 ' + this.blur + 'px hsla(' + this.hue + ', 100%, 60%, 1)';
         this.elem.style.opacity = this.opacity;
     };
@@ -621,7 +660,7 @@ Snake Entity
         this.updateTick = 10;
         this.updateTickMax = this.updateTick;
         this.updateTickLimit = 3;
-        this.updateTickChange = 0.2;
+        this.updateTickChange = 0.05;
         this.deathFlag = 0;
         this.justAteTick = 0;
         this.justAteTickMax = 1;
@@ -734,7 +773,46 @@ Snake Entity
             if( this.parentState.grid.get( this.tiles[ 0 ].col, this.tiles[ 0 ].row ) == 'snake' ) {
                 this.parentState.isGamePaused = true;
 
-                EndGamePopup(this.parentState.score)
+                const saveData = {
+                    score: this.parentState.score,
+                    bonusScore: this.parentState.bonusScore,
+                    chatID: this.parentState.chatID,
+                }
+
+                EndGamePopup(saveData)
+            }
+
+            // check eating of food
+            if( this.parentState.grid.get( this.tiles[ 0 ].col, this.tiles[ 0 ].row ) == 'bonus' ) {
+                this.tiles.push( new g.SnakeTile({
+                    parentState: this.parentState,
+                    parentGroup: this.tiles,
+                    col: this.last.col,
+                    row: this.last.row,
+                    x: this.last.col * this.parentState.tileWidth,
+                    y: this.last.row * this.parentState.tileHeight,
+                    w: this.parentState.tileWidth - this.parentState.spacing,
+                    h: this.parentState.tileHeight - this.parentState.spacing
+                }));
+                if( this.updateTickMax - this.updateTickChange > this.updateTickLimit ) {
+                    this.updateTickMax -= this.updateTickChange;
+                }
+
+                if(this.parentState.bonusScore + 5 <= 30) {
+                    this.parentState.bonusScore += 5;
+                    this.parentState.updateBonusScore();
+                }
+
+                this.justAteTick = this.justAteTickMax;
+
+                this.parentState.stageElem.removeChild( this.parentState.bonus.tile.elem );
+                this.parentState.bonus = null;
+
+                this.parentState.bonusTicksUntilCreate = this.parentState.defaultBonusTicksUntilCreate;
+                this.parentState.bonusTicksUntilDelete = this.parentState.defaultBonusTicksUntilDelete;
+
+                document.querySelector('.progress-bar__bonus').style.opacity = '0';
+                document.querySelectorAll('.progress-bar__bonus-item').forEach(item => item.style.opacity = '1');
             }
 
             // check eating of food
@@ -811,6 +889,8 @@ Food Entity
         this.parentState = opt.parentState;
         this.tile = new g.FoodTile({
             parentState: this.parentState,
+            hue: 10,
+            bgc: 'hsla(10, 100%, 51%, 1)',
             col: 0,
             row: 0,
             x: 0,
@@ -865,6 +945,75 @@ Food Entity
 
 })();
 
+
+(function(){ 'use strict';
+
+    g.Bonus = function( opt ) {
+        this.parentState = opt.parentState;
+        this.tile = this.tile = new g.FoodTile({
+            parentState: this.parentState,
+            col: 0,
+            row: 0,
+            hue: 40,
+            bgc:'hsla(40, 99%, 49%, 1)',
+            x: 0,
+            y: 0,
+            w: opt.parentState.tileWidth - opt.parentState.spacing,
+            h: opt.parentState.tileHeight - opt.parentState.spacing
+        });
+        this.reset();
+        this.eaten = 0;
+        this.birthTick = 1;
+        this.deathTick = 0;
+        this.birthTickChange = 0.025;
+        this.deathTickChange = 0.05;
+        this.ticksUntilDelete = 5000;
+        this.defaultTicksUntilDelete = 5000;
+    };
+
+    g.Bonus.prototype.reset = function() {
+        var empty = [];
+        for( var x = 0; x < this.parentState.cols; x++) {
+            for( var y = 0; y < this.parentState.rows; y++) {
+                var tile = this.parentState.grid.get( x, y );
+                if( tile == 'empty' ) {
+                    empty.push( { x: x, y: y } );
+                }
+            }
+        }
+        var newTile = empty[ g.util.randInt( 0, empty.length - 1 ) ];
+        this.tile.col = newTile.x;
+        this.tile.row = newTile.y;
+    };
+
+    g.Bonus.prototype.updateDimensions = function() {
+        this.tile.updateDimensions();
+    };
+
+    g.Bonus.prototype.update = function() {
+        this.tile.update();
+
+        if( this.birthTick > 0 ) {
+            this.birthTick -= this.birthTickChange;
+        } else if( this.birthTick < 0 ) {
+            this.birthTick = 0;
+        }
+
+        this.parentState.grid.set( this.tile.col, this.tile.row, 'bonus' );
+    };
+
+    g.Bonus.prototype.remove = function() {
+        this.parentState.stageElem.removeChild( this.parentState.bonus.tile.elem );
+
+        this.parentState.grid.set( this.tile.col, this.tile.row, 'tile' );
+    };
+
+    g.Bonus.prototype.render = function() {
+        this.tile.render();
+    };
+
+})();
+
 /*================================================
 
 Play State
@@ -890,6 +1039,7 @@ Play State
         this.keys = {};
         this.foodCreateTimeout = null;
         this.score = 0;
+        this.bonusScore = 0;
         this.time = new g.Time();
         this.getDimensions();
         if( this.winWidth < this.winHeight ) {
@@ -901,6 +1051,7 @@ Play State
         }
         this.spacing = 1;
         this.grid = new g.Grid( this.cols, this.rows );
+        this.maxBonusCount = this.cols * this.rows - 5
         this.resize();
         this.createBoardTiles();
         this.bindEvents();
@@ -910,6 +1061,15 @@ Play State
         this.food = new g.Food({
             parentState: this
         });
+
+        this.bonusTicksUntilDelete = 750;
+        this.defaultBonusTicksUntilDelete = 750;
+        this.bonusTicksUntilCreate = 2000;
+        this.defaultBonusTicksUntilCreate = 2000;
+
+        this.bonusScore = null
+
+        this.chatID = null
 
         this.updateScore()
     };
@@ -924,19 +1084,32 @@ Play State
     StatePlay.prototype.updateScore = async function() {
         var _this = g.currentState();
 
-        if(_this.score === 30){
-            _this.isGamePaused = true;
-            await WinPopup();
-        }
-
         if(_this.score >= 10) {
-            _this.scoreElem.querySelector('.score__num').innerHTML = `0${_this.score}`
+            _this.scoreElem.querySelector('.score__num .score__simple').innerHTML = `0${_this.score}`
         }
         else{
-            _this.scoreElem.querySelector('.score__num').innerHTML = `00${_this.score}`
+            _this.scoreElem.querySelector('.score__num .score__simple').innerHTML = `00${_this.score}`
         }
 
+        //progress bar
+        const progressBarItems = document.querySelectorAll('.progress-bar__main-item');
+        const filledItemsCount = Math.floor(_this.score / progressBarItems.length);
 
+        for (let i = 0; i < filledItemsCount; i++){
+            progressBarItems[i].style.opacity = '1';
+        }
+
+        const remainedScore = (_this.score / progressBarItems.length) - filledItemsCount;
+
+        if(remainedScore > 0){
+            progressBarItems[filledItemsCount].style.opacity = `${remainedScore}`;
+        }
+    };
+
+    StatePlay.prototype.updateBonusScore = async function() {
+        var _this = g.currentState();
+
+        document.querySelector('.score__bonus span').innerHTML = _this.bonusScore
     };
 
     StatePlay.prototype.resize = function() {
@@ -1071,6 +1244,55 @@ Play State
         this.food.update();
         this.food.render();
         this.time.update();
+
+        if(this.bonusTicksUntilCreate === 0 && !this.bonus){
+            this.bonus = new g.Bonus({
+                parentState: this
+            });
+
+            this.bonusTicksUntilCreate = this.defaultBonusTicksUntilCreate
+
+            document.querySelector('.progress-bar__bonus').style.opacity = '1';
+            document.querySelectorAll('.progress-bar__bonus-item').forEach(item => item.style.opacity = '1')
+        }
+        else if(!this.bonus){
+            this.bonusTicksUntilCreate--
+        }
+
+        if(this.bonusTicksUntilDelete === 0 && this.bonus){
+            this.bonus.remove();
+            this.bonus = null;
+
+            document.querySelector('.progress-bar__bonus').style.opacity = '0';
+
+            this.bonusTicksUntilDelete = this.defaultBonusTicksUntilDelete
+        }
+        else if(this.bonus){
+            this.bonusTicksUntilDelete--
+
+            const progressBarItems = document.querySelectorAll('.progress-bar__bonus-item');
+            const filledItemValue = Math.floor(this.defaultBonusTicksUntilDelete / progressBarItems.length);
+            const remainItemsValue = this.defaultBonusTicksUntilDelete - this.bonusTicksUntilDelete
+
+            let itemsValueCount = 0;
+
+            for (let i = progressBarItems.length - 1; i >= 0; i--){
+                itemsValueCount+=filledItemValue;
+
+                if(itemsValueCount <= remainItemsValue) progressBarItems[i].style.opacity = '0'
+
+                if(itemsValueCount > remainItemsValue){
+                    const valuesDiff = itemsValueCount - remainItemsValue;
+
+                    progressBarItems[i].style.opacity = `${((valuesDiff * 100) / filledItemValue) / 100}`
+                }
+            }
+        }
+
+        if(this.bonus){
+            this.bonus.update();
+            this.bonus.render();
+        }
     };
 
     StatePlay.prototype.exit = function() {
@@ -1102,6 +1324,16 @@ App
 
     g.time = new g.Time();
 
+    const chatID = getParamFromUrl('chat_id');
+
+    if(!chatID){
+        throw new Error('Отсутствует айди чата')
+    }
+
+    g.config.chatID = chatID
+
+    g.currentState().chatID = chatID;
+
     g.step = function() {
         const gameState = g.currentState();
 
@@ -1112,8 +1344,6 @@ App
 
         g.time.update();
     };
-
-
 
     window.addEventListener( 'load', g.step, false );
 
@@ -1130,10 +1360,6 @@ App
                 g.step();
             })
         })
-    })
-
-    window.addEventListener('load', () => {
-
     })
 
 
@@ -1181,21 +1407,37 @@ const WinPopup = function(){
     })
 }
 
-const EndGamePopup = function(score){
+const EndGamePopup = function(data){
     return new Promise((resolve, reject) => {
         const popup = document.querySelector('#popup-ended')
 
-        popup.querySelector('#score').innerHTML = score
-
         popup.classList.add('--opened');
 
-        popup.querySelector('.popup-btn').addEventListener('click', (evt)=>{
+        popup.querySelector('.popup-btn.primary').addEventListener('click', (evt)=>{
             evt.preventDefault();
             popup.classList.remove('--opened');
 
             window.location.reload()
 
             resolve(true)
+        })
+
+        popup.querySelector('.popup-btn.secondary').addEventListener('click', async (evt)=>{
+            evt.preventDefault();
+
+            let response = await fetch('http://localhost:8443/snake-game/end', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json;charset=utf-8'
+                },
+                body: JSON.stringify({
+                    chat_id: data.chatID,
+                    score: data.score,
+                    bonusScore: data.bonusScore
+                })
+            });
+
+            console.log(response)
         })
     })
 }
@@ -1204,6 +1446,38 @@ const EndGamePopup = function(score){
 /*================================================
 
 Popups
+
+================================================*/
+
+
+/*================================================
+
+Utils
+
+================================================*/
+
+function getParamFromUrl(query) {
+    var vars = query.split("&");
+    var query_string = {};
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split("=");
+        var key = decodeURIComponent(pair.shift());
+        var value = decodeURIComponent(pair.join("="));
+        if (typeof query_string[key] === "undefined") {
+            query_string[key] = value;
+        } else if (typeof query_string[key] === "string") {
+            var arr = [query_string[key], value];
+            query_string[key] = arr;
+        } else {
+            query_string[key].push(value);
+        }
+    }
+    return query_string;
+}
+
+/*================================================
+
+Utils
 
 ================================================*/
 
