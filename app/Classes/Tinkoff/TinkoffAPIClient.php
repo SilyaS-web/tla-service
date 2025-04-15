@@ -10,8 +10,8 @@ use stdClass;
 
 class TinkoffAPIClient
 {
-    const API_ENDPOINT = 'https://business.tbank.ru/openapi/sandbox/secured/api/v1';
-    const TOKEN = 'TBankSandboxToken';
+    const API_ENDPOINT = 'https://business.tbank.ru/openapi/api/v1/';
+    const TOKEN = 't.KS4xB8p8qQFag7Yex4CdoEiSVItgeMpFLlbF1jRgFe6t5zElewo9lxybnKfZNYsx-74nXcIRAO2g_tYu8Nib-g';
     const ACCOUNT_NUMBER = '40802810600002050260';
     private Client $client;
 
