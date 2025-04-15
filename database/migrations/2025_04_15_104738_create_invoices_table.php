@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('invoice_id')->nullable();
             $table->string('pdf_url')->nullable();
             $table->string('incoming_invoice_url')->nullable();
-            $table->string('invoice_number');
             $table->timestamp('due_date');
             $table->string('account_number');
             $table->string('payer_name');

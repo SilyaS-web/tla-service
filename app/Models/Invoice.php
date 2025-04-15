@@ -47,7 +47,6 @@ class Invoice extends Model
         'invoice_id',
         'pdf_url',
         'incoming_invoice_url',
-        'invoice_number',
         'due_date',
         'account_number',
         'payer_name',

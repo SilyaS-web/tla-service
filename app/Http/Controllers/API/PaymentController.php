@@ -189,10 +189,11 @@ class PaymentController extends Controller
         $invoice = InvoiceService::store($validated);
         $result = InvoiceService::send($invoice);
         if ($result) {
+            dd($result);
             InvoiceService::update($invoice, [
-                'invoice_id' => $result->invoiceId,
-                'pdf_url' => $invoice->pdfUrl,
-                'incoming_invoice_url' => $invoice->incomingInvoiceUrl,
+                'invoice_id' => $result['invoiceId'],
+                'pdf_url' => $result['dfUrl'],
+                'incoming_invoice_url' => $result['ncomingInvoiceUrl'],
             ]);
             return response()->json(['result' => $result]);
         }
