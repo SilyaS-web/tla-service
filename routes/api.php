@@ -106,6 +106,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/payments', [PaymentController::class, 'index']);
     Route::get('/payments/{tariff}/init', [PaymentController::class, 'initTariffPayment']);
     Route::get('/payments/init', [PaymentController::class, 'initBalancePayment']);
+    Route::post('/payments/init-invoice', [PaymentController::class, 'initInvoice']);
 
     Route::post('/partners', [PartnerController::class, 'store']);
     Route::get('/partners', [PartnerController::class, 'index']);
