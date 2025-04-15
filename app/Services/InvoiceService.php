@@ -53,7 +53,7 @@ class InvoiceService
             'items' => [[
                 'name' => 'Пополнение баланса личного кабинета',
                 'price' => $invoice->amount,
-                'unit' => '',
+                'unit' => 'штука',
                 'vat' => "0",
                 'amount' => 1,
             ]]
