@@ -28,7 +28,7 @@ class StoreOrderRequest extends FormRequest
         return [
             'specification' => 'required|string',
             'price' => ['required', 'numeric', 'lte:' . $user->balance],
-            'complete_till' => 'required|date',
+            'complete_till' => 'required|numeric',
             'work_id' => 'required|exists:works,id',
         ];
     }

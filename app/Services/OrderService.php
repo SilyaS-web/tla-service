@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Work;
+use Carbon\Carbon;
 
 class OrderService
 {
@@ -13,6 +14,7 @@ class OrderService
         $work = Work::query()->find($order_data['work_id']);
         $project = $work->project;
         $order_data['status'] = $status;
+        $order_data['complete_till'] = Carbon::now()->addDays($order_data['complete_till'])->timestamp;
         $order = Order::create($order_data);
         $user->balance -= $order_data['price'];
         $user->save();
