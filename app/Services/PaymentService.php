@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App;
+use App\Classes\Tinkoff\TinkoffAPIClient;
 use App\Models\Payment;
+use App\Models\User;
 use Illuminate\Support\Facades\Log;
 use JustCommunication\TinkoffAcquiringAPIClient\API\InitRequest;
 use JustCommunication\TinkoffAcquiringAPIClient\Exception\TinkoffAPIException;
@@ -51,5 +53,24 @@ class PaymentService
             Log::channel('single')->info($e);
             return $fail_url;
         }
+    }
+
+    public static function initWithdraw(int $amount, User $user, $requisites): bool
+    {
+        $payment = Payment::create([
+            'user_id' => $user->id,
+            'price' => $amount,
+            'type' => Payment::WITHDRAW,
+        ]);
+        $id = $payment->id . '_' . (int) App::isProduction();
+
+        $data = [
+            'id' => $id,
+            'to' => $requisites,
+            'purpose' => 'Выплата самозанятому по оказанию услуг',
+            'amount' => $amount,
+        ];
+        $client = new TinkoffAPIClient();
+        return $client->initWithdraw($data);
     }
 }

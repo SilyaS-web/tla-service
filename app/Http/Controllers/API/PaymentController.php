@@ -4,9 +4,10 @@ namespace App\Http\Controllers\API;
 
 use App;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Payments\InitPaymentRequest;
+use App\Http\Requests\Payments\WithdrawRequest;
 use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
+use App\Models\Requisites;
 use App\Services\BalanceService;
 use App\Services\PaymentService;
 use Illuminate\Http\JsonResponse;
@@ -39,7 +40,7 @@ class PaymentController extends Controller
         $type = request()->input('type');
         $user = User::find($payment->user_id);
         $state = $this->checkState($payment);
-        if ($state == TPayment::STATUS_CONFIRMED || !App::isProduction()) {
+        if ($payment->processed && ($state == TPayment::STATUS_CONFIRMED || !App::isProduction())) {
             switch ($type) {
                 case Payment::TARIFF_TYPE:
                     $tariff = Tariff::find($payment->tariff_id);
@@ -96,7 +97,7 @@ class PaymentController extends Controller
         return response()->json(['link' => $link])->setStatusCode(200);
     }
 
-    public function initBalancePayment(InitPaymentRequest $request): JsonResponse
+    public function initBalancePayment(WithdrawRequest $request): JsonResponse
     {
         $validated = $request->validated();
         $user = Auth::user();
@@ -150,5 +151,29 @@ class PaymentController extends Controller
     {
         $redirect_url = $this->initTariffPayment($tariff, null, false, 1000);
         return redirect($redirect_url);
+    }
+
+    public function withdraw(WithdrawRequest $request, User $user): JsonResponse
+    {
+        $validated = $request->validated();
+        if ($user->balance < $validated['amount']) {
+            return response()->json(['result' => 'Сумма превышает баланс'], 400);
+
+        }
+
+        $requisites = Requisites::where('user_id', $user->id)->first();
+        if (!$requisites) {
+            return response()->json(['result' => 'Заполните реквизиты'], 400);
+        }
+
+        $requisites = $requisites->toArray();
+        unset($requisites['user_id']);
+
+        if (PaymentService::initWithdraw($validated['amount'], $user, $requisites)) {
+            BalanceService::withdraw($validated['amount'], $user);
+            return response()->json(['result' => 'Выплата поставлена в очередь']);
+        }
+
+        return response()->json(['result' => 'Не удалось вывести средства, обратитесь в поддержку'], 400);
     }
 }

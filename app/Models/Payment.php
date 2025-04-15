@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property int $price
  * @property string $status
  * @property int $quantity
+ * @property boolean $processed
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @mixin \Eloquent
@@ -29,6 +30,7 @@ class Payment extends Model
 
     const TARIFF_TYPE = 'tariff';
     const TOP_UP_TYPE = 'top_up';
+    const WITHDRAW = 'withdraw';
 
     protected $fillable = [
         'user_id',
@@ -37,6 +39,7 @@ class Payment extends Model
         'tariff_id',
         'tariff_id',
         'type',
+        'processed',
         'status',
         'quantity',
     ];

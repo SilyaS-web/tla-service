@@ -9,6 +9,7 @@ use App\Http\Controllers\API\PartnerController;
 use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\PlatformController;
 use App\Http\Controllers\API\ProjectController;
+use App\Http\Controllers\API\RequisitesController;
 use App\Http\Controllers\API\SellerController;
 use App\Http\Controllers\API\TariffController;
 use App\Http\Controllers\API\UserController;
@@ -63,6 +64,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users/{user}/notifications', [UserController::class, 'notifications']);
     Route::get('/users/{user}/notifications/view', [UserController::class, 'viewNotification']);
     Route::get('/users/{user}/notifications/{notification}/view', [UserController::class, 'viewNotification']);
+    Route::post('/users/{user}/payments/init-withdraw', [PaymentController::class, 'withdraw']);
+    Route::post('/users/{user}/requisites', [RequisitesController::class, 'store']);
 
     Route::post('/bloggers', [BloggerController::class, 'store']);
     Route::get('/bloggers', [BloggerController::class, 'index']);
@@ -101,8 +104,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/works/{work}/stats', [WorkController::class, 'stats']);
 
     Route::get('/payments', [PaymentController::class, 'index']);
-    Route::get('payment/{tariff}/init', [PaymentController::class, 'initTariffPayment']);
-    Route::get('/payment/init', [PaymentController::class, 'initBalancePayment']);
+    Route::get('/payments/{tariff}/init', [PaymentController::class, 'initTariffPayment']);
+    Route::get('/payments/init', [PaymentController::class, 'initBalancePayment']);
 
     Route::post('/partners', [PartnerController::class, 'store']);
     Route::get('/partners', [PartnerController::class, 'index']);

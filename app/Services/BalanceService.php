@@ -14,4 +14,13 @@ class BalanceService
         $user->balance += $price;
         $user->save();
     }
+
+    public static function withdraw(int $amount, User $user): void
+    {
+        $message_text = "Вывод средств \n\nИмя: " . $user->name . "\nТелефон: " . $user->phone . "\nСумма: " . ($amount / 100) . " руб.";
+        TgService::sendPayment($message_text);
+
+        $user->balance -= $amount;
+        $user->save();
+    }
 }
