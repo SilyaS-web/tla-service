@@ -7,14 +7,15 @@ use App\Models\Invoice;
 use App\Models\Requisites;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use stdClass;
 
 class InvoiceService
 {
-    public static function send(Invoice $invoice): ?array
+    public static function send(Invoice $invoice): ?stdClass
     {
         $data = InvoiceService::prepareInvoiceData($invoice);
         $client = new TinkoffAPIClient();
-        dd($client->sendInvoice($data));
+        return $client->sendInvoice($data);
     }
 
     public static function store(array $data): Invoice
@@ -27,6 +28,11 @@ class InvoiceService
         }
 
         return Invoice::create($data);
+    }
+
+    public static function update(Invoice $invoice, array $data): bool
+    {
+       return $invoice->update($data);
     }
 
     public static function prepareInvoiceData(Invoice $invoice): array

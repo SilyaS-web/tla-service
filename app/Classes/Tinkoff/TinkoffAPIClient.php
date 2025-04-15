@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use stdClass;
 
 class TinkoffAPIClient
 {
@@ -33,7 +34,7 @@ class TinkoffAPIClient
         }
     }
 
-    public function sendInvoice($data): ?array
+    public function sendInvoice($data): ?stdClass
     {
         if (empty($data['from'])) {
             $data['from'] = [
