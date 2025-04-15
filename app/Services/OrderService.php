@@ -24,7 +24,7 @@ class OrderService
 
         if (!empty($files)) {
             foreach ($files as $file) {
-                $file_path = $file->storeAs('orders', str_replace(' ', '_', $project->product_name) . '_' . Carbon::now() . '_' . Str::random(10), 'public');
+                $file_path = $file->storeAs('orders', $order->id . '_' . Carbon::now()->format('Y_m_d') . '_' . $file->hashName(), 'public');
 
                 OrderFile::create([
                     'source_id' => $order->id,
