@@ -106,7 +106,7 @@ class PaymentController extends Controller
         $user = Auth::user();
 
         $description = 'Тестовый платёж баланса';
-        $link = PaymentService::getPaymentLink($user->id, $validated['price'], $description, Payment::TOP_UP_TYPE);
+        $link = PaymentService::getPaymentLink($user->id, $validated['price'] * 100, $description, Payment::TOP_UP_TYPE);
         return response()->json(['link' => $link])->setStatusCode(200);
     }
 
@@ -183,6 +183,7 @@ class PaymentController extends Controller
     public function initInvoice(StoreInvoiceRequest $request): JsonResponse
     {
         $validated = $request->validated();
+        $validated['amount'] *= 100;
         $invoice = InvoiceService::store($validated);
         $result = InvoiceService::send($invoice);
         if ($result) {
