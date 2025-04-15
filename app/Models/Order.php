@@ -43,4 +43,9 @@ class Order extends Model
     {
         return $this->hasOne(Work::class, 'id', 'work_id');
     }
+
+    public function files()
+    {
+        return $this->hasMany(OrderFile::class, 'source_id', 'id');
+    }
 }

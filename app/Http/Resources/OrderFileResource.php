@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PartnerResource extends JsonResource
+class OrderFileResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +15,8 @@ class PartnerResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'title' => $this->title,
-            'description' => $this->description,
-            'code' => $this->code,
-            'link' => $this->link,
-            'code_description' => $this->code_description,
+            'source_id' => $this->source_id,
+            'link' => $this->getURL(),
         ];
     }
 }

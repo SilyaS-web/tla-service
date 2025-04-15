@@ -56,6 +56,7 @@ class WorkResource extends JsonResource
             'confirmed_by_seller_at' => isset($this->confirmed_by_seller_at) ? $this->confirmed_by_seller_at->format('Y-m-d H:i') : null,
             'canceled_by_blogger_at' => isset($this->canceled_by_blogger_at) ? $this->canceled_by_blogger_at->format('Y-m-d H:i') : null,
             'canceled_by_seller_at' => isset($this->canceled_by_seller_at) ? $this->canceled_by_seller_at->format('Y-m-d H:i') : null,
+            'orders' => OrderResource::collection($this->orders),
             'status' => $this->status,
             'status_name' => $this->getStatus(),
             'created_by' => $this->created_by,

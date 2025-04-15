@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  *
  * @property int $id
  * @property-read Project|null $project
+ * @property-read Order[]|null $orders
  * @method static \Illuminate\Database\Eloquent\Builder|Work newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Work newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|Work onlyTrashed()
@@ -77,6 +79,11 @@ class Work extends Model
     public function project(): HasOne
     {
         return $this->hasOne(Project::class, 'id', 'project_id');
+    }
+
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class, 'work_id', 'id');
     }
 
     public function messages()
