@@ -4,8 +4,33 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ *
+ * @property int $id
+ * @property int $price
+ * @property string $invoice_id
+ * @property string $account_number
+ * @property string $payer_name
+ * @property string $payer_inn
+ * @property string $payer_kpp
+ * @property string $contact_email
+ * @property string $contact_phone
+ * @property string $comment
+ * @property string $status
+ * @property int $user_id
+ * @property \Datetime $due_date
+ * @property-read User|null $user
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Invoice withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Invoice extends Model
 {
     use HasFactory, SoftDeletes;
@@ -29,7 +54,7 @@ class Invoice extends Model
         'payer_inn',
         'payer_kpp',
         'items',
-        'contacts',
+        'contact_email',
         'contact_phone',
         'comment',
         'status',
@@ -43,13 +68,12 @@ class Invoice extends Model
     protected $casts = [
         'due_date' => 'datetime',
         'items' => 'array', // Если items хранится как JSON
-        'contacts' => 'array', // Если contacts хранится как JSON
     ];
 
     /**
      * Get the user that owns the invoice.
      */
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }

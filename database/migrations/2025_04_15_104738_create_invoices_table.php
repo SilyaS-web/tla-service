@@ -27,7 +27,7 @@ return new class extends Migration
             $table->string('payer_inn');
             $table->string('payer_kpp')->nullable();
             $table->string('items')->nullable();
-            $table->string('contacts')->nullable();
+            $table->string('contact_email')->nullable();
             $table->string('contact_phone')->nullable();
             $table->string('comment')->nullable();
             $table->string('status')->nullable();

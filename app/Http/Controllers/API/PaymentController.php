@@ -4,11 +4,13 @@ namespace App\Http\Controllers\API;
 
 use App;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Payments\StoreInvoiceRequest;
 use App\Http\Requests\Payments\WithdrawRequest;
 use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
 use App\Models\Requisites;
 use App\Services\BalanceService;
+use App\Services\InvoiceService;
 use App\Services\PaymentService;
 use Illuminate\Http\JsonResponse;
 use App\Models\Tariff;
@@ -175,5 +177,12 @@ class PaymentController extends Controller
         }
 
         return response()->json(['result' => 'Не удалось вывести средства, обратитесь в поддержку'], 400);
+    }
+
+    public function makeInvoice(StoreInvoiceRequest $request, User $user): JsonResponse
+    {
+        $validated = $request->validated();
+        $invoice = InvoiceService::store($validated);
+        InvoiceService::send($invoice);
     }
 }
