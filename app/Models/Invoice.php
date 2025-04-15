@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 /**
  *
  * @property int $id
- * @property int $price
+ * @property int $amount
  * @property string $invoice_id
  * @property string $account_number
  * @property string $payer_name
@@ -42,7 +42,7 @@ class Invoice extends Model
      */
     protected $fillable = [
         'user_id',
-        'price',
+        'amount',
         'type',
         'invoice_id',
         'pdf_url',
