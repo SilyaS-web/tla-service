@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Order\StoreOrderRequest;
 use App\Models\Order;
+use App\Models\Work;
 use App\Services\OrderService;
 use Auth;
 use Illuminate\Http\JsonResponse;
@@ -41,7 +42,7 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Order $m)
+    public function show(Order $order)
     {
         //
     }
@@ -49,7 +50,7 @@ class OrderController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Order $m)
+    public function edit(Order $order)
     {
         //
     }
@@ -57,7 +58,7 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Order $m)
+    public function update(Request $request, Order $order)
     {
         //
     }
@@ -65,8 +66,26 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Order $m)
+    public function destroy(Order $order)
     {
         //
+    }
+
+    public function accept(Order $order): JsonResponse
+    {
+        OrderService::accept($order, Auth::user());
+        return response()->json();
+    }
+
+    public function reject(Order $order): JsonResponse
+    {
+        OrderService::reject($order, Auth::user());
+        return response()->json();
+    }
+
+    public function complete(Order $order): JsonResponse
+    {
+        OrderService::complete($order, Auth::user());
+        return response()->json();
     }
 }

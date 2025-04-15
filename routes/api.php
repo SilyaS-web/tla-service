@@ -111,6 +111,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/partners/{partner}', [PartnerController::class, 'destroy']);
 
     Route::post('/orders', [OrderController::class, 'store']);
+    Route::get('/orders/{order}/accept', [OrderController::class, 'accept']);
+    Route::get('/orders/{order}/reject', [OrderController::class, 'reject']);
+    Route::get('/orders/{order}/complete', [OrderController::class, 'complete']);
 
     Route::get('/stats', [AdminController::class, 'stats']);
     Route::post('/feedback', [UserController::class, 'sendFeedback']);
