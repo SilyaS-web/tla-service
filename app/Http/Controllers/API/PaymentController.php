@@ -184,7 +184,16 @@ class PaymentController extends Controller
     {
         $validated = $request->validated();
         $invoice = InvoiceService::store($validated);
-        InvoiceService::send($invoice);
-        return response()->json(['result' => 'Выплата поставлена в очередь']);
+        $result = InvoiceService::send($invoice);
+        if ($result) {
+            InvoiceService::update($invoice, [
+                'invoice_id' => $result->invoiceId,
+                'pdf_url' => $invoice->pdfUrl,
+                'incoming_invoice_url' => $invoice->incomingInvoiceUrl,
+            ]);
+            return response()->json(['result' => $result]);
+        }
+
+        return response()->json(['result' => 'Не удалось выставить счёт, обратитесь в поддержку'], 400);
     }
 }
