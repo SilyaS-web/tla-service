@@ -149,17 +149,17 @@ export default {
                 method: 'get',
                 url: '/api/payment/20/init'
             })
-                .then(response => {
-                    if(response.data && response.data.link){
-                        window.location.href = response.data.link
-                    }
-                })
-                .catch(data => {
-                    notify('error', {
-                        title: 'Внимание!',
-                        message: 'Невозможно купить тариф, попробуйте позже или напишите в поддержку'
-                    });
-                })
+            .then(response => {
+                if(response.data && response.data.link){
+                    window.location.href = response.data.link
+                }
+            })
+            .catch(data => {
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'Невозможно купить тариф, попробуйте позже или напишите в поддержку'
+                });
+            })
         },
     }
 }

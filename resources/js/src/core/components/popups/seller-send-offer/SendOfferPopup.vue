@@ -9,19 +9,19 @@
         </div>
         <div class="popup__form">
             <SelectBlockComponent
-                v-model="offer.time"
+                v-model="offer.complete_till"
                 :label="'Желаемый срок выполнения'"
                 :placeholder="'Выберите желаемый срок выполнения'"
                 :selectID="'seller-offer-time'"
-                :optionsList="timesArr.map(t => {
+                :optionsList="completeUntilArr.map((t, ind) => {
                     return {
                         name: t,
-                        value: t,
+                        value: ind,
                     }
                 })"
             ></SelectBlockComponent>
             <InputBlockComponent
-                v-model="offer.price"
+                v-model.number="offer.price"
                 :inputType="'number'"
                 :label="'Бюджет'"
                 :inputPlaceholder="'Введите бюджет'"
@@ -30,7 +30,7 @@
                 :error="null"
             ></InputBlockComponent>
             <TextareaBlockComponent
-                v-model="offer.text"
+                v-model="offer.specification"
                 :id="'seller-offer-text'"
                 :label="'Опишите задание'"
                 :placeholder="'Напишите, что требуется выполнить'"
@@ -40,12 +40,13 @@
                 :error="null"
             >
             </TextareaBlockComponent>
-            <InputFileBlockComponent
-                v-model="offer.file"
-                :label="'Прикрепить файл'"
-                :uploadedLabel="'Файл прикреплен'"
+            <PlusFilesUploadBlockComponent
+                v-model="offer.files"
+                :id="'order-upload-files'"
+                :label="'Загрузите файлы'"
+                :files="[]"
                 :error="null"
-            ></InputFileBlockComponent>
+            ></PlusFilesUploadBlockComponent>
             <button
                 @click="sendOffer"
                 class="btn btn-primary">
@@ -61,26 +62,34 @@ import TextareaBlockComponent from "../../form/TextareaBlockComponent.vue";
 import InputBlockComponent from "../../form/InputBlockComponent.vue";
 import InputFileBlockComponent from "../../form/InputFileBlockComponent.vue";
 import SelectBlockComponent from "../../form/SelectBlockComponent.vue";
+import PlusFilesUploadBlockComponent from "../../form/PlusFilesUploadBlockComponent.vue";
 
 import PopupModal from '../AppPopup.vue';
+import UploadFilesBlock from "../../form/PlusFilesUploadBlockComponent.vue";
+import axios from "axios";
 
 export default {
     components: {
+        UploadFilesBlock,
         PopupModal, TextareaBlockComponent, InputBlockComponent,
-        InputFileBlockComponent, SelectBlockComponent
+        InputFileBlockComponent, SelectBlockComponent, PlusFilesUploadBlockComponent
     },
     data(){
         return{
-            timesArr: [
+            completeUntilArr: [
                 '1 день', '2 дня', '3 дня', '4 дня',
                 '5 дней', '6 дней', '7 дней', '9 дней',
                 '10 дней', '2 недели', '3 недели'
             ],
+            completeUntilDaysMap: [
+                1,2,3,4,5,6,7,9,10,14,21
+            ],
+
             offer: ref({
-                text: '',
+                specification: '',
                 price: 0,
-                file: null,
-                time: null,
+                files: [],
+                complete_till: null,
             }),
         }
     },
@@ -97,7 +106,34 @@ export default {
             })
         },
         sendOffer(){
-            console.log(this.offer)
+            const sendData = {
+                specification: this.offer.specification,
+                price: this.offer.price,
+                files: this.offer.files,
+                complete_till: this.completeUntilDaysMap[this.offer.complete_till],
+            }
+
+            axios({
+                method: 'post',
+                url: '/api/orders',
+                data: sendData,
+            })
+            .then((result) => {
+                notify('info', {
+                    title: 'Успешно!',
+                    message: 'Заказ успешно создан'
+                })
+
+                this._confirm()
+            })
+            .catch((err) =>{
+                notify('info', {
+                    title: 'Внимание!',
+                    message: 'Невозможно создать заказ. Попробуйте позже'
+                })
+
+                this._cancel()
+            })
         },
         _confirm() {
             this.$refs.popup.close()

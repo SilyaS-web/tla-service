@@ -111,6 +111,7 @@
                 this.$emit(eventName)
             },
             updateValue(event){
+                console.log(event)
                 this.$emit('update:modelValue', event.target.value)
             }
         }

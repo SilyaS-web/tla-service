@@ -15,11 +15,13 @@
         </div>
         <div class="topup-balance__body">
             <div class="topup-balance__content">
-                <p class="topup-balance__balance">
-                    13600 ₽
-                </p>
+                <input
+                    v-model="paymentSum"
+                    type="number" class="topup-balance__balance" placeholder="Введите сумму">
                 <div class="topup-balance__btns">
-                    <button class="btn btn-primary">
+                    <button
+                        @click="getPaymentLink"
+                        class="btn btn-primary">
                         Пополнить картой
                     </button>
                     <button
@@ -35,6 +37,7 @@
 </template>
 <script>
 import {ref} from "vue";
+import axios from 'axios'
 
 import PopupModal from '../AppPopup.vue';
 
@@ -46,6 +49,7 @@ export default {
     data(){
         return{
             showNotification: ref(false),
+            paymentSum: ref(1000),
             Work
         }
     },
@@ -58,8 +62,38 @@ export default {
                 this.rejectPromise = reject
             })
         },
-        toggleNotification(){ this.showNotification = !this.showNotification },
-        openInvoiceIssue(){ this.$refs.invoiceIssuePopup.show()  },
+        getPaymentLink(){
+            axios({
+                method: 'get',
+                url: '/api/payments/init',
+                params:{
+                    price: this.paymentSum,
+                }
+            })
+            .then(response => {
+                const link = response.data.link;
+
+                if(!link){
+                    notify('error', {
+                        title: 'Внимание!',
+                        message: 'В данный момент невозможно пополнить баланс, сервер не отвечает. Попробуйте позже'
+                    });
+
+                    return
+                }
+
+                window.location.href = link
+            })
+            .catch(error => {
+                notify('error', {
+                    title: 'Внимание!',
+                    message: 'В данный момент невозможно пополнить баланс. Попробуйте позже'
+                });
+
+                this._cancel()
+            })
+        },
+        openInvoiceIssue(){ this.$refs.invoiceIssuePopup.show(this.paymentSum)  },
         _confirm() {
             this.$refs.popup.close()
             this.resolvePromise(true)
@@ -95,6 +129,16 @@ export default {
     text-align: center;
     margin-bottom: 32px;
     color:#2E2E2E;
+    padding: 12px;
+    border:0;
+    width: 100%;
+}
+.topup-balance__balance[type='number'] {
+    -moz-appearance:textfield;
+}
+.topup-balance__balance::-webkit-outer-spin-button,
+.topup-balance__balance::-webkit-inner-spin-button {
+    -webkit-appearance: none;
 }
 .topup-balance__btns{
     display: flex;
@@ -108,5 +152,27 @@ export default {
     font-size: 28px;
     font-weight: 400;
     margin-bottom: 32px;
+}
+
+@media(max-width:475px){
+    .topup-balance__balance{
+        font-size: 42px;
+        margin-bottom: 21px;
+    }
+}
+@media(max-width:375px){
+    .topup-balance__balance{
+        font-size: 38px;
+        margin-bottom: 18px;
+        padding: 8px;
+    }
+    .topup-balance__btns{
+        gap: 8px;
+        flex-direction: column;
+    }
+    .topup-balance__btns > .btn {
+        flex: 1 1 100%;
+        width: 100%;
+    }
 }
 </style>
