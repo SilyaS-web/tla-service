@@ -50,6 +50,13 @@ class InvoiceService
                 'name' => $invoice,
                 'inn' => $invoice->payer_inn,
             ],
+            'items' => [[
+                'name' => 'Пополнение баланса личного кабинета',
+                'price' => $invoice->amount,
+                'unit' => '',
+                'vat' => 0,
+                'amount' => 1,
+            ]]
         ];
 
         if (!empty($invoice->payer_kpp)) {
