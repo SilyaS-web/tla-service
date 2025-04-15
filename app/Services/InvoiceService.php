@@ -11,6 +11,8 @@ use stdClass;
 
 class InvoiceService
 {
+    const ACCOUNT_NUMBER = "40802810600002050260";
+
     public static function send(Invoice $invoice): ?stdClass
     {
         $data = InvoiceService::prepareInvoiceData($invoice);
@@ -25,6 +27,9 @@ class InvoiceService
         }
         if (empty($data['comment'])) {
             $data['comment'] = 'Пополнение баланса личного кабинета';
+        }
+        if (empty($data['account_number'])) {
+            $data['account_number'] = self::ACCOUNT_NUMBER;
         }
 
         return Invoice::create($data);

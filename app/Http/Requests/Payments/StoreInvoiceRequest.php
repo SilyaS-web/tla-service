@@ -25,7 +25,6 @@ class StoreInvoiceRequest extends FormRequest
     {
         return [
             'amount' => 'required|numeric|min:1000',
-            'account_number' => 'required|numeric|min:1000',
             'payer_name' => 'required|string',
             'payer_inn' => 'required|numeric|min:1000',
             'payer_kpp' => 'nullable|numeric|min:1000',
@@ -38,7 +37,6 @@ class StoreInvoiceRequest extends FormRequest
     {
         return [
             'amount' => 'Сумма пополнения',
-            'account_number' => 'Рублевый расчетный счет отправителя',
             'payer_name' => 'Наименование плательщика',
             'payer_inn' => 'ИНН плательщика',
             'payer_kpp' => 'КПП плательщика',
