@@ -8,6 +8,7 @@ use App\Models\Order;
 use App\Models\Work;
 use App\Services\OrderService;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -35,7 +36,8 @@ class OrderController extends Controller
     public function store(StoreOrderRequest $request): JsonResponse
     {
         $validated = $request->validated();
-        OrderService::create($validated, Auth::user());
+        $order_files = $request->file('files');
+        OrderService::create($validated, $order_files, Auth::user());
         return response()->json();
     }
 

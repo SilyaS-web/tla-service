@@ -3,13 +3,16 @@
 namespace App\Services;
 
 use App\Models\Order;
+use App\Models\OrderFile;
 use App\Models\User;
 use App\Models\Work;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
+use Nyholm\Psr7\UploadedFile;
 
 class OrderService
 {
-    public static function create(array $order_data, User $user, string $status = Order::PENDING): Order
+    public static function create(array $order_data, array $files, User $user, string $status = Order::PENDING): Order
     {
         $work = Work::query()->find($order_data['work_id']);
         $project = $work->project;
@@ -18,6 +21,18 @@ class OrderService
         $order = Order::create($order_data);
         $user->balance -= $order_data['price'];
         $user->save();
+
+        if (!empty($files)) {
+            foreach ($files as $file) {
+                $file_path = $file->storeAs('orders', str_replace(' ', '_', $project->product_name) . '_' . Carbon::now() . '_' . Str::random(10), 'public');
+
+                OrderFile::create([
+                    'source_id' => $order->id,
+                    'type' => 0,
+                    'link' => $file_path,
+                ]);
+            }
+        }
 
         NotificationService::send('Вам поступил заказ на проект ' . $project->product_name, $user->role, $work);
         return $order;

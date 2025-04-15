@@ -30,6 +30,8 @@ class StoreOrderRequest extends FormRequest
             'price' => ['required', 'numeric', 'lte:' . $user->balance],
             'complete_till' => 'required|numeric',
             'work_id' => 'required|exists:works,id',
+            'files' => 'nullable|array',
+            'files.*' => 'nullable|file|max:51200',
         ];
     }
 
