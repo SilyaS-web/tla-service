@@ -180,10 +180,11 @@ class PaymentController extends Controller
         return response()->json(['result' => 'Не удалось вывести средства, обратитесь в поддержку'], 400);
     }
 
-    public function makeInvoice(StoreInvoiceRequest $request, User $user): JsonResponse
+    public function initInvoice(StoreInvoiceRequest $request): JsonResponse
     {
         $validated = $request->validated();
         $invoice = InvoiceService::store($validated);
         InvoiceService::send($invoice);
+        return response()->json(['result' => 'Выплата поставлена в очередь']);
     }
 }
