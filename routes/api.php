@@ -4,6 +4,7 @@ use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BloggerController;
 use App\Http\Controllers\API\DashboardController;
+use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\PartnerController;
 use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\PlatformController;
@@ -108,6 +109,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/partners/{partner}', [PartnerController::class, 'show']);
     Route::post('/partners/{partner}', [PartnerController::class, 'update']);
     Route::delete('/partners/{partner}', [PartnerController::class, 'destroy']);
+
+    Route::post('/orders', [OrderController::class, 'store']);
 
     Route::get('/stats', [AdminController::class, 'stats']);
     Route::post('/feedback', [UserController::class, 'sendFeedback']);
