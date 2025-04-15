@@ -7,112 +7,101 @@
     <link rel="stylesheet" href="/css/snake.css">
 </head>
 <body>
-    <div class="score">
-        <div class="score__num">
-            <span class="score__simple">000</span>
-            <p class="score__bonus"><span>0</span>/30</p>
-        </div>
-        <div class="score__progress-bar progress-bar">
-            <div class="progress-bar__items">
-                <div class="progress-bar__item progress-bar__main">
-                    <div class="progress-bar__main-item"></div>
-                    <div class="progress-bar__main-item"></div>
-                    <div class="progress-bar__main-item"></div>
-                    <div class="progress-bar__main-item"></div>
-                    <div class="progress-bar__main-item"></div>
-                    <div class="progress-bar__main-item"></div>
-                    <div class="progress-bar__main-item"></div>
-                    <div class="progress-bar__main-item"></div>
-                    <div class="progress-bar__main-item"></div>
-                    <div class="progress-bar__main-item"></div>
-                    <div class="progress-bar__main-item"></div>
-                    <div class="progress-bar__main-item"></div>
-                    <div class="progress-bar__main-item"></div>
-                    <div class="progress-bar__main-item"></div>
-                    <div class="progress-bar__main-item"></div>
-                    <div class="progress-bar__main-item"></div>
+    <div class="wrapper">
+        <div class="score">
+                <div class="score__num">
+                    <span class="score__simple">000</span>
+                    <p class="score__bonus"><span>0</span>/30</p>
                 </div>
-                <div class="progress-bar__item progress-bar__bonus">
-                    <div class="progress-bar__bonus-item"></div>
-                    <div class="progress-bar__bonus-item"></div>
-                    <div class="progress-bar__bonus-item"></div>
-                    <div class="progress-bar__bonus-item"></div>
-                    <div class="progress-bar__bonus-item"></div>
-                    <div class="progress-bar__bonus-item"></div>
-                    <div class="progress-bar__bonus-item"></div>
-                    <div class="progress-bar__bonus-item"></div>
-                    <div class="progress-bar__bonus-item"></div>
-                    <div class="progress-bar__bonus-item"></div>
+                <div class="score__progress-bar progress-bar">
+                    <div class="progress-bar__items">
+                        <div class="progress-bar__item progress-bar__main">
+                            <div class="progress-bar__main-item"></div>
+                            <div class="progress-bar__main-item"></div>
+                            <div class="progress-bar__main-item"></div>
+                            <div class="progress-bar__main-item"></div>
+                            <div class="progress-bar__main-item"></div>
+                            <div class="progress-bar__main-item"></div>
+                            <div class="progress-bar__main-item"></div>
+                            <div class="progress-bar__main-item"></div>
+                            <div class="progress-bar__main-item"></div>
+                            <div class="progress-bar__main-item"></div>
+                            <div class="progress-bar__main-item"></div>
+                            <div class="progress-bar__main-item"></div>
+                            <div class="progress-bar__main-item"></div>
+                            <div class="progress-bar__main-item"></div>
+                            <div class="progress-bar__main-item"></div>
+                            <div class="progress-bar__main-item"></div>
+                        </div>
+                        <div class="progress-bar__item progress-bar__bonus">
+                            <div class="progress-bar__bonus-item"></div>
+                            <div class="progress-bar__bonus-item"></div>
+                            <div class="progress-bar__bonus-item"></div>
+                            <div class="progress-bar__bonus-item"></div>
+                            <div class="progress-bar__bonus-item"></div>
+                            <div class="progress-bar__bonus-item"></div>
+                            <div class="progress-bar__bonus-item"></div>
+                            <div class="progress-bar__bonus-item"></div>
+                            <div class="progress-bar__bonus-item"></div>
+                            <div class="progress-bar__bonus-item"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="question">
+                    <img src="/images/snake/icon-question.png" alt="">
+                </div>
+            </div>
+            <div class="stage"></div>
+        </body>
+        <div
+            id="popup-instruction"
+            class="popup">
+            <div class="popup__content">
+                <div class="popup__header">
+                    <div class="popup__title">
+                        Игра "Змейка"
+                    </div>
+                </div>
+                <div class="popup__body">
+                    <p>
+                        Перед вами игра змейка, суть которой собирать <b class="--red">красные</b> и <b class="--gold">золотые</b> квадратики.
+                    </p>
+                    <p><b>Один красный квадрат = Один балл</b></p>
+                    <p><b>Один золотой квадрат = Семь баллов, которые можно использовать в клубе</b></p>
+                    <p>
+                        Золотые баллы можно собирать раз в двое суток
+                    </p>
+                    <p>
+                        Для управления змейкой используйте стрелки, либо свайпы встороны.
+                    </p>
+                </div>
+                <div class="popup__footer">
+                    <button class="btn popup-btn primary">Понятно</button>
                 </div>
             </div>
         </div>
-        <div class="question">
-            <img src="/images/snake/icon-question.png" alt="">
-        </div>
-    </div>
-    <div class="stage"></div>
-</body>
-<div
-    id="popup-instruction"
-    class="popup">
-    <div class="popup__content">
-        <div class="popup__header">
-            <div class="popup__title">
-                Игра "Змейка"
+        <div
+            id="popup-ended"
+            class="popup">
+            <div class="popup__content">
+                <div class="popup__header">
+                    <div class="popup__title">
+                        Игра окончена!
+                    </div>
+                </div>
+                <div class="popup__body">
+                    <p>Игра окончена! Вас счет: <span id="score">1</span></p>
+                </div>
+                <div class="popup__footer">
+                    <button class="btn primary popup-btn">Начать заново</button>
+                    <button class="btn secondary popup-btn">Забрать бонусы</button>
+                </div>
             </div>
         </div>
-        <div class="popup__body">
-            <p>
-                Перед вами игра змейка, суть которой собирать красные квадратики.
-            </p>
-            <p><b>Один квадрат = Один балл</b></p>
-            <p>
-                Для управления змейкой используйте стрелки, либо свайпы встороны.
-            </p>
-        </div>
-        <div class="popup__footer">
-            <button class="btn popup-btn">Понятно</button>
+        <div class="logo">
+            <img src="/images/snake/logo.png" alt="">
         </div>
     </div>
-</div>
-<div
-    id="popup-win"
-    class="popup">
-    <div class="popup__content">
-        <div class="popup__header">
-            <div class="popup__title">
-                Ура! Победа!
-            </div>
-        </div>
-        <div class="popup__body">
-            <p>Игра окончена! Вы набрали максимальное количество очков, теперь вы можете использовать их в наших клубах!</p>
-        </div>
-        <div class="popup__footer">
-            <button class="btn popup-btn">Продолжить</button>
-        </div>
-    </div>
-</div>
-<div
-    id="popup-ended"
-    class="popup">
-    <div class="popup__content">
-        <div class="popup__header">
-            <div class="popup__title">
-                Игра окончена!
-            </div>
-        </div>
-        <div class="popup__body">
-            <p>Игра окончена! Вас счет: <span id="score">1</span>, теперь вы можете эти очки в наших клубах!</p>
-        </div>
-        <div class="popup__footer">
-            <button class="btn primary popup-btn">Начать заново</button>
-            <button class="btn secondary popup-btn">Забрать бонусы</button>
-        </div>
-    </div>
-</div>
-<div class="logo">
-    <img src="/images/snake/logo.png" alt="">
-</div>
 <script>
 /*================================================
 
@@ -1245,6 +1234,8 @@ Play State
         this.food.render();
         this.time.update();
 
+        if(this.timer) return
+
         if(this.bonusTicksUntilCreate === 0 && !this.bonus){
             this.bonus = new g.Bonus({
                 parentState: this
@@ -1345,6 +1336,49 @@ App
         g.time.update();
     };
 
+    window.addEventListener( 'load', async function(){
+        const timerParams = new URLSearchParams({ chat_id: chatID }).toString()
+        const timer = await fetch('http://localhost:8443/snake-game/timer?' + timerParams).then((res) => res.json()).then((json) => json.result.timer)
+
+        if(timer){
+            g.currentState().timer = timer
+        }
+
+        if(timer){
+            const timerElem = document.querySelector('.score__bonus');
+
+            const diffTimestamp = new Date().getTime() + Math.abs(timer);
+
+            let currentDiff = (diffTimestamp - Date.now()) / 1000;
+
+            let days = Math.floor(currentDiff / 86400);
+            currentDiff -= days * 86400;
+
+            let hours = Math.floor(currentDiff / 3600) % 24;
+            currentDiff -= hours * 3600;
+
+            let minutes = Math.floor(currentDiff / 60) % 60;
+            currentDiff -= minutes * 60;
+
+            timerElem.innerHTML = `${days}:${hours}:${minutes}`
+
+            setInterval(() => {
+                currentDiff = (diffTimestamp - Date.now()) / 1000;
+
+                days = Math.floor(currentDiff / 86400);
+                currentDiff -= days * 86400;
+
+                hours = Math.floor(currentDiff / 3600) % 24;
+                currentDiff -= hours * 3600;
+
+                minutes = Math.floor(currentDiff / 60) % 60;
+                currentDiff -= minutes * 60;
+
+                timerElem.innerHTML = `${days}:${hours}:${minutes}`
+            }, 1000 * 60)
+        }
+    }, false );
+
     window.addEventListener( 'load', g.step, false );
 
     window.addEventListener('load', () => {
@@ -1386,32 +1420,18 @@ const InstructionPopup = function(){
     })
 }
 
-const WinPopup = function(){
+
+const EndGamePopup = function(data){
     return new Promise((resolve, reject) => {
-        const popup = document.querySelector('#popup-win')
+        const popup = document.querySelector('#popup-ended')
+
+        popup.querySelector('#score').innerHTML = data.score + data.bonusScore
 
         popup.classList.add('--opened');
 
         const fireworkInterval = setInterval(createFirework, 300);
 
         setTimeout(() => { clearInterval(fireworkInterval) }, 5000)
-
-        popup.querySelector('.popup-btn').addEventListener('click', (evt)=>{
-            evt.preventDefault();
-            popup.classList.remove('--opened');
-
-            window.location.reload()
-
-            resolve(true)
-        })
-    })
-}
-
-const EndGamePopup = function(data){
-    return new Promise((resolve, reject) => {
-        const popup = document.querySelector('#popup-ended')
-
-        popup.classList.add('--opened');
 
         popup.querySelector('.popup-btn.primary').addEventListener('click', (evt)=>{
             evt.preventDefault();
@@ -1422,8 +1442,15 @@ const EndGamePopup = function(data){
             resolve(true)
         })
 
-        popup.querySelector('.popup-btn.secondary').addEventListener('click', async (evt)=>{
+        popup.querySelector('.popup-btn.secondary').addEventListener('click', sendResults)
+
+        async function sendResults(evt){
             evt.preventDefault();
+
+            const btn = evt.target;
+
+            btn.removeEventListener('click', sendResults);
+            btn.classList.add('loading')
 
             let response = await fetch('http://localhost:8443/snake-game/end', {
                 method: 'POST',
@@ -1435,10 +1462,27 @@ const EndGamePopup = function(data){
                     score: data.score,
                     bonusScore: data.bonusScore
                 })
-            });
+            })
+            .then(response => {
+                console.log(response)
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                if(data.status === 'ok'){
+                    btn.classList.remove('loading')
+                    btn.innerHTML = 'Успешно!'
+                }
 
-            console.log(response)
-        })
+                setTimeout(() => { window.location.reload() }, 1500)
+            })
+            .catch(error => {
+                 btn.classList.remove('loading')
+                 btn.innerHTML = 'Попробуйте позже'
+            });
+        }
     })
 }
 
@@ -1501,7 +1545,7 @@ const createFirework = () => {
         firework.style.backgroundColor = colour
         firework.style.left = xPos + '%'
         firework.style.top = yPos + '%'
-        document.body.appendChild(firework)
+        document.querySelector('.wrapper').appendChild(firework)
     }
 }
 
