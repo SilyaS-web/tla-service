@@ -22,8 +22,8 @@ class InvoiceService
 
     public static function store(array $data): Invoice
     {
-        if (empty($data['due_data'])) {
-            $data['due_data'] = Carbon::now()->addWeek();
+        if (empty($data['due_date'])) {
+            $data['due_date'] = Carbon::now()->addWeek()->timestamp;
         }
         if (empty($data['comment'])) {
             $data['comment'] = 'Пополнение баланса личного кабинета';
@@ -43,18 +43,18 @@ class InvoiceService
     public static function prepareInvoiceData(Invoice $invoice): array
     {
         $data = [
-            'invoiceNumber' => $invoice->id,
-            'dueDate' => $invoice->due_date,
+            'invoiceNumber' => (string) $invoice->id,
+            'dueDate' => $invoice->due_date->format('Y-m-d'),
             'accountNumber' => $invoice->account_number,
             'payer' => [
-                'name' => $invoice,
-                'inn' => $invoice->payer_inn,
+                'name' => $invoice->payer_name,
+                'inn' => (string) $invoice->payer_inn,
             ],
             'items' => [[
                 'name' => 'Пополнение баланса личного кабинета',
                 'price' => $invoice->amount,
                 'unit' => '',
-                'vat' => 0,
+                'vat' => "0",
                 'amount' => 1,
             ]]
         ];
@@ -64,17 +64,16 @@ class InvoiceService
         }
 
         if (!empty($invoice->contact_email)) {
-            $data['payer']['contacts'] = [['email' => $invoice->contact_email]];
+            $data['contacts'] = [['email' => $invoice->contact_email]];
         }
 
         if (!empty($invoice->contact_phone)) {
-            $data['payer']['contactPhone'] = $invoice->contact_phone;
+            $data['contactPhone'] = $invoice->contact_phone;
         }
 
         if (!empty($invoice->comment)) {
-            $data['payer']['comment'] = $invoice->comment;
+            $data['comment'] = $invoice->comment;
         }
-
         return $data;
     }
 }

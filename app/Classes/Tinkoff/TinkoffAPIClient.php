@@ -36,10 +36,8 @@ class TinkoffAPIClient
 
     public function sendInvoice($data): ?array
     {
-        if (empty($data['from'])) {
-            $data['from'] = [
-                'accountNumber' => self::ACCOUNT_NUMBER,
-            ];
+        if (empty($data['accountNumber'])) {
+            $data['accountNumber'] = self::ACCOUNT_NUMBER;
         }
 
         try {
