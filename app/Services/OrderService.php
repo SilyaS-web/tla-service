@@ -14,7 +14,7 @@ class OrderService
         $work = Work::query()->find($order_data['work_id']);
         $project = $work->project;
         $order_data['status'] = $status;
-        $order_data['complete_till'] = Carbon::now()->addDays($order_data['complete_till'])->toISOString();
+        $order_data['complete_till'] = Carbon::now()->addDays($order_data['complete_till'])->toDateTimeString();
         $order = Order::create($order_data);
         $user->balance -= $order_data['price'];
         $user->save();
