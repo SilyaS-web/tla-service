@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Payments\InitPaymentRequest;
 use App\Http\Requests\Payments\StoreInvoiceRequest;
 use App\Http\Requests\Payments\WithdrawRequest;
 use App\Http\Resources\PaymentResource;
@@ -99,7 +100,7 @@ class PaymentController extends Controller
         return response()->json(['link' => $link])->setStatusCode(200);
     }
 
-    public function initBalancePayment(WithdrawRequest $request): JsonResponse
+    public function initBalancePayment(InitPaymentRequest $request): JsonResponse
     {
         $validated = $request->validated();
         $user = Auth::user();
