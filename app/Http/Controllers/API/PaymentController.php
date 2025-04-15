@@ -184,6 +184,8 @@ class PaymentController extends Controller
     {
         $validated = $request->validated();
         $validated['amount'] *= 100;
+        $user = Auth::user();
+        $validated['user_id'] = $user->id;
         $invoice = InvoiceService::store($validated);
         $result = InvoiceService::send($invoice);
         if ($result) {
