@@ -13,7 +13,7 @@ class InvoiceService
 {
     const ACCOUNT_NUMBER = "40802810600002050260";
 
-    public static function send(Invoice $invoice): ?stdClass
+    public static function send(Invoice $invoice): ?array
     {
         $data = InvoiceService::prepareInvoiceData($invoice);
         $client = new TinkoffAPIClient();

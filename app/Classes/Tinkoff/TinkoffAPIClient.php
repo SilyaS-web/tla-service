@@ -34,7 +34,7 @@ class TinkoffAPIClient
         }
     }
 
-    public function sendInvoice($data): ?stdClass
+    public function sendInvoice($data): ?array
     {
         if (empty($data['from'])) {
             $data['from'] = [
