@@ -4,11 +4,14 @@ use App\Http\Controllers\API\AdminController;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\API\BloggerController;
 use App\Http\Controllers\API\DashboardController;
+use App\Http\Controllers\API\OrderController;
 use App\Http\Controllers\API\PartnerController;
 use App\Http\Controllers\API\PaymentController;
 use App\Http\Controllers\API\PlatformController;
 use App\Http\Controllers\API\ProjectController;
+use App\Http\Controllers\API\RequisitesController;
 use App\Http\Controllers\API\SellerController;
+use App\Http\Controllers\API\TariffController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\ReferralController;
 use App\Http\Controllers\API\TelegramController;
@@ -54,13 +57,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/users/{user}/ban', [UserController::class, 'ban']);
     Route::get('/users/{user}/unban', [UserController::class, 'unban']);
     Route::get('/users/{user}/projects', [UserController::class, 'projects']);
-    Route::get('/users/{user}/projects/barnds', [UserController::class, 'brands']);
+    Route::get('/users/{user}/projects/brands', [UserController::class, 'brands']);
     Route::get('/users/{user}/works', [UserController::class, 'works']);
     Route::get('/users/{user}/works/{work}/messages', [UserController::class, 'messages']);
     Route::post('/users/{user}/works/{work}/messages', [UserController::class, 'storeMessage']);
     Route::get('/users/{user}/notifications', [UserController::class, 'notifications']);
     Route::get('/users/{user}/notifications/view', [UserController::class, 'viewNotification']);
     Route::get('/users/{user}/notifications/{notification}/view', [UserController::class, 'viewNotification']);
+    Route::post('/users/{user}/payments/init-withdraw', [PaymentController::class, 'withdraw']);
+    Route::post('/users/{user}/requisites', [RequisitesController::class, 'store']);
 
     Route::post('/bloggers', [BloggerController::class, 'store']);
     Route::get('/bloggers', [BloggerController::class, 'index']);
@@ -99,16 +104,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/works/{work}/stats', [WorkController::class, 'stats']);
 
     Route::get('/payments', [PaymentController::class, 'index']);
-
-    Route::get('/referrals', [ReferralController::class, 'index']);
-    Route::get('/referrals/export', [ReferralController::class, 'export']);
-
-    Route::get('/tariifs', [TelegramController::class, 'index']);
-    Route::get('/tariifs/{tariff}/price', [TelegramController::class, 'getPrice']);
-
-    Route::post('/feedback', [UserController::class, 'sendFeedback']);
-
-    Route::get('payment/{tariff}/init', [PaymentController::class, 'init']);
+    Route::get('/payments/{tariff}/init', [PaymentController::class, 'initTariffPayment']);
+    Route::get('/payments/init', [PaymentController::class, 'initBalancePayment']);
 
     Route::post('/partners', [PartnerController::class, 'store']);
     Route::get('/partners', [PartnerController::class, 'index']);
@@ -116,6 +113,15 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/partners/{partner}', [PartnerController::class, 'update']);
     Route::delete('/partners/{partner}', [PartnerController::class, 'destroy']);
 
+    Route::post('/orders', [OrderController::class, 'store']);
+    Route::get('/orders/{order}/accept', [OrderController::class, 'accept']);
+    Route::get('/orders/{order}/reject', [OrderController::class, 'reject']);
+    Route::get('/orders/{order}/complete', [OrderController::class, 'complete']);
+
     Route::get('/stats', [AdminController::class, 'stats']);
+    Route::post('/feedback', [UserController::class, 'sendFeedback']);
+    Route::get('/referrals', [ReferralController::class, 'index']);
+    Route::get('/referrals/export', [ReferralController::class, 'export']);
+    Route::get('/tariffs', [TariffController::class, 'index']);
 });
 

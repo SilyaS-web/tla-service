@@ -28,6 +28,7 @@ class Seller extends Model
         'ozon_link',
         'ozon_api_key',
         'ozon_client_id',
+        'balance',
     ];
 
     protected $casts = [

@@ -3,9 +3,22 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ *
+ * @property int $id
+ * @property-read Project|null $project
+ * @method static \Illuminate\Database\Eloquent\Builder|Work newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Work newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Work onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Work query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Work withTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|Work withoutTrashed()
+ * @mixin \Eloquent
+ */
 class Work extends Model
 {
     use HasFactory, SoftDeletes;
@@ -61,7 +74,7 @@ class Work extends Model
         return $this->hasOne(Seller::class, 'user_id', 'seller_id');
     }
 
-    public function project()
+    public function project(): HasOne
     {
         return $this->hasOne(Project::class, 'id', 'project_id');
     }

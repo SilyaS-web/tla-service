@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('tg_phones', function (Blueprint $table) {
-            $table->string('username')->nullable();
+        Schema::table('payments', function (Blueprint $table) {
+            $table->unsignedBigInteger('tariff_id')->nullable()->change();
+            $table->string('type')->nullable();
         });
     }
 
@@ -21,8 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('tg_phones', function (Blueprint $table) {
-            $table->dropColumn('username');
+        Schema::table('payments', function (Blueprint $table) {
+            $table->unsignedBigInteger('tariff_id')->nullable(false)->change();
+            $table->dropColumn('type');
         });
     }
 };

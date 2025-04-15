@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers\API;
 
+use App;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Payments\InitPaymentRequest;
+use App\Http\Requests\Payments\StoreInvoiceRequest;
+use App\Http\Requests\Payments\WithdrawRequest;
 use App\Http\Resources\PaymentResource;
 use App\Models\Payment;
-use Illuminate\Http\Request;
-use App\Models\Project;
-use App\Models\SellerTariff;
+use App\Models\Requisites;
+use App\Services\BalanceService;
+use App\Services\InvoiceService;
+use App\Services\PaymentService;
+use Illuminate\Http\JsonResponse;
 use App\Models\Tariff;
 use App\Models\User;
 use App\Services\PhoneService;
 use App\Services\TariffService;
-use App\Services\TgService;
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
-use JustCommunication\TinkoffAcquiringAPIClient\API\InitRequest;
 use JustCommunication\TinkoffAcquiringAPIClient\Exception\TinkoffAPIException;
 use JustCommunication\TinkoffAcquiringAPIClient\TinkoffAcquiringAPIClient;
 use JustCommunication\TinkoffAcquiringAPIClient\API\GetStateRequest;
@@ -25,7 +28,7 @@ use JustCommunication\TinkoffAcquiringAPIClient\Model\Payment as TPayment;
 
 class PaymentController extends Controller
 {
-    public function index(Request $request)
+    public function index(): JsonResponse
     {
         $payments = PaymentResource::collection(Payment::all());
         $data = [
@@ -36,33 +39,23 @@ class PaymentController extends Controller
 
     public function successPayment(Payment $payment)
     {
-        $from_landing = request()->input('from_landing', null);
+        $from_landing = request()->input('from_landing');
+        $type = request()->input('type');
         $user = User::find($payment->user_id);
         $state = $this->checkState($payment);
-        if ($state == TPayment::STATUS_CONFIRMED) {
-            $tariff = Tariff::find($payment->tariff_id);
-            $message_text = "Новая оплата\n\nИмя: " . $user->name . "\nТелефон: " . $user->phone . "\nТариф: " . $tariff->title . " — ". $tariff->tariffGroup->title . "\nСумма: " . ($tariff->price / 100) . " руб.\nID в банке: " . $payment->payment_id;
-            TgService::sendPayment($message_text);
-
-            $seller_start_tariff = $user->getActiveTariffByGroup(1);
-            if ($tariff->type == Project::BARTER && $user->getActiveTariffByGroup(1)) {
-                $seller_start_tariff->delete();
+        if ($payment->processed && ($state == TPayment::STATUS_CONFIRMED || !App::isProduction())) {
+            switch ($type) {
+                case Payment::TARIFF_TYPE:
+                    $tariff = Tariff::find($payment->tariff_id);
+                    TariffService::add($tariff, $user, $payment->id);
+                    break;
+                case Payment::TOP_UP_TYPE:
+                    BalanceService::add($payment->price, $user, $payment->id);
+                    break;
+                default:
+                    Log::channel('single')->info('Неизвестный тип оплаты :' . $type);
             }
 
-            $seller_tariff = $user->getActiveTariffByGroup($tariff->group_id);
-            if ($seller_tariff) {
-                $finish_date = new Carbon($seller_tariff->finish_date);
-                $seller_tariff->update(['quantity' => $seller_tariff->quantity + $tariff->quantity, 'finish_date' => $finish_date->addDays($tariff->period)]);
-            } else {
-                SellerTariff::create([
-                    'user_id' => $user->id,
-                    'tariff_id' => $tariff->id,
-                    'type' => $tariff->type,
-                    'quantity' => $tariff->quantity,
-                    'finish_date' => Carbon::now()->addDays($tariff->period),
-                    'activation_date' => Carbon::now(),
-                ]);
-            }
             if ($from_landing) {
                 return redirect('https://adswap.ru/#successful-payment');
             }
@@ -79,7 +72,7 @@ class PaymentController extends Controller
 
     public function failPayment(Payment $payment)
     {
-        $from_landing = request()->input('from_landing', null);
+        $from_landing = request()->input('from_landing');
         if ($from_landing) {
             return redirect('https://adswap.ru');
         }
@@ -87,87 +80,37 @@ class PaymentController extends Controller
         return redirect()->route('tariff')->with('success', 'При получении платежа произошла ошибка');
     }
 
-    public function notificationsPayment(Payment $payment)
+    public function notificationsPayment(Payment $payment): void
     {
         echo 'OK';
     }
 
-    public function init(Tariff $tariff, Int $selected_quantity = null, $from_landing = false, $user_id = null, $degug_price = null)
+    public function initTariffPayment(Tariff $tariff, User $user = null, $from_landing = false, $debug_price = null): JsonResponse
     {
         $price = $tariff->price;
-        $quantity = $tariff->quantity;
 
-        if (!$selected_quantity || $selected_quantity <= 10) {
-            $validator = Validator::make(request()->all(), [
-                'quantity' => 'numeric|nullable',
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json($validator->errors(), 400);
-            }
-
-            $validated = $validator->validated();
-
-            if ($selected_quantity || isset($validated['quantity'])) {
-                $quantity = $validated['quantity'] ?? $selected_quantity;
-                $price = TariffService::getPrice($tariff->type, $quantity) * 100;
-            }
-        }
-
-        $user = null;
-        if (!$user_id) {
+        if (!$user) {
             $user = Auth::user();
-        } else {
-            $user = User::find($user_id);
         }
 
-        $payment = Payment::create([
-            'user_id' => $user->id,
-            'tariff_id' => $tariff->id,
-            'price' => $price,
-            'quantity' => $quantity,
-        ]);
+        $price = $debug_price ?? $price;
+        $description = $debug_price != null ? 'Тестовый платёж' : $tariff->title;
 
-        $price = $degug_price ?? $price;
-        $description = $degug_price != null ? 'Тестовый платёж' : $tariff->title;
-
-        $client = new TinkoffAcquiringAPIClient(config('tbank.terminal_key'), config('tbank.secret'));
-        $initRequest = new InitRequest($price, $payment->id . '_' . $tariff->id);
-
-        $notification_url = url('/');
-        $success_url = url('/api/payment/' . $payment->id . '/success?') .  ($from_landing ? 'from_landing=1' : '');
-        $fail_url = url('/api/payment/' . $payment->id . '/fail?') .  ($from_landing ? 'from_landing=1' : '');
-
-        // необязательные параметры
-        $initRequest
-            ->setDescription($description)
-            ->setNotificationURL($notification_url)
-            ->setSuccessURL($success_url)
-            ->setFailURL($fail_url);
-
-        try {
-            $response = $client->sendInitRequest($initRequest);
-            $payment->update([
-                'payment_id' => $response->getPaymentId()
-            ]);
-
-            if ($from_landing) {
-                return $response->getPaymentURL();
-            }
-
-            return response()->json(['link' => $response->getPaymentURL()])->setStatusCode(200);
-        } catch (TinkoffAPIException $e) {
-            Log::channel('single')->info($e);
-
-            if ($from_landing) {
-                return $fail_url;
-            }
-
-            return response()->json(['message' => 'Произошла ошибка на стороне банка'])->setStatusCode(400);
-        }
+        $link = PaymentService::getPaymentLink($user->id, $price, $description, Payment::TARIFF_TYPE, $tariff->id, $from_landing);
+        return response()->json(['link' => $link])->setStatusCode(200);
     }
 
-    public function checkState(Payment $payment)
+    public function initBalancePayment(InitPaymentRequest $request): JsonResponse
+    {
+        $validated = $request->validated();
+        $user = Auth::user();
+
+        $description = 'Тестовый платёж баланса';
+        $link = PaymentService::getPaymentLink($user->id, $validated['price'], $description, Payment::TOP_UP_TYPE);
+        return response()->json(['link' => $link])->setStatusCode(200);
+    }
+
+    public function checkState(Payment $payment): JsonResponse|string
     {
         $client = new TinkoffAcquiringAPIClient(config('tbank.terminal_key'), config('tbank.secret'));
         $payment_id = $payment->payment_id;
@@ -187,7 +130,6 @@ class PaymentController extends Controller
     public function regFromPayment(Tariff $tariff)
     {
         $validator = Validator::make(request()->all(), [
-            'quantity' => 'numeric|nullable',
             'phone' => 'string|required',
         ]);
 
@@ -198,19 +140,50 @@ class PaymentController extends Controller
         $validated = $validator->validated();
 
         $phone = PhoneService::format($validated['phone']);
-        $user = User::where([['phone', '=',  $phone]])->first();
+        $user = User::where([['phone', '=', $phone]])->first();
 
         if (!$user) {
             return redirect()->route('login')->with('success', 'Аккаунт с таким номером телефона не найден')->withInput();
         }
 
-        $redirect_url = $this->init($tariff, $validated['quantity'] ?? null, true, $user->id);
+        $redirect_url = $this->initTariffPayment($tariff, $user, true);
         return redirect($redirect_url);
     }
 
     public function debugPayment(Tariff $tariff)
     {
-        $redirect_url = $this->init($tariff, true, null, 1000);
+        $redirect_url = $this->initTariffPayment($tariff, null, false, 1000);
         return redirect($redirect_url);
+    }
+
+    public function withdraw(WithdrawRequest $request, User $user): JsonResponse
+    {
+        $validated = $request->validated();
+        if ($user->balance < $validated['amount']) {
+            return response()->json(['result' => 'Сумма превышает баланс'], 400);
+
+        }
+
+        $requisites = Requisites::where('user_id', $user->id)->first();
+        if (!$requisites) {
+            return response()->json(['result' => 'Заполните реквизиты'], 400);
+        }
+
+        $requisites = $requisites->toArray();
+        unset($requisites['user_id']);
+
+        if (PaymentService::initWithdraw($validated['amount'], $user, $requisites)) {
+            BalanceService::withdraw($validated['amount'], $user);
+            return response()->json(['result' => 'Выплата поставлена в очередь']);
+        }
+
+        return response()->json(['result' => 'Не удалось вывести средства, обратитесь в поддержку'], 400);
+    }
+
+    public function makeInvoice(StoreInvoiceRequest $request, User $user): JsonResponse
+    {
+        $validated = $request->validated();
+        $invoice = InvoiceService::store($validated);
+        InvoiceService::send($invoice);
     }
 }

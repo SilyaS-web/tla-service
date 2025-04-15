@@ -5,31 +5,27 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Auth;
 
+/**
+ *
+ * @property int $id
+ * @property int $price
+ * @property string $title
+ * @property string $description
+ * @property string $type
+ * @property int $quantity
+ * @property int $period
+ * @property int $group_id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @mixin \Eloquent
+ */
 class Tariff extends Model
 {
     use HasFactory;
-
-    const MINIMAL_QUANTITY = [
-        Project::FEEDBACK => 10,
-        Project::INTEGRATION => 10,
-    ];
-
-    // Массив для расчета стоимости по тарифу
-    // Количество штук => Цена за штуку у тарифа с отзывами
-    const PRICE_CONDITIONS = [
-        Project::FEEDBACK => [
-            10 => 100,
-            20 => 90,
-            30 => 80,
-        ],
-        Project::INTEGRATION => [
-            10 => 200,
-            20 => 180,
-            30 => 160,
-        ],
-    ];
 
     protected $fillable = [
         'title',
@@ -43,18 +39,19 @@ class Tariff extends Model
         'is_best'
     ];
 
-    public function tariffGroup()
+    public function tariffGroup(): HasOne
     {
         return $this->hasOne(TariffGroup::class, 'id', 'group_id');
     }
 
-    public function sellerTariffs()
+    public function sellerTariffs(): HasMany
     {
         return $this->hasMany(SellerTariff::class, 'tariff_id', 'id');
     }
 
-    public function isActive() {
+    public function isActive(): bool
+    {
         $user_active = $this->sellerTariffs()->where('user_id', Auth::user()->id)->where('finish_date', '>', Carbon::now())->first();
-        return $user_active ? true : false;
+        return (bool)$user_active;
     }
 }

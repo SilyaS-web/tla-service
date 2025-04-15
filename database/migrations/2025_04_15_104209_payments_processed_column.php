@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('project_works', function (Blueprint $table) {
-            $table->boolean('is_auto_generated')->default(false);
+        Schema::table('payments', function (Blueprint $table) {
+            $table->boolean('processed')->default(false);
         });
     }
 
@@ -21,8 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('project_works', function (Blueprint $table) {
-            $table->dropColumn('is_auto_generated');
+        Schema::table('payments', function (Blueprint $table) {
+            $table->dropColumn('processed');
         });
     }
 };

@@ -1,5 +1,6 @@
 <?php
 
+use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -25,27 +26,33 @@ class CreatePlatformsTable extends Migration
             [
                 'title' => 'Telegram', // 1
                 'image' => 'img/telegram-icon.svg',
-                "created_at" =>  \Carbon\Carbon::now(),
-                "updated_at" => \Carbon\Carbon::now(),
+                "created_at" =>  Carbon::now(),
+                "updated_at" => Carbon::now(),
             ],
             [
                 'title' => 'Youtube', // 2
                 'image' => 'img/youtube-colored-icon.svg',
-                "created_at" =>  \Carbon\Carbon::now(),
-                "updated_at" => \Carbon\Carbon::now(),
+                "created_at" =>  Carbon::now(),
+                "updated_at" => Carbon::now(),
             ],
             [
                 'title' => 'Instagram', // 3
                 'image' => 'img/inst-icon.svg',
-                "created_at" =>  \Carbon\Carbon::now(),
-                "updated_at" => \Carbon\Carbon::now(),
+                "created_at" =>  Carbon::now(),
+                "updated_at" => Carbon::now(),
             ],
             [
                 'title' => 'VK', // 4
                 'image' => 'img/vk-icon.svg',
-                "created_at" =>  \Carbon\Carbon::now(),
-                "updated_at" => \Carbon\Carbon::now(),
+                "created_at" =>  Carbon::now(),
+                "updated_at" => Carbon::now(),
             ],
+            [
+                'title' => 'Tiktok',
+                'image' => 'img/tiktok-icon.svg',
+                "created_at" =>  Carbon::now(),
+                "updated_at" => Carbon::now(),
+            ]
         ]);
     }
 
