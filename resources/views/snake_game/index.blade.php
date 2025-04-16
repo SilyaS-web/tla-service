@@ -1236,6 +1236,8 @@ Play State
 
         if(this.timer) return
 
+        if(this.bonusScore) return
+
         if(this.bonusTicksUntilCreate === 0 && !this.bonus){
             this.bonus = new g.Bonus({
                 parentState: this
@@ -1338,7 +1340,7 @@ App
 
     window.addEventListener( 'load', async function(){
         const timerParams = new URLSearchParams({ chat_id: chatID }).toString()
-        const timer = await fetch('http://localhost:8443/snake-game/timer?' + timerParams).then((res) => res.json()).then((json) => json.result.timer)
+        const timer = await fetch('http://89.104.69.63:8443/snake-game/timer?' + timerParams).then((res) => res.json()).then((json) => json.result.timer)
 
         if(timer){
             g.currentState().timer = timer
@@ -1452,7 +1454,7 @@ const EndGamePopup = function(data){
             btn.removeEventListener('click', sendResults);
             btn.classList.add('loading')
 
-            let response = await fetch('http://localhost:8443/snake-game/end', {
+            let response = await fetch('http://89.104.69.63:8443/snake-game/end', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json;charset=utf-8'
