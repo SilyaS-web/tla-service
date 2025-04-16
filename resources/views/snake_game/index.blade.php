@@ -1363,7 +1363,6 @@ function delay(ms) {
             g.time.update();
         };
 
-        const chatID = getUrlParameter('chat_id');
         const timerParams = new URLSearchParams({ chat_id: chatID }).toString()
         const timer = await fetch('https://lk.adswap.ru/api/snake-game/timer?' + timerParams)
             .then((res) => res.json())
