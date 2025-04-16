@@ -1313,6 +1313,18 @@ function delay(ms) {
 
 (async function(){ 'use strict';
 
+    if(window.TelegramWebviewProxy){
+        const web_app_setup_swipe_behavior = JSON.stringify({ allow_vertical_swipe: false });
+
+        window
+          .TelegramWebviewProxy
+          .postEvent('web_app_setup_swipe_behavior', web_app_setup_swipe_behavior);
+
+        window
+          .TelegramWebviewProxy
+          .postEvent('web_app_request_fullscreen');
+    }
+
     g.config = {
         title: 'Snakely',
         debug: window.location.hash == '#debug' ? 1 : 0,
@@ -1388,17 +1400,6 @@ function delay(ms) {
     }, false );
 
     window.addEventListener( 'load', async () => {
-        if(window.TelegramWebviewProxy){
-            const web_app_setup_swipe_behavior = JSON.stringify({ allow_vertical_swipe: false });
-
-            window
-              .TelegramWebviewProxy
-              .postEvent('web_app_setup_swipe_behavior', web_app_setup_swipe_behavior);
-
-            window
-              .TelegramWebviewProxy
-              .postEvent('web_app_request_fullscreen');
-        }
 
         await delay(3000)
 
