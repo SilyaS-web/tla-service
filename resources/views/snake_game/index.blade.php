@@ -69,10 +69,10 @@
                     <p><b>Один красный квадрат = Один балл</b></p>
                     <p><b>Один золотой квадрат = Семь баллов, которые можно использовать в клубе</b></p>
                     <p>
-                        Золотые баллы можно собирать раз в двое суток
+                        Бонусные баллы можно собирать раз в трое суток
                     </p>
                     <p>
-                        Для управления змейкой используйте стрелки, либо свайпы встороны.
+                        Для управления змейкой используйте стрелки, либо свайпы в стороны.
                     </p>
                 </div>
                 <div class="popup__footer">
@@ -1360,7 +1360,7 @@ App
             let minutes = Math.floor(currentDiff / 60) % 60;
             currentDiff -= minutes * 60;
 
-            timerElem.innerHTML = `${days}:${hours}:${minutes}`
+            timerElem.innerHTML = `До появления бонусов: ${days}д. ${hours}ч. ${minutes}м.`
 
             setInterval(() => {
                 currentDiff = (diffTimestamp - Date.now()) / 1000;
@@ -1374,7 +1374,7 @@ App
                 minutes = Math.floor(currentDiff / 60) % 60;
                 currentDiff -= minutes * 60;
 
-                timerElem.innerHTML = `${days}:${hours}:${minutes}`
+                timerElem.innerHTML = `До появления бонусов: ${days}д. ${hours}ч. ${minutes}м.`
             }, 1000 * 60)
         }
     }, false );

@@ -446,13 +446,14 @@ Popup
     .question {
         width: 28px;
         height: 28px;
+        align-self: unset;
     }
     .score__simple{
         font-size: 32px;
         line-height: 22px;
     }
     .score__bonus{
-        font-size: 16px;
+        font-size: 14px;
     }
     .progress-bar {
         width: 100%;
@@ -504,7 +505,7 @@ Popup
         font-size: 32px;
     }
     .score__bonus{
-        font-size: 14px;
+        font-size: 12px;
     }
     .progress-bar__main{
         gap: 2px;
