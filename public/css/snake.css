@@ -435,6 +435,14 @@ Popup
 
 }
 @media(max-width:475px){
+    .wrapper{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .stage{
+        margin: 0 auto;
+    }
     .score{
         flex-wrap: wrap;
         justify-content: space-between;
@@ -442,7 +450,6 @@ Popup
         gap: 4px;
         padding-left: 2%;
         padding-right: 5%;
-        margin-top: 12vh;
     }
     .question {
         width: 28px;
