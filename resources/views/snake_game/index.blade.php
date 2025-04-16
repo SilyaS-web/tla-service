@@ -1315,12 +1315,14 @@ App
 
     if(window.TelegramWebviewProxy){
         const web_app_setup_swipe_behavior = JSON.stringify({ allow_vertical_swipe: false });
-        const web_app_request_fullscreen = JSON.stringify(true);
 
         window
           .TelegramWebviewProxy
           .postEvent('web_app_setup_swipe_behavior', web_app_setup_swipe_behavior);
-          .postEvent('web_app_request_fullscreen', web_app_request_fullscreen);
+
+        window
+          .TelegramWebviewProxy
+          .postEvent('web_app_request_fullscreen');
     }
 
     g.setState( g.config.state );
