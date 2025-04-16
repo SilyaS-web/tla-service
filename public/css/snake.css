@@ -441,7 +441,7 @@ Popup
         justify-content: center;
     }
     .stage{
-        margin: 0 auto;
+        margin: 0 auto!important;
     }
     .score{
         flex-wrap: wrap;
