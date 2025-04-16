@@ -1328,7 +1328,9 @@ function delay(ms) {
     window.addEventListener( 'load', async function(){
          const chatID = getUrlParameter('chat_id');
         const timerParams = new URLSearchParams({ chat_id: chatID }).toString()
-        const timer = await fetch('https://lk.adswap.ru/api/snake-game/timer?' + timerParams).then((res) => res.json()).then((json) => json.result.timer)
+        const timer = await fetch('https://lk.adswap.ru/api/snake-game/timer?' + timerParams)
+            .then((res) => {console.log(res); return res.json()})
+            .then((json) => console.log(json))
 
         if(timer){
             g.currentState().timer = timer
