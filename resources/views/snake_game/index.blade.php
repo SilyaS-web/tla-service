@@ -1313,6 +1313,14 @@ App
         state: 'play'
     };
 
+    if(window.TelegramWebviewProxy){
+        const data = JSON.stringify({ allow_vertical_swipe: false });
+
+        window
+          .TelegramWebviewProxy
+          .postEvent('web_app_setup_swipe_behavior', data);
+    }
+
     g.setState( g.config.state );
 
     g.time = new g.Time();
