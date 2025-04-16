@@ -1325,38 +1325,8 @@ function delay(ms) {
           .postEvent('web_app_request_fullscreen');
     }
 
-    g.config = {
-        title: 'Snakely',
-        debug: window.location.hash == '#debug' ? 1 : 0,
-        state: 'play'
-    };
-
-    g.setState( g.config.state );
-
-    g.time = new g.Time();
-
-    const chatID = getUrlParameter('chat_id');
-
-    if(!chatID){
-        throw new Error('Отсутствует айди чата')
-    }
-
-    g.config.chatID = chatID
-
-    g.currentState().chatID = chatID;
-
-    g.step = function() {
-        const gameState = g.currentState();
-
-        if(gameState.isGamePaused) return;
-
-        requestAnimationFrame( g.step );
-        g.states[ g.state ].step();
-
-        g.time.update();
-    };
-
     window.addEventListener( 'load', async function(){
+         const chatID = getUrlParameter('chat_id');
         const timerParams = new URLSearchParams({ chat_id: chatID }).toString()
         const timer = await fetch('https://lk.adswap.ru/api/snake-game/timer?' + timerParams).then((res) => res.json()).then((json) => json.result.timer)
 
@@ -1400,8 +1370,38 @@ function delay(ms) {
     }, false );
 
     window.addEventListener( 'load', async () => {
-
         await delay(3000)
+
+         g.config = {
+            title: 'Snakely',
+            debug: window.location.hash == '#debug' ? 1 : 0,
+            state: 'play'
+        };
+
+        g.setState( g.config.state );
+
+        g.time = new g.Time();
+
+        const chatID = getUrlParameter('chat_id');
+
+        if(!chatID){
+            throw new Error('Отсутствует айди чата')
+        }
+
+        g.config.chatID = chatID
+
+        g.currentState().chatID = chatID;
+
+        g.step = function() {
+                const gameState = g.currentState();
+
+                if(gameState.isGamePaused) return;
+
+                requestAnimationFrame( g.step );
+                g.states[ g.state ].step();
+
+                g.time.update();
+            };
 
         g.step()
     }, false );
