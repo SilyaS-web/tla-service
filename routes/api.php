@@ -44,6 +44,53 @@ Route::prefix('payment')->group(function () {
     Route::get('/{payment}/fail', [PaymentController::class, 'failPayment']);
 });
 
+Route::prefix('snake-game')->group(function () {
+    Route::get('/timer', function(){
+        $chat_id = request()->input('chat_id')
+
+        $curl = curl_init();
+        $url = 'http://89.104.69.63:8443/snake-game/timer?chat_id=' . $chat_id;
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+        ));
+
+        $response = curl_exec($curl);
+
+        return response()->json($response);
+    });
+    Route::get('/end', function(){
+        $chat_id = request()->input('chat_id')
+        $bonusScore = request()->input('bonusScore')
+        $score = request()->input('score')
+
+        $curl = curl_init();
+        $url = 'http://89.104.69.63:8443/snake-game/end?chat_id=' . $chat_id . '&bonusScore=' . $bonusScore . '&score=' . $score;
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
+        ));
+
+        $response = curl_exec($curl);
+
+        return response()->json($response);
+    });
+});
+
 Route::middleware('auth:sanctum')->group(function () {
     Route::delete('/users/{user}', [UserController::class, 'delete']);
     Route::post('/users/{user}', [UserController::class, 'update']);
