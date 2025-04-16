@@ -442,6 +442,7 @@ Popup
         gap: 4px;
         padding-left: 2%;
         padding-right: 5%;
+        margin-top: 60px;
     }
     .question {
         width: 28px;
