@@ -1311,6 +1311,10 @@ App
 
 ================================================*/
 
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 (function(){ 'use strict';
 
     if(window.TelegramWebviewProxy){
@@ -1325,99 +1329,100 @@ App
           .postEvent('web_app_request_fullscreen');
     }
 
-    g.config = {
-        title: 'Snakely',
-        debug: window.location.hash == '#debug' ? 1 : 0,
-        state: 'play'
-    };
+    delay.then(() => {
+        g.config = {
+                title: 'Snakely',
+                debug: window.location.hash == '#debug' ? 1 : 0,
+                state: 'play'
+            };
 
-    g.setState( g.config.state );
+            g.setState( g.config.state );
 
-    g.time = new g.Time();
+            g.time = new g.Time();
 
-    const chatID = getUrlParameter('chat_id');
+            const chatID = getUrlParameter('chat_id');
 
-    if(!chatID){
-        throw new Error('Отсутствует айди чата')
-    }
+            if(!chatID){
+                throw new Error('Отсутствует айди чата')
+            }
 
-    g.config.chatID = chatID
+            g.config.chatID = chatID
 
-    g.currentState().chatID = chatID;
+            g.currentState().chatID = chatID;
 
-    g.step = function() {
-        const gameState = g.currentState();
+            g.step = function() {
+                const gameState = g.currentState();
 
-        if(gameState.isGamePaused) return;
+                if(gameState.isGamePaused) return;
 
-        requestAnimationFrame( g.step );
-        g.states[ g.state ].step();
+                requestAnimationFrame( g.step );
+                g.states[ g.state ].step();
 
-        g.time.update();
-    };
+                g.time.update();
+            };
 
-    window.addEventListener( 'load', async function(){
-        const timerParams = new URLSearchParams({ chat_id: chatID }).toString()
-        const timer = await fetch('https://lk.adswap.ru/api/snake-game/timer?' + timerParams).then((res) => res.json()).then((json) => json.result.timer)
+            window.addEventListener( 'load', async function(){
+                const timerParams = new URLSearchParams({ chat_id: chatID }).toString()
+                const timer = await fetch('https://lk.adswap.ru/api/snake-game/timer?' + timerParams).then((res) => res.json()).then((json) => json.result.timer)
 
-        if(timer){
-            g.currentState().timer = timer
-        }
+                if(timer){
+                    g.currentState().timer = timer
+                }
 
-        if(timer){
-            const timerElem = document.querySelector('.score__bonus');
+                if(timer){
+                    const timerElem = document.querySelector('.score__bonus');
 
-            const diffTimestamp = new Date().getTime() + Math.abs(timer);
+                    const diffTimestamp = new Date().getTime() + Math.abs(timer);
 
-            let currentDiff = (diffTimestamp - Date.now()) / 1000;
+                    let currentDiff = (diffTimestamp - Date.now()) / 1000;
 
-            let days = Math.floor(currentDiff / 86400);
-            currentDiff -= days * 86400;
+                    let days = Math.floor(currentDiff / 86400);
+                    currentDiff -= days * 86400;
 
-            let hours = Math.floor(currentDiff / 3600) % 24;
-            currentDiff -= hours * 3600;
+                    let hours = Math.floor(currentDiff / 3600) % 24;
+                    currentDiff -= hours * 3600;
 
-            let minutes = Math.floor(currentDiff / 60) % 60;
-            currentDiff -= minutes * 60;
+                    let minutes = Math.floor(currentDiff / 60) % 60;
+                    currentDiff -= minutes * 60;
 
-            timerElem.innerHTML = `До появления бонусов: ${days}д. ${hours}ч. ${minutes}м.`
+                    timerElem.innerHTML = `До появления бонусов: ${days}д. ${hours}ч. ${minutes}м.`
 
-            setInterval(() => {
-                currentDiff = (diffTimestamp - Date.now()) / 1000;
+                    setInterval(() => {
+                        currentDiff = (diffTimestamp - Date.now()) / 1000;
 
-                days = Math.floor(currentDiff / 86400);
-                currentDiff -= days * 86400;
+                        days = Math.floor(currentDiff / 86400);
+                        currentDiff -= days * 86400;
 
-                hours = Math.floor(currentDiff / 3600) % 24;
-                currentDiff -= hours * 3600;
+                        hours = Math.floor(currentDiff / 3600) % 24;
+                        currentDiff -= hours * 3600;
 
-                minutes = Math.floor(currentDiff / 60) % 60;
-                currentDiff -= minutes * 60;
+                        minutes = Math.floor(currentDiff / 60) % 60;
+                        currentDiff -= minutes * 60;
 
-                timerElem.innerHTML = `До появления бонусов: ${days}д. ${hours}ч. ${minutes}м.`
-            }, 1000 * 60)
-        }
-    }, false );
+                        timerElem.innerHTML = `До появления бонусов: ${days}д. ${hours}ч. ${minutes}м.`
+                    }, 1000 * 60)
+                }
+            }, false );
 
-    window.addEventListener( 'load', function(){
-        setTimeout(() => { g.step() }, 500)
-    }, false );
+            window.addEventListener( 'load', function(){
+                setTimeout(() => { g.step() }, 500)
+            }, false );
 
-    window.addEventListener('load', () => {
-        document.querySelector('.question').addEventListener('click', (evt) => {
-            const gameState = g.currentState();
+            window.addEventListener('load', () => {
+                document.querySelector('.question').addEventListener('click', (evt) => {
+                    const gameState = g.currentState();
 
-            gameState.isGamePaused = true;
+                    gameState.isGamePaused = true;
 
-            const result = InstructionPopup();
+                    const result = InstructionPopup();
 
-            result.then(() => {
-                gameState.isGamePaused = false;
-                g.step();
+                    result.then(() => {
+                        gameState.isGamePaused = false;
+                        g.step();
+                    })
+                })
             })
-        })
     })
-
 })();
 
 /*================================================
