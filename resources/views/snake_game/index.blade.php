@@ -315,12 +315,12 @@ State
         g.states[ state.name ] = state;
     };
 
-    g.setState = function( name ) {
+    g.setState = async function( name ) {
         if( g.state ) {
             g.states[ g.state ].exit();
         }
         g.state = name;
-        g.states[ g.state ].init();
+        await g.states[ g.state ].init();
     };
 
     g.currentState = function() {
@@ -1331,7 +1331,7 @@ App
     g.config.chatID = chatID
 
     g.currentState().chatID = chatID;
-console.log(chatID)
+
     g.step = function() {
         const gameState = g.currentState();
 
