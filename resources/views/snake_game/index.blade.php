@@ -1015,9 +1015,14 @@ Play State
         this.name = 'play';
     }
 
-    StatePlay.prototype.init = function() {
-        this.scoreElem = document.querySelector( '.score' );
-        this.stageElem = document.querySelector( '.stage' );
+    function delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    StatePlay.prototype.init = async function () {
+        await delay(3000);
+        this.scoreElem = document.querySelector('.score');
+        this.stageElem = document.querySelector('.stage');
         this.isGamePaused = false;
         this.xDown = null;
         this.yDown = null;
@@ -1031,7 +1036,7 @@ Play State
         this.bonusScore = 0;
         this.time = new g.Time();
         this.getDimensions();
-        if( this.winWidth < this.winHeight ) {
+        if (this.winWidth < this.winHeight) {
             this.rows = this.dimLong;
             this.cols = this.dimShort;
         } else {
@@ -1039,7 +1044,7 @@ Play State
             this.cols = this.dimLong;
         }
         this.spacing = 1;
-        this.grid = new g.Grid( this.cols, this.rows );
+        this.grid = new g.Grid(this.cols, this.rows);
         this.maxBonusCount = this.cols * this.rows - 5
         this.resize();
         this.createBoardTiles();
