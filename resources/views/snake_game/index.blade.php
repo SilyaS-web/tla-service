@@ -1382,7 +1382,7 @@ App
     }, false );
 
     window.addEventListener( 'load', function(){
-        setTimeout((){ g.step() }, 500)
+        setTimeout(() => { g.step() }, 500)
     }, false );
 
     window.addEventListener('load', () => {
