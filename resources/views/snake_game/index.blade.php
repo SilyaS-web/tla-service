@@ -1400,7 +1400,7 @@ function delay(ms) {
               .postEvent('web_app_request_fullscreen');
         }
 
-        await delay(1000)
+        await delay(3000)
 
         g.step()
     }, false );
