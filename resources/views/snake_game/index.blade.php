@@ -1315,7 +1315,7 @@ function delay(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-(function(){ 'use strict';
+(async function(){ 'use strict';
 
     if(window.TelegramWebviewProxy){
         const web_app_setup_swipe_behavior = JSON.stringify({ allow_vertical_swipe: false });
@@ -1329,99 +1329,97 @@ function delay(ms) {
           .postEvent('web_app_request_fullscreen');
     }
 
-    delay(1000).then(() => {
-        g.config = {
-                title: 'Snakely',
-                debug: window.location.hash == '#debug' ? 1 : 0,
-                state: 'play'
-            };
+    await delay(1000)
 
-            g.setState( g.config.state );
+    g.config = {
+        title: 'Snakely',
+        debug: window.location.hash == '#debug' ? 1 : 0,
+        state: 'play'
+    };
 
-            g.time = new g.Time();
+    g.setState( g.config.state );
 
-            const chatID = getUrlParameter('chat_id');
+    g.time = new g.Time();
 
-            if(!chatID){
-                throw new Error('Отсутствует айди чата')
-            }
+    const chatID = getUrlParameter('chat_id');
 
-            g.config.chatID = chatID
+    if(!chatID){
+        throw new Error('Отсутствует айди чата')
+    }
 
-            g.currentState().chatID = chatID;
+    g.config.chatID = chatID
 
-            g.step = function() {
-                const gameState = g.currentState();
+    g.currentState().chatID = chatID;
 
-                if(gameState.isGamePaused) return;
+    g.step = function() {
+        const gameState = g.currentState();
 
-                requestAnimationFrame( g.step );
-                g.states[ g.state ].step();
+        if(gameState.isGamePaused) return;
 
-                g.time.update();
-            };
+        requestAnimationFrame( g.step );
+        g.states[ g.state ].step();
 
-            window.addEventListener( 'load', async function(){
-                const timerParams = new URLSearchParams({ chat_id: chatID }).toString()
-                const timer = await fetch('https://lk.adswap.ru/api/snake-game/timer?' + timerParams).then((res) => res.json()).then((json) => json.result.timer)
+        g.time.update();
+    };
 
-                if(timer){
-                    g.currentState().timer = timer
-                }
+    window.addEventListener( 'load', async function(){
+        const timerParams = new URLSearchParams({ chat_id: chatID }).toString()
+        const timer = await fetch('https://lk.adswap.ru/api/snake-game/timer?' + timerParams).then((res) => res.json()).then((json) => json.result.timer)
 
-                if(timer){
-                    const timerElem = document.querySelector('.score__bonus');
+        if(timer){
+            g.currentState().timer = timer
+        }
 
-                    const diffTimestamp = new Date().getTime() + Math.abs(timer);
+        if(timer){
+            const timerElem = document.querySelector('.score__bonus');
 
-                    let currentDiff = (diffTimestamp - Date.now()) / 1000;
+            const diffTimestamp = new Date().getTime() + Math.abs(timer);
 
-                    let days = Math.floor(currentDiff / 86400);
-                    currentDiff -= days * 86400;
+            let currentDiff = (diffTimestamp - Date.now()) / 1000;
 
-                    let hours = Math.floor(currentDiff / 3600) % 24;
-                    currentDiff -= hours * 3600;
+            let days = Math.floor(currentDiff / 86400);
+            currentDiff -= days * 86400;
 
-                    let minutes = Math.floor(currentDiff / 60) % 60;
-                    currentDiff -= minutes * 60;
+            let hours = Math.floor(currentDiff / 3600) % 24;
+            currentDiff -= hours * 3600;
 
-                    timerElem.innerHTML = `До появления бонусов: ${days}д. ${hours}ч. ${minutes}м.`
+            let minutes = Math.floor(currentDiff / 60) % 60;
+            currentDiff -= minutes * 60;
 
-                    setInterval(() => {
-                        currentDiff = (diffTimestamp - Date.now()) / 1000;
+            timerElem.innerHTML = `До появления бонусов: ${days}д. ${hours}ч. ${minutes}м.`
 
-                        days = Math.floor(currentDiff / 86400);
-                        currentDiff -= days * 86400;
+            setInterval(() => {
+                currentDiff = (diffTimestamp - Date.now()) / 1000;
 
-                        hours = Math.floor(currentDiff / 3600) % 24;
-                        currentDiff -= hours * 3600;
+                days = Math.floor(currentDiff / 86400);
+                currentDiff -= days * 86400;
 
-                        minutes = Math.floor(currentDiff / 60) % 60;
-                        currentDiff -= minutes * 60;
+                hours = Math.floor(currentDiff / 3600) % 24;
+                currentDiff -= hours * 3600;
 
-                        timerElem.innerHTML = `До появления бонусов: ${days}д. ${hours}ч. ${minutes}м.`
-                    }, 1000 * 60)
-                }
-            }, false );
+                minutes = Math.floor(currentDiff / 60) % 60;
+                currentDiff -= minutes * 60;
 
-            window.addEventListener( 'load', function(){
-                setTimeout(() => { g.step() }, 500)
-            }, false );
+                timerElem.innerHTML = `До появления бонусов: ${days}д. ${hours}ч. ${minutes}м.`
+            }, 1000 * 60)
+        }
+    }, false );
 
-            window.addEventListener('load', () => {
-                document.querySelector('.question').addEventListener('click', (evt) => {
-                    const gameState = g.currentState();
+    window.addEventListener( 'load', g.step, false );
 
-                    gameState.isGamePaused = true;
+    window.addEventListener('load', () => {
+        document.querySelector('.question').addEventListener('click', (evt) => {
+            const gameState = g.currentState();
 
-                    const result = InstructionPopup();
+            gameState.isGamePaused = true;
 
-                    result.then(() => {
-                        gameState.isGamePaused = false;
-                        g.step();
-                    })
-                })
+            const result = InstructionPopup();
+
+            result.then(() => {
+                gameState.isGamePaused = false;
+                g.step();
             })
+        })
     })
 })();
 
