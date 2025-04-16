@@ -99,7 +99,7 @@ export default {
             return 'Неизвестно'
         },
         sendOfferPopup(){
-            this.$refs.sendOfferPopup.show(null, null)
+            this.$refs.sendOfferPopup.show(null, null, this.chat.id)
         }
     }
 }

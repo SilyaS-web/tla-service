@@ -1,5 +1,13 @@
 <template>
     <div class="chat__messages messages-chat">
+        <offer-content-component
+            v-if="order"
+            :productImage="project.project_files[0]"
+            :productName="project.product_name"
+            :user="user"
+            :offer="order"
+        ></offer-content-component>
+
         <div
             v-if="isAvailableToShowMessages(messages)"
             v-for="message in messages"
@@ -52,15 +60,7 @@
                     </div>
                 </div>
             </div>
-            <offer-content-component
-                v-else-if="true"
-                :productImage="false"
-                :productName="'Название'"
-                :offerDescription="'Оставить в сторис отзыв о предоставленном продукте'"
-                :user="user"
-                :offerPrice="'3000'"
-                :offerPeriod="'2 дня'"
-            ></offer-content-component>
+
             <div
                 v-else
                 class="messages-chat__item-content msg-specification">
@@ -112,7 +112,10 @@ import SpecificationPopup from '../../../core/components/popups/specification-po
 import OfferContentComponent from "./OfferContentComponent.vue";
 
 export default{
-    props:['user', 'messages', 'chatWorks', 'chatStatus', 'statistics', 'partnerName'],
+    props:[
+        'user', 'messages', 'chatWorks', 'chatStatus',
+        'statistics', 'partnerName', 'order', 'project'
+    ],
     components: {OfferContentComponent, ImagePopup, SpecificationPopup },
     data(){
         return{

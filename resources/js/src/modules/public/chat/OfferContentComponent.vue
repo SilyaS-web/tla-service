@@ -1,10 +1,11 @@
 <script>
 import {ref} from "vue";
+import FileIcon from "../../../core/icons/FileIcon.vue";
 
 export default {
+    components: {FileIcon},
     props:[
-        'productImage', 'productName', 'offerDescription',
-        'user', 'offerPrice', 'offerPeriod'
+        'productImage', 'productName', 'offer', 'user'
     ],
     data(){
         return{
@@ -13,13 +14,12 @@ export default {
     },
     name: "OfferContentComponent",
     methods:{
-        toggleOffer(event){
-            const link = event.target;
+        getOfferFileName(name){
+            if(!name) return 'Неизвестно'
 
-            if(this.isHidden) $(link).text('свернуть')
-            else $(link).text('развернуть')
+            const splitedFile = name.split('/');
 
-            this.isHidden = !this.isHidden;
+            return splitedFile[splitedFile.length - 1];
         }
     }
 }
@@ -39,55 +39,78 @@ export default {
                             {{ productName }}
                         </div>
                         <div class="offer-chat__description">
-                            Оставить в сторис отзыв о предоставленном продукте
+                            {{ offer.specification }}
                         </div>
+                    </div>
+                    <div class="offer-chat__files">
+                        <a
+                            v-for="file in offer.files"
+                            :href="file.name"
+                            download
+                            class="offer-chat__files-item offer-file">
+                            <div class="offer-file__icon">
+                                <file-icon></file-icon>
+                            </div>
+                            <span class="offer-file__name">{{ getOfferFileName(file.name) }}</span>
+                        </a>
                     </div>
                     <div class="offer-chat__more-info">
                         <div class="offer-chat__price">
                             <label>Цена</label>
-                            <span><b>{{ offerPrice || "-" }} ₽</b></span>
+                            <span><b>{{ offer.price || "-" }} ₽</b></span>
                         </div>
                         <div class="offer-chat__period">
                             <label>Срок выполнения</label>
-                            <span><b>{{ offerPeriod }}</b></span>
+                            <span><b>{{ offer.complete_till }}</b></span>
                         </div>
                     </div>
                     <div class="offer-chat__btns">
                         <div
-                            v-if="false"
+                            v-if="user.role === 'blogger' && offer.status === 0"
                             class="offer-chat__btns-item">
                             <button class="btn btn-primary">Принять</button>
                             <button class="btn btn-white btn-secondary">Отклонить</button>
                         </div>
                         <div
-                            v-if="false"
+                            v-if="user.role === 'seller' && offer.status === 0"
                             class="offer-chat__btns-item">
                             <button class="btn btn-white" disabled>Заказ на рассмотрении</button>
+                            <a href="#" class="offer-chat__btns-link">Отменить заказ</a>
                         </div>
                         <div
-                            v-if="false"
+                            v-if="user.role === 'blogger' && offer.status === 1"
                             class="offer-chat__btns-item">
                             <button class="btn btn-white">Подтвердить выполнение</button>
                         </div>
                         <div
-                            v-if="false"
+                            v-if="user.role === 'seller' && offer.status === 1"
                             class="offer-chat__btns-item">
-                            <a href="#" class="offer-chat__btns-link">Отменить заказ</a>
                             <button class="btn btn-white btn-primary">Заказ принят</button>
+                            <a href="#" class="offer-chat__btns-link">Отменить заказ</a>
                         </div>
                         <div
-                            v-if="true"
+                            v-if="offer.status === -1"
                             class="offer-chat__btns-item">
                             <button class="btn btn-danger">Заказ отклонен</button>
+                            <a
+                                v-if="user.role === 'seller'"
+                                href="#" class="offer-chat__btns-link">Удалить заказ</a>
                         </div>
                     </div>
                 </div>
             </div>
-            <a
-                @click.prevent="toggleOffer"
-                href="#" class="offer-chat__hide">
-                свернуть
-            </a>
+            <div class="offer-chat__toggle">
+                <a
+                    @click.prevent="this.isHidden = true"
+                    href="#" class="offer-chat__show">
+                    Информация
+                </a>
+                <a
+                    @click.prevent="this.isHidden = false"
+                    href="#" class="offer-chat__hide">
+                    Скрыть
+                </a>
+            </div>
         </div>
     </div>
 </template>
@@ -98,6 +121,8 @@ export default {
         border:1px solid rgba(0,0,0,.1);
         border-radius:8px;
         transition:all .1s linear;
+        max-width:850px;
+        margin: 0 auto;
     }
     .offer-chat--hidden .offer-chat__main{
         margin-bottom: 0 !important;
@@ -116,17 +141,23 @@ export default {
         position:relative;
         padding: 24px;
     }
-    .offer-chat__hide{
-        color:#56565680;
+    .offer-chat__toggle{
         position: absolute;
         right:16px;
         top:16px;
         font-size: 12px;
         font-weight: 400;
     }
+    .offer-chat__hide{
+        color:#56565680;
+    }
     .offer-chat__hide:hover{
         text-decoration:none;
         color:var(--primary)
+    }
+    .offer-chat__show{
+        color:var(--primary);
+        text-decoration:underline;
     }
 
     .offer-chat__body{
@@ -156,7 +187,7 @@ export default {
     }
     .offer-chat__main{
         gap: 12px;
-        margin-bottom: 24px;
+        margin-bottom: 12px;
     }
     .offer-chat__label{
         font-size: 18px;
@@ -169,6 +200,16 @@ export default {
         font-weight: 500;
         color:#000;
         text-align:left;
+    }
+    .offer-chat__files{
+        display:flex;
+        flex-wrap:wrap;
+        gap: 16px;
+        margin-bottom: 24px;
+    }
+    .offer-file{
+        display: flex;
+        gap: 4px;
     }
     .offer-chat__more-info{
         gap: 8px;

@@ -94,9 +94,10 @@ export default {
         }
     },
     methods:{
-        show(blogger_id = null, seller_id = null){
+        show(blogger_id = null, seller_id = null, workID = null){
             this.blogger_id = blogger_id;
             this.seller_id = seller_id;
+            this.workID = workID;
 
             this.$refs.popup.open()
 
@@ -106,23 +107,40 @@ export default {
             })
         },
         sendOffer(){
+            let formData = new FormData;
+
             const sendData = {
                 specification: this.offer.specification,
                 price: this.offer.price,
-                files: this.offer.files,
                 complete_till: this.completeUntilDaysMap[this.offer.complete_till],
+                work_id: this.workID,
+            }
+            const offerFiles = this.offer.files.filter(obj => obj.file).map(obj => obj.file);
+
+            for (const key in sendData) {
+                if(sendData[key]){
+                    formData.append(key, sendData[key])
+                }
+            }
+
+            for (let i = 0; i < offerFiles.length; i++) {
+                formData.append('files[' + i + ']', offerFiles[i])
             }
 
             axios({
                 method: 'post',
                 url: '/api/orders',
-                data: sendData,
+                data: formData,
             })
             .then((result) => {
                 notify('info', {
                     title: 'Успешно!',
                     message: 'Заказ успешно создан'
                 })
+
+                for (const key in this.offer) {
+                    this.offer[key] = null
+                }
 
                 this._confirm()
             })
@@ -131,6 +149,10 @@ export default {
                     title: 'Внимание!',
                     message: 'Невозможно создать заказ. Попробуйте позже'
                 })
+
+                for (const key in this.offer) {
+                    this.offer[key] = null
+                }
 
                 this._cancel()
             })

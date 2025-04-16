@@ -27,6 +27,8 @@
                             <MessagesList
                                 :messages="messages"
                                 :user="user"
+                                :order="currentChat ? currentChat.orders[0] : false"
+                                :project="currentChat ? currentChat.project : false"
                                 :chatWorks="currentChat ? currentChat.project_works : false"
                                 :chatStatus="currentChat ? currentChat.status : false"
                                 :statistics="currentChat ? currentChat.statistics : false"
