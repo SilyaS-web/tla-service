@@ -1020,7 +1020,7 @@ Play State
     }
 
     StatePlay.prototype.init = async function () {
-        await delay(3000);
+        await delay(700);
         this.scoreElem = document.querySelector('.score');
         this.stageElem = document.querySelector('.stage');
         this.isGamePaused = false;
