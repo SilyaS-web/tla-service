@@ -1460,7 +1460,7 @@ const EndGamePopup = function(data){
                 bonusScore: data.bonusScore,
             }).toString()
 
-            const response = await fetch('https://lk.adswap.ru/api/snake-game/end?' + timerParams)
+            const response = await fetch('https://lk.adswap.ru/api/snake-game/end?' + endGameParams)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
