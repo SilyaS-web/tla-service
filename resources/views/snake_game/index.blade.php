@@ -1307,30 +1307,29 @@ App
 
 ================================================*/
 
-function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-(async function(){ 'use strict';
-
+function setTelegramWindow(ms) {
+  return new Promise(async resolve => {
     if(window.TelegramWebviewProxy){
         const web_app_setup_swipe_behavior = JSON.stringify({ allow_vertical_swipe: false });
 
-        window
+        await window
           .TelegramWebviewProxy
-          .postEvent('web_app_setup_swipe_behavior', web_app_setup_swipe_behavior);
+          .postEvent('web_app_setup_swipe_behavior', web_app_setup_swipe_behavior)
 
-        window
+        await window
           .TelegramWebviewProxy
-          .postEvent('web_app_request_fullscreen');
+          .postEvent('web_app_request_fullscreen')
     }
+  });
+}
 
+(async function(){ 'use strict';
     window.addEventListener( 'load', async function(){
 
     }, false );
 
     window.addEventListener( 'load', async () => {
-        await delay(3000)
+        await setTelegramWindow()
 
          g.config = {
             title: 'Snakely',
