@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Змейка</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/snake.css?v=1">
+    <link rel="stylesheet" href="/css/snake.css?v=2">
 </head>
 <body>
     <div class="wrapper">
@@ -1313,18 +1313,6 @@ App
         state: 'play'
     };
 
-    if(window.TelegramWebviewProxy){
-        const web_app_setup_swipe_behavior = JSON.stringify({ allow_vertical_swipe: false });
-
-        window
-          .TelegramWebviewProxy
-          .postEvent('web_app_setup_swipe_behavior', web_app_setup_swipe_behavior);
-
-        window
-          .TelegramWebviewProxy
-          .postEvent('web_app_request_fullscreen');
-    }
-
     g.setState( g.config.state );
 
     g.time = new g.Time();
@@ -1408,6 +1396,20 @@ App
                 g.step();
             })
         })
+    })
+
+    window.addEventListener('load', () => {
+        if(window.TelegramWebviewProxy){
+            const web_app_setup_swipe_behavior = JSON.stringify({ allow_vertical_swipe: false });
+
+            window
+              .TelegramWebviewProxy
+              .postEvent('web_app_setup_swipe_behavior', web_app_setup_swipe_behavior);
+
+            window
+              .TelegramWebviewProxy
+              .postEvent('web_app_request_fullscreen');
+        }
     })
 
 
