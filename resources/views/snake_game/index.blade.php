@@ -1236,7 +1236,7 @@ Play State
 
         if(this.timer) return
 
-        if(this.bonusScore) return
+        if(this.bonusScore === 30) return
 
         if(this.bonusTicksUntilCreate === 0 && !this.bonus){
             this.bonus = new g.Bonus({

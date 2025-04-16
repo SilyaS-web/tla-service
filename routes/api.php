@@ -73,18 +73,26 @@ Route::prefix('snake-game')->group(function () {
         $bonusScore = request()->input('bonusScore');
         $score = request()->input('score');
 
+        $data = [
+            'chat_id' => $chat_id,
+            'bonusScore' => $bonusScore,
+            'score' => $score,
+        ];
+
         $curl = curl_init();
-        $url = 'http://89.104.69.63:8443/snake-game/end?chat_id=' . $chat_id . '&bonusScore=' . $bonusScore . '&score=' . $score;
+        $url = 'http://89.104.69.63:8443/snake-game/end';
 
         curl_setopt_array($curl, array(
-          CURLOPT_URL => $url,
-          CURLOPT_RETURNTRANSFER => true,
-          CURLOPT_ENCODING => '',
-          CURLOPT_MAXREDIRS => 10,
-          CURLOPT_TIMEOUT => 0,
-          CURLOPT_FOLLOWLOCATION => true,
-          CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-          CURLOPT_CUSTOMREQUEST => 'GET',
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => false,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => json_encode($data),
+            CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
         ));
 
         curl_close($curl);
