@@ -66,7 +66,7 @@ Route::prefix('snake-game')->group(function () {
 
         curl_close($curl);
 
-        echo $response;
+        return $response;
     });
     Route::get('/end', function(){
         $chat_id = request()->input('chat_id');
@@ -89,7 +89,7 @@ Route::prefix('snake-game')->group(function () {
 
         curl_close($curl);
 
-        echo $response;
+        return $response;
     });
 });
 
