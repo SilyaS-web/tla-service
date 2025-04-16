@@ -1329,7 +1329,7 @@ function delay(ms) {
           .postEvent('web_app_request_fullscreen');
     }
 
-    delay.then(() => {
+    delay(1000).then(() => {
         g.config = {
                 title: 'Snakely',
                 debug: window.location.hash == '#debug' ? 1 : 0,
