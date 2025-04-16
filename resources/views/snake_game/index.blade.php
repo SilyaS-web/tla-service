@@ -1307,6 +1307,10 @@ App
 
 ================================================*/
 
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
 function setTelegramWindow(ms) {
   return new Promise(async resolve => {
     if(window.TelegramWebviewProxy){
@@ -1335,6 +1339,8 @@ function setTelegramWindow(ms) {
 
     window.addEventListener( 'load', async () => {
         await setTelegramWindow()
+
+        await delay(300)
 
          g.config = {
             title: 'Snakely',
