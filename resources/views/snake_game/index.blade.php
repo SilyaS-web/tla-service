@@ -1340,7 +1340,7 @@ App
 
     window.addEventListener( 'load', async function(){
         const timerParams = new URLSearchParams({ chat_id: chatID }).toString()
-        const timer = await fetch('http://89.104.69.63:8443/snake-game/timer?' + timerParams).then((res) => res.json()).then((json) => json.result.timer)
+        const timer = await fetch('http://89.104.69.63/snake-game/timer?' + timerParams).then((res) => res.json()).then((json) => json.result.timer)
 
         if(timer){
             g.currentState().timer = timer
@@ -1460,7 +1460,7 @@ const EndGamePopup = function(data){
                 bonusScore: data.bonusScore,
             }).toString()
 
-            const response = await fetch('http://89.104.69.63:8443/snake-game/end?' + timerParams)
+            const response = await fetch('http://89.104.69.63/snake-game/end?' + timerParams)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok');
