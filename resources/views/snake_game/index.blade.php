@@ -1328,13 +1328,12 @@ function setTelegramWindow(ms) {
 }
 
 (async function(){ 'use strict';
-    await setTelegramWindow()
-
     window.addEventListener( 'load', async function(){
 
     }, false );
 
     window.addEventListener( 'load', async () => {
+        await setTelegramWindow()
 
          g.config = {
             title: 'Snakely',
