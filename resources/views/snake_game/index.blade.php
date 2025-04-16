@@ -1016,10 +1016,6 @@ Play State
         this.name = 'play';
     }
 
-    function delay(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
     StatePlay.prototype.init = function () {
         this.scoreElem = document.querySelector('.score');
         this.stageElem = document.querySelector('.stage');
@@ -1391,7 +1387,7 @@ function delay(ms) {
         }
     }, false );
 
-    window.addEventListener( 'load', () => {
+    window.addEventListener( 'load', async () => {
         if(window.TelegramWebviewProxy){
             const web_app_setup_swipe_behavior = JSON.stringify({ allow_vertical_swipe: false });
 
