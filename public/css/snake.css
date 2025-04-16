@@ -442,7 +442,7 @@ Popup
         gap: 4px;
         padding-left: 2%;
         padding-right: 5%;
-        margin-top: 7vh;
+        margin-top: 12vh;
     }
     .question {
         width: 28px;
@@ -503,10 +503,10 @@ Popup
         height: 22px;
     }
     .score__simple{
-        font-size: 32px;
+        font-size: 30px;
     }
     .score__bonus{
-        font-size: 12px;
+        font-size: 10px;
     }
     .progress-bar__main{
         gap: 2px;
