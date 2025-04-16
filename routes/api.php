@@ -46,7 +46,7 @@ Route::prefix('payment')->group(function () {
 
 Route::prefix('snake-game')->group(function () {
     Route::get('/timer', function(){
-        $chat_id = request()->input('chat_id')
+        $chat_id = request()->input('chat_id');
 
         $curl = curl_init();
         $url = 'http://89.104.69.63:8443/snake-game/timer?chat_id=' . $chat_id;
@@ -67,9 +67,9 @@ Route::prefix('snake-game')->group(function () {
         return response()->json($response);
     });
     Route::get('/end', function(){
-        $chat_id = request()->input('chat_id')
-        $bonusScore = request()->input('bonusScore')
-        $score = request()->input('score')
+        $chat_id = request()->input('chat_id');
+        $bonusScore = request()->input('bonusScore');
+        $score = request()->input('score');
 
         $curl = curl_init();
         $url = 'http://89.104.69.63:8443/snake-game/end?chat_id=' . $chat_id . '&bonusScore=' . $bonusScore . '&score=' . $score;
