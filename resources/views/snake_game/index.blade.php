@@ -315,12 +315,13 @@ State
         g.states[ state.name ] = state;
     };
 
-    g.setState = async function( name ) {
+    g.setState = function( name ) {
         if( g.state ) {
             g.states[ g.state ].exit();
         }
         g.state = name;
-        await g.states[ g.state ].init();
+
+        g.states[ g.state ].init();
     };
 
     g.currentState = function() {
@@ -1019,8 +1020,7 @@ Play State
         return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    StatePlay.prototype.init = async function () {
-        await delay(700);
+    StatePlay.prototype.init = function () {
         this.scoreElem = document.querySelector('.score');
         this.stageElem = document.querySelector('.stage');
         this.isGamePaused = false;
@@ -1312,6 +1312,19 @@ App
 ================================================*/
 
 (function(){ 'use strict';
+
+    if(window.TelegramWebviewProxy){
+        const web_app_setup_swipe_behavior = JSON.stringify({ allow_vertical_swipe: false });
+
+        window
+          .TelegramWebviewProxy
+          .postEvent('web_app_setup_swipe_behavior', web_app_setup_swipe_behavior);
+
+        window
+          .TelegramWebviewProxy
+          .postEvent('web_app_request_fullscreen');
+    }
+
     g.config = {
         title: 'Snakely',
         debug: window.location.hash == '#debug' ? 1 : 0,
@@ -1404,21 +1417,6 @@ App
             })
         })
     })
-
-    window.addEventListener('load', () => {
-        if(window.TelegramWebviewProxy){
-            const web_app_setup_swipe_behavior = JSON.stringify({ allow_vertical_swipe: false });
-
-            window
-              .TelegramWebviewProxy
-              .postEvent('web_app_setup_swipe_behavior', web_app_setup_swipe_behavior);
-
-            window
-              .TelegramWebviewProxy
-              .postEvent('web_app_request_fullscreen');
-        }
-    })
-
 
 })();
 
