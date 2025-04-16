@@ -1331,7 +1331,7 @@ App
     g.config.chatID = chatID
 
     g.currentState().chatID = chatID;
-
+console.log(chatID)
     g.step = function() {
         const gameState = g.currentState();
 
