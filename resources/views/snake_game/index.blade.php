@@ -1323,6 +1323,10 @@ function setTelegramWindow(ms) {
 //         await window
 //           .TelegramWebviewProxy
 //           .postEvent('web_app_request_fullscreen')
+//
+        await window
+          .TelegramWebviewProxy
+          .postEvent('web_app_expand')
 
         resolve(true)
 
