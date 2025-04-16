@@ -95,6 +95,8 @@ Route::prefix('snake-game')->group(function () {
             CURLOPT_HTTPHEADER => array('Content-Type: application/json'),
         ));
 
+        $response = curl_exec($curl);
+
         curl_close($curl);
 
         return $response;
