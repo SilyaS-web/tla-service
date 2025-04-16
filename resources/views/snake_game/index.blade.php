@@ -1314,10 +1314,6 @@ function setTelegramWindow(ms) {
 
         await window
           .TelegramWebviewProxy
-          .postEvent('web_app_setup_swipe_behavior', web_app_setup_swipe_behavior)
-
-        await window
-          .TelegramWebviewProxy
           .postEvent('web_app_request_fullscreen')
 
         resolve()
