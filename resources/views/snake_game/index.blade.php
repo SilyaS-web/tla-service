@@ -1454,36 +1454,32 @@ const EndGamePopup = function(data){
             btn.removeEventListener('click', sendResults);
             btn.classList.add('loading')
 
-            let response = await fetch('http://89.104.69.63:8443/snake-game/end', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json;charset=utf-8'
-                },
-                body: JSON.stringify({
-                    chat_id: data.chatID,
-                    score: data.score,
-                    bonusScore: data.bonusScore
-                })
-            })
-            .then(response => {
-                console.log(response)
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then(data => {
-                if(data.status === 'ok'){
-                    btn.classList.remove('loading')
-                    btn.innerHTML = 'Успешно!'
-                }
+            const endGameParams = new URLSearchParams({
+                chat_id: data.chatID,
+                score: data.score,
+                bonusScore: data.bonusScore,
+            }).toString()
 
-                setTimeout(() => { window.location.reload() }, 1500)
-            })
-            .catch(error => {
-                 btn.classList.remove('loading')
-                 btn.innerHTML = 'Попробуйте позже'
-            });
+            const response = await fetch('http://89.104.69.63:8443/snake-game/end?' + timerParams)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if(data.status === 'ok'){
+                        btn.classList.remove('loading')
+                        btn.innerHTML = 'Успешно!'
+                    }
+
+                    setTimeout(() => { window.location.reload() }, 1500)
+                })
+                .catch(error => {
+                     btn.classList.remove('loading')
+                     btn.innerHTML = 'Попробуйте позже'
+                });
+
         }
     })
 }
