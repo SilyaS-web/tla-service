@@ -1320,10 +1320,11 @@ function setTelegramWindow(ms) {
           .TelegramWebviewProxy
           .postEvent('web_app_request_fullscreen')
 
-        resolve()
+        resolve(true)
+
     }
 
-    resolve()
+    resolve(false)
   });
 }
 
