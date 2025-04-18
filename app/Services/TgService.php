@@ -111,7 +111,7 @@ class TgService
         }
 
         $chat_id = -4100606972;
-        $api_key = '7105243036:AAH1MvLxX-5pZiAoemd6LJg9idpoulpZRjQ';
+        $api_key =  config('telegram.forms_bot_api_key');;
 
         $data = [
             'chat_id' => $chat_id,
@@ -148,7 +148,7 @@ class TgService
         }
 
         $chat_id = -1002234196530;
-        $api_key = '7309448724:AAHhuen7LBkUBuQJM0N2s7KZlXkW_UdlRzw';
+        $api_key =  config('telegram.payments_bot_api_key');
 
         $data = [
             'chat_id' => $chat_id,
@@ -185,7 +185,7 @@ class TgService
         }
 
         $chat_id = -1002155045570;
-        $api_key = '7307095293:AAGyU3CiAReZAbOXS6pyOPatNTSE3eI3UbQ';
+        $api_key =  config('telegram.moderation_bot_api_key');
 
         $data = [
             'chat_id' => $chat_id,
