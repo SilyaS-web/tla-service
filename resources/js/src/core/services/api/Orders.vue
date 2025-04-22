@@ -12,7 +12,7 @@ const Orders = {
                 resolve(response.data.payments)
             })
             .catch(error => {
-                notify('danger', {
+                notify('error', {
                     title: 'Внимание',
                     message: 'Неудалось получить список оплат'
                 });

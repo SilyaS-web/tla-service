@@ -1,12 +1,12 @@
 <template>
     <div class="chat__messages messages-chat">
-        <offer-content-component
+        <order-content-component
             v-if="order"
             :productImage="project.project_files[0]"
             :productName="project.product_name"
             :user="user"
-            :offer="order"
-        ></offer-content-component>
+            :order="order"
+        ></order-content-component>
 
         <div
             v-if="isAvailableToShowMessages(messages)"
@@ -109,14 +109,14 @@
 import moment from "moment";
 import ImagePopup from "../../../core/components/popups/fullscreen-asset/AssetPopup";
 import SpecificationPopup from '../../../core/components/popups/specification-popup/SpecificationPopup.vue'
-import OfferContentComponent from "./OfferContentComponent.vue";
+import OrderContentComponent from "./OrderContentComponent.vue";
 
 export default{
     props:[
         'user', 'messages', 'chatWorks', 'chatStatus',
         'statistics', 'partnerName', 'order', 'project'
     ],
-    components: {OfferContentComponent, ImagePopup, SpecificationPopup },
+    components: { OrderContentComponent, ImagePopup, SpecificationPopup },
     data(){
         return{
             statusNames: {

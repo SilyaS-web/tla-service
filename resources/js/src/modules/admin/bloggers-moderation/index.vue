@@ -107,7 +107,7 @@ export default{
 
         ban(id) {
             if(!id){
-                notify('danger', {
+                notify('error', {
                     title: 'Внимание',
                     message: 'Невозможно получить айди пользователя'
                 });
@@ -117,7 +117,7 @@ export default{
         },
         delete(id) {
             if(!id){
-                notify('danger', {
+                notify('error', {
                     title: 'Внимание',
                     message: 'Невозможно получить айди пользователя'
                 });

@@ -22,6 +22,7 @@
 
                                 @backToChats="backToChats"
                                 @chatAction="btnAction"
+                                @offerCreated="getMessages(currentChat)"
                             ></MessagesHeader>
 
                             <MessagesList

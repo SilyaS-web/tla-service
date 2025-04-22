@@ -37,12 +37,10 @@ export default {
     }),
     methods: {
         show(opts = {}) {
-            this.title = opts.title
-            this.subtitle = opts.subtitle
-            this.okButton = opts.okButton
-            if (opts.cancelButton) {
-                this.cancelButton = opts.cancelButton
-            }
+            opts.title && (this.title = opts.title)
+            opts.subtitle && (this.subtitle = opts.subtitle)
+            opts.okButton && (this.okButton = opts.okButton)
+            opts.cancelButton && (this.cancelButton = opts.cancelButton)
 
             this.$refs.popup.open()
 
@@ -64,3 +62,26 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.popup__title{
+    font-size: 18px;
+}
+.popup__form-btns{
+    display: flex;
+    gap: 0 24px;
+}
+.popup__form-btns>.btn{
+    flex:1 1 50%;
+    padding: 8px;
+}
+@media (max-width:768px) {
+    .popup__title{
+        font-size: 18px;
+    }
+    .popup__form-btns{
+        display: flex;
+        gap: 0 12px;
+    }
+}
+</style>

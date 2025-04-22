@@ -12,7 +12,7 @@ const Statistics = {
                 resolve(response.data.referral_codes)
             })
             .catch(error => {
-                notify('danger', {
+                notify('error', {
                     title: 'Внимание',
                     message: 'Не удалось получить данные'
                 })
