@@ -118,6 +118,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/orders/{order}/accept', [OrderController::class, 'accept']);
     Route::get('/orders/{order}/reject', [OrderController::class, 'reject']);
     Route::get('/orders/{order}/complete', [OrderController::class, 'complete']);
+    Route::delete('/orders/{order}', [OrderController::class, 'destroy']);
 
     Route::get('/stats', [AdminController::class, 'stats']);
     Route::post('/feedback', [UserController::class, 'sendFeedback']);

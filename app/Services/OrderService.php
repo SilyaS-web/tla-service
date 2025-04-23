@@ -66,4 +66,9 @@ class OrderService
         $project = $work->project;
         NotificationService::send('Селлер отметил заказ на проект ' . $project->product_name, $seller_user->role, $work);
     }
+
+    public static function destroy(Order $order): void
+    {
+        $order->delete();
+    }
 }
