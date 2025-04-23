@@ -22,18 +22,20 @@
 
                                 @backToChats="backToChats"
                                 @chatAction="btnAction"
-                                @offerCreated="getMessages(currentChat)"
+                                @orderCreated="getChats()"
                             ></MessagesHeader>
 
                             <MessagesList
                                 :messages="messages"
                                 :user="user"
-                                :order="currentChat ? currentChat.orders[0] : false"
+                                :order="currentChat ? currentChat.order : false"
                                 :project="currentChat ? currentChat.project : false"
                                 :chatWorks="currentChat ? currentChat.project_works : false"
                                 :chatStatus="currentChat ? currentChat.status : false"
                                 :statistics="currentChat ? currentChat.statistics : false"
                                 :partnerName="currentChat ? currentChat.partner_user.name : ''"
+
+                                @orderStatusChanged="getChats()"
                             ></MessagesList>
 
                             <div class="chat__messages messages-create">
@@ -277,6 +279,7 @@ export default{
                         this.currentChat.confirmed_by_blogger_at = work ? work.confirmed_by_blogger_at : this.currentChat.confirmed_by_blogger_at;
                         this.currentChat.confirmed_by_seller_at = work ? work.confirmed_by_seller_at : this.currentChat.confirmed_by_seller_at;
                         this.currentChat.statistics = work ? work.statistics : this.currentChat.statistics;
+                        this.currentChat.order = work ? work.order : this.currentChat.order;
 
                         this.currentChat.btnData = this.getChatBtnData(this.currentChat)
                     }

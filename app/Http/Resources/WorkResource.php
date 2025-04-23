@@ -37,6 +37,7 @@ class WorkResource extends JsonResource
 
         $work_project_work_ids = WorkProjectWork::where('work_id', $this->id)->pluck('project_work_id');
         $project_works = ProjectWorkResource::collection(ProjectWork::whereIn('id', $work_project_work_ids)->get());
+        $orders = OrderResource::collection($this->orders);
 
         return [
             'id' => $this->id,
@@ -56,7 +57,7 @@ class WorkResource extends JsonResource
             'confirmed_by_seller_at' => isset($this->confirmed_by_seller_at) ? $this->confirmed_by_seller_at->format('Y-m-d H:i') : null,
             'canceled_by_blogger_at' => isset($this->canceled_by_blogger_at) ? $this->canceled_by_blogger_at->format('Y-m-d H:i') : null,
             'canceled_by_seller_at' => isset($this->canceled_by_seller_at) ? $this->canceled_by_seller_at->format('Y-m-d H:i') : null,
-            'orders' => OrderResource::collection($this->orders),
+            'order' => $orders->first(),
             'status' => $this->status,
             'status_name' => $this->getStatus(),
             'created_by' => $this->created_by,

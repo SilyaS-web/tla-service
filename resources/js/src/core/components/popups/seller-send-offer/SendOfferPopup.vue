@@ -145,9 +145,11 @@ export default {
                 this._confirm()
             })
             .catch((err) =>{
+                const message = err.response.data.message;
+
                 notify('info', {
                     title: 'Внимание!',
-                    message: 'Невозможно создать заказ. Попробуйте позже'
+                    message: message || 'Невозможно создать заказ. Попробуйте позже'
                 })
 
                 for (const key in this.offer) {

@@ -37,7 +37,13 @@ class OrderController extends Controller
     {
         $validated = $request->validated();
         $order_files = $request->file('files');
-        OrderService::create($validated, $order_files, Auth::user());
+
+        $order = OrderService::create($validated, $order_files, Auth::user());
+
+        if(!$order){
+             return response()->json(['message' => 'Заказ уже существует. Удалите предыдущий, чтобы создать новый'], 418);
+        }
+
         return response()->json();
     }
 

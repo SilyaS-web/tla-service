@@ -2,10 +2,13 @@
     <div class="chat__messages messages-chat">
         <order-content-component
             v-if="order"
+
             :productImage="project.project_files[0]"
             :productName="project.product_name"
             :user="user"
             :order="order"
+
+            @orderStatusChanged="orderStatusChanged"
         ></order-content-component>
 
         <div
@@ -110,6 +113,7 @@ import moment from "moment";
 import ImagePopup from "../../../core/components/popups/fullscreen-asset/AssetPopup";
 import SpecificationPopup from '../../../core/components/popups/specification-popup/SpecificationPopup.vue'
 import OrderContentComponent from "./OrderContentComponent.vue";
+import {ref} from "vue";
 
 export default{
     props:[
@@ -133,6 +137,9 @@ export default{
         })
     },
     methods:{
+        orderStatusChanged(){
+            this.$emit('orderStatusChanged')
+        },
         getMessageClass(message){
             switch (message.sender_id) {
                 case 1:

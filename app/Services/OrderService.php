@@ -12,9 +12,15 @@ use Nyholm\Psr7\UploadedFile;
 
 class OrderService
 {
-    public static function create(array $order_data, array $files, User $user, string $status = Order::PENDING): Order
+    public static function create(array $order_data, array $files, User $user, string $status = Order::PENDING): Order | bool
     {
         $work = Work::query()->find($order_data['work_id']);
+        $current_orders = $work->orders;
+
+        if(count($current_orders) > 0) {
+            return false;
+        }
+
         $project = $work->project;
         $order_data['status'] = $status;
         $order_data['complete_till'] = Carbon::now()->addDays($order_data['complete_till'])->toDateTimeString();

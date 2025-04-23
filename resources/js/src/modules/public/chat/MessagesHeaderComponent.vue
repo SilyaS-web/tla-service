@@ -101,7 +101,7 @@ export default {
         sendOfferPopup(){
             this.$refs.sendOfferPopup.show(null, null, this.chat.id).then((isConfirmed) => {
                 if(isConfirmed){
-                    this.$emit('offerCreated')
+                    this.$emit('orderCreated')
                 }
             })
         }

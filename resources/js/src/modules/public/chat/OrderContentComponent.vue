@@ -4,12 +4,6 @@ import FileIcon from "../../../core/icons/FileIcon.vue";
 import axios from "axios";
 import ConfirmationPopup from "../../../core/components/popups/confirmation-popup/ConfirmationPopup.vue";
 
-const orderStatuses = {
-    'accepted': 1,
-    'denied': -1,
-    'pending': 0,
-    'complete': 2,
-}
 
 export default {
     components: {FileIcon, ConfirmationPopup},
@@ -19,10 +13,24 @@ export default {
     data(){
         return{
             currentOrder: ref(null),
+            orderStatuses: {
+                'deleted': -2,
+                'denied': -1,
+                'pending': 0,
+                'accepted': 1,
+                'completed': 2,
+            },
             isHidden: ref(false),
         }
     },
     name: "OrderContentComponent",
+    watch:{
+        order(){
+            console.log(this.order.status, this.currentOrder.status)
+            if(this.order.status !== this.currentOrder.status) this.currentOrder.status = this.order.status
+            else if(!this.order) this.currentOrder.status = this.orderStatuses['deleted']
+        }
+    },
     created(){
         this.currentOrder = this.order
     },
@@ -40,15 +48,13 @@ export default {
         acceptOrder(){
             axios({
                 method: 'get',
-                url: '/api/orders/' + this.currentItem.id + '/accept',
+                url: '/api/orders/' + this.currentOrder.id + '/accept',
             })
             .then(response => {
                 notify('info', {
                     title: 'Успешно!',
                     message: 'Статус заказа изменен.'
                 })
-
-                this.currentOrder.status = orderStatuses['accepted']
             })
             .catch(error => {
                 notify('error', {
@@ -67,15 +73,13 @@ export default {
 
             axios({
                 method: 'get',
-                url: '/api/orders/' + this.currentItem.id + '/deny',
+                url: '/api/orders/' + this.currentOrder.id + '/reject',
             })
             .then(response => {
                 notify('info', {
                     title: 'Успешно!',
                     message: 'Статус заказа изменен.'
                 })
-
-                this.currentOrder.status = orderStatuses['denied']
             })
             .catch(error => {
                 notify('error', {
@@ -87,15 +91,13 @@ export default {
         completeOrder(){
             axios({
                 method: 'get',
-                url: '/api/orders/' + this.currentItem.id + '/complete',
+                url: '/api/orders/' + this.currentOrder.id + '/complete',
             })
             .then(response => {
                 notify('info', {
                     title: 'Успешно!',
                     message: 'Статус заказа изменен.'
                 })
-
-                this.currentOrder.status = orderStatuses['complete']
             })
             .catch(error => {
                 notify('error', {
@@ -113,21 +115,19 @@ export default {
             if(!isConfirmed) return
 
             axios({
-                method: 'get',
-                url: '/api/orders/' + this.currentItem.id + '/delete',
+                method: 'delete',
+                url: '/api/orders/' + this.currentOrder.id,
             })
             .then(response => {
                 notify('info', {
                     title: 'Успешно!',
-                    message: 'Заказа'
+                    message: 'Заказ удален'
                 })
-
-                this.currentOrder.status = orderStatuses['denied']
             })
             .catch(error => {
                 notify('error', {
                     title: 'Ошибка',
-                    message: 'Что-то пошло не так. Невозможно изменить статус заказа, попробуйте позже.'
+                    message: 'Что-то пошло не так. Невозможно удалить заказ, попробуйте позже.'
                 })
             })
         },
@@ -136,7 +136,9 @@ export default {
 </script>
 
 <template>
-    <div :class="['chat__order', 'order-chat', (isHidden ? 'order-chat--hidden' : '')]">
+    <div
+        v-if="currentOrder.status !== orderStatuses['deleted']"
+        :class="['chat__order', 'order-chat', (isHidden ? 'order-chat--hidden' : '')]">
         <div class="order-chat__content">
             <div class="order-chat__header"></div>
             <div class="order-chat__body">
@@ -176,7 +178,7 @@ export default {
                     </div>
                     <div class="order-chat__btns">
                         <div
-                            v-if="user.role === 'blogger' && currentOrder.status === 0"
+                            v-if="user.role === 'blogger' && currentOrder.status === orderStatuses['pending']"
                             class="order-chat__btns-item">
                             <button
                                 @click="acceptOrder"
@@ -186,7 +188,7 @@ export default {
                                 class="btn btn-white btn-secondary">Отклонить</button>
                         </div>
                         <div
-                            v-if="user.role === 'seller' && currentOrder.status === 0"
+                            v-if="user.role === 'seller' && currentOrder.status === orderStatuses['pending']"
                             class="order-chat__btns-item">
                             <button class="btn btn-white" disabled>Заказ на рассмотрении</button>
                             <a
@@ -194,14 +196,14 @@ export default {
                                 href="#" class="order-chat__btns-link">Отменить заказ</a>
                         </div>
                         <div
-                            v-if="user.role === 'blogger' && currentOrder.status === 1"
+                            v-if="user.role === 'blogger' && currentOrder.status === orderStatuses['accepted']"
                             class="order-chat__btns-item">
                             <button
                                 @click="completeOrder"
                                 class="btn btn-white">Подтвердить выполнение</button>
                         </div>
                         <div
-                            v-if="user.role === 'seller' && currentOrder.status === 1"
+                            v-if="user.role === 'seller' && currentOrder.status === orderStatuses['accepted']"
                             class="order-chat__btns-item">
                             <button class="btn btn-white btn-primary">Заказ принят</button>
                             <a
@@ -209,9 +211,18 @@ export default {
                                 href="#" class="order-chat__btns-link">Отменить заказ</a>
                         </div>
                         <div
-                            v-if="currentOrder.status === -1"
+                            v-if="currentOrder.status === orderStatuses['denied']"
                             class="order-chat__btns-item">
                             <button class="btn btn-danger">Заказ отклонен</button>
+                            <a
+                                v-if="user.role === 'seller'"
+                                @click="deleteOrder"
+                                href="#" class="order-chat__btns-link">Удалить заказ</a>
+                        </div>
+                        <div
+                            v-if="currentOrder.status === orderStatuses['completed']"
+                            class="order-chat__btns-item">
+                            <button class="btn btn-white btn-primary">Заказ выполнен</button>
                             <a
                                 v-if="user.role === 'seller'"
                                 @click="deleteOrder"
