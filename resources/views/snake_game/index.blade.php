@@ -67,7 +67,7 @@
                         Перед вами игра змейка, суть которой собирать <b class="--red">красные</b> и <b class="--gold">золотые</b> квадратики.
                     </p>
                     <p><b>Один красный квадрат = Один балл</b></p>
-                    <p><b>Один золотой квадрат = Пять бонусных рублей, которые можно использовать в клубе</b></p>
+                    <p><b>Один золотой квадрат = Три бонусных рубля, которые можно использовать в клубе</b></p>
                     <p>
                         Бонусные рубли можно собирать раз в трое суток
                     </p>
@@ -788,8 +788,8 @@ Snake Entity
                     this.updateTickMax -= this.updateTickChange;
                 }
 
-                if(this.parentState.bonusScore + 5 <= 30) {
-                    this.parentState.bonusScore += 5;
+                if(this.parentState.bonusScore + 3 <= 30) {
+                    this.parentState.bonusScore += 3;
                     this.parentState.updateBonusScore();
                 }
 
