@@ -61,15 +61,15 @@
                             50%
                         </div>
                         <div class="tariff-card__prices">
-                            <div class="tariff-card__total">
-                                4990 руб
-                            </div>
-<!--                            <div class="tariff-card__total tariff__col" style="text-wrap:nowrap">-->
-<!--                                2490 руб-->
-<!--                                <span class="tariff-card__total&#45;&#45;old">-->
-<!--                                    4990 руб-->
-<!--                                </span>-->
+<!--                            <div class="tariff-card__total">-->
+<!--                                4990 руб-->
 <!--                            </div>-->
+                            <div class="tariff-card__total tariff__col" style="text-wrap:nowrap">
+                                2490 руб
+                                <span class="tariff-card__total--old">
+                                    4990 руб
+                                </span>
+                            </div>
                             <div class="tariff-card__single">
                                 неограниченное количество интеграций
                             </div>
