@@ -49,7 +49,7 @@ Route::prefix('snake-game')->group(function () {
         $chat_id = request()->input('chat_id');
 
         $curl = curl_init();
-        $url = 'http://89.104.69.63:8443/snake-game/timer?chat_id=' . $chat_id;
+        $url = 'http://91.197.96.160:8443/snake-game/timer?chat_id=' . $chat_id;
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url,
@@ -80,7 +80,7 @@ Route::prefix('snake-game')->group(function () {
         ];
 
         $curl = curl_init();
-        $url = 'http://89.104.69.63:8443/snake-game/end';
+        $url = 'http://91.197.96.160:8443/snake-game/end';
 
         curl_setopt_array($curl, array(
             CURLOPT_URL => $url,
