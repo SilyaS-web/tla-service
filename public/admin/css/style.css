@@ -1463,7 +1463,7 @@ label{
     position: relative;
 }
 .seller-item{
-    max-width: 345px;
+    max-width: 350px;
     min-width: 320px;
     flex: 1 1 auto;
 }
