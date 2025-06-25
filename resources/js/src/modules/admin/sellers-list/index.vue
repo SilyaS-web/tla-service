@@ -28,6 +28,7 @@
 import {ref} from "vue";
 
 import Seller from "../../../core/services/api/Seller.vue";
+import User from "../../../core/services/api/User.vue";
 
 import Loader from "../../../core/services/AppLoader.vue";
 
@@ -41,7 +42,7 @@ export default{
             sellers: ref([]),
             defaultQueryData: {},
 
-            Seller, Loader
+            Seller, Loader, User
         }
     },
     mounted(){
